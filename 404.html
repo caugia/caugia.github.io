@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Page Not Found | Caugia Consulting</title>
+  <meta name="description" content="The page you are looking for does not exist. Return to Caugia's homepage or explore our GTM resources.">
+
+  <link rel="icon" href="/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/C-logo.png">
+  <meta name="msapplication-TileImage" content="/C-logo.png">
+
+  <link rel="stylesheet" href="assets/caugia.css?v=2.7" />
+
+  <!-- 🔒 SECURITY: Protect this page -->
+  <script src="/auth.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="/C-logo.png" alt="Caugia Consulting">
+      <span>Caugia Consulting</span>
+    </a>
+
+    <nav class="nav-desktop">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="grip-diamond.html">GRIP Diamond</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="cta">Contact</a>
+    </nav>
+
+    <button class="menu-toggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="grip-diamond.html">GRIP Diamond</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section>
+      <div class="container">
+        <h1>Page not found</h1>
+        <p class="hero-sub">
+          The page you are looking for does not exist or has been moved.  
+          You can return to the homepage or explore one of our resources below.
+        </p>
+      </div>
+    </section>
+
+    <!-- OPTIONS -->
+    <section>
+      <div class="container">
+        <div class="card">
+          <h2>What would you like to do?</h2>
+          <ul>
+            <li><a href="index.html"><strong>Go to the homepage</strong></a></li>
+            <li><a href="gtm-assessment.html"><strong>Start the Free GTM Score</strong></a></li>
+            <li><a href="gtm-intelligence-report.html"><strong>Explore the GTM Intelligence Report</strong></a></li>
+            <li><a href="modules.html"><strong>View the 12 GTM Modules</strong></a></li>
+            <li><a href="contact.html"><strong>Contact Caugia</strong></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    © <span id="year"></span> Caugia Consulting. All rights reserved.
+    <a href="privacy.html">Privacy Policy</a>
+    ·
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const yearSpan = document.getElementById("year");
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  const toggle = document.querySelector('.menu-toggle');
+  const mobileNav = document.querySelector('.nav-mobile');
+
+  if (toggle && mobileNav) {
+    toggle.addEventListener('click', function () {
+      const isOpen = mobileNav.classList.toggle('open');
+      toggle.classList.toggle('active', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

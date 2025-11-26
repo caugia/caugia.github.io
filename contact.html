@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact | Caugia Consulting</title>
+  <meta name="description" content="Contact Caugia Consulting to discuss your GTM system, request support or learn more about our frameworks and services.">
+
+  <link rel="icon" href="/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/C-logo.png">
+  <meta name="msapplication-TileImage" content="/C-logo.png">
+
+  <link rel="stylesheet" href="assets/caugia.css?v=2.7" />
+
+  <!-- 🔒 SECURITY: Protect this entire page -->
+  <script src="/auth.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="/C-logo.png" alt="Caugia Consulting">
+      <span>Caugia Consulting</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="grip-diamond.html">GRIP Diamond</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="cta active">Contact</a>
+    </nav>
+
+    <button class="menu-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+  </div>
+
+  <nav class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="grip-diamond.html">GRIP Diamond</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- Hero -->
+    <section id="hero">
+      <div class="container">
+        <h1>Contact</h1>
+        <p class="hero-sub">
+          If you are exploring how to strengthen your GTM system or want to learn more about our work,
+          we are available for a short introductory conversation.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section>
+      <div class="container">
+        <div class="card">
+          <h2>Get in touch</h2>
+          <p>
+            For questions about the GTM Score, the GTM Intelligence Report or any of the modules,
+            you can reach Caugia directly using the details below.
+          </p>
+
+          <ul>
+            <li>Email: <strong>contact@caugia.com</strong></li>
+            <li>Based in France, working internationally</li>
+          </ul>
+
+          <p>
+            If you prefer, you can also share a short message using the form on this page.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section>
+      <div class="container">
+        <div class="card">
+          <h2>Send a message</h2>
+          <p>Please share your details and we will respond shortly.</p>
+
+          <form action="https://formspree.io/f/mnqepzjn" method="POST" class="contact-form" aria-label="Contact form">
+            <label>
+              Name
+              <input type="text" name="name" required>
+            </label>
+
+            <label>
+              Email
+              <input type="email" name="email" required>
+            </label>
+
+            <label>
+              Message
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+
+            <button type="submit" class="cta">Send message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+      <div class="container">
+        <div class="card">
+          <h2>Not sure where to start?</h2>
+          <p>
+            Begin with the Free GTM Score for a first view of your GTM system.  
+            It takes a few minutes and gives you an immediate sense of your strengths and areas to explore.
+          </p>
+          <p><a href="gtm-assessment.html" class="cta">Start Your Free GTM Score</a></p>
+          <p><a href="gtm-intelligence-report.html" class="cta">Explore the GTM Intelligence Report</a></p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    © <span id="year"></span> Caugia Consulting. All rights reserved.
+    <a href="privacy.html">Privacy Policy</a>
+    ·
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const yearSpan = document.getElementById("year");
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  const toggle = document.querySelector('.menu-toggle');
+  const mobileNav = document.querySelector('.nav-mobile');
+  if (toggle && mobileNav) {
+    toggle.addEventListener('click', function () {
+      const isOpen = mobileNav.classList.toggle('open');
+      toggle.classList.toggle('active', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
+

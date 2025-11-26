@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Positioning and Messaging Module | Caugia Consulting</title>
+  <meta name="description" content="The Positioning and Messaging module examines how clearly and consistently your company explains its value to the market.">
+
+  <link rel="icon" href="/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/C-logo.png">
+  <meta name="msapplication-TileImage" content="/C-logo.png">
+
+  <link rel="stylesheet" href="assets/caugia.css?v=2.7" />
+
+  <!-- 🔒 SECURITY: Protect this entire page -->
+  <script src="/auth.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="/C-logo.png" alt="Caugia Consulting">
+        <span>Caugia Consulting</span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="grip-diamond.html">GRIP Diamond</a>
+        <a href="resources.html">Resources</a>
+        <a href="contact.html" class="cta">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <nav class="nav-mobile">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="grip-diamond.html">GRIP Diamond</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <section id="hero">
+        <div class="container">
+          <h1>Positioning and Messaging</h1>
+          <p class="hero-sub">
+            Pillar 2 · Guidance  
+            A deep look into how your company describes its value in a way that resonates with the market.
+          </p>
+        </div>
+      </section>
+
+      <section id="what-inside">
+        <div class="container">
+          <div class="card">
+            <h2>What is inside this module</h2>
+            <p>
+              This module focuses on the clarity, consistency and relevance of your positioning and messaging
+              across channels and teams.
+            </p>
+            <ul>
+              <li>Maturity assessment for Positioning and Messaging</li>
+              <li>Review of core narrative, value proposition and proof points</li>
+              <li>Analysis of consistency between marketing, sales and product language</li>
+              <li>Prioritised recommendations to sharpen your story</li>
+            </ul>
+            <p>Price: €149 per module</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities">
+        <div class="container">
+          <div class="card">
+            <h2>Capabilities assessed</h2>
+            <ul>
+              <li>Definition of a clear and specific value proposition</li>
+              <li>Customer centric problem framing and outcome language</li>
+              <li>Message hierarchy across product, solution and use case levels</li>
+              <li>Consistency of messaging across website, sales assets and decks</li>
+              <li>Alignment of messaging with chosen ICP and segments</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="failures">
+        <div class="container">
+          <div class="card">
+            <h2>Common failure patterns</h2>
+            <ul>
+              <li>Generic statements that could belong to many companies</li>
+              <li>Frequent changes in story without evidence from the market</li>
+              <li>Sales teams rewriting their own versions of the narrative</li>
+              <li>Technical explanations that do not connect to business outcomes</li>
+              <li>Messaging that ignores the constraints of the buyer</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="impact">
+        <div class="container">
+          <div class="card">
+            <h2>Impact on the GTM system</h2>
+            <p>
+              Positioning and Messaging influence every conversation with the market, from first touch to renewal.
+            </p>
+            <ul>
+              <li>Improved conversion in campaigns and outbound activity</li>
+              <li>Shorter sales cycles through clearer value communication</li>
+              <li>Stronger alignment between product roadmap and customer promises</li>
+              <li>More coherent experience for prospects and customers</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta">
+        <div class="container">
+          <div class="card">
+            <h2>Explore your Positioning and Messaging</h2>
+            <p>
+              Use this module together with your GTM Score and Intelligence Report for a complete view of Guidance.
+            </p>
+            <p><a href="gtm-assessment.html" class="cta">Start Your Free GTM Score</a></p>
+            <p><a href="gtm-intelligence-report.html" class="cta">Explore the GTM Intelligence Report</a></p>
+            <p><a href="contact.html" class="cta">Contact Caugia</a></p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        © <span id="year"></span> Caugia Consulting. All rights reserved.
+        <a href="privacy.html">Privacy Policy</a>
+        ·
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const yearSpan = document.getElementById("year");
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      const header = document.querySelector('header');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 10) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      });
+
+      const toggle = document.querySelector('.menu-toggle');
+      const mobileNav = document.querySelector('.nav-mobile');
+      if (toggle && mobileNav) {
+        toggle.addEventListener('click', function () {
+          const isOpen = mobileNav.classList.toggle('open');
+          toggle.classList.toggle('active', isOpen);
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
