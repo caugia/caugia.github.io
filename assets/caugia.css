@@ -584,14 +584,13 @@ p {
   margin-bottom: 4px;
 }
 /* ===========================================================
-   BLOCK 3 — HOMEPAGE HERO + ENTERPRISE GRIP DIAMOND v4.1
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (Enterprise v4.1)
    =========================================================== */
 
-/* HERO LAYOUT */
+/* ------------------ HERO LAYOUT ------------------ */
 
 .home-hero {
-  margin-top: -68px;
-  margin-bottom: 96px;
+  margin-bottom: 90px;
 }
 
 .home-hero-grid {
@@ -601,20 +600,22 @@ p {
   align-items: center;
 }
 
-/* HERO TEXT */
+.home-hero-copy {
+  margin-top: -30px; /* ← Hoger zoals jij wilde */
+}
 
 .home-hero-copy .kicker {
   font-size: 0.9rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
-  margin-bottom: 14px;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 12px;
 }
 
 .home-hero-copy h1 {
-  font-size: 2.8rem;
+  font-size: 2.85rem;
   line-height: 1.08;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .hero-lead {
@@ -622,97 +623,102 @@ p {
   line-height: 1.7;
   color: rgba(15, 23, 42, 0.86);
   max-width: 34rem;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
-/* HERO VISUAL PANEL */
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hero-footnote {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+
+/* ===========================================================
+   GRIP DIAMOND — ENTERPRISE v4.1
+   =========================================================== */
 
 .home-hero-visual {
-  border-radius: 24px;
-  padding: 24px;
-  background: linear-gradient(135deg, #f9fafc, #edf2ff);
+  border-radius: 22px;
+  padding: 22px 26px 30px;
+  background: linear-gradient(135deg, #f9fafc, #eef3ff);
   border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 18px 52px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
   display: flex;
   flex-direction: column;
   gap: 18px;
+  position: relative;
 }
 
-/* =============================
-   DIAMOND — FIXED v4.1
-   ============================= */
+/* =====================
+   SHELL
+   ===================== */
 
 .diamond-shell {
   position: relative;
   width: 360px;
   height: 360px;
-  margin: 0 auto 12px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .diamond-title {
   font-size: 0.82rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   color: rgba(15,23,42,0.55);
+  transform: translateY(-22px); /* hoger zoals gevraagd */
 }
 
-/* GRID */
+/* =====================
+   GRID
+   ===================== */
 
 .diamond-grid {
   position: absolute;
   width: 260px;
   height: 260px;
-  top: 52%;
+  top: 60px;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
+  transform: translateX(-50%) rotate(45deg);
   pointer-events: none;
 }
 
 .diamond-ring {
   position: absolute;
-  border: 1px solid rgba(0,70,165,0.20);
+  border: 1px solid rgba(0,70,165,0.18);
   border-radius: 16px;
 }
 
 .ring-outer { inset: 0; }
-.ring-mid {
-  width: 68%;
-  height: 68%;
-  top: 16%;
-  left: 16%;
-}
-.ring-inner {
-  width: 36%;
-  height: 36%;
-  top: 32%;
-  left: 32%;
-}
+.ring-mid   { inset: 17%; }
+.ring-inner { inset: 34%; }
 
 .diamond-line {
   position: absolute;
   background: rgba(0,70,165,0.18);
 }
 
-.diamond-vertical {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-}
-.diamond-horizontal {
-  height: 1px;
-  width: 100%;
-  top: 50%;
-}
+.diamond-vertical   { width: 1px; height: 100%; left: 50%; }
+.diamond-horizontal { height: 1px; width: 100%; top: 50%; }
+
 .diamond-diag-1 {
   width: 1px;
   height: 100%;
   left: 50%;
   transform: rotate(45deg);
 }
+
 .diamond-diag-2 {
   width: 1px;
   height: 100%;
@@ -720,68 +726,67 @@ p {
   transform: rotate(-45deg);
 }
 
-/* POLYGON — FIXED */
+/* =====================
+   POLYGON (SHAPE)
+   ===================== */
 
 .diamond-shape {
   position: absolute;
   width: 260px;
   height: 260px;
-  top: 52%;
+  top: 60px;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  z-index: 2;
+  transform: translateX(-50%) rotate(45deg);
 
   clip-path: polygon(
-    50% calc(50% - 45% * var(--g, 0.45)),
-    calc(50% + 45% * var(--r, 0.60)) 50%,
-    50% calc(50% + 45% * var(--i, 0.85)),
-    calc(50% - 45% * var(--p, 0.43)) 50%
+    50% calc(50% - 50% * var(--g)),
+    calc(50% + 50% * var(--r)) 50%,
+    50% calc(50% + 50% * var(--i)),
+    calc(50% - 50% * var(--p)) 50%
   );
 
-  background: rgba(243,108,33,0.20);
-  border: 2px solid rgba(243,108,33,0.60);
-  border-radius: 18px;
-  backdrop-filter: blur(3px);
+  background: rgba(243,108,33,0.06); /* Caugia Orange 6% transparency */
+  border-radius: 14px;
+  backdrop-filter: blur(1px);
+  z-index: 3;
 }
 
-/* OUTER FRAME */
+/* FRAME OUTLINE */
 
 .diamond-frame {
   position: absolute;
   width: 260px;
   height: 260px;
-  top: 52%;
+  top: 60px;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  border: 1px solid rgba(0,70,165,0.40);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.30);
-  box-shadow:
-    0 14px 40px rgba(15,23,42,0.10),
-    0 0 0 1px rgba(255,255,255,0.40);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 14px;
+  border: 1px solid rgba(0,70,165,0.28);
+  box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+  z-index: 4;
 }
 
-/* CORE DOT */
-
-:root {
-  --core-x: 50%;
-  --core-y: 50%;
-}
+/* =====================
+   CORE DOT
+   ===================== */
 
 .diamond-core {
   position: absolute;
   width: 22px;
   height: 22px;
-  border-radius: 999px;
-  background: #0046A5;
-  box-shadow: 0 4px 14px rgba(0,70,165,0.35),
-              0 0 0 3px rgba(255,255,255,0.95);
+  border-radius: 50%;
+  background: #0046A5; /* Caugia Blue */
+  box-shadow: 0 4px 14px rgba(0,70,165,0.25);
+
   top: calc(var(--core-y) - 11px);
   left: calc(var(--core-x) - 11px);
+
   z-index: 6;
 }
 
-/* LABELS */
+/* =====================
+   LABELS
+   ===================== */
 
 .diamond-label {
   position: absolute;
@@ -790,29 +795,12 @@ p {
   color: rgba(15,23,42,0.85);
 }
 
-.diamond-label-top {
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+.diamond-label-top    { top: 12px;  left: 50%; transform: translateX(-50%); }
+.diamond-label-right  { top: 165px; right: -40px; }
+.diamond-label-bottom { bottom: -10px; left: 50%; transform: translateX(-50%); }
+.diamond-label-left   { top: 165px; left: -40px; }
 
-.diamond-label-right {
-  top: 50%;
-  right: -60px;
-  transform: translateY(-50%);
-}
 
-.diamond-label-bottom {
-  bottom: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-left {
-  top: 50%;
-  left: -72px;
-  transform: translateY(-50%);
-}
 
 
 /* ===========================================================
