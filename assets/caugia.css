@@ -772,16 +772,18 @@ p {
    POLYGON — FULL TRANSPARENCY + GLASS
    ----------------------------------------------------------- */
 
+/* MAIN SCORE POLYGON (GRIP shape) */
 .diamond-shape {
   position: absolute;
-  width: 280px;
-  height: 280px;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
+  inset: 0;
+  margin: auto;
+  width: var(--diamond-size);
+  height: var(--diamond-size);
+  transform: rotate(45deg);
+  pointer-events: none;
   z-index: 3;
 
-  /* AXIS-ALIGNED polygon */
+  /* vorm bepaald door --g, --r, --i, --p (0–1) */
   clip-path: polygon(
     50% calc(50% - 50% * var(--g)),
     calc(50% + 50% * var(--r)) 50%,
@@ -789,12 +791,22 @@ p {
     calc(50% - 50% * var(--p)) 50%
   );
 
-  /* TRUE transparency — no tint */
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(0, 70, 165, 0.24);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
+  /* Caugia-oranje, maar bewust heel transparant */
+  background: linear-gradient(
+    140deg,
+    rgba(243, 108, 33, 0.24),
+    rgba(243, 108, 33, 0.06)
+  );
+  border: 1px solid rgba(243, 108, 33, 0.35);
+  border-radius: 16px;
+
+  /* subtiele glass feel, lijnen eronder blijven zichtbaar */
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.22);
 }
+
 
 
 
