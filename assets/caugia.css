@@ -1132,3 +1132,180 @@ footer a:hover {
     transform-origin: top center;
   }
 }
+
+/* ===========================================================
+   CAUGIA GRIP DIAMOND — CLEAN TRANSPARENT EDITION v3.5
+   =========================================================== */
+
+/* Shell */
+.diamond-shell {
+  position: relative;
+  width: 340px;
+  height: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Titel */
+.diamond-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15,23,42,0.55);
+  margin-bottom: 14px;
+}
+
+/* GRID + STRUCTUUR (de fijne lijnen) */
+.diamond-grid {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%) rotate(45deg);
+  pointer-events: none;
+  opacity: 0.82;
+}
+
+.diamond-ring {
+  position: absolute;
+  border: 1px solid rgba(0,70,165,0.22);
+  border-radius: 12px;
+}
+
+.ring-outer {
+  width: 100%;
+  height: 100%;
+}
+
+.ring-mid {
+  width: 67%;
+  height: 67%;
+  top: 16.5%;
+  left: 16.5%;
+}
+
+.ring-inner {
+  width: 34%;
+  height: 34%;
+  top: 33%;
+  left: 33%;
+}
+
+.diamond-line {
+  position: absolute;
+  background: rgba(0,70,165,0.20);
+}
+
+.diamond-vertical {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+}
+
+.diamond-horizontal {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+}
+
+.diamond-diag-1 {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: rotate(45deg);
+}
+
+.diamond-diag-2 {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: rotate(-45deg);
+}
+
+/* POLYGON — Volledig transparant, lichte blur */
+.diamond-shape {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 4;
+
+  /* rechte polygon, transparant */
+  clip-path: polygon(
+    50% calc(50% - 50% * var(--g)),
+    calc(50% + 50% * var(--r)) 50%,
+    50% calc(50% + 50% * var(--i)),
+    calc(50% - 50% * var(--p)) 50%
+  );
+
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+}
+
+/* FRAME */
+.diamond-frame {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 12px;
+  border: 1px solid rgba(0,70,165,0.28);
+  z-index: 5;
+}
+
+/* WITTE INTERACTIEVE STIP */
+.diamond-core {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.18);
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  top: var(--core-y);
+  left: var(--core-x);
+}
+
+/* LABELS — zonder pill, buiten graph */
+.diamond-label {
+  position: absolute;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(15,23,42,0.70);
+}
+
+.diamond-label-top {
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-right {
+  top: 175px;
+  right: -60px;
+}
+
+.diamond-label-bottom {
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-left {
+  top: 175px;
+  left: -80px;
+}
