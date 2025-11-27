@@ -659,18 +659,87 @@ p {
 }
 
 
-
 /* ===========================================================
-   ENTERPRISE GRIP DIAMOND v4.0
-   Clean • Transparent • True Axes • Interactive-ready
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (Enterprise v4.1)
    =========================================================== */
 
-/* Shell container */
+/* ------------------ HERO LAYOUT ------------------ */
+
+.home-hero {
+  margin-bottom: 90px;
+}
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.home-hero-copy {
+  margin-top: -30px; /* ← Hoger zoals jij wilde */
+}
+
+.home-hero-copy .kicker {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 12px;
+}
+
+.home-hero-copy h1 {
+  font-size: 2.85rem;
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+
+.hero-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.86);
+  max-width: 34rem;
+  margin-bottom: 20px;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hero-footnote {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+
+/* ===========================================================
+   GRIP DIAMOND — ENTERPRISE v4.1
+   =========================================================== */
+
+.home-hero-visual {
+  border-radius: 22px;
+  padding: 22px 26px 30px;
+  background: linear-gradient(135deg, #f9fafc, #eef3ff);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+
+/* =====================
+   SHELL
+   ===================== */
 
 .diamond-shell {
   position: relative;
   width: 360px;
-  height: 380px;
+  height: 360px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -678,88 +747,51 @@ p {
   justify-content: flex-start;
 }
 
-/* Title */
-
 .diamond-title {
   font-size: 0.82rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.55);
-  text-align: center;
-
-  /* omhoog trekken */
-  margin-top: -45px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  color: rgba(15,23,42,0.55);
+  transform: translateY(-22px); /* hoger zoals gevraagd */
 }
 
-
-
-
-/* -----------------------------------------------------------
-   GRID STRUCTURE (rings + axes)
-   ----------------------------------------------------------- */
+/* =====================
+   GRID
+   ===================== */
 
 .diamond-grid {
   position: absolute;
-  width: 280px;
-  height: 280px;
+  width: 260px;
+  height: 260px;
   top: 60px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(45deg);
   pointer-events: none;
 }
 
-/* Rings */
 .diamond-ring {
   position: absolute;
-  border: 1px solid rgba(0, 70, 165, 0.18);
-  border-radius: 12px;
-  transform: rotate(45deg);
+  border: 1px solid rgba(0,70,165,0.18);
+  border-radius: 16px;
 }
 
-.ring-outer {
-  width: 100%;
-  height: 100%;
-}
-
-.ring-mid {
-  width: 67%;
-  height: 67%;
-  left: 16.5%;
-  top: 16.5%;
-}
-
-.ring-inner {
-  width: 34%;
-  height: 34%;
-  left: 33%;
-  top: 33%;
-}
-
-/* Axes */
+.ring-outer { inset: 0; }
+.ring-mid   { inset: 17%; }
+.ring-inner { inset: 34%; }
 
 .diamond-line {
   position: absolute;
-  background: rgba(0, 70, 165, 0.18);
+  background: rgba(0,70,165,0.18);
 }
 
-.diamond-vertical {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-}
-
-.diamond-horizontal {
-  height: 1px;
-  width: 100%;
-  top: 50%;
-}
+.diamond-vertical   { width: 1px; height: 100%; left: 50%; }
+.diamond-horizontal { height: 1px; width: 100%; top: 50%; }
 
 .diamond-diag-1 {
   width: 1px;
   height: 100%;
   left: 50%;
-  transform-origin: center;
   transform: rotate(45deg);
 }
 
@@ -767,27 +799,21 @@ p {
   width: 1px;
   height: 100%;
   left: 50%;
-  transform-origin: center;
   transform: rotate(-45deg);
 }
 
+/* =====================
+   POLYGON (SHAPE)
+   ===================== */
 
-
-/* -----------------------------------------------------------
-   POLYGON — FULL TRANSPARENCY + GLASS
-   ----------------------------------------------------------- */
-
-/* MAIN SCORE POLYGON (GRIP shape) */
 .diamond-shape {
   position: absolute;
   width: 260px;
   height: 260px;
-  top: 55px;
+  top: 60px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  z-index: 3;
 
-  /* jouw polygon vorm */
   clip-path: polygon(
     50% calc(50% - 50% * var(--g)),
     calc(50% + 50% * var(--r)) 50%,
@@ -795,180 +821,62 @@ p {
     calc(50% - 50% * var(--p)) 50%
   );
 
-  /* 🔥 CAUGIA ORANJE TRANSPARANT GLAS — exact zoals PS */
-  background: rgba(243,108,33,0.05); /* bijna onzichtbaar */
-  border: 2px solid rgba(243,108,33,0.45); /* sterke rand, zichtbaar */
-
-  /* WAAROM DIT WERKT: geen blur! */
-  backdrop-filter: none;
-
-  /* subtiel licht effect, maar NIET blokkerend */
-  box-shadow:
-    inset 0 0 20px rgba(243,108,33,0.15),
-    0 0 8px rgba(243,108,33,0.12);
+  background: rgba(243,108,33,0.06); /* Caugia Orange 6% transparency */
+  border-radius: 14px;
+  backdrop-filter: blur(1px);
+  z-index: 3;
 }
 
-
-
-/* -----------------------------------------------------------
-   OUTER FRAME
-   ----------------------------------------------------------- */
+/* FRAME OUTLINE */
 
 .diamond-frame {
   position: absolute;
-  width: 280px;
-  height: 280px;
+  width: 260px;
+  height: 260px;
   top: 60px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 70, 165, 0.28);
-  box-shadow:
-    0 10px 28px rgba(15, 23, 42, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  border: 1px solid rgba(0,70,165,0.28);
+  box-shadow: 0 10px 26px rgba(15,23,42,0.06);
   z-index: 4;
 }
 
-
-
-/* -----------------------------------------------------------
-   MOVING CORE DOT
-   ----------------------------------------------------------- */
+/* =====================
+   CORE DOT
+   ===================== */
 
 .diamond-core {
   position: absolute;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
-  top: var(--core-y);
-  left: var(--core-x);
-  transform: translate(-50%, -50%);
+  background: #0046A5; /* Caugia Blue */
+  box-shadow: 0 4px 14px rgba(0,70,165,0.25);
+
+  top: calc(var(--core-y) - 11px);
+  left: calc(var(--core-x) - 11px);
+
   z-index: 6;
 }
 
-
-
-/* -----------------------------------------------------------
-   LABELS OUTSIDE GRAPH
-   ----------------------------------------------------------- */
+/* =====================
+   LABELS
+   ===================== */
 
 .diamond-label {
   position: absolute;
-  font-size: 0.82rem;
-  color: rgba(15, 23, 42, 0.75);
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.55);
-  z-index: 7;
-}
-
-.diamond-label-top {
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-right {
-  right: -26px;
-  top: 148px;
-}
-
-.diamond-label-bottom {
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-left {
-  left: -26px;
-  top: 148px;
-}
-
-
-
-/* -----------------------------------------------------------
-   HEALTH CARD UNDER DIAMOND
-   ----------------------------------------------------------- */
-
-.hero-health {
-  border-radius: 14px;
-  padding: 14px 16px 12px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-}
-
-.hero-health-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.hero-health-label {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
-  margin-bottom: 4px;
-}
-
-.hero-health-score {
-  font-size: 1.42rem;
-  font-weight: 700;
-}
-
-.hero-health-score span {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 500;
-  color: rgba(75, 85, 99, 1);
+  color: rgba(15,23,42,0.85);
 }
 
-.hero-health-note {
-  font-size: 0.85rem;
-  color: rgba(75, 85, 99, 1);
-}
+.diamond-label-top    { top: 12px;  left: 50%; transform: translateX(-50%); }
+.diamond-label-right  { top: 165px; right: -40px; }
+.diamond-label-bottom { bottom: -10px; left: 50%; transform: translateX(-50%); }
+.diamond-label-left   { top: 165px; left: -40px; }
 
-.hero-health-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 
-.hero-health-row {
-  display: grid;
-  grid-template-columns: 1.2fr 3fr auto;
-  gap: 8px;
-  align-items: center;
-}
-
-.hero-health-name {
-  color: rgba(55, 65, 81, 1);
-}
-
-.hero-health-bar {
-  position: relative;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(229, 231, 235, 1);
-  overflow: hidden;
-}
-
-.hero-health-bar span {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #0046A5, #F36C21);
-}
-
-.hero-health-value {
-  font-variant-numeric: tabular-nums;
-  font-size: 0.82rem;
-  color: rgba(31, 41, 55, 1);
-}
 /* ===========================================================
    BLOCK 4 — RESPONSIVE RULES v4.0
    =========================================================== */
