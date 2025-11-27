@@ -438,19 +438,23 @@
      ============================================================ -->
 <script>
 function updateGripDiamond(g, r, i, p) {
-  g = Math.max(0, Math.min(100, g));
-  r = Math.max(0, Math.min(100, r));
-  i = Math.max(0, Math.min(100, i));
-  p = Math.max(0, Math.min(100, p));
+  // Clamp 0–100
+  g = Math.min(100, Math.max(0, g));
+  r = Math.min(100, Math.max(0, r));
+  i = Math.min(100, Math.max(0, i));
+  p = Math.min(100, Math.max(0, p));
 
+  // Normalise 0–1
   const G = g / 100;
   const R = r / 100;
   const I = i / 100;
   const P = p / 100;
 
-  const cx = 50 + (R - P) * 50;
-  const cy = 50 + (I - G) * 50;
+  // CORRECT CENTRUM VAN DE DIAMOND
+  const cx = 50 + (R - P) * 45;
+  const cy = 50 + (I - G) * 45;
 
+  // CSS variabelen instellen
   document.documentElement.style.setProperty("--g", G);
   document.documentElement.style.setProperty("--r", R);
   document.documentElement.style.setProperty("--i", I);
@@ -459,6 +463,10 @@ function updateGripDiamond(g, r, i, p) {
   document.documentElement.style.setProperty("--core-x", cx + "%");
   document.documentElement.style.setProperty("--core-y", cy + "%");
 }
+
+// Test met jouw waarden
+updateGripDiamond(45, 60, 85, 43);
+</script>
 
 updateGripDiamond(45, 60, 85, 43);
 </script>
