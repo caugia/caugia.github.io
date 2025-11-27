@@ -710,261 +710,202 @@ footer a:hover {
   z-index: 0;
 }
 
-/* GRID (achter het frame, boven de glow) */
+/* =======================================================================================
+   CAUGIA GRIP DIAMOND v3.0
+   Clean • Enterprise • Structured • Zero-noise
+   ======================================================================================= */
+
+/* Shell (buitencontainer) */
+.diamond-shell {
+  position: relative;
+  width: 340px;
+  height: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Titel boven de diamant */
+.diamond-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: rgba(15,23,42,0.55);
+}
+
+/* Grid container */
 .diamond-grid {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  transform: rotate(45deg);
-  top: 50%;
+  width: 260px;
+  height: 260px;
+  top: 55px;
   left: 50%;
-  translate: -50% -50%;
+  transform: translateX(-50%);
   pointer-events: none;
-  z-index: 1;
 }
 
-.grid-layer {
+/* Rings (3 concentrische frames) */
+.diamond-ring {
   position: absolute;
-  inset: 0;
-  border: 1px solid rgba(0, 70, 165, 0.18);
-  border-radius: 24px;
+  border: 1px solid rgba(0,70,165,0.18);
+  border-radius: 12px;
+  transform: rotate(45deg);
 }
 
-.grid-middle {
-  width: 66%;
-  height: 66%;
-  top: 17%;
-  left: 17%;
+.ring-outer {
+  width: 100%;
+  height: 100%;
 }
 
-.grid-inner {
-  width: 33%;
-  height: 33%;
-  top: 34%;
-  left: 34%;
+.ring-mid {
+  width: 67%;
+  height: 67%;
+  left: 16.5%;
+  top: 16.5%;
 }
 
-/* CROSS LINES (horizontaal + verticaal) */
-.grid-cross::before,
-.grid-cross::after {
-  content: "";
+.ring-inner {
+  width: 34%;
+  height: 34%;
+  left: 33%;
+  top: 33%;
+}
+
+/* Grid lines */
+.diamond-line {
   position: absolute;
-  background: rgba(0, 70, 165, 0.14);
+  background: rgba(0,70,165,0.18);
 }
 
-.grid-cross::before {
+.diamond-vertical {
   width: 1px;
   height: 100%;
   left: 50%;
 }
 
-.grid-cross::after {
+.diamond-horizontal {
   height: 1px;
   width: 100%;
   top: 50%;
 }
 
-/* DIAGONALEN */
-.grid-diagonal::before,
-.grid-diagonal::after {
-  content: "";
-  position: absolute;
+.diamond-diag-1 {
   width: 1px;
   height: 100%;
-  background: rgba(0, 70, 165, 0.14);
   left: 50%;
   transform-origin: center;
-}
-
-.grid-diagonal::before {
   transform: rotate(45deg);
 }
 
-.grid-diagonal::after {
+.diamond-diag-2 {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform-origin: center;
   transform: rotate(-45deg);
 }
 
-/* SCORE SHAPE (polygon) */
+/* MAIN SCORE POLYGON (4 inputs → shape) */
 .diamond-shape {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  top: 50%;
+  width: 260px;
+  height: 260px;
+  top: 55px;
   left: 50%;
-  translate: -50% -50%;
-  transform: rotate(45deg);
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 3;
+
   clip-path: polygon(
     50% calc(50% - 50% * var(--g, 0.45)),
     calc(50% + 50% * var(--r, 0.60)) 50%,
     50% calc(50% + 50% * var(--i, 0.85)),
     calc(50% - 50% * var(--p, 0.43)) 50%
   );
-  background: linear-gradient(135deg, rgba(0, 70, 165, 0.35), rgba(243, 108, 33, 0.35));
-  border: 1px solid rgba(0, 70, 165, 0.35);
-  border-radius: 18px;
-  backdrop-filter: blur(4px);
-  box-shadow:
-    0 10px 30px rgba(15, 23, 42, 0.08),
-    0 0 20px rgba(0, 70, 165, 0.12);
-  z-index: 2;
+
+  background: linear-gradient(
+    135deg,
+    rgba(0,70,165,0.20),
+    rgba(243,108,33,0.20)
+  );
+  border: 1px solid rgba(0,70,165,0.28);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
 }
 
-/* EXTERNE FRAME (transparant, geen vulling) */
-.diamond-outer {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  transform: rotate(45deg);
-  border-radius: 28px;
-  background: transparent;
-  border: 1px solid rgba(0, 70, 165, 0.28);
+/* Outer frame */
+.diamond-frame {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 12px;
+  border: 1px solid rgba(0,70,165,0.30);
   box-shadow:
-    0 12px 30px rgba(15, 23, 42, 0.25),
-    0 0 0 1px rgba(255, 255, 255, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-}
-
-/* INNER FRAME (glass) */
-.diamond-inner {
-  width: 112px;
-  height: 112px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    0 10px 28px rgba(15,23,42,0.06),
+    0 0 0 1px rgba(255,255,255,0.25);
   z-index: 4;
 }
 
-/* MIDDENPUNT */
+/* Core center point */
 .diamond-core {
-  width: 32px;
-  height: 32px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow:
-    0 0 0 1px rgba(15, 23, 42, 0.04),
-    0 6px 14px rgba(15, 23, 42, 0.16);
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.12);
   z-index: 5;
 }
 
-
-/* Health card onder de diamant */
-
-.hero-health {
-  margin-top: 10px;
-  border-radius: 14px;
-  padding: 12px 14px 10px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.05);
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-}
-
-.hero-health-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.hero-health-label {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
-  margin-bottom: 4px;
-}
-
-.hero-health-score {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.hero-health-score span {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(75, 85, 99, 1);
-  margin-left: 2px;
-}
-
-.hero-health-note {
-  font-size: 0.85rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-.hero-health-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.hero-health-row {
-  display: grid;
-  grid-template-columns: 1.2fr 3fr auto;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.86rem;
-}
-
-.hero-health-name {
-  color: rgba(55, 65, 81, 1);
-}
-
-.hero-health-bar {
-  position: relative;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(229, 231, 235, 1);
-  overflow: hidden;
-}
-
-.hero-health-bar span {
+/* Labels */
+.diamond-label {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #0046A5, #F36C21);
-}
-
-.hero-health-value {
-  font-variant-numeric: tabular-nums;
-  color: rgba(31, 41, 55, 1);
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.08);
   font-size: 0.82rem;
+  color: rgba(15,23,42,0.75);
+  z-index: 6;
 }
 
-/* responsive tweaks voor hero visual */
+.diamond-label-top {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-@media (max-width: 1024px) {
-  .home-hero-visual {
-    margin-top: 12px;
-  }
+.diamond-label-right {
+  top: 165px;
+  right: -10px;
+}
 
+.diamond-label-bottom {
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-left {
+  top: 165px;
+  left: -10px;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
   .diamond-shell {
-    width: 230px;
-    height: 190px;
-  }
-
-  .diamond-outer {
-    width: 135px;
-    height: 135px;
-  }
-
-  .diamond-inner {
-    width: 100px;
-    height: 100px;
+    transform: scale(0.85);
+    transform-origin: top center;
   }
 }
-
-@media (max-width: 768px) {
-  .home-hero-copy h1 {
-    font-size: 2.2rem;
-  }
 
   .hero-cta-row {
     flex-direction: column;
