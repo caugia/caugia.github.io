@@ -1,1 +1,1164 @@
 
+/* ===========================================================
+   CAUGIA CONSULTING — PRODUCTION CSS v4.0
+   Calm • Professional • Systematic • Enterprise-grade
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   ROOT VARIABLES
+   ----------------------------------------------------------- */
+
+:root {
+  --ink: #0b132b;
+  --blue: #0046A5;
+  --navy: #002A5C;
+  --accent: #F36C21;
+  --accent-soft: #FFD9C2;
+  --silver: #E6E9EF;
+
+  --bg-light: #f9fafc;
+  --border: rgba(0, 0, 0, 0.08);
+
+  --header-h: 64px;
+  --maxw: 1180px;
+
+  --radius: 12px;
+  --transition: 0.22s ease;
+}
+
+
+/* -----------------------------------------------------------
+   RESET
+   ----------------------------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+body {
+  min-height: 100%;
+  background: #fff;
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* -----------------------------------------------------------
+   LAYOUT HELPERS
+   ----------------------------------------------------------- */
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+main {
+  min-height: calc(100vh - var(--header-h));
+}
+
+main .wrap {
+  padding: 96px 24px 80px;
+}
+
+section {
+  margin-bottom: 64px;
+}
+
+
+/* -----------------------------------------------------------
+   HEADER
+   ----------------------------------------------------------- */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--header-h);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+}
+
+header.scrolled {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+header .inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+
+/* -----------------------------------------------------------
+   BRAND / LOGO
+   ----------------------------------------------------------- */
+
+a.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.brand span {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+
+/* -----------------------------------------------------------
+   DESKTOP NAV
+   ----------------------------------------------------------- */
+
+nav.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+nav.nav-desktop a {
+  position: relative;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: rgba(15, 23, 42, 0.78);
+  padding: 6px 2px;
+  transition: color var(--transition);
+}
+
+nav.nav-desktop a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 999px;
+  transition: width var(--transition);
+}
+
+nav.nav-desktop a:hover {
+  color: var(--ink);
+}
+
+nav.nav-desktop a:hover::after,
+nav.nav-desktop a.active::after {
+  width: 100%;
+}
+
+.nav-desktop .cta {
+  margin-left: 8px;
+}
+
+
+/* -----------------------------------------------------------
+   CTA BUTTONS
+   ----------------------------------------------------------- */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition),
+              box-shadow var(--transition), transform var(--transition),
+              border-color var(--transition);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.cta:hover {
+  background: #003986;
+  border-color: #003986;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
+}
+
+.cta--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: none;
+}
+
+.cta--ghost:hover {
+  background: #f3f4f6;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+/* Header CTA must stay white */
+.nav-desktop .cta,
+.nav-desktop .cta:hover {
+  color: #fff !important;
+}
+
+
+/* -----------------------------------------------------------
+   MOBILE NAV
+   ----------------------------------------------------------- */
+
+.menu-toggle {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 18px;
+  height: 2px;
+  background: #111827;
+  display: block;
+  position: relative;
+}
+
+.menu-toggle span::before,
+.menu-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: #111827;
+}
+
+.menu-toggle span::before {
+  top: -5px;
+}
+
+.menu-toggle span::after {
+  top: 5px;
+}
+
+nav.nav-mobile {
+  display: none;
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(15, 23, 42, 0.04);
+  padding: 16px 18px 20px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+nav.nav-mobile a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+nav.nav-mobile.open {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  nav.nav-desktop {
+    display: none;
+  }
+  .menu-toggle {
+    display: inline-flex;
+  }
+}
+/* ===========================================================
+   BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   TYPOGRAPHY
+   ----------------------------------------------------------- */
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: 18px;
+}
+
+h2 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--blue);
+}
+
+p {
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.88);
+}
+
+.page-intro {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+
+.page-intro p {
+  color: rgba(15, 23, 42, 0.78);
+}
+
+.section-heading {
+  margin-bottom: 16px;
+}
+
+.section-body {
+  max-width: 760px;
+  color: rgba(15, 23, 42, 0.84);
+}
+
+
+/* -----------------------------------------------------------
+   GENERIC CARD
+   ----------------------------------------------------------- */
+
+.card {
+  border-radius: var(--radius);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: #fff;
+  padding: 22px 22px 20px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: box-shadow var(--transition), transform var(--transition),
+              border-color var(--transition), background var(--transition);
+}
+
+.card:hover {
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+.card h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.card p {
+  font-size: 0.98rem;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+
+/* -----------------------------------------------------------
+   GENERIC HOMEPAGE SECTIONS
+   ----------------------------------------------------------- */
+
+.home-section {
+  margin-bottom: 64px;
+}
+
+.home-section-line {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  padding-top: 32px;
+  margin-top: 16px;
+}
+
+.home-split {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 32px;
+  align-items: flex-start;
+}
+
+
+/* -----------------------------------------------------------
+   “GRIP EXAMPLE” SIDE CARD IN SECTION 3
+   ----------------------------------------------------------- */
+
+.home-grip-card {
+  border-radius: var(--radius);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  padding: 20px 20px 18px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+}
+
+.home-grip-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 6px;
+}
+
+.home-grip-score {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.home-grip-note {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+/* -----------------------------------------------------------
+   PRODUCT LADDER (3-COLUMN CARDS)
+   ----------------------------------------------------------- */
+
+.home-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.home-product .service-label {
+  margin-bottom: 6px;
+}
+
+.service-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 8px;
+}
+
+.service-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.service-body {
+  margin-bottom: 14px;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.service-features {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.service-features li {
+  font-size: 0.92rem;
+  color: rgba(15, 23, 42, 0.9);
+  margin-bottom: 6px;
+}
+
+.service-price {
+  margin-bottom: 12px;
+  font-size: 0.98rem;
+  color: rgba(15, 23, 42, 0.9);
+}
+
+.service-price span {
+  font-weight: 700;
+}
+
+
+/* -----------------------------------------------------------
+   MODULES GRID (12 MODULES)
+   ----------------------------------------------------------- */
+
+.home-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.home-module {
+  text-decoration: none;
+}
+
+.home-module h3 {
+  font-size: 1.02rem;
+  margin-bottom: 4px;
+}
+
+.home-module p {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+.module-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 4px;
+}
+
+.home-modules-cta {
+  margin-top: 18px;
+}
+
+
+/* -----------------------------------------------------------
+   RESOURCES CARDS (BOTTOM OF HOMEPAGE)
+   ----------------------------------------------------------- */
+
+.home-resource h3 {
+  margin-bottom: 6px;
+}
+
+.home-resource p {
+  font-size: 0.94rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+/* -----------------------------------------------------------
+   INLINE “READ MORE”
+   ----------------------------------------------------------- */
+
+.readmore {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.94rem;
+  text-decoration: none;
+  color: var(--blue);
+}
+
+.readmore:hover {
+  text-decoration: underline;
+}
+
+
+/* -----------------------------------------------------------
+   PLAIN LIST (NO BULLETS)
+   ----------------------------------------------------------- */
+
+.plain-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 10px;
+}
+
+.plain-list li {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+/* ===========================================================
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (Enterprise v4.3)
+   =========================================================== */
+
+/* ------------------ HERO LAYOUT ------------------ */
+
+.home-hero {
+  margin-bottom: 96px;
+}
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.home-hero-copy {
+  margin-top: -38px; /* tekst hoger zoals gevraagd */
+}
+
+.home-hero-copy .kicker {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.65);
+  margin-bottom: 12px;
+}
+
+.home-hero-copy h1 {
+  font-size: 2.85rem;
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.hero-lead {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: rgba(15, 23, 42, 0.86);
+  max-width: 34rem;
+  margin-bottom: 20px;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hero-footnote {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+/* ===========================================================
+   GRIP DIAMOND — ENTERPRISE v4.3
+   =========================================================== */
+
+.home-hero-visual {
+  width: 125%;                     /* 💥 20% groter maken */
+  transform-origin: left center;   /* 💥 uitbreiden naar rechts */
+  transform: translateX(-20%);     /* linkerkant blijft exact staan */
+
+  border-radius: 22px;
+  padding: 26px 26px 40px;
+  background: linear-gradient(135deg, #f9fafc, #f0f4ff);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
+}
+
+/* -----------------------------------------------------------
+   GRID IN DE HERO VISUAL — LINKS HEALTH, RECHTS DIAMOND
+   ----------------------------------------------------------- */
+
+.hero-visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.8fr);
+  gap: 26px;
+  align-items: center;
+}
+
+
+/* ------------------ DIAMOND SHELL ------------------ */
+
+.diamond-shell {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  margin: 0 auto;
+}
+
+.diamond-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+/* ------------------ GRID (45°) ------------------ */
+
+.diamond-grid {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  pointer-events: none;
+}
+
+.diamond-ring {
+  position: absolute;
+  border: 1px solid rgba(0, 70, 165, 0.17);
+  border-radius: 18px;
+}
+
+.ring-outer { inset: 0; }
+.ring-mid   { inset: 17%; }
+.ring-inner { inset: 34%; }
+
+.diamond-line {
+  position: absolute;
+  background: rgba(0, 70, 165, 0.17);
+}
+
+.diamond-vertical   { width: 1px; height: 100%; left: 50%; }
+.diamond-horizontal { height: 1px; width: 100%; top: 50%; }
+
+.diamond-diag-1 {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: rotate(45deg);
+}
+
+.diamond-diag-2 {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: rotate(-45deg);
+}
+
+/* ===========================================================
+   POLYGON — TRUE 0° ORIENTATION
+   =========================================================== */
+
+.diamond-shape {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Guidance top, Implementation right, Performance bottom, Resources left */
+  clip-path: polygon(
+    50% calc(50% - (var(--g, 0.45) * 50%)),
+    calc(50% + (var(--r, 0.60) * 50%)) 50%,
+    50% calc(50% + (var(--i, 0.85) * 50%)),
+    calc(50% - (var(--p, 0.60) * 50%)) 50%
+  );
+
+  background: rgba(243, 108, 33, 0.08);           /* zachte Caugia oranje vulling */
+  border: 2px solid rgba(243, 108, 33, 0.55);     /* oranje rand */
+  border-radius: 14px;
+  backdrop-filter: blur(1px);
+  z-index: 4;
+}
+
+/* ------------------ FRAME OUTLINE (rotated) ------------------ */
+
+.diamond-frame {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 18px;
+  border: 1px solid rgba(0, 70, 165, 0.25);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  z-index: 3;
+}
+
+/* ------------------ CORE DOT ------------------ */
+
+.diamond-core {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0046A5; /* Caugia Blue */
+  box-shadow: 0 4px 14px rgba(0, 70, 165, 0.28);
+
+  top: calc(var(--core-y, 50%) - 11px);
+  left: calc(var(--core-x, 50%) - 11px);
+
+  z-index: 6;
+}
+
+/* ------------------ LABELS BUITEN DE DIAMOND ------------------ */
+
+.diamond-label {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.diamond-label-top {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-bottom {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-right {
+  top: 170px;
+  right: -40px;
+}
+
+.diamond-label-left {
+  top: 170px;
+  left: -40px;
+}
+
+/* ===========================================================
+   HEALTH CARD + SLIDERS
+   =========================================================== */
+
+.hero-health {
+  border-radius: 14px;
+  padding: 16px 18px 18px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+}
+
+.hero-health-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.hero-health-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  color: rgba(15, 23, 42, 0.65);
+}
+
+.hero-health-score {
+  font-size: 1.42rem;
+  font-weight: 700;
+}
+
+.hero-health-score span:last-child {
+  font-size: 0.88rem;
+  margin-left: 2px;
+  color: rgba(75, 85, 99, 1);
+}
+
+.hero-health-note {
+  font-size: 0.85rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+.hero-health-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.hero-health-row {
+  display: grid;
+  grid-template-columns: 1.4fr 3fr auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.hero-health-name {
+  color: rgba(55, 65, 81, 1);
+}
+
+.hero-health-bar {
+  position: relative;
+  height: 4px;
+  background: rgba(229, 231, 235, 1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hero-health-bar span {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0046A5, #F36C21);
+}
+
+.hero-health-value {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+  color: rgba(31, 41, 55, 1);
+}
+
+/* Sliders om mee te spelen */
+
+.hero-health-sliders {
+  margin-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.hero-health-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.hero-health-slider label {
+  color: rgba(75, 85, 99, 1);
+}
+
+.hero-health-slider input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.hero-health-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0046A5;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.20);
+}
+
+.hero-health-slider input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0046A5;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.20);
+}
+
+/* ------------------ HERO RESPONSIVE ------------------ */
+
+@media (max-width: 1024px) {
+  .home-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hero-visual {
+    margin-top: 10px;
+  }
+
+  .hero-visual-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .diamond-shell {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero-copy h1 {
+    font-size: 2.3rem;
+  }
+
+  .hero-visual-grid {
+    gap: 20px;
+  }
+
+  .diamond-shell {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-health-sliders {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .diamond-shell {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+
+
+/* ===========================================================
+   BLOCK 4 — RESPONSIVE RULES v4.3
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   LARGE TABLETS (max-width: 1180px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  main .wrap {
+    padding: 72px 20px 72px;
+  }
+
+  .home-hero-grid {
+    gap: 40px;
+  }
+
+  .home-hero-visual {
+    padding: 22px 22px;
+  }
+
+  .diamond-shell {
+    width: 360px;
+    height: 360px;
+  }
+
+  .home-modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* -----------------------------------------------------------
+   TABLETS (max-width: 1024px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .home-hero-copy {
+    margin-top: -8px;
+  }
+
+  .home-hero-copy h1 {
+    font-size: 2.45rem;
+  }
+
+  /* Grid binnen hero visual wordt automatisch 1 kolom */
+  .hero-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .diamond-shell {
+    width: 320px;
+    height: 320px;
+  }
+
+  .home-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* -----------------------------------------------------------
+   SMALL TABLETS / LARGE PHONES (max-width: 840px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 840px) {
+  header .inner {
+    padding: 14px 18px;
+  }
+
+  .home-hero {
+    margin-bottom: 80px;
+  }
+
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-copy {
+    margin-top: 0;
+  }
+
+  .diamond-shell {
+    width: 300px;
+    height: 300px;
+  }
+
+  .home-grid-3,
+  .home-modules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   NAVIGATION (max-width: 780px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 780px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-mobile {
+    display: flex;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   SMALL PHONES (max-width: 520px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  main .wrap {
+    padding: 64px 16px 64px;
+  }
+
+  .home-hero {
+    margin-bottom: 64px;
+  }
+
+  .hero-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-hero-visual {
+    padding: 18px 16px 20px;
+  }
+
+  .diamond-shell {
+    width: 250px;
+    height: 250px;
+  }
+
+  /* Labels iets dichterbij */
+  .diamond-label-right {
+    right: -22px;
+  }
+
+  .diamond-label-left {
+    left: -22px;
+  }
+
+  footer .inner {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
