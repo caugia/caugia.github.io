@@ -60,9 +60,9 @@
 
         <!-- TEXT COLUMN -->
         <div class="home-hero-copy">
-          <p class="kicker">GTM clarity for B2B SaaS</p>
+          <p class="kicker">GTM Clarity for B2B SaaS</p>
 
-          <h1>From scattered activity to one<br>GTM system.</h1>
+          <h1>From scattered activity to one GTM system.</h1>
 
           <p class="hero-lead">
             Caugia Consulting helps go to market leaders turn tools, data and teams into a calm operating system for predictable revenue.
@@ -78,78 +78,76 @@
           </p>
         </div>
 
-        <!-- VISUAL COLUMN: GRIP DIAMOND + HEALTH CARD -->
+        <!-- VISUAL COLUMN: HEALTH + DIAMOND -->
         <div class="home-hero-visual">
           <div class="hero-visual-grid">
 
-            <!-- HEALTH / SLIDERS -->
-            <aside class="hero-health hero-health-panel">
+            <!-- HEALTH CARD WITH SLIDERS -->
+            <aside class="hero-health">
               <div class="hero-health-header">
                 <div>
                   <p class="hero-health-label">Your GRIP health</p>
                   <p class="hero-health-score">
-                    <span id="grip-total">58</span><span>/100</span>
+                    <span id="health-total">58</span><span>/100</span>
                   </p>
                 </div>
                 <p class="hero-health-note">Example company</p>
               </div>
 
-              <!-- BARS -->
+              <!-- Score bars (mirror sliders) -->
               <div class="hero-health-rows">
                 <div class="hero-health-row">
                   <span class="hero-health-name">Guidance</span>
                   <div class="hero-health-bar">
-                    <span id="bar-g"></span>
+                    <span id="bar-guidance" style="width:45%"></span>
                   </div>
-                  <span class="hero-health-value" id="val-g">45</span>
+                  <span class="hero-health-value" id="value-guidance">45</span>
                 </div>
                 <div class="hero-health-row">
                   <span class="hero-health-name">Resources</span>
                   <div class="hero-health-bar">
-                    <span id="bar-r"></span>
+                    <span id="bar-resources" style="width:60%"></span>
                   </div>
-                  <span class="hero-health-value" id="val-r">60</span>
+                  <span class="hero-health-value" id="value-resources">60</span>
                 </div>
                 <div class="hero-health-row">
                   <span class="hero-health-name">Implementation</span>
                   <div class="hero-health-bar">
-                    <span id="bar-i"></span>
+                    <span id="bar-implementation" style="width:85%"></span>
                   </div>
-                  <span class="hero-health-value" id="val-i">85</span>
+                  <span class="hero-health-value" id="value-implementation">85</span>
                 </div>
                 <div class="hero-health-row">
                   <span class="hero-health-name">Performance</span>
                   <div class="hero-health-bar">
-                    <span id="bar-p"></span>
+                    <span id="bar-performance" style="width:43%"></span>
                   </div>
-                  <span class="hero-health-value" id="val-p">43</span>
+                  <span class="hero-health-value" id="value-performance">43</span>
                 </div>
               </div>
 
-              <hr class="hero-health-divider" />
-
-              <!-- SLIDERS -->
+              <!-- Sliders -->
               <div class="hero-health-sliders">
                 <div class="hero-slider">
-                  <label for="slider-g">Guidance</label>
-                  <input id="slider-g" type="range" min="0" max="100" value="45">
+                  <label for="slider-guidance">Guidance</label>
+                  <input id="slider-guidance" type="range" min="0" max="100" value="45">
                 </div>
                 <div class="hero-slider">
-                  <label for="slider-r">Resources</label>
-                  <input id="slider-r" type="range" min="0" max="100" value="60">
+                  <label for="slider-resources">Resources</label>
+                  <input id="slider-resources" type="range" min="0" max="100" value="60">
                 </div>
                 <div class="hero-slider">
-                  <label for="slider-i">Implementation</label>
-                  <input id="slider-i" type="range" min="0" max="100" value="85">
+                  <label for="slider-implementation">Implementation</label>
+                  <input id="slider-implementation" type="range" min="0" max="100" value="85">
                 </div>
                 <div class="hero-slider">
-                  <label for="slider-p">Performance</label>
-                  <input id="slider-p" type="range" min="0" max="100" value="43">
+                  <label for="slider-performance">Performance</label>
+                  <input id="slider-performance" type="range" min="0" max="100" value="43">
                 </div>
               </div>
             </aside>
 
-            <!-- DIAMOND -->
+            <!-- GRIP DIAMOND (visual kept as is) -->
             <div class="diamond-shell">
               <div class="diamond-title">Your GRIP position</div>
 
@@ -164,12 +162,10 @@
                 <div class="diamond-line diamond-diag-2"></div>
               </div>
 
-              <!-- Polygon + frame + core dot -->
               <div class="diamond-shape"></div>
               <div class="diamond-frame"></div>
               <div class="diamond-core"></div>
 
-              <!-- Labels -->
               <div class="diamond-label diamond-label-top">Guidance</div>
               <div class="diamond-label diamond-label-right">Resources</div>
               <div class="diamond-label diamond-label-bottom">Implementation</div>
@@ -222,6 +218,14 @@
           </ul>
 
           <a href="grip-diamond.html" class="readmore">Explore the GRIP Diamond in detail</a>
+        </div>
+
+        <div class="home-grip-card">
+          <p class="home-grip-label">Example GRIP health view</p>
+          <p class="home-grip-score">G 72 · R 64 · I 59 · P 68</p>
+          <p class="home-grip-note">
+            A GTM organisation moving from founder led sales to a structured system led model.
+          </p>
         </div>
       </div>
     </section>
@@ -448,86 +452,91 @@
 </script>
 
 <!-- ============================================================
-     GRIP DIAMOND LOGIC (sliders + polygon + core)
+     GRIP DIAMOND + HEALTH LOGIC
      ============================================================ -->
 <script>
-  // BASISSTATE (zelfde als je health card)
+  const root = document.documentElement;
+
   const state = {
-    g: 45,
-    r: 60,
-    i: 85,
-    p: 43
+    guidance: 45,
+    resources: 60,
+    implementation: 85,
+    performance: 43
   };
 
-  function clamp(v) {
-    v = Number(v);
-    if (isNaN(v)) return 0;
-    return Math.max(0, Math.min(100, v));
-  }
+  function applyState() {
+    const g = state.guidance;
+    const r = state.resources;
+    const i = state.implementation;
+    const p = state.performance;
 
-  function updateGripDiamond() {
-    const g = clamp(state.g);
-    const r = clamp(state.r);
-    const i = clamp(state.i);
-    const p = clamp(state.p);
+    // Update health bars and numbers
+    document.getElementById("bar-guidance").style.width = g + "%";
+    document.getElementById("bar-resources").style.width = r + "%";
+    document.getElementById("bar-implementation").style.width = i + "%";
+    document.getElementById("bar-performance").style.width = p + "%";
 
-    // overall score = gemiddelde
+    document.getElementById("value-guidance").textContent = g;
+    document.getElementById("value-resources").textContent = r;
+    document.getElementById("value-implementation").textContent = i;
+    document.getElementById("value-performance").textContent = p;
+
+    // Overall score (simple average)
     const total = Math.round((g + r + i + p) / 4);
+    document.getElementById("health-total").textContent = total;
 
-    // UI cijfers
-    document.getElementById("grip-total").textContent = total;
-    document.getElementById("val-g").textContent = g;
-    document.getElementById("val-r").textContent = r;
-    document.getElementById("val-i").textContent = i;
-    document.getElementById("val-p").textContent = p;
+    // Sync sliders (in case we change state programmatically)
+    const sg = document.getElementById("slider-guidance");
+    const sr = document.getElementById("slider-resources");
+    const si = document.getElementById("slider-implementation");
+    const sp = document.getElementById("slider-performance");
+    if (sg) sg.value = g;
+    if (sr) sr.value = r;
+    if (si) si.value = i;
+    if (sp) sp.value = p;
 
-    // balken (breedte in %)
-    document.getElementById("bar-g").style.width = g + "%";
-    document.getElementById("bar-r").style.width = r + "%";
-    document.getElementById("bar-i").style.width = i + "%";
-    document.getElementById("bar-p").style.width = p + "%";
-
-    // genormaliseerde waarden 0–1
-    const G = g / 100;
-    const R = r / 100;
-    const I = i / 100;
-    const P = p / 100;
-
-    // CSS variabelen voor polygon (as-gericht binnen de diamond-shape)
-    // 50% is midden; 0 = geen vulling, 1 = raakt rand.
-    document.documentElement.style.setProperty("--g", G);
-    document.documentElement.style.setProperty("--r", R);
-    document.documentElement.style.setProperty("--i", I);
-    document.documentElement.style.setProperty("--p", P);
-
-    // core dot: verschuiving tov midden
-    // meer Implementation dan Guidance = naar beneden
-    // meer Resources dan Performance   = naar rechts
-    const shift = 40; // "radius" binnen de shape (in % van hoogte/breedte)
-    const coreX = 50 + (R - P) * shift;
-    const coreY = 50 + (I - G) * shift;
-
-    document.documentElement.style.setProperty("--core-x", coreX + "%");
-    document.documentElement.style.setProperty("--core-y", coreY + "%");
+    updateGripVisual(g, r, i, p);
   }
 
-  // sliders koppelen
+  function updateGripVisual(g, r, i, p) {
+    // Normalise 0–100 to 0–1
+    const G = Math.max(0, Math.min(100, g)) / 100;
+    const R = Math.max(0, Math.min(100, r)) / 100;
+    const I = Math.max(0, Math.min(100, i)) / 100;
+    const P = Math.max(0, Math.min(100, p)) / 100;
+
+    // Polygon (CSS clip-path uses these directly)
+    root.style.setProperty("--g", G);
+    root.style.setProperty("--r", R);
+    root.style.setProperty("--i", I);
+    root.style.setProperty("--p", P);
+
+    // Blue dot — directionally correct centroid approximation
+    // Centre is 50%, we move at most 12.5% toward each side.
+    const cx = 50 + (R - P) * 12.5;
+    const cy = 50 + (I - G) * 12.5;
+
+    root.style.setProperty("--core-x", cx + "%");
+    root.style.setProperty("--core-y", cy + "%");
+  }
+
   function bindSlider(id, key) {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener("input", (e) => {
-      state[key] = clamp(e.target.value);
-      updateGripDiamond();
+      const v = parseInt(e.target.value, 10);
+      state[key] = isNaN(v) ? 0 : v;
+      applyState();
     });
   }
 
-  bindSlider("slider-g", "g");
-  bindSlider("slider-r", "r");
-  bindSlider("slider-i", "i");
-  bindSlider("slider-p", "p");
+  bindSlider("slider-guidance", "guidance");
+  bindSlider("slider-resources", "resources");
+  bindSlider("slider-implementation", "implementation");
+  bindSlider("slider-performance", "performance");
 
-  // init
-  updateGripDiamond();
+  // Initial render
+  applyState();
 </script>
 
 </body>
