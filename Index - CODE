@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=4.0" />
+  <link rel="stylesheet" href="assets/caugia.css?v=4.1" />
 
   <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
@@ -63,9 +63,9 @@
           <p class="kicker">GTM Clarity for B2B SaaS</p>
 
           <h1>
-  From scattered activity to one<br>
-  GTM system.
-</h1>
+            From scattered activity to one<br>
+            GTM system.
+          </h1>
 
           <p class="hero-lead">
             Caugia Consulting helps go to market leaders turn tools, data and teams into a calm operating system for predictable revenue.
@@ -81,9 +81,8 @@
           </p>
         </div>
 
-        <!-- VISUAL COLUMN: GRIP DIAMOND + HEALTH CARD + SLIDERS -->
+        <!-- VISUAL COLUMN: HEALTH CARD + SVG DIAMOND -->
         <div class="home-hero-visual">
-
           <div class="hero-visual-grid">
             <!-- LEFT: HEALTH CARD -->
             <div class="hero-health">
@@ -131,7 +130,7 @@
                 </div>
               </div>
 
-              <!-- SLIDERS TO PLAY WITH THE DIAMOND -->
+              <!-- SLIDERS -->
               <div class="hero-health-sliders">
                 <div class="hero-health-slider">
                   <label for="slider-guidance">Guidance</label>
@@ -152,32 +151,43 @@
               </div>
             </div>
 
-            <!-- RIGHT: GRIP DIAMOND -->
-            <div class="diamond-shell">
+            <!-- RIGHT: PURE SVG DIAMOND -->
+            <div class="diamond-card">
               <div class="diamond-title">Your GRIP position</div>
+              <div class="diamond-canvas">
+                <svg class="diamond-svg" viewBox="0 0 280 280">
+                  <!-- background diamonds -->
+                  <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
+                    <polygon points="140,40 240,140 140,240 40,140"></polygon>
+                    <polygon points="140,70 210,140 140,210 70,140"></polygon>
+                    <polygon points="140,100 180,140 140,180 100,140"></polygon>
+                  </g>
 
-              <div class="diamond-grid">
-                <div class="diamond-ring ring-outer"></div>
-                <div class="diamond-ring ring-mid"></div>
-                <div class="diamond-ring ring-inner"></div>
+                  <!-- dynamic polygon -->
+                  <polygon id="hero-diamond-polygon"
+                    fill="rgba(243,108,33,0.10)"
+                    stroke="#0046A5"
+                    stroke-width="2"
+                    points="140,70 210,140 140,210 70,140">
+                  </polygon>
 
-                <div class="diamond-line diamond-vertical"></div>
-                <div class="diamond-line diamond-horizontal"></div>
-                <div class="diamond-line diamond-diag-1"></div>
-                <div class="diamond-line diamond-diag-2"></div>
+                  <!-- dynamic core dot -->
+                  <circle id="hero-diamond-core"
+                    cx="140" cy="140" r="7"
+                    fill="#0046A5"
+                    stroke="#ffffff"
+                    stroke-width="2">
+                  </circle>
+                </svg>
+
+                <div class="diamond-label diamond-label-top">Guidance</div>
+                <div class="diamond-label diamond-label-left">Resources</div>
+                <div class="diamond-label diamond-label-right">Implementation</div>
+                <div class="diamond-label diamond-label-bottom">Performance</div>
               </div>
-
-              <div class="diamond-shape"></div>
-              <div class="diamond-frame"></div>
-              <div class="diamond-core"></div>
-
-              <div class="diamond-label diamond-label-top">Guidance</div>
-              <div class="diamond-label diamond-label-right">Implementation</div>
-              <div class="diamond-label diamond-label-bottom">Performance</div>
-              <div class="diamond-label diamond-label-left">Resources</div>
             </div>
-          </div>
 
+          </div>
         </div>
 
       </div>
@@ -201,7 +211,7 @@
       </div>
     </section>
 
-
+    <!-- rest van de pagina ONGEWIJZIGD -->
     <!-- ============================================================
          SECTION — THE GTM CLARITY PATH
          ============================================================ -->
@@ -263,9 +273,8 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — TWELVE INTELLIGENCE MODULES (LIGHT VERSION)
-         ============================================================ -->
+    <!-- (modules, consulting, resources secties blijven zoals bij jou) -->
+
     <section class="home-section">
       <div class="section-heading">
         <h2>The twelve intelligence modules.</h2>
@@ -327,9 +336,6 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — FOUNDER LEVEL CONSULTING
-         ============================================================ -->
     <section class="home-section home-section-line">
       <div class="section-heading">
         <h2>Founder level consulting.</h2>
@@ -345,9 +351,6 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — RESOURCES
-         ============================================================ -->
     <section class="home-section">
       <div class="section-heading">
         <h2>Resources.</h2>
@@ -424,7 +427,7 @@
 </script>
 
 <!-- ============================================================
-     GRIP DIAMOND DEMO + SLIDERS
+     GRIP DIAMOND DEMO + SLIDERS (SVG + trig)
      ============================================================ -->
 <script>
   const gripState = {
@@ -444,28 +447,49 @@
     const i = clamp(gripState.implementation);
     const p = clamp(gripState.performance);
 
-    const G = g / 100;
-    const R = r / 100;
-    const I = i / 100;
-    const P = p / 100;
+    const G = g;
+    const R = r;
+    const I = i;
+    const P = p;
 
-    // CSS variabelen voor polygon
-    document.documentElement.style.setProperty("--g", G.toString());
-    document.documentElement.style.setProperty("--r", R.toString());
-    document.documentElement.style.setProperty("--i", I.toString());
-    document.documentElement.style.setProperty("--p", P.toString());
+    const cx = 140;
+    const cy = 140;
+    const maxR = 100;
 
-    // Core dot positie
-    const cx = 50 + (R - P) * 50;
-    const cy = 50 + (I - G) * 50;
-    document.documentElement.style.setProperty("--core-x", cx + "%");
-    document.documentElement.style.setProperty("--core-y", cy + "%");
+    const point = (deg, val) => {
+      const radius = (val / 100) * maxR;
+      const rad = deg * Math.PI / 180;
+      const x = cx + radius * Math.cos(rad);
+      const y = cy - radius * Math.sin(rad);
+      return `${x},${y}`;
+    };
 
-    // Health bars en waarden
+    const polygon = document.getElementById("hero-diamond-polygon");
+    const core = document.getElementById("hero-diamond-core");
+
+    if (polygon) {
+      const pts = [
+        point(90, G),   // top: Guidance
+        point(0, I),    // right: Implementation
+        point(270, P),  // bottom: Performance
+        point(180, R)   // left: Resources
+      ].join(" ");
+      polygon.setAttribute("points", pts);
+    }
+
+    if (core) {
+      const coreX = cx + ((I - R) / 100) * maxR;
+      const coreY = cy + ((P - G) / 100) * maxR;
+      core.setAttribute("cx", coreX);
+      core.setAttribute("cy", coreY);
+    }
+
+    // Total score
     const total = Math.round((g + r + i + p) / 4);
     const totalEl = document.getElementById("hero-total-score");
     if (totalEl) totalEl.textContent = total;
 
+    // Bars + values
     const map = [
       ["guidance", g],
       ["resources", r],
