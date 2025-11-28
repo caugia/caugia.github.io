@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The GRIP Diamond | Caugia Consulting</title>
-  <meta name="description" content="Diagnose your GTM system across the four GRIP dimensions and see where your real constraint lives. Built on The GTM Framework by Caugia Consulting.">
+  <meta name="description" content="Visualise your go-to-market system across four GRIP dimensions with Caugia’s diagnostic diamond. Adjust Guidance, Resources, Implementation and Performance interactively.">
 
   <!-- Favicon -->
   <link rel="icon" href="C-logo.png" type="image/png" sizes="512x512">
@@ -15,14 +15,11 @@
   <!-- Styles -->
   <link rel="stylesheet" href="assets/caugia.css?v=3.0">
 
-  <!-- 🔒 SECURITY: Protect this entire page -->
+  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <style>
-    /* GRIP DIAMOND PAGE SPECIFIC STYLES
-       Houd alles onder .grip-page zodat het niet botst met andere pagina's
-    */
-
+    /* PAGE WRAPPER */
     .grip-page {
       background: var(--bg-light, #F9FAFC);
       min-height: 100vh;
@@ -32,11 +29,11 @@
       padding: 48px 0 72px;
     }
 
+    /* HERO */
     .grip-hero {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
     }
-
     .grip-eyebrow {
       font-size: 0.85rem;
       letter-spacing: 0.12em;
@@ -44,13 +41,11 @@
       color: var(--blue, #0046A5);
       margin-bottom: 8px;
     }
-
     .grip-hero h1 {
-      font-size: 2.3rem;
+      font-size: 2.6rem;
       margin-bottom: 8px;
       color: var(--ink, #0B132B);
     }
-
     .grip-hero p {
       max-width: 640px;
       margin: 0 auto;
@@ -58,78 +53,66 @@
       font-size: 1rem;
     }
 
-    /* Layout: diamant links, kaart rechts */
+    /* MAIN LAYOUT: Diamond left, Scorecard right */
     .grip-layout-main {
       display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-      gap: 32px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 40px;
       margin-bottom: 40px;
+      align-items: stretch;
     }
-
     @media (max-width: 960px) {
       .grip-layout-main {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
       }
     }
 
+    /* CARD STYLE */
     .grip-card {
       background: var(--white, #FFFFFF);
       border-radius: 16px;
       box-shadow: 0 18px 45px rgba(11, 19, 43, 0.08);
-      padding: 24px 24px 20px;
+      padding: 28px;
       border: 1px solid var(--silver, #E6E9EF);
     }
 
-    .grip-card h2 {
-      font-size: 1rem;
-      margin-bottom: 4px;
-      color: var(--ink, #0B132B);
-    }
-
-    .grip-card-sub {
-      font-size: 0.9rem;
-      color: #6B7280;
-      margin-bottom: 20px;
-    }
-
-    /* DIAMOND WRAPPER */
-
-    .grip-diamond-wrap {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .grip-diamond-wrap {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
+    /* DIAMOND CANVAS - maximal space */
     .grip-diamond-canvas {
       position: relative;
       background: radial-gradient(circle at top, #FFFFFF 0%, #F3F4F8 40%, #E6E9EF 100%);
       border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.04);
+      padding: 32px;
+      height: 480px;     /* BIGGER SPACE */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .grip-diamond-canvas {
+        height: 420px;
+      }
+    }
+    @media (max-width: 600px) {
+      .grip-diamond-canvas {
+        height: 340px;
+      }
     }
 
     .grip-diamond-svg {
       width: 100%;
-      max-width: 360px;
+      max-width: 420px; /* much larger */
+      height: auto;
       display: block;
-      margin: 0 auto;
     }
 
+    /* DIAMOND LABELS */
     .grip-diamond-label {
       position: absolute;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      padding: 6px 10px;
+      padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.96);
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
       color: var(--ink, #0B132B);
       display: flex;
@@ -138,8 +121,8 @@
     }
 
     .grip-diamond-label span.icon {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
@@ -148,117 +131,60 @@
       color: #FFFFFF;
     }
 
-    .grip-label-guidance { top: 14px; left: 50%; transform: translateX(-50%); }
-    .grip-label-resources { top: 50%; left: 12px; transform: translateY(-50%); }
-    .grip-label-implementation { top: 50%; right: 12px; transform: translateY(-50%); }
-    .grip-label-performance { bottom: 14px; left: 50%; transform: translateX(-50%); }
+    .label-guidance { top: 18px; left: 50%; transform: translateX(-50%); }
+    .label-resources { top: 50%; left: 18px; transform: translateY(-50%); }
+    .label-implementation { top: 50%; right: 18px; transform: translateY(-50%); }
+    .label-performance { bottom: 18px; left: 50%; transform: translateX(-50%); }
 
-    .grip-diamond-legend {
-      font-size: 0.78rem;
-      color: #6B7280;
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    .grip-diamond-legend strong {
-      color: var(--ink, #0B132B);
-      font-weight: 600;
-    }
-
-    /* SCORECARD RIGHT */
-
-    .grip-scorecard {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .grip-scorecard-top {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-
+    /* SCORECARD – double size */
     .grip-scorecard-title {
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
+      font-size: 1rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--blue, #0046A5);
+      margin-bottom: 8px;
     }
-
     .grip-scorecard-value {
-      font-size: 1.9rem;
-      font-weight: 600;
+      font-size: 3.6rem;  /* 2× bigger */
+      line-height: 1;
+      font-weight: 700;
       color: var(--ink, #0B132B);
+      margin-bottom: 20px;
     }
-
     .grip-scorecard-pill {
-      font-size: 0.7rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
+      padding: 4px 12px;
       border-radius: 999px;
-      padding: 3px 10px;
       background: #EFF1F5;
-      color: #4B5563;
+      display: inline-block;
+      margin-bottom: 24px;
     }
+
+    .chip-critical { background: rgba(220,38,38,0.08); color:#B91C1C; }
+    .chip-developing { background: rgba(245,158,11,0.08); color:#92400E; }
+    .chip-solid { background: rgba(34,197,94,0.08); color:#166534; }
+    .chip-strong { background: rgba(37,99,235,0.08); color:#1D4ED8; }
 
     .grip-scorecard-rows {
       display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 10px 12px;
-      font-size: 0.85rem;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 22px;
+      font-size: 0.95rem;
+      margin-bottom: 24px;
     }
 
     .grip-scorecard-label {
       color: #4B5563;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .grip-scorecard-chip {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      padding: 3px 8px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       font-weight: 500;
     }
-
-    .chip-critical {
-      background: rgba(220, 38, 38, 0.06);
-      color: #B91C1C;
-    }
-
-    .chip-developing {
-      background: rgba(245, 158, 11, 0.08);
-      color: #92400E;
-    }
-
-    .chip-solid {
-      background: rgba(34, 197, 94, 0.08);
-      color: #166534;
-    }
-
-    .chip-strong {
-      background: rgba(37, 99, 235, 0.08);
-      color: #1D4ED8;
-    }
-
     .grip-scorecard-meter {
-      position: relative;
       height: 8px;
       border-radius: 999px;
       background: #E5E7EB;
       overflow: hidden;
     }
-
     .grip-scorecard-meter span {
       position: absolute;
       inset: 0;
@@ -268,250 +194,144 @@
       transition: width 0.25s ease;
     }
 
-    /* ARCHETYPE PANEL */
-
+    /* ARCHETYPE */
     .grip-archetype {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(148,163,184,0.4);
     }
-
     .grip-archetype-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #6B7280;
-      margin-bottom: 4px;
-    }
-
-    .grip-archetype-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--ink, #0B132B);
-      margin-bottom: 4px;
-    }
-
-    .grip-archetype-meta {
-      font-size: 0.8rem;
-      color: #4B5563;
-      margin-bottom: 4px;
-    }
-
-    .grip-archetype-meta strong {
-      font-weight: 600;
-    }
-
-    .grip-archetype-body {
       font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #6B7280;
+      margin-bottom: 6px;
+    }
+    .grip-archetype-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--ink, #0B132B);
+    }
+    .grip-archetype-body {
       color: #4B5563;
-      line-height: 1.55;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 90%;
     }
 
-    /* SLIDERS SECTION */
-
+    /* SLIDERS */
     .grip-sliders {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
     }
-
     @media (max-width: 960px) {
-      .grip-sliders {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .grip-sliders { grid-template-columns: repeat(2, 1fr); }
     }
-
-    @media (max-width: 640px) {
-      .grip-sliders {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media (max-width: 600px) {
+      .grip-sliders { grid-template-columns: 1fr; }
     }
 
     .grip-slider-card {
       background: var(--white, #FFFFFF);
       border-radius: 14px;
-      padding: 12px 14px 14px;
+      padding: 16px 18px;
       border: 1px solid var(--silver, #E6E9EF);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
-      font-size: 0.85rem;
+      box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+      font-size: 0.95rem;
     }
-
     .grip-slider-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
-    }
-
-    .grip-slider-label {
+      margin-bottom: 6px;
       font-weight: 500;
       color: var(--ink, #0B132B);
-      font-size: 0.88rem;
-    }
-
-    .grip-slider-value {
-      font-size: 0.8rem;
-      color: #4B5563;
-    }
-
-    .grip-slider-sub {
-      font-size: 0.78rem;
-      color: #6B7280;
-      margin-bottom: 6px;
-    }
-
-    .grip-slider-input {
-      width: 100%;
     }
 
     .grip-slider-input input[type="range"] {
       width: 100%;
-      -webkit-appearance: none;
       height: 4px;
       border-radius: 999px;
       background: #E5E7EB;
       outline: none;
       cursor: pointer;
     }
-
     .grip-slider-input input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #0046A5;
-      border: 2px solid #FFFFFF;
-      box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.24);
+      -webkit-appearance:none;
+      width:16px; height:16px;
+      border-radius:50%;
+      background:#0046A5;
+      border:2px solid #FFF;
+      box-shadow:0 0 0 4px rgba(0,70,165,0.20);
     }
 
-    .grip-slider-input input[type="range"]::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #0046A5;
-      border: 2px solid #FFFFFF;
-      box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.24);
-    }
-
-    /* PILLARS GRID */
-
+    /* CTA PILLARS */
     .grip-pillars-section {
-      margin-top: 8px;
+      margin-top: 32px;
     }
-
     .grip-pillars-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .grip-pillars-header h2 {
+      font-size: 1.6rem;
+      color: var(--ink, #0B132B);
       margin-bottom: 12px;
     }
-
-    .grip-pillars-header h2 {
-      margin: 0;
-      font-size: 1rem;
-    }
-
     .grip-pillars-sub {
-      font-size: 0.85rem;
+      font-size: 1rem;
       color: #6B7280;
+      max-width: 520px;
+      margin: 0 auto;
     }
 
     .grip-pillars-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media(max-width: 960px) {
+      .grip-pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width: 600px) {
+      .grip-pillars-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 1024px) {
-      .grip-pillars-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .grip-pillars-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .grip-pillars-group {
-      background: var(--white, #FFFFFF);
-      border-radius: 14px;
-      padding: 14px 14px 12px;
+    .grip-cta-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 22px 26px;
       border: 1px solid var(--silver, #E6E9EF);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 14px 32px rgba(15,23,42,0.06);
+      text-align: left;
     }
-
-    .grip-pillars-group-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-    }
-
-    .grip-pillars-group-header span {
-      font-weight: 500;
+    .grip-cta-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
       color: var(--ink, #0B132B);
     }
-
-    .grip-pillars-group-header small {
-      font-size: 0.78rem;
-      color: #6B7280;
-    }
-
-    .grip-pillars-item {
-      font-size: 0.8rem;
-      margin-bottom: 6px;
-    }
-
-    .grip-pillars-item-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 2px;
+    .grip-cta-card p {
       color: #4B5563;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      line-height: 1.45;
     }
-
-    .grip-pillars-item-label strong {
-      font-weight: 500;
-    }
-
-    .grip-pillars-item-label span {
-      font-size: 0.78rem;
-      color: #6B7280;
-    }
-
-    .grip-pillars-bar {
-      position: relative;
-      height: 6px;
+    .grip-cta-card a {
+      display: inline-block;
+      padding: 8px 16px;
       border-radius: 999px;
-      background: #E5E7EB;
-      overflow: hidden;
-    }
-
-    .grip-pillars-bar span {
-      position: absolute;
-      inset: 0;
-      width: var(--value, 50%);
-      border-radius: inherit;
-      background: linear-gradient(90deg, #0046A5, #F36C21);
-      transition: width 0.25s ease;
-    }
-
-    /* Small helper text */
-
-    .grip-note {
-      margin-top: 6px;
-      font-size: 0.8rem;
-      color: #9CA3AF;
+      background: var(--blue, #0046A5);
+      color: white;
+      font-size: 0.85rem;
+      text-decoration: none;
+      font-weight: 500;
     }
   </style>
 </head>
-
 <body class="grip-page">
+
 <header>
   <div class="container">
     <a href="/" class="brand">
@@ -519,7 +339,6 @@
       <span>Caugia Consulting</span>
     </a>
 
-    <!-- Desktop navigation -->
     <nav class="nav-desktop" aria-label="Main navigation">
       <a href="/index.html">Home</a>
       <a href="/about.html">About</a>
@@ -530,13 +349,11 @@
       <a href="/contact.html" class="cta">Contact</a>
     </nav>
 
-    <!-- Mobile navigation toggle -->
     <button class="menu-toggle" type="button" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- Mobile navigation -->
   <nav class="nav-mobile" aria-label="Mobile navigation">
     <a href="/index.html">Home</a>
     <a href="/about.html">About</a>
@@ -548,705 +365,399 @@
   </nav>
 </header>
 
+
 <main>
   <div class="wrap">
+
+    <!-- HERO -->
     <section class="grip-hero">
       <div class="container">
         <div class="grip-eyebrow">The GRIP Framework</div>
         <h1>The GTM Health Diamond</h1>
-        <p>
-          See your go to market system through four GRIP dimensions.
-          Move the sliders to change Guidance, Resources, Implementation and Performance
-          and watch the diamond, score and archetype update in real time.
-        </p>
+        <p>Move the sliders to see how your GTM system shifts across Guidance, Resources, Implementation and Performance.</p>
       </div>
     </section>
 
+
+    <!-- DIAMOND + SCORECARD -->
     <section>
       <div class="container grip-layout-main">
 
-        <!-- LEFT: DIAMOND + SHORT EXPLANATION -->
+        <!-- LEFT: DIAMOND ONLY -->
         <div class="grip-card">
-          <h2>Your GRIP health</h2>
-          <p class="grip-card-sub">
-            The diamond shows how balanced your GTM engine is across Guidance, Resources, Implementation and Performance.
-          </p>
+          <div class="grip-diamond-canvas">
 
-          <div class="grip-diamond-wrap">
-            <div class="grip-diamond-canvas">
-              <!-- SVG diamond -->
-              <svg class="grip-diamond-svg" viewBox="0 0 280 280" aria-hidden="true">
-                <!-- Background grid diamonds -->
-                <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
-                  <polygon points="140,40 240,140 140,240 40,140"></polygon>
-                  <polygon points="140,70 210,140 140,210 70,140"></polygon>
-                  <polygon points="140,100 180,140 140,180 100,140"></polygon>
-                </g>
-                <!-- Current polygon -->
-                <polygon id="grip-polygon"
-                  fill="url(#gripGradient)"
-                  stroke="#0046A5"
-                  stroke-width="2.2"
-                  stroke-linejoin="round"
-                  opacity="0.92"
-                  points="140,70 210,140 140,210 70,140">
-                </polygon>
+            <!-- SVG DIAMOND -->
+            <svg class="grip-diamond-svg" viewBox="0 0 280 280">
+              <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
+                <polygon points="140,40 240,140 140,240 40,140"></polygon>
+                <polygon points="140,70 210,140 140,210 70,140"></polygon>
+                <polygon points="140,100 180,140 140,180 100,140"></polygon>
+              </g>
 
-                <!-- Center marker -->
-                <circle cx="140" cy="140" r="4" fill="#FFFFFF" stroke="#0046A5" stroke-width="1.2"></circle>
+              <polygon id="grip-polygon"
+                fill="url(#gripGrad)"
+                stroke="#0046A5"
+                stroke-width="2.2"
+                stroke-linejoin="round"
+                opacity="0.92"
+                points="140,70 210,140 140,210 70,140">
+              </polygon>
 
-                <!-- Gradient definition -->
-                <defs>
-                  <linearGradient id="gripGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#0046A5" />
-                    <stop offset="50%" stop-color="#00B5D8" />
-                    <stop offset="100%" stop-color="#F36C21" />
-                  </linearGradient>
-                </defs>
-              </svg>
+              <circle cx="140" cy="140" r="4" fill="#FFFFFF" stroke="#0046A5" stroke-width="1.2"></circle>
 
-              <!-- Diamond labels -->
-              <div class="grip-diamond-label grip-label-guidance">
-                <span class="icon" style="background:#0046A5;">G</span>
-                <span>Guidance</span>
-              </div>
-              <div class="grip-diamond-label grip-label-resources">
-                <span class="icon" style="background:#6366F1;">R</span>
-                <span>Resources</span>
-              </div>
-              <div class="grip-diamond-label grip-label-implementation">
-                <span class="icon" style="background:#10B981;">I</span>
-                <span>Implementation</span>
-              </div>
-              <div class="grip-diamond-label grip-label-performance">
-                <span class="icon" style="background:#F97316;">P</span>
-                <span>Performance</span>
-              </div>
+              <defs>
+                <linearGradient id="gripGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0046A5"/>
+                  <stop offset="50%" stop-color="#00B5D8"/>
+                  <stop offset="100%" stop-color="#F36C21"/>
+                </linearGradient>
+              </defs>
+            </svg>
 
-              <div class="grip-diamond-legend">
-                <strong>Your position</strong> shows the combined average of each GRIP dimension.
-              </div>
+            <!-- 4 LABELS -->
+            <div class="grip-diamond-label label-guidance">
+              <span class="icon" style="background:#0046A5;">G</span>
+              <span>Guidance</span>
+            </div>
+            <div class="grip-diamond-label label-resources">
+              <span class="icon" style="background:#6366F1;">R</span>
+              <span>Resources</span>
+            </div>
+            <div class="grip-diamond-label label-implementation">
+              <span class="icon" style="background:#10B981;">I</span>
+              <span>Implementation</span>
+            </div>
+            <div class="grip-diamond-label label-performance">
+              <span class="icon" style="background:#F97316;">P</span>
+              <span>Performance</span>
             </div>
 
-            <div>
-              <h3 style="font-size:0.9rem; margin-bottom:6px; color:#111827;">How to read the diamond</h3>
-              <p style="font-size:0.85rem; color:#4B5563; margin-bottom:10px;">
-                A balanced diamond means your GTM engine is healthy and predictable.
-                A skewed shape reveals constraints. The smallest corner usually tells you where to start.
-              </p>
-              <ul style="font-size:0.82rem; color:#4B5563; padding-left:18px; margin:0;">
-                <li><strong>Guidance</strong> tells you if people know what to do.</li>
-                <li><strong>Resources</strong> shows whether the system can support the plan.</li>
-                <li><strong>Implementation</strong> reflects discipline and repeatability.</li>
-                <li><strong>Performance</strong> confirms if the engine delivers results.</li>
-              </ul>
-              <p class="grip-note">
-                This demo runs on sample scores. In production these values will come from your GTM Score assessment.
-              </p>
-            </div>
           </div>
         </div>
 
-        <!-- RIGHT: SCORECARD + ARCHETYPE -->
+
+        <!-- RIGHT: SCORECARD -->
         <div class="grip-card">
-          <div class="grip-scorecard">
+          <div class="grip-scorecard-title">Your GRIP Health</div>
+
+          <div class="grip-scorecard-value">
+            <span id="overall-score">55</span>
+            <span style="font-size:1.2rem; color:#6B7280;">/100</span>
+          </div>
+
+          <div id="overall-pill" class="grip-scorecard-pill chip-developing">Developing</div>
+
+          <div class="grip-scorecard-rows">
+            <!-- Guidance -->
+            <div class="grip-scorecard-label">Guidance</div>
             <div>
-              <div class="grip-scorecard-top">
-                <div>
-                  <div class="grip-scorecard-title">Your GTM health</div>
-                  <div class="grip-scorecard-value">
-                    <span id="overall-score">55</span><span style="font-size:1rem; color:#6B7280;"> / 100</span>
-                </div>
-                </div>
-                <span id="overall-pill" class="grip-scorecard-pill">Developing</span>
-              </div>
-
-              <div class="grip-scorecard-rows">
-                <!-- Guidance -->
-                <div class="grip-scorecard-label">
-                  <span>Guidance</span>
-                </div>
-                <div>
-                  <div class="grip-scorecard-meter" aria-hidden="true">
-                    <span id="meter-guidance"></span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-top:3px;">
-                    <span id="score-guidance" style="font-size:0.8rem; color:#4B5563;">45 / 100</span>
-                    <span id="chip-guidance" class="grip-scorecard-chip chip-critical">Critical</span>
-                  </div>
-                </div>
-
-                <!-- Resources -->
-                <div class="grip-scorecard-label">
-                  <span>Resources</span>
-                </div>
-                <div>
-                  <div class="grip-scorecard-meter">
-                    <span id="meter-resources"></span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-top:3px;">
-                    <span id="score-resources" style="font-size:0.8rem; color:#4B5563;">48 / 100</span>
-                    <span id="chip-resources" class="grip-scorecard-chip chip-critical">Critical</span>
-                  </div>
-                </div>
-
-                <!-- Implementation -->
-                <div class="grip-scorecard-label">
-                  <span>Implementation</span>
-                </div>
-                <div>
-                  <div class="grip-scorecard-meter">
-                    <span id="meter-implementation"></span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-top:3px;">
-                    <span id="score-implementation" style="font-size:0.8rem; color:#4B5563;">85 / 100</span>
-                    <span id="chip-implementation" class="grip-scorecard-chip chip-strong">Strong</span>
-                  </div>
-                </div>
-
-                <!-- Performance -->
-                <div class="grip-scorecard-label">
-                  <span>Performance</span>
-                </div>
-                <div>
-                  <div class="grip-scorecard-meter">
-                    <span id="meter-performance"></span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-top:3px;">
-                    <span id="score-performance" style="font-size:0.8rem; color:#4B5563;">43 / 100</span>
-                    <span id="chip-performance" class="grip-scorecard-chip chip-critical">Critical</span>
-                  </div>
-                </div>
+              <div class="grip-scorecard-meter"><span id="meter-guidance"></span></div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span id="score-guidance" style="font-size:0.8rem; color:#4B5563;">45 / 100</span>
+                <span id="chip-guidance" class="grip-scorecard-pill chip-critical">Critical</span>
               </div>
             </div>
 
-            <div class="grip-archetype">
-              <div class="grip-archetype-label">Your GRIP archetype</div>
-              <div id="archetype-name" class="grip-archetype-name">The Foundation Builder</div>
-              <div id="archetype-meta" class="grip-archetype-meta">
-                Primary constraint is <strong>Guidance</strong>. Secondary constraint is <strong>Performance</strong>.
+            <!-- Resources -->
+            <div class="grip-scorecard-label">Resources</div>
+            <div>
+              <div class="grip-scorecard-meter"><span id="meter-resources"></span></div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span id="score-resources">48 / 100</span>
+                <span id="chip-resources" class="grip-scorecard-pill chip-critical">Critical</span>
               </div>
-              <div id="archetype-body" class="grip-archetype-body">
-                Your teams work hard but the system lacks clear direction and consistent outcomes.
-                Before you invest in more tools or campaigns, align leaders on a simple GTM model and connect it to a visible operating rhythm.
+            </div>
+
+            <!-- Implementation -->
+            <div class="grip-scorecard-label">Implementation</div>
+            <div>
+              <div class="grip-scorecard-meter"><span id="meter-implementation"></span></div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span id="score-implementation">85 / 100</span>
+                <span id="chip-implementation" class="grip-scorecard-pill chip-strong">Strong</span>
+              </div>
+            </div>
+
+            <!-- Performance -->
+            <div class="grip-scorecard-label">Performance</div>
+            <div>
+              <div class="grip-scorecard-meter"><span id="meter-performance"></span></div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span id="score-performance">43 / 100</span>
+                <span id="chip-performance" class="grip-scorecard-pill chip-critical">Critical</span>
               </div>
             </div>
           </div>
+
+          <!-- ARCHETYPE -->
+          <div class="grip-archetype">
+            <div class="grip-archetype-label">GRIP Archetype</div>
+            <div id="archetype-name" class="grip-archetype-name">The Foundation Builder</div>
+            <div id="archetype-body" class="grip-archetype-body">
+              Your system has multiple constraints. Build strategic clarity first, then support it with the right infrastructure.
+            </div>
+          </div>
+
         </div>
 
       </div>
     </section>
+
 
     <!-- SLIDERS -->
     <section>
       <div class="container">
         <div class="grip-sliders">
-          <!-- Guidance slider -->
+
           <div class="grip-slider-card">
             <div class="grip-slider-header">
-              <span class="grip-slider-label">Guidance</span>
-              <span class="grip-slider-value"><span id="slider-guidance-value">45</span> / 100</span>
-            </div>
-            <div class="grip-slider-sub">
-              Do people know what to do and why it matters.
+              <span>Guidance</span>
+              <span><span id="slider-guidance-value">45</span>/100</span>
             </div>
             <div class="grip-slider-input">
-              <input id="slider-guidance" type="range" min="0" max="100" step="1" value="45">
+              <input id="slider-guidance" type="range" min="0" max="100" value="45">
             </div>
           </div>
 
-          <!-- Resources slider -->
           <div class="grip-slider-card">
             <div class="grip-slider-header">
-              <span class="grip-slider-label">Resources</span>
-              <span class="grip-slider-value"><span id="slider-resources-value">48</span> / 100</span>
-            </div>
-            <div class="grip-slider-sub">
-              Do teams have the systems, tools and support they need.
+              <span>Resources</span>
+              <span><span id="slider-resources-value">48</span>/100</span>
             </div>
             <div class="grip-slider-input">
-              <input id="slider-resources" type="range" min="0" max="100" step="1" value="48">
+              <input id="slider-resources" type="range" min="0" max="100" value="48">
             </div>
           </div>
 
-          <!-- Implementation slider -->
           <div class="grip-slider-card">
             <div class="grip-slider-header">
-              <span class="grip-slider-label">Implementation</span>
-              <span class="grip-slider-value"><span id="slider-implementation-value">85</span> / 100</span>
-            </div>
-            <div class="grip-slider-sub">
-              Do teams execute the same way and follow one playbook.
+              <span>Implementation</span>
+              <span><span id="slider-implementation-value">85</span>/100</span>
             </div>
             <div class="grip-slider-input">
-              <input id="slider-implementation" type="range" min="0" max="100" step="1" value="85">
+              <input id="slider-implementation" type="range" min="0" max="100" value="85">
             </div>
           </div>
 
-          <!-- Performance slider -->
           <div class="grip-slider-card">
             <div class="grip-slider-header">
-              <span class="grip-slider-label">Performance</span>
-              <span class="grip-slider-value"><span id="slider-performance-value">43</span> / 100</span>
-            </div>
-            <div class="grip-slider-sub">
-              Does the engine deliver reliable revenue and retention.
+              <span>Performance</span>
+              <span><span id="slider-performance-value">43</span>/100</span>
             </div>
             <div class="grip-slider-input">
-              <input id="slider-performance" type="range" min="0" max="100" step="1" value="43">
+              <input id="slider-performance" type="range" min="0" max="100" value="43">
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 12 PILLARS -->
+
+    <!-- CTA PILLARS (NOT DYNAMIC) -->
     <section class="grip-pillars-section">
       <div class="container">
+
         <div class="grip-pillars-header">
-          <div>
-            <h2>The GTM Framework pillars mapped</h2>
-            <div class="grip-pillars-sub">
-              Each corner of the diamond aggregates three pillars from The GTM Framework. These scores adjust when you move the sliders.
-            </div>
-          </div>
+          <h2>The GTM Framework pillars mapped</h2>
+          <p class="grip-pillars-sub">Explore the twelve pillars behind the GRIP model.</p>
         </div>
 
         <div class="grip-pillars-grid">
-          <!-- GUIDANCE GROUP -->
-          <div class="grip-pillars-group">
-            <div class="grip-pillars-group-header">
-              <span>Guidance</span>
-              <small>Direction and narrative</small>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>GTM Strategy and Leadership</strong>
-                <span id="pillar-g-0-value">88</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-g-0" style="--value:88%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Market Intelligence</strong>
-                <span id="pillar-g-1-value">82</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-g-1" style="--value:82%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Product Marketing</strong>
-                <span id="pillar-g-2-value">85</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-g-2" style="--value:85%;"></span></div>
-            </div>
+
+          <div class="grip-cta-card">
+            <h3>Guidance</h3>
+            <p>Strategy, market intelligence and product marketing aligned for clarity.</p>
+            <a href="/resources.html">Explore Guidance</a>
           </div>
 
-          <!-- RESOURCES GROUP -->
-          <div class="grip-pillars-group">
-            <div class="grip-pillars-group-header">
-              <span>Resources</span>
-              <small>Infrastructure and support</small>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Revenue Operations</strong>
-                <span id="pillar-r-0-value">42</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-r-0" style="--value:42%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Enablement</strong>
-                <span id="pillar-r-1-value">38</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-r-1" style="--value:38%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Performance Management</strong>
-                <span id="pillar-r-2-value">45</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-r-2" style="--value:45%;"></span></div>
-            </div>
+          <div class="grip-cta-card">
+            <h3>Resources</h3>
+            <p>RevOps, enablement and performance systems that support the GTM engine.</p>
+            <a href="/resources.html">Explore Resources</a>
           </div>
 
-          <!-- IMPLEMENTATION GROUP -->
-          <div class="grip-pillars-group">
-            <div class="grip-pillars-group-header">
-              <span>Implementation</span>
-              <small>Execution and motion</small>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Demand Generation</strong>
-                <span id="pillar-i-0-value">68</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-i-0" style="--value:68%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Sales Development</strong>
-                <span id="pillar-i-1-value">68</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-i-1" style="--value:68%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Pricing and Packaging</strong>
-                <span id="pillar-i-2-value">71</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-i-2" style="--value:71%;"></span></div>
-            </div>
+          <div class="grip-cta-card">
+            <h3>Implementation</h3>
+            <p>Demand, sales development and packaging executed consistently.</p>
+            <a href="/resources.html">Explore Implementation</a>
           </div>
 
-          <!-- PERFORMANCE GROUP -->
-          <div class="grip-pillars-group">
-            <div class="grip-pillars-group-header">
-              <span>Performance</span>
-              <small>Results and retention</small>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Sales Execution</strong>
-                <span id="pillar-p-0-value">74</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-p-0" style="--value:74%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Customer Success and Retention</strong>
-                <span id="pillar-p-1-value">70</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-p-1" style="--value:70%;"></span></div>
-            </div>
-            <div class="grip-pillars-item">
-              <div class="grip-pillars-item-label">
-                <strong>Account Management and Expansion</strong>
-                <span id="pillar-p-2-value">72</span>
-              </div>
-              <div class="grip-pillars-bar"><span id="pillar-p-2" style="--value:72%;"></span></div>
-            </div>
+          <div class="grip-cta-card">
+            <h3>Performance</h3>
+            <p>Sales execution, customer success and expansion delivering real results.</p>
+            <a href="/resources.html">Explore Performance</a>
           </div>
+
         </div>
-
-        <p class="grip-note">
-          In your production version these pillar scores will come directly from the full GTM Intelligence Report.
-        </p>
       </div>
     </section>
+
   </div>
 </main>
 
+
 <footer>
   <div class="container">
-    © <span id="year"></span> Caugia Consulting. All rights reserved.
-    <a href="privacy.html">Privacy Policy</a>
-    ·
-    <a href="contact.html">Contact</a>
+    © <span id="year"></span> Caugia Consulting. All rights reserved.  
+    <a href="privacy.html">Privacy Policy</a> · <a href="contact.html">Contact</a>
   </div>
 </footer>
 
+
 <script>
-(function () {
-  // Year in footer
-  const yearSpan = document.getElementById("year");
-  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+/* ---------------- FOOTER YEAR ---------------- */
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Header scroll and mobile nav (reuse pattern from other pages)
-  const header = document.querySelector('header');
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 10) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
+/* ---------------- MOBILE NAV ---------------- */
+const toggle = document.querySelector('.menu-toggle');
+const mobileNav = document.querySelector('.nav-mobile');
+if (toggle && mobileNav) {
+  toggle.addEventListener('click', () => {
+    mobileNav.classList.toggle('open');
+    toggle.classList.toggle('active', mobileNav.classList.contains('open'));
   });
+}
 
-  const toggle = document.querySelector('.menu-toggle');
-  const mobileNav = document.querySelector('.nav-mobile');
+/* ---------------- STATE ---------------- */
+const state = {
+  guidance: 45,
+  resources: 48,
+  implementation: 85,
+  performance: 43
+};
 
-  if (toggle && mobileNav) {
-    toggle.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.toggle('open');
-      toggle.classList.toggle('active', isOpen);
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  }
+/* ---------------- STATUS LABELS ---------------- */
+function getStatus(score) {
+  if (score < 50) return { label: 'Critical', class: 'chip-critical' };
+  if (score < 65) return { label: 'Developing', class: 'chip-developing' };
+  if (score < 80) return { label: 'Solid', class: 'chip-solid' };
+  return { label: 'Strong', class: 'chip-strong' };
+}
 
-  // GRIP DIAMOND LOGIC
+/* ---------------- ARCHETYPE LOGIC ---------------- */
+function pickArchetype(g, r, i, p) {
+  const weak = [];
+  if (g < 50) weak.push("Guidance");
+  if (r < 50) weak.push("Resources");
+  if (i < 50) weak.push("Implementation");
+  if (p < 50) weak.push("Performance");
 
-  const state = {
-    guidance: 45,
-    resources: 48,
-    implementation: 85,
-    performance: 43
-  };
-
-  // Relative weights per pillar so de verdeling blijft mooi als je schuift
-  const pillarWeights = {
-    guidance: [1.05, 0.95, 1.0],          // Strategy, Market Intel, Product Marketing
-    resources: [0.9, 1.05, 1.05],         // RevOps, Enablement, Performance Management
-    implementation: [1.0, 1.0, 1.05],     // Demand, SDR, Pricing
-    performance: [1.02, 0.98, 1.0]        // Sales Exec, CS, AM
-  };
-
-  function getStatus(score) {
-    if (score < 50) return { label: 'Critical', className: 'chip-critical' };
-    if (score < 65) return { label: 'Developing', className: 'chip-developing' };
-    if (score < 80) return { label: 'Solid', className: 'chip-solid' };
-    return { label: 'Strong', className: 'chip-strong' };
-  }
-
-  // Archetype definitions
   const archetypes = {
-    'High Performer': {
-      name: 'The High Performer',
-      body: 'All four GRIP dimensions are strong. Your focus is not on fixing basics but on deepening the moat. Sharpen differentiation, improve efficiency and invest in experiments that keep you ahead of the market.'
+    foundation: {
+      name: "The Foundation Builder",
+      body: "Your system has multiple constraints. Build strategic clarity first, then support it with infrastructure."
     },
-    'Foundation Builder': {
-      name: 'The Foundation Builder',
-      body: 'Multiple dimensions sit in the critical range. Teams work hard but the system is not stable. Start with simple shared strategy, clear ownership and a visible operating rhythm before adding more activity or tools.'
+    directionless: {
+      name: "The Directionless Engine",
+      body: "Implementation and resources exist, but direction is weak. Align leaders on ICP and GTM strategy."
     },
-    'Directionless Engine': {
-      name: 'The Directionless Engine',
-      body: 'You have capacity and motion, but direction is weak. Activity does not add up to a clear plan. Align leaders on market focus, ICP and strategic bets so the rest of the system can row in the same direction.'
+    crunch: {
+      name: "The Capacity Crunch",
+      body: "You know what to do but lack supporting infrastructure. Strengthen RevOps and enablement first."
     },
-    'Capacity Crunch': {
-      name: 'The Capacity Crunch',
-      body: 'The plan is clear and teams know how to execute, but infrastructure cannot keep up. Invest in RevOps, enablement and performance management so the engine can scale without burning people out.'
+    chaos: {
+      name: "The Heroic Chaos",
+      body: "People know what to do but execution varies wildly. Codify playbooks and enforce process discipline."
     },
-    'Heroic Chaos': {
-      name: 'The Heroic Chaos',
-      body: 'Guidance and resources exist, yet results depend on individual heroics. Codify the winning patterns into clear plays, tighten process discipline and remove variation between teams and segments.'
-    },
-    'Leaky Bucket': {
-      name: 'The Leaky Bucket',
-      body: 'Guidance, resources and implementation look reasonable, but outcomes lag. Inspect handoffs, customer experience and commercial discipline. The engine pours energy in at the top and loses value further down the funnel.'
-    },
-    'Executing Blind': {
-      name: 'The Executing Blind',
-      body: 'Resources and infrastructure move, but there is no real blueprint. You increase activity without clarity. Define strategy and customer focus before scaling the operating model.'
-    },
-    'Random Walk': {
-      name: 'The Random Walk',
-      body: 'Direction and implementation are both weak. Every campaign and deal looks different. Introduce a simple GTM model, a shared language and a few non negotiable processes to create basic consistency.'
-    },
-    'Busy Failure': {
-      name: 'The Busy Failure',
-      body: 'You see a lot of motion but little movement in results. Fix Guidance first so teams stop chasing random work. Then build a simple scorecard that keeps everyone focused on the few metrics that matter.'
-    },
-    'Undermanned Mess': {
-      name: 'The Undermanned Mess',
-      body: 'Resources and implementation are both underdeveloped. People know roughly what to do, yet they lack tools, support and structure. Strengthen RevOps and enablement and then standardise how work gets done.'
-    },
-    'Resource Starved': {
-      name: 'The Resource Starved',
-      body: 'You know what works in theory, but there is not enough infrastructure to make it real. Close the resource gap before you increase targets. Otherwise you will only amplify frustration and burnout.'
-    },
-    'Inconsistent Closer': {
-      name: 'The Inconsistent Closer',
-      body: 'Implementation and performance are weak relative to strategy and resources. Some people hit numbers, others do not. Bring method, coaching and review discipline into every deal, not just the important ones.'
+    leaky: {
+      name: "The Leaky Bucket",
+      body: "Inputs look fine but results lag. Fix handoffs, lifecycle experience and commercial discipline."
     }
   };
 
-  function classifyArchetype(g, r, i, p) {
-    const dims = [
-      { key: 'Guidance', value: g },
-      { key: 'Resources', value: r },
-      { key: 'Implementation', value: i },
-      { key: 'Performance', value: p }
-    ];
+  if (weak.length >= 3) return archetypes.foundation;
+  if (weak.includes("Guidance") && weak.length === 1) return archetypes.directionless;
+  if (weak.includes("Resources") && weak.length === 1) return archetypes.crunch;
+  if (weak.includes("Implementation") && weak.length === 1) return archetypes.chaos;
+  if (weak.includes("Performance") && weak.length === 1) return archetypes.leaky;
 
-    const weak = dims.filter(d => d.value < 50).map(d => d.key);
-    const strong = dims.filter(d => d.value >= 65).map(d => d.key);
+  return archetypes.foundation;
+}
 
-    let archetypeKey = 'Foundation Builder';
-    let primaryConstraint = null;
-    let secondaryConstraint = null;
+/* ---------------- UPDATE DIAMOND ---------------- */
+function updateDiamond() {
+  const cx = 140, cy = 140, maxR = 100;
 
-    if (g >= 65 && r >= 65 && i >= 65 && p >= 65) {
-      archetypeKey = 'High Performer';
-    } else if (weak.length >= 3) {
-      archetypeKey = 'Foundation Builder';
-    } else if (weak.length === 1 && strong.length >= 3) {
-      const w = weak[0];
-      if (w === 'Guidance') archetypeKey = 'Directionless Engine';
-      else if (w === 'Resources') archetypeKey = 'Capacity Crunch';
-      else if (w === 'Implementation') archetypeKey = 'Heroic Chaos';
-      else if (w === 'Performance') archetypeKey = 'Leaky Bucket';
-    } else if (weak.length === 2) {
-      const set = new Set(weak);
-      if (set.has('Guidance') && set.has('Resources')) archetypeKey = 'Executing Blind';
-      else if (set.has('Guidance') && set.has('Implementation')) archetypeKey = 'Random Walk';
-      else if (set.has('Guidance') && set.has('Performance')) archetypeKey = 'Busy Failure';
-      else if (set.has('Resources') && set.has('Implementation')) archetypeKey = 'Undermanned Mess';
-      else if (set.has('Resources') && set.has('Performance')) archetypeKey = 'Resource Starved';
-      else if (set.has('Implementation') && set.has('Performance')) archetypeKey = 'Inconsistent Closer';
-    }
-
-    // Primary constraint volgt de GRIP volgorde: Guidance -> Resources -> Implementation -> Performance
-    const priorityOrder = ['Guidance', 'Resources', 'Implementation', 'Performance'];
-    const sortedByPriority = dims
-      .filter(d => d.value < 65)
-      .sort((a, b) => a.value - b.value || priorityOrder.indexOf(a.key) - priorityOrder.indexOf(b.key));
-
-    if (sortedByPriority.length > 0) {
-      primaryConstraint = sortedByPriority[0].key;
-      if (sortedByPriority.length > 1) {
-        secondaryConstraint = sortedByPriority[1].key;
-      }
-    }
-
-    return {
-      archetypeKey,
-      primaryConstraint,
-      secondaryConstraint
-    };
+  function p(angle, value) {
+    const rad = angle * Math.PI / 180;
+    const r = (value / 100) * maxR;
+    const x = cx + r * Math.cos(rad);
+    const y = cy - r * Math.sin(rad);
+    return `${x},${y}`;
   }
 
-  function updatePillarGroup(groupPrefix, dimScore, weights) {
-    const meanWeight = (weights[0] + weights[1] + weights[2]) / 3;
-    const factors = weights.map(w => w / meanWeight);
+  const points = [
+    p(90, state.guidance),
+    p(0, state.implementation),
+    p(270, state.performance),
+    p(180, state.resources)
+  ].join(" ");
 
-    for (let i = 0; i < 3; i++) {
-      let value = Math.round(dimScore * factors[i]);
-      if (value < 0) value = 0;
-      if (value > 100) value = 100;
+  document.getElementById("grip-polygon").setAttribute("points", points);
+}
 
-      const bar = document.getElementById(`pillar-${groupPrefix}-${i}`);
-      const label = document.getElementById(`pillar-${groupPrefix}-${i}-value`);
-      if (bar) bar.style.setProperty('--value', value + '%');
-      if (label) label.textContent = value;
-    }
+/* ---------------- RENDER ---------------- */
+function render() {
+
+  /* OVERALL */
+  const overall = Math.round((state.guidance + state.resources + state.implementation + state.performance) / 4);
+  document.getElementById("overall-score").textContent = overall;
+
+  const st = getStatus(overall);
+  const pill = document.getElementById("overall-pill");
+  pill.textContent = st.label;
+  pill.className = "grip-scorecard-pill " + st.class;
+
+  /* DIMENSIONS */
+  function updateBlock(key) {
+    const v = state[key];
+    document.getElementById(`score-${key}`).textContent = v + " / 100";
+    document.getElementById(`meter-${key}`).style.setProperty("--value", v + "%");
+
+    const st = getStatus(v);
+    const chip = document.getElementById(`chip-${key}`);
+    chip.textContent = st.label;
+    chip.className = "grip-scorecard-pill " + st.class;
   }
 
-  function updateDiamond() {
-    const svg = document.getElementById('grip-polygon');
-    if (!svg) return;
+  updateBlock("guidance");
+  updateBlock("resources");
+  updateBlock("implementation");
+  updateBlock("performance");
 
-    const cx = 140;
-    const cy = 140;
-    const maxR = 100; // iets kleiner dan grid rand
+  /* SLIDER LABELS */
+  document.getElementById("slider-guidance-value").textContent = state.guidance;
+  document.getElementById("slider-resources-value").textContent = state.resources;
+  document.getElementById("slider-implementation-value").textContent = state.implementation;
+  document.getElementById("slider-performance-value").textContent = state.performance;
 
-    function point(angleDeg, value) {
-      const rad = angleDeg * Math.PI / 180;
-      const r = (value / 100) * maxR;
-      const x = cx + r * Math.cos(rad);
-      const y = cy - r * Math.sin(rad);
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }
+  /* ARCHETYPE */
+  const arch = pickArchetype(state.guidance, state.resources, state.implementation, state.performance);
+  document.getElementById("archetype-name").textContent = arch.name;
+  document.getElementById("archetype-body").textContent = arch.body;
 
-    const top = point(90, state.guidance);
-    const right = point(0, state.implementation);
-    const bottom = point(270, state.performance);
-    const left = point(180, state.resources);
+  /* DIAMOND */
+  updateDiamond();
+}
 
-    const points = `${top} ${right} ${bottom} ${left}`;
-    svg.setAttribute('points', points);
-  }
+/* ---------------- SLIDERS ---------------- */
+function bindSlider(id, key) {
+  document.getElementById(id).addEventListener("input", e => {
+    state[key] = parseInt(e.target.value);
+    render();
+  });
+}
 
-  function render() {
-    // Overall
-    const overall = Math.round((state.guidance + state.resources + state.implementation + state.performance) / 4);
-    const overallSpan = document.getElementById('overall-score');
-    if (overallSpan) overallSpan.textContent = overall;
+bindSlider("slider-guidance", "guidance");
+bindSlider("slider-resources", "resources");
+bindSlider("slider-implementation", "implementation");
+bindSlider("slider-performance", "performance");
 
-    const overallStatus = getStatus(overall);
-    const overallPill = document.getElementById('overall-pill');
-    if (overallPill) {
-      overallPill.textContent = overallStatus.label;
-      overallPill.className = 'grip-scorecard-pill ' + overallStatus.className;
-    }
+/* INITIAL */
+render();
 
-    // Dimension blocks
-    const dims = [
-      { key: 'guidance', labelId: 'score-guidance', meterId: 'meter-guidance', chipId: 'chip-guidance' },
-      { key: 'resources', labelId: 'score-resources', meterId: 'meter-resources', chipId: 'chip-resources' },
-      { key: 'implementation', labelId: 'score-implementation', meterId: 'meter-implementation', chipId: 'chip-implementation' },
-      { key: 'performance', labelId: 'score-performance', meterId: 'meter-performance', chipId: 'chip-performance' }
-    ];
-
-    dims.forEach(d => {
-      const value = state[d.key];
-      const labelEl = document.getElementById(d.labelId);
-      const meterEl = document.getElementById(d.meterId);
-      const chipEl = document.getElementById(d.chipId);
-      const status = getStatus(value);
-
-      if (labelEl) labelEl.textContent = value + ' / 100';
-      if (meterEl) meterEl.style.setProperty('--value', value + '%');
-      if (chipEl) {
-        chipEl.textContent = status.label;
-        chipEl.className = 'grip-scorecard-chip ' + status.className;
-      }
-    });
-
-    // Sliders display value labels
-    const sliderIds = ['guidance', 'resources', 'implementation', 'performance'];
-    sliderIds.forEach(id => {
-      const span = document.getElementById('slider-' + id + '-value');
-      if (span) span.textContent = state[id];
-    });
-
-    // Update pillars based on dimension scores
-    updatePillarGroup('g', state.guidance, pillarWeights.guidance);
-    updatePillarGroup('r', state.resources, pillarWeights.resources);
-    updatePillarGroup('i', state.implementation, pillarWeights.implementation);
-    updatePillarGroup('p', state.performance, pillarWeights.performance);
-
-    // Archetype
-    const { archetypeKey, primaryConstraint, secondaryConstraint } =
-      classifyArchetype(state.guidance, state.resources, state.implementation, state.performance);
-
-    const def = archetypes[archetypeKey] || archetypes['Foundation Builder'];
-
-    const nameEl = document.getElementById('archetype-name');
-    const metaEl = document.getElementById('archetype-meta');
-    const bodyEl = document.getElementById('archetype-body');
-
-    if (nameEl) nameEl.textContent = def.name;
-    if (metaEl) {
-      let text = '';
-      if (primaryConstraint) {
-        text += 'Primary constraint is ';
-        text += primaryConstraint;
-        text += '.';
-      }
-      if (secondaryConstraint) {
-        text += ' Secondary constraint is ';
-        text += secondaryConstraint;
-        text += '.';
-      }
-      if (!text) {
-        text = 'Your GRIP profile is balanced. Focus on optimisation and long term advantage.';
-      }
-      metaEl.textContent = text;
-    }
-    if (bodyEl) bodyEl.textContent = def.body;
-
-    // Diamond shape
-    updateDiamond();
-  }
-
-  // Slider events
-  function attachSlider(id, key) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('input', function (e) {
-      const value = parseInt(e.target.value, 10);
-      if (!Number.isNaN(value)) {
-        state[key] = value;
-        render();
-      }
-    });
-  }
-
-  attachSlider('slider-guidance', 'guidance');
-  attachSlider('slider-resources', 'resources');
-  attachSlider('slider-implementation', 'implementation');
-  attachSlider('slider-performance', 'performance');
-
-  // Initial render
-  render();
-})();
 </script>
 
 </body>
