@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +74,7 @@
 
           <div class="hero-cta-row">
             <a href="gtm-assessment.html" class="cta">Start your free GTM Score</a>
-            <a href="#clarity" class="cta cta--ghost">See how the GRIP Diamond works</a>
+            <a href="#grip" class="cta cta--ghost">See how the GRIP Diamond works</a>
           </div>
 
           <p class="hero-footnote">
@@ -81,7 +82,7 @@
           </p>
         </div>
 
-        <!-- VISUAL COLUMN: HEALTH CARD + NEW SVG DIAMOND -->
+        <!-- VISUAL COLUMN: HEALTH CARD + SVG DIAMOND -->
         <div class="home-hero-visual">
           <div class="hero-visual-grid">
             <!-- LEFT: HEALTH CARD -->
@@ -93,6 +94,8 @@
                     <span id="hero-total-score">58</span><span>/100</span>
                   </p>
                 </div>
+                <p class="hero-health-note">Example company</p>
+              </div>
 
               <div class="hero-health-rows">
                 <div class="hero-health-row">
@@ -149,29 +152,29 @@
               </div>
             </div>
 
-            <!-- RIGHT: GRIP DIAMOND v5 (SVG + centroid dot) -->
+            <!-- RIGHT: PURE SVG DIAMOND -->
             <div class="diamond-card">
               <div class="diamond-title">Your GRIP position</div>
               <div class="diamond-canvas">
-                <svg class="diamond-svg" viewBox="0 0 360 360">
-                  <!-- Background grid, royaal -->
+                <svg class="diamond-svg" viewBox="0 0 280 280">
+                  <!-- background diamonds -->
                   <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
-                    <polygon points="180,36 324,180 180,324 36,180"></polygon>
-                    <polygon points="180,96 300,180 180,300 60,180"></polygon>
-                    <polygon points="180,156 276,180 180,276 84,180"></polygon>
+                    <polygon points="140,40 240,140 140,240 40,140"></polygon>
+                    <polygon points="140,70 210,140 140,210 70,140"></polygon>
+                    <polygon points="140,100 180,140 140,180 100,140"></polygon>
                   </g>
 
-                  <!-- Dynamic GRIP polygon -->
+                  <!-- dynamic polygon -->
                   <polygon id="hero-diamond-polygon"
                     fill="rgba(243,108,33,0.10)"
                     stroke="#0046A5"
                     stroke-width="2"
-                    points="180,96 300,180 180,300 60,180">
+                    points="140,70 210,140 140,210 70,140">
                   </polygon>
 
-                  <!-- Centroid dot -->
+                  <!-- dynamic core dot -->
                   <circle id="hero-diamond-core"
-                    cx="180" cy="180" r="7"
+                    cx="140" cy="140" r="7"
                     fill="#0046A5"
                     stroke="#ffffff"
                     stroke-width="2">
@@ -209,6 +212,7 @@
       </div>
     </section>
 
+    <!-- rest van de pagina ONGEWIJZIGD -->
     <!-- ============================================================
          SECTION — THE GTM CLARITY PATH
          ============================================================ -->
@@ -270,9 +274,8 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — TWELVE INTELLIGENCE MODULES
-         ============================================================ -->
+    <!-- (modules, consulting, resources secties blijven zoals bij jou) -->
+
     <section class="home-section">
       <div class="section-heading">
         <h2>The twelve intelligence modules.</h2>
@@ -334,9 +337,6 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — FOUNDER LEVEL CONSULTING
-         ============================================================ -->
     <section class="home-section home-section-line">
       <div class="section-heading">
         <h2>Founder level consulting.</h2>
@@ -352,9 +352,6 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION — RESOURCES
-         ============================================================ -->
     <section class="home-section">
       <div class="section-heading">
         <h2>Resources.</h2>
@@ -431,7 +428,7 @@
 </script>
 
 <!-- ============================================================
-     GRIP DIAMOND DEMO + SLIDERS (SVG + centroid)
+     GRIP DIAMOND DEMO + SLIDERS (SVG + trig)
      ============================================================ -->
 <script>
   const gripState = {
@@ -451,37 +448,41 @@
     const i = clamp(gripState.implementation);
     const p = clamp(gripState.performance);
 
-    const cx = 180;
-    const cy = 180;
-    const maxR = 110; // iets binnen de buitenste ring
+    const G = g;
+    const R = r;
+    const I = i;
+    const P = p;
 
-    const toPoint = (deg, value) => {
-      const radius = (value / 100) * maxR;
-      const rad = (deg * Math.PI) / 180;
-      return {
-        x: cx + radius * Math.cos(rad),
-        y: cy - radius * Math.sin(rad)
-      };
+    const cx = 140;
+    const cy = 140;
+    const maxR = 100;
+
+    const point = (deg, val) => {
+      const radius = (val / 100) * maxR;
+      const rad = deg * Math.PI / 180;
+      const x = cx + radius * Math.cos(rad);
+      const y = cy - radius * Math.sin(rad);
+      return `${x},${y}`;
     };
 
-    const ptG = toPoint(90, g);   // Guidance (top)
-    const ptI = toPoint(0, i);    // Implementation (right)
-    const ptP = toPoint(270, p);  // Performance (bottom)
-    const ptR = toPoint(180, r);  // Resources (left)
+    const polygon = document.getElementById("hero-diamond-polygon");
+    const core = document.getElementById("hero-diamond-core");
 
-    const polygonEl = document.getElementById("hero-diamond-polygon");
-    if (polygonEl) {
-      const pts = `${ptG.x},${ptG.y} ${ptI.x},${ptI.y} ${ptP.x},${ptP.y} ${ptR.x},${ptR.y}`;
-      polygonEl.setAttribute("points", pts);
+    if (polygon) {
+      const pts = [
+        point(90, G),   // top: Guidance
+        point(0, I),    // right: Implementation
+        point(270, P),  // bottom: Performance
+        point(180, R)   // left: Resources
+      ].join(" ");
+      polygon.setAttribute("points", pts);
     }
 
-    // centroid van het vlak, zodat de stip altijd logisch in de shape ligt
-    const coreEl = document.getElementById("hero-diamond-core");
-    if (coreEl) {
-      const coreX = (ptG.x + ptI.x + ptP.x + ptR.x) / 4;
-      const coreY = (ptG.y + ptI.y + ptP.y + ptR.y) / 4;
-      coreEl.setAttribute("cx", coreX);
-      coreEl.setAttribute("cy", coreY);
+    if (core) {
+      const coreX = cx + ((I - R) / 100) * maxR;
+      const coreY = cy + ((P - G) / 100) * maxR;
+      core.setAttribute("cx", coreX);
+      core.setAttribute("cy", coreY);
     }
 
     // Total score
@@ -490,12 +491,14 @@
     if (totalEl) totalEl.textContent = total;
 
     // Bars + values
-    [
+    const map = [
       ["guidance", g],
       ["resources", r],
       ["implementation", i],
       ["performance", p]
-    ].forEach(([key, value]) => {
+    ];
+
+    map.forEach(([key, value]) => {
       const bar = document.getElementById("bar-" + key);
       const val = document.getElementById("value-" + key);
       if (bar) bar.style.width = value + "%";
@@ -517,6 +520,7 @@
   bindGripSlider("slider-implementation", "implementation");
   bindGripSlider("slider-performance", "performance");
 
+  // Initial render
   updateGripDiamond();
 </script>
 
