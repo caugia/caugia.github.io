@@ -639,24 +639,72 @@ p {
 }
 
 /* ===========================================================
-   GRIP DIAMOND — ENTERPRISE v4.3
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (SVG v5.0)
    =========================================================== */
 
-.home-hero-visual {
-  width: 125%;                     /* 💥 20% groter maken */
-  transform-origin: left center;   /* 💥 uitbreiden naar rechts */
-  transform: translateX(-20%);     /* linkerkant blijft exact staan */
+/* ---------- HERO LAYOUT ---------- */
 
+.home-hero {
+  margin-bottom: 96px;
+}
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.home-hero-copy {
+  margin-top: -38px;
+}
+
+.home-hero-copy .kicker {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.65);
+  margin-bottom: 12px;
+}
+
+.home-hero-copy h1 {
+  font-size: 2.85rem;
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.hero-lead {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: rgba(15, 23, 42, 0.86);
+  max-width: 34rem;
+  margin-bottom: 20px;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hero-footnote {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+/* ---------- HERO VISUAL WRAPPER ---------- */
+
+.home-hero-visual {
+  width: 125%;
+  transform-origin: left center;
+  transform: translateX(-20%);
   border-radius: 22px;
   padding: 26px 26px 40px;
   background: linear-gradient(135deg, #f9fafc, #f0f4ff);
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
 }
-
-/* -----------------------------------------------------------
-   GRID IN DE HERO VISUAL — LINKS HEALTH, RECHTS DIAMOND
-   ----------------------------------------------------------- */
 
 .hero-visual-grid {
   display: grid;
@@ -665,160 +713,7 @@ p {
   align-items: center;
 }
 
-
-/* ------------------ DIAMOND SHELL ------------------ */
-
-.diamond-shell {
-  position: relative;
-  width: 360px;
-  height: 360px;
-  margin: 0 auto;
-}
-
-.diamond-title {
-  font-size: 0.82rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  color: rgba(15, 23, 42, 0.55);
-}
-
-/* ------------------ GRID (45°) ------------------ */
-
-.diamond-grid {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  pointer-events: none;
-}
-
-.diamond-ring {
-  position: absolute;
-  border: 1px solid rgba(0, 70, 165, 0.17);
-  border-radius: 18px;
-}
-
-.ring-outer { inset: 0; }
-.ring-mid   { inset: 17%; }
-.ring-inner { inset: 34%; }
-
-.diamond-line {
-  position: absolute;
-  background: rgba(0, 70, 165, 0.17);
-}
-
-.diamond-vertical   { width: 1px; height: 100%; left: 50%; }
-.diamond-horizontal { height: 1px; width: 100%; top: 50%; }
-
-.diamond-diag-1 {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-  transform: rotate(45deg);
-}
-
-.diamond-diag-2 {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-  transform: rotate(-45deg);
-}
-
-/* ===========================================================
-   POLYGON — TRUE 0° ORIENTATION
-   =========================================================== */
-
-.diamond-shape {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  /* Guidance top, Implementation right, Performance bottom, Resources left */
-  clip-path: polygon(
-    50% calc(50% - (var(--g, 0.45) * 50%)),
-    calc(50% + (var(--r, 0.60) * 50%)) 50%,
-    50% calc(50% + (var(--i, 0.85) * 50%)),
-    calc(50% - (var(--p, 0.60) * 50%)) 50%
-  );
-
-  background: rgba(243, 108, 33, 0.08);           /* zachte Caugia oranje vulling */
-  border: 2px solid rgba(243, 108, 33, 0.55);     /* oranje rand */
-  border-radius: 14px;
-  backdrop-filter: blur(1px);
-  z-index: 4;
-}
-
-/* ------------------ FRAME OUTLINE (rotated) ------------------ */
-
-.diamond-frame {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  border-radius: 18px;
-  border: 1px solid rgba(0, 70, 165, 0.25);
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-  z-index: 3;
-}
-
-/* ------------------ CORE DOT ------------------ */
-
-.diamond-core {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #0046A5; /* Caugia Blue */
-  box-shadow: 0 4px 14px rgba(0, 70, 165, 0.28);
-
-  top: calc(var(--core-y, 50%) - 11px);
-  left: calc(var(--core-x, 50%) - 11px);
-
-  z-index: 6;
-}
-
-/* ------------------ LABELS BUITEN DE DIAMOND ------------------ */
-
-.diamond-label {
-  position: absolute;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(15, 23, 42, 0.85);
-}
-
-.diamond-label-top {
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-bottom {
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-right {
-  top: 170px;
-  right: -40px;
-}
-
-.diamond-label-left {
-  top: 170px;
-  left: -40px;
-}
-
-/* ===========================================================
-   HEALTH CARD + SLIDERS
-   =========================================================== */
+/* ---------- HEALTH CARD (onveranderd) ---------- */
 
 .hero-health {
   border-radius: 14px;
@@ -899,8 +794,6 @@ p {
   color: rgba(31, 41, 55, 1);
 }
 
-/* Sliders om mee te spelen */
-
 .hero-health-sliders {
   margin-top: 10px;
   border-top: 1px solid rgba(15, 23, 42, 0.06);
@@ -950,53 +843,143 @@ p {
   box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.20);
 }
 
-/* ------------------ HERO RESPONSIVE ------------------ */
+/* ---------- SVG DIAMOND CARD ---------- */
+
+.diamond-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 18px 18px 22px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+}
+
+.diamond-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.diamond-canvas {
+  position: relative;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diamond-svg {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+}
+
+/* labels rond de diamond */
+
+.diamond-label {
+  position: absolute;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(15, 23, 42, 0.85);
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.diamond-label-top {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-bottom {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-right {
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.diamond-label-left {
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ---------- HERO RESPONSIVE ---------- */
 
 @media (max-width: 1024px) {
   .home-hero-grid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .home-hero-copy {
+    margin-top: -8px;
+  }
+
+  .home-hero-copy h1 {
+    font-size: 2.45rem;
+  }
+
+  .hero-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
   }
 
   .home-hero-visual {
-    margin-top: 10px;
-  }
-
-  .hero-visual-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .diamond-shell {
-    width: 320px;
-    height: 320px;
+    width: 100%;
+    transform: none;
   }
 }
 
-@media (max-width: 768px) {
-  .home-hero-copy h1 {
-    font-size: 2.3rem;
+@media (max-width: 840px) {
+  .home-hero {
+    margin-bottom: 80px;
   }
 
-  .hero-visual-grid {
-    gap: 20px;
+  .home-hero-copy {
+    margin-top: 0;
   }
 
-  .diamond-shell {
-    width: 280px;
-    height: 280px;
+  .diamond-canvas {
+    height: 240px;
   }
 }
 
 @media (max-width: 520px) {
-  .hero-health-sliders {
-    grid-template-columns: minmax(0, 1fr);
+  .hero-cta-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .diamond-shell {
-    width: 250px;
-    height: 250px;
+  .home-hero-visual {
+    padding: 18px 16px 20px;
+  }
+
+  .hero-health-sliders {
+    grid-template-columns: 1fr;
+  }
+
+  .diamond-canvas {
+    height: 220px;
+  }
+
+  .diamond-label-right {
+    right: -4px;
+  }
+
+  .diamond-label-left {
+    left: -4px;
   }
 }
-
 
 
 /* ===========================================================
