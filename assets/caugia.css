@@ -584,7 +584,7 @@ p {
   margin-bottom: 4px;
 }
 /* ===========================================================
-   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (Enterprise v4.2)
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (Enterprise v4.3)
    =========================================================== */
 
 /* ------------------ HERO LAYOUT ------------------ */
@@ -594,7 +594,7 @@ p {
 }
 
 .home-hero-copy {
-  margin-top: -38px; /* extra omhoog zoals gevraagd */
+  margin-top: -38px; /* tekst iets hoger in de fold */
 }
 
 .home-hero-copy .kicker {
@@ -632,7 +632,7 @@ p {
 }
 
 /* ===========================================================
-   GRIP DIAMOND — ENTERPRISE v4.2
+   HERO VISUAL WRAPPER
    =========================================================== */
 
 .home-hero-visual {
@@ -647,7 +647,9 @@ p {
   position: relative;
 }
 
-/* ------------------ DIAMOND SHELL ------------------ */
+/* ===========================================================
+   GRIP DIAMOND — SHELL
+   =========================================================== */
 
 .diamond-shell {
   position: relative;
@@ -662,10 +664,12 @@ p {
   text-transform: uppercase;
   margin-bottom: 16px;
   color: rgba(15, 23, 42, 0.55);
-  transform: translateY(-10px); /* hoger zoals gevraagd */
+  transform: translateY(-10px);
 }
 
-/* ------------------ GRID (45°) ------------------ */
+/* ===========================================================
+   GRID (45° ROTATED)
+   =========================================================== */
 
 .diamond-grid {
   position: absolute;
@@ -692,13 +696,14 @@ p {
   background: rgba(0, 70, 165, 0.17);
 }
 
-.diamond-vertical   { width: 1px; height: 100%; left: 50%; }
-.diamond-horizontal { height: 1px; width: 100%; top: 50%; }
+.diamond-vertical   { width: 1px; height: 100%; left: 50%; top: 0; }
+.diamond-horizontal { height: 1px; width: 100%; top: 50%; left: 0; }
 
 .diamond-diag-1 {
   width: 1px;
   height: 100%;
   left: 50%;
+  top: 0;
   transform: rotate(45deg);
 }
 
@@ -706,11 +711,12 @@ p {
   width: 1px;
   height: 100%;
   left: 50%;
+  top: 0;
   transform: rotate(-45deg);
 }
 
 /* ===========================================================
-   POLYGON — TRUE 0° ORIENTATION (fixed)
+   POLYGON — TRUE GEOMETRY (0°)
    =========================================================== */
 
 .diamond-shape {
@@ -719,24 +725,26 @@ p {
   height: 270px;
   top: 70px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); /* NOT rotated */
 
-  /* TRUE CARTESIAN POLYGON — NOT ROTATED */
+  /* Guidance = top, Resources = right, Implementation = bottom, Performance = left */
   clip-path: polygon(
-    50% calc(50% - (var(--g) * 50%)),          /* TOP → Guidance */
-    calc(50% + (var(--r) * 50%)) 50%,          /* RIGHT → Resources */
-    50% calc(50% + (var(--i) * 50%)),          /* BOTTOM → Implementation */
-    calc(50% - (var(--p) * 50%)) 50%           /* LEFT → Performance */
+    50% calc(50% - (var(--g) * 50%)),
+    calc(50% + (var(--r) * 50%)) 50%,
+    50% calc(50% + (var(--i) * 50%)),
+    calc(50% - (var(--p) * 50%)) 50%
   );
 
-  background: rgba(243,108,33,0.08);           /* soft Caugia orange */
-  border: 2px solid rgba(243,108,33,0.55);     /* orange highlight border */
+  background: rgba(243, 108, 33, 0.08);
+  border: 2px solid rgba(243, 108, 33, 0.55);
   border-radius: 14px;
   backdrop-filter: blur(1px);
   z-index: 4;
 }
 
-/* ------------------ FRAME OUTLINE (still rotated) ------------------ */
+/* ===========================================================
+   FRAME (45° WRAPPER)
+   =========================================================== */
 
 .diamond-frame {
   position: absolute;
@@ -751,14 +759,16 @@ p {
   z-index: 3;
 }
 
-/* ------------------ CORE DOT ------------------ */
+/* ===========================================================
+   CORE DOT
+   =========================================================== */
 
 .diamond-core {
   position: absolute;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #0046A5; /* Caugia Blue */
+  background: #0046A5;
   box-shadow: 0 4px 14px rgba(0,70,165,0.28);
 
   top: calc(var(--core-y) - 11px);
@@ -767,7 +777,9 @@ p {
   z-index: 6;
 }
 
-/* ------------------ LABELS ------------------ */
+/* ===========================================================
+   LABELS (ALL OUTSIDE THE DIAMOND)
+   =========================================================== */
 
 .diamond-label {
   position: absolute;
@@ -776,31 +788,32 @@ p {
   color: rgba(15, 23, 42, 0.85);
 }
 
-/* perfect centering */
-.diamond-label-top {
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+/* All labels placed exactly at the compass points */
 
-.diamond-label-bottom {
-  bottom: -4px;
+.diamond-label-top {
+  top: 22px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .diamond-label-right {
   top: 165px;
-  right: -52px;
+  right: -56px;
+}
+
+.diamond-label-bottom {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .diamond-label-left {
   top: 165px;
-  left: -52px;
+  left: -56px;
 }
 
 /* ===========================================================
-   HEALTH CARD UNDER DIAMOND
+   HEALTH CARD
    =========================================================== */
 
 .hero-health {
@@ -869,6 +882,7 @@ p {
   border-radius: inherit;
   background: linear-gradient(90deg, #0046A5, #F36C21);
 }
+
 
 
 /* ===========================================================
