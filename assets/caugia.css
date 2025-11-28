@@ -884,11 +884,9 @@ p {
 }
 
 
-
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES v4.0
+   BLOCK 4 — RESPONSIVE RULES v4.2
    =========================================================== */
-
 
 /* -----------------------------------------------------------
    LARGE TABLETS (max-width: 1180px)
@@ -900,60 +898,122 @@ p {
   }
 
   .home-hero-grid {
-    gap: 36px;
+    gap: 40px;
+  }
+
+  .home-hero-visual {
+    padding: 22px 22px;
   }
 
   .diamond-shell {
-    transform: scale(0.92);
-    transform-origin: top center;
+    max-width: 380px;
+  }
+
+  .home-modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
 /* -----------------------------------------------------------
-   TABLET (max-width: 1024px)
+   TABLETS (max-width: 1024px)
    ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-
-  /* Hero grid → 1 column */
   .home-hero-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+    gap: 32px;
   }
 
-  /* Space below hero text */
   .home-hero-copy {
-    text-align: left;
+    margin-top: -16px;
   }
 
-  /* Diamond slightly smaller */
+  .home-hero-copy h1 {
+    font-size: 2.5rem;
+  }
+
+  .home-hero-visual {
+    flex-direction: column;
+  }
+
+  .hero-health-panel {
+    order: 2;
+  }
+
   .diamond-shell {
-    transform: scale(0.88);
-    transform-origin: top center;
+    order: 1;
+    max-width: 360px;
   }
 
-  /* Modules grid → 3 columns */
-  .home-modules-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  /* 3-product ladder → 2 columns */
   .home-grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
 /* -----------------------------------------------------------
-   MOBILE LARGE (max-width: 768px)
+   SMALL TABLETS / LARGE PHONES (max-width: 840px)
    ----------------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
+  header .inner {
+    padding: 14px 18px;
+  }
 
-  /* Hero title smaller */
-  .home-hero-copy h1 {
-    font-size: 2.3rem;
+  .home-hero {
+    margin-bottom: 80px;
+  }
+
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-copy {
+    margin-top: 0;
+  }
+
+  .home-hero-visual {
+    margin-top: 4px;
+  }
+
+  .diamond-shell {
+    max-width: 340px;
+  }
+
+  .home-grid-3,
+  .home-modules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -----------------------------------------------------------
+   NAVIGATION (max-width: 780px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 780px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-mobile {
+    display: flex;
+  }
+}
+
+/* -----------------------------------------------------------
+   SMALL PHONES (max-width: 520px)
+   ----------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  main .wrap {
+    padding: 64px 16px 64px;
+  }
+
+  .home-hero {
+    margin-bottom: 64px;
   }
 
   .hero-cta-row {
@@ -961,61 +1021,24 @@ p {
     align-items: stretch;
   }
 
-  /* Diamond scale down */
+  .home-hero-visual {
+    padding: 18px 16px 20px;
+  }
+
   .diamond-shell {
-    transform: scale(0.80);
-    transform-origin: top center;
+    max-width: 310px;
   }
 
-  /* Modules grid → 2 columns */
-  .home-modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .diamond-label-right {
+    right: -18px;
   }
 
-  /* Product cards full width */
-  .home-grid-3 {
-    grid-template-columns: minmax(0, 1fr);
+  .diamond-label-left {
+    left: -24px;
   }
 
-  /* Split layout stack */
-  .home-split {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-
-
-/* -----------------------------------------------------------
-   MOBILE SMALL (max-width: 520px)
-   ----------------------------------------------------------- */
-
-@media (max-width: 520px) {
-
-  main .wrap {
-    padding: 64px 16px 64px;
-  }
-
-  .home-hero-copy h1 {
-    font-size: 2.05rem;
-  }
-
-  .hero-lead {
-    font-size: 1rem;
-  }
-
-  /* Diamond strongly scaled for small screens */
-  .diamond-shell {
-    transform: scale(0.72);
-    transform-origin: top center;
-  }
-
-  /* Modules → 1 column */
-  .home-modules-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Reduce spacing */
-  section {
-    margin-bottom: 52px;
+  footer .inner {
+    flex-direction: column;
+    gap: 8px;
   }
 }
