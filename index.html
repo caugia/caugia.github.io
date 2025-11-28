@@ -440,47 +440,61 @@
   }
 
   function updateGripDiamond() {
-    const g = clamp(gripState.guidance);
-    const r = clamp(gripState.resources);
-    const i = clamp(gripState.implementation);
-    const p = clamp(gripState.performance);
+  const g = clamp(gripState.guidance);
+  const r = clamp(gripState.resources);
+  const i = clamp(gripState.implementation);
+  const p = clamp(gripState.performance);
 
-    const G = g / 100;
-    const R = r / 100;
-    const I = i / 100;
-    const P = p / 100;
+  const G = g / 100;
+  const R = r / 100;
+  const I = i / 100;
+  const P = p / 100;
 
-    // CSS variabelen voor polygon
-    document.documentElement.style.setProperty("--g", G.toString());
-    document.documentElement.style.setProperty("--r", R.toString());
-    document.documentElement.style.setProperty("--i", I.toString());
-    document.documentElement.style.setProperty("--p", P.toString());
+  // ------------------------------
+  // ⭐ NEW AXIS MAPPING
+  // Must match your labels:
+  // TOP    = Guidance
+  // RIGHT  = Implementation
+  // BOTTOM = Performance
+  // LEFT   = Resources
+  // ------------------------------
 
-    // Core dot positie
-    const cx = 50 + (R - P) * 50;
-    const cy = 50 + (I - G) * 50;
-    document.documentElement.style.setProperty("--core-x", cx + "%");
-    document.documentElement.style.setProperty("--core-y", cy + "%");
+  // Polygon CSS variables
+  document.documentElement.style.setProperty("--g", G.toString());
+  document.documentElement.style.setProperty("--i", I.toString());
+  document.documentElement.style.setProperty("--p", P.toString());
+  document.documentElement.style.setProperty("--r", R.toString());
 
-    // Health bars en waarden
-    const total = Math.round((g + r + i + p) / 4);
-    const totalEl = document.getElementById("hero-total-score");
-    if (totalEl) totalEl.textContent = total;
+  // ⭐ CORE DOT CALC WITH CORRECT AXIS
+  // X-axis: RIGHT = Implementation, LEFT = Resources
+  const cx = 50 + (I - R) * 50;
 
-    const map = [
-      ["guidance", g],
-      ["resources", r],
-      ["implementation", i],
-      ["performance", p]
-    ];
+  // Y-axis: DOWN = Performance, UP = Guidance
+  const cy = 50 + (P - G) * 50;
 
-    map.forEach(([key, value]) => {
-      const bar = document.getElementById("bar-" + key);
-      const val = document.getElementById("value-" + key);
-      if (bar) bar.style.width = value + "%";
-      if (val) val.textContent = value;
-    });
-  }
+  document.documentElement.style.setProperty("--core-x", cx + "%");
+  document.documentElement.style.setProperty("--core-y", cy + "%");
+
+  // Total score
+  const total = Math.round((g + r + i + p) / 4);
+  const totalEl = document.getElementById("hero-total-score");
+  if (totalEl) totalEl.textContent = total;
+
+  // Bars + values
+  const map = [
+    ["guidance", g],
+    ["resources", r],
+    ["implementation", i],
+    ["performance", p]
+  ];
+
+  map.forEach(([key, value]) => {
+    const bar = document.getElementById("bar-" + key);
+    const val = document.getElementById("value-" + key);
+    if (bar) bar.style.width = value + "%";
+    if (val) val.textContent = value;
+  });
+}
 
   function bindGripSlider(id, key) {
     const el = document.getElementById(id);
