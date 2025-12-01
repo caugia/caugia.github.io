@@ -574,10 +574,8 @@
   });
 </script>
 
-
-
 <!-- =============================== -->
-<!-- GRIP DIAMOND JS -->
+<!-- GRIP DIAMOND JS + 24 ARCHETYPES -->
 <!-- =============================== -->
 <script>
   const gripState = {
@@ -589,41 +587,163 @@
 
   const clamp = v => Math.max(0, Math.min(100, v));
 
-  function getArchetype(g, r, i, p) {
-  const arr = [g, r, i, p];
-  const weakCount = arr.filter(s => s < 50).length;
+  // -------------------------------
+  // 24-Archetype Classification
+  // -------------------------------
+  function classifyArchetype(g, r, i, p) {
+    const scores = { g, r, i, p };
+    const arr = [g, r, i, p];
+    const overall = (g + r + i + p) / 4;
 
-  if (arr.every(s => s >= 65)) return "High Performer";
-  if (weakCount >= 3) return "Foundation Builder";
-  if (arr.every(s => s >= 55 && s <= 70)) return "Stable Operator";
+    const lowDims = Object.entries(scores)
+      .filter(([_, v]) => v < 50)
+      .map(([k]) => k);
 
-  if (g < 50 && r >= 65 && i >= 65 && p >= 65) return "Directionless Engine";
-  if (r < 50 && g >= 65 && i >= 65 && p >= 65) return "Capacity Crunch";
-  if (i < 50 && g >= 65 && r >= 65 && p >= 65) return "Heroic Chaos";
-  if (p < 50 && g >= 65 && r >= 65 && i >= 65) return "Leaky Bucket";
+    const lowCount = lowDims.length;
+    const highCount = arr.filter(v => v >= 75).length;
+    const veryHighCount = arr.filter(v => v >= 85).length;
+    const maxScore = Math.max(...arr);
+    const minScore = Math.min(...arr);
 
-  if (g < 50 && r < 50) return "Executing Blind";
-  if (g < 50 && i < 50) return "Random Walk";
-  if (g < 50 && p < 50) return "Busy Failure";
-  if (r < 50 && i < 50) return "Undermanned Mess";
-  if (r < 50 && p < 50) return "Resource Starved";
-  if (i < 50 && p < 50) return "Inconsistent Closer";
+    const isLow = key => scores[key] < 50;
 
-  if (g >= 80 && r >= 50 && r <= 65 && i >= 50 && i <= 65 && p >= 50 && p <= 65)
-    return "Overpowered Strategist";
+    // ---------- 1. Elite Operator ----------
+    if (arr.every(v => v >= 85) && veryHighCount >= 2) {
+      return "The Elite Operator";
+    }
 
-  if (r >= 80 && g >= 50 && g <= 65 && i >= 50 && i <= 65 && p >= 50 && p <= 65)
-    return "Infrastructure First";
+    // ---------- 2. Collapse patterns (Tier 1) ----------
+    // Overwhelmed
+    if (arr.every(v => v < 50) || (lowCount >= 3 && overall < 55)) {
+      return "The Overwhelmed";
+    }
 
-  if (i >= 80 && g >= 50 && g <= 65 && r >= 50 && r <= 65 && p >= 50 && p <= 65)
-    return "Operational Workhorse";
+    // Firefighter
+    if (p >= 70 && g < 50 && r < 50 && i < 50) {
+      return "The Firefighter";
+    }
 
-  if (p >= 80 && g >= 50 && g <= 65 && r >= 50 && r <= 65 && i >= 50 && i <= 65)
-    return "Analytical Driver";
+    // Tool Hoarder
+    if (r >= 70 && g < 50 && i < 50 && p < 55) {
+      return "The Tool Hoarder";
+    }
 
-  return "Stable Operator";
-}
+    // Wishful Thinker
+    if (g >= 60 && (i < 50 || p < 50) && overall < 55) {
+      return "The Wishful Thinker";
+    }
 
+    // ---------- 3. Dual constraint patterns ----------
+    if (lowCount >= 2) {
+      if (isLow("g") && isLow("r")) return "The Executing Blind";
+      if (isLow("g") && isLow("i")) return "The Random Walk";
+      if (isLow("g") && isLow("p")) return "The Busy Failure";
+      if (isLow("r") && isLow("i")) return "The Undermanned Mess";
+      if (isLow("r") && isLow("p")) return "The Resource Starved";
+      if (isLow("i") && isLow("p")) return "The Inconsistent Closer";
+    }
+
+    // ---------- 4. Single constraint patterns ----------
+    if (lowCount === 1) {
+      const [dim] = lowDims;
+      const others = Object.entries(scores)
+        .filter(([k]) => k !== dim)
+        .map(([_, v]) => v);
+
+      if (others.every(v => v >= 60)) {
+        if (dim === "g") return "The Directionless Engine";
+        if (dim === "r") return "The Capacity Crunch";
+        if (dim === "i") return "The Heroic Chaos";
+        if (dim === "p") return "The Leaky Bucket";
+      }
+    }
+
+    // ---------- 5. High pair patterns ----------
+    // Insight Leader
+    if (g >= 80 && p >= 80 && r >= 65 && i >= 65) {
+      return "The Insight Leader";
+    }
+
+    // Revenue Machine
+    if (i >= 80 && p >= 80 && g >= 60 && r >= 60) {
+      return "The Revenue Machine";
+    }
+
+    // Systematic Scaler
+    if (highCount >= 3) {
+      const midOrBetter = arr.every(v => v >= 55);
+      if (midOrBetter) {
+        return "The Systematic Scaler";
+      }
+    }
+
+    // ---------- 6. Asymmetric strength patterns ----------
+    const highDims = Object.entries(scores)
+      .filter(([_, v]) => v >= 80)
+      .map(([k]) => k);
+
+    if (highDims.length === 1 && arr.every(v => v >= 45)) {
+      const [dim] = highDims;
+      const others = Object.entries(scores)
+        .filter(([k]) => k !== dim)
+        .map(([_, v]) => v);
+
+      const midOthers = others.filter(v => v >= 50 && v <= 75).length;
+      if (midOthers >= 2) {
+        if (dim === "p") return "The Analyst";
+        if (dim === "g") return "The Strategist";
+        if (dim === "i") return "The Executor";
+        if (dim === "r") return "The Collector";
+      }
+    }
+
+    // ---------- 7. Mid band systems ----------
+    const dimsBelow60 = arr.filter(v => v < 60).length;
+    if (overall >= 50 && overall < 65 && dimsBelow60 >= 2 && maxScore < 80) {
+      return "The Foundation Builder";
+    }
+
+    if (arr.every(v => v >= 60 && v <= 80) && (maxScore - minScore) <= 15) {
+      return "The Stable Operator";
+    }
+
+    // ---------- 8. Fallback ----------
+    if (overall < 60) {
+      return "The Foundation Builder";
+    }
+
+    return "The Stable Operator";
+  }
+
+  // -------------------------------
+  // Archetype: 1 zin per type
+  // -------------------------------
+  const archetypeDescriptions = {
+    "The Overwhelmed": "All four GTM dimensions are weak; effort is high but the system is unstable.",
+    "The Firefighter": "The organisation runs in crisis mode; wins require constant heroics instead of a stable system.",
+    "The Tool Hoarder": "You have many tools and data, but no coherent operating model to turn them into results.",
+    "The Wishful Thinker": "Strategy sounds good on slides, but execution and performance do not keep pace.",
+    "The Executing Blind": "Teams work hard without clear direction or proper enablement, so impact stays low.",
+    "The Random Walk": "There is no shared playbook; campaigns and motions shift constantly and learnings do not stick.",
+    "The Busy Failure": "Activity is high but outcomes lag; the system rewards effort more than results.",
+    "The Undermanned Mess": "Capacity and process are both thin, so basic operations already feel heavy.",
+    "The Resource Starved": "You roughly know what should happen, but roles, data and tooling cannot support it.",
+    "The Inconsistent Closer": "Outcomes depend on who touches the deal; success is not yet repeatable.",
+    "The Directionless Engine": "Execution and resources exist, but GTM strategy and priorities are not aligned.",
+    "The Capacity Crunch": "Guidance and execution are strong, but infrastructure and RevOps are running hot.",
+    "The Heroic Chaos": "Results depend on individual talent rather than clear, enforced GTM processes.",
+    "The Leaky Bucket": "The system creates pipeline, but value leaks in conversion, pricing or retention.",
+    "The Analyst": "You see everything in the data, but action and system change lag behind the insight.",
+    "The Strategist": "Positioning and narrative are strong, but the GTM system behind them is underbuilt.",
+    "The Executor": "Teams execute reliably, but sometimes execute the wrong priorities very well.",
+    "The Collector": "You own many GTM assets and tools, but usage and standards are inconsistent.",
+    "The Foundation Builder": "You have moved past collapse, but several GTM dimensions still need basic structure.",
+    "The Stable Operator": "Your GTM engine is balanced and predictable, but lacks real acceleration.",
+    "The Systematic Scaler": "Most of the system is strong; one recurring bottleneck now limits scale.",
+    "The Revenue Machine": "Execution and commercial discipline are strong; the system reliably converts pipeline.",
+    "The Insight Leader": "Strategy is sharp and validated by results; GTM decisions are grounded in reality.",
+    "The Elite Operator": "All GRIP dimensions are strong and mutually reinforcing; GTM is a competitive advantage."
+  };
 
   function updateGripDiamond() {
     const g = clamp(gripState.guidance);
@@ -631,12 +751,20 @@
     const i = clamp(gripState.implementation);
     const p = clamp(gripState.performance);
 
-      const archetype = getArchetype(g, r, i, p);
-  const archetypeEl = document.getElementById("hero-archetype");
-  if (archetypeEl) {
-    archetypeEl.textContent = archetype;
-  }
+    // 1) Archetype bepalen
+    const archetypeName = classifyArchetype(g, r, i, p);
+    const archetypeEl = document.getElementById("hero-archetype");
+    if (archetypeEl) {
+      const titleEl = archetypeEl.querySelector(".archetype-title");
+      const descEl = archetypeEl.querySelector(".archetype-desc");
 
+      if (titleEl) titleEl.textContent = archetypeName;
+      if (descEl) {
+        descEl.textContent = archetypeDescriptions[archetypeName] || "";
+      }
+    }
+
+    // 2) Diamond shape tekenen
     const point = (deg, val) => {
       const cx = 140, cy = 140, maxR = 100;
       const rad = deg * Math.PI / 180;
@@ -645,15 +773,20 @@
     };
 
     const polygon = document.getElementById("hero-diamond-polygon");
-    polygon.setAttribute("points", [
-      point(90, g),
-      point(0, i),
-      point(270, p),
-      point(180, r)
-    ].join(" "));
+    if (polygon) {
+      polygon.setAttribute("points", [
+        point(90, g),    // top = Guidance
+        point(0, i),     // right = Implementation
+        point(270, p),   // bottom = Performance
+        point(180, r)    // left = Resources
+      ].join(" "));
+    }
 
-    document.getElementById("hero-total-score").textContent =
-      Math.round((g + r + i + p) / 4);
+    // 3) Total score + bars
+    const totalEl = document.getElementById("hero-total-score");
+    if (totalEl) {
+      totalEl.textContent = Math.round((g + r + i + p) / 4);
+    }
 
     const map = [
       ["guidance", g],
@@ -663,21 +796,27 @@
     ];
 
     map.forEach(([k, v]) => {
-      document.getElementById("bar-" + k).style.width = v + "%";
-      document.getElementById("value-" + k).textContent = v;
+      const bar = document.getElementById("bar-" + k);
+      const value = document.getElementById("value-" + k);
+      if (bar) bar.style.width = v + "%";
+      if (value) value.textContent = v;
     });
   }
 
   ["guidance","resources","implementation","performance"].forEach(key => {
     const slider = document.getElementById("slider-" + key);
-    slider.addEventListener("input", e => {
-      gripState[key] = parseInt(e.target.value, 10);
-      updateGripDiamond();
-    });
+    if (slider) {
+      slider.addEventListener("input", e => {
+        gripState[key] = parseInt(e.target.value, 10);
+        updateGripDiamond();
+      });
+    }
   });
 
+  // Initial render
   updateGripDiamond();
 </script>
+
 
 </body>
 </html>
