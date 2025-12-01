@@ -1158,3 +1158,65 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-moz-range-track {
   background: #E5E7EB !important;
 }
+
+/* ===========================================================
+   CAUGIA v7.2 — HERO ALIGN + SLIDER FIX
+   =========================================================== */
+
+/* 1) GRIP-kader iets naar links (meer marge rechts) */
+.home-hero-visual {
+  width: 135% !important;          /* kleiner dan 140% → meer witruimte rechts */
+  transform-origin: left center;
+  transform: translateX(-28%) !important; /* zelfde balans links */
+}
+
+/* 2) Implementation / Resources labels netjes binnen het kader */
+.diamond-label-right {
+  right: -24px !important;         /* was -42px → nu duidelijk binnen het blauwe vlak */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 3) Sliders: dun, volledig rond, geen lelijke browser-fill */
+.hero-health-slider input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* WebKit (Chrome / Safari) track */
+.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Firefox track */
+.hero-health-slider input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Thumb blijft jouw blauwe, ronde stijl */
+.hero-health-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
+}
+
+.hero-health-slider input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
+}
