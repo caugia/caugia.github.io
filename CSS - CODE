@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v4.0
+   CAUGIA CONSULTING — PRODUCTION CSS v7.0 (Base + Header)
    Calm • Professional • Systematic • Enterprise-grade
    =========================================================== */
 
@@ -74,8 +74,9 @@ main {
   min-height: calc(100vh - var(--header-h));
 }
 
+/* basispadding, wordt fijngetuned in Block 4 */
 main .wrap {
-  padding: 96px 24px 80px;
+  padding: clamp(80px, 8vw, 96px) clamp(18px, 3vw, 24px) clamp(64px, 7vw, 80px);
 }
 
 section {
@@ -182,11 +183,12 @@ nav.nav-desktop a.active::after {
   margin-left: 8px;
 }
 
-/* Fix: Contact CTA mag geen hover-underline tonen */
+/* Contact CTA mag geen hover-underline tonen */
 nav.nav-desktop a.cta::after {
   width: 0 !important;
   display: none !important;
 }
+
 
 /* -----------------------------------------------------------
    CTA BUTTONS
@@ -206,9 +208,12 @@ nav.nav-desktop a.cta::after {
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition),
-              box-shadow var(--transition), transform var(--transition),
-              border-color var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition),
+    border-color var(--transition);
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
@@ -231,7 +236,7 @@ nav.nav-desktop a.cta::after {
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
-/* Header CTA must stay white */
+/* Header CTA blijft altijd wit */
 .nav-desktop .cta,
 .nav-desktop .cta:hover {
   color: #fff !important;
@@ -304,7 +309,8 @@ nav.nav-mobile.open {
   display: flex;
 }
 
-@media (max-width: 768px) {
+/* breakpoint in lijn met Block 4 */
+@media (max-width: 720px) {
   nav.nav-desktop {
     display: none;
   }
@@ -312,6 +318,7 @@ nav.nav-mobile.open {
     display: inline-flex;
   }
 }
+
 
 /* ===========================================================
    BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
