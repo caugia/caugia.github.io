@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v7.0 (Base + Header)
+   CAUGIA CONSULTING — PRODUCTION CSS v7.3 (Safe Mode)
    Calm • Professional • Systematic • Enterprise-grade
    =========================================================== */
 
@@ -311,7 +311,7 @@ nav.nav-mobile.open {
   display: flex;
 }
 
-/* Mobile breakpoint (consistent with Block 4) */
+/* Mobile breakpoint */
 @media (max-width: 720px) {
   nav.nav-desktop {
     display: none;
@@ -320,6 +320,7 @@ nav.nav-mobile.open {
     display: inline-flex;
   }
 }
+
 
 /* ===========================================================
    BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
@@ -381,7 +382,6 @@ p {
   border-radius: var(--radius);
   border: 1px solid rgba(15, 23, 42, 0.06);
   padding: clamp(18px, 2vw, 22px);
-
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
   transition:
     box-shadow var(--transition),
@@ -496,7 +496,7 @@ p {
 
 
 /* -----------------------------------------------------------
-   MODULES GRID (auto-fit → perfect zoom behaviour)
+   MODULES GRID
    ----------------------------------------------------------- */
 
 .home-modules-grid {
@@ -579,7 +579,7 @@ p {
 
 .clarity-image img,
 .diamond-image img {
-  width: 100%;
+  width: clamp(240px, 38vw, 540px);
   height: auto;
   object-fit: cover;
   border-radius: 16px;
@@ -618,6 +618,7 @@ p {
     order: 1;
   }
 }
+
 
 /* ===========================================================
    BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND
@@ -680,13 +681,16 @@ p {
 
 
 /* -----------------------------------------------------------
-   RIGHT COLUMN WRAPPER (RESTORED)
+   RIGHT COLUMN WRAPPER (FINAL SAFE MODE)
    ----------------------------------------------------------- */
 
 .home-hero-visual {
-  width: 135%;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 135% !important;
   transform-origin: left center;
-  transform: translateX(-18%);
+  transform: translateX(-28%) !important;
   border-radius: 22px;
   padding: 24px 26px 36px;
   background: linear-gradient(135deg, #f9fafc 0%, #f3f6ff 100%);
@@ -703,17 +707,15 @@ p {
 
 
 /* ===========================================================
-   HEALTH CARD — RESTORED
+   HEALTH CARD — FINAL
    =========================================================== */
 
 .hero-health {
   border-radius: 14px;
-  padding: 16px 18px 18px;
+  padding: 20px 18px 18px !important;
   background: #ffffff;
   border: 1px solid rgba(15,23,42,0.06);
   box-shadow: 0 8px 22px rgba(15,23,42,0.04);
-
-  /* ⭐ matches Diamond card height */
   height: 100%;
 }
 
@@ -791,7 +793,7 @@ p {
 }
 
 
-/* ---------- SLIDERS — RESTORED, CENTERED ---------- */
+/* ---------- SLIDERS — FINAL ---------- */
 
 .hero-health-sliders {
   margin-top: 12px;
@@ -799,18 +801,19 @@ p {
   border-top: 1px solid rgba(15,23,42,0.06);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 14px;
+  gap: 18px 14px; /* row-gap final */
 }
 
 .hero-health-slider {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   font-size: 0.85rem;
 }
 
 .hero-health-slider label {
   color: rgba(75,85,99,1);
+  margin-bottom: 2px;
 }
 
 /* rail — centered, rounded */
@@ -824,30 +827,43 @@ p {
   margin: 0;
 }
 
-/* thumb — now PERFECTLY centered vertically */
+/* WebKit track */
+.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Firefox track */
+.hero-health-slider input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* thumb — final style */
 .hero-health-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--blue);
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 2px rgba(0,70,165,0.20);
-  margin-top: -5px;  /* ⭐ fixes vertical centering */
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
 }
 
 .hero-health-slider input[type="range"]::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--blue);
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 2px rgba(0,70,165,0.20);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
 }
 
 
 /* ===========================================================
-   DIAMOND CARD — RESTORED + WIDER
+   DIAMOND CARD — FINAL
    =========================================================== */
 
 .diamond-card {
@@ -856,11 +872,8 @@ p {
   background: #ffffff;
   border: 1px solid rgba(15,23,42,0.06);
   box-shadow: 0 10px 28px rgba(15,23,42,0.05);
-
-  /* ⭐ same height as health card */
   height: 100%;
-
-  padding: 28px 80px 36px; /* ⭐ wider than before */
+  padding: 28px 80px 36px;
 }
 
 .diamond-title {
@@ -875,138 +888,68 @@ p {
 
 .diamond-canvas {
   position: relative;
-  height: 260px;
-  max-width: 360px; /* ⭐ wider */
-  padding: 0 20px;
+  height: 340px !important;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
 }
 
 .diamond-svg {
   width: 100%;
-max-width: 260px;
+  max-width: 340px !important;
+  height: auto !important;
 }
 
-
-/* ---- labels ---- */
-
-.diamond-label {
-  position: absolute;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: rgba(15,23,42,0.9);
-}
-
-.diamond-label-top    { top: 4px; left: 50%; transform: translateX(-50%); }
-.diamond-label-bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
-
-/* ⭐ symmetrical spacing (Implementation no longer touching edge) */
-.diamond-label-right  {
-  right: -20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.diamond-label-left   {
-  left: -20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-
-/* -----------------------------------------------------------
-   RESPONSIVE
-   ----------------------------------------------------------- */
-
-@media (max-width: 1024px) {
-  .home-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-  .home-hero-copy { margin-top: 0; }
-  .hero-visual-grid { grid-template-columns: 1fr; }
-  .home-hero-visual { width: 100%; transform: none; }
-}
-
-@media (max-width: 520px) {
-  .hero-cta-row { flex-direction: column; }
-}
-
-/* ===========================================================
-   FIX — PERFECT ALIGNED DIAMOND LABELS (Caugia Final)
-   =========================================================== */
-
-/* 1. Diamond canvas houdt vast aan jouw validated size */
-.diamond-canvas {
-  position: relative;
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 40px; /* lucht links + rechts */
-}
-
-/* 2. Labels exact op de as van de diamond-midpoint */
+/* algemene labelstijl */
 .diamond-label {
   position: absolute;
   font-size: 0.92rem;
   font-weight: 400;
   color: rgba(15, 23, 42, 0.9);
-  white-space: nowrap;        
+  white-space: nowrap;
 }
 
-/* TOP (blijft zoals je 'm goed vond) */
+/* Top en bottom */
 .diamond-label-top {
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-/* BOTTOM */
 .diamond-label-bottom {
   bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-/* LEFT — PERFECT op **dezelfde lijn** als diamond midpoint */
-.diamond-label-left {
-  left: -48px;                     /* ademruimte links */
-  top: 50%;                        /* exact center */
-  transform: translateY(-50%);     /* exact op de punt-lijn */
+/* Middelpunt als referentie voor Resources + Implementation */
+.diamond-label-left,
+.diamond-label-right {
+  top: 50%;
+  left: 50%;
 }
 
-/* RIGHT — PERFECT gespiegeld van LEFT */
+/* Resources (links) — buiten het raster */
+.diamond-label-left {
+  transform: translate(-270%, -50%);
+}
+
+/* Implementation (rechts) — spiegeling */
 .diamond-label-right {
-  right: -48px;                    /* ademruimte rechts */
-  top: 50%;                        /* exact dezelfde Y-lijn */
-  transform: translateY(-50%);     /* exact op de punt-lijn */
+  transform: translate(60%, -50%);
 }
 
 
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES (Caugia v7.1 — Clean & Stable)
+   BLOCK 4 — RESPONSIVE RULES (Caugia v7.3 Safe)
    Modern • Predictable • Zoom-proof • Caugia Style
    =========================================================== */
 
-/* FIX — Restore Diamond vertical alignment exactly as validated */
-
-.home-hero-visual {
-  display: flex;
-  align-items: center;      /* centreert health + diamond verticaal */
-  gap: 32px;
-}
-
-.hero-health {
-  padding-top: 20px !important;
-}
-
-.diamond-card {
-  padding-top: 26px !important;
-}
 
 /* -----------------------------------------------------------
    XL DEVICES — up to 1280px
-   Light compression for laptop screens & 125% zoom
    ----------------------------------------------------------- */
 @media (max-width: 1280px) {
 
@@ -1018,9 +961,8 @@ max-width: 260px;
     gap: clamp(32px, 4vw, 48px);
   }
 
-  /* Keep original Block 3 transformation */
   .home-hero-visual {
-    transform: translateX(-18%);
+    transform: translateX(-18%) !important;
     padding: 26px 24px 36px;
   }
 }
@@ -1028,11 +970,9 @@ max-width: 260px;
 
 /* -----------------------------------------------------------
    TABLETS — up to 1024px
-   Stacks the hero, compresses grids
    ----------------------------------------------------------- */
 @media (max-width: 1024px) {
 
-  /* Hero becomes vertical */
   .home-hero-grid {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -1051,19 +991,16 @@ max-width: 260px;
     gap: 26px;
   }
 
-  /* Right panel fills width but keeps style */
   .home-hero-visual {
-    width: 100%;
-    transform: none;
+    width: 100% !important;
+    transform: none !important;
     padding: 24px;
   }
 
-  /* Product ladder → 2 columns */
   .home-grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Modules → 2 columns */
   .home-modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1072,7 +1009,6 @@ max-width: 260px;
 
 /* -----------------------------------------------------------
    MOBILE LANDSCAPE / SMALL TABLETS — up to 720px
-   Nav switches, grids collapse to one column
    ----------------------------------------------------------- */
 @media (max-width: 720px) {
 
@@ -1080,15 +1016,14 @@ max-width: 260px;
     padding: 14px 18px;
   }
 
-  /* Enable mobile menu */
   .nav-desktop {
     display: none;
   }
+
   .menu-toggle {
     display: flex;
   }
 
-  /* All grids → single column */
   .home-grid-3,
   .home-modules-grid {
     grid-template-columns: 1fr;
@@ -1106,7 +1041,6 @@ max-width: 260px;
 
 /* -----------------------------------------------------------
    PHONES — up to 480px
-   Tightens padding + stacks CTAs + fixes Diamond labels
    ----------------------------------------------------------- */
 @media (max-width: 480px) {
 
@@ -1123,12 +1057,12 @@ max-width: 260px;
     padding: 18px 16px 20px;
   }
 
-  /* Diamond label safety — only on phones */
   .diamond-label-right {
-    right: -22px;
+    transform: translate(40%, -50%);
   }
+
   .diamond-label-left {
-    left: -22px;
+    transform: translate(-250%, -50%);
   }
 }
 
@@ -1185,18 +1119,12 @@ footer {
 
 /* -----------------------------------------------------------
    IMAGE ZOOM-PROOF SAFEGUARD
-   Clarity + Diamond images resize smoothly
    ----------------------------------------------------------- */
-.clarity-image img,
-.diamond-image img {
-  width: clamp(240px, 38vw, 540px);
-  height: auto;
-}
+/* (al verwerkt boven in clarity-image/diamond-image) */
 
 
 /* -----------------------------------------------------------
-   SLIDER RESTORATION
-   Prevent Chrome's filled blue track from appearing
+   SLIDER RESTORATION — GLOBAL RANGE TRACK
    ----------------------------------------------------------- */
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -1204,167 +1132,4 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 input[type="range"]::-moz-range-track {
   background: #E5E7EB !important;
-}
-
-/* ===========================================================
-   CAUGIA v7.2 — HERO ALIGN + SLIDER FIX
-   =========================================================== */
-
-/* 1) GRIP-kader iets naar links (meer marge rechts) */
-.home-hero-visual {
-  width: 135% !important;          /* kleiner dan 140% → meer witruimte rechts */
-  transform-origin: left center;
-  transform: translateX(-28%) !important; /* zelfde balans links */
-}
-
-/* 2) Implementation / Resources labels netjes binnen het kader */
-.diamond-label-right {
-  right: -24px !important;         /* was -42px → nu duidelijk binnen het blauwe vlak */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* 3) Sliders: dun, volledig rond, geen lelijke browser-fill */
-.hero-health-slider input[type="range"] {
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-  appearance: none;
-  cursor: pointer;
-}
-
-/* WebKit (Chrome / Safari) track */
-.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-}
-
-/* Firefox track */
-.hero-health-slider input[type="range"]::-moz-range-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-}
-
-/* Thumb blijft jouw blauwe, ronde stijl */
-.hero-health-slider input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
-}
-
-.hero-health-slider input[type="range"]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
-}
-
-/* ===========================================================
-   CAUGIA FINAL — DIAMOND LABELS EXACT GOOD
-   =========================================================== */
-
-/* Basis blijft gelijk */
-.diamond-canvas {
-  position: relative;
-  height: 260px;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* algemene labelstijl */
-.diamond-label {
-  position: absolute;
-  font-size: 0.92rem;
-  font-weight: 400;
-  color: rgba(15, 23, 42, 0.9);
-  white-space: nowrap;
-}
-
-/* Top en bottom blijven zoals je ze had */
-.diamond-label-top {
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-bottom {
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* LINKS: Resources — exact op de horizontale lijn van de punt, buiten de diamond */
-.diamond-label-left {
-  top: 50%;
-  left: 50%;
-  transform: translate(-190%, -50%);
-}
-
-/* RECHTS: Implementation — zelfde lijn, maar verder naar rechts zodat het WOORD buiten de diamond valt */
-.diamond-label-right {
-  top: 50%;
-  left: 50%;
-  transform: translate(210%, -50%);
-}
-
-/* ===========================================================
-   CAUGIA FINAL — SLIDER SPACING
-   =========================================================== */
-
-/* meer verticale ruimte tussen de 2 rijen sliders */
-.hero-health-sliders {
-  row-gap: 18px; /* was 12px */
-}
-
-/* iets meer ruimte tussen label en slider zelf */
-.hero-health-slider {
-  gap: 6px;   /* was 4px */
-}
-
-.hero-health-slider label {
-  margin-bottom: 2px;
-}
-
-/* ===========================================================
-   CAUGIA — FINAL LABEL FIX (Resources + Implementation)
-   EXACT jouw bedoeling, pixel-perfect gecentreerd
-   =========================================================== */
-
-/* Middelpunt als referentie */
-.diamond-label-left,
-.diamond-label-right {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-}
-
-/* Resources (links) — zelfde hoogte, buiten het raster */
-.diamond-label-left {
-  transform: translate(-270%, -50%); /* afstand L ↔︎ punt */
-}
-
-/* Implementation (rechts) — spiegeling van Resources */
-.diamond-label-right {
-  transform: translate(60%, -50%);  /* exact symmetrisch */
-}
-
-.diamond-canvas {
-  height: 340px !important;   /* groter maken — originele was 260px */
-}
-
-.diamond-svg {
-  max-width: 340px !important; /* laat mee schalen met canvas */
-  height: auto !important;
 }
