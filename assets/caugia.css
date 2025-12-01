@@ -1,3 +1,4 @@
+
 /* ===========================================================
    CAUGIA CONSULTING — PRODUCTION CSS v7.3 (Safe Mode)
    Calm • Professional • Systematic • Enterprise-grade
@@ -801,7 +802,7 @@ p {
   border-top: 1px solid rgba(15,23,42,0.06);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 14px;
+  gap: 18px 14px; /* row-gap final */
 }
 
 .hero-health-slider {
@@ -850,7 +851,7 @@ p {
   background: var(--blue);
   border: 2px solid #ffffff;
   box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
-  margin-top: -4px;
+  margin-top: -4px; /* ⭐ duwt de dot precies op de rail */
 }
 
 .hero-health-slider input[type="range"]::-moz-range-thumb {
@@ -860,18 +861,8 @@ p {
   background: var(--blue);
   border: 2px solid #ffffff;
   box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
-}
-
-
-/* ---------- ARCHETYPE LABEL (NIEUW) ---------- */
-
-.hero-archetype {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--blue);
-  letter-spacing: 0.02em;
+  /* Firefox centreert meestal al goed; alleen als hij nog te laag staat kun je dit doen: */
+  /* transform: translateY(-2px); */
 }
 
 
@@ -1147,7 +1138,6 @@ input[type="range"]::-moz-range-track {
   background: #E5E7EB !important;
 }
 
-
 /* ===========================================================
    GTM Clarity Path — Equal Height Cards + CTA Alignment
    =========================================================== */
@@ -1171,31 +1161,33 @@ input[type="range"]::-moz-range-track {
 
 /* De CTA-container vult de resterende ruimte niet, maar plakt onderaan */
 .home-product .service-cta {
-  margin-top: auto;
-  padding-top: 20px;
+  margin-top: auto;     /* ⭐ schuift CTA helemaal naar beneden */
+  padding-top: 20px;    /* ruimte tussen bullets en CTA */
 }
 
 /* Optioneel: maak alle kaarten exact dezelfde hoogte */
 .home-grid-3 > .home-product {
-  min-height: 360px;
+  min-height: 360px;   /* perfect voor jouw huidige layout */
 }
-
 
 /* ===========================================================
    GTM Clarity Path — Bullet Alignment & Line Height Fix
    =========================================================== */
 
+/* Maak bullets consistent qua regelafstand */
 .home-product ul.service-features li {
-  line-height: 1.55;
-  margin-bottom: 6px;
+  line-height: 1.55;      /* zelfde rust als jouw bodytekst */
+  margin-bottom: 6px;     /* extra lucht tussen bullets */
 }
 
+/* Zorg dat de bullet-lijst overal op dezelfde positie begint */
 .home-product ul.service-features {
-  margin-top: 16px !important;
+  margin-top: 16px !important;   /* gelijke top-margin voor alle kaarten */
   margin-bottom: 0;
 }
 
+/* Boxtuning voor het tekstblok boven de bullets */
 .home-product .service-body {
   margin-bottom: 0 !important;
-  padding-bottom: 4px;
+  padding-bottom: 4px;          /* consistent kleine lucht */
 }
