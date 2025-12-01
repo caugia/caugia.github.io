@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,64 +94,69 @@
           <div class="hero-visual-grid">
 
             <!-- HEALTH CARD -->
-            <div class="hero-health">
-              <div class="hero-health-header">
-                <div>
-                  <p class="hero-health-label">Your GRIP health</p>
-                  <p class="hero-health-score">
-                    <span id="hero-total-score">58</span><span>/100</span>
-                  </p>
-                </div>
-              </div>
+          <div class="hero-health">
 
-              <div class="hero-health-rows">
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Guidance</span>
-                  <div class="hero-health-bar"><span id="bar-guidance"></span></div>
-                  <span class="hero-health-value" id="value-guidance">45</span>
-                </div>
+  <div class="hero-health-header">
+    <div>
+      <p class="hero-health-label">Your GRIP health</p>
+      <p class="hero-health-score">
+        <span id="hero-total-score">58</span><span>/100</span>
+      </p>
+    </div>
+  </div>
 
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Resources</span>
-                  <div class="hero-health-bar"><span id="bar-resources"></span></div>
-                  <span class="hero-health-value" id="value-resources">60</span>
-                </div>
+  <div class="hero-health-rows">
+    <div class="hero-health-row">
+      <span class="hero-health-name">Guidance</span>
+      <div class="hero-health-bar"><span id="bar-guidance"></span></div>
+      <span class="hero-health-value" id="value-guidance">45</span>
+    </div>
 
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Implementation</span>
-                  <div class="hero-health-bar"><span id="bar-implementation"></span></div>
-                  <span class="hero-health-value" id="value-implementation">85</span>
-                </div>
+    <div class="hero-health-row">
+      <span class="hero-health-name">Resources</span>
+      <div class="hero-health-bar"><span id="bar-resources"></span></div>
+      <span class="hero-health-value" id="value-resources">60</span>
+    </div>
 
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Performance</span>
-                  <div class="hero-health-bar"><span id="bar-performance"></span></div>
-                  <span class="hero-health-value" id="value-performance">43</span>
-                </div>
-              </div>
+    <div class="hero-health-row">
+      <span class="hero-health-name">Implementation</span>
+      <div class="hero-health-bar"><span id="bar-implementation"></span></div>
+      <span class="hero-health-value" id="value-implementation">85</span>
+    </div>
 
-              <div class="hero-health-sliders">
-                <div class="hero-health-slider">
-                  <label for="slider-guidance">Guidance</label>
-                  <input id="slider-guidance" type="range" min="0" max="100" value="45">
-                </div>
+    <div class="hero-health-row">
+      <span class="hero-health-name">Performance</span>
+      <div class="hero-health-bar"><span id="bar-performance"></span></div>
+      <span class="hero-health-value" id="value-performance">43</span>
+    </div>
+  </div>
 
-                <div class="hero-health-slider">
-                  <label for="slider-resources">Resources</label>
-                  <input id="slider-resources" type="range" min="0" max="100" value="60">
-                </div>
+  <div class="hero-health-sliders">
+    <div class="hero-health-slider">
+      <label for="slider-guidance">Guidance</label>
+      <input id="slider-guidance" type="range" min="0" max="100" value="45">
+    </div>
 
-                <div class="hero-health-slider">
-                  <label for="slider-implementation">Implementation</label>
-                  <input id="slider-implementation" type="range" min="0" max="100" value="85">
-                </div>
+    <div class="hero-health-slider">
+      <label for="slider-resources">Resources</label>
+      <input id="slider-resources" type="range" min="0" max="100" value="60">
+    </div>
 
-                <div class="hero-health-slider">
-                  <label for="slider-performance">Performance</label>
-                  <input id="slider-performance" type="range" min="0" max="100" value="43">
-                </div>
-              </div>
-            </div>
+    <div class="hero-health-slider">
+      <label for="slider-implementation">Implementation</label>
+      <input id="slider-implementation" type="range" min="0" max="100" value="85">
+    </div>
+
+    <div class="hero-health-slider">
+      <label for="slider-performance">Performance</label>
+      <input id="slider-performance" type="range" min="0" max="100" value="43">
+    </div>
+  </div>
+
+  <!-- ✅ PERFECT: Archetype INSIDE the health card -->
+  <div id="hero-archetype" class="hero-archetype"></div>
+
+</div>
 
 
             <!-- SVG DIAMOND -->
@@ -543,11 +549,53 @@
 
   const clamp = v => Math.max(0, Math.min(100, v));
 
+  function getArchetype(g, r, i, p) {
+  const arr = [g, r, i, p];
+  const weakCount = arr.filter(s => s < 50).length;
+
+  if (arr.every(s => s >= 65)) return "High Performer";
+  if (weakCount >= 3) return "Foundation Builder";
+  if (arr.every(s => s >= 55 && s <= 70)) return "Stable Operator";
+
+  if (g < 50 && r >= 65 && i >= 65 && p >= 65) return "Directionless Engine";
+  if (r < 50 && g >= 65 && i >= 65 && p >= 65) return "Capacity Crunch";
+  if (i < 50 && g >= 65 && r >= 65 && p >= 65) return "Heroic Chaos";
+  if (p < 50 && g >= 65 && r >= 65 && i >= 65) return "Leaky Bucket";
+
+  if (g < 50 && r < 50) return "Executing Blind";
+  if (g < 50 && i < 50) return "Random Walk";
+  if (g < 50 && p < 50) return "Busy Failure";
+  if (r < 50 && i < 50) return "Undermanned Mess";
+  if (r < 50 && p < 50) return "Resource Starved";
+  if (i < 50 && p < 50) return "Inconsistent Closer";
+
+  if (g >= 80 && r >= 50 && r <= 65 && i >= 50 && i <= 65 && p >= 50 && p <= 65)
+    return "Overpowered Strategist";
+
+  if (r >= 80 && g >= 50 && g <= 65 && i >= 50 && i <= 65 && p >= 50 && p <= 65)
+    return "Infrastructure First";
+
+  if (i >= 80 && g >= 50 && g <= 65 && r >= 50 && r <= 65 && p >= 50 && p <= 65)
+    return "Operational Workhorse";
+
+  if (p >= 80 && g >= 50 && g <= 65 && r >= 50 && r <= 65 && i >= 50 && i <= 65)
+    return "Analytical Driver";
+
+  return "Stable Operator";
+}
+
+
   function updateGripDiamond() {
     const g = clamp(gripState.guidance);
     const r = clamp(gripState.resources);
     const i = clamp(gripState.implementation);
     const p = clamp(gripState.performance);
+
+      const archetype = getArchetype(g, r, i, p);
+  const archetypeEl = document.getElementById("hero-archetype");
+  if (archetypeEl) {
+    archetypeEl.textContent = archetype;
+  }
 
     const point = (deg, val) => {
       const cx = 140, cy = 140, maxR = 100;
