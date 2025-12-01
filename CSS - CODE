@@ -657,7 +657,7 @@ p {
 
 /* ===========================================================
    BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND
-   Enterprise v6.0 — Clean, Consistent, Caugia Style
+   Enterprise v7.0 — Zoom-proof, Fluid, Caugia Style
    =========================================================== */
 
 
@@ -671,13 +671,13 @@ p {
 
 .home-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-  gap: 48px;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
   align-items: center;
 }
 
 .home-hero-copy {
-  margin-top: -32px;
+  margin-top: -24px;
 }
 
 .home-hero-copy .kicker {
@@ -716,17 +716,16 @@ p {
 
 
 /* -----------------------------------------------------------
-   RIGHT COLUMN WRAPPER
+   RIGHT COLUMN WRAPPER — ZOOM-PROOF VERSION
    ----------------------------------------------------------- */
 
-/* ---------- RIGHT COLUMN WRAPPER (TERUG NAAR MOOIE ALIGNMENT) ---------- */
-
 .home-hero-visual {
-  width: 140%;              /* meer totale ruimte */
-  transform-origin: left center;
-  transform: translateX(-28%);   /* blok schuift naar links zodat de balans klopt */
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  padding: 32px 32px 44px;
   border-radius: 22px;
-  padding: 26px 26px 40px;
+
   background: linear-gradient(135deg, #f9fafc, #f0f4ff);
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
@@ -734,20 +733,19 @@ p {
 
 .hero-visual-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.8fr);
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.7fr);
+  gap: 32px;
   align-items: center;
 }
 
 
-
-/* ===========================================================
+/* -----------------------------------------------------------
    HEALTH CARD
-   =========================================================== */
+   ----------------------------------------------------------- */
 
 .hero-health {
   border-radius: 14px;
-  padding: 18px 20px 20px;
+  padding: 20px 24px 22px;
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
@@ -777,19 +775,19 @@ p {
 }
 
 
-/* ---------------- HEALTH BARS (clean + long + aligned) ---------------- */
+/* ---------------- HEALTH BARS — fluid & aligned ---------------- */
 
 .hero-health-rows {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
 .hero-health-row {
   display: grid;
-  grid-template-columns: 95px minmax(0, 1fr) auto; /* labels small → LONG bars */
-  column-gap: 18px;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  column-gap: 20px;
   align-items: center;
   font-size: 0.92rem;
 }
@@ -797,7 +795,6 @@ p {
 .hero-health-name {
   white-space: nowrap;
   color: rgba(55, 65, 81, 1);
-  padding-right: 4px;
 }
 
 .hero-health-bar {
@@ -811,9 +808,7 @@ p {
 
 .hero-health-bar span {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  inset: 0;
   border-radius: inherit;
   background: linear-gradient(90deg,
     var(--blue) 0%,
@@ -830,7 +825,9 @@ p {
 }
 
 
-/* ---------------- SLIDERS ---------------- */
+/* -----------------------------------------------------------
+   SLIDERS
+   ----------------------------------------------------------- */
 
 .hero-health-sliders {
   margin-top: 12px;
@@ -845,50 +842,21 @@ p {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 0.85rem;
-}
-
-.hero-health-slider input[type="range"] {
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-  appearance: none;
-}
-
-.hero-health-slider input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
-}
-
-.hero-health-slider input[type="range"]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
 }
 
 
-
-/* ===========================================================
-   SVG DIAMOND — clean + spacious (fix implementation edges)
-   =========================================================== */
+/* -----------------------------------------------------------
+   DIAMOND CARD — fluid & spacious
+   ----------------------------------------------------------- */
 
 .diamond-card {
   position: relative;
   border-radius: 16px;
+  padding: 28px clamp(40px, 6vw, 80px) 36px;
+
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
-
-  padding: 24px 60px 32px;      /* ★★ huge fix: breathing room left+right */
 }
 
 .diamond-title {
@@ -896,15 +864,15 @@ p {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-align: center;
   color: rgba(15, 23, 42, 0.55);
+  text-align: center;
   margin-bottom: 18px;
 }
 
 .diamond-canvas {
   position: relative;
   height: 260px;
-  padding: 0 20px; /* nice balanced inside padding */
+  padding: 0 clamp(20px, 3vw, 40px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -916,7 +884,7 @@ p {
   height: auto;
 }
 
-/* ------- LABEL POSITIONS WITH PROPER SPACE ------- */
+/* ------- fluid label spacing ------- */
 
 .diamond-label {
   position: absolute;
@@ -928,54 +896,36 @@ p {
 .diamond-label-top    { top: 4px; left: 50%; transform: translateX(-50%); }
 .diamond-label-bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
 
+/* ★ replaced fixed pixels by fluid viewport spacing */
 .diamond-label-right  {
-  right: -42px;        /* ★ final spacing so Implementation NEVER touches edge */
-  top: 50%;
-  transform: translateY(-50%);
+  right: clamp(-28px, -3vw, -42px);
+  top: 50%; transform: translateY(-50%);
 }
 
 .diamond-label-left   {
-  left: -10px;         /* symmetric to right */
-  top: 50%;
-  transform: translateY(-50%);
+  left: clamp(-28px, -3vw, -42px);
+  top: 50%; transform: translateY(-50%);
 }
 
 
 
-/* ===========================================================
-   RESPONSIVE RULES
-   =========================================================== */
+/* -----------------------------------------------------------
+   RESPONSIVE HERO
+   ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
   .home-hero-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 48px;
   }
-  .home-hero-visual {
-    width: 100%;
-    transform: none;
-  }
-  .hero-visual-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 840px) {
-  .diamond-canvas {
-    height: 240px;
-  }
+  .home-hero-copy { margin-top: 0; }
+  .home-hero-visual { max-width: 100%; margin: 0; }
 }
 
 @media (max-width: 520px) {
-  .hero-cta-row {
-    flex-direction: column;
-  }
-  .diamond-canvas {
-    height: 220px;
-  }
-  .diamond-label-right { right: -12px; }
-  .diamond-label-left  { left: -12px; }
+  .hero-cta-row { flex-direction: column; }
 }
+
 
 /* ===========================================================
    BLOCK 4 — RESPONSIVE RULES v4.3
