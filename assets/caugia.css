@@ -937,16 +937,15 @@ p {
 
 
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES v7.0 (Enterprise Fluid)
+   BLOCK 4 — RESPONSIVE RULES (Caugia v7.1 — Clean & Stable)
    Modern • Predictable • Zoom-proof • Caugia Style
    =========================================================== */
 
 
 /* -----------------------------------------------------------
-   XL DEVICES (max-width: 1280px)
-   Soft compression for laptops / 125% zoom
+   XL DEVICES — up to 1280px
+   Light compression for laptop screens & 125% zoom
    ----------------------------------------------------------- */
-
 @media (max-width: 1280px) {
 
   main .wrap {
@@ -957,19 +956,21 @@ p {
     gap: clamp(32px, 4vw, 48px);
   }
 
+  /* Keep original Block 3 transformation */
   .home-hero-visual {
-    transform: translateX(-22%);
-    padding: 24px 24px 32px;
+    transform: translateX(-18%);
+    padding: 26px 24px 36px;
   }
 }
 
-/* -----------------------------------------------------------
-   TABLETS (max-width: 1024px)
-   Hero stacks, grids go single-column
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   TABLETS — up to 1024px
+   Stacks the hero, compresses grids
+   ----------------------------------------------------------- */
 @media (max-width: 1024px) {
 
+  /* Hero becomes vertical */
   .home-hero-grid {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -988,34 +989,36 @@ p {
     gap: 26px;
   }
 
-  /* make blue diamond block full width */
+  /* Right panel fills width but keeps style */
   .home-hero-visual {
     width: 100%;
     transform: none;
+    padding: 24px;
   }
 
-  /* 3-column blocks collapse into 2 */
+  /* Product ladder → 2 columns */
   .home-grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Modules → 2 columns */
   .home-modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* -----------------------------------------------------------
-   MOBILE LANDSCAPE / SMALL TABLETS (max-width: 720px)
-   Navigation switches, all grids go 1-column
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   MOBILE LANDSCAPE / SMALL TABLETS — up to 720px
+   Nav switches, grids collapse to one column
+   ----------------------------------------------------------- */
 @media (max-width: 720px) {
 
   header .inner {
     padding: 14px 18px;
   }
 
-  /* mobile nav */
+  /* Enable mobile menu */
   .nav-desktop {
     display: none;
   }
@@ -1023,7 +1026,7 @@ p {
     display: flex;
   }
 
-  /* layouts collapse smoothly */
+  /* All grids → single column */
   .home-grid-3,
   .home-modules-grid {
     grid-template-columns: 1fr;
@@ -1038,11 +1041,11 @@ p {
   }
 }
 
-/* -----------------------------------------------------------
-   PHONES (max-width: 480px)
-   Tighter padding, hero buttons stacked, diamond labels adjust
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   PHONES — up to 480px
+   Tightens padding + stacks CTAs + fixes Diamond labels
+   ----------------------------------------------------------- */
 @media (max-width: 480px) {
 
   main .wrap {
@@ -1058,11 +1061,10 @@ p {
     padding: 18px 16px 20px;
   }
 
-  /* Adjust diamond label spacing only where required */
+  /* Diamond label safety — only on phones */
   .diamond-label-right {
     right: -22px;
   }
-
   .diamond-label-left {
     left: -22px;
   }
@@ -1070,7 +1072,7 @@ p {
 
 
 /* -----------------------------------------------------------
-   FOOTER (remains the same, but made fluid)
+   FOOTER — Fluid & Clean
    ----------------------------------------------------------- */
 
 footer {
@@ -1118,171 +1120,26 @@ footer {
   }
 }
 
-/* ===========================================================
-   CAUGIA v7.1 — FINAL PATCH
-   Restores Hero Cards + Fixes Zoom-Proof Images
-   =========================================================== */
+
+/* -----------------------------------------------------------
+   IMAGE ZOOM-PROOF SAFEGUARD
+   Clarity + Diamond images resize smoothly
+   ----------------------------------------------------------- */
+.clarity-image img,
+.diamond-image img {
+  width: clamp(240px, 38vw, 540px);
+  height: auto;
+}
 
 
 /* -----------------------------------------------------------
-   1. RESTORE — ORIGINAL HERO HEALTH & DIAMOND (pixel-perfect)
+   SLIDER RESTORATION
+   Prevent Chrome's filled blue track from appearing
    ----------------------------------------------------------- */
 
-/* Right column wrapper */
-.home-hero-visual {
-  width: 140%;
-  transform-origin: left center;
-  transform: translateX(-28%);
-  border-radius: 22px;
-  padding: 26px 26px 40px;
-  background: linear-gradient(135deg, #f9fafc, #f0f4ff);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
-}
-
-.hero-visual-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.8fr);
-  gap: 28px;
-  align-items: center;
-}
-
-/* ---- HEALTH CARD (fully restored) ---- */
-.hero-health {
-  border-radius: 14px;
-  padding: 18px 20px 20px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-}
-
-.hero-health-row {
-  display: grid;
-  grid-template-columns: 95px minmax(0, 1fr) auto; /* long beautiful bars */
-  column-gap: 18px;
-  align-items: center;
-  font-size: 0.92rem;
-}
-
-.hero-health-sliders {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 14px;
-}
-
-/* ---- DIAMOND CARD (restored spacing) ---- */
-.diamond-card {
-  position: relative;
-  border-radius: 16px;
-  padding: 24px 60px 32px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
-}
-
-/* ---- DIAMOND LABELS (your exact final spacing) ---- */
-.diamond-label {
-  position: absolute;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: rgba(15, 23, 42, 0.9);
-}
-
-.diamond-label-top    { top: 4px; left: 50%; transform: translateX(-50%); }
-.diamond-label-bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
-
-/* Right label — NEVER touches edge */
-.diamond-label-right  {
-  right: -42px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Left label — symmetrical version you created */
-.diamond-label-left   {
-  left: -10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-
-
-/* ===========================================================
-   2. FIX — ZOOM-PROOF IMAGES (Clarity + Diamond sections)
-   =========================================================== */
-
-.clarity-image img,
-.diamond-image img {
-  width: clamp(260px, 38vw, 540px);  /* grow/shrink with zoom */
-  height: auto;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.08);
-}
-
-
-/* ===========================================================
-   3. SAFETY: Small-screen overrides (keeps hero clean)
-   =========================================================== */
-
-@media (max-width: 1024px) {
-  .home-hero-visual {
-    width: 100%;
-    transform: none;
-    padding: 24px;
-  }
-}
-
-@media (max-width: 520px) {
-  .diamond-label-right { right: -22px; }
-  .diamond-label-left  { left: -22px; }
-}
-
-/* ===========================================================
-   FIX: Restore original Caugia slider (no blue fill)
-   =========================================================== */
-
-/* remove Chrome's blue track fill */
 input[type="range"]::-webkit-slider-runnable-track {
   background: #E5E7EB !important;
 }
-
 input[type="range"]::-moz-range-track {
   background: #E5E7EB !important;
-}
-
-/* remove Chrome's "filled lower track" */
-input[type="range"]::-webkit-slider-thumb {
-  /* keep thumb styling from validated version */
-}
-
-/* keep your original slider styling exactly */
-.hero-health-slider input[type="range"] {
-  width: 100% !important;
-  height: 4px !important;
-  border-radius: 999px !important;
-  background: #E5E7EB !important;
-  appearance: none !important;
-}
-
-.hero-health-slider input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none !important;
-  width: 12px !important;
-  height: 12px !important;
-  border-radius: 50% !important;
-  background: var(--blue) !important;
-  border: 2px solid #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20) !important;
-}
-
-.hero-health-slider input[type="range"]::-moz-range-thumb {
-  width: 12px !important;
-  height: 12px !important;
-  border-radius: 50% !important;
-  background: var(--blue) !important;
-  border: 2px solid #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20) !important;
 }
