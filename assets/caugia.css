@@ -930,6 +930,57 @@ p {
   .hero-cta-row { flex-direction: column; }
 }
 
+/* ===========================================================
+   FIX — PERFECT ALIGNED DIAMOND LABELS (Caugia Final)
+   =========================================================== */
+
+/* 1. Diamond canvas houdt vast aan jouw validated size */
+.diamond-canvas {
+  position: relative;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px; /* lucht links + rechts */
+}
+
+/* 2. Labels exact op de as van de diamond-midpoint */
+.diamond-label {
+  position: absolute;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(15, 23, 42, 0.9);
+  white-space: nowrap;        
+}
+
+/* TOP (blijft zoals je 'm goed vond) */
+.diamond-label-top {
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* BOTTOM */
+.diamond-label-bottom {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* LEFT — PERFECT op **dezelfde lijn** als diamond midpoint */
+.diamond-label-left {
+  left: -48px;                     /* ademruimte links */
+  top: 50%;                        /* exact center */
+  transform: translateY(-50%);     /* exact op de punt-lijn */
+}
+
+/* RIGHT — PERFECT gespiegeld van LEFT */
+.diamond-label-right {
+  right: -48px;                    /* ademruimte rechts */
+  top: 50%;                        /* exact dezelfde Y-lijn */
+  transform: translateY(-50%);     /* exact op de punt-lijn */
+}
+
 
 /* ===========================================================
    BLOCK 4 — RESPONSIVE RULES (Caugia v7.1 — Clean & Stable)
