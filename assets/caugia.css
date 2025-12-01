@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v4.0
+   CAUGIA CONSULTING — PRODUCTION CSS v7.0 (Base + Header)
    Calm • Professional • Systematic • Enterprise-grade
    =========================================================== */
 
@@ -74,8 +74,9 @@ main {
   min-height: calc(100vh - var(--header-h));
 }
 
+/* basispadding, wordt fijngetuned in Block 4 */
 main .wrap {
-  padding: 96px 24px 80px;
+  padding: clamp(80px, 8vw, 96px) clamp(18px, 3vw, 24px) clamp(64px, 7vw, 80px);
 }
 
 section {
@@ -182,11 +183,12 @@ nav.nav-desktop a.active::after {
   margin-left: 8px;
 }
 
-/* Fix: Contact CTA mag geen hover-underline tonen */
+/* Contact CTA mag geen hover-underline tonen */
 nav.nav-desktop a.cta::after {
   width: 0 !important;
   display: none !important;
 }
+
 
 /* -----------------------------------------------------------
    CTA BUTTONS
@@ -206,9 +208,12 @@ nav.nav-desktop a.cta::after {
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition),
-              box-shadow var(--transition), transform var(--transition),
-              border-color var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition),
+    border-color var(--transition);
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
@@ -231,7 +236,7 @@ nav.nav-desktop a.cta::after {
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
-/* Header CTA must stay white */
+/* Header CTA blijft altijd wit */
 .nav-desktop .cta,
 .nav-desktop .cta:hover {
   color: #fff !important;
@@ -304,7 +309,8 @@ nav.nav-mobile.open {
   display: flex;
 }
 
-@media (max-width: 768px) {
+/* breakpoint in lijn met Block 4 */
+@media (max-width: 720px) {
   nav.nav-desktop {
     display: none;
   }
@@ -312,6 +318,7 @@ nav.nav-mobile.open {
     display: inline-flex;
   }
 }
+
 /* ===========================================================
    BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
    Calm • Professional • Modern • Caugia Style
@@ -978,136 +985,116 @@ p {
 }
 
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES v4.3
+   BLOCK 4 — RESPONSIVE RULES v7.0 (Enterprise Fluid)
+   Modern • Predictable • Zoom-proof • Caugia Style
    =========================================================== */
 
 
 /* -----------------------------------------------------------
-   LARGE TABLETS (max-width: 1180px)
+   XL DEVICES (max-width: 1280px)
+   Soft compression for laptops / 125% zoom
    ----------------------------------------------------------- */
 
-@media (max-width: 1180px) {
+@media (max-width: 1280px) {
+
   main .wrap {
-    padding: 72px 20px 72px;
+    padding: clamp(56px, 6vw, 72px) 20px;
   }
 
   .home-hero-grid {
-    gap: 40px;
+    gap: clamp(32px, 4vw, 48px);
   }
 
   .home-hero-visual {
-    padding: 22px 22px;
-  }
-
-  .diamond-shell {
-    width: 360px;
-    height: 360px;
-  }
-
-  .home-modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    transform: translateX(-22%);
+    padding: 24px 24px 32px;
   }
 }
 
-
 /* -----------------------------------------------------------
    TABLETS (max-width: 1024px)
+   Hero stacks, grids go single-column
    ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
+
   .home-hero-grid {
     grid-template-columns: 1fr;
     gap: 36px;
   }
 
   .home-hero-copy {
-    margin-top: -8px;
+    margin-top: 0;
   }
 
   .home-hero-copy h1 {
-    font-size: 2.45rem;
+    font-size: clamp(2.1rem, 5vw, 2.45rem);
   }
 
-  /* Grid binnen hero visual wordt automatisch 1 kolom */
   .hero-visual-grid {
     grid-template-columns: 1fr;
     gap: 26px;
   }
 
-  .diamond-shell {
-    width: 320px;
-    height: 320px;
+  /* make blue diamond block full width */
+  .home-hero-visual {
+    width: 100%;
+    transform: none;
   }
 
+  /* 3-column blocks collapse into 2 */
   .home-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
 /* -----------------------------------------------------------
-   SMALL TABLETS / LARGE PHONES (max-width: 840px)
+   MOBILE LANDSCAPE / SMALL TABLETS (max-width: 720px)
+   Navigation switches, all grids go 1-column
    ----------------------------------------------------------- */
 
-@media (max-width: 840px) {
+@media (max-width: 720px) {
+
   header .inner {
     padding: 14px 18px;
   }
 
-  .home-hero {
-    margin-bottom: 80px;
-  }
-
-  .home-hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-hero-copy {
-    margin-top: 0;
-  }
-
-  .diamond-shell {
-    width: 300px;
-    height: 300px;
-  }
-
-  .home-grid-3,
-  .home-modules-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* -----------------------------------------------------------
-   NAVIGATION (max-width: 780px)
-   ----------------------------------------------------------- */
-
-@media (max-width: 780px) {
+  /* mobile nav */
   .nav-desktop {
     display: none;
   }
-
   .menu-toggle {
     display: flex;
   }
 
-  .nav-mobile {
-    display: flex;
-  }
-}
-
-
-/* -----------------------------------------------------------
-   SMALL PHONES (max-width: 520px)
-   ----------------------------------------------------------- */
-
-@media (max-width: 520px) {
-  main .wrap {
-    padding: 64px 16px 64px;
+  /* layouts collapse smoothly */
+  .home-grid-3,
+  .home-modules-grid {
+    grid-template-columns: 1fr;
   }
 
   .home-hero {
-    margin-bottom: 64px;
+    margin-bottom: 72px;
+  }
+
+  .home-hero-visual {
+    padding: 20px 18px 28px;
+  }
+}
+
+/* -----------------------------------------------------------
+   PHONES (max-width: 480px)
+   Tighter padding, hero buttons stacked, diamond labels adjust
+   ----------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+  main .wrap {
+    padding: 56px 16px 56px;
   }
 
   .hero-cta-row {
@@ -1119,25 +1106,20 @@ p {
     padding: 18px 16px 20px;
   }
 
-  .diamond-shell {
-    width: 250px;
-    height: 250px;
-  }
-
-  /* Labels iets dichterbij */
+  /* Adjust diamond label spacing only where required */
   .diamond-label-right {
     right: -22px;
   }
 
-    .diamond-label-left {
+  .diamond-label-left {
     left: -22px;
   }
-}  /* ← deze sluit de @media (max-width: 520px) af */
+}
 
-/* ===========================================================
-   FOOTER — ENTERPRISE STYLE
-   =========================================================== */
 
+/* -----------------------------------------------------------
+   FOOTER (remains the same, but made fluid)
+   ----------------------------------------------------------- */
 
 footer {
   border-top: 1px solid rgba(15, 23, 42, 0.06);
@@ -1147,7 +1129,7 @@ footer {
 .footer-inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 20px 18px 24px;
+  padding: clamp(18px, 3vw, 24px) 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1156,13 +1138,9 @@ footer {
   color: rgba(15, 23, 42, 0.7);
 }
 
-/* linker kant: tekst */
-
 .footer-left p {
   margin: 0;
 }
-
-/* rechter kant: links als rustige horizontale rij */
 
 .footer-right {
   display: flex;
@@ -1175,24 +1153,15 @@ footer {
   text-decoration: none;
 }
 
-.footer-right a:visited {
-  color: rgba(15, 23, 42, 0.75);
-}
-
 .footer-right a:hover {
   color: var(--blue);
   text-decoration: underline;
 }
 
-/* mobiel: alles onder elkaar, maar nog steeds netjes */
-
+/* Mobile footer */
 @media (max-width: 640px) {
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .footer-right {
-    gap: 8px 12px;
   }
 }
