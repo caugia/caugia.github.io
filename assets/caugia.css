@@ -935,6 +935,35 @@ p {
   .hero-cta-row { flex-direction: column; }
 }
 
+/* ===========================================================
+   PATCH — Make YOUR GRIP DIAMOND wider (Option B)
+   =========================================================== */
+
+/* 1. Maak de rechterkaart breder binnen de hero grid */
+.hero-visual-grid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 2.1fr);
+  /* Left card stays same — Right card gets +55% width */
+}
+
+/* 2. Diamond card krijgt extra interne ruimte */
+.diamond-card {
+  padding-left: 80px;   /* was 60px */
+  padding-right: 80px;  /* was 60px */
+}
+
+/* 3. Diamond content breder zonder vervormen */
+.diamond-canvas {
+  max-width: 360px;  /* was ±260px → geeft labels meer ruimte */
+}
+
+/* 4. Labels opnieuw perfect centreren binnen bredere kaart */
+.diamond-label-right {
+  right: -20px;   /* was -42px → nu exact binnen card */
+}
+
+.diamond-label-left {
+  left: -16px;    /* was -10px → symmetrisch binnen card */
+}
 
 /* ===========================================================
    BLOCK 4 — RESPONSIVE RULES (Caugia v7.1 — Clean & Stable)
