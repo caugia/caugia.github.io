@@ -75,9 +75,11 @@ main {
   min-height: calc(100vh - var(--header-h));
 }
 
-/* basispadding, wordt fijngetuned in Block 4 */
+/* basispadding — zoom-proof, fluid */
 main .wrap {
-  padding: clamp(80px, 8vw, 96px) clamp(18px, 3vw, 24px) clamp(64px, 7vw, 80px);
+  padding: clamp(80px, 8vw, 96px)
+           clamp(18px, 3vw, 24px)
+           clamp(64px, 7vw, 80px);
 }
 
 section {
@@ -184,7 +186,7 @@ nav.nav-desktop a.active::after {
   margin-left: 8px;
 }
 
-/* Contact CTA mag geen hover-underline tonen */
+/* Contact CTA mag GEEN underline tonen */
 nav.nav-desktop a.cta::after {
   width: 0 !important;
   display: none !important;
@@ -310,7 +312,7 @@ nav.nav-mobile.open {
   display: flex;
 }
 
-/* breakpoint in lijn met Block 4 */
+/* Mobile breakpoint (consistent with Block 4) */
 @media (max-width: 720px) {
   nav.nav-desktop {
     display: none;
@@ -620,7 +622,7 @@ p {
 
 /* ===========================================================
    BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND
-   Enterprise v7.0 — Zoom-proof, Fluid, Caugia Style
+   Enterprise v6.x — Caugia Approved Version (RESTORED)
    =========================================================== */
 
 
@@ -634,13 +636,13 @@ p {
 
 .home-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 48px;
   align-items: center;
 }
 
 .home-hero-copy {
-  margin-top: -24px;
+  margin-top: -32px;
 }
 
 .home-hero-copy .kicker {
@@ -679,42 +681,44 @@ p {
 
 
 /* -----------------------------------------------------------
-   RIGHT COLUMN WRAPPER — ZOOM-PROOF VERSION
+   RIGHT COLUMN WRAPPER (RESTORED ORIGINAL)
    ----------------------------------------------------------- */
 
 .home-hero-visual {
-  width: 100%;
-  max-width: 720px;
-  margin-left: auto;
-  padding: 32px 32px 44px;
+  width: 135%;                 /* jouw gevalideerde waarde */
+  transform-origin: left center;
+  transform: translateX(-18%); /* perfect gecentreerd volgens jouw feedback */
   border-radius: 22px;
-
-  background: linear-gradient(135deg, #f9fafc, #f0f4ff);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.07);
+  padding: 24px 26px 36px;
+  background: linear-gradient(135deg, #f9fafc 0%, #f3f6ff 100%);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  box-shadow: 0 12px 38px rgba(15, 23, 42, 0.06);
 }
 
 .hero-visual-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.7fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.75fr);
+  gap: 22px;
   align-items: center;
 }
 
 
-/* -----------------------------------------------------------
-   HEALTH CARD
-   ----------------------------------------------------------- */
+/* ===========================================================
+   HEALTH CARD — RESTORED ORIGINAL
+   =========================================================== */
 
 .hero-health {
   border-radius: 14px;
-  padding: 20px 24px 22px;
+  padding: 16px 18px 18px;
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
 }
 
 .hero-health-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   margin-bottom: 12px;
 }
 
@@ -722,8 +726,8 @@ p {
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
   margin-bottom: 4px;
+  color: rgba(15, 23, 42, 0.65);
 }
 
 .hero-health-score {
@@ -738,18 +742,18 @@ p {
 }
 
 
-/* ---------------- HEALTH BARS — fluid & aligned ---------------- */
+/* ---------- HEALTH BARS (RESTORED) ---------- */
 
 .hero-health-rows {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
 .hero-health-row {
   display: grid;
-  grid-template-columns: 90px minmax(0, 1fr) auto;
+  grid-template-columns: 95px minmax(0, 1fr) auto; /* small label, long bar */
   column-gap: 20px;
   align-items: center;
   font-size: 0.92rem;
@@ -757,6 +761,7 @@ p {
 
 .hero-health-name {
   white-space: nowrap;
+  padding-right: 4px;
   color: rgba(55, 65, 81, 1);
 }
 
@@ -771,13 +776,17 @@ p {
 
 .hero-health-bar span {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
   border-radius: inherit;
+
   background: linear-gradient(90deg,
     var(--blue) 0%,
     var(--blue) 55%,
     var(--accent) 100%
   );
+
   transition: width 0.3s ease;
 }
 
@@ -788,9 +797,7 @@ p {
 }
 
 
-/* -----------------------------------------------------------
-   SLIDERS
-   ----------------------------------------------------------- */
+/* ---------- SLIDERS — EXACT OORSPRONKELIJK ---------- */
 
 .hero-health-sliders {
   margin-top: 12px;
@@ -805,18 +812,52 @@ p {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-size: 0.85rem;
+}
+
+.hero-health-slider label {
+  color: rgba(75, 85, 99, 1);
+}
+
+/* rail — light grey */
+.hero-health-slider input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* blue thumb — EXACT jouw versie */
+.hero-health-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
+}
+
+.hero-health-slider input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
 }
 
 
-/* -----------------------------------------------------------
-   DIAMOND CARD — fluid & spacious
-   ----------------------------------------------------------- */
+/* ===========================================================
+   DIAMOND CARD — RESTORED ORIGINAL
+   =========================================================== */
 
 .diamond-card {
   position: relative;
   border-radius: 16px;
-  padding: 28px clamp(40px, 6vw, 80px) 36px;
-
+  padding: 20px 20px 26px;
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
@@ -827,15 +868,15 @@ p {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.55);
-  text-align: center;
   margin-bottom: 18px;
+  text-align: center;
+  color: rgba(15, 23, 42, 0.55);
 }
 
 .diamond-canvas {
   position: relative;
   height: 260px;
-  padding: 0 clamp(20px, 3vw, 40px);
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -847,8 +888,6 @@ p {
   height: auto;
 }
 
-/* ------- fluid label spacing ------- */
-
 .diamond-label {
   position: absolute;
   font-size: 0.92rem;
@@ -859,48 +898,99 @@ p {
 .diamond-label-top    { top: 4px; left: 50%; transform: translateX(-50%); }
 .diamond-label-bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
 
-/* ★ replaced fixed pixels by fluid viewport spacing */
+/* YOUR EXACT VALIDATED VALUES */
 .diamond-label-right  {
-  right: clamp(-28px, -3vw, -42px);
-  top: 50%; transform: translateY(-50%);
+  right: -42px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .diamond-label-left   {
-  left: clamp(-28px, -3vw, -42px);
-  top: 50%; transform: translateY(-50%);
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 
-
 /* -----------------------------------------------------------
-   RESPONSIVE HERO
+   RESPONSIVE — ORIGINAL
    ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
   .home-hero-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 36px;
   }
+
   .home-hero-copy { margin-top: 0; }
-  .home-hero-visual { max-width: 100%; margin: 0; }
+
+  .hero-visual-grid { grid-template-columns: 1fr; gap: 26px; }
+
+  .home-hero-visual {
+    width: 100%;
+    transform: none;
+  }
 }
 
 @media (max-width: 520px) {
   .hero-cta-row { flex-direction: column; }
 }
 
+/* ===========================================================
+   PATCH — Make YOUR GRIP DIAMOND wider (Option B)
+   =========================================================== */
+
+/* 1. Maak de rechterkaart breder binnen de hero grid */
+.hero-visual-grid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 2.1fr);
+  /* Left card stays same — Right card gets +55% width */
+}
+
+/* 2. Diamond card krijgt extra interne ruimte */
+.diamond-card {
+  padding-left: 80px;   /* was 60px */
+  padding-right: 80px;  /* was 60px */
+}
+
+/* 3. Diamond content breder zonder vervormen */
+.diamond-canvas {
+  max-width: 360px;  /* was ±260px → geeft labels meer ruimte */
+}
+
+/* 4. Labels opnieuw perfect centreren binnen bredere kaart */
+.diamond-label-right {
+  right: -20px;   /* was -42px → nu exact binnen card */
+}
+
+.diamond-label-left {
+  left: -16px;    /* was -10px → symmetrisch binnen card */
+}
 
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES v7.0 (Enterprise Fluid)
+   BLOCK 4 — RESPONSIVE RULES (Caugia v7.1 — Clean & Stable)
    Modern • Predictable • Zoom-proof • Caugia Style
    =========================================================== */
 
+/* FIX — Restore Diamond vertical alignment exactly as validated */
+
+.home-hero-visual {
+  display: flex;
+  align-items: center;      /* centreert health + diamond verticaal */
+  gap: 32px;
+}
+
+.hero-health {
+  padding-top: 20px !important;
+}
+
+.diamond-card {
+  padding-top: 26px !important;
+}
 
 /* -----------------------------------------------------------
-   XL DEVICES (max-width: 1280px)
-   Soft compression for laptops / 125% zoom
+   XL DEVICES — up to 1280px
+   Light compression for laptop screens & 125% zoom
    ----------------------------------------------------------- */
-
 @media (max-width: 1280px) {
 
   main .wrap {
@@ -911,19 +1001,21 @@ p {
     gap: clamp(32px, 4vw, 48px);
   }
 
+  /* Keep original Block 3 transformation */
   .home-hero-visual {
-    transform: translateX(-22%);
-    padding: 24px 24px 32px;
+    transform: translateX(-18%);
+    padding: 26px 24px 36px;
   }
 }
 
-/* -----------------------------------------------------------
-   TABLETS (max-width: 1024px)
-   Hero stacks, grids go single-column
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   TABLETS — up to 1024px
+   Stacks the hero, compresses grids
+   ----------------------------------------------------------- */
 @media (max-width: 1024px) {
 
+  /* Hero becomes vertical */
   .home-hero-grid {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -942,34 +1034,36 @@ p {
     gap: 26px;
   }
 
-  /* make blue diamond block full width */
+  /* Right panel fills width but keeps style */
   .home-hero-visual {
     width: 100%;
     transform: none;
+    padding: 24px;
   }
 
-  /* 3-column blocks collapse into 2 */
+  /* Product ladder → 2 columns */
   .home-grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Modules → 2 columns */
   .home-modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* -----------------------------------------------------------
-   MOBILE LANDSCAPE / SMALL TABLETS (max-width: 720px)
-   Navigation switches, all grids go 1-column
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   MOBILE LANDSCAPE / SMALL TABLETS — up to 720px
+   Nav switches, grids collapse to one column
+   ----------------------------------------------------------- */
 @media (max-width: 720px) {
 
   header .inner {
     padding: 14px 18px;
   }
 
-  /* mobile nav */
+  /* Enable mobile menu */
   .nav-desktop {
     display: none;
   }
@@ -977,7 +1071,7 @@ p {
     display: flex;
   }
 
-  /* layouts collapse smoothly */
+  /* All grids → single column */
   .home-grid-3,
   .home-modules-grid {
     grid-template-columns: 1fr;
@@ -992,11 +1086,11 @@ p {
   }
 }
 
-/* -----------------------------------------------------------
-   PHONES (max-width: 480px)
-   Tighter padding, hero buttons stacked, diamond labels adjust
-   ----------------------------------------------------------- */
 
+/* -----------------------------------------------------------
+   PHONES — up to 480px
+   Tightens padding + stacks CTAs + fixes Diamond labels
+   ----------------------------------------------------------- */
 @media (max-width: 480px) {
 
   main .wrap {
@@ -1012,11 +1106,10 @@ p {
     padding: 18px 16px 20px;
   }
 
-  /* Adjust diamond label spacing only where required */
+  /* Diamond label safety — only on phones */
   .diamond-label-right {
     right: -22px;
   }
-
   .diamond-label-left {
     left: -22px;
   }
@@ -1024,7 +1117,7 @@ p {
 
 
 /* -----------------------------------------------------------
-   FOOTER (remains the same, but made fluid)
+   FOOTER — Fluid & Clean
    ----------------------------------------------------------- */
 
 footer {
@@ -1070,4 +1163,90 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+
+/* -----------------------------------------------------------
+   IMAGE ZOOM-PROOF SAFEGUARD
+   Clarity + Diamond images resize smoothly
+   ----------------------------------------------------------- */
+.clarity-image img,
+.diamond-image img {
+  width: clamp(240px, 38vw, 540px);
+  height: auto;
+}
+
+
+/* -----------------------------------------------------------
+   SLIDER RESTORATION
+   Prevent Chrome's filled blue track from appearing
+   ----------------------------------------------------------- */
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #E5E7EB !important;
+}
+input[type="range"]::-moz-range-track {
+  background: #E5E7EB !important;
+}
+
+/* ===========================================================
+   CAUGIA v7.2 — HERO ALIGN + SLIDER FIX
+   =========================================================== */
+
+/* 1) GRIP-kader iets naar links (meer marge rechts) */
+.home-hero-visual {
+  width: 135% !important;          /* kleiner dan 140% → meer witruimte rechts */
+  transform-origin: left center;
+  transform: translateX(-28%) !important; /* zelfde balans links */
+}
+
+/* 2) Implementation / Resources labels netjes binnen het kader */
+.diamond-label-right {
+  right: -24px !important;         /* was -42px → nu duidelijk binnen het blauwe vlak */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 3) Sliders: dun, volledig rond, geen lelijke browser-fill */
+.hero-health-slider input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* WebKit (Chrome / Safari) track */
+.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Firefox track */
+.hero-health-slider input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Thumb blijft jouw blauwe, ronde stijl */
+.hero-health-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
+}
+
+.hero-health-slider input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.20);
 }
