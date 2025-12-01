@@ -321,7 +321,7 @@ nav.nav-mobile.open {
 
 /* ===========================================================
    BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
-   Calm • Professional • Modern • Caugia Style
+   Enterprise Fluid v2.0 — Zoom-proof, Modern, Caugia Style
    =========================================================== */
 
 
@@ -330,15 +330,15 @@ nav.nav-mobile.open {
    ----------------------------------------------------------- */
 
 h1 {
-  font-size: 2.9rem;
+  font-size: clamp(2.2rem, 4vw, 2.9rem);
   font-weight: 800;
   color: var(--blue);
-  margin-bottom: 18px;
+  margin-bottom: clamp(14px, 2vw, 22px);
   line-height: 1.08;
 }
 
 h2 {
-  font-size: 1.65rem;
+  font-size: clamp(1.4rem, 2.4vw, 1.65rem);
   font-weight: 700;
   margin-bottom: 14px;
   color: var(--blue);
@@ -346,7 +346,7 @@ h2 {
 }
 
 p {
-  font-size: 1.06rem;
+  font-size: clamp(1rem, 1.4vw, 1.06rem);
   line-height: 1.7;
   color: rgba(15, 23, 42, 0.88);
 }
@@ -378,7 +378,7 @@ p {
   background: #fff;
   border-radius: var(--radius);
   border: 1px solid rgba(15, 23, 42, 0.06);
-  padding: 22px 22px 20px;
+  padding: clamp(18px, 2vw, 22px);
 
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
   transition:
@@ -395,7 +395,7 @@ p {
 }
 
 .card h3 {
-  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.15rem);
   font-weight: 700;
   margin-bottom: 8px;
   color: var(--ink);
@@ -412,20 +412,21 @@ p {
    ----------------------------------------------------------- */
 
 .home-section {
-  margin-bottom: 72px;
+  margin-bottom: clamp(56px, 8vw, 96px);
 }
 
 .home-section-line {
   border-top: 1px solid rgba(15, 23, 42, 0.06);
-  padding-top: 40px;
-  margin-top: 20px;
+  padding-top: clamp(24px, 4vw, 40px);
+  margin-top: clamp(10px, 2vw, 20px);
 }
 
+/* Two-column responsive split */
 .home-split {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  gap: 40px;
-  align-items: flex-start;
+  grid-template-columns: 1fr 0.9fr;
+  gap: clamp(28px, 4vw, 40px);
+  align-items: start;
 }
 
 
@@ -437,7 +438,7 @@ p {
   background: #fff;
   border-radius: var(--radius);
   border: 1px solid rgba(15, 23, 42, 0.08);
-  padding: 20px 20px 18px;
+  padding: clamp(18px, 2vw, 22px);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
 }
 
@@ -466,8 +467,8 @@ p {
 
 .home-grid-3 {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(18px, 3vw, 26px);
   margin-top: 24px;
 }
 
@@ -491,37 +492,15 @@ p {
   color: rgba(15, 23, 42, 0.86);
 }
 
-.service-features {
-  list-style: none;
-  margin: 0 0 14px;
-  padding: 0;
-}
-
-.service-features li {
-  font-size: 0.92rem;
-  margin-bottom: 6px;
-  color: rgba(15, 23, 42, 0.9);
-}
-
-.service-price {
-  margin-bottom: 12px;
-  font-size: 0.98rem;
-  color: rgba(15, 23, 42, 0.9);
-}
-
-.service-price span {
-  font-weight: 700;
-}
-
 
 /* -----------------------------------------------------------
-   MODULES GRID
+   MODULES GRID (auto-fit → perfect zoom behaviour)
    ----------------------------------------------------------- */
 
 .home-modules-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(16px, 2.5vw, 20px);
   margin-top: 22px;
 }
 
@@ -570,25 +549,7 @@ p {
 
 
 /* -----------------------------------------------------------
-   INLINE READ MORE
-   ----------------------------------------------------------- */
-
-.readmore {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 10px;
-  font-size: 0.94rem;
-  text-decoration: none;
-  color: var(--blue);
-}
-
-.readmore:hover {
-  text-decoration: underline;
-}
-
-
-/* -----------------------------------------------------------
-   CLEAN LISTS (NO BULLETS)
+   CLEAN LISTS
    ----------------------------------------------------------- */
 
 .plain-list {
@@ -604,61 +565,55 @@ p {
 
 
 /* -----------------------------------------------------------
-   IMAGE ROUNDING FOR CLARITY + DIAMOND SECTIONS
+   IMAGE ROUNDING — Clarity & Diamond
    ----------------------------------------------------------- */
 
 .clarity-split {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  gap: 48px;
+  grid-template-columns: 1fr 0.8fr;
+  gap: clamp(32px, 5vw, 48px);
   align-items: center;
 }
 
 .clarity-image img,
 .diamond-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 18px 48px rgba(0,0,0,0.08);
-  display: block;
 }
 
-/* Two-column layout for GRIP Diamond section */
+/* Diamond section */
 .diamond-split {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  gap: 48px;
+  grid-template-columns: 0.8fr 1fr;
+  gap: clamp(32px, 5vw, 48px);
   align-items: center;
 }
 
-/* ============================================
-   MOBILE FIX — Clarity + Diamond sections
-   ============================================ */
+
+/* -----------------------------------------------------------
+   MOBILE — Unified collapse
+   ----------------------------------------------------------- */
 
 @media (max-width: 860px) {
 
   .clarity-split,
-  .diamond-split {
-    grid-template-columns: 1fr;   /* tekst en beeld onder elkaar */
-    gap: 32px;
+  .diamond-split,
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 32px);
   }
 
   .clarity-image,
   .diamond-image {
-    order: 2;                     /* foto NA de tekst op mobiel */
+    order: 2;
   }
 
   .clarity-text,
   .diamond-text {
     order: 1;
-  }
-
-  .clarity-image img,
-  .diamond-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
   }
 }
 
