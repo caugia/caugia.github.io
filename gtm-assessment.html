@@ -603,6 +603,7 @@ document.addEventListener("DOMContentLoaded", function() {
     E: 10
   };
 
+  // 0–100 → maturity band
   function gtmGetMaturityLevel(totalScore) {
     if (totalScore < 40) return "At Risk";
     if (totalScore < 55) return "Unstable";
@@ -610,6 +611,77 @@ document.addEventListener("DOMContentLoaded", function() {
     if (totalScore < 80) return "Performing";
     if (totalScore < 90) return "High Performing";
     return "Best in Class";
+  }
+
+  // 12 official pillars (for payload / clarity)
+  const GTM_PILLAR_LABELS = [
+    "GTM Strategy & Leadership",          // P1
+    "Market Intelligence",                // P2
+    "Product Marketing",                  // P3
+    "Demand Generation",                  // P4
+    "Sales Development (SDR)",            // P5
+    "Sales Execution",                    // P6
+    "Customer Success & Retention",       // P7
+    "Account Management & Expansion",     // P8
+    "Revenue Operations",                 // P9
+    "Enablement",                         // P10
+    "Performance Management",             // P11
+    "Pricing & Packaging"                 // P12
+  ];
+
+  // True 12-pillar mini-mapping (op basis van 10 vragen)
+  // Elke pilaar = gemiddelde van relevante vragen (A–E → 0–10) × 10 → 0–100
+  function gtmComputePillarScores(letters) {
+    function avg(questionNames) {
+      if (!questionNames.length) return 0;
+      let sum = 0;
+      questionNames.forEach(name => {
+        const code = letters[name];
+        const s = GTM_SCORE_MAP[code] ?? 0;
+        sum += s;
+      });
+      return Math.round((sum / questionNames.length) * 10); // 0–100
+    }
+
+    const scores = [];
+
+    // P1 — GTM Strategy & Leadership
+    scores[0] = avg(["q3", "q9", "q12"]);
+
+    // P2 — Market Intelligence
+    scores[1] = avg(["q3", "q8"]);
+
+    // P3 — Product Marketing
+    scores[2] = avg(["q3", "q8", "q10"]);
+
+    // P4 — Demand Generation
+    scores[3] = avg(["q4", "q5"]);
+
+    // P5 — Sales Development (SDR)
+    scores[4] = avg(["q4", "q5"]);
+
+    // P6 — Sales Execution
+    scores[5] = avg(["q5", "q6", "q8", "q10"]);
+
+    // P7 — Customer Success & Retention
+    scores[6] = avg(["q7", "q9"]);
+
+    // P8 — Account Management & Expansion
+    scores[7] = avg(["q7", "q9"]);
+
+    // P9 — Revenue Operations
+    scores[8] = avg(["q4", "q5", "q9", "q11", "q12"]);
+
+    // P10 — Enablement
+    scores[9] = avg(["q6", "q8", "q10", "q12"]);
+
+    // P11 — Performance Management
+    scores[10] = avg(["q5", "q7", "q9", "q11"]);
+
+    // P12 — Pricing & Packaging
+    scores[11] = avg(["q3", "q7"]);
+
+    return scores;
   }
 
   const GTM_WEBHOOK_URL = "https://hook.eu1.make.com/t02wf80j5iygknnd0biplgjehfqkly2r";
@@ -763,6 +835,7 @@ document.addEventListener("DOMContentLoaded", function() {
       letters[name] = val;
     }
 
+    // Total GTM Score (0–100)
     let totalScore = 0;
     for (let i = 3; i <= 12; i++) {
       const code = letters["q" + i];
@@ -771,6 +844,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const maturityLevel = gtmGetMaturityLevel(totalScore);
+
+    // 12-pillar mini-scores (0–100)
+    const pillarScores = gtmComputePillarScores(letters);
 
     const payload = {
       stage,
@@ -789,6 +865,20 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       total_score: totalScore,
       maturity_level: maturityLevel,
+      pillar_scores: {
+        p1_gtm_strategy_leadership: pillarScores[0],
+        p2_market_intelligence: pillarScores[1],
+        p3_product_marketing: pillarScores[2],
+        p4_demand_generation: pillarScores[3],
+        p5_sdr: pillarScores[4],
+        p6_sales_execution: pillarScores[5],
+        p7_cs_retention: pillarScores[6],
+        p8_account_expansion: pillarScores[7],
+        p9_revenue_operations: pillarScores[8],
+        p10_enablement: pillarScores[9],
+        p11_performance_management: pillarScores[10],
+        p12_pricing_packaging: pillarScores[11]
+      },
       frustration: gtmForm.elements["frustration"]?.value || "",
       one_thing: gtmForm.elements["one_thing"]?.value || "",
       email: gtmForm.elements["email"]?.value || "",
@@ -800,7 +890,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     };
 
-    return { totalScore, maturityLevel, payload };
+    return { totalScore, maturityLevel, payload, pillarScores };
   }
 
   function gtmSendToWebhook(payload) {
@@ -814,8 +904,11 @@ document.addEventListener("DOMContentLoaded", function() {
     } catch (e) {}
   }
 
-  function gtmGoToResult(totalScore) {
-    const target = "the-gtm-score.html?score=" + encodeURIComponent(totalScore);
+  function gtmGoToResult(totalScore, pillarScores) {
+    const params = new URLSearchParams();
+    params.set("score", String(totalScore));
+    params.set("pillars", pillarScores.join(","));
+    const target = "the-gtm-score.html?" + params.toString();
     window.location.href = target;
   }
 
@@ -851,9 +944,9 @@ document.addEventListener("DOMContentLoaded", function() {
     if (gtmCurrentStep < GTM_TOTAL_STEPS - 1) {
       gtmShowStep(gtmCurrentStep + 1);
     } else {
-      const { totalScore, maturityLevel, payload } = gtmComputeScoreAndPayload();
+      const { totalScore, maturityLevel, payload, pillarScores } = gtmComputeScoreAndPayload();
       gtmSendToWebhook(payload);
-      gtmGoToResult(totalScore);
+      gtmGoToResult(totalScore, pillarScores);
     }
   });
 
@@ -864,15 +957,14 @@ document.addEventListener("DOMContentLoaded", function() {
   gtmUpdateProgress();
 </script>
 
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const steps = document.querySelectorAll(".gtm-step");
-  if (!steps.length) return;
-
-  // Ensure only step 1 is active on load
-  steps.forEach(s => s.classList.remove("active"));
-  steps[0].classList.add("active");
-});
+<script>
+  // Ensure only step 1 is active on load (defensive)
+  document.addEventListener("DOMContentLoaded", function() {
+    const steps = document.querySelectorAll(".gtm-step");
+    if (!steps.length) return;
+    steps.forEach(s => s.classList.remove("active"));
+    steps[0].classList.add("active");
+  });
 </script>
 
 </body>
