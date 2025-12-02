@@ -1811,3 +1811,147 @@ input[type="range"]::-moz-range-track {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===========================================================
+   SERVICES PRICING GRID — Caugia 2025
+   =========================================================== */
+
+.services-pricing {
+  margin-top: 32px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Cards in services grid mogen NIET springen bij hover */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 22px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+  transition:
+    box-shadow var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.service-card:hover {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  transform: none; /* override globale .card:hover */
+}
+
+/* Flagship highlight */
+.service-card-flagship {
+  border-width: 2px;
+  border-color: var(--accent-soft);
+}
+
+/* Top pill labels */
+.service-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #eef1f6;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 14px;
+}
+
+.pill-flagship {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pill-structured {
+  background: #e6edf6;
+  color: var(--blue);
+}
+
+.pill-advisory {
+  background: #f1f2f4;
+}
+
+/* Titels en subtitels */
+.service-title-main {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.service-subtitle {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(55, 65, 81, 0.9);
+  margin-bottom: 14px;
+}
+
+/* Prijs groter, rustig */
+.service-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+/* CTA blok vast, bullets eronder */
+.service-cta {
+  margin-bottom: 14px;
+}
+
+.service-card .cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Features met blauwe check icons */
+.service-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 6px;
+}
+
+.service-features li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(55, 65, 81, 0.9);
+  margin-bottom: 6px;
+}
+
+.service-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* Responsive: 2 kolommen op tablet, 1 op mobiel */
+@media (max-width: 1100px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
