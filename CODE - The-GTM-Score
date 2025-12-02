@@ -17,8 +17,13 @@
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
+  <!-- Chart.js Radar -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    /* Inline additions specific to result page only */
+    /* ===========================================================
+       INLINE — RESULT PAGE ONLY
+    =========================================================== */
 
     .result-wrap {
       max-width: 800px;
@@ -107,8 +112,115 @@
       text-decoration: underline;
     }
 
+    /* ===========================================================
+       12-PILLAR RADAR
+    =========================================================== */
+
+    .gtm-pattern {
+      margin-top: 80px;
+    }
+
+    .gtm-pattern h2 {
+      font-size: 1.6rem;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .gtm-pattern-desc {
+      max-width: 600px;
+      color: rgba(11,19,43,0.75);
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    .gtm-pattern-chart-box {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .gtm-pattern-note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: rgba(11,19,43,0.65);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .gtm-pattern-chart-box {
+        padding: 16px;
+      }
+    }
+
+    /* ===========================================================
+       NEW GRIP DIAMOND — PREMIUM CAUGIA VERSION
+    =========================================================== */
+
+    .grip-diamond-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+    }
+
+    .grip-diamond-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .grip-diamond-wrapper {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin: 0 auto;
+    }
+
+    #gripDiamondSVG {
+      width: 100%;
+      height: 100%;
+    }
+
+    .grip-diamond-label {
+      position: absolute;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(11,19,43,0.75);
+    }
+
+    .grip-diamond-label.top {
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .grip-diamond-label.bottom {
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .grip-diamond-label.left {
+      top: 50%;
+      left: -40px;
+      transform: translateY(-50%);
+    }
+
+    .grip-diamond-label.right {
+      top: 50%;
+      right: -40px;
+      transform: translateY(-50%);
+    }
+
   </style>
 </head>
+
 
 
 <body>
@@ -144,6 +256,9 @@
 </header>
 
 
+
+
+
 <!-- ===========================================================
      RESULT CONTENT
 =========================================================== -->
@@ -162,27 +277,25 @@
   <section class="score-display">
     <div id="gtm-score" class="score-number">–</div>
     <div id="gtm-band" class="score-band">Loading…</div>
-
-    <p id="gtm-band-description" class="score-description">
-      Your maturity band will appear here.
-    </p>
+    <p id="gtm-band-description">Your maturity band will appear here.</p>
   </section>
 
-  <!-- REPORT STATUS -->
+
+  <!-- ===========================================================
+       REPORT STATUS
+  ============================================================ -->
   <section class="report-status">
     <h2>Your full report is on its way</h2>
     <p>
       Within a few moments you will receive an email with your personalised GTM analysis.
       It includes your score interpretation, capability insights and the patterns behind your current performance.
     </p>
-    <p>
-      If the report does not arrive within five minutes, please check your spam folder or reach out directly.
-    </p>
+    <p>If the report does not arrive within five minutes, please check your spam folder or reach out directly.</p>
   </section>
 
 
   <!-- ===========================================================
-       GRIP RESULT SECTION (FINAL, CORRECTED)
+       GRIP RESULT — CARD + DIAMOND
   ============================================================ -->
   <section class="grip-result">
     <div class="container">
@@ -199,7 +312,6 @@
 
         <!-- LEFT CARD -->
         <div class="hero-health grip-health-card">
-
           <div class="hero-health-header">
             <div class="hero-health-label">Your GRIP health</div>
             <div class="hero-health-score">
@@ -234,22 +346,10 @@
           </div>
 
           <div class="hero-health-sliders">
-            <div class="hero-health-slider">
-              <label>Guidance</label>
-              <input type="range" disabled value="60">
-            </div>
-            <div class="hero-health-slider">
-              <label>Resources</label>
-              <input type="range" disabled value="55">
-            </div>
-            <div class="hero-health-slider">
-              <label>Implementation</label>
-              <input type="range" disabled value="50">
-            </div>
-            <div class="hero-health-slider">
-              <label>Performance</label>
-              <input type="range" disabled value="45">
-            </div>
+            <div class="hero-health-slider"><label>Guidance</label><input type="range" disabled value="60"></div>
+            <div class="hero-health-slider"><label>Resources</label><input type="range" disabled value="55"></div>
+            <div class="hero-health-slider"><label>Implementation</label><input type="range" disabled value="50"></div>
+            <div class="hero-health-slider"><label>Performance</label><input type="range" disabled value="45"></div>
           </div>
 
           <div class="hero-archetype">
@@ -259,43 +359,53 @@
               The Intelligence Report highlights the first adjustments that bring balance and stability.
             </div>
           </div>
-
         </div>
 
+
         <!-- RIGHT DIAMOND -->
-        <div class="diamond-card grip-diamond-card">
-          <div class="diamond-title">Your GRIP Diamond</div>
+        <div class="grip-diamond-card">
+          <div class="grip-diamond-title">Your GRIP Diamond</div>
 
-          <div class="diamond-canvas">
+          <div class="grip-diamond-wrapper">
+            <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
 
-            <div class="diamond-label diamond-label-top">Guidance</div>
-            <div class="diamond-label diamond-label-right">Implementation</div>
-            <div class="diamond-label diamond-label-bottom">Performance</div>
-            <div class="diamond-label diamond-label-left">Resources</div>
-
-            <svg class="diamond-svg" viewBox="0 0 200 200">
-
-              <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="#E5E7EB"/>
-              <polygon points="100,40 160,100 100,160 40,100" fill="none" stroke="#E5E7EB"/>
-              <polygon points="100,60 140,100 100,140 60,100" fill="none" stroke="#E5E7EB"/>
-
-              <polygon id="gripDiamondShape"
-                points="100,55 145,100 100,150 55,100"
-                fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
-
-              <circle cx="100" cy="100" r="4" fill="#0046A5" />
-
-            </svg>
+            <div class="grip-diamond-label top">Guidance</div>
+            <div class="grip-diamond-label right">Implementation</div>
+            <div class="grip-diamond-label bottom">Performance</div>
+            <div class="grip-diamond-label left">Resources</div>
           </div>
         </div>
 
-      </div>
+      </div> <!-- end grip-result-grid -->
+    </div> <!-- end container -->
+  </section>
 
+
+
+
+  <!-- ===========================================================
+       12-PILLAR PATTERN
+  ============================================================ -->
+  <section class="gtm-pattern">
+    <h2>Your GTM pattern</h2>
+    <p class="gtm-pattern-desc">
+      This radar shows how your twelve core GTM pillars perform relative to each other for your current score.
+      The deeper Intelligence Report uses your full input to refine these pillars and prioritise change.
+    </p>
+
+    <div class="gtm-pattern-chart-box">
+      <canvas id="gtmPatternRadar"></canvas>
+      <div class="gtm-pattern-note">
+        The shape highlights where your GTM system is strongest and where foundations need more attention.
+      </div>
     </div>
   </section>
 
 
-  <!-- WHAT HAPPENS NEXT -->
+
+  <!-- ===========================================================
+       NEXT STEPS
+  ============================================================ -->
   <section class="next-steps">
     <h2>What happens next</h2>
 
@@ -319,11 +429,13 @@
 </main>
 
 
-<script>
-  // ==========================================================
-  // SCORE LOGIC
-  // ==========================================================
 
+
+
+<!-- ==========================================================
+     JS — SCORE + 12-PILLAR LOGIC
+=========================================================== -->
+<script>
   function getScoreFromURL() {
     const params = new URLSearchParams(window.location.search);
     return parseInt(params.get("score"), 10);
@@ -360,8 +472,141 @@
     bandEl.textContent = band;
     descEl.textContent = desc;
   }
+
+
+  /* ==========================================================
+     RADAR (12-pillar)
+  ========================================================== */
+
+  const GTM_PILLAR_LABELS = [
+    "GTM Strategy & Leadership",
+    "Market Intelligence",
+    "Product Marketing",
+    "Demand Generation",
+    "Sales Development (SDR)",
+    "Sales Execution",
+    "Customer Success & Retention",
+    "Account Management & Expansion",
+    "Revenue Operations",
+    "Enablement",
+    "Performance Management",
+    "Pricing & Packaging"
+  ];
+
+  function getPillarsFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get("pillars");
+    if (!raw) return null;
+
+    const parts = raw.split(",").map(n => parseInt(n, 10));
+    if (parts.length !== 12 || parts.some(isNaN)) return null;
+
+    return parts;
+  }
+
+  const pillarScores = getPillarsFromURL();
+
+  if (pillarScores && window.Chart) {
+    const ctx = document.getElementById("gtmPatternRadar");
+
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: GTM_PILLAR_LABELS,
+        datasets: [{
+          data: pillarScores,
+          fill: true,
+          backgroundColor: "rgba(0,70,165,0.10)",
+          borderColor: "#0046A5",
+          pointBackgroundColor: "#0046A5",
+          pointRadius: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: {
+          r: {
+            suggestedMin: 0,
+            suggestedMax: 100,
+            ticks: { display: false },
+            angleLines: { color: "rgba(0,0,0,0.05)" },
+            grid: { color: "rgba(0,0,0,0.08)" },
+            pointLabels: {
+              font: { size: 10 },
+              color: "rgba(11,19,43,0.78)"
+            }
+          }
+        }
+      }
+    });
+  }
+
+
+  /* ==========================================================
+     GRIP DIAMOND ENGINE
+  ========================================================== */
+
+  function drawGripDiamond(g, r, i, p) {
+    const svg = document.getElementById("gripDiamondSVG");
+    if (!svg) return;
+
+    const center = 130;
+    const max = 100;
+
+    function point(angle, value) {
+      const rad = (Math.PI / 180) * angle;
+      return {
+        x: center + Math.cos(rad) * value,
+        y: center + Math.sin(rad) * value
+      };
+    }
+
+    const G = point(-90, g);
+    const I = point(0, i);
+    const P = point(90, p);
+    const R = point(180, r);
+
+    const rings = [30, 60, 90];
+    let grid = "";
+
+    rings.forEach(val => {
+      const rg = point(-90, val);
+      const ri = point(0, val);
+      const rp = point(90, val);
+      const rr = point(180, val);
+
+      grid += `
+        <polygon 
+          points="${rg.x},${rg.y} ${ri.x},${ri.y} ${rp.x},${rp.y} ${rr.x},${rr.y}"
+          fill="none"
+          stroke="rgba(0,0,0,0.08)"
+          stroke-width="1"
+        />
+      `;
+    });
+
+    const shape = `
+      <polygon
+        points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}"
+        fill="rgba(0,70,165,0.12)"
+        stroke="#0046A5"
+        stroke-width="2.4"
+      />
+    `;
+
+    svg.innerHTML = grid + shape;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const g = parseInt(document.getElementById("gripGuidanceValue").textContent, 10);
+    const r = parseInt(document.getElementById("gripResourcesValue").textContent, 10);
+    const i = parseInt(document.getElementById("gripImplementationValue").textContent, 10);
+    const p = parseInt(document.getElementById("gripPerformanceValue").textContent, 10);
+
+    drawGripDiamond(g, r, i, p);
+  });
 </script>
 
 </body>
 </html>
-
