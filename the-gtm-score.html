@@ -17,10 +17,7 @@
   <script src="/auth.js"></script>
 
   <style>
-    /* ===============================
-       Inline additions specific to result page only
-       (safe, isolated)
-    =============================== */
+    /* Inline additions specific to result page only */
 
     .result-wrap {
       max-width: 800px;
@@ -52,16 +49,16 @@
       border-radius: 16px;
       padding: 36px;
       margin-bottom: 40px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
       text-align: center;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
     }
 
     .score-number {
       font-size: 5rem;
       font-weight: 800;
       color: var(--blue);
-      line-height: 1;
       margin-bottom: 16px;
+      line-height: 1;
     }
 
     .score-band {
@@ -72,25 +69,6 @@
       color: var(--accent);
       font-weight: 600;
       margin-bottom: 10px;
-    }
-
-    .pattern-section {
-      margin-top: 50px;
-    }
-
-    .pattern-section h2 {
-      font-size: 1.5rem;
-      color: var(--blue);
-      margin-bottom: 14px;
-    }
-
-    .pattern-placeholder {
-      border: 1px dashed rgba(0,0,0,0.2);
-      border-radius: 12px;
-      padding: 40px;
-      text-align: center;
-      color: rgba(11,19,43,0.6);
-      font-size: 1rem;
     }
 
     .cta-block {
@@ -130,6 +108,7 @@
 
   </style>
 </head>
+
 
 <body>
 <header>
@@ -173,7 +152,7 @@
   <section class="result-hero">
     <h1>Your GTM Score</h1>
     <p>
-      This score gives a first view of how mature, aligned and scalable your go to market system is. 
+      This score gives a first view of how mature, aligned and scalable your go to market system is.
       It is not a full audit but a structured foundation for deeper analysis through the Intelligence Report.
     </p>
   </section>
@@ -192,7 +171,7 @@
   <section class="report-status">
     <h2>Your full report is on its way</h2>
     <p>
-      Within a few moments you will receive an email with your personalised GTM analysis. 
+      Within a few moments you will receive an email with your personalised GTM analysis.
       It includes your score interpretation, capability insights and the patterns behind your current performance.
     </p>
     <p>
@@ -200,181 +179,148 @@
     </p>
   </section>
 
- <section class="grip-result">
-  <div class="container">
 
-    <div class="grip-result-header">
-      <h2>The GRIP view of your GTM system</h2>
-      <p>
-        This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine. 
-        Your full pattern and next steps are explained in the Intelligence Report in your inbox.
-      </p>
-    </div>
+  <!-- ===========================================================
+       GRIP RESULT SECTION (FINAL, CORRECTED)
+  ============================================================ -->
+  <section class="grip-result">
+    <div class="container">
 
-    <div class="grip-result-grid">
+      <div class="grip-result-header">
+        <h2>The GRIP view of your GTM system</h2>
+        <p>
+          This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine.
+          Your full pattern and next steps are explained in the Intelligence Report in your inbox.
+        </p>
+      </div>
 
-      <!-- LEFT — GRIP HEALTH CARD -->
-      <div class="hero-health grip-health-card">
+      <div class="grip-result-grid">
 
-        <div class="hero-health-header">
-          <div class="hero-health-label">Your GRIP health</div>
-          <div class="hero-health-score">
-            <span id="gripHealthScore">58</span><span>/100</span>
-          </div>
+        <!-- LEFT CARD -->
+        <div class="hero-health grip-health-card">
 
-        <div class="hero-health-rows">
-          <div class="hero-health-row">
-            <div class="hero-health-name">Guidance</div>
-            <div class="hero-health-bar">
-              <span id="gripGuidanceBar" style="width: 60%;"></span>
+          <div class="hero-health-header">
+            <div class="hero-health-label">Your GRIP health</div>
+            <div class="hero-health-score">
+              <span id="gripHealthScore">58</span><span>/100</span>
             </div>
-            <div class="hero-health-value" id="gripGuidanceValue">60</div>
           </div>
 
-          <div class="hero-health-row">
-            <div class="hero-health-name">Resources</div>
-            <div class="hero-health-bar">
-              <span id="gripResourcesBar" style="width: 55%;"></span>
+          <div class="hero-health-rows">
+            <div class="hero-health-row">
+              <div class="hero-health-name">Guidance</div>
+              <div class="hero-health-bar"><span id="gripGuidanceBar" style="width:60%"></span></div>
+              <div class="hero-health-value" id="gripGuidanceValue">60</div>
             </div>
-            <div class="hero-health-value" id="gripResourcesValue">55</div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Resources</div>
+              <div class="hero-health-bar"><span id="gripResourcesBar" style="width:55%"></span></div>
+              <div class="hero-health-value" id="gripResourcesValue">55</div>
+            </div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Implementation</div>
+              <div class="hero-health-bar"><span id="gripImplementationBar" style="width:50%"></span></div>
+              <div class="hero-health-value" id="gripImplementationValue">50</div>
+            </div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Performance</div>
+              <div class="hero-health-bar"><span id="gripPerformanceBar" style="width:45%"></span></div>
+              <div class="hero-health-value" id="gripPerformanceValue">45</div>
+            </div>
           </div>
 
-          <div class="hero-health-row">
-            <div class="hero-health-name">Implementation</div>
-            <div class="hero-health-bar">
-              <span id="gripImplementationBar" style="width: 50%;"></span>
+          <div class="hero-health-sliders">
+            <div class="hero-health-slider">
+              <label>Guidance</label>
+              <input type="range" disabled value="60">
             </div>
-            <div class="hero-health-value" id="gripImplementationValue">50</div>
+            <div class="hero-health-slider">
+              <label>Resources</label>
+              <input type="range" disabled value="55">
+            </div>
+            <div class="hero-health-slider">
+              <label>Implementation</label>
+              <input type="range" disabled value="50">
+            </div>
+            <div class="hero-health-slider">
+              <label>Performance</label>
+              <input type="range" disabled value="45">
+            </div>
           </div>
 
-          <div class="hero-health-row">
-            <div class="hero-health-name">Performance</div>
-            <div class="hero-health-bar">
-              <span id="gripPerformanceBar" style="width: 45%;"></span>
+          <div class="hero-archetype">
+            <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
+            <div class="archetype-desc" id="gripArchetypeDesc">
+              Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync.
+              The Intelligence Report highlights the first adjustments that bring balance and stability.
             </div>
-            <div class="hero-health-value" id="gripPerformanceValue">45</div>
           </div>
+
         </div>
 
-        <div class="hero-health-sliders">
-          <div class="hero-health-slider">
-            <label>Guidance</label>
-            <input type="range" min="0" max="100" value="60" disabled>
-          </div>
-          <div class="hero-health-slider">
-            <label>Resources</label>
-            <input type="range" min="0" max="100" value="55" disabled>
-          </div>
-          <div class="hero-health-slider">
-            <label>Implementation</label>
-            <input type="range" min="0" max="100" value="50" disabled>
-          </div>
-          <div class="hero-health-slider">
-            <label>Performance</label>
-            <input type="range" min="0" max="100" value="45" disabled>
-          </div>
-        </div>
+        <!-- RIGHT DIAMOND -->
+        <div class="diamond-card grip-diamond-card">
+          <div class="diamond-title">Your GRIP Diamond</div>
 
-        <div class="hero-archetype">
-          <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
-          <div class="archetype-desc" id="gripArchetypeDesc">
-            Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync. 
-            The Intelligence Report highlights the first adjustments that bring balance and stability.
+          <div class="diamond-canvas">
+
+            <div class="diamond-label diamond-label-top">Guidance</div>
+            <div class="diamond-label diamond-label-right">Implementation</div>
+            <div class="diamond-label diamond-label-bottom">Performance</div>
+            <div class="diamond-label diamond-label-left">Resources</div>
+
+            <svg class="diamond-svg" viewBox="0 0 200 200">
+
+              <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,40 160,100 100,160 40,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,60 140,100 100,140 60,100" fill="none" stroke="#E5E7EB"/>
+
+              <polygon id="gripDiamondShape"
+                points="100,55 145,100 100,150 55,100"
+                fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
+
+              <circle cx="100" cy="100" r="4" fill="#0046A5" />
+
+            </svg>
           </div>
         </div>
 
       </div>
 
-      <!-- RIGHT — GRIP DIAMOND -->
-      <div class="diamond-card grip-diamond-card">
-        <div class="diamond-title">Your GRIP Diamond</div>
-
-        <div class="diamond-canvas">
-
-          <div class="diamond-label diamond-label-top">Guidance</div>
-          <div class="diamond-label diamond-label-right">Implementation</div>
-          <div class="diamond-label diamond-label-bottom">Performance</div>
-          <div class="diamond-label diamond-label-left">Resources</div>
-
-          <svg class="diamond-svg" viewBox="0 0 200 200">
-
-            <polygon points="100,20 180,100 100,180 20,100"
-                     fill="none" stroke="#E5E7EB" stroke-width="1" />
-
-            <polygon points="100,40 160,100 100,160 40,100"
-                     fill="none" stroke="#E5E7EB" stroke-width="1" />
-
-            <polygon points="100,60 140,100 100,140 60,100"
-                     fill="none" stroke="#E5E7EB" stroke-width="1" />
-
-            <polygon id="gripDiamondShape"
-              points="100,55 145,100 100,150 55,100"
-              fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
-
-            <circle cx="100" cy="100" r="4" fill="#0046A5"></circle>
-
-          </svg>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-  
-  <!-- PATTERN PLACEHOLDER -->
-  <section class="pattern-section">
-    <h2>Your GTM pattern</h2>
-
-    <div class="pattern-placeholder">
-      Your pattern across ten capabilities will be visible here.  
-      <br>(This lightweight view complements the full report in your inbox.)
     </div>
   </section>
+
 
   <!-- WHAT HAPPENS NEXT -->
   <section class="next-steps">
     <h2>What happens next</h2>
 
     <ul class="next-list">
-      <li>
-        <strong>Your full GTM report is generated.</strong>  
-        A personalised analysis is being prepared based on your inputs.
-      </li>
-
-      <li>
-        <strong>You receive the report by email.</strong>  
-        It includes your maturity band, patterns, strengths, risks and recommended focal points.
-      </li>
-
-      <li>
-        <strong>Use the report to align your leadership team.</strong>  
-        It creates a structured starting point before deeper GTM work.
-      </li>
-
-      <li>
-        <strong>Explore the Intelligence Report.</strong>  
-        This deeper twelve-pillar assessment reveals constraints and prioritises change with confidence.
-      </li>
+      <li><strong>Your full GTM report is generated.</strong> A personalised analysis is being prepared based on your inputs.</li>
+      <li><strong>You receive the report by email.</strong> It includes your maturity band, patterns, strengths, risks and recommended focal points.</li>
+      <li><strong>Use the report to align your leadership team.</strong> It creates a structured starting point before deeper GTM work.</li>
+      <li><strong>Explore the Intelligence Report.</strong> This deeper twelve-pillar assessment reveals constraints and prioritises change with confidence.</li>
     </ul>
   </section>
 
-  <!-- CTA SECTION -->
+
+  <!-- CTA -->
   <section class="cta-block">
     <h3>Move from insight to action</h3>
-
     <a href="services.html" class="cta-btn">Explore the Intelligence Report</a>
     <a href="mailto:hello@caugia.com" class="cta-secondary">Ask a question</a>
   </section>
+
 
 </main>
 
 
 <script>
   // ==========================================================
-  // RESULT LOGIC — READ SCORE FROM URL
+  // SCORE LOGIC
   // ==========================================================
 
   function getScoreFromURL() {
@@ -383,7 +329,6 @@
   }
 
   const score = getScoreFromURL();
-
   const scoreEl = document.getElementById("gtm-score");
   const bandEl = document.getElementById("gtm-band");
   const descEl = document.getElementById("gtm-band-description");
@@ -391,7 +336,6 @@
   if (!isNaN(score)) {
     scoreEl.textContent = score;
 
-    // BASIC BANDING — same logic as V1
     let band = "";
     let desc = "";
 
