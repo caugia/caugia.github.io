@@ -1169,229 +1169,117 @@ footer {
 }
 
 /* ===========================================================
-   BLOCK 5 — SERVICES PRICING GRID (4 CARDS, CAUGIA 2025)
+   BLOCK 5 — GLOBAL TYPOGRAPHY + SECTION SPACING + HERO + IMAGES
    =========================================================== */
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(20px, 2.6vw, 28px);
-  margin-top: 40px;
-}
-
-/* Basiskaart (geen jump, moderne shadow) */
-.service-card {
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid rgba(15,23,42,0.08);
-  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
-  padding: 24px 26px 28px;
-  display: flex;
-  flex-direction: column;
-  transition:
-    box-shadow .22s ease,
-    border-color .22s ease,
-    background .22s ease;
-}
-
-/* Hover — schoon, geen beweging */
-.service-card:hover {
-  border-color: rgba(15,23,42,0.14);
-  box-shadow: 0 12px 30px rgba(15,23,42,0.08);
-}
-
-/* Flagship highlight (subtiel, professioneel) */
-.service-card-flagship {
-  border: 2px solid var(--accent);
-  box-shadow: 0 14px 34px rgba(243,108,33,0.14);
-}
-
-/* Top pill (Free, Flagship, Structured, Advisory) */
-.service-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 14px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-  background: #eef1f6;
-  color: rgba(15,23,42,0.7);
-}
-
-.pill-flagship {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.pill-structured {
-  background: #e6edf6;
-  color: var(--blue);
-}
-
-.pill-advisory {
-  background: #f1f2f4;
-  color: rgba(15,23,42,0.8);
-}
-
-/* Titel + subtitel */
-.service-name {
-  font-size: 1.12rem;
+/* Global typography */
+h1, h2, h3 {
+  font-family: Inter, system-ui, sans-serif;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 4px;
 }
 
-.service-tagline {
-  font-size: 0.95rem;
-  color: rgba(15,23,42,0.75);
+h2 {
+  font-size: clamp(1.6rem, 2.4vw, 1.9rem);
   margin-bottom: 14px;
-  line-height: 1.45;
-  white-space: normal;
 }
 
-/* Prijs dominant, modern */
-.service-price {
-  font-size: 1.9rem;
-  font-weight: 800;
-  margin: 8px 0 18px;
-  color: var(--ink);
-}
-
-/* CTA */
-.service-card .cta {
-  width: 100%;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-/* Features (checklist stijl) */
-.service-features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.service-features li {
-  position: relative;
-  padding-left: 22px;
+h3 {
+  font-size: 1.15rem;
   margin-bottom: 8px;
-  font-size: 0.92rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(15,23,42,0.82);
+  margin-bottom: 12px;
+}
+
+/* Section spacing */
+section {
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+
+/* Page intro blocks */
+.page-intro {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+
+/* Restore hero image containers */
+.clarity-image img,
+.diamond-image img,
+.home-hero-visual img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* Restore slider style (thin rail + blue dot) */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--blue);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  margin-top: -8px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--blue);
+  border: 4px solid #fff;
+  border-radius: 50%;
+}
+
+/* Restore homepage hero layout */
+.home-hero {
+  margin-bottom: 96px;
+}
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 36rem;
   color: rgba(15,23,42,0.85);
-  line-height: 1.5;
 }
 
-.service-features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  font-size: 0.86rem;
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 720px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ===========================================================
-   BLOCK 6 — MARKETPLACE GRID (12 MODULES)
+   BLOCK 6 — MARKETPLACE GRID + GENERIC CARD LAYOUT
    =========================================================== */
 
+/* Marketplace section */
 .marketplace-section {
-  margin-top: 80px;
+  margin-top: 64px;
 }
 
 .marketplace-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(20px, 2.6vw, 28px);
-  margin-top: 28px;
-}
-
-/* Modulekaart */
-.marketplace-card {
-  background: #ffffff;
-  padding: 24px 26px 30px;
-  border-radius: 16px;
-  border: 1px solid rgba(15,23,42,0.08);
-  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow .22s ease, transform .2s ease;
-}
-
-.marketplace-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(15,23,42,0.08);
-}
-
-/* Label boven module */
-.mp-label {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(15,23,42,0.55);
-  margin-bottom: 12px;
-}
-
-/* Module titel */
-.marketplace-card h3 {
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-
-/* Module korte uitleg */
-.mp-sub {
-  font-size: 0.92rem;
-  line-height: 1.45;
-  color: rgba(15,23,42,0.75);
-  margin-bottom: 16px;
-}
-
-/* Bullets */
-.mp-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-}
-
-.mp-list li {
-  position: relative;
-  padding-left: 22px;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-  color: rgba(15,23,42,0.85);
-  line-height: 1.45;
-}
-
-.mp-list li::before {
-  content: "✓";
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-weight: 700;
-  color: var(--blue);
-}
-
-/* CTA onderaan */
-.mp-cta {
-  margin-top: auto;
-  text-align: center;
+  gap: 26px;
 }
 
 @media (max-width: 1200px) {
@@ -1404,4 +1292,68 @@ footer {
   .marketplace-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Marketplace cards */
+.marketplace-card {
+  background: #fff;
+  padding: 22px 22px 26px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.marketplace-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+}
+
+.mp-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(15,23,42,0.5);
+  margin-bottom: 10px;
+}
+
+.marketplace-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.mp-sub {
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  line-height: 1.55;
+  color: rgba(15,23,42,0.75);
+}
+
+/* Bullet list */
+.mp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.mp-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: rgba(15,23,42,0.85);
+}
+
+.mp-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.mp-cta {
+  margin-top: auto;
+  display: inline-block;
 }
