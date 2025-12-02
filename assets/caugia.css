@@ -1475,3 +1475,99 @@ input[type="range"]::-moz-range-track {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===========================================================
+   SERVICES GRID — FINAL
+=========================================================== */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 26px;
+}
+
+/* Prevent jumping */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+  transform: none !important;
+}
+
+/* Kicker (boven productnaam) */
+.service-kicker {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(15,23,42,0.6);
+  margin-bottom: 4px;
+}
+
+/* Hoofdtitel */
+.service-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Tagline (1 zin) */
+.service-tagline {
+  font-size: 0.92rem;
+  color: rgba(15,23,42,0.75);
+  margin-bottom: 14px;
+}
+
+/* Prijs – echt groter */
+.service-price {
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+/* CTA */
+.service-cta-main {
+  margin-bottom: 18px;
+}
+
+/* Checklist */
+.service-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: rgba(15,23,42,0.85);
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+}
+
+.service-checklist li:before {
+  content: "✓";
+  color: var(--blue);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 1120px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
