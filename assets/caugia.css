@@ -319,10 +319,14 @@ nav.nav-mobile.open {
 
 
 /* ===========================================================
-   BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
+   BLOCK 2 — CLEAN COMPONENTS / CARDS / TEXT / GRIDS
+   Caugia Consulting — Production CSS Clean 
    =========================================================== */
 
-/* Badges */
+
+/* -----------------------------------------------------------
+   BADGES
+   ----------------------------------------------------------- */
 
 .badge {
   display: inline-block;
@@ -353,46 +357,10 @@ nav.nav-mobile.open {
   color: var(--ink);
 }
 
-.service-price {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin: -4px 0 12px;
-}
 
-
-/* Typography */
-
-h1 {
-  font-size: clamp(2.2rem, 4vw, 2.9rem);
-  font-weight: 800;
-  color: var(--blue);
-  margin-bottom: clamp(14px, 2vw, 22px);
-  line-height: 1.08;
-}
-
-h2 {
-  font-size: clamp(1.4rem, 2.4vw, 1.65rem);
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--blue);
-  line-height: 1.25;
-}
-
-p {
-  font-size: clamp(1rem, 1.4vw, 1.06rem);
-  line-height: 1.7;
-  color: rgba(15, 23, 42, 0.88);
-}
-
-.page-intro {
-  max-width: 720px;
-  margin-bottom: 32px;
-}
-
-.page-intro p {
-  color: rgba(15, 23, 42, 0.78);
-}
+/* -----------------------------------------------------------
+   TYPOGRAPHY UTILITIES
+   ----------------------------------------------------------- */
 
 .section-heading {
   margin-bottom: 16px;
@@ -403,192 +371,242 @@ p {
   color: rgba(15, 23, 42, 0.84);
 }
 
+.service-kicker {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(15,23,42,0.6);
+  margin-bottom: 4px;
+}
 
-/* Generic card */
+.service-title-main,
+.service-card h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
 
-.card {
-  background: #fff;
-  border-radius: var(--radius);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  padding: clamp(18px, 2vw, 22px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+.service-subtitle {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(75,85,99,1);
+  margin-bottom: 12px;
+}
+
+
+/* -----------------------------------------------------------
+   GENERIC CARD — BASIS voor ALLE kaarten
+   ----------------------------------------------------------- */
+
+.card,
+.service-card,
+.marketplace-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.08);
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
   transition:
     box-shadow var(--transition),
-    transform var(--transition),
     border-color var(--transition),
     background var(--transition);
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(15, 23, 42, 0.1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-}
-
-.card h3 {
-  font-size: clamp(1.05rem, 1.4vw, 1.15rem);
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.card p {
-  font-size: 0.98rem;
-  color: rgba(15, 23, 42, 0.85);
+.card:hover,
+.service-card:hover,
+.marketplace-card:hover {
+  border-color: rgba(15,23,42,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  transform: none;  /* geen jump */
 }
 
 
-/* Generic homepage sections */
+/* -----------------------------------------------------------
+   SERVICE CARDS — pricing style (Notion / Make / Amplitude)
+   ----------------------------------------------------------- */
 
-.home-section {
-  margin-bottom: clamp(56px, 8vw, 96px);
+.service-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.home-section-line {
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
-  padding-top: clamp(24px, 4vw, 40px);
-  margin-top: clamp(10px, 2vw, 20px);
-}
-
-
-/* Two-column split */
-
-.home-split {
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  gap: clamp(28px, 4vw, 40px);
-  align-items: start;
-}
-
-
-/* Product ladder (GTM clarity path + resources) */
-
-.home-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 26px);
-  margin-top: 24px;
-}
-
-.service-label {
-  font-size: 0.85rem;
-  letter-spacing: 0.14em;
+/* Pill labels bovenaan kaart */
+.service-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.7);
-  margin-bottom: 8px;
-}
-
-.service-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.service-body {
+  background: #eef1f6;
+  color: rgba(15,23,42,0.7);
   margin-bottom: 14px;
-  color: rgba(15, 23, 42, 0.86);
 }
 
+.pill-flagship { background: var(--accent-soft); color: var(--accent); }
+.pill-structured { background: #e6edf6; color: var(--blue); }
+.pill-advisory { background: #f1f2f4; color: rgba(15,23,42,0.8); }
 
-/* Modules grid */
-
-.home-modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2.5vw, 20px);
-  margin-top: 22px;
-}
-
-.home-module {
-  text-decoration: none;
-  display: block;
-}
-
-.home-module h3 {
-  font-size: 1.04rem;
-  margin-bottom: 4px;
+/* Prijs — dominant */
+.service-price {
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--ink);
+  margin: 10px 0 18px;
 }
 
-.home-module p {
-  font-size: 0.9rem;
-  color: rgba(75, 85, 99, 1);
+/* CTA */
+.service-cta {
+  margin-bottom: 14px;
+}
+.service-card .cta {
+  width: 100%;
+  justify-content: center;
 }
 
-.module-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(15, 23, 42, 0.7);
-  margin-bottom: 4px;
+/* Checklist — blauwe Caugia-check */
+.service-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.home-modules-cta {
-  margin-top: 20px;
-}
-
-
-/* Resources */
-
-.home-resource h3 {
+.service-features li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(55,65,81,0.95);
   margin-bottom: 6px;
-  font-size: 1.12rem;
-  color: var(--ink);
 }
 
-.home-resource p {
-  font-size: 0.95rem;
-  color: rgba(75, 85, 99, 1);
+.service-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--blue);
+  font-size: 0.86rem;
+  font-weight: 700;
 }
 
 
-/* Image rounding — clarity & diamond */
+/* -----------------------------------------------------------
+   SERVICES GRID — 4 kaarten *naast elkaar*
+   ----------------------------------------------------------- */
 
-.clarity-split {
+.services-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(32px, 5vw, 48px);
-  align-items: center;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 26px);
+  align-items: stretch;
 }
 
-.diamond-split {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(32px, 5vw, 48px);
-  align-items: center;
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
 }
-
-.clarity-image img,
-.diamond-image img {
-  width: clamp(260px, 36vw, 520px);
-  height: auto;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.08);
-}
-
-
-/* Collapse splits pas op kleinere schermen */
 
 @media (max-width: 720px) {
-  .clarity-split,
-  .diamond-split,
-  .home-split {
+  .services-grid {
     grid-template-columns: 1fr;
-    gap: clamp(24px, 4vw, 32px);
-  }
-
-  .clarity-image,
-  .diamond-image {
-    order: 2;
   }
 }
 
 
+/* -----------------------------------------------------------
+   MARKETPLACE — 4 kaarten onder services
+   ----------------------------------------------------------- */
+
+.marketplace-section {
+  margin-top: 80px;
+}
+
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 26px);
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .marketplace-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .marketplace-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Marketplace labels & bullets */
+.mp-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: rgba(15,23,42,0.5);
+}
+
+.marketplace-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.mp-sub {
+  font-size: 0.92rem;
+  color: rgba(15,23,42,0.75);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.mp-list {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.mp-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba(15,23,42,0.85);
+  margin-bottom: 10px;
+}
+
+.mp-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.mp-cta {
+  margin-top: auto;
+}
+
 /* ===========================================================
-   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND
+   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND (CLEAN VERSION)
+   Caugia Consulting — Production CSS v7.5
    =========================================================== */
+
+
+/* -----------------------------------------------------------
+   HERO SECTION — text left, visuals right
+   ----------------------------------------------------------- */
 
 .home-hero {
   margin-bottom: 96px;
@@ -614,13 +632,14 @@ p {
 }
 
 .home-hero-copy h1 {
-  font-size: 2.85rem;
+  font-size: clamp(2.35rem, 4vw, 2.85rem);
   line-height: 1.08;
   margin-bottom: 16px;
+  color: var(--blue);
 }
 
 .hero-lead {
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   line-height: 1.65;
   color: rgba(15, 23, 42, 0.86);
   max-width: 34rem;
@@ -640,7 +659,9 @@ p {
 }
 
 
-/* Right column wrapper */
+/* -----------------------------------------------------------
+   HERO VISUAL (GRIP health card + GRIP diamond)
+   ----------------------------------------------------------- */
 
 .home-hero-visual {
   display: flex;
@@ -664,7 +685,9 @@ p {
 }
 
 
-/* HEALTH CARD — FINAL, CLEAN, CAUGIA 2025 */
+/* ===========================================================
+   GRIP HEALTH CARD — clean version (unchanged logic)
+   =========================================================== */
 
 .hero-health {
   border-radius: 14px;
@@ -699,7 +722,7 @@ p {
 }
 
 
-/* Bars */
+/* ---- BARS ---- */
 
 .hero-health-rows {
   display: flex;
@@ -743,16 +766,14 @@ p {
 }
 
 
-/* -----------------------------------------------------------
-   SLIDERS — Caugia GRIP card (smalle rail + blauwe dot)
-   ----------------------------------------------------------- */
+/* ---- SLIDERS (blue thumb, narrow rail) ---- */
 
 .hero-health-sliders {
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid rgba(15,23,42,0.06);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0,1fr));
   gap: 18px 14px;
 }
 
@@ -767,7 +788,6 @@ p {
   color: rgba(75,85,99,1);
 }
 
-/* Rail (smal, lichtgrijs, afgerond) */
 .hero-health-slider input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -779,65 +799,35 @@ p {
   margin: 0;
 }
 
-/* Track */
-.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-}
+.hero-health-slider input[type="range"]::-webkit-slider-runnable-track,
 .hero-health-slider input[type="range"]::-moz-range-track {
   height: 4px;
   border-radius: 999px;
   background: #E5E7EB;
 }
 
-/* Thumb — blauwe dot met witte ring */
 .hero-health-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #0046A5;                  /* inner dot */
-  border: 4px solid #ffffff;            /* witte ring */
-  margin-top: -8px;                     /* exact centreren op 4px rail */
+  background: var(--blue);
+  border: 4px solid #ffffff;
+  margin-top: -8px;
 }
 
 .hero-health-slider input[type="range"]::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #0046A5;
+  background: var(--blue);
   border: 4px solid #ffffff;
-  box-shadow: 0 0 0 3px rgba(0,70,165,0.18);
 }
 
 
-/* Archetype in kaart */
-
-.hero-archetype {
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(15,23,42,0.06);
-  text-align: left;
-}
-
-.hero-archetype .archetype-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 6px;
-}
-
-.hero-archetype .archetype-desc {
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: rgba(75,85,99,1);
-  max-width: 420px;
-}
-
-
-/* DIAMOND CARD — FINAL */
+/* ===========================================================
+   GRIP DIAMOND CANVAS — clean styling (positions untouched!!)
+   =========================================================== */
 
 .diamond-card {
   position: relative;
@@ -875,7 +865,8 @@ p {
   height: auto !important;
 }
 
-/* labels — POSITIES GELATEN ZOALS DOOR JOU AANGEPAST */
+
+/* ---- LABEL POSITIES (JOUW MANUELE FIXES — NIET AANGEPAST) ---- */
 
 .diamond-label {
   position: absolute;
@@ -897,30 +888,24 @@ p {
   transform: translateX(-50%);
 }
 
-.diamond-label-left,
+.diamond-label-left {
+  top: 50%;
+  left: 50%;
+  transform: translate(-260%, -50%);   /* jouw custom positioning */
+}
+
 .diamond-label-right {
   top: 50%;
   left: 50%;
-}
-
-.diamond-label-left {
-  transform: translate(-260%, -50%);
-}
-
-.diamond-label-right {
-  transform: translate(100%, -50%);
+  transform: translate(100%, -50%);    /* jouw custom positioning */
 }
 
 
 /* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES
-   =========================================================== */
+   RESPONSIVE RULES
+   ----------------------------------------------------------- */
 
 @media (max-width: 1280px) {
-  main .wrap {
-    padding: clamp(56px, 6vw, 72px) 20px;
-  }
-
   .home-hero-grid {
     gap: clamp(32px, 4vw, 48px);
   }
@@ -942,13 +927,99 @@ p {
     margin-top: 0;
   }
 
-  .home-hero-copy h1 {
-    font-size: clamp(2.1rem, 5vw, 2.45rem);
+  .home-hero-visual {
+    width: 100% !important;
+    transform: none !important;
+    padding: 24px;
   }
 
   .hero-visual-grid {
     grid-template-columns: 1fr;
     gap: 26px;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .home-hero {
+    margin-bottom: 72px;
+  }
+
+  .home-hero-visual {
+    padding: 20px 18px 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .diamond-label-right {
+    transform: translate(40%, -50%);
+  }
+  .diamond-label-left {
+    transform: translate(-250%, -50%);
+  }
+}
+
+/* ===========================================================
+   BLOCK 4 — RESPONSIVE RULES + FOOTER + GLOBAL FIXES
+   Caugia Consulting – Production CSS v7.6
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   GLOBAL RANGE TRACK SAFETY (no browser overrides)
+   ----------------------------------------------------------- */
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #E5E7EB !important;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #E5E7EB !important;
+}
+
+
+/* ===========================================================
+   RESPONSIVE BREAKPOINTS — MOBILE-FIRST APPROACH
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   LARGE DEVICES — ≤ 1280px
+   ----------------------------------------------------------- */
+@media (max-width: 1280px) {
+
+  main .wrap {
+    padding: clamp(56px, 6vw, 72px) 20px;
+  }
+
+  .home-hero-grid {
+    gap: clamp(32px, 4vw, 48px);
+  }
+
+  .home-hero-visual {
+    transform: translateX(-18%) !important;
+    padding: 26px 24px 36px;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   TABLET LANDSCAPE — ≤ 1024px
+   ----------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+  /* HERO */
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .home-hero-copy {
+    margin-top: 0;
+  }
+
+  .home-hero-copy h1 {
+    font-size: clamp(2.1rem, 5vw, 2.45rem);
   }
 
   .home-hero-visual {
@@ -957,23 +1028,56 @@ p {
     padding: 24px;
   }
 
-  .home-grid-3 {
+  .hero-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  /* PRICING CARDS & MODULES */
+  .services-grid,
+  .marketplace-grid,
+  .modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .home-modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Content columns (image + text) */
+  .clarity-split,
+  .diamond-split,
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 32px);
+  }
+
+  .clarity-image,
+  .diamond-image {
+    order: 2; /* image under text */
   }
 }
 
+
+/* -----------------------------------------------------------
+   TABLET PORTRAIT / LARGE MOBILE — ≤ 720px
+   ----------------------------------------------------------- */
 @media (max-width: 720px) {
 
   header .inner {
     padding: 14px 18px;
   }
 
+  .nav-desktop {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  /* Product ladders & module cards */
   .home-grid-3,
-  .home-modules-grid {
+  .home-modules-grid,
+  .services-grid,
+  .marketplace-grid,
+  .modules-grid {
     grid-template-columns: 1fr;
   }
 
@@ -986,6 +1090,10 @@ p {
   }
 }
 
+
+/* -----------------------------------------------------------
+   SMALL PHONES — ≤ 480px
+   ----------------------------------------------------------- */
 @media (max-width: 480px) {
 
   main .wrap {
@@ -1001,6 +1109,7 @@ p {
     padding: 18px 16px 20px;
   }
 
+  /* Your custom diamond label hotfix — unchanged */
   .diamond-label-right {
     transform: translate(40%, -50%);
   }
@@ -1011,9 +1120,9 @@ p {
 }
 
 
-/* -----------------------------------------------------------
-   FOOTER — Fluid & Clean
-   ----------------------------------------------------------- */
+/* ===========================================================
+   FOOTER — Fluid, clean & consistent
+   =========================================================== */
 
 footer {
   border-top: 1px solid rgba(15, 23, 42, 0.06);
@@ -1059,814 +1168,57 @@ footer {
   }
 }
 
-
-/* -----------------------------------------------------------
-   GLOBAL RANGE TRACK SAFEGUARD
-   ----------------------------------------------------------- */
-
-input[type="range"]::-webkit-slider-runnable-track {
-  background: #E5E7EB !important;
-}
-input[type="range"]::-moz-range-track {
-  background: #E5E7EB !important;
-}
-
-
 /* ===========================================================
-   GTM CLARITY PATH — Equal Height + Bullets + CTA alignment
-   =========================================================== */
-
-.home-product {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.home-product .service-body,
-.home-product .service-features {
-  margin-bottom: 0;
-}
-
-.home-product ul.service-features {
-  margin-top: 16px !important;
-  margin-bottom: 0;
-}
-
-.home-product .service-cta {
-  margin-top: auto;
-  padding-top: 20px;
-}
-
-.home-grid-3 > .home-product {
-  min-height: 360px;
-}
-
-.home-product ul.service-features li {
-  line-height: 1.55;
-  margin-bottom: 6px;
-}
-
-/* ===========================================================
-   SERVICES PAGE — CARDS & MODULES FIX
-   =========================================================== */
-
-/* 4 service cards mooi in balans */
-.service-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.service-card .service-body {
-  margin-bottom: 10px;
-  color: rgba(15,23,42,0.86);
-}
-
-.service-price {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 4px 0 10px;
-}
-
-.service-price-note {
-  font-weight: 400;
-  font-size: 0.9rem;
-  color: rgba(75,85,99,1);
-}
-
-/* bullets onder elkaar, rustige spacing */
-.service-features {
-  margin-top: 10px;
-  margin-bottom: 0;
-  padding-left: 18px;
-  font-size: 0.92rem;
-  color: rgba(55,65,81,0.95);
-}
-
-.service-features li {
-  line-height: 1.55;
-  margin-bottom: 4px;
-}
-
-/* CTA altijd netjes onderaan de kaart */
-.service-card .service-cta {
-  margin-top: auto;
-  padding-top: 18px;
-}
-
-/* Flagship kaart iets meer accent */
-.service-card-flagship {
-  border-color: rgba(0,70,165,0.25);
-  box-shadow: 0 10px 28px rgba(15,23,42,0.07);
-}
-
-.service-card-flagship h3 {
-  color: var(--blue);
-}
-
-/* ===========================================================
-   SERVICES — 12 GTM MODULES BLOK
-   =========================================================== */
-
-.modules-card {
-  margin-top: 24px;
-  border-radius: 16px;
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 10px 32px rgba(15,23,42,0.05);
-  padding: 24px 22px 22px;
-  background: #ffffff;
-}
-
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.modules-grid h3 {
-  font-size: 1.02rem;
-  margin-bottom: 4px;
-  color: var(--ink);
-}
-
-.modules-grid p {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-  color: rgba(75,85,99,1);
-}
-
-.modules-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 0.9rem;
-}
-
-.modules-list li {
-  margin-bottom: 10px;
-  line-height: 1.5;
-}
-
-.modules-list strong {
-  display: inline-block;
-  margin-bottom: 2px;
-  color: var(--ink);
-}
-
-.modules-note {
-  margin-top: 18px;
-  font-size: 0.9rem;
-  color: rgba(75,85,99,1);
-}
-
-/* Responsief gedrag voor modules-blok */
-@media (max-width: 1024px) {
-  .modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.service-one-liner {
-  font-size: 0.98rem;
-  color: rgba(15,23,42,0.85);
-  margin-bottom: 14px;
-}
-
-.service-cta-top {
-  margin-bottom: 18px;
-}
-
-.service-price span {
-  font-size: 0.85rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-/* ===========================================================
-   PRICING GRID — Caugia 2025
-=========================================================== */
-
-.services-pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 26px;
-  align-items: stretch;
-}
-
-/* Pricing Card Base */
-.pricing-card {
-  background: #fff;
-  border: 1px solid rgba(15,23,42,0.08);
-  border-radius: 16px;
-  padding: 24px 26px 30px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-  transition: box-shadow 0.2s ease;
-}
-
-.pricing-card:hover {
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-  transform: none !important; /* NO JUMP */
-}
-
-/* Title + one-liner */
-.pricing-card h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 8px 0 6px;
-}
-
-.pricing-one-liner {
-  font-size: 0.96rem;
-  color: rgba(15,23,42,0.75);
-  margin-bottom: 16px;
-}
-
-/* Pricing */
-.pricing-price {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 18px;
-}
-
-.pricing-price span {
-  font-size: 0.85rem;
-  color: rgba(75,85,99,1);
-  margin-left: 6px;
-}
-
-/* CTA */
-.pricing-cta {
-  margin-bottom: 20px;
-  text-align: center;
-  width: 100%;
-}
-
-/* Features */
-.pricing-features {
-  list-style: none;
-  padding: 0;
-  margin-top: auto;
-}
-
-.pricing-features li {
-  margin-bottom: 8px;
-  font-size: 0.92rem;
-  color: rgba(15,23,42,0.85);
-}
-
-/* Mobile layout */
-@media (max-width: 1024px) {
-  .services-pricing-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .services-pricing-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===========================================================
-   SERVICES — CHECKMARK LISTS
-=========================================================== */
-
-.service-checks {
-  list-style: none;
-  margin-top: 18px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.service-checks li {
-  position: relative;
-  padding-left: 24px;
-  font-size: 0.92rem;
-  color: rgba(15,23,42,0.85);
-}
-
-.service-checks li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* Prevent hover jump */
-.service-card {
-  transition: box-shadow var(--transition),
-              border-color var(--transition);
-}
-.service-card:hover {
-  transform: none !important;
-  box-shadow: 0 8px 24px rgba(15,23,42,0.06);
-}
-
-/* ===========================================================
-   SERVICES PRICING GRID
-=========================================================== */
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(230px, 1fr));
-  gap: clamp(18px, 2.5vw, 24px);
-  align-items: stretch;
-}
-
-.service-card {
-  display: flex;
-  flex-direction: column;
-}
-
-/* kaarthover: wel iets meer shadow, geen sprong */
-.service-card:hover {
-  transform: none;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
-}
-
-/* tagline + price */
-.service-tagline {
-  margin: 4px 0 10px;
-  font-size: 0.95rem;
-  color: rgba(15, 23, 42, 0.8);
-}
-
-.service-price {
-  font-size: 1.35rem;
-  font-weight: 700;
-  margin: 4px 0 14px;
-  color: var(--ink);
-}
-
-.service-cta-main {
-  margin-bottom: 14px;
-}
-
-/* checklist met blauwe check */
-.service-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.service-checklist li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-  color: rgba(15, 23, 42, 0.85);
-}
-
-.service-checklist li::before {
-  content: "✓";
-  font-weight: 700;
-  color: var(--blue);
-  margin-top: 2px;
-}
-
-/* modules grid onder de kaarten */
-.modules-card {
-  margin-top: 24px;
-}
-
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(220px, 1fr));
-  gap: clamp(16px, 2.5vw, 22px);
-}
-
-.modules-list {
-  list-style: none;
-  padding: 0;
-  margin: 8px 0 0;
-}
-
-.modules-list li {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-  color: rgba(15, 23, 42, 0.85);
-}
-
-/* responsive breuken */
-@media (max-width: 1120px) {
-  .services-grid,
-  .modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .services-grid,
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===========================================================
-   SERVICES GRID — FINAL
-=========================================================== */
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(260px, 1fr));
-  gap: 26px;
-}
-
-/* Prevent jumping */
-.service-card {
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow 0.2s ease;
-}
-
-.service-card:hover {
-  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
-  transform: none !important;
-}
-
-/* Kicker (boven productnaam) */
-.service-kicker {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(15,23,42,0.6);
-  margin-bottom: 4px;
-}
-
-/* Hoofdtitel */
-.service-card h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-/* Tagline (1 zin) */
-.service-tagline {
-  font-size: 0.92rem;
-  color: rgba(15,23,42,0.75);
-  margin-bottom: 14px;
-}
-
-/* Prijs – echt groter */
-.service-price {
-  font-size: 1.55rem;
-  font-weight: 800;
-  margin-bottom: 16px;
-  color: var(--ink);
-}
-
-/* CTA */
-.service-cta-main {
-  margin-bottom: 18px;
-}
-
-/* Checklist */
-.service-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.service-checklist li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  color: rgba(15,23,42,0.85);
-  margin-bottom: 8px;
-  font-size: 0.92rem;
-}
-
-.service-checklist li:before {
-  content: "✓";
-  color: var(--blue);
-  font-weight: 700;
-  margin-top: 2px;
-}
-
-/* Responsive */
-@media (max-width: 1120px) {
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 720px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* CARD TITLES — terug kleiner, strak */
-.service-card h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-/* PRIJZEN — nu ECHT groot */
-.service-price {
-  font-size: 1.9rem;
-  font-weight: 800;
-  margin: 10px 0 18px;
-  color: var(--ink);
-}
-
-/* Marketplace titel op 1 regel */
-.service-kicker,
-.service-card h3,
-.service-tagline {
-  white-space: nowrap;
-}
-
-/* Checklist bullets blijven strak, korter */
-.service-checklist li {
-  margin-bottom: 6px;
-  font-size: 0.92rem;
-}
-
-/* Marketplace card exact dezelfde spacing */
-.marketplace-card {
-  padding: 28px;
-  border-radius: var(--radius);
-  border: 1px solid rgba(15,23,42,0.08);
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-}
-
-/* TITELS KLEINER */
-.service-card h3 {
-  font-size: 1.12rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: var(--ink);
-}
-
-/* PRIJS GROTER EN DOMINANT */
-.service-price {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 10px 0 18px;
-  color: var(--ink);
-}
-
-/* CHECKLIST */
-.service-checklist li {
-  font-size: 0.92rem;
-  line-height: 1.45;
-  margin-bottom: 6px;
-}
-
-/* ===========================================================
-   SERVICES GRID — PRICING STYLE (Notion / Make / Amplitude)
+   BLOCK 5 — SERVICES PRICING GRID (4 CARDS, CAUGIA 2025)
    =========================================================== */
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 2.6vw, 26px);
-  align-items: stretch;
+  gap: clamp(20px, 2.6vw, 28px);
+  margin-top: 40px;
 }
 
-/* Basiskaart, los van .card zodat hover niet springt */
+/* Basiskaart (geen jump, moderne shadow) */
 .service-card {
   background: #ffffff;
   border-radius: 18px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-  padding: 22px 22px 20px;
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+  padding: 24px 26px 28px;
   display: flex;
   flex-direction: column;
   transition:
-    box-shadow var(--transition),
-    border-color var(--transition),
-    background var(--transition);
+    box-shadow .22s ease,
+    border-color .22s ease,
+    background .22s ease;
 }
 
-/* Geen jump op hover, alleen iets meer shadow */
+/* Hover — schoon, geen beweging */
 .service-card:hover {
-  border-color: rgba(15, 23, 42, 0.14);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+  border-color: rgba(15,23,42,0.14);
+  box-shadow: 0 12px 30px rgba(15,23,42,0.08);
 }
 
-/* Flagship — solid accent rand en iets sterkere shadow */
-.service-card--flagship {
+/* Flagship highlight (subtiel, professioneel) */
+.service-card-flagship {
   border: 2px solid var(--accent);
-  box-shadow: 0 14px 34px rgba(243, 108, 33, 0.16);
+  box-shadow: 0 14px 34px rgba(243,108,33,0.14);
 }
 
-/* Bovenste “pill” */
+/* Top pill (Free, Flagship, Structured, Advisory) */
 .service-pill {
   display: inline-flex;
   align-items: center;
   padding: 5px 14px;
   border-radius: 999px;
-  background: #e5e7eb;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.7);
-  margin-bottom: 16px;
-}
-
-.service-pill--flagship {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.service-pill--structured {
-  background: #e6edf6;
-  color: var(--blue);
-}
-
-.service-pill--advisory {
-  background: #f3f4f6;
-  color: rgba(15, 23, 42, 0.8);
-}
-
-/* Titels en copy in de kaart */
-.service-eyebrow {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.7);
-  margin-bottom: 6px;
-}
-
-.service-name {
-  font-size: 1.1rem;          /* kleiner dan prijs, rustiger dan eerst */
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-
-.service-subtitle {
-  font-size: 0.95rem;
-  color: rgba(75, 85, 99, 1);
-  margin-bottom: 10px;
-}
-
-/* Prijs dominant, zoals Notion / Make */
-.service-price {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 4px 0 14px;
-}
-
-/* CTA mooi onder de prijs */
-.service-cta {
-  margin-bottom: 16px;
-}
-
-/* Checklists */
-.service-features {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-top: 4px;
-}
-
-.service-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: rgba(55, 65, 81, 0.95);
-  margin-bottom: 6px;
-}
-
-.service-features li::before {
-  content: "✓";
-  font-weight: 700;
-  color: var(--blue);      /* Caugia blauw voor checks */
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-/* CTA-knop binnen deze kaarten mag niet wit-tekst verliezen */
-.service-card .cta {
-  width: 100%;
-  justify-content: center;
-}
-
-/* Responsive breuken voor de 4 kaarten */
-@media (max-width: 1200px) {
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===========================================================
-   MARKETPLACE GRID — 4 CARDS
-=========================================================== */
-
-.marketplace-section {
-  margin-top: 60px;
-}
-
-.marketplace-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 2.6vw, 26px);
-  align-items: stretch;
-}
-
-.marketplace-card {
-  padding-top: 24px;
-}
-  
-@media (max-width: 1200px) {
-  .marketplace-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .marketplace-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===========================================================
-   SERVICES PRICING GRID — Caugia 2025
-   =========================================================== */
-
-.services-pricing {
-  margin-top: 32px;
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  align-items: stretch;
-}
-
-/* Cards in services grid mogen NIET springen bij hover */
-.service-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 22px 22px 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-  transition:
-    box-shadow var(--transition),
-    border-color var(--transition),
-    background var(--transition);
-}
-
-.service-card:hover {
-  border-color: rgba(15, 23, 42, 0.12);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-  transform: none; /* override globale .card:hover */
-}
-
-/* Flagship highlight */
-.service-card-flagship {
-  border-width: 2px;
-  border-color: var(--accent-soft);
-}
-
-/* Top pill labels */
-.service-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: #eef1f6;
-  color: rgba(15, 23, 42, 0.7);
   margin-bottom: 14px;
+  background: #eef1f6;
+  color: rgba(15,23,42,0.7);
 }
 
 .pill-flagship {
@@ -1881,56 +1233,54 @@ input[type="range"]::-moz-range-track {
 
 .pill-advisory {
   background: #f1f2f4;
+  color: rgba(15,23,42,0.8);
 }
 
-/* Titels en subtitels */
-.service-title-main {
-  font-size: 1.1rem;
+/* Titel + subtitel */
+.service-name {
+  font-size: 1.12rem;
   font-weight: 700;
+  color: var(--ink);
   margin-bottom: 4px;
-  color: var(--ink);
 }
 
-.service-subtitle {
+.service-tagline {
   font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(55, 65, 81, 0.9);
+  color: rgba(15,23,42,0.75);
   margin-bottom: 14px;
+  line-height: 1.45;
+  white-space: normal;
 }
 
-/* Prijs groter, rustig */
+/* Prijs dominant, modern */
 .service-price {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 8px 0 18px;
   color: var(--ink);
-  margin-bottom: 14px;
 }
 
-/* CTA blok vast, bullets eronder */
-.service-cta {
-  margin-bottom: 14px;
-}
-
+/* CTA */
 .service-card .cta {
   width: 100%;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
-/* Features met blauwe check icons */
+/* Features (checklist stijl) */
 .service-features {
   list-style: none;
-  margin: 0;
   padding: 0;
-  margin-top: 6px;
+  margin: 0;
 }
 
 .service-features li {
   position: relative;
   padding-left: 22px;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: rgba(55, 65, 81, 0.9);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+  color: rgba(15,23,42,0.85);
+  line-height: 1.5;
 }
 
 .service-features li::before {
@@ -1939,120 +1289,119 @@ input[type="range"]::-moz-range-track {
   left: 0;
   top: 0;
   font-size: 0.86rem;
-  font-weight: 700;
   color: var(--blue);
+  font-weight: 700;
 }
 
-/* Responsive: 2 kolommen op tablet, 1 op mobiel */
-@media (max-width: 1100px) {
+/* Responsive */
+@media (max-width: 1200px) {
   .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
   .services-grid {
     grid-template-columns: 1fr;
   }
 }
 
 /* ===========================================================
-   MARKETPLACE SECTION — GRID + CARDS (CAUGIA STYLE)
+   BLOCK 6 — MARKETPLACE GRID (12 MODULES)
    =========================================================== */
 
 .marketplace-section {
   margin-top: 80px;
 }
 
-.marketplace-questions {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin: 24px 0 36px;
-  font-size: 0.95rem;
-  color: rgba(15,23,42,0.78);
-}
-
-.marketplace-questions strong {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-/* GRID */
 .marketplace-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 28px);
+  margin-top: 28px;
 }
 
-/* CARDS */
+/* Modulekaart */
 .marketplace-card {
   background: #ffffff;
-  padding: 22px 22px 28px;
-  border-radius: 14px;
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  padding: 24px 26px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: box-shadow 0.25s ease, transform 0.2s ease;
+  transition: box-shadow .22s ease, transform .2s ease;
 }
 
 .marketplace-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  box-shadow: 0 12px 30px rgba(15,23,42,0.08);
 }
 
+/* Label boven module */
 .mp-label {
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: rgba(15,23,42,0.55);
   margin-bottom: 12px;
-  color: rgba(15,23,42,0.5);
 }
 
+/* Module titel */
 .marketplace-card h3 {
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   font-weight: 700;
-  margin-bottom: 6px;
   color: var(--ink);
+  margin-bottom: 6px;
 }
 
+/* Module korte uitleg */
 .mp-sub {
   font-size: 0.92rem;
+  line-height: 1.45;
   color: rgba(15,23,42,0.75);
-  margin-bottom: 14px;
-  line-height: 1.5;
+  margin-bottom: 16px;
 }
 
-/* BULLET LIST */
+/* Bullets */
 .mp-list {
   list-style: none;
-  margin: 0 0 20px;
   padding: 0;
+  margin: 0 0 20px;
 }
 
 .mp-list li {
   position: relative;
   padding-left: 22px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 0.9rem;
-  line-height: 1.45;
   color: rgba(15,23,42,0.85);
+  line-height: 1.45;
 }
 
 .mp-list li::before {
   content: "✓";
   position: absolute;
-  left: 0;
   top: 0;
-  color: var(--blue);
+  left: 0;
   font-weight: 700;
+  color: var(--blue);
 }
 
-/* CTA */
+/* CTA onderaan */
 .mp-cta {
   margin-top: auto;
-  display: inline-block;
   text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .marketplace-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .marketplace-grid {
+    grid-template-columns: 1fr;
+  }
 }
