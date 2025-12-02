@@ -1,1 +1,367 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Your GTM Score | Caugia Consulting</title>
+  <meta name="description" content="Your GTM Score is a structured indicator of how mature, aligned and scalable your go to market system is.">
+
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="assets/C-logo.png">
+  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+
+  <link rel="stylesheet" href="assets/caugia.css?v=7.4" />
+
+  <!-- 🔒 SECURITY -->
+  <script src="/auth.js"></script>
+
+  <style>
+    /* Inline additions specific to result page only */
+
+    .result-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 40px;
+    }
+
+    .result-hero {
+      margin-bottom: 60px;
+    }
+
+    .result-hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .result-hero p {
+      max-width: 640px;
+      font-size: 1.1rem;
+      color: rgba(11,19,43,0.8);
+      line-height: 1.55;
+    }
+
+    .score-display {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 40px;
+      text-align: center;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+    }
+
+    .score-number {
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .score-band {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .cta-block {
+      margin-top: 60px;
+      margin-bottom: 80px;
+      text-align: center;
+    }
+
+    .cta-block h3 {
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 26px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--navy);
+    }
+
+    .cta-secondary {
+      display: block;
+      margin-top: 16px;
+      font-size: 1rem;
+      color: var(--blue);
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+
+
+<body>
+<header>
+  <div class="inner">
+    <a href="index.html" class="brand">
+      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
+      <span>Caugia Consulting</span>
+    </a>
+
+    <nav class="nav-desktop">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html" class="active">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <a class="cta" href="mailto:hello@caugia.com">Contact</a>
+    </nav>
+
+    <button class="menu-toggle" aria-label="Open navigation">
+      <span></span>
+    </button>
+
+    <nav class="nav-mobile">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html" class="active">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <a href="mailto:hello@caugia.com">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ===========================================================
+     RESULT CONTENT
+=========================================================== -->
+<main class="result-wrap">
+
+  <!-- HERO -->
+  <section class="result-hero">
+    <h1>Your GTM Score</h1>
+    <p>
+      This score gives a first view of how mature, aligned and scalable your go to market system is.
+      It is not a full audit but a structured foundation for deeper analysis through the Intelligence Report.
+    </p>
+  </section>
+
+  <!-- SCORE CARD -->
+  <section class="score-display">
+    <div id="gtm-score" class="score-number">–</div>
+    <div id="gtm-band" class="score-band">Loading…</div>
+
+    <p id="gtm-band-description" class="score-description">
+      Your maturity band will appear here.
+    </p>
+  </section>
+
+  <!-- REPORT STATUS -->
+  <section class="report-status">
+    <h2>Your full report is on its way</h2>
+    <p>
+      Within a few moments you will receive an email with your personalised GTM analysis.
+      It includes your score interpretation, capability insights and the patterns behind your current performance.
+    </p>
+    <p>
+      If the report does not arrive within five minutes, please check your spam folder or reach out directly.
+    </p>
+  </section>
+
+
+  <!-- ===========================================================
+       GRIP RESULT SECTION (FINAL, CORRECTED)
+  ============================================================ -->
+  <section class="grip-result">
+    <div class="container">
+
+      <div class="grip-result-header">
+        <h2>The GRIP view of your GTM system</h2>
+        <p>
+          This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine.
+          Your full pattern and next steps are explained in the Intelligence Report in your inbox.
+        </p>
+      </div>
+
+      <div class="grip-result-grid">
+
+        <!-- LEFT CARD -->
+        <div class="hero-health grip-health-card">
+
+          <div class="hero-health-header">
+            <div class="hero-health-label">Your GRIP health</div>
+            <div class="hero-health-score">
+              <span id="gripHealthScore">58</span><span>/100</span>
+            </div>
+          </div>
+
+          <div class="hero-health-rows">
+            <div class="hero-health-row">
+              <div class="hero-health-name">Guidance</div>
+              <div class="hero-health-bar"><span id="gripGuidanceBar" style="width:60%"></span></div>
+              <div class="hero-health-value" id="gripGuidanceValue">60</div>
+            </div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Resources</div>
+              <div class="hero-health-bar"><span id="gripResourcesBar" style="width:55%"></span></div>
+              <div class="hero-health-value" id="gripResourcesValue">55</div>
+            </div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Implementation</div>
+              <div class="hero-health-bar"><span id="gripImplementationBar" style="width:50%"></span></div>
+              <div class="hero-health-value" id="gripImplementationValue">50</div>
+            </div>
+
+            <div class="hero-health-row">
+              <div class="hero-health-name">Performance</div>
+              <div class="hero-health-bar"><span id="gripPerformanceBar" style="width:45%"></span></div>
+              <div class="hero-health-value" id="gripPerformanceValue">45</div>
+            </div>
+          </div>
+
+          <div class="hero-health-sliders">
+            <div class="hero-health-slider">
+              <label>Guidance</label>
+              <input type="range" disabled value="60">
+            </div>
+            <div class="hero-health-slider">
+              <label>Resources</label>
+              <input type="range" disabled value="55">
+            </div>
+            <div class="hero-health-slider">
+              <label>Implementation</label>
+              <input type="range" disabled value="50">
+            </div>
+            <div class="hero-health-slider">
+              <label>Performance</label>
+              <input type="range" disabled value="45">
+            </div>
+          </div>
+
+          <div class="hero-archetype">
+            <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
+            <div class="archetype-desc" id="gripArchetypeDesc">
+              Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync.
+              The Intelligence Report highlights the first adjustments that bring balance and stability.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT DIAMOND -->
+        <div class="diamond-card grip-diamond-card">
+          <div class="diamond-title">Your GRIP Diamond</div>
+
+          <div class="diamond-canvas">
+
+            <div class="diamond-label diamond-label-top">Guidance</div>
+            <div class="diamond-label diamond-label-right">Implementation</div>
+            <div class="diamond-label diamond-label-bottom">Performance</div>
+            <div class="diamond-label diamond-label-left">Resources</div>
+
+            <svg class="diamond-svg" viewBox="0 0 200 200">
+
+              <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,40 160,100 100,160 40,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,60 140,100 100,140 60,100" fill="none" stroke="#E5E7EB"/>
+
+              <polygon id="gripDiamondShape"
+                points="100,55 145,100 100,150 55,100"
+                fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
+
+              <circle cx="100" cy="100" r="4" fill="#0046A5" />
+
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- WHAT HAPPENS NEXT -->
+  <section class="next-steps">
+    <h2>What happens next</h2>
+
+    <ul class="next-list">
+      <li><strong>Your full GTM report is generated.</strong> A personalised analysis is being prepared based on your inputs.</li>
+      <li><strong>You receive the report by email.</strong> It includes your maturity band, patterns, strengths, risks and recommended focal points.</li>
+      <li><strong>Use the report to align your leadership team.</strong> It creates a structured starting point before deeper GTM work.</li>
+      <li><strong>Explore the Intelligence Report.</strong> This deeper twelve-pillar assessment reveals constraints and prioritises change with confidence.</li>
+    </ul>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="cta-block">
+    <h3>Move from insight to action</h3>
+    <a href="services.html" class="cta-btn">Explore the Intelligence Report</a>
+    <a href="mailto:hello@caugia.com" class="cta-secondary">Ask a question</a>
+  </section>
+
+
+</main>
+
+
+<script>
+  // ==========================================================
+  // SCORE LOGIC
+  // ==========================================================
+
+  function getScoreFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return parseInt(params.get("score"), 10);
+  }
+
+  const score = getScoreFromURL();
+  const scoreEl = document.getElementById("gtm-score");
+  const bandEl = document.getElementById("gtm-band");
+  const descEl = document.getElementById("gtm-band-description");
+
+  if (!isNaN(score)) {
+    scoreEl.textContent = score;
+
+    let band = "";
+    let desc = "";
+
+    if (score < 30) {
+      band = "At Risk";
+      desc = "Your GTM system has multiple constraints that require attention.";
+    } else if (score < 50) {
+      band = "Emerging";
+      desc = "Your GTM foundations are forming but lack consistency and alignment.";
+    } else if (score < 70) {
+      band = "Developing";
+      desc = "Your system shows progress with several capabilities performing well.";
+    } else if (score < 85) {
+      band = "Strong";
+      desc = "Your GTM system is running with clarity and discipline, with room for refinement.";
+    } else {
+      band = "Best in Class";
+      desc = "You have a highly aligned and scalable GTM engine.";
+    }
+
+    bandEl.textContent = band;
+    descEl.textContent = desc;
+  }
+</script>
+
+</body>
+</html>
+
