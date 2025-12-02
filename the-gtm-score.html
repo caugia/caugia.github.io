@@ -16,17 +16,20 @@
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
+  <!-- Chart.js for 12-pillar radar -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    /* Inline additions specific to result page */
+    /* Inline additions specific to result page only */
 
     .result-wrap {
       max-width: 800px;
       margin: 0 auto;
-      padding: 80px 18px 72px;
+      padding-top: 40px;
     }
 
     .result-hero {
-      margin-bottom: 48px;
+      margin-bottom: 60px;
     }
 
     .result-hero h1 {
@@ -38,26 +41,26 @@
 
     .result-hero p {
       max-width: 640px;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: rgba(11,19,43,0.8);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     .score-display {
       background: #fff;
       border: 1px solid rgba(0,0,0,0.08);
       border-radius: 16px;
-      padding: 32px 32px 30px;
-      margin-bottom: 32px;
+      padding: 36px;
+      margin-bottom: 40px;
       text-align: center;
       box-shadow: 0 12px 28px rgba(0,0,0,0.05);
     }
 
     .score-number {
-      font-size: 4.4rem;
+      font-size: 5rem;
       font-weight: 800;
       color: var(--blue);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       line-height: 1;
     }
 
@@ -69,168 +72,86 @@
       color: var(--accent);
       font-weight: 600;
       margin-bottom: 10px;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .score-description {
-      margin-top: 10px;
-      font-size: 0.98rem;
-      color: rgba(15,23,42,0.78);
-    }
-
-    .report-status {
-      margin-top: 32px;
-      margin-bottom: 40px;
-      max-width: 720px;
-    }
-
-    .report-status h2 {
-      font-size: 1.4rem;
-      color: var(--blue);
-      margin-bottom: 10px;
-    }
-
-    .report-status p {
-      font-size: 0.98rem;
-      line-height: 1.6;
-      color: rgba(15,23,42,0.86);
-    }
-
-    .grip-result {
-      margin-top: 52px;
-      margin-bottom: 40px;
-    }
-
-    .grip-result-header {
-      max-width: 720px;
-      margin-bottom: 24px;
-    }
-
-    .grip-result-header h2 {
-      font-size: 1.4rem;
-      color: var(--blue);
-      margin-bottom: 8px;
-    }
-
-    .grip-result-header p {
-      font-size: 0.98rem;
-      line-height: 1.6;
-      color: rgba(15,23,42,0.86);
-    }
-
-    .grip-result-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.05fr);
-      gap: 32px;
-      align-items: stretch;
-    }
-
-    @media (max-width: 900px) {
-      .grip-result-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .pattern-section {
-      margin-top: 40px;
-      margin-bottom: 40px;
-    }
-
-    .pattern-section h2 {
-      font-size: 1.35rem;
-      color: var(--blue);
-      margin-bottom: 8px;
-    }
-
-    .pattern-section p {
-      max-width: 720px;
-      font-size: 0.98rem;
-      color: rgba(15,23,42,0.8);
-      margin-bottom: 16px;
-    }
-
-    .pattern-chart-wrapper {
-      max-width: 720px;
-    }
-
-    .next-steps {
-      margin-top: 32px;
-      margin-bottom: 32px;
-      max-width: 720px;
-    }
-
-    .next-steps h2 {
-      font-size: 1.35rem;
-      color: var(--blue);
-      margin-bottom: 10px;
-    }
-
-    .next-list {
-      margin-top: 10px;
-      padding-left: 20px;
-      font-size: 0.98rem;
-      color: rgba(15,23,42,0.86);
-    }
-
-    .next-list li {
-      margin-bottom: 8px;
-      line-height: 1.6;
     }
 
     .cta-block {
-      margin-top: 40px;
-      margin-bottom: 40px;
+      margin-top: 60px;
+      margin-bottom: 80px;
       text-align: center;
     }
 
     .cta-block h3 {
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       color: var(--ink);
       margin-bottom: 16px;
     }
 
     .cta-btn {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 14px 26px;
       background: var(--blue);
       color: #fff;
-      border-radius: 999px;
+      border-radius: 10px;
       font-weight: 600;
       text-decoration: none;
-      font-size: 0.98rem;
-      border: 1px solid var(--blue);
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s;
     }
 
     .cta-btn:hover {
       background: var(--navy);
-      border-color: var(--navy);
     }
 
     .cta-secondary {
       display: block;
-      margin-top: 14px;
-      font-size: 0.96rem;
+      margin-top: 16px;
+      font-size: 1rem;
       color: var(--blue);
       text-decoration: underline;
     }
 
-    @media (max-width: 640px) {
-      .result-wrap {
-        padding-top: 64px;
-        padding-bottom: 64px;
-      }
-      .score-display {
-        padding: 26px 22px 24px;
-      }
-      .score-number {
-        font-size: 3.4rem;
+    /* 12-pillar radar */
+
+    .gtm-pattern {
+      margin-top: 80px;
+    }
+
+    .gtm-pattern h2 {
+      font-size: 1.6rem;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .gtm-pattern-desc {
+      max-width: 600px;
+      color: rgba(11,19,43,0.75);
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    .gtm-pattern-chart-box {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .gtm-pattern-note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: rgba(11,19,43,0.65);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .gtm-pattern-chart-box {
+        padding: 16px;
       }
     }
   </style>
 </head>
+
 
 <body>
 <header>
@@ -264,473 +185,313 @@
   </div>
 </header>
 
-<main>
-  <div class="result-wrap">
 
-    <!-- HERO -->
-    <section class="result-hero">
-      <h1>Your GTM Score</h1>
-      <p>
-        This score gives a first view of how mature, aligned and scalable your go to market system is.
-        It is not a full audit but a structured foundation for deeper analysis through the Intelligence Report.
-      </p>
-    </section>
+<!-- ===========================================================
+     RESULT CONTENT
+=========================================================== -->
+<main class="result-wrap">
 
-    <!-- SCORE CARD -->
-    <section class="score-display">
-      <div id="gtm-score" class="score-number">–</div>
-      <div id="gtm-band" class="score-band">Loading…</div>
+  <!-- HERO -->
+  <section class="result-hero">
+    <h1>Your GTM Score</h1>
+    <p>
+      This score gives a first view of how mature, aligned and scalable your go to market system is.
+      It is not a full audit but a structured foundation for deeper analysis through the Intelligence Report.
+    </p>
+  </section>
 
-      <p id="gtm-band-description" class="score-description">
-        Your maturity band will appear here.
-      </p>
-    </section>
+  <!-- SCORE CARD -->
+  <section class="score-display">
+    <div id="gtm-score" class="score-number">–</div>
+    <div id="gtm-band" class="score-band">Loading…</div>
 
-    <!-- REPORT STATUS -->
-    <section class="report-status">
-      <h2>Your full report is on its way</h2>
-      <p>
-        Within a few moments you will receive an email with your personalised GTM analysis.
-        It includes your score interpretation, capability insights and the patterns behind your current performance.
-      </p>
-      <p>
-        If the report does not arrive within five minutes, please check your spam folder or reach out directly.
-      </p>
-    </section>
+    <p id="gtm-band-description" class="score-description">
+      Your maturity band will appear here.
+    </p>
+  </section>
 
-    <!-- ===========================================================
-         GRIP RESULT SECTION
-    ============================================================ -->
-    <section class="grip-result">
-      <div class="container">
+  <!-- REPORT STATUS -->
+  <section class="report-status">
+    <h2>Your full report is on its way</h2>
+    <p>
+      Within a few moments you will receive an email with your personalised GTM analysis.
+      It includes your score interpretation, capability insights and the patterns behind your current performance.
+    </p>
+    <p>
+      If the report does not arrive within five minutes, please check your spam folder or reach out directly.
+    </p>
+  </section>
 
-        <div class="grip-result-header">
-          <h2>The GRIP view of your GTM system</h2>
-          <p>
-            This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine.
-            Your full pattern and next steps are explained in the Intelligence Report in your inbox.
-          </p>
-        </div>
 
-        <div class="grip-result-grid">
+  <!-- ===========================================================
+       GRIP RESULT SECTION
+  ============================================================ -->
+  <section class="grip-result">
+    <div class="container">
 
-          <!-- LEFT — GRIP HEALTH CARD -->
-          <div class="hero-health grip-health-card">
+      <div class="grip-result-header">
+        <h2>The GRIP view of your GTM system</h2>
+        <p>
+          This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine.
+          Your full pattern and next steps are explained in the Intelligence Report in your inbox.
+        </p>
+      </div>
 
-            <div class="hero-health-header">
-              <div class="hero-health-label">Your GRIP health</div>
-              <div class="hero-health-score">
-                <span id="gripHealthScore">58</span><span>/100</span>
-              </div>
+      <div class="grip-result-grid">
+
+        <!-- LEFT CARD -->
+        <div class="hero-health grip-health-card">
+
+          <div class="hero-health-header">
+            <div class="hero-health-label">Your GRIP health</div>
+            <div class="hero-health-score">
+              <span id="gripHealthScore">58</span><span>/100</span>
             </div>
-
-            <div class="hero-health-rows">
-              <div class="hero-health-row">
-                <div class="hero-health-name">Guidance</div>
-                <div class="hero-health-bar">
-                  <span id="gripGuidanceBar" style="width:60%"></span>
-                </div>
-                <div class="hero-health-value" id="gripGuidanceValue">60</div>
-              </div>
-
-              <div class="hero-health-row">
-                <div class="hero-health-name">Resources</div>
-                <div class="hero-health-bar">
-                  <span id="gripResourcesBar" style="width:55%"></span>
-                </div>
-                <div class="hero-health-value" id="gripResourcesValue">55</div>
-              </div>
-
-              <div class="hero-health-row">
-                <div class="hero-health-name">Implementation</div>
-                <div class="hero-health-bar">
-                  <span id="gripImplementationBar" style="width:50%"></span>
-                </div>
-                <div class="hero-health-value" id="gripImplementationValue">50</div>
-              </div>
-
-              <div class="hero-health-row">
-                <div class="hero-health-name">Performance</div>
-                <div class="hero-health-bar">
-                  <span id="gripPerformanceBar" style="width:45%"></span>
-                </div>
-                <div class="hero-health-value" id="gripPerformanceValue">45</div>
-              </div>
-            </div>
-
-            <div class="hero-health-sliders">
-              <div class="hero-health-slider">
-                <label>Guidance</label>
-                <input type="range" min="0" max="100" value="60" disabled>
-              </div>
-              <div class="hero-health-slider">
-                <label>Resources</label>
-                <input type="range" min="0" max="100" value="55" disabled>
-              </div>
-              <div class="hero-health-slider">
-                <label>Implementation</label>
-                <input type="range" min="0" max="100" value="50" disabled>
-              </div>
-              <div class="hero-health-slider">
-                <label>Performance</label>
-                <input type="range" min="0" max="100" value="45" disabled>
-              </div>
-            </div>
-
-            <div class="hero-archetype">
-              <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
-              <div class="archetype-desc" id="gripArchetypeDesc">
-                Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync.
-                The Intelligence Report highlights the first adjustments that bring balance and stability.
-              </div>
-            </div>
-
           </div>
 
-          <!-- RIGHT — GRIP DIAMOND -->
-          <div class="diamond-card grip-diamond-card">
-            <div class="diamond-title">Your GRIP Diamond</div>
+          <div class="hero-health-rows">
+            <div class="hero-health-row">
+              <div class="hero-health-name">Guidance</div>
+              <div class="hero-health-bar"><span id="gripGuidanceBar" style="width:60%"></span></div>
+              <div class="hero-health-value" id="gripGuidanceValue">60</div>
+            </div>
 
-            <div class="diamond-canvas">
+            <div class="hero-health-row">
+              <div class="hero-health-name">Resources</div>
+              <div class="hero-health-bar"><span id="gripResourcesBar" style="width:55%"></span></div>
+              <div class="hero-health-value" id="gripResourcesValue">55</div>
+            </div>
 
-              <div class="diamond-label diamond-label-top">Guidance</div>
-              <div class="diamond-label diamond-label-right">Implementation</div>
-              <div class="diamond-label diamond-label-bottom">Performance</div>
-              <div class="diamond-label diamond-label-left">Resources</div>
+            <div class="hero-health-row">
+              <div class="hero-health-name">Implementation</div>
+              <div class="hero-health-bar"><span id="gripImplementationBar" style="width:50%"></span></div>
+              <div class="hero-health-value" id="gripImplementationValue">50</div>
+            </div>
 
-              <svg class="diamond-svg" viewBox="0 0 200 200" aria-hidden="true">
-                <!-- Grid -->
-                <polygon points="100,20 180,100 100,180 20,100"
-                         fill="none" stroke="#E5E7EB" stroke-width="1" />
-                <polygon points="100,40 160,100 100,160 40,100"
-                         fill="none" stroke="#E5E7EB" stroke-width="1" />
-                <polygon points="100,60 140,100 100,140 60,100"
-                         fill="none" stroke="#E5E7EB" stroke-width="1" />
+            <div class="hero-health-row">
+              <div class="hero-health-name">Performance</div>
+              <div class="hero-health-bar"><span id="gripPerformanceBar" style="width:45%"></span></div>
+              <div class="hero-health-value" id="gripPerformanceValue">45</div>
+            </div>
+          </div>
 
-                <!-- Dynamic shape -->
-                <polygon id="gripDiamondShape"
-                         points="100,55 145,100 100,150 55,100"
-                         fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
+          <div class="hero-health-sliders">
+            <div class="hero-health-slider">
+              <label>Guidance</label>
+              <input type="range" disabled value="60">
+            </div>
+            <div class="hero-health-slider">
+              <label>Resources</label>
+              <input type="range" disabled value="55">
+            </div>
+            <div class="hero-health-slider">
+              <label>Implementation</label>
+              <input type="range" disabled value="50">
+            </div>
+            <div class="hero-health-slider">
+              <label>Performance</label>
+              <input type="range" disabled value="45">
+            </div>
+          </div>
 
-                <!-- Center dot -->
-                <circle cx="100" cy="100" r="4" fill="#0046A5"></circle>
-              </svg>
+          <div class="hero-archetype">
+            <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
+            <div class="archetype-desc" id="gripArchetypeDesc">
+              Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync.
+              The Intelligence Report highlights the first adjustments that bring balance and stability.
             </div>
           </div>
 
         </div>
 
+        <!-- RIGHT DIAMOND -->
+        <div class="diamond-card grip-diamond-card">
+          <div class="diamond-title">Your GRIP Diamond</div>
+
+          <div class="diamond-canvas">
+
+            <div class="diamond-label diamond-label-top">Guidance</div>
+            <div class="diamond-label diamond-label-right">Implementation</div>
+            <div class="diamond-label diamond-label-bottom">Performance</div>
+            <div class="diamond-label diamond-label-left">Resources</div>
+
+            <svg class="diamond-svg" viewBox="0 0 200 200">
+
+              <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,40 160,100 100,160 40,100" fill="none" stroke="#E5E7EB"/>
+              <polygon points="100,60 140,100 100,140 60,100" fill="none" stroke="#E5E7EB"/>
+
+              <polygon id="gripDiamondShape"
+                points="100,55 145,100 100,150 55,100"
+                fill="#FFD9C2" stroke="#0046A5" stroke-width="2" />
+
+              <circle cx="100" cy="100" r="4" fill="#0046A5" />
+
+            </svg>
+          </div>
+        </div>
+
       </div>
-    </section>
 
-    <!-- PATTERN SECTION (RADAR CHART) -->
-    <section class="pattern-section">
-      <h2>Your GTM pattern</h2>
-      <p>
-        This pattern shows how ten core GTM capabilities relate to each other for your current score.
-        The deeper Intelligence Report uses your full input to refine this view and prioritise change.
-      </p>
+    </div>
+  </section>
 
-      <div class="pattern-chart-wrapper">
-        <canvas id="gtmPatternChart" width="400" height="260"></canvas>
+
+  <!-- 12-PILLAR PATTERN -->
+  <section class="gtm-pattern">
+    <h2>Your GTM pattern</h2>
+    <p class="gtm-pattern-desc">
+      This radar shows how your twelve core GTM pillars perform relative to each other for your current score.
+      The deeper Intelligence Report uses your full input to refine these pillars and prioritise change.
+    </p>
+
+    <div class="gtm-pattern-chart-box">
+      <canvas id="gtmPatternRadar"></canvas>
+      <div class="gtm-pattern-note">
+        The shape highlights where your GTM system is strongest and where foundations need more attention.
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- WHAT HAPPENS NEXT -->
-    <section class="next-steps">
-      <h2>What happens next</h2>
 
-      <ul class="next-list">
-        <li>
-          <strong>Your full GTM report is generated.</strong>
-          A personalised analysis is being prepared based on your inputs.
-        </li>
-        <li>
-          <strong>You receive the report by email.</strong>
-          It includes your maturity band, patterns, strengths, risks and recommended focal points.
-        </li>
-        <li>
-          <strong>Use the report to align your leadership team.</strong>
-          It creates a structured starting point before deeper GTM work.
-        </li>
-        <li>
-          <strong>Explore the Intelligence Report.</strong>
-          This deeper twelve pillar assessment reveals constraints and prioritises change with confidence.
-        </li>
-      </ul>
-    </section>
+  <!-- WHAT HAPPENS NEXT -->
+  <section class="next-steps">
+    <h2>What happens next</h2>
 
-    <!-- CTA -->
-    <section class="cta-block">
-      <h3>Move from insight to action</h3>
-      <a href="services.html" class="cta-btn">Explore the Intelligence Report</a>
-      <a href="mailto:hello@caugia.com" class="cta-secondary">Ask a question</a>
-    </section>
+    <ul class="next-list">
+      <li><strong>Your full GTM report is generated.</strong> A personalised analysis is being prepared based on your inputs.</li>
+      <li><strong>You receive the report by email.</strong> It includes your maturity band, patterns, strengths, risks and recommended focal points.</li>
+      <li><strong>Use the report to align your leadership team.</strong> It creates a structured starting point before deeper GTM work.</li>
+      <li><strong>Explore the Intelligence Report.</strong> This deeper twelve-pillar assessment reveals constraints and prioritises change with confidence.</li>
+    </ul>
+  </section>
 
-  </div>
+
+  <!-- CTA -->
+  <section class="cta-block">
+    <h3>Move from insight to action</h3>
+    <a href="services.html" class="cta-btn">Explore the Intelligence Report</a>
+    <a href="mailto:hello@caugia.com" class="cta-secondary">Ask a question</a>
+  </section>
+
+
 </main>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <p>© 2025 Caugia Consulting</p>
-    </div>
-    <div class="footer-right">
-      <a href="privacy.html">Privacy notice</a>
-      <a href="https://www.linkedin.com/in/meijertom" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:tom@caugia.com">tom@caugia.com</a>
-    </div>
-  </div>
-</footer>
-
-<!-- Chart.js via CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  // Mobile nav + header scroll
-  document.addEventListener("DOMContentLoaded", function() {
-    const toggle = document.querySelector(".menu-toggle");
-    const mobileNav = document.querySelector(".nav-mobile");
-
-    if (toggle && mobileNav) {
-      toggle.addEventListener("click", () => {
-        toggle.classList.toggle("active");
-        mobileNav.classList.toggle("open");
-      });
-    }
-
-    window.addEventListener("scroll", () => {
-      const header = document.querySelector("header");
-      if (!header) return;
-      if (window.scrollY > 10) header.classList.add("scrolled");
-      else header.classList.remove("scrolled");
-    });
-
-    initScorePage();
-  });
-
-  // ------------------------------
-  // GTM SCORE V2 ENGINE
-  // ------------------------------
+  // ==========================================================
+  // SCORE LOGIC
+  // ==========================================================
 
   function getScoreFromURL() {
     const params = new URLSearchParams(window.location.search);
-    const raw = parseInt(params.get("score"), 10);
-    if (isNaN(raw)) return null;
-    if (raw < 0) return 0;
-    if (raw > 100) return 100;
-    return raw;
+    return parseInt(params.get("score"), 10);
   }
 
-  function getMaturityBand(score) {
-    // Zelfde banding als in de assessment engine
-    if (score < 40) return {
-      band: "At Risk",
-      desc: "Your GTM system carries multiple structural constraints. Focus on stabilising the basics before scaling further."
-    };
-    if (score < 55) return {
-      band: "Unstable",
-      desc: "You see moments of performance, but outcomes are hard to repeat. Clarifying ownership and core processes becomes essential."
-    };
-    if (score < 70) return {
-      band: "Developing",
-      desc: "Your system shows progress with several capabilities performing well. The next step is to reduce variance and close obvious gaps."
-    };
-    if (score < 80) return {
-      band: "Performing",
-      desc: "Your GTM engine is working, with clear structure and discipline. Refinement now has more impact than reinvention."
-    };
-    if (score < 90) return {
-      band: "High Performing",
-      desc: "You operate with strong GTM fundamentals. Incremental improvements in focus and sequencing can unlock compounding effects."
-    };
-    return {
-      band: "Best in Class",
-      desc: "You have a highly aligned and scalable GTM engine. The work now is protecting this edge and extending it to new motions."
-    };
-  }
+  const score = getScoreFromURL();
+  const scoreEl = document.getElementById("gtm-score");
+  const bandEl = document.getElementById("gtm-band");
+  const descEl = document.getElementById("gtm-band-description");
 
-  function initScorePage() {
-    const score = getScoreFromURL();
-
-    const scoreEl = document.getElementById("gtm-score");
-    const bandEl = document.getElementById("gtm-band");
-    const descEl = document.getElementById("gtm-band-description");
-
-    if (!scoreEl || !bandEl || !descEl) return;
-
-    if (score === null) {
-      scoreEl.textContent = "–";
-      bandEl.textContent = "Score unavailable";
-      descEl.textContent = "We could not read your GTM Score from the link. Please retake the assessment if needed.";
-      return;
-    }
-
-    // 1) Basis score en band
+  if (!isNaN(score)) {
     scoreEl.textContent = score;
-    const bandInfo = getMaturityBand(score);
-    bandEl.textContent = bandInfo.band;
-    descEl.textContent = bandInfo.desc;
 
-    // 2) Capability pattern (10 capabilities, afgeleid van totale score)
-    function clamp(v) {
-      return Math.max(10, Math.min(100, Math.round(v)));
+    let band = "";
+    let desc = "";
+
+    if (score < 30) {
+      band = "At Risk";
+      desc = "Your GTM system has multiple constraints that require attention.";
+    } else if (score < 50) {
+      band = "Emerging";
+      desc = "Your GTM foundations are forming but lack consistency and alignment.";
+    } else if (score < 70) {
+      band = "Developing";
+      desc = "Your system shows progress with several capabilities performing well.";
+    } else if (score < 85) {
+      band = "Strong";
+      desc = "Your GTM system is running with clarity and discipline, with room for refinement.";
+    } else {
+      band = "Best in Class";
+      desc = "You have a highly aligned and scalable GTM engine.";
     }
 
-    const capabilities = [
-      { key: "Market clarity",          value: clamp(score * 0.90) },
-      { key: "ICP discipline",          value: clamp(score * 0.95) },
-      { key: "Demand & lead quality",   value: clamp(score * 1.00) },
-      { key: "Pipeline reliability",    value: clamp(score * 0.88) },
-      { key: "Sales execution",         value: clamp(score * 0.92) },
-      { key: "Retention & expansion",   value: clamp(score * 0.94) },
-      { key: "Competitive edge",        value: clamp(score * 0.90) },
-      { key: "Enablement strength",     value: clamp(score * 0.96) },
-      { key: "GTM analytics",           value: clamp(score * 0.97) },
-      { key: "Team alignment",          value: clamp(score * 0.93) }
-    ];
+    bandEl.textContent = band;
+    descEl.textContent = desc;
+  }
 
-    // 3) GRIP mapping uit deze capabilities
-    function avgIndexes(indexes) {
-      const total = indexes.reduce((sum, idx) => sum + capabilities[idx].value, 0);
-      return Math.round(total / indexes.length);
-    }
+  // ==========================================================
+  // 12-PILLAR RADAR LOGIC
+  // ==========================================================
 
-    const gripGuidance       = avgIndexes([0, 1, 2, 9]);  // clarity, ICP, demand, alignment
-    const gripResources      = avgIndexes([5, 7, 8]);     // retention, enablement, analytics
-    const gripImplementation = avgIndexes([3, 4, 6]);     // pipeline, sales execution, edge
-    const gripPerformance    = avgIndexes([2, 5, 8]);     // demand, retention, analytics
+  const GTM_PILLAR_LABELS = [
+    "GTM Strategy & Leadership",
+    "Market Intelligence",
+    "Product Marketing",
+    "Demand Generation",
+    "Sales Development (SDR)",
+    "Sales Execution",
+    "Customer Success & Retention",
+    "Account Management & Expansion",
+    "Revenue Operations",
+    "Enablement",
+    "Performance Management",
+    "Pricing & Packaging"
+  ];
 
-    const overallGrip = Math.round(
-      (gripGuidance + gripResources + gripImplementation + gripPerformance) / 4
-    );
+  function getPillarsFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get("pillars");
+    if (!raw) return null;
+    const parts = raw.split(",").map(v => parseInt(v, 10));
+    if (parts.length !== 12 || parts.some(n => isNaN(n))) return null;
+    return parts;
+  }
 
-    // 4) Update GRIP card
-    const gripHealthScoreEl = document.getElementById("gripHealthScore");
-    if (gripHealthScoreEl) {
-      gripHealthScoreEl.textContent = overallGrip;
-    }
+  const pillarScores = getPillarsFromURL();
 
-    const gripMap = [
-      { barId: "gripGuidanceBar",      valueId: "gripGuidanceValue",      value: gripGuidance },
-      { barId: "gripResourcesBar",     valueId: "gripResourcesValue",     value: gripResources },
-      { barId: "gripImplementationBar",valueId: "gripImplementationValue",value: gripImplementation },
-      { barId: "gripPerformanceBar",   valueId: "gripPerformanceValue",   value: gripPerformance }
-    ];
-
-    gripMap.forEach(item => {
-      const bar = document.getElementById(item.barId);
-      const valEl = document.getElementById(item.valueId);
-      if (bar) bar.style.width = item.value + "%";
-      if (valEl) valEl.textContent = item.value;
-    });
-
-    // sliders syncen
-    const sliderValues = {
-      "Guidance":       gripGuidance,
-      "Resources":      gripResources,
-      "Implementation": gripImplementation,
-      "Performance":    gripPerformance
-    };
-
-    document.querySelectorAll(".hero-health-slider").forEach(sliderBlock => {
-      const labelEl = sliderBlock.querySelector("label");
-      const input = sliderBlock.querySelector("input[type='range']");
-      if (!labelEl || !input) return;
-      const key = labelEl.textContent.trim();
-      if (sliderValues[key] != null) {
-        input.value = sliderValues[key];
-      }
-    });
-
-    // 5) GRIP diamond shape (0–100 -> afstand centre naar vertex)
-    const diamondShape = document.getElementById("gripDiamondShape");
-    if (diamondShape) {
-      function pointFor(value, direction) {
-        const dist = (value / 100) * 80; // 80px van center naar buitenste vertex
-        if (direction === "top")    return [100, 100 - dist];
-        if (direction === "right")  return [100 + dist, 100];
-        if (direction === "bottom") return [100, 100 + dist];
-        if (direction === "left")   return [100 - dist, 100];
-        return [100, 100];
-      }
-
-      const pTop    = pointFor(gripGuidance,       "top");
-      const pRight  = pointFor(gripImplementation, "right");
-      const pBottom = pointFor(gripPerformance,    "bottom");
-      const pLeft   = pointFor(gripResources,      "left");
-
-      const points = [
-        pTop[0] + "," + pTop[1],
-        pRight[0] + "," + pRight[1],
-        pBottom[0] + "," + pBottom[1],
-        pLeft[0] + "," + pLeft[1]
-      ].join(" ");
-
-      diamondShape.setAttribute("points", points);
-    }
-
-    // 6) Archetype op basis van band
-    const archetypeTitleEl = document.getElementById("gripArchetypeTitle");
-    const archetypeDescEl  = document.getElementById("gripArchetypeDesc");
-
-    if (archetypeTitleEl && archetypeDescEl) {
-      const band = bandInfo.band;
-      if (band === "At Risk") {
-        archetypeTitleEl.textContent = "The Fragmented System";
-        archetypeDescEl.textContent =
-          "Your GTM activity is real but scattered. Effort is high, structural coherence is low. The first step is to define a minimal GTM backbone and protect the team from constant context switching.";
-      } else if (band === "Unstable") {
-        archetypeTitleEl.textContent = "The Unstable Engine";
-        archetypeDescEl.textContent =
-          "You see pockets of success, but results are hard to repeat. A few missing disciplines create volatility. The Intelligence Report highlights which capabilities need a baseline before you scale further.";
-      } else if (band === "Developing") {
-        archetypeTitleEl.textContent = "The Emerging System";
-        archetypeDescEl.textContent =
-          "Your GTM engine is taking shape. Several capabilities work, others lag behind. The priority now is to remove obvious bottlenecks and make performance less dependent on individual heroes.";
-      } else if (band === "Performing") {
-        archetypeTitleEl.textContent = "The Aligned Operator";
-        archetypeDescEl.textContent =
-          "Your GTM system is functional and broadly aligned. You win when you execute your playbook, lose when exceptions dominate. The focus is tightening rhythms, handoffs and decision rules.";
-      } else if (band === "High Performing") {
-        archetypeTitleEl.textContent = "The Disciplined Engine";
-        archetypeDescEl.textContent =
-          "You operate with clear structure and intent. Most motion is data informed and repeatable. The next layer is sequencing bigger moves and protecting the disciplines that make the system work.";
-      } else {
-        archetypeTitleEl.textContent = "The Compounding System";
-        archetypeDescEl.textContent =
-          "Your GTM engine behaves like a system, not a set of campaigns. The main risk is complacency. The Intelligence Report focuses on how to extend this edge to new segments, motions or regions.";
-      }
-    }
-
-    // 7) Radar chart (Chart.js)
-    const chartCanvas = document.getElementById("gtmPatternChart");
-    if (chartCanvas && window.Chart) {
-      const ctx = chartCanvas.getContext("2d");
-      const labels = capabilities.map(c => c.key);
-      const data = capabilities.map(c => c.value);
-
+  if (pillarScores && window.Chart) {
+    const ctx = document.getElementById("gtmPatternRadar");
+    if (ctx) {
       new Chart(ctx, {
         type: "radar",
         data: {
-          labels: labels,
+          labels: GTM_PILLAR_LABELS,
           datasets: [{
-            label: "GTM pattern",
-            data: data,
-            fill: true
+            data: pillarScores,
+            fill: true,
+            backgroundColor: "rgba(0,70,165,0.10)",
+            borderColor: "#0046A5",
+            pointBackgroundColor: "#0046A5",
+            pointRadius: 3
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
           plugins: {
-            legend: { display: false }
+            legend: {
+              display: false
+            }
           },
           scales: {
             r: {
-              suggestedMin: 10,
+              suggestedMin: 0,
               suggestedMax: 100,
-              ticks: { display: false }
+              ticks: {
+                display: false
+              },
+              angleLines: {
+                color: "rgba(0,0,0,0.05)"
+              },
+              grid: {
+                color: "rgba(0,0,0,0.08)"
+              },
+              pointLabels: {
+                font: {
+                  size: 10
+                },
+                color: "rgba(11,19,43,0.78)"
+              }
             }
           }
         }
