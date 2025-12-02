@@ -1632,3 +1632,151 @@ input[type="range"]::-moz-range-track {
   line-height: 1.45;
   margin-bottom: 6px;
 }
+
+/* ===========================================================
+   SERVICES GRID — PRICING STYLE (Notion / Make / Amplitude)
+   =========================================================== */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 26px);
+  align-items: stretch;
+}
+
+/* Basiskaart, los van .card zodat hover niet springt */
+.service-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+/* Geen jump op hover, alleen iets meer shadow */
+.service-card:hover {
+  border-color: rgba(15, 23, 42, 0.14);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+}
+
+/* Flagship — solid accent rand en iets sterkere shadow */
+.service-card--flagship {
+  border: 2px solid var(--accent);
+  box-shadow: 0 14px 34px rgba(243, 108, 33, 0.16);
+}
+
+/* Bovenste “pill” */
+.service-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 16px;
+}
+
+.service-pill--flagship {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.service-pill--structured {
+  background: #e6edf6;
+  color: var(--blue);
+}
+
+.service-pill--advisory {
+  background: #f3f4f6;
+  color: rgba(15, 23, 42, 0.8);
+}
+
+/* Titels en copy in de kaart */
+.service-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 6px;
+}
+
+.service-name {
+  font-size: 1.1rem;          /* kleiner dan prijs, rustiger dan eerst */
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.service-subtitle {
+  font-size: 0.95rem;
+  color: rgba(75, 85, 99, 1);
+  margin-bottom: 10px;
+}
+
+/* Prijs dominant, zoals Notion / Make */
+.service-price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 4px 0 14px;
+}
+
+/* CTA mooi onder de prijs */
+.service-cta {
+  margin-bottom: 16px;
+}
+
+/* Checklists */
+.service-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.service-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(55, 65, 81, 0.95);
+  margin-bottom: 6px;
+}
+
+.service-features li::before {
+  content: "✓";
+  font-weight: 700;
+  color: var(--blue);      /* Caugia blauw voor checks */
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* CTA-knop binnen deze kaarten mag niet wit-tekst verliezen */
+.service-card .cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive breuken voor de 4 kaarten */
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
