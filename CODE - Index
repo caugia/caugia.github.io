@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=4.3" />
+  <link rel="stylesheet" href="assets/caugia.css?v=7.4" />
 
   <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
@@ -287,7 +287,7 @@
           Whether you need a quick diagnostic or a full reset, the path stays simple and repeatable. You start with your GTM Score, deepen the analysis with the Intelligence Report and keep the system healthy through a regular review rhythm.
         </p>
         <p>
-          Designed for B2B SaaS companies between €5M and €500M ARR that need clarity, structure and predictable revenue.
+          Designed for B2B SaaS companies between €1M and €500M ARR that need clarity, structure and predictable revenue.
         </p>
       </div>
 
@@ -529,7 +529,7 @@
 </script>
 
 <!-- =============================== -->
-<!-- GRIP DIAMOND JS + 24 ARCHETYPES -->
+<!-- GRIP DIAMOND JS + 30 ARCHETYPES -->
 <!-- =============================== -->
 <script>
   const gripState = {
@@ -541,199 +541,208 @@
 
   const clamp = v => Math.max(0, Math.min(100, v));
 
-  // -------------------------------
-  // 24-Archetype Classification
-  // -------------------------------
-  function classifyArchetype(g, r, i, p) {
-    const scores = { g, r, i, p };
-    const arr = [g, r, i, p];
-    const overall = (g + r + i + p) / 4;
+  // ------------------------------------------------------------
+  // CAUGIA ARCHETYPE ENGINE v2.0 — 30 archetypes, 6 tiers
+  // ------------------------------------------------------------
+  function evaluateArchetype(G, R, I, P) {
+    const arr = [G, R, I, P];
+    const overall = Math.round((G + R + I + P) / 4);
 
-    const lowDims = Object.entries(scores)
-      .filter(([_, v]) => v < 50)
-      .map(([k]) => k);
+    const low = arr.filter(v => v < 50).length;
+    const high = arr.filter(v => v >= 80).length;
 
-    const lowCount = lowDims.length;
-    const highCount = arr.filter(v => v >= 75).length;
-    const veryHighCount = arr.filter(v => v >= 85).length;
-    const maxScore = Math.max(...arr);
-    const minScore = Math.min(...arr);
+    const all85Plus = arr.every(v => v >= 85);
 
-    const isLow = key => scores[key] < 50;
+    const weakG = G < 50;
+    const weakR = R < 50;
+    const weakI = I < 50;
+    const weakP = P < 50;
 
-    // ---------- 1. Elite Operator ----------
-    if (arr.every(v => v >= 85) && veryHighCount >= 2) {
-      return "The Elite Operator";
+    const strongG = G >= 80;
+    const strongR = R >= 80;
+    const strongI = I >= 80;
+    const strongP = P >= 80;
+
+    const make = (tier, key, name) => ({
+      tier,
+      key,
+      name,
+      overall,
+      G,
+      R,
+      I,
+      P
+    });
+
+    // ----------------------
+    // TIER 1 — COLLAPSE STATES
+    // ----------------------
+    if (overall <= 30 || low >= 3) {
+      return make(1, "collapse_spiral", "The Collapse Spiral");
     }
 
-    // ---------- 2. Collapse patterns (Tier 1) ----------
-    // Overwhelmed
-    if (arr.every(v => v < 50) || (lowCount >= 3 && overall < 55)) {
-      return "The Overwhelmed";
+    if (weakG && weakR && weakI) return make(1, "overwhelmed", "The Overwhelmed");
+    if (weakG && weakR && weakP) return make(1, "firefighter", "The Firefighter");
+    if (weakR && weakI && weakP) return make(1, "tool_hoarder", "The Tool Hoarder");
+    if (weakG && weakI && weakP) return make(1, "wishful_thinker", "The Wishful Thinker");
+
+    // ----------------------
+    // TIER 2 — DUAL CONSTRAINT STATES
+    // ----------------------
+    if (low === 2) {
+      if (weakG && weakR) return make(2, "executing_blind", "The Executing Blind");
+      if (weakR && weakI) return make(2, "undermanned_mess", "The Undermanned Mess");
+      if (weakG && weakI) return make(2, "random_walk", "The Random Walk");
+      if (weakI && weakP) return make(2, "inconsistent_closer", "The Inconsistent Closer");
+      if (weakR && weakP) return make(2, "strained_system", "The Strained System");
     }
 
-    // Firefighter
-    if (p >= 70 && g < 50 && r < 50 && i < 50) {
-      return "The Firefighter";
+    // ----------------------
+    // TIER 3 — SINGLE CONSTRAINT STATES
+    // ----------------------
+    if (low === 1) {
+      if (weakG) return make(3, "directionless_engine", "The Directionless Engine");
+      if (weakR) return make(3, "capacity_crunch", "The Capacity Crunch");
+      if (weakI) return make(3, "heroic_chaos", "The Heroic Chaos");
+      if (weakP) return make(3, "leaky_bucket", "The Leaky Bucket");
+
+      return make(3, "constraint_trap", "The Constraint Trap");
     }
 
-    // Tool Hoarder
-    if (r >= 70 && g < 50 && i < 50 && p < 55) {
-      return "The Tool Hoarder";
+    // ----------------------
+    // TIER 6 — ELITE SYSTEMS (synergy based)
+    // ----------------------
+    if (all85Plus) {
+      return make(6, "elite_operator", "The Elite Operator");
     }
 
-    // Wishful Thinker
-    if (g >= 60 && (i < 50 || p < 50) && overall < 55) {
-      return "The Wishful Thinker";
+    if (strongG && strongP && R >= 65 && I >= 65) {
+      return make(6, "insight_leader", "The Insight Leader");
     }
 
-    // ---------- 3. Dual constraint patterns ----------
-    if (lowCount >= 2) {
-      if (isLow("g") && isLow("r")) return "The Executing Blind";
-      if (isLow("g") && isLow("i")) return "The Random Walk";
-      if (isLow("g") && isLow("p")) return "The Busy Failure";
-      if (isLow("r") && isLow("i")) return "The Undermanned Mess";
-      if (isLow("r") && isLow("p")) return "The Resource Starved";
-      if (isLow("i") && isLow("p")) return "The Inconsistent Closer";
+    if (strongI && strongP && G >= 65 && R >= 65) {
+      return make(6, "revenue_machine", "The Revenue Machine");
     }
 
-    // ---------- 4. Single constraint patterns ----------
-    if (lowCount === 1) {
-      const [dim] = lowDims;
-      const others = Object.entries(scores)
-        .filter(([k]) => k !== dim)
-        .map(([_, v]) => v);
-
-      if (others.every(v => v >= 60)) {
-        if (dim === "g") return "The Directionless Engine";
-        if (dim === "r") return "The Capacity Crunch";
-        if (dim === "i") return "The Heroic Chaos";
-        if (dim === "p") return "The Leaky Bucket";
-      }
+    if (strongG && strongI && R >= 65 && P >= 65) {
+      return make(6, "strategic_executor", "The Strategic Executor");
     }
 
-    // ---------- 5. High pair patterns ----------
-    // Insight Leader
-    if (g >= 80 && p >= 80 && r >= 65 && i >= 65) {
-      return "The Insight Leader";
+    if (strongR && strongI && G >= 65 && P >= 65) {
+      return make(6, "resourceful_operator", "The Resourceful Operator");
     }
 
-    // Revenue Machine
-    if (i >= 80 && p >= 80 && g >= 60 && r >= 60) {
-      return "The Revenue Machine";
+    // ----------------------
+    // TIER 4 — ASYMMETRIC STRENGTH
+    // ----------------------
+    if (strongG && overall >= 65) return make(4, "strategist", "The Strategist");
+    if (strongR && overall >= 65) return make(4, "collector", "The Collector");
+    if (strongI && overall >= 65) return make(4, "executor", "The Executor");
+    if (strongP && overall >= 65) return make(4, "analyst", "The Analyst");
+
+    if (high === 1) {
+      return make(4, "unbalanced_power", "The Unbalanced Power");
     }
 
-    // Systematic Scaler
-    if (highCount >= 3) {
-      const midOrBetter = arr.every(v => v >= 55);
-      if (midOrBetter) {
-        return "The Systematic Scaler";
-      }
-    }
+    // ----------------------
+    // TIER 5 — BALANCED SYSTEMS
+    // ----------------------
+    if (overall < 60) return make(5, "foundation_builder", "The Foundation Builder");
+    if (overall < 70) return make(5, "stable_operator", "The Stable Operator");
+    if (overall < 75) return make(5, "systematic_performer", "The Systematic Performer");
+    if (overall < 80) return make(5, "forecast_engine", "The Forecast Engine");
 
-    // ---------- 6. Asymmetric strength patterns ----------
-    const highDims = Object.entries(scores)
-      .filter(([_, v]) => v >= 80)
-      .map(([k]) => k);
-
-    if (highDims.length === 1 && arr.every(v => v >= 45)) {
-      const [dim] = highDims;
-      const others = Object.entries(scores)
-        .filter(([k]) => k !== dim)
-        .map(([_, v]) => v);
-
-      const midOthers = others.filter(v => v >= 50 && v <= 75).length;
-      if (midOthers >= 2) {
-        if (dim === "p") return "The Analyst";
-        if (dim === "g") return "The Strategist";
-        if (dim === "i") return "The Executor";
-        if (dim === "r") return "The Collector";
-      }
-    }
-
-    // ---------- 7. Mid band systems ----------
-    const dimsBelow60 = arr.filter(v => v < 60).length;
-    if (overall >= 50 && overall < 65 && dimsBelow60 >= 2 && maxScore < 80) {
-      return "The Foundation Builder";
-    }
-
-    if (arr.every(v => v >= 60 && v <= 80) && (maxScore - minScore) <= 15) {
-      return "The Stable Operator";
-    }
-
-    // ---------- 8. Fallback ----------
-    if (overall < 60) {
-      return "The Foundation Builder";
-    }
-
-    return "The Stable Operator";
+    return make(5, "steady_state", "The Steady State");
   }
 
-  // -------------------------------
-  // Archetype: 1 zin per type
-  // -------------------------------
+  // ------------------------------------------------------------
+  // Archetype descriptions (short, UI friendly)
+  // ------------------------------------------------------------
   const archetypeDescriptions = {
-    "The Overwhelmed": "All four GTM dimensions are weak; effort is high but the system is unstable.",
-    "The Firefighter": "The organisation runs in crisis mode; wins require constant heroics instead of a stable system.",
-    "The Tool Hoarder": "You have many tools and data, but no coherent operating model to turn them into results.",
-    "The Wishful Thinker": "Strategy sounds good on slides, but execution and performance do not keep pace.",
-    "The Executing Blind": "Teams work hard without clear direction or proper enablement, so impact stays low.",
-    "The Random Walk": "There is no shared playbook; campaigns and motions shift constantly and learnings do not stick.",
-    "The Busy Failure": "Activity is high but outcomes lag; the system rewards effort more than results.",
-    "The Undermanned Mess": "Capacity and process are both thin, so basic operations already feel heavy.",
-    "The Resource Starved": "You roughly know what should happen, but roles, data and tooling cannot support it.",
-    "The Inconsistent Closer": "Outcomes depend on who touches the deal; success is not yet repeatable.",
-    "The Directionless Engine": "Execution and resources exist, but GTM strategy and priorities are not aligned.",
-    "The Capacity Crunch": "Guidance and execution are strong, but infrastructure and RevOps are running hot.",
-    "The Heroic Chaos": "Results depend on individual talent rather than clear, enforced GTM processes.",
-    "The Leaky Bucket": "The system creates pipeline, but value leaks in conversion, pricing or retention.",
-    "The Analyst": "You see everything in the data, but action and system change lag behind the insight.",
-    "The Strategist": "Positioning and narrative are strong, but the GTM system behind them is underbuilt.",
-    "The Executor": "Teams execute reliably, but sometimes execute the wrong priorities very well.",
-    "The Collector": "You own many GTM assets and tools, but usage and standards are inconsistent.",
-    "The Foundation Builder": "You have moved past collapse, but several GTM dimensions still need basic structure.",
-    "The Stable Operator": "Your GTM engine is balanced and predictable, but lacks real acceleration.",
-    "The Systematic Scaler": "Most of the system is strong; one recurring bottleneck now limits scale.",
-    "The Revenue Machine": "Execution and commercial discipline are strong; the system reliably converts pipeline.",
-    "The Insight Leader": "Strategy is sharp and validated by results; GTM decisions are grounded in reality.",
-    "The Elite Operator": "All GRIP dimensions are strong and mutually reinforcing; GTM is a competitive advantage."
+    // Tier 1
+    collapse_spiral: "The system is breaking down across the board and cannot support growth.",
+    overwhelmed: "All four dimensions are weak; everything feels noisy and unstable.",
+    firefighter: "Progress depends on constant heroics; nothing feels calm or repeatable.",
+    tool_hoarder: "Many tools and assets, but little structure that turns them into results.",
+    wishful_thinker: "Strategy sounds good, yet behaviour and results do not follow.",
+    // Tier 2
+    executing_blind: "Teams work hard with thin strategy and poor enablement behind them.",
+    undermanned_mess: "Too little capacity and weak operations make basic work feel heavy.",
+    random_walk: "Motions keep changing and learnings do not stick in the system.",
+    inconsistent_closer: "Deals close in pockets but success is not yet repeatable.",
+    strained_system: "Commercial load is high while infrastructure and support run hot.",
+    // Tier 3
+    directionless_engine: "Resources and execution exist, but direction and choices stay fuzzy.",
+    capacity_crunch: "Good intent and effort, but infrastructure cannot keep up.",
+    heroic_chaos: "Individual talent masks the absence of real GTM discipline.",
+    leaky_bucket: "The system creates demand, but value leaks in conversion or retention.",
+    constraint_trap: "One constraint dominates and keeps pulling the whole system back.",
+    // Tier 4
+    strategist: "Guidance is strong; the system behind it still needs to catch up.",
+    collector: "You own many GTM assets, but standards and usage are inconsistent.",
+    executor: "Execution is strong, yet often pointed at the wrong priorities.",
+    analyst: "You see the truth in the data, but system change lags behind insight.",
+    unbalanced_power: "One dimension dominates so much that it distorts the rest.",
+    // Tier 5
+    foundation_builder: "You have moved past collapse; structure is emerging but still fragile.",
+    stable_operator: "The engine is predictable and calm, though not yet fast.",
+    systematic_performer: "Most fundamentals are in place; you now push for sharper performance.",
+    forecast_engine: "Planning and rhythm are strong; the focus shifts to quality of bets.",
+    steady_state: "A mature, steady pattern that holds its shape over time.",
+    // Tier 6
+    elite_operator: "All four dimensions are strong and mutually reinforcing.",
+    insight_leader: "Sharp guidance validated by performance and trusted by leadership.",
+    revenue_machine: "Implementation and performance combine into a strong commercial engine.",
+    strategic_executor: "Clear choices and strong follow through live in the same system.",
+    resourceful_operator: "People, tools and operations work together with very little waste."
   };
 
+  // ------------------------------------------------------------
+  // Diamond + health card rendering
+  // ------------------------------------------------------------
   function updateGripDiamond() {
     const g = clamp(gripState.guidance);
     const r = clamp(gripState.resources);
     const i = clamp(gripState.implementation);
     const p = clamp(gripState.performance);
 
-    // 1) Archetype bepalen
-    const archetypeName = classifyArchetype(g, r, i, p);
+    // 1) Archetype
+    const result = evaluateArchetype(g, r, i, p);
     const archetypeEl = document.getElementById("hero-archetype");
     if (archetypeEl) {
       const titleEl = archetypeEl.querySelector(".archetype-title");
       const descEl = archetypeEl.querySelector(".archetype-desc");
 
-      if (titleEl) titleEl.textContent = archetypeName;
+      if (titleEl) {
+        titleEl.textContent = result.name;
+      }
       if (descEl) {
-        descEl.textContent = archetypeDescriptions[archetypeName] || "";
+        const key = result.key;
+        descEl.textContent = archetypeDescriptions[key] || "";
       }
     }
 
-    // 2) Diamond shape tekenen
+    // 2) Diamond shape
     const point = (deg, val) => {
-      const cx = 140, cy = 140, maxR = 100;
-      const rad = deg * Math.PI / 180;
+      const cx = 140;
+      const cy = 140;
+      const maxR = 100;
+      const rad = (deg * Math.PI) / 180;
       const radius = (val / 100) * maxR;
-      return (cx + radius * Math.cos(rad)) + "," + (cy - radius * Math.sin(rad));
+      return cx + radius * Math.cos(rad) + "," + (cy - radius * Math.sin(rad));
     };
 
     const polygon = document.getElementById("hero-diamond-polygon");
     if (polygon) {
-      polygon.setAttribute("points", [
-        point(90, g),    // top = Guidance
-        point(0, i),     // right = Implementation
-        point(270, p),   // bottom = Performance
-        point(180, r)    // left = Resources
-      ].join(" "));
+      polygon.setAttribute(
+        "points",
+        [
+          point(90, g),   // top  = Guidance
+          point(0, i),    // right = Implementation
+          point(270, p),  // bottom = Performance
+          point(180, r)   // left = Resources
+        ].join(" ")
+      );
     }
 
     // 3) Total score + bars
@@ -749,15 +758,16 @@
       ["performance", p]
     ];
 
-    map.forEach(([k, v]) => {
-      const bar = document.getElementById("bar-" + k);
-      const value = document.getElementById("value-" + k);
-      if (bar) bar.style.width = v + "%";
-      if (value) value.textContent = v;
+    map.forEach(([key, value]) => {
+      const bar = document.getElementById("bar-" + key);
+      const label = document.getElementById("value-" + key);
+      if (bar) bar.style.width = value + "%";
+      if (label) label.textContent = value;
     });
   }
 
-  ["guidance","resources","implementation","performance"].forEach(key => {
+  // Slider listeners
+  ["guidance", "resources", "implementation", "performance"].forEach(key => {
     const slider = document.getElementById("slider-" + key);
     if (slider) {
       slider.addEventListener("input", e => {
@@ -770,7 +780,6 @@
   // Initial render
   updateGripDiamond();
 </script>
-
 
 </body>
 </html>
