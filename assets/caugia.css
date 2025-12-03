@@ -2953,12 +2953,10 @@ input[type="range"]::-moz-range-track {
 }
 
 /* =============================================================
-   CAUGIA — GTM INTELLIGENCE REPORT SKIN (v1)
-   Visual fix for all .gi-* components
-   Clean • Professional • Calm • Enterprise
+   CAUGIA — GTM INTELLIGENCE REPORT SKIN (v2)
+   Centered card flow + option cards + stepper
    ============================================================= */
 
-/* PAGE WRAPPER */
 .gi-shell {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -2973,6 +2971,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* HEADER */
+
 .gi-header h1 {
   font-size: 2.2rem;
   color: var(--blue);
@@ -3000,6 +2999,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* SIDEBAR */
+
 .gi-side-card {
   background: #fff;
   border: 1px solid rgba(15,23,42,0.06);
@@ -3042,6 +3042,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* PILLAR CHIPS */
+
 .gi-pillars-list-label {
   font-size: 0.85rem;
   color: rgba(15,23,42,0.55);
@@ -3075,6 +3076,10 @@ input[type="range"]::-moz-range-track {
   border-color: var(--blue);
 }
 
+.gi-pillar-chip.is-active {
+  border-color: var(--blue);
+}
+
 .gi-pillar-chip.is-complete {
   background: var(--accent-soft);
   border-color: var(--accent);
@@ -3082,6 +3087,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* SIDE ACTIONS */
+
 .gi-side-actions {
   margin-top: 20px;
   display: flex;
@@ -3096,6 +3102,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* MAIN CARD */
+
 .gi-main-card {
   background: #fff;
   border: 1px solid rgba(15,23,42,0.08);
@@ -3110,7 +3117,8 @@ input[type="range"]::-moz-range-track {
   }
 }
 
-/* MAIN HEADER */
+/* MAIN HEADER + CENTERED FLOW */
+
 .gi-main-header {
   margin-bottom: 20px;
 }
@@ -3137,7 +3145,6 @@ input[type="range"]::-moz-range-track {
   color: var(--ink);
 }
 
-/* INTRO */
 .gi-intro-text {
   font-size: 1rem;
   color: rgba(15,23,42,0.75);
@@ -3145,7 +3152,21 @@ input[type="range"]::-moz-range-track {
   max-width: 680px;
 }
 
-/* SECTIONS */
+/* CENTERED QUESTION AREA */
+
+.gi-questions {
+  min-height: 260px;
+}
+
+.gi-question {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.gi-question:not(:first-of-type) {
+  margin-top: 0;
+}
+
 .gi-section h2 {
   font-size: 1.35rem;
   color: var(--blue);
@@ -3158,10 +3179,7 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 20px;
 }
 
-/* QUESTIONS */
-.gi-question {
-  margin-bottom: 20px;
-}
+/* LABEL + FIELDS (CONTEXT / TEXTINPUTS) */
 
 .gi-question label {
   display: block;
@@ -3186,12 +3204,49 @@ input[type="range"]::-moz-range-track {
   min-height: 100px;
 }
 
-/* RADIO OPTIONS */
-.gi-question input[type="radio"] {
-  margin-right: 6px;
+/* =========================================================
+   OPTION CARDS — APPLIED AUTOMATISCH OP RADIO LABELS
+   ========================================================= */
+
+/* Basiskaart: elk label dat een radio bevat */
+.gi-question label:has(input[type="radio"]) {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.14);
+  background: #f9fafc;
+  cursor: pointer;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(15,23,42,0.9);
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* Radio zelf */
+.gi-question label:has(input[type="radio"]) input[type="radio"] {
+  margin-top: 3px;
+}
+
+/* Hover */
+.gi-question label:has(input[type="radio"]):hover {
+  border-color: rgba(0,70,165,0.5);
+  background: #f4f6ff;
+}
+
+/* Geselecteerd */
+.gi-question label:has(input[type="radio"]:checked) {
+  border-color: var(--blue);
+  background: #eef3ff;
+  box-shadow: 0 0 0 2px rgba(0,70,165,0.16);
 }
 
 /* FOOTER NAV */
+
 .gi-footer-nav {
   margin-top: 36px;
   display: flex;
@@ -3201,12 +3256,30 @@ input[type="range"]::-moz-range-track {
   gap: 12px;
 }
 
+.gi-footer-nav-left {
+  display: flex;
+  gap: 8px;
+}
+
 .gi-footer-status {
   font-size: 0.9rem;
   color: rgba(15,23,42,0.6);
 }
 
+.gi-footer-status-info {
+  color: rgba(15,23,42,0.7);
+}
+
+.gi-footer-status-ok {
+  color: #166534;
+}
+
+.gi-footer-status-error {
+  color: #b91c1c;
+}
+
 /* ALERT */
+
 .gi-alert {
   margin-top: 18px;
   padding: 10px 14px;
@@ -3221,6 +3294,7 @@ input[type="range"]::-moz-range-track {
 }
 
 /* LOCKED BANNER */
+
 .gi-locked-banner {
   display: none;
   padding: 10px 14px;
