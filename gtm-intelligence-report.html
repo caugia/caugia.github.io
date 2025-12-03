@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The GTM Intelligence Report | GTM Clarity for B2B SaaS</title>
-  <meta name="description" content="Caugia Consulting helps executives and go to market leaders design integrated revenue systems. The GTM Framework and the GTM Intelligence Report bring structure, clarity and order to complex go to market environments." />
+  <meta name="description" content="The GTM Intelligence Report from Caugia Consulting gives leadership a calm, structured way to understand the full go to market system across twelve pillars and 240 diagnostic questions." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
 
-  <!-- 🔒 SECURITY -->
+  <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
 </head>
 <body>
@@ -49,33 +49,33 @@
   </div>
 </header>
 
-<main>
-  <div class="wrap container">
+<main class="gi-main">
+  <div class="gi-shell">
 
-    <div class="gi-shell">
+    <!-- LEFT SIDE: PRODUCT EXPLANATION -->
+    <aside class="gi-side">
+      <div class="gi-side-eyebrow">Premium GTM Assessment</div>
+      <h1>The GTM Intelligence Report</h1>
 
-      <!-- Left column header -->
-      <section class="gi-header">
-        <div class="gi-label">Premium GTM Assessment</div>
+      <div class="gi-side-meta">
+        12 pillars · 240 diagnostic questions · Enterprise GTM system view
+      </div>
 
-        <h1>The GTM Intelligence Report</h1>
+      <p>
+        The GTM Intelligence Report helps you see your complete go to market architecture in one calm, structured model.
+        You work through twelve pillars, capture context that only you can see and receive a system level view of strengths, risks and priorities.
+      </p>
 
-        <div class="gi-main-header-pill">12 pillars · 240 diagnostic questions</div>
+      <p>
+        You can complete the assessment in one sitting or over several sessions.
+        Answers save locally in your browser and will sync to Caugia once Stripe and Make are connected.
+      </p>
+    </aside>
 
-        <p class="gi-subtitle">
-          Work through your complete GTM architecture at your own pace. You can pause at any time. Your answers save locally and will sync to Caugia once Stripe and Make are connected.
-        </p>
+    <!-- RIGHT SIDE: INTERACTIVE ENGINE -->
+    <div id="gi-app">
 
-        <div class="gi-top-meta">
-          This interface is your live assessment shell. All questions, scoring logic and AI report generation follow your internal blueprint.
-        </div>
-      </section>
-
-      <!-- Main interactive shell -->
-      <div id="gi-app">
-
-        <!-- Pillar chips -->
-        <div class="gi-pillars-strip" id="gi-pillars-list"></div>
+      <div class="gi-main-card">
 
         <!-- Progress -->
         <div class="gi-progress">
@@ -83,19 +83,28 @@
             <span id="gi-progress-count">0 of 240 answered</span>
             <span id="gi-progress-percent">0%</span>
           </div>
-          <div class="gi-progress-bar-bg">
-            <div id="gi-progress-bar" class="gi-progress-bar-fill"></div>
+          <div id="gi-progress-track">
+            <div id="gi-progress-bar"></div>
           </div>
         </div>
 
-        <!-- Main card -->
-        <div class="gi-main-card">
+        <!-- Pillar chips -->
+        <div class="gi-pillars-strip" id="gi-pillars-list"></div>
 
+        <!-- Current pillar header -->
+        <div class="gi-main-header">
           <h2 id="gi-pillar-title" class="gi-card-title"></h2>
           <p id="gi-pillar-meta" class="gi-card-meta"></p>
+        </div>
 
-          <!-- FORM START -->
-          <form id="gtm-intel-form">
+        <!-- INTRO TEXT ABOVE QUESTIONS (OPTIONAL) -->
+        <p class="gi-intro-text">
+          Move through the questions in order or jump between pillars using the chips above.
+          You can change answers at any time before submitting.
+        </p>
+
+        <!-- FORM START -->
+        <form id="gtm-intel-form">
             <!-- All questions get injected here -->
 
             <!-- ========================================= -->
@@ -3343,13 +3352,29 @@
   </div>
 
             <!-- END OF QUESTIONS -->
-          </form> <!-- end of assessment form -->
+          </form>
+        <!-- FORM END -->
 
-        </div> <!-- /gi-main-card -->
-      </div> <!-- /gi-app -->
+        <!-- FOOTER ACTIONS -->
+        <div class="gi-footer-actions">
+          <div class="gi-footer-actions-left">
+            <button type="button" id="gi-btn-prev" class="gi-nav-btn">Previous</button>
+            <button type="button" id="gi-btn-next" class="gi-nav-btn">Next</button>
+          </div>
 
-    </div> <!-- /gi-shell -->
-  </div> <!-- /wrap -->
+          <div class="gi-footer-actions-right">
+            <button type="button" id="gi-btn-save" class="cta--ghost">Save progress</button>
+            <button type="button" id="gi-btn-clear" class="gi-nav-btn">Clear</button>
+            <button type="button" id="gi-btn-submit" class="cta">Submit assessment</button>
+          </div>
+        </div>
+
+        <p id="gi-footer-status" class="gi-footer-status"></p>
+
+      </div> <!-- /gi-main-card -->
+    </div> <!-- /gi-app -->
+
+  </div> <!-- /gi-shell -->
 </main>
 
 <footer>
@@ -3367,7 +3392,7 @@
   <pre id="gi-debug-output" style="white-space:pre-wrap; margin:0;"></pre>
 </div>
 
-<!-- MOBILE NAV -->
+<!-- MOBILE NAV TOGGLE -->
 <script>
 (function () {
   var toggle = document.querySelector(".menu-toggle");
@@ -3388,7 +3413,7 @@
   var STORAGE_KEY = "gtmIntelligence_v1";
   var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
 
-  function $(q) { return document.querySelector(q); }
+  function $(q)  { return document.querySelector(q); }
   function $all(q) { return Array.from(document.querySelectorAll(q)); }
 
   function dbg(msg, o) {
@@ -3399,16 +3424,16 @@
      PILLAR DEFINITIONS
   ========================================= */
   var PILLAR_DEFS = [
-    { id: "0", label: "Organizational Context" },
-    { id: "1", label: "GTM Strategy & Leadership" },
-    { id: "2", label: "Market Intelligence" },
-    { id: "3", label: "Product Marketing" },
-    { id: "4", label: "Inbound Engine" },
-    { id: "5", label: "Outbound Engine" },
-    { id: "6", label: "Sales Execution" },
-    { id: "7", label: "Customer Success & Expansion" },
-    { id: "8", label: "Product & Engineering" },
-    { id: "9", label: "Brand & Communications" },
+    { id: "0",  label: "Organizational Context" },
+    { id: "1",  label: "GTM Strategy & Leadership" },
+    { id: "2",  label: "Market Intelligence" },
+    { id: "3",  label: "Product Marketing" },
+    { id: "4",  label: "Inbound Engine" },
+    { id: "5",  label: "Outbound Engine" },
+    { id: "6",  label: "Sales Execution" },
+    { id: "7",  label: "Customer Success & Expansion" },
+    { id: "8",  label: "Product & Engineering" },
+    { id: "9",  label: "Brand & Communications" },
     { id: "10", label: "Data & Insights" },
     { id: "11", label: "Operations & Systems" },
     { id: "12", label: "Leadership & Alignment" }
@@ -3434,23 +3459,25 @@
      COLLECT ANSWERS
   ========================================= */
   function collectAnswers() {
-    var ctx = {};
+    var ctx     = {};
     var pillars = {};
     var totalScore = 0;
-    var scored = 0;
+    var scored     = 0;
 
-    // Pillar 0
+    // Context pillar
     $all(".gi-question[data-pillar='0']").forEach(function (q) {
       var el = q.querySelector("input, textarea, select");
       if (el && el.name) ctx[el.name] = el.value.trim();
     });
 
-    // Scored questions
+    // Scored pillars
     $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
       if (pid === "0") return;
 
-      if (!pillars[pid]) pillars[pid] = { questions_answered: 0, raw_score: 0 };
+      if (!pillars[pid]) {
+        pillars[pid] = { questions_answered: 0, raw_score: 0 };
+      }
 
       var sel =
         q.querySelector("input[type='radio']:checked") ||
@@ -3460,6 +3487,7 @@
 
       if (sel) {
         pillars[pid].questions_answered++;
+
         var s = parseInt(sel.getAttribute("data-score") || sel.value, 10);
         if (!isNaN(s)) {
           scored++;
@@ -3489,9 +3517,15 @@
   function updateProgressUI(n) {
     var max = 240;
     var pct = Math.round((n / max) * 100);
-    $("#gi-progress-bar").style.width = pct + "%";
-    $("#gi-progress-count").textContent = n + " of " + max + " answered";
-    $("#gi-progress-percent").textContent = pct + "%";
+
+    var bar = $("#gi-progress-bar");
+    if (bar) bar.style.width = pct + "%";
+
+    var countEl = $("#gi-progress-count");
+    var pctEl   = $("#gi-progress-percent");
+
+    if (countEl) countEl.textContent = n + " of " + max + " answered";
+    if (pctEl)   pctEl.textContent   = pct + "%";
   }
 
   /* =========================================
@@ -3507,9 +3541,10 @@
       if (d.id === "0") return;
 
       var chip = document.createElement("button");
+      chip.type = "button";
       chip.className = "gi-pillar-chip";
       chip.dataset.pillarId = d.id;
-      chip.innerHTML = `<span>${d.label}</span><span id="gi-pillar-status-${d.id}">0%</span>`;
+      chip.innerHTML = '<span>' + d.label + '</span><span id="gi-pillar-status-' + d.id + '">0%</span>';
       chip.addEventListener("click", function () { goToPillar(d.id); });
 
       container.appendChild(chip);
@@ -3521,13 +3556,13 @@
       if (d.id === "0") return;
 
       var total = PILLAR_TOTALS[d.id] || 0;
-      var ans = scores[d.id] ? scores[d.id].questions_answered : 0;
-      var pct = total ? Math.round((ans / total) * 100) : 0;
+      var ans   = scores[d.id] ? scores[d.id].questions_answered : 0;
+      var pct   = total ? Math.round((ans / total) * 100) : 0;
 
       var statusEl = $("#gi-pillar-status-" + d.id);
       if (statusEl) statusEl.textContent = pct + "%";
 
-      var chip = document.querySelector(`.gi-pillar-chip[data-pillar-id="${d.id}"]`);
+      var chip = document.querySelector('.gi-pillar-chip[data-pillar-id="' + d.id + '"]');
       if (chip) {
         chip.classList.toggle("is-active", pct > 0 && pct < 100);
         chip.classList.toggle("is-complete", pct === 100);
@@ -3539,26 +3574,37 @@
      STEPPER
   ========================================= */
   function updateStepHeader() {
-    var q = orderedQuestions[currentIndex];
+    if (!orderedQuestions.length) return;
+
+    var q   = orderedQuestions[currentIndex];
     var pid = q.getAttribute("data-pillar");
     var def = PILLAR_DEFS.find(function (x) { return x.id === pid; });
 
     var title = $("#gi-pillar-title");
-    var meta = $("#gi-pillar-meta");
+    var meta  = $("#gi-pillar-meta");
 
     if (pid === "0") {
-      title.textContent = "Organizational Context";
-      meta.textContent = "These questions help interpret your GTM system.";
+      if (title) title.textContent = "Organizational Context";
+      if (meta)  meta.textContent  = "These questions help interpret your GTM system.";
     } else {
-      var list = orderedQuestions.filter(function (x) { return x.getAttribute("data-pillar") === pid; });
+      var list = orderedQuestions.filter(function (x) {
+        return x.getAttribute("data-pillar") === pid;
+      });
       var pos = list.indexOf(q) + 1;
 
-      title.textContent = "Pillar " + pid + " — " + (def ? def.label : "");
-      meta.textContent = "Question " + pos + " of " + list.length;
+      if (title) {
+        title.textContent = "Pillar " + pid + " · " + (def ? def.label : "");
+      }
+      if (meta) {
+        meta.textContent = "Question " + pos + " of " + list.length;
+      }
     }
 
-    $("#gi-btn-prev").disabled = currentIndex === 0;
-    $("#gi-btn-next").disabled = currentIndex === orderedQuestions.length - 1;
+    var prevBtn = $("#gi-btn-prev");
+    var nextBtn = $("#gi-btn-next");
+
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex === orderedQuestions.length - 1;
   }
 
   function goTo(idx) {
@@ -3572,7 +3618,9 @@
   }
 
   function goToPillar(pid) {
-    var q = orderedQuestions.find(function (x) { return x.getAttribute("data-pillar") === pid; });
+    var q = orderedQuestions.find(function (x) {
+      return x.getAttribute("data-pillar") === pid;
+    });
     var idx = orderedQuestions.indexOf(q);
     if (idx > -1) goTo(idx);
   }
@@ -3584,8 +3632,10 @@
 
     // Count questions per pillar
     PILLAR_DEFS.forEach(function (d) { PILLAR_TOTALS[d.id] = 0; });
+
     $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
+      if (!PILLAR_TOTALS[pid]) PILLAR_TOTALS[pid] = 0;
       PILLAR_TOTALS[pid]++;
     });
 
@@ -3597,6 +3647,7 @@
     });
 
     updateStepHeader();
+    updateProgressUI(0);
 
     // Autosave
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
@@ -3609,36 +3660,55 @@
         });
       });
 
-    // Nav buttons
-    $("#gi-btn-prev").onclick = function () { goTo(currentIndex - 1); };
-    $("#gi-btn-next").onclick = function () { goTo(currentIndex + 1); };
+    // Navigation buttons
+    var prevBtn   = $("#gi-btn-prev");
+    var nextBtn   = $("#gi-btn-next");
+    var saveBtn   = $("#gi-btn-save");
+    var clearBtn  = $("#gi-btn-clear");
+    var submitBtn = $("#gi-btn-submit");
+    var statusEl  = $("#gi-footer-status");
 
-    $("#gi-btn-save").onclick = function () {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
-      $("#gi-footer-status").textContent = "Saved.";
-    };
+    if (prevBtn) {
+      prevBtn.onclick = function () { goTo(currentIndex - 1); };
+    }
 
-    $("#gi-btn-clear").onclick = function () {
-      localStorage.removeItem(STORAGE_KEY);
-      document.getElementById("gtm-intel-form").reset();
-      updateProgressUI(0);
-      $("#gi-footer-status").textContent = "Cleared.";
-    };
+    if (nextBtn) {
+      nextBtn.onclick = function () { goTo(currentIndex + 1); };
+    }
 
-    $("#gi-btn-submit").onclick = function () {
-      var p = collectAnswers();
-      $("#gi-footer-status").textContent = "Submitting...";
+    if (saveBtn) {
+      saveBtn.onclick = function () {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
+        if (statusEl) statusEl.textContent = "Progress saved locally in this browser.";
+      };
+    }
 
-      fetch("https://hook.make.com/REPLACE_WEBHOOK", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(p)
-      }).then(function () {
-        $("#gi-footer-status").textContent = "Submitted.";
-      }).catch(function () {
-        $("#gi-footer-status").textContent = "Error submitting. Try again.";
-      });
-    };
+    if (clearBtn) {
+      clearBtn.onclick = function () {
+        localStorage.removeItem(STORAGE_KEY);
+        var form = document.getElementById("gtm-intel-form");
+        if (form) form.reset();
+        updateProgressUI(0);
+        if (statusEl) statusEl.textContent = "Answers cleared for this device.";
+      };
+    }
+
+    if (submitBtn) {
+      submitBtn.onclick = function () {
+        var payload = collectAnswers();
+        if (statusEl) statusEl.textContent = "Submitting assessment...";
+
+        fetch("https://hook.make.com/REPLACE_WEBHOOK", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }).then(function () {
+          if (statusEl) statusEl.textContent = "Submitted. You can still adjust answers until Caugia confirms receipt.";
+        }).catch(function () {
+          if (statusEl) statusEl.textContent = "Error submitting. Please try again.";
+        });
+      };
+    }
   });
 
 })();
