@@ -3960,6 +3960,464 @@
   </div>
 <script>
     (function () {
+
+      <script>
+(function () {
+
+  /* =========================================================
+     GLOBAL CONFIG
+     ========================================================= */
+
+  var STORAGE_KEY = "gtmIntelligence_v1";
+  var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
+
+  function selectAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector));
+  }
+
+  function dbg(msg, obj) {
+    if (!DEBUG_MODE) return;
+    console.log("[GTM DEBUG]", msg, obj || "");
+  }
+
+  /* =========================================================
+     PILLAR DEFINITIES (12)
+     ========================================================= */
+
+  var PILLAR_DEFS = [
+    { id: "0", label: "Organizational Context" },
+    { id: "1", label: "GTM Strategy & Leadership" },
+    { id: "2", label: "Market Intelligence" },
+    { id: "3", label: "Product Marketing" },
+    { id: "4", label: "Inbound Engine" },
+    { id: "5", label: "Outbound Engine" },
+    { id: "6", label: "Sales Execution" },
+    { id: "7", label: "Customer Success & Expansion" },
+    { id: "8", label: "Product & Engineering" },
+    { id: "9", label: "Brand & Communications" },
+    { id: "10", label: "Data & Insights" },
+    { id: "11", label: "Operations & Systems" },
+    { id: "12", label: "Leadership & Alignment" }
+  ];
+
+  var PILLAR_TOTALS = {};
+  var orderedQuestions = [];
+  var currentIndex = 0;
+
+
+  /* =========================================================
+     MATURITY
+     ========================================================= */
+
+  function getMaturityFromScore(score100) {
+    if (score100 <= 20) return "At Risk";
+    if (score100 <= 40) return "Unstable";
+    if (score100 <= 70) return "Developing";
+    if (score100 <= 85) return "Performing";
+    if (score100 <= 95) return "High Performing";
+    return "Best in Class";
+  }
+
+
+  /* =========================================================
+     COLLECT ANSWERS
+     ========================================================= */
+
+  function collectAnswers() {
+    var context = {};
+    var pillars = {};
+    var totalScore = 0;
+    var scoredQuestionCount = 0;
+
+    // Context (pillar 0)
+    selectAll(".gi-question[data-pillar='0']").forEach(function (q) {
+      var input = q.querySelector("input, select, textarea");
+      if (input && input.name) {
+        context[input.name] = input.value.trim();
+      }
+    });
+
+    // Scored questions
+    selectAll(".gi-question[data-pillar]").forEach(function (q) {
+      var pid = q.getAttribute("data-pillar");
+      if (pid === "0") return;
+
+      if (!pillars[pid]) {
+        pillars[pid] = { questions_answered: 0, raw_score: 0 };
+      }
+
+      var selected =
+        q.querySelector("input[type='radio']:checked") ||
+        q.querySelector("select") ||
+        q.querySelector("textarea") ||
+        q.querySelector("input[type='text']");
+
+      if (selected) {
+        pillars[pid].questions_answered++;
+
+        var scoreAttr = selected.getAttribute("data-score");
+        var s = scoreAttr ? parseInt(scoreAttr, 10) : 0;
+
+        if (!isNaN(s)) {
+          scoredQuestionCount++;
+          totalScore += s;
+          pillars[pid].raw_score += s;
+        }
+      }
+    });
+
+    var normalized = scoredQuestionCount
+      ? Math.round((totalScore / (scoredQuestionCount * 5)) * 100)
+      : 0;
+
+    return {
+      context: context,
+      scores: {
+        total_questions_answered: scoredQuestionCount,
+        total_raw_score: totalScore,
+        total_normalized_0_100: normalized,
+        total_maturity: getMaturityFromScore(normalized),
+        pillars: pillars
+      }
+    };
+  }
+
+
+  /* =========================================================
+     PROGRESS BAR
+     ========================================================= */
+
+  function updateProgressUI(totalAnswered) {
+    var maxQuestions = 240; // definitieve totaal
+    var percent = Math.round((totalAnswered / maxQuestions) * 100);
+
+    var bar = document.getElementById("gi-progress-bar");
+    var cnt = document.getElementById("gi-progress-count");
+    var pct = document.getElementById("gi-progress-percent");
+
+    if (bar) bar.style.width = percent + "%";
+    if (cnt) cnt.textContent = totalAnswered + " of " + maxQuestions + " answered";
+    if (pct) pct.textContent = percent + "%";
+  }
+
+
+  /* =========================================================
+     PILLAR CHIPS
+     ========================================================= */
+
+  function renderPillarChips() {
+    var container = document.getElementById("gi-pillars-list");
+    if (!container) return;
+    container.innerHTML = "";
+
+    PILLAR_DEFS.forEach(function (def) {
+      if (def.id === "0") return;
+
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "gi-pillar-chip";
+      chip.setAttribute("data-pillar-id", def.id);
+      chip.innerHTML = `
+        <span>${def.label}</span>
+        <span id="gi-pillar-status-${def.id}" class="gi-pillar-status">0%</span>
+      `;
+      chip.addEventListener("click", function () {
+        goToPillar(def.id);
+      });
+      container.appendChild(chip);
+    });
+  }
+
+  function updatePillarChips(pillarScores) {
+    PILLAR_DEFS.forEach(function (def) {
+      if (def.id === "0") return;
+
+      var total = PILLAR_TOTALS[def.id] || 0;
+      var answered = pillarScores[def.id]
+        ? pillarScores[def.id].questions_answered
+        : 0;
+
+      var percent = total ? Math.round((answered / total) * 100) : 0;
+
+      var statusEl = document.getElementById("gi-pillar-status-" + def.id);
+      var chip = document.querySelector('.gi-pillar-chip[data-pillar-id="' + def.id + '"]');
+
+      if (statusEl) statusEl.textContent = percent + "%";
+
+      chip.classList.toggle("is-active", percent > 0 && percent < 100);
+      chip.classList.toggle("is-complete", percent === 100);
+    });
+  }
+
+
+  /* =========================================================
+     OPTION CARDS — automatische transformatie
+     ========================================================= */
+
+  function transformOptionCards() {
+    selectAll(".gi-question").forEach(function (q) {
+      var radios = q.querySelectorAll("input[type='radio']");
+      radios.forEach(function (r) {
+        var label = r.parentElement;
+        if (!label.classList.contains("gi-option-card")) {
+          label.classList.add("gi-option-card");
+          var txt = label.textContent.trim();
+          label.innerHTML = "<strong>" + txt + "</strong>";
+        }
+      });
+    });
+
+    selectAll("input[type='radio']").forEach(function (r) {
+      r.addEventListener("change", function () {
+        var parent = r.closest(".gi-option-card");
+        var siblings = parent.parentElement.querySelectorAll(".gi-option-card");
+        siblings.forEach(function (s) { s.classList.remove("selected"); });
+        parent.classList.add("selected");
+      });
+    });
+  }
+
+
+  /* =========================================================
+     STEPPER — 1 vraag per keer
+     ========================================================= */
+
+  function updateStepHeader() {
+    if (!orderedQuestions.length) return;
+
+    var q = orderedQuestions[currentIndex];
+    var pid = q.getAttribute("data-pillar");
+
+    var def = PILLAR_DEFS.find(function (d) { return d.id === pid; });
+
+    var title = document.getElementById("gi-pillar-title");
+    var meta = document.getElementById("gi-pillar-meta");
+
+    if (pid === "0") {
+      title.textContent = "Organizational Context";
+      meta.textContent = "These questions help interpret your GTM system in context.";
+    } else {
+      var list = orderedQuestions.filter(function (x) {
+        return x.getAttribute("data-pillar") === pid;
+      });
+      var pos = list.indexOf(q) + 1;
+
+      title.textContent = "Pillar " + pid + " — " + def.label;
+      meta.textContent =
+        "Question " + pos + " of " + list.length + " in this pillar.";
+    }
+
+    var prevBtn = document.getElementById("gi-btn-prev");
+    var nextBtn = document.getElementById("gi-btn-next");
+
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled =
+      currentIndex === orderedQuestions.length - 1;
+
+    // active chip
+    selectAll(".gi-pillar-chip").forEach(function (chip) {
+      var active = chip.getAttribute("data-pillar-id") === pid;
+      chip.classList.toggle("is-active", active);
+    });
+  }
+
+
+  function goTo(offset) {
+    var next = currentIndex + offset;
+    if (next < 0 || next >= orderedQuestions.length) return;
+
+    orderedQuestions[currentIndex].style.display = "none";
+    orderedQuestions[next].style.display = "block";
+
+    currentIndex = next;
+    updateStepHeader();
+
+    var card = document.querySelector(".gi-main-card");
+    if (card) {
+      var top = card.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    }
+  }
+
+
+  function goToPillar(pid) {
+    var target = orderedQuestions.find(function (q) {
+      return q.getAttribute("data-pillar") === pid;
+    });
+    if (!target) return;
+
+    var index = orderedQuestions.indexOf(target);
+    if (index === -1) return;
+
+    orderedQuestions[currentIndex].style.display = "none";
+    orderedQuestions[index].style.display = "block";
+
+    currentIndex = index;
+    updateStepHeader();
+  }
+
+
+  function initStepper() {
+    orderedQuestions = selectAll(".gi-question[data-pillar]");
+    if (!orderedQuestions.length) return;
+
+    orderedQuestions.forEach(function (q, idx) {
+      q.style.display = idx === 0 ? "block" : "none";
+    });
+
+    currentIndex = 0;
+    updateStepHeader();
+  }
+
+
+  /* =========================================================
+     LOCAL STORAGE
+     ========================================================= */
+
+  function saveToLocal() {
+    try {
+      var payload = collectAnswers();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      setStatus("Saved locally.", "info");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function loadFromLocal() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var payload = JSON.parse(raw);
+
+      // restore values
+
+      Object.keys(payload.context || {}).forEach(function (name) {
+        var el = document.querySelector("[name='" + name + "']");
+        if (el) el.value = payload.context[name];
+      });
+
+      orderedQuestions.forEach(function (q) {
+        var radios = q.querySelectorAll("input[type='radio']");
+        radios.forEach(function (r) {
+          if (payload.values && payload.values[r.name] === r.value) {
+            r.checked = true;
+          }
+        });
+      });
+
+      updateProgressUI(payload.scores.total_questions_answered || 0);
+      updatePillarChips(payload.scores.pillars || {});
+
+      setStatus("Draft loaded.", "info");
+    } catch (e) {}
+  }
+
+  function clearLocal() {
+    localStorage.removeItem(STORAGE_KEY);
+    document.getElementById("gtm-intel-form").reset();
+    updateProgressUI(0);
+    updatePillarChips({});
+    setStatus("Cleared.", "info");
+  }
+
+
+  /* =========================================================
+     SUBMIT
+     ========================================================= */
+
+  function setStatus(msg, type) {
+    var el = document.getElementById("gi-footer-status");
+    if (!el) return;
+    el.textContent = msg;
+  }
+
+  function validateBeforeSubmit(payload) {
+    var errors = [];
+    if (!payload.context.ctx_company_name) errors.push("Company name missing.");
+    if (!payload.context.ctx_company_size) errors.push("Company size missing.");
+    if ((payload.scores.total_questions_answered || 0) < 50) {
+      errors.push("Minimum 50 questions required.");
+    }
+    return errors;
+  }
+
+  function submitAssessment() {
+    var payload = collectAnswers();
+    var errors = validateBeforeSubmit(payload);
+
+    if (errors.length) {
+      setStatus(errors[0], "error");
+      return;
+    }
+
+    if (DEBUG_MODE) {
+      console.log("SUBMIT PAYLOAD:", payload);
+      setStatus("Debug: printed to console.", "info");
+      return;
+    }
+
+    fetch("https://hook.make.com/REPLACE_WITH_WEBHOOK", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function () {
+        setStatus("Assessment submitted.", "ok");
+      })
+      .catch(function () {
+        setStatus("Submit failed.", "error");
+      });
+  }
+
+
+  /* =========================================================
+     INIT
+     ========================================================= */
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // count questions
+    PILLAR_DEFS.forEach(function (d) {
+      PILLAR_TOTALS[d.id] = 0;
+    });
+
+    selectAll(".gi-question[data-pillar]").forEach(function (q) {
+      var pid = q.getAttribute("data-pillar");
+      if (pid) PILLAR_TOTALS[pid]++;
+    });
+
+    renderPillarChips();
+    transformOptionCards();
+    initStepper();
+
+    var formInputs = selectAll("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea");
+    formInputs.forEach(function (el) {
+      el.addEventListener("change", function () {
+        saveToLocal();
+        var payload = collectAnswers();
+        updateProgressUI(payload.scores.total_questions_answered);
+        updatePillarChips(payload.scores.pillars);
+      });
+    });
+
+    document.getElementById("gi-btn-prev").addEventListener("click", function () {
+      goTo(-1);
+    });
+
+    document.getElementById("gi-btn-next").addEventListener("click", function () {
+      goTo(1);
+    });
+
+    document.getElementById("gi-btn-save").addEventListener("click", saveToLocal);
+    document.getElementById("gi-btn-clear").addEventListener("click", clearLocal);
+    document.getElementById("gi-btn-submit").addEventListener("click", submitAssessment);
+  });
+
+})();
+</script>
+
+      
       var toggle = document.querySelector(".nav-toggle");
       var nav = document.querySelector(".nav-desktop");
       if (!toggle || !nav) return;
