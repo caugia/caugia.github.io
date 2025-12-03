@@ -3439,483 +3439,466 @@
   </main>
 
 <script>
-    (function () {
-      var STORAGE_KEY = "gtmIntelligence_v1";
-      var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
+(function () {
+  var STORAGE_KEY = "gtmIntelligence_v1";
+  var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
 
-      var PILLAR_DEFS = [
-        { id: "1", label: "GTM Strategy & Leadership" },
-        { id: "2", label: "Market Intelligence" },
-        { id: "3", label: "Product Marketing" },
-        { id: "4", label: "Inbound Engine" },
-        { id: "5", label: "Outbound Engine" },
-        { id: "6", label: "Sales Execution" },
-        { id: "7", label: "Customer Success & Expansion" },
-        { id: "8", label: "Product & Engineering" },
-        { id: "9", label: "Brand & Communications" },
-        { id: "10", label: "Data & Insights" },
-        { id: "11", label: "Operations & Systems" },
-        { id: "12", label: "Leadership & Alignment" }
-      ];
+  function selectAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector));
+  }
 
-      var PILLAR_TOTALS = {};
-      var TOTAL_SCORED_QUESTIONS = 0;
+  function dbg(msg, obj) {
+    if (!DEBUG_MODE) return;
+    console.log("[GTM DEBUG]", msg, obj || "");
+  }
 
-      function selectAll(selector) {
-        return Array.prototype.slice.call(document.querySelectorAll(selector));
-      }
+  var PILLAR_DEFS = [
+    { id: "0", label: "Organizational context" },
+    { id: "1", label: "GTM Strategy & Leadership" },
+    { id: "2", label: "Market Intelligence" },
+    { id: "3", label: "Product Marketing" },
+    { id: "4", label: "Inbound Engine" },
+    { id: "5", label: "Outbound Engine" },
+    { id: "6", label: "Sales Execution" },
+    { id: "7", label: "Customer Success & Expansion" },
+    { id: "8", label: "Product & Engineering" },
+    { id: "9", label: "Brand & Communications" },
+    { id: "10", label: "Data & Insights" },
+    { id: "11", label: "Operations & Systems" },
+    { id: "12", label: "Leadership & Alignment" }
+  ];
 
-      function dbg(msg, obj) {
-        if (!DEBUG_MODE) return;
-        var panel = document.getElementById("gi-debug");
-        var out = document.getElementById("gi-debug-output");
-        if (!panel || !out) return;
-        panel.style.display = "block";
-        out.textContent += "\n\n" + msg;
-        if (obj !== undefined) {
-          try {
-            out.textContent += "\n" + JSON.stringify(obj, null, 2);
-          } catch (e) {
-            out.textContent += "\n[object]";
-          }
-        }
-      }
+  var PILLAR_TOTALS = {};
+  var TOTAL_SCORED_QUESTIONS = 0;
 
-      function getMaturityFromScore(score100) {
-        if (score100 <= 20) return "At Risk";
-        if (score100 <= 40) return "Unstable";
-        if (score100 <= 70) return "Developing";
-        if (score100 <= 85) return "Performing";
-        if (score100 <= 95) return "High Performing";
-        return "Best in Class";
-      }
+  var orderedQuestions = [];
+  var currentIndex = 0;
 
-      function collectAnswers() {
-        var context = {};
-        var pillars = {};
-        var totalScore = 0;
-        var scoredQuestionCount = 0;
+  function getMaturityFromScore(score100) {
+    if (score100 <= 20) return "At Risk";
+    if (score100 <= 40) return "Unstable";
+    if (score100 <= 70) return "Developing";
+    if (score100 <= 85) return "Performing";
+    if (score100 <= 95) return "High Performing";
+    return "Best in Class";
+  }
 
-        // Context (data-pillar="0")
-        selectAll('.gi-question[data-pillar="0"] input, .gi-question[data-pillar="0"] select, .gi-question[data-pillar="0"] textarea')
-          .forEach(function (el) {
-            var name = el.name;
-            if (!name) return;
-            if (el.type === "radio") {
-              if (el.checked) context[name] = el.value;
-            } else if (el.tagName === "SELECT" || el.tagName === "TEXTAREA" ||
-                       el.type === "text" || el.type === "email" || el.type === "number") {
-              if (el.value && el.value.trim() !== "") {
-                context[name] = el.value.trim();
-              }
-            }
-          });
+  function collectAnswers() {
+    var context = {};
+    var pillars = {};
+    var totalScore = 0;
+    var scoredQuestionCount = 0;
 
-        // Scored questions (data-pillar != "0")
-        selectAll(".gi-question[data-pillar]")
-          .forEach(function (block) {
-            var pillarId = block.getAttribute("data-pillar");
-            if (!pillarId || pillarId === "0") return;
+    selectAll(".gi-question[data-pillar='0']").forEach(function (q) {
+      var input = q.querySelector("input, select, textarea");
+      if (!input || !input.name) return;
+      context[input.name] = input.value || "";
+    });
 
-            if (!pillars[pillarId]) {
-              pillars[pillarId] = {
-                score: 0,
-                questions: 0
-              };
-            }
+    selectAll(".gi-question[data-pillar]").forEach(function (q) {
+      var pillarId = q.getAttribute("data-pillar");
+      if (!pillarId || pillarId === "0") return;
 
-            var radios = block.querySelectorAll('input[type="radio"]');
-            if (!radios.length) return;
+      var input =
+        q.querySelector("input[type='radio']:checked") ||
+        q.querySelector("select") ||
+        q.querySelector("textarea") ||
+        q.querySelector("input[type='text']");
 
-            var questionAnswered = false;
-            radios.forEach(function (r) {
-              if (r.checked) {
-                var val = parseInt(r.value, 10);
-                if (!isNaN(val)) {
-                  pillars[pillarId].score += val;
-                  totalScore += val;
-                  questionAnswered = true;
-                }
-              }
-            });
-
-            if (questionAnswered) {
-              pillars[pillarId].questions += 1;
-              scoredQuestionCount += 1;
-            }
-          });
-
-        var maxTotalScore = scoredQuestionCount * 10;
-        var normalizedTotal = maxTotalScore > 0
-          ? Math.round((totalScore / maxTotalScore) * 100)
-          : 0;
-        var maturity = getMaturityFromScore(normalizedTotal);
-
-        var pillarScores = {};
-        Object.keys(pillars).forEach(function (pid) {
-          var p = pillars[pid];
-          var maxPillar = p.questions * 10;
-          var norm = maxPillar > 0
-            ? Math.round((p.score / maxPillar) * 100)
-            : 0;
-          pillarScores[pid] = {
-            raw_score: p.score,
-            questions_answered: p.questions,
-            normalized_0_100: norm,
-            maturity: getMaturityFromScore(norm)
-          };
-        });
-
-        var result = {
-          context: context,
-          scores: {
-            total_raw_score: totalScore,
-            total_questions_answered: scoredQuestionCount,
-            total_normalized_0_100: normalizedTotal,
-            total_maturity: maturity,
-            pillars: pillarScores
-          }
-        };
-
-        dbg("Collected answers()", result);
-        return result;
-      }
-
-      function saveProgress() {
-        var data = {
-          timestamp: new Date().toISOString(),
-          values: {}
-        };
-
-        selectAll(".gi-section input, .gi-section select, .gi-section textarea").forEach(function (el) {
-          if (!el.name) return;
-          if (el.type === "radio") {
-            if (el.checked) {
-              data.values[el.name] = el.value;
-            }
-          } else {
-            if (el.value && el.value.trim() !== "") {
-              data.values[el.name] = el.value;
-            }
-          }
-        });
-
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-          setStatus("Progress saved on this device.", "ok");
-          dbg("Saved progress to localStorage", data);
-        } catch (e) {
-          setStatus("Could not save progress in this browser.", "error");
-        }
-      }
-
-      function loadProgress() {
-        var raw;
-        try {
-          raw = localStorage.getItem(STORAGE_KEY);
-        } catch (e) {
-          return;
-        }
-        if (!raw) return;
-
-        var data;
-        try {
-          data = JSON.parse(raw);
-        } catch (e) {
-          return;
-        }
-        if (!data || !data.values) return;
-
-        selectAll(".gi-section input, .gi-section select, .gi-section textarea").forEach(function (el) {
-          if (!el.name) return;
-          var stored = data.values[el.name];
-          if (stored == null) return;
-
-          if (el.type === "radio") {
-            if (el.value === stored) {
-              el.checked = true;
-            }
-          } else {
-            el.value = stored;
-          }
-        });
-
-        setStatus("Previous progress loaded from this device.", "info");
-        dbg("Loaded progress from localStorage", data);
-      }
-
-      function clearProgress() {
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (e) {}
-        selectAll(".gi-section input, .gi-section select, .gi-section textarea").forEach(function (el) {
-          if (el.type === "radio" || el.type === "checkbox") {
-            el.checked = false;
-          } else {
-            el.value = "";
-          }
-        });
-        setStatus("Progress cleared from this device.", "info");
-        dbg("Progress cleared", null);
-        // Also reset progress UI
-        updateProgressUI(0);
-        updatePillarChips({});
-      }
-
-      function setStatus(text, mode) {
-        var footerStatus = document.getElementById("gi-footer-status");
-        var alertBox = document.getElementById("gi-alert");
-
-        if (footerStatus) {
-          footerStatus.textContent = text;
-        }
-        if (alertBox) {
-          alertBox.textContent = text;
-          alertBox.classList.remove("is-ok", "is-error", "is-info");
-          if (mode === "ok") alertBox.classList.add("is-ok");
-          if (mode === "error") alertBox.classList.add("is-error");
-          if (mode === "info") alertBox.classList.add("is-info");
-          alertBox.classList.add("is-visible");
-          setTimeout(function () {
-            alertBox.classList.remove("is-visible");
-          }, 2500);
-        }
-      }
-
-      function buildPayload() {
-        var answers = collectAnswers();
-        return {
-          meta: {
-            version: "1.0",
-            created_at: new Date().toISOString(),
-            source: "gtm-intelligence-report-html"
-          },
-          context: answers.context,
-          scores: answers.scores
+      if (!pillars[pillarId]) {
+        pillars[pillarId] = {
+          questions_answered: 0,
+          raw_score: 0
         };
       }
 
-      function updateProgressUI(answeredCount) {
-        var progressBar = document.getElementById("gi-progress-bar");
-        var progressCount = document.getElementById("gi-progress-count");
-        var progressPercent = document.getElementById("gi-progress-percent");
+      if (input && input.value) {
+        pillars[pillarId].questions_answered += 1;
 
-        var total = TOTAL_SCORED_QUESTIONS || 240;
-        var percent = total > 0 ? Math.round((answeredCount / total) * 100) : 0;
-
-        if (progressBar) {
-          progressBar.style.width = percent + "%";
-        }
-        if (progressCount) {
-          progressCount.textContent = answeredCount + " of " + total + " answered";
-        }
-        if (progressPercent) {
-          progressPercent.textContent = percent + "%";
+        var scoreAttr = input.getAttribute("data-score");
+        var s = scoreAttr ? parseInt(scoreAttr, 10) : 0;
+        if (!isNaN(s)) {
+          scoredQuestionCount += 1;
+          totalScore += s;
+          pillars[pillarId].raw_score += s;
         }
       }
+    });
 
-      function updatePillarChips(pillarScores) {
-        // pillarScores: answers.scores.pillars or {}
-        PILLAR_DEFS.forEach(function (def) {
-          var pid = def.id;
-          var chip = document.querySelector('.gi-pillar-chip[data-pillar-id="' + pid + '"]');
-          var statusEl = document.getElementById("gi-pillar-status-" + pid);
-          if (!chip || !statusEl) return;
+    var normalizedScore = 0;
+    if (scoredQuestionCount > 0) {
+      normalizedScore = Math.round((totalScore / (scoredQuestionCount * 5)) * 100);
+    }
 
-          var total = PILLAR_TOTALS[pid] || 0;
-          var answered = 0;
-          if (pillarScores && pillarScores[pid]) {
-            answered = pillarScores[pid].questions_answered || 0;
-          }
-          var percent = total > 0 ? Math.round((answered / total) * 100) : 0;
+    var maturity = getMaturityFromScore(normalizedScore);
 
-          statusEl.textContent = percent + "%";
-
-          chip.classList.remove("is-active", "is-complete");
-          if (percent > 0) {
-            chip.classList.add("is-active");
-          }
-          if (percent === 100) {
-            chip.classList.add("is-complete");
-          }
-        });
+    return {
+      context: context,
+      scores: {
+        total_questions_answered: scoredQuestionCount,
+        total_raw_score: totalScore,
+        total_normalized_0_100: normalizedScore,
+        total_maturity: maturity,
+        pillars: pillars
       }
+    };
+  }
 
-      function validateBeforeSubmit(payload) {
-        var errors = [];
+  function updateProgressUI(totalAnswered) {
+    var maxQuestions = 240; // totaal straks
+    var percent = Math.min(100, Math.round((totalAnswered / maxQuestions) * 100));
 
-        // Basic context validation
-        var ctx = payload.context || {};
-        if (!ctx.ctx_company_name) {
-          errors.push("Please fill in your company name.");
-        }
-        if (!ctx.ctx_company_size) {
-          errors.push("Please select your company size.");
-        }
+    var bar = document.getElementById("gi-progress-bar");
+    var countEl = document.getElementById("gi-progress-count");
+    var percentEl = document.getElementById("gi-progress-percent");
 
-        // Minimum answered questions
-        var totalAnswered = payload.scores.total_questions_answered || 0;
-        if (totalAnswered < 50) {
-          errors.push("Please answer at least 50 scored questions before submitting.");
-        }
+    if (bar) bar.style.width = percent + "%";
+    if (countEl) countEl.textContent = totalAnswered + " of " + maxQuestions + " answered";
+    if (percentEl) percentEl.textContent = percent + "%";
+  }
 
-        return errors;
-      }
+  function renderPillarChips() {
+    var container = document.getElementById("gi-pillars-list");
+    if (!container) return;
 
-      function submitAssessment() {
-        var payload = buildPayload();
-        dbg("submitAssessment() payload", payload);
+    container.innerHTML = "";
+    PILLAR_DEFS.forEach(function (def) {
+      if (def.id === "0") return;
 
-        // Update progress + chips based on latest answers
-        var totalAnswered = payload.scores.total_questions_answered || 0;
-        updateProgressUI(totalAnswered);
-        updatePillarChips(payload.scores.pillars || {});
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "gi-pillar-chip";
+      chip.setAttribute("data-pillar-id", def.id);
+      chip.innerHTML =
+        "<span class='gi-pillar-label'>" +
+        def.label +
+        "</span><span class='gi-pillar-status' id='gi-pillar-status-" +
+        def.id +
+        "'>0%</span>";
 
-        var errors = validateBeforeSubmit(payload);
-        if (errors.length) {
-          setStatus(errors[0], "error");
-          dbg("Validation errors", errors);
-          return;
-        }
-
-        if (DEBUG_MODE) {
-          console.log("[GTM DEBUG] Submission payload:", payload);
-          console.log("[GTM DEBUG] Total normalized score:", payload.scores.total_normalized_0_100,
-            "Maturity:", payload.scores.total_maturity);
-          setStatus("Debug mode: payload logged in console. Nothing was submitted.", "info");
-          return;
-        }
-
-        setStatus("Submitting assessment...", "info");
-
-        // Replace with your real Make.com webhook URL
-        var webhookUrl = "https://hook.make.com/REPLACE_WITH_YOUR_WEBHOOK";
-
-        fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        })
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.text();
-          })
-          .then(function () {
-            setStatus("Assessment submitted. You will receive your GTM Intelligence Report soon.", "ok");
-          })
-          .catch(function (err) {
-            console.error(err);
-            setStatus("Something went wrong while submitting. Please try again later.", "error");
-          });
-      }
-
-      function bootstrapPillarTotals() {
-        PILLAR_TOTALS = {};
-        selectAll(".gi-question[data-pillar]").forEach(function (q) {
-          var pid = q.getAttribute("data-pillar");
-          if (!pid || pid === "0") return;
-          if (!PILLAR_TOTALS[pid]) PILLAR_TOTALS[pid] = 0;
-          PILLAR_TOTALS[pid] += 1;
-        });
-        TOTAL_SCORED_QUESTIONS = Object.keys(PILLAR_TOTALS).reduce(function (acc, pid) {
-          return acc + (PILLAR_TOTALS[pid] || 0);
-        }, 0);
-        if (!TOTAL_SCORED_QUESTIONS) {
-          TOTAL_SCORED_QUESTIONS = 240;
-        }
-        dbg("Bootstrap pillar totals", { PILLAR_TOTALS: PILLAR_TOTALS, TOTAL_SCORED_QUESTIONS: TOTAL_SCORED_QUESTIONS });
-      }
-
-      function bootstrapPillarChips() {
-        var list = document.getElementById("gi-pillars-list");
-        if (!list) return;
-        list.innerHTML = "";
-        PILLAR_DEFS.forEach(function (def) {
-          var chip = document.createElement("button");
-          chip.type = "button";
-          chip.className = "gi-pillar-chip";
-          chip.setAttribute("data-pillar-id", def.id);
-
-          var labelSpan = document.createElement("span");
-          labelSpan.textContent = def.id + ". " + def.label;
-
-          var statusSpan = document.createElement("span");
-          statusSpan.id = "gi-pillar-status-" + def.id;
-          statusSpan.textContent = "0%";
-
-          chip.appendChild(labelSpan);
-          chip.appendChild(statusSpan);
-
-          chip.addEventListener("click", function () {
-            var section = document.querySelector('.gi-section[data-pillar="' + def.id + '"]');
-            if (section) {
-              var rect = section.getBoundingClientRect();
-              var offset = 80;
-              window.scrollTo({
-                top: window.pageYOffset + rect.top - offset,
-                behavior: "smooth"
-              });
-            }
-          });
-
-          list.appendChild(chip);
-        });
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-        bootstrapPillarTotals();
-        bootstrapPillarChips();
-
-        loadProgress();
-
-        // After loading progress, recompute answers for progress + chips
-        var afterLoad = collectAnswers();
-        updateProgressUI(afterLoad.scores.total_questions_answered || 0);
-        updatePillarChips(afterLoad.scores.pillars || {});
-
-        var btnSave = document.getElementById("gi-btn-save");
-        var btnSubmit = document.getElementById("gi-btn-submit");
-        var btnClear = document.getElementById("gi-btn-clear");
-
-        if (btnSave) {
-          btnSave.addEventListener("click", function (e) {
-            e.preventDefault();
-            saveProgress();
-          });
-        }
-
-        if (btnSubmit) {
-          btnSubmit.addEventListener("click", function (e) {
-            e.preventDefault();
-            submitAssessment();
-          });
-        }
-
-        if (btnClear) {
-          btnClear.addEventListener("click", function (e) {
-            e.preventDefault();
-            clearProgress();
-          });
-        }
-
-        selectAll(".gi-section input, .gi-section select, .gi-section textarea").forEach(function (el) {
-          el.addEventListener("change", function () {
-            // Recompute answers for UI and then save
-            var answers = collectAnswers();
-            updateProgressUI(answers.scores.total_questions_answered || 0);
-            updatePillarChips(answers.scores.pillars || {});
-            saveProgress();
-          });
-        });
-
-        if (DEBUG_MODE) {
-          setStatus("Debug mode active. No data will be sent.", "info");
-          dbg("Debug mode started", null);
-        }
+      chip.addEventListener("click", function () {
+        // later kun je hier direct naar een pillar springen
       });
-    })();
-  </script>
 
+      container.appendChild(chip);
+    });
+  }
+
+  function updatePillarChips(pillarScores) {
+    PILLAR_DEFS.forEach(function (def) {
+      var pid = def.id;
+      if (pid === "0") return;
+
+      var chip = document.querySelector('.gi-pillar-chip[data-pillar-id="' + pid + '"]');
+      var statusEl = document.getElementById("gi-pillar-status-" + pid);
+      if (!chip || !statusEl) return;
+
+      var total = PILLAR_TOTALS[pid] || 0;
+      var answered = pillarScores && pillarScores[pid]
+        ? pillarScores[pid].questions_answered || 0
+        : 0;
+
+      var percent = total > 0 ? Math.round((answered / total) * 100) : 0;
+
+      statusEl.textContent = percent + "%";
+
+      chip.classList.remove("is-active", "is-complete");
+      if (percent > 0) chip.classList.add("is-active");
+      if (percent === 100) chip.classList.add("is-complete");
+    });
+  }
+
+  function setStatus(msg, type) {
+    var el = document.getElementById("gi-footer-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.className = "gi-footer-status";
+    if (type) el.classList.add("gi-footer-status-" + type);
+  }
+
+  function buildPayload() {
+    return collectAnswers();
+  }
+
+  function validateBeforeSubmit(payload) {
+    var errors = [];
+
+    var ctx = payload.context || {};
+    if (!ctx.ctx_company_name) {
+      errors.push("Please fill in your company name.");
+    }
+    if (!ctx.ctx_company_size) {
+      errors.push("Please select your company size.");
+    }
+
+    var totalAnswered = payload.scores.total_questions_answered || 0;
+    if (totalAnswered < 50) {
+      errors.push("Please answer at least 50 scored questions before submitting.");
+    }
+
+    return errors;
+  }
+
+  function saveToLocal() {
+    var payload = buildPayload();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      var alertEl = document.getElementById("gi-alert");
+      if (alertEl) {
+        alertEl.classList.add("is-visible");
+        setTimeout(function () {
+          alertEl.classList.remove("is-visible");
+        }, 2000);
+      }
+      setStatus("Draft saved locally on this device.", "info");
+      dbg("Saved to localStorage", payload);
+    } catch (e) {
+      console.error(e);
+      setStatus("Unable to save locally. Please check your browser settings.", "error");
+    }
+  }
+
+  function loadFromLocal() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      var payload = JSON.parse(raw);
+      dbg("Loaded from localStorage", payload);
+
+      var ctx = payload.context || {};
+      Object.keys(ctx).forEach(function (key) {
+        var el = document.querySelector("[name='" + key + "']");
+        if (el) el.value = ctx[key];
+      });
+
+      var totalAnswered = payload.scores.total_questions_answered || 0;
+      updateProgressUI(totalAnswered);
+      updatePillarChips(payload.scores.pillars || {});
+      setStatus("Draft loaded from this device.", "info");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function clearLocal() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {
+      console.error(e);
+    }
+
+    var form = document.getElementById("gtm-intel-form");
+    if (form) form.reset();
+
+    updateProgressUI(0);
+    updatePillarChips({});
+    setStatus("All local answers cleared.", "info");
+  }
+
+  function submitAssessment() {
+    var payload = buildPayload();
+    dbg("submitAssessment() payload", payload);
+
+    var totalAnswered = payload.scores.total_questions_answered || 0;
+    updateProgressUI(totalAnswered);
+    updatePillarChips(payload.scores.pillars || {});
+
+    var errors = validateBeforeSubmit(payload);
+    if (errors.length) {
+      setStatus(errors[0], "error");
+      dbg("Validation errors", errors);
+      return;
+    }
+
+    if (DEBUG_MODE) {
+      console.log("[GTM DEBUG] Submission payload:", payload);
+      console.log(
+        "[GTM DEBUG] Total normalized score:",
+        payload.scores.total_normalized_0_100,
+        "Maturity:",
+        payload.scores.total_maturity
+      );
+      setStatus("Debug mode: payload logged in console. Nothing was submitted.", "info");
+      return;
+    }
+
+    setStatus("Submitting assessment...", "info");
+
+    var webhookUrl = "https://hook.make.com/REPLACE_WITH_YOUR_WEBHOOK";
+
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
+      .then(function () {
+        setStatus(
+          "Assessment submitted. You will receive your GTM Intelligence Report soon.",
+          "ok"
+        );
+        saveToLocal();
+        var lock = document.getElementById("gi-locked-banner");
+        if (lock) lock.style.display = "block";
+      })
+      .catch(function (err) {
+        console.error(err);
+        setStatus(
+          "Something went wrong while submitting. Please try again later.",
+          "error"
+        );
+      });
+  }
+
+  /* =========================================================
+     STEPPER: één vraag per keer + pillar voor pillar
+     ========================================================= */
+
+  function updateStepHeader() {
+    if (!orderedQuestions.length) return;
+
+    var q = orderedQuestions[currentIndex];
+    var pid = q.getAttribute("data-pillar") || "0";
+
+    var def = PILLAR_DEFS.find(function (d) { return d.id === pid; });
+
+    var titleEl = document.getElementById("gi-pillar-title");
+    var metaEl = document.getElementById("gi-pillar-meta");
+    var chipEl = document.getElementById("gi-pillar-chip");
+
+    if (pid === "0") {
+      if (titleEl) titleEl.textContent = "Section 0 — Organizational context";
+      if (chipEl) chipEl.textContent = "Context before scoring";
+      if (metaEl) {
+        metaEl.textContent =
+          "Answer a few short questions so we can interpret your GTM system in context.";
+      }
+    } else {
+      var pillarQuestions = orderedQuestions.filter(function (qn) {
+        return qn.getAttribute("data-pillar") === pid;
+      });
+      var position = pillarQuestions.indexOf(q) + 1;
+
+      if (titleEl) {
+        var label = def ? def.label : "";
+        titleEl.textContent = "Pillar " + pid + " — " + label;
+      }
+      if (chipEl) chipEl.textContent = "Pillar " + pid + " of 12";
+      if (metaEl) {
+        metaEl.textContent =
+          "Question " +
+          position +
+          " of " +
+          pillarQuestions.length +
+          " in this pillar. Select the option that best matches how your team works today.";
+      }
+    }
+
+    var prevBtn = document.getElementById("gi-btn-prev-pillar");
+    var nextBtn = document.getElementById("gi-btn-next-pillar");
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex === orderedQuestions.length - 1;
+
+    // Active pillar chip highlight
+    var activePid = pid === "0" ? null : pid;
+    selectAll(".gi-pillar-chip").forEach(function (chip) {
+      chip.classList.toggle(
+        "is-active",
+        chip.getAttribute("data-pillar-id") === activePid
+      );
+    });
+  }
+
+  function goTo(offset) {
+    if (!orderedQuestions.length) return;
+    var next = currentIndex + offset;
+    if (next < 0 || next >= orderedQuestions.length) return;
+
+    currentIndex = next;
+
+    orderedQuestions.forEach(function (q, i) {
+      q.style.display = i === currentIndex ? "block" : "none";
+    });
+
+    updateStepHeader();
+
+    var card = document.querySelector(".gi-main-card");
+    if (card) {
+      var top = card.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    }
+  }
+
+  function initStepper() {
+    var rawQuestions = selectAll(".gi-question[data-pillar]");
+    if (!rawQuestions.length) return;
+
+    orderedQuestions = rawQuestions;
+
+    orderedQuestions.forEach(function (q, i) {
+      q.style.display = i === 0 ? "block" : "none";
+    });
+
+    currentIndex = 0;
+    updateStepHeader();
+  }
+
+  /* =========================================================
+     INIT
+     ========================================================= */
+
+  function init() {
+    // vraag aantallen per pillar tellen
+    PILLAR_DEFS.forEach(function (def) {
+      PILLAR_TOTALS[def.id] = 0;
+    });
+
+    selectAll(".gi-question[data-pillar]").forEach(function (q) {
+      var pid = q.getAttribute("data-pillar") || "";
+      if (!pid) return;
+      if (!PILLAR_TOTALS[pid]) PILLAR_TOTALS[pid] = 0;
+      PILLAR_TOTALS[pid] += 1;
+      if (pid !== "0") TOTAL_SCORED_QUESTIONS += 1;
+    });
+
+    renderPillarChips();
+    loadFromLocal();
+    initStepper();
+
+    // autosave
+    selectAll("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea").forEach(
+      function (el) {
+        el.addEventListener("change", function () {
+          saveToLocal();
+          var payload = buildPayload();
+          var totalAnswered = payload.scores.total_questions_answered || 0;
+          updateProgressUI(totalAnswered);
+          updatePillarChips(payload.scores.pillars || {});
+        });
+      }
+    );
+
+    var btnSave = document.getElementById("gi-btn-save");
+    var btnClear = document.getElementById("gi-btn-clear");
+    var btnSubmit = document.getElementById("gi-btn-submit");
+
+    if (btnSave) btnSave.addEventListener("click", saveToLocal);
+    if (btnClear) btnClear.addEventListener("click", clearLocal);
+    if (btnSubmit) btnSubmit.addEventListener("click", submitAssessment);
+
+    var btnPrev = document.getElementById("gi-btn-prev-pillar");
+    var btnNext = document.getElementById("gi-btn-next-pillar");
+    if (btnPrev) btnPrev.addEventListener("click", function () { goTo(-1); });
+    if (btnNext) btnNext.addEventListener("click", function () { goTo(1); });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
   
   <div id="gi-debug" style="display:none; padding:20px; background:#f9fafb; border-top:1px solid #e5e7eb; font-family:monospace; font-size:12px; margin-top:32px;">
     <h3 style="margin:0 0 8px 0; font-size:13px;">GTM Intelligence Debug Mode</h3>
