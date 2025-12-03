@@ -3460,7 +3460,10 @@
 
       if (sel) {
         pillars[pid].questions_answered++;
-        var s = parseInt(sel.getAttribute("data-score"), 10);
+
+        // Gebruik de value (0, 2, 5, 7, 10) als score
+        var s = parseInt(sel.getAttribute("data-score") || sel.value, 10);
+
         if (!isNaN(s)) {
           scored++;
           totalScore += s;
@@ -3469,7 +3472,8 @@
       }
     });
 
-    var normalized = scored ? Math.round((totalScore / (scored * 5)) * 100) : 0;
+    // Normaliseer naar 0–100, max per vraag = 10
+    var normalized = scored ? Math.round((totalScore / (scored * 10)) * 100) : 0;
 
     return {
       context: ctx,
@@ -3487,7 +3491,7 @@
      PROGRESS BAR
   ============================ */
   function updateProgressUI(n) {
-    var max = 240;
+    var max = 240; // 12 pilaren × 20 vragen
     var pct = Math.round((n / max) * 100);
 
     $("#gi-progress-bar").style.width = pct + "%";
@@ -3542,7 +3546,7 @@
   function updateStepHeader() {
     var q = orderedQuestions[currentIndex];
     var pid = q.getAttribute("data-pillar");
-    var def = PILLAR_DEFS.find(x => x.id === pid);
+    var def = PILLAR_DEFS.find(function (x) { return x.id === pid; });
 
     var title = $("#gi-pillar-title");
     var meta = $("#gi-pillar-meta");
@@ -3551,11 +3555,11 @@
       title.textContent = "Organizational Context";
       meta.textContent = "These questions help interpret your GTM system.";
     } else {
-      var list = orderedQuestions.filter(x => x.getAttribute("data-pillar") === pid);
+      var list = orderedQuestions.filter(function (x) { return x.getAttribute("data-pillar") === pid; });
       var pos = list.indexOf(q) + 1;
 
-      title.textContent = `Pillar ${pid} — ${def.label}`;
-      meta.textContent = `Question ${pos} of ${list.length}`;
+      title.textContent = "Pillar " + pid + " — " + (def ? def.label : "");
+      meta.textContent = "Question " + pos + " of " + list.length;
     }
 
     $("#gi-btn-prev").disabled = currentIndex === 0;
@@ -3573,7 +3577,7 @@
   }
 
   function goToPillar(pid) {
-    var q = orderedQuestions.find(x => x.getAttribute("data-pillar") === pid);
+    var q = orderedQuestions.find(function (x) { return x.getAttribute("data-pillar") === pid; });
     var idx = orderedQuestions.indexOf(q);
     if (idx > -1) goTo(idx);
   }
@@ -3584,8 +3588,8 @@
   document.addEventListener("DOMContentLoaded", function () {
 
     // Count per pillar
-    PILLAR_DEFS.forEach(d => PILLAR_TOTALS[d.id] = 0);
-    $all(".gi-question[data-pillar]").forEach(q => {
+    PILLAR_DEFS.forEach(function (d) { PILLAR_TOTALS[d.id] = 0; });
+    $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
       PILLAR_TOTALS[pid]++;
     });
@@ -3594,23 +3598,25 @@
 
     // Stepper
     orderedQuestions = $all(".gi-question[data-pillar]");
-    orderedQuestions.forEach((q, i) => q.style.display = i === 0 ? "block" : "none");
+    orderedQuestions.forEach(function (q, i) {
+      q.style.display = i === 0 ? "block" : "none";
+    });
     updateStepHeader();
 
     // Autosave events
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
-      .forEach(el =>
+      .forEach(function (el) {
         el.addEventListener("change", function () {
           var p = collectAnswers();
           updateProgressUI(p.scores.total_questions_answered);
           updatePillarChips(p.scores.pillars);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
-        })
-      );
+        });
+      });
 
     // Buttons
-    $("#gi-btn-prev").onclick = () => goTo(currentIndex - 1);
-    $("#gi-btn-next").onclick = () => goTo(currentIndex + 1);
+    $("#gi-btn-prev").onclick = function () { goTo(currentIndex - 1); };
+    $("#gi-btn-next").onclick = function () { goTo(currentIndex + 1); };
 
     $("#gi-btn-save").onclick = function () {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
@@ -3632,14 +3638,17 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(p)
-      }).then(() => {
+      }).then(function () {
         $("#gi-footer-status").textContent = "Submitted.";
+      }).catch(function () {
+        $("#gi-footer-status").textContent = "Error submitting. Please try again.";
       });
     };
   });
 
 })();
 </script>
+
 
 </body>
 </html>
