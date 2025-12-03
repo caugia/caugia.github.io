@@ -3391,7 +3391,7 @@
   <pre id="gi-debug-output" style="white-space:pre-wrap; margin:0;"></pre>
 </div>
 
-<!-- NAV TOGGLE (blijft altijd staan) -->
+<!-- NAV TOGGLE -->
 <script>
 (function () {
   var toggle = document.querySelector(".menu-toggle");
@@ -3417,10 +3417,7 @@
 
   function $(q) { return document.querySelector(q); }
   function $all(q) { return Array.from(document.querySelectorAll(q)); }
-
-  function dbg(msg, o) {
-    if (DEBUG_MODE) console.log("[GTM DEBUG]", msg, o || "");
-  }
+  function dbg(msg, o) { if (DEBUG_MODE) console.log("[GTM DEBUG]", msg, o || ""); }
 
   /* ============================
      PILLAR DEFINITIES
@@ -3458,7 +3455,7 @@
   }
 
   /* ============================
-     ANSWER COLLECTION
+     COLLECT ANSWERS
   ============================ */
   function collectAnswers() {
     var ctx = {};
@@ -3466,13 +3463,13 @@
     var totalScore = 0;
     var scored = 0;
 
-    // CONTEXT (pillar 0)
+    // Pillar 0 — context
     $all(".gi-question[data-pillar='0']").forEach(function (q) {
       var el = q.querySelector("input, textarea, select");
       if (el && el.name) ctx[el.name] = el.value.trim();
     });
 
-    // SCORED QUESTIONS
+    // Scored pillars
     $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
       if (pid === "0") return;
@@ -3511,7 +3508,7 @@
   }
 
   /* ============================
-     PROGRESS
+     PROGRESS BAR
   ============================ */
   function updateProgressUI(n) {
     var max = 240;
@@ -3526,18 +3523,21 @@
      PILLAR CHIPS
   ============================ */
   function renderPillarChips() {
-    var c = $("#gi-pillars-list");
-    c.innerHTML = "";
+    var container = $("#gi-pillars-list");
+    if (!container) return;
+
+    container.innerHTML = "";
 
     PILLAR_DEFS.forEach(function (d) {
       if (d.id === "0") return;
 
-      var btn = document.createElement("button");
-      btn.className = "gi-pillar-chip";
-      btn.dataset.pillarId = d.id;
-      btn.innerHTML = `<span>${d.label}</span><span id="gi-pillar-status-${d.id}">0%</span>`;
-      btn.onclick = function () { goToPillar(d.id); };
-      c.appendChild(btn);
+      var chip = document.createElement("button");
+      chip.className = "gi-pillar-chip";
+      chip.dataset.pillarId = d.id;
+      chip.innerHTML = `<span>${d.label}</span><span id="gi-pillar-status-${d.id}">0%</span>`;
+      chip.addEventListener("click", function () { goToPillar(d.id); });
+
+      container.appendChild(chip);
     });
   }
 
@@ -3549,8 +3549,8 @@
       var ans = scores[d.id] ? scores[d.id].questions_answered : 0;
       var pct = total ? Math.round((ans / total) * 100) : 0;
 
-      var el = $("#gi-pillar-status-" + d.id);
-      if (el) el.textContent = pct + "%";
+      var statusEl = $("#gi-pillar-status-" + d.id);
+      if (statusEl) statusEl.textContent = pct + "%";
 
       var chip = document.querySelector(`.gi-pillar-chip[data-pillar-id="${d.id}"]`);
       if (chip) {
@@ -3566,7 +3566,7 @@
   function updateStepHeader() {
     var q = orderedQuestions[currentIndex];
     var pid = q.getAttribute("data-pillar");
-    var def = PILLAR_DEFS.find(d => d.id === pid);
+    var def = PILLAR_DEFS.find(x => x.id === pid);
 
     var title = $("#gi-pillar-title");
     var meta = $("#gi-pillar-meta");
@@ -3577,6 +3577,7 @@
     } else {
       var list = orderedQuestions.filter(x => x.getAttribute("data-pillar") === pid);
       var pos = list.indexOf(q) + 1;
+
       title.textContent = `Pillar ${pid} — ${def.label}`;
       meta.textContent = `Question ${pos} of ${list.length}`;
     }
@@ -3587,8 +3588,10 @@
 
   function goTo(idx) {
     if (idx < 0 || idx >= orderedQuestions.length) return;
+
     orderedQuestions[currentIndex].style.display = "none";
     orderedQuestions[idx].style.display = "block";
+
     currentIndex = idx;
     updateStepHeader();
   }
@@ -3604,7 +3607,7 @@
   ============================ */
   document.addEventListener("DOMContentLoaded", function () {
 
-    // count
+    // Count per pillar
     PILLAR_DEFS.forEach(d => PILLAR_TOTALS[d.id] = 0);
     $all(".gi-question[data-pillar]").forEach(q => {
       var pid = q.getAttribute("data-pillar");
@@ -3613,20 +3616,23 @@
 
     renderPillarChips();
 
+    // Stepper
     orderedQuestions = $all(".gi-question[data-pillar]");
-    orderedQuestions.forEach((q, i) => q.style.display = i ? "none" : "block");
-
+    orderedQuestions.forEach((q, i) => q.style.display = i === 0 ? "block" : "none");
     updateStepHeader();
 
-    // autosave
+    // Autosave events
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
-      .forEach(el => el.addEventListener("change", function () {
-        var p = collectAnswers();
-        updateProgressUI(p.scores.total_questions_answered);
-        updatePillarChips(p.scores.pillars);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
-      }));
+      .forEach(el =>
+        el.addEventListener("change", function () {
+          var p = collectAnswers();
+          updateProgressUI(p.scores.total_questions_answered);
+          updatePillarChips(p.scores.pillars);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+        })
+      );
 
+    // Buttons
     $("#gi-btn-prev").onclick = () => goTo(currentIndex - 1);
     $("#gi-btn-next").onclick = () => goTo(currentIndex + 1);
 
@@ -3638,13 +3644,14 @@
     $("#gi-btn-clear").onclick = function () {
       localStorage.removeItem(STORAGE_KEY);
       document.getElementById("gtm-intel-form").reset();
-      $("#gi-footer-status").textContent = "Cleared.";
       updateProgressUI(0);
+      $("#gi-footer-status").textContent = "Cleared.";
     };
 
     $("#gi-btn-submit").onclick = function () {
       var p = collectAnswers();
       $("#gi-footer-status").textContent = "Submitting...";
+
       fetch("https://hook.make.com/REPLACE_WEBHOOK", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
