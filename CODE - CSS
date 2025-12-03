@@ -2246,3 +2246,218 @@ input[type="range"]::-moz-range-track {
   transform: translateY(-50%);
   width: 80px;
 }
+
+/* CLARITY + DIAMOND STORYTELLING TUNING */
+
+.home-section .clarity-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 22px;
+}
+
+.home-section .clarity-list li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(15,23,42,0.9);
+}
+
+.home-section .clarity-list strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.home-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 26px;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+/* ===========================================================
+   STORY BLOCK — CLARITY + GRIP DIAMOND (CAUGIA STYLE)
+   =========================================================== */
+
+.story-section {
+  margin: clamp(80px, 10vw, 120px) 0;
+}
+
+.story-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(40px, 6vw, 70px);
+  align-items: center;
+  margin-bottom: clamp(80px, 8vw, 110px);
+}
+
+.story-row.reverse {
+  grid-template-columns: 1fr 1.2fr;
+}
+
+.story-column.text h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.story-column.text h4 {
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-weight: 700;
+  margin: 18px 0 10px;
+}
+
+.story-column.text p {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgba(15, 23, 42, 0.85);
+  margin-bottom: 16px;
+}
+
+.story-column.visual img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.06);
+  display: block;
+}
+
+
+/* ===========================================================
+   RESPONSIVE — KEEP THE CAUGIA CALMNESS
+   =========================================================== */
+
+@media (max-width: 1024px) {
+
+  .story-row,
+  .story-row.reverse {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .story-column.visual {
+    order: -1; /* Foto boven tekst */
+  }
+
+  .story-section {
+    margin: 60px 0;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .story-column.text h2 {
+    font-size: 1.65rem;
+  }
+
+  .story-column.text p {
+    font-size: 0.98rem;
+  }
+
+  .story-row {
+    gap: 30px;
+  }
+
+  .story-column.visual img {
+    border-radius: 14px;
+  }
+}
+
+/* ===========================================================
+   STORY BLOCK — FIXES: SPACING + BLUE HEADINGS
+   =========================================================== */
+
+/* TITLES IN CAUGIA BLUE */
+.story-column.text h2 {
+  color: var(--blue); /* exact hetzelfde blauw als al je H2’s */
+}
+
+/* Paragraph spacing consistent houden */
+.story-column.text p:last-child {
+  margin-bottom: 0;
+}
+
+/* LESS SPACE BETWEEN THE TWO BLOCKS */
+.story-row {
+  margin-bottom: clamp(40px, 5vw, 60px); /* was 80–110px → veel rustiger nu */
+}
+
+/* Top & bottom margins van hele section minder groot */
+.story-section {
+  margin: clamp(60px, 8vw, 100px) 0; /* iets compacter */
+}
+
+/* On mobile nóg iets compacter */
+@media (max-width: 640px) {
+  .story-row {
+    margin-bottom: 40px;
+  }
+
+  .story-section {
+    margin: 50px 0;
+  }
+}
+
+/* ===========================================================
+   STORY BLOCK IMAGE RESPONSIVENESS
+   =========================================================== */
+
+.story-img img {
+  width: 100%;
+  height: auto;
+  max-width: 560px;        /* perfect formaat voor jouw layout */
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .story-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .story-img img {
+    max-width: 100%;
+  }
+}
+
+/* ===========================================================
+   STORY BLOCK — PERFECT FORCE ALIGNMENT
+   =========================================================== */
+
+.story-forces {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.story-forces li {
+  display: grid;
+  grid-template-columns: 140px 1fr;  /* labels exact uitgelijnd */
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.story-forces li strong {
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;     /* labels strak rechts uitlijnen voor orde */
+}
+
+/* Mobile stacked layout */
+@media (max-width: 600px) {
+  .story-forces li {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  
+  .story-forces li strong {
+    text-align: left;
+    margin-bottom: 2px;
+  }
+}
