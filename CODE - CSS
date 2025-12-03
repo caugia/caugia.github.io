@@ -1,15 +1,18 @@
 
+
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v7.4
-   Calm • Professional • Systematic • Enterprise-grade
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   Calm • Professional • Systematic • Enterprise grade
+   BLOCK 1 — Root, Reset, Layout, Header, Nav, Footer
    =========================================================== */
 
 
 /* -----------------------------------------------------------
-   ROOT VARIABLES
+   1. ROOT VARIABLES
    ----------------------------------------------------------- */
 
 :root {
+  /* Core colors */
   --ink: #0b132b;
   --blue: #0046A5;
   --navy: #002A5C;
@@ -20,19 +23,26 @@
   --bg-light: #f9fafc;
   --border: rgba(0, 0, 0, 0.08);
 
+  /* Layout */
   --header-h: 64px;
   --maxw: 1180px;
 
+  /* Visuals */
   --radius: 12px;
   --transition: 0.22s ease;
+
+  /* Typography */
+  --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 
 /* -----------------------------------------------------------
-   RESET
+   2. RESET
    ----------------------------------------------------------- */
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,6 +50,7 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
   overflow-y: scroll;
 }
 
@@ -47,22 +58,47 @@ body {
   min-height: 100%;
   background: #fff;
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
-img {
+img,
+picture,
+video,
+canvas,
+svg {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus zichtbaarheid voor toetsenbordgebruikers */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
 
 /* -----------------------------------------------------------
-   LAYOUT HELPERS
+   3. LAYOUT HELPERS
    ----------------------------------------------------------- */
 
 .container {
@@ -76,18 +112,39 @@ main {
 }
 
 main .wrap {
-  padding: clamp(80px, 8vw, 96px)
-           clamp(18px, 3vw, 24px)
-           clamp(64px, 7vw, 80px);
+  padding:
+    clamp(80px, 8vw, 96px)
+    clamp(18px, 3vw, 24px)
+    clamp(64px, 7vw, 80px);
 }
 
 section {
   margin-bottom: 64px;
 }
 
+/* Simpele stack helper voor verticale spacing */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Utility om tekst te verbergen maar wel voor screenreaders te bewaren */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 
 /* -----------------------------------------------------------
-   HEADER
+   4. HEADER STRUCTURE
    ----------------------------------------------------------- */
 
 header {
@@ -116,7 +173,7 @@ header .inner {
 
 
 /* -----------------------------------------------------------
-   BRAND / LOGO
+   5. BRANDING
    ----------------------------------------------------------- */
 
 a.brand {
@@ -142,7 +199,7 @@ a.brand {
 
 
 /* -----------------------------------------------------------
-   DESKTOP NAV
+   6. DESKTOP NAVIGATION
    ----------------------------------------------------------- */
 
 nav.nav-desktop {
@@ -185,7 +242,7 @@ nav.nav-desktop a.active::after {
   margin-left: 8px;
 }
 
-/* Contact CTA — altijd witte tekst, geen underline */
+/* Contact CTA altijd wit, zonder underline */
 nav.nav-desktop a.cta {
   color: #fff !important;
 }
@@ -197,7 +254,7 @@ nav.nav-desktop a.cta::after {
 
 
 /* -----------------------------------------------------------
-   CTA BUTTONS
+   7. CTA BUTTONS
    ----------------------------------------------------------- */
 
 .cta {
@@ -242,9 +299,14 @@ nav.nav-desktop a.cta::after {
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
+.cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 
 /* -----------------------------------------------------------
-   MOBILE NAV
+   8. MOBILE NAVIGATION
    ----------------------------------------------------------- */
 
 .menu-toggle {
@@ -309,687 +371,27 @@ nav.nav-mobile.open {
   display: flex;
 }
 
+
+/* Mobile breekpunt voor navigatie */
+
 @media (max-width: 720px) {
   nav.nav-desktop {
     display: none;
   }
+
   .menu-toggle {
     display: inline-flex;
   }
-}
-
-
-/* ===========================================================
-   BLOCK 2 — GENERIC COMPONENTS / CARDS / SECTIONS / GRIDS
-   Calm, consistent basis voor alle pagina's
-   =========================================================== */
-
-/* Badges (labeltjes boven kaarten) */
-
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  border-radius: 999px;
-  margin-bottom: 10px;
-}
-
-.badge-free {
-  background: var(--silver);
-  color: var(--ink);
-}
-
-.badge-flagship {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.badge-retainer {
-  background: #E6EDF6;
-  color: var(--blue);
-}
-
-.badge-module {
-  background: #F1F2F4;
-  color: var(--ink);
-}
-
-
-/* Typography */
-
-h1 {
-  font-size: clamp(2.2rem, 4vw, 2.9rem);
-  font-weight: 800;
-  color: var(--blue);
-  margin-bottom: clamp(14px, 2vw, 22px);
-  line-height: 1.08;
-}
-
-h2 {
-  font-size: clamp(1.4rem, 2.4vw, 1.65rem);
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--blue);
-  line-height: 1.25;
-}
-
-h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-p {
-  font-size: clamp(1rem, 1.4vw, 1.06rem);
-  line-height: 1.7;
-  color: rgba(15, 23, 42, 0.88);
-}
-
-.page-intro {
-  max-width: 720px;
-  margin-bottom: 32px;
-}
-
-.page-intro p {
-  color: rgba(15, 23, 42, 0.78);
-}
-
-.section-heading {
-  margin-bottom: 16px;
-}
-
-.section-body {
-  max-width: 760px;
-  color: rgba(15, 23, 42, 0.84);
-}
-
-
-/* Generic card (basis voor veel blokken) */
-
-.card {
-  background: #fff;
-  border-radius: var(--radius);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  padding: clamp(18px, 2vw, 22px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-  transition:
-    box-shadow var(--transition),
-    transform var(--transition),
-    border-color var(--transition),
-    background var(--transition);
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(15, 23, 42, 0.1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-}
-
-.card h3 {
-  font-size: clamp(1.05rem, 1.4vw, 1.15rem);
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.card p {
-  font-size: 0.98rem;
-  color: rgba(15, 23, 42, 0.85);
-}
-
-
-/* Generic homepage sections */
-
-.home-section {
-  margin-bottom: clamp(56px, 8vw, 96px);
-}
-
-.home-section-line {
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
-  padding-top: clamp(24px, 4vw, 40px);
-  margin-top: clamp(10px, 2vw, 20px);
-}
-
-
-/* Generic two-column split */
-
-.home-split {
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  gap: clamp(28px, 4vw, 40px);
-  align-items: start;
-}
-
-
-/* 3-koloms grid (Score / Report / Partnership, Resources) */
-
-.home-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 26px);
-  margin-top: 24px;
-}
-
-/* Modules-grid (12 intelligence modules / resource-kaartjes) */
-
-.home-modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2.5vw, 20px);
-  margin-top: 22px;
-}
-
-.home-module {
-  text-decoration: none;
-  display: block;
-}
-
-.home-module h3 {
-  font-size: 1.04rem;
-  margin-bottom: 4px;
-  color: var(--ink);
-}
-
-.home-module p {
-  font-size: 0.9rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-.module-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(15, 23, 42, 0.7);
-  margin-bottom: 4px;
-}
-
-.home-modules-cta {
-  margin-top: 20px;
-}
-
-
-/* Resources-rij op homepage */
-
-.home-resource h3 {
-  margin-bottom: 6px;
-  font-size: 1.12rem;
-  color: var(--ink);
-}
-
-.home-resource p {
-  font-size: 0.95rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-
-/* Clarity before speed / GRIP Diamond splits */
-
-.clarity-split {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(32px, 5vw, 48px);
-  align-items: center;
-}
-
-.diamond-split {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(32px, 5vw, 48px);
-  align-items: center;
-}
-
-.clarity-image img,
-.diamond-image img {
-  width: clamp(260px, 36vw, 520px);
-  height: auto;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.08);
-}
-
-
-/* Collapse splits op kleinere schermen */
-
-@media (max-width: 720px) {
-  .clarity-split,
-  .diamond-split,
-  .home-split {
-    grid-template-columns: 1fr;
-    gap: clamp(24px, 4vw, 32px);
-  }
-
-  .clarity-image,
-  .diamond-image {
-    order: 2;
-  }
-}
-
-
-/* ===========================================================
-   BLOCK 3 — HOMEPAGE HERO + GRIP DIAMOND
-   =========================================================== */
-
-.home-hero {
-  margin-bottom: 96px;
-}
-
-.home-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-  gap: 48px;
-  align-items: center;
-}
-
-.home-hero-copy {
-  margin-top: -32px;
-}
-
-.home-hero-copy .kicker {
-  font-size: 0.9rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
-  margin-bottom: 12px;
-}
-
-.home-hero-copy h1 {
-  font-size: 2.85rem;
-  line-height: 1.08;
-  margin-bottom: 16px;
-}
-
-.hero-lead {
-  font-size: 1.08rem;
-  line-height: 1.65;
-  color: rgba(15, 23, 42, 0.86);
-  max-width: 34rem;
-  margin-bottom: 20px;
-}
-
-.hero-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.hero-footnote {
-  font-size: 0.9rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-
-/* Right column wrapper */
-
-.home-hero-visual {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  width: 135% !important;
-  transform-origin: left center;
-  transform: translateX(-28%) !important;
-  border-radius: 22px;
-  padding: 24px 26px 36px;
-  background: linear-gradient(135deg, #f9fafc 0%, #f3f6ff 100%);
-  border: 1px solid rgba(15,23,42,0.05);
-  box-shadow: 0 12px 38px rgba(15,23,42,0.06);
-}
-
-.hero-visual-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.75fr);
-  gap: 22px;
-  align-items: center;
-}
-
-
-/* HEALTH CARD — Your GRIP health */
-
-.hero-health {
-  border-radius: 14px;
-  padding: 20px 18px 18px;
-  background: #ffffff;
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 8px 22px rgba(15,23,42,0.04);
-  height: 100%;
-}
-
-.hero-health-header {
-  margin-bottom: 12px;
-}
-
-.hero-health-label {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  color: rgba(15,23,42,0.65);
-}
-
-.hero-health-score {
-  font-size: 1.42rem;
-  font-weight: 700;
-}
-
-.hero-health-score span:last-child {
-  font-size: 0.88rem;
-  color: rgba(75,85,99,1);
-  margin-left: 2px;
-}
-
-
-/* Bars */
-
-.hero-health-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.hero-health-row {
-  display: grid;
-  grid-template-columns: 95px minmax(0, 1fr) auto;
-  column-gap: 20px;
-  align-items: center;
-  font-size: 0.92rem;
-}
-
-.hero-health-name {
-  white-space: nowrap;
-  color: rgba(55,65,81,1);
-}
-
-.hero-health-bar {
-  width: 100%;
-  height: 4px;               /* dunne rail */
-  border-radius: 999px;
-  background: #E5E7EB;
-  overflow: hidden;
-}
-
-.hero-health-bar span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--blue), var(--accent));
-  transition: width 0.3s ease;
-}
-
-.hero-health-value {
-  font-size: 0.82rem;
-  color: rgba(31,41,55,1);
-}
-
-
-/* Sliders — Caugia GRIP sliders in kaart */
-
-.hero-health-sliders {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(15,23,42,0.06);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 14px;
-}
-
-.hero-health-slider {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.85rem;
-}
-
-.hero-health-slider label {
-  color: rgba(75,85,99,1);
-}
-
-/* Rail (smal, lichtgrijs, afgerond) */
-.hero-health-slider input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-  cursor: pointer;
-  margin: 0;
-}
-
-/* Track */
-.hero-health-slider input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-}
-.hero-health-slider input[type="range"]::-moz-range-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #E5E7EB;
-}
-
-/* Thumb — blauwe dot met witte ring */
-.hero-health-slider input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #0046A5;                  /* inner dot */
-  border: 4px solid #ffffff;            /* witte ring */
-  margin-top: -8px;                     /* centreren op 4px rail */
-}
-
-.hero-health-slider input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #0046A5;
-  border: 4px solid #ffffff;
-  box-shadow: 0 0 0 3px rgba(0,70,165,0.18);
-}
-
-
-/* Archetype in kaart */
-
-.hero-archetype {
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(15,23,42,0.06);
-  text-align: left;
-}
-
-.hero-archetype .archetype-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 6px;
-}
-
-.hero-archetype .archetype-desc {
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: rgba(75,85,99,1);
-  max-width: 420px;
-}
-
-
-/* DIAMOND CARD — GRIP Diamond raster */
-
-.diamond-card {
-  position: relative;
-  border-radius: 16px;
-  background: #ffffff;
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 10px 28px rgba(15,23,42,0.05);
-  height: 100%;
-  padding: 28px 80px 36px;
-}
-
-.diamond-title {
-  font-size: 0.88rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
-  color: rgba(15,23,42,0.55);
-  margin-bottom: 18px;
-}
-
-.diamond-canvas {
-  position: relative;
-  height: 340px !important;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-.diamond-svg {
-  width: 100%;
-  max-width: 340px !important;
-  height: auto !important;
-}
-
-/* Labels rond de diamond */
-
-.diamond-label {
-  position: absolute;
-  font-size: 0.92rem;
-  font-weight: 400;
-  color: rgba(15, 23, 42, 0.9);
-  white-space: nowrap;
-}
-
-.diamond-label-top {
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-bottom {
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.diamond-label-left,
-.diamond-label-right {
-  top: 50%;
-  left: 50%;
-}
-
-.diamond-label-left {
-  transform: translate(-260%, -50%);
-}
-
-.diamond-label-right {
-  transform: translate(100%, -50%);
-}
-
-
-/* ===========================================================
-   BLOCK 4 — RESPONSIVE RULES + FOOTER + RANGE SAFEGUARD
-   =========================================================== */
-
-@media (max-width: 1280px) {
-  main .wrap {
-    padding: clamp(56px, 6vw, 72px) 20px;
-  }
-
-  .home-hero-grid {
-    gap: clamp(32px, 4vw, 48px);
-  }
-
-  .home-hero-visual {
-    transform: translateX(-18%) !important;
-    padding: 26px 24px 36px;
-  }
-}
-
-@media (max-width: 1024px) {
-
-  .home-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .home-hero-copy {
-    margin-top: 0;
-  }
-
-  .home-hero-copy h1 {
-    font-size: clamp(2.1rem, 5vw, 2.45rem);
-  }
-
-  .hero-visual-grid {
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-
-  .home-hero-visual {
-    width: 100% !important;
-    transform: none !important;
-    padding: 24px;
-  }
-
-  .home-grid-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .home-modules-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
 
   header .inner {
     padding: 14px 18px;
   }
-
-  .home-grid-3,
-  .home-modules-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-hero {
-    margin-bottom: 72px;
-  }
-
-  .home-hero-visual {
-    padding: 20px 18px 28px;
-  }
-}
-
-@media (max-width: 480px) {
-
-  main .wrap {
-    padding: 56px 16px 56px;
-  }
-
-  .hero-cta-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .home-hero-visual {
-    padding: 18px 16px 20px;
-  }
-
-  .diamond-label-right {
-    transform: translate(40%, -50%);
-  }
-
-  .diamond-label-left {
-    transform: translate(-250%, -50%);
-  }
 }
 
 
-/* Footer */
+/* -----------------------------------------------------------
+   9. FOOTER
+   ----------------------------------------------------------- */
 
 footer {
   border-top: 1px solid rgba(15, 23, 42, 0.06);
@@ -1035,23 +437,921 @@ footer {
   }
 }
 
+/* ===========================================================
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 2 — Typography, Cards, Grids, Generic Components
+   Calm • Professional • Consistent • Enterprise-grade
+   =========================================================== */
 
-/* Global range track safeguard (voorkomt rare themes) */
+
+/* -----------------------------------------------------------
+   1. TYPOGRAPHY
+   ----------------------------------------------------------- */
+
+h1 {
+  font-size: clamp(2.2rem, 4vw, 2.9rem);
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: clamp(14px, 2vw, 22px);
+  line-height: 1.08;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.4vw, 1.65rem);
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: clamp(1rem, 1.35vw, 1.06rem);
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.88);
+  margin-bottom: 16px;
+}
+
+.page-intro {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+
+.page-intro p {
+  color: rgba(15, 23, 42, 0.78);
+}
+
+.section-heading {
+  margin-bottom: 16px;
+}
+
+.section-body {
+  max-width: 760px;
+  color: rgba(15, 23, 42, 0.84);
+}
+
+
+/* -----------------------------------------------------------
+   2. BADGES (labels boven kaarten)
+   ----------------------------------------------------------- */
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.badge-free {
+  background: var(--silver);
+  color: var(--ink);
+}
+
+.badge-flagship {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.badge-retainer {
+  background: #E6EDF6;
+  color: var(--blue);
+}
+
+.badge-module {
+  background: #F1F2F4;
+  color: var(--ink);
+}
+
+
+/* -----------------------------------------------------------
+   3. GENERIC CARD
+   ----------------------------------------------------------- */
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  padding: clamp(18px, 2vw, 22px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.card h3 {
+  color: var(--ink);
+}
+
+.card p {
+  font-size: 0.98rem;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+
+/* -----------------------------------------------------------
+   4. GENERIC SECTIONS (homepage + overal)
+   ----------------------------------------------------------- */
+
+.home-section {
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+
+.home-section-line {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  padding-top: clamp(24px, 4vw, 40px);
+  margin-top: clamp(10px, 2vw, 20px);
+}
+
+
+/* -----------------------------------------------------------
+   5. GRID SYSTEMS — 2, 3, 4 kolommen
+   ----------------------------------------------------------- */
+
+.home-split {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: clamp(28px, 4vw, 40px);
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 32px);
+  }
+}
+
+
+/* 3-column grid: Score / Report / Partnership / Resources */
+
+.home-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 26px);
+  margin-top: 24px;
+}
+
+@media (max-width: 1024px) {
+  .home-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .home-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Modules grid (resources + intelligence modules) */
+
+.home-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.5vw, 20px);
+  margin-top: 22px;
+}
+
+@media (max-width: 1024px) {
+  .home-modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .home-modules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   6. MODULE + RESOURCE CARDS
+   ----------------------------------------------------------- */
+
+.home-module {
+  text-decoration: none;
+  display: block;
+}
+
+.home-module h3 {
+  font-size: 1.04rem;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.home-module p {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+.module-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 4px;
+}
+
+.home-modules-cta {
+  margin-top: 20px;
+}
+
+.home-resource h3 {
+  margin-bottom: 6px;
+  font-size: 1.12rem;
+  color: var(--ink);
+}
+
+.home-resource p {
+  font-size: 0.95rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+/* -----------------------------------------------------------
+   7. CLARITY BEFORE SPEED / DIAMOND SPLIT
+   ----------------------------------------------------------- */
+
+.clarity-split,
+.diamond-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 5vw, 48px);
+  align-items: center;
+}
+
+.diamond-split {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.clarity-image img,
+.diamond-image img {
+  width: clamp(260px, 36vw, 520px);
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 720px) {
+  .clarity-split,
+  .diamond-split {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 32px);
+  }
+
+  .clarity-image,
+  .diamond-image {
+    order: 2; /* op mobiel komt tekst boven, beeld onder */
+  }
+}
+
+/* ===========================================================
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 3 — Homepage Hero, GRIP Health, GRIP Diamond
+   Calm • Professional • Structured • Premium
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   1. HOMEPAGE HERO — GRID, TEXT, VISUALS
+   ----------------------------------------------------------- */
+
+.home-hero {
+  margin-bottom: clamp(72px, 10vw, 96px);
+}
+
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: clamp(32px, 5vw, 48px);
+  align-items: center;
+}
+
+.home-hero-copy {
+  margin-top: -18px;
+}
+
+.home-hero-copy .kicker {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.65);
+  margin-bottom: 12px;
+}
+
+.home-hero-copy h1 {
+  font-size: clamp(2.2rem, 4vw, 2.85rem);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.hero-lead {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: rgba(15, 23, 42, 0.86);
+  max-width: 34rem;
+  margin-bottom: 20px;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hero-footnote {
+  font-size: 0.9rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+/* -----------------------------------------------------------
+   2. HERO VISUAL BLOCK WRAPPER
+   ----------------------------------------------------------- */
+
+.home-hero-visual {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 3vw, 32px);
+  width: 135%;
+  transform-origin: left center;
+  transform: translateX(-28%);
+  border-radius: 22px;
+  padding: 24px 26px 36px;
+  background: linear-gradient(135deg, #f9fafc 0%, #f3f6ff 100%);
+  border: 1px solid rgba(15,23,42,0.05);
+  box-shadow: 0 12px 38px rgba(15,23,42,0.06);
+}
+
+.hero-visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.75fr);
+  gap: 22px;
+  align-items: center;
+}
+
+
+/* -----------------------------------------------------------
+   3. GRIP HEALTH CARD — SCORE + BARS
+   ----------------------------------------------------------- */
+
+.hero-health {
+  border-radius: 14px;
+  padding: 20px 18px 18px;
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: 0 8px 22px rgba(15,23,42,0.04);
+  height: 100%;
+}
+
+.hero-health-header {
+  margin-bottom: 12px;
+}
+
+.hero-health-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  color: rgba(15,23,42,0.65);
+}
+
+.hero-health-score {
+  font-size: 1.42rem;
+  font-weight: 700;
+}
+
+.hero-health-score span:last-child {
+  font-size: 0.88rem;
+  color: rgba(75,85,99,1);
+  margin-left: 2px;
+}
+
+
+/* HEALTH BARS */
+
+.hero-health-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.hero-health-row {
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr) auto;
+  column-gap: 20px;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.hero-health-name {
+  white-space: nowrap;
+  color: rgba(55,65,81,1);
+}
+
+.hero-health-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  overflow: hidden;
+}
+
+.hero-health-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--accent));
+  transition: width 0.3s ease;
+}
+
+.hero-health-value {
+  font-size: 0.82rem;
+  color: rgba(31,41,55,1);
+}
+
+
+/* -----------------------------------------------------------
+   4. SLIDERS — GRIP DIMENSIONS
+   ----------------------------------------------------------- */
+
+.hero-health-sliders {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(15,23,42,0.06);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 14px;
+}
+
+.hero-health-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.hero-health-slider label {
+  color: rgba(75,85,99,1);
+}
+
+/* Rail */
+.hero-health-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Track */
+.hero-health-slider input[type="range"]::-webkit-slider-runnable-track,
+.hero-health-slider input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+/* Thumb — blauwe dot + witte ring */
+.hero-health-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0046A5;
+  border: 4px solid #ffffff;
+  margin-top: -8px;
+}
+
+.hero-health-slider input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0046A5;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(0,70,165,0.18);
+}
+
+
+/* -----------------------------------------------------------
+   5. ARCHETYPE OUTCOME
+   ----------------------------------------------------------- */
+
+.hero-archetype {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(15,23,42,0.06);
+  text-align: left;
+}
+
+.hero-archetype .archetype-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.hero-archetype .archetype-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(75,85,99,1);
+  max-width: 420px;
+}
+
+
+/* -----------------------------------------------------------
+   6. DIAMOND CARD — GRIP Diamond Raster
+   ----------------------------------------------------------- */
+
+.diamond-card {
+  position: relative;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+  height: 100%;
+  padding: 28px 80px 36px;
+}
+
+.diamond-title {
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(15,23,42,0.55);
+  margin-bottom: 18px;
+}
+
+.diamond-canvas {
+  position: relative;
+  height: 340px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.diamond-svg {
+  width: 100%;
+  max-width: 360px !important; /* groter dan jouw vorige versie */
+  height: auto;
+}
+
+
+/* DIAMOND LABELS */
+
+.diamond-label {
+  position: absolute;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: rgba(15, 23, 42, 0.9);
+  white-space: nowrap;
+}
+
+.diamond-label-top {
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-bottom {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-label-left {
+  top: 50%;
+  left: 50%;
+  transform: translate(-260%, -50%);
+}
+
+.diamond-label-right {
+  top: 50%;
+  left: 50%;
+  transform: translate(110%, -50%);
+}
+
+
+/* -----------------------------------------------------------
+   7. RESPONSIVE RULES (BLOCK 3 ONLY)
+   ----------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+  .home-hero-visual {
+    transform: translateX(-18%);
+    padding: 26px 24px 36px;
+  }
+}
+
+@media (max-width: 1024px) {
+
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .home-hero-copy {
+    margin-top: 0;
+  }
+
+  .home-hero-copy h1 {
+    font-size: clamp(2.1rem, 5vw, 2.45rem);
+  }
+
+  .hero-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .home-hero-visual {
+    width: 100%;
+    transform: none;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-hero {
+    margin-bottom: 72px;
+  }
+  
+  .home-hero-visual {
+    padding: 20px 18px 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero-visual {
+    padding: 18px 16px 20px;
+  }
+
+  .diamond-label-right {
+    transform: translate(40%, -50%);
+  }
+
+  .diamond-label-left {
+    transform: translate(-240%, -50%);
+  }
+}
+
+/* ===========================================================
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 4 — Global Responsive Rules + Safeguards
+   Calm • Predictable • Zoom-Proof • Mobile-First
+   =========================================================== */
+
+
+/* -----------------------------------------------------------
+   1. GLOBAL RESPONSIVE TUNING (largest → smallest)
+   ----------------------------------------------------------- */
+
+/* ---------------------------------------
+   ≤ 1280px — Laptop optimisation
+---------------------------------------- */
+@media (max-width: 1280px) {
+
+  main .wrap {
+    padding: clamp(56px, 6vw, 72px) 20px;
+  }
+
+  .home-hero-visual {
+    transform: translateX(-18%);
+    padding: 26px 24px 36px;
+  }
+}
+
+
+/* ---------------------------------------
+   ≤ 1024px — Tablet (horizontal)
+---------------------------------------- */
+@media (max-width: 1024px) {
+
+  /* Generic grids (applies everywhere) */
+  .home-grid-3,
+  .home-modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* HERO */
+  .home-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .home-hero-copy {
+    margin-top: 0;
+  }
+
+  .home-hero-copy h1 {
+    font-size: clamp(2.1rem, 5vw, 2.45rem);
+  }
+
+  .hero-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .home-hero-visual {
+    width: 100%;
+    transform: none;
+    padding: 24px;
+  }
+}
+
+
+/* ---------------------------------------
+   ≤ 720px — Tablet vertical / Large mobile
+---------------------------------------- */
+@media (max-width: 720px) {
+
+  /* Navigation moved to Block 1 (for clarity) */
+
+  /* Structure */
+  main .wrap {
+    padding: clamp(56px, 8vw, 64px) 18px;
+  }
+
+  /* Grids collapse */
+  .home-grid-3,
+  .home-modules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero */
+  .home-hero {
+    margin-bottom: 72px;
+  }
+
+  .home-hero-visual {
+    padding: 20px 18px 28px;
+  }
+
+  /* Splits (clarity, diamond, homepage) */
+  .clarity-split,
+  .diamond-split,
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 32px);
+  }
+
+  /* Images come after text */
+  .clarity-image,
+  .diamond-image {
+    order: 2;
+  }
+}
+
+
+/* ---------------------------------------
+   ≤ 600px — Small mobile refinements
+---------------------------------------- */
+@media (max-width: 600px) {
+
+  /* Story forces list (Block 8) */
+  .story-forces li {
+    grid-template-columns: 1fr;
+  }
+
+  .story-forces li strong {
+    text-align: left;
+    margin-bottom: 2px;
+  }
+}
+
+
+/* ---------------------------------------
+   ≤ 480px — Smallest mobile (iPhone SE etc.)
+---------------------------------------- */
+@media (max-width: 480px) {
+
+  main .wrap {
+    padding: 56px 16px 56px;
+  }
+
+  .hero-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-hero-visual {
+    padding: 18px 16px 20px;
+  }
+
+  /* Diamond label adjustments */
+  .diamond-label-right {
+    transform: translate(40%, -50%);
+  }
+
+  .diamond-label-left {
+    transform: translate(-240%, -50%);
+  }
+}
+
+
+/* -----------------------------------------------------------
+   2. RANGE INPUT SAFEGUARD (Chrome & Safari)
+   -----------------------------------------------------------
+   Fixes UA-theme bugs where the OS attempts to recolor sliders.
+   ----------------------------------------------------------- */
 
 input[type="range"]::-webkit-slider-runnable-track {
   background: #E5E7EB !important;
 }
+
 input[type="range"]::-moz-range-track {
   background: #E5E7EB !important;
 }
 
 
+/* -----------------------------------------------------------
+   3. HARDENING AGAINST SYSTEM DARK MODE
+   (We do NOT enable dark mode unless you explicitly want it)
+   ----------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  /* We enforce light mode visuals to prevent forced inversion */
+  html, body {
+    background: #ffffff !important;
+    color-scheme: light !important;
+  }
+
+  /* Prevent Safari/Chrome from recoloring form controls */
+  input,
+  textarea,
+  select,
+  button {
+    color-scheme: light !important;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   4. EXTREME SMALL DEVICES (≤ 360px)
+   ≈ 2% of mobile traffic — worthwhile optimisation
+   ----------------------------------------------------------- */
+
+@media (max-width: 360px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .cta {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  .home-hero-copy h1 {
+    font-size: 2.1rem;
+  }
+
+  .diamond-svg {
+    max-width: 300px;
+  }
+}
+
 /* ===========================================================
-   BLOCK 5 — GTM CLARITY PATH + GTM MODULES
-   (homepage + modules-overzicht)
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 5 — GTM Clarity Path + GTM Modules
+   Calm • Enterprise • Clear • Structured
    =========================================================== */
 
-/* GTM CLARITY PATH — Equal Height + Bullets + CTA alignment */
+
+/* -----------------------------------------------------------
+   1. GTM CLARITY PATH — CARD STRUCTURE
+   ----------------------------------------------------------- */
 
 .home-product {
   display: flex;
@@ -1065,7 +1365,7 @@ input[type="range"]::-moz-range-track {
 }
 
 .home-product ul.service-features {
-  margin-top: 16px !important;
+  margin-top: 16px;
   margin-bottom: 0;
 }
 
@@ -1083,7 +1383,10 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 6px;
 }
 
-/* Labels en titels binnen GTM-path kaarten */
+
+/* -----------------------------------------------------------
+   2. LABELS / TITLES / ONE-LINERS
+   ----------------------------------------------------------- */
 
 .service-label {
   font-size: 0.85rem;
@@ -1100,17 +1403,28 @@ input[type="range"]::-moz-range-track {
   color: var(--ink);
 }
 
+.service-one-liner {
+  font-size: 0.98rem;
+  color: rgba(15,23,42,0.85);
+  margin-bottom: 14px;
+}
+
 .service-body {
   margin-bottom: 14px;
   color: rgba(15, 23, 42, 0.86);
 }
+
+
+/* -----------------------------------------------------------
+   3. FEATURE LISTS
+   ----------------------------------------------------------- */
 
 .service-features {
   margin-top: 10px;
   margin-bottom: 0;
   padding-left: 18px;
   font-size: 0.92rem;
-  color: rgba(55,65,81,0.95);
+  color: rgba(55, 65, 81, 0.95);
 }
 
 .service-features li {
@@ -1119,7 +1433,40 @@ input[type="range"]::-moz-range-track {
 }
 
 
-/* 12 GTM MODULES BLOK (Services / Resources) */
+/* -----------------------------------------------------------
+   4. CHECKMARK LISTS (generic)
+   ----------------------------------------------------------- */
+
+.service-checks {
+  list-style: none;
+  margin-top: 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-checks li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 0.92rem;
+  color: rgba(15,23,42,0.85);
+  line-height: 1.55;
+}
+
+.service-checks li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+
+/* -----------------------------------------------------------
+   5. 12 GTM MODULES — GRID + CARDS
+   ----------------------------------------------------------- */
 
 .modules-card {
   margin-top: 24px;
@@ -1172,7 +1519,11 @@ input[type="range"]::-moz-range-track {
   color: rgba(75,85,99,1);
 }
 
-/* Responsief gedrag voor modules-blok */
+
+/* -----------------------------------------------------------
+   6. MODULES RESPONSIVE BEHAVIOUR
+   ----------------------------------------------------------- */
+
 @media (max-width: 1024px) {
   .modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1185,56 +1536,16 @@ input[type="range"]::-moz-range-track {
   }
 }
 
-.service-one-liner {
-  font-size: 0.98rem;
-  color: rgba(15,23,42,0.85);
-  margin-bottom: 14px;
-}
-
-.service-cta-top {
-  margin-bottom: 18px;
-}
-
-.service-price span {
-  font-size: 0.85rem;
-  color: rgba(75, 85, 99, 1);
-}
-
-
-/* Checkmark-lijsten (algemeen, NIET de pricing-cards) */
-
-.service-checks {
-  list-style: none;
-  margin-top: 18px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.service-checks li {
-  position: relative;
-  padding-left: 24px;
-  font-size: 0.92rem;
-  color: rgba(15,23,42,0.85);
-}
-
-.service-checks li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--blue);
-  font-weight: 700;
-}
-
-
 /* ===========================================================
-   BLOCK 6 — SERVICES PRICING GRID + MARKETPLACE
-   (dit is de versie die nu goed werkt — niet aanpassen)
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 6 — Services Pricing Grid + Marketplace
+   Enterprise-grade • Clean • Structured • Consistent
    =========================================================== */
 
-/* SERVICES PRICING GRID — Caugia 2025 */
+
+/* -----------------------------------------------------------
+   1. SERVICES PRICING — GRID + CARDS
+   ----------------------------------------------------------- */
 
 .services-pricing {
   margin-top: 32px;
@@ -1247,7 +1558,7 @@ input[type="range"]::-moz-range-track {
   align-items: stretch;
 }
 
-/* Cards in services grid mogen NIET springen bij hover */
+/* Pricing cards must NEVER jump on hover */
 .service-card {
   display: flex;
   flex-direction: column;
@@ -1265,16 +1576,19 @@ input[type="range"]::-moz-range-track {
 .service-card:hover {
   border-color: rgba(15, 23, 42, 0.12);
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-  transform: none; /* override globale .card:hover */
 }
 
-/* Flagship highlight */
+/* Highlight card (flagship offer) */
 .service-card-flagship {
   border-width: 2px;
   border-color: var(--accent-soft);
 }
 
-/* Top pill labels */
+
+/* -----------------------------------------------------------
+   2. CARD LABELS (PILL STYLE)
+   ----------------------------------------------------------- */
+
 .service-pill {
   display: inline-flex;
   align-items: center;
@@ -1303,7 +1617,11 @@ input[type="range"]::-moz-range-track {
   background: #f1f2f4;
 }
 
-/* Titels en subtitels */
+
+/* -----------------------------------------------------------
+   3. TITLES, SUBTITLES, PRICING
+   ----------------------------------------------------------- */
+
 .service-title-main {
   font-size: 1.1rem;
   font-weight: 700;
@@ -1318,7 +1636,7 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 14px;
 }
 
-/* Prijs groter, rustig */
+/* Main price (prominent) */
 .service-price {
   font-size: 1.4rem;
   font-weight: 700;
@@ -1326,7 +1644,16 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 14px;
 }
 
-/* CTA blok vast, bullets eronder */
+.service-price span {
+  font-size: 0.85rem;
+  color: rgba(75, 85, 99, 1);
+}
+
+
+/* -----------------------------------------------------------
+   4. CTA AREA INSIDE THE CARD
+   ----------------------------------------------------------- */
+
 .service-cta {
   margin-bottom: 14px;
 }
@@ -1336,7 +1663,11 @@ input[type="range"]::-moz-range-track {
   justify-content: center;
 }
 
-/* Features met blauwe check icons */
+
+/* -----------------------------------------------------------
+   5. FEATURES INSIDE PRICING CARDS
+   ----------------------------------------------------------- */
+
 .service-features {
   list-style: none;
   margin: 0;
@@ -1363,7 +1694,11 @@ input[type="range"]::-moz-range-track {
   color: var(--blue);
 }
 
-/* Responsive: 2 kolommen op tablet, 1 op mobiel */
+
+/* -----------------------------------------------------------
+   6. RESPONSIVE — PRICING GRID
+   ----------------------------------------------------------- */
+
 @media (max-width: 1100px) {
   .services-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1377,7 +1712,9 @@ input[type="range"]::-moz-range-track {
 }
 
 
-/* MARKETPLACE SECTION — GRID + CARDS (CAUGIA STYLE) */
+/* -----------------------------------------------------------
+   7. MARKETPLACE — QUESTIONS + GRID
+   ----------------------------------------------------------- */
 
 .marketplace-section {
   margin-top: 80px;
@@ -1397,14 +1734,17 @@ input[type="range"]::-moz-range-track {
   font-weight: 700;
 }
 
-/* GRID */
+
+/* -----------------------------------------------------------
+   MARKETPLACE GRID + CARDS
+   ----------------------------------------------------------- */
+
 .marketplace-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 28px;
 }
 
-/* CARDS */
 .marketplace-card {
   background: #ffffff;
   padding: 22px 22px 28px;
@@ -1444,7 +1784,11 @@ input[type="range"]::-moz-range-track {
   line-height: 1.5;
 }
 
-/* BULLET LIST */
+
+/* -----------------------------------------------------------
+   MARKETPLACE BULLET LIST
+   ----------------------------------------------------------- */
+
 .mp-list {
   list-style: none;
   margin: 0 0 20px;
@@ -1469,14 +1813,22 @@ input[type="range"]::-moz-range-track {
   font-weight: 700;
 }
 
-/* CTA */
+
+/* -----------------------------------------------------------
+   MARKETPLACE CTA AREA
+   ----------------------------------------------------------- */
+
 .mp-cta {
   margin-top: auto;
   display: inline-block;
   text-align: center;
 }
 
-/* Responsive marketplace */
+
+/* -----------------------------------------------------------
+   8. RESPONSIVE — MARKETPLACE
+   ----------------------------------------------------------- */
+
 @media (max-width: 1200px) {
   .marketplace-grid,
   .marketplace-questions {
@@ -1491,7 +1843,6 @@ input[type="range"]::-moz-range-track {
   }
 }
 
-/* Marketplace spacing refinement */
 .marketplace-section {
   margin-top: 32px;
 }
@@ -1500,7 +1851,11 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 20px;
 }
 
-/* Services hero refinements — GRIP headline */
+
+/* -----------------------------------------------------------
+   9. SERVICE HERO — INTRO BLOCK ABOVE PRICING
+   ----------------------------------------------------------- */
+
 .services-hero h1 {
   margin-bottom: 16px;
 }
@@ -1516,9 +1871,13 @@ input[type="range"]::-moz-range-track {
   color: var(--navy);
 }
 
-/* GRIP Journey Section */
+
+/* -----------------------------------------------------------
+   10. GRIP JOURNEY SECTION (context/story)
+   ----------------------------------------------------------- */
+
 .grip-journey {
-  text-align: left; /* consistent met jouw layout */
+  text-align: left;
   margin-top: 48px;
   margin-bottom: 32px;
 }
@@ -1533,60 +1892,27 @@ input[type="range"]::-moz-range-track {
   color: var(--ink);
 }
 
-/* Disable hover movement on all cards */
-.service-card:hover,
-.marketplace-card:hover,
-.card:hover {
-  transform: none !important;
-}
-
-/* FAQ SECTION */
-.faq-section {
-  margin-top: 48px;
-  margin-bottom: 48px;
-}
-
-.faq-section h2 {
-  margin-bottom: 24px;
-}
-
-.faq details {
-  border-bottom: 1px solid var(--border);
-  padding: 16px 0;
-}
-
-.faq summary {
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--ink);
-  list-style: none;
-}
-
-.faq summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq details p {
-  margin-top: 12px;
-  max-width: 720px;
-  line-height: 1.55;
-  color: var(--ink);
-}
-
 /* ===========================================================
-   CAUGIA — GTM SCORE V2
-   Calm • Enterprise • Structured
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 7 — GTM SCORE V2 (Form System + Results)
+   Calm • Structured • Accessible • Enterprise-grade
    =========================================================== */
 
-/* Global wrapper */
+
+/* -----------------------------------------------------------
+   1. GLOBAL WRAPPER
+   ----------------------------------------------------------- */
+
 .gtm-wrap {
   max-width: 820px;
   margin: 0 auto;
 }
 
-/* -----------------------------------------
-   HERO
------------------------------------------ */
+
+/* -----------------------------------------------------------
+   2. HERO SECTION (INTRO ABOVE QUESTIONS)
+   ----------------------------------------------------------- */
+
 .gtm-v2-hero {
   text-align: left;
   margin-bottom: 60px;
@@ -1614,9 +1940,11 @@ input[type="range"]::-moz-range-track {
   color: rgba(11,19,43,0.8);
 }
 
-/* -----------------------------------------
-   INTRO CARD
------------------------------------------ */
+
+/* -----------------------------------------------------------
+   3. INTRO CARD (BEFORE STARTING)
+   ----------------------------------------------------------- */
+
 .gtm-v2-intro-card {
   background: #fff;
   border: 1px solid rgba(0,0,0,0.06);
@@ -1643,9 +1971,11 @@ input[type="range"]::-moz-range-track {
   color: rgba(11,19,43,0.6);
 }
 
-/* -----------------------------------------
-   PROGRESS BAR
------------------------------------------ */
+
+/* -----------------------------------------------------------
+   4. PROGRESS BAR
+   ----------------------------------------------------------- */
+
 .gtm-v2-progress {
   margin-bottom: 26px;
 }
@@ -1671,124 +2001,33 @@ input[type="range"]::-moz-range-track {
   transition: width 0.32s ease;
 }
 
-/* -----------------------------------------
-   QUESTIONS
------------------------------------------ */
-.gtm-v2-question {
-  margin-bottom: 18px;
-}
 
-.gtm-v2-label {
-  font-size: 1.18rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-
-.gtm-v2-help {
-  font-size: 0.92rem;
-  color: rgba(11,19,43,0.6);
-}
-
-/* -----------------------------------------
-   OPTIONS
------------------------------------------ */
-.gtm-options .gtm-option {
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(11,19,43,0.12);
-  margin-bottom: 10px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.gtm-options .gtm-option.selected {
-  border-color: var(--blue);
-  background: #f6faff;
-  box-shadow: 0 0 0 3px rgba(0,70,165,0.1);
-}
-
-/* -----------------------------------------
-   TEXTAREA
------------------------------------------ */
-.gtm-textarea {
-  width: 100%;
-  min-height: 110px;
-  border-radius: 10px;
-  border: 1px solid rgba(11,19,43,0.15);
-  padding: 14px;
-  font-size: 1rem;
-}
-
-/* -----------------------------------------
-   NAVIGATION BUTTONS
------------------------------------------ */
-.gtm-v2-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 26px;
-}
-
-.gtm-btn-primary {
-  background: var(--blue);
-  color: #fff;
-  transition: background 0.2s;
-}
-
-.gtm-btn-primary:hover {
-  background: var(--navy);
-}
-
-.gtm-btn-secondary {
-  background: #f2f4f7;
-  color: var(--ink);
-}
-
-/* -----------------------------------------
-   HOW IT WORKS
------------------------------------------ */
-.gtm-v2-how {
-  margin-top: 80px;
-  max-width: 680px;
-}
-
-.gtm-v2-how h2 {
-  font-size: 1.55rem;
-  margin-bottom: 14px;
-  color: var(--blue);
-}
-
-.gtm-v2-how p {
-  margin-bottom: 16px;
-  color: rgba(11,19,43,0.78);
-}
-
-/* FIX: ensure only active step is shown */
-.gtm-step {
-  display: none !important;
-}
-
-.gtm-step.active {
-  display: block !important;
-}
-
-/* ===========================================================
-   GTM SCORE V2 — LAYOUT FIX
-   =========================================================== */
+/* -----------------------------------------------------------
+   5. GTM STEP LAYOUT (THE NEW CANONICAL VERSION)
+   ----------------------------------------------------------- */
 
 .gtm-step {
   display: none;
   margin-top: 32px;
 }
+
 .gtm-step.active {
   display: block;
 }
 
+
+/* -----------------------------------------------------------
+   6. QUESTION + HELP TEXT
+   ----------------------------------------------------------- */
+
+.gtm-v2-question,
 .gtm-question-label {
-  font-size: 1.15rem;
+  margin-bottom: 18px;
+}
+
+.gtm-question-label {
+  font-size: 1.18rem;
   font-weight: 600;
-  margin-bottom: 6px;
   color: var(--ink);
 }
 
@@ -1797,6 +2036,11 @@ input[type="range"]::-moz-range-track {
   color: rgba(15,23,42,0.7);
   margin-bottom: 18px;
 }
+
+
+/* -----------------------------------------------------------
+   7. ANSWER OPTIONS (MULTIPLE CHOICE)
+   ----------------------------------------------------------- */
 
 .gtm-options {
   display: flex;
@@ -1829,7 +2073,13 @@ input[type="range"]::-moz-range-track {
 .gtm-option.selected {
   border-color: var(--blue);
   background: #eef4ff;
+  box-shadow: 0 0 0 3px rgba(0,70,165,0.1);
 }
+
+
+/* -----------------------------------------------------------
+   8. TEXTAREA + INPUT FIELDS
+   ----------------------------------------------------------- */
 
 .gtm-textarea,
 .gtm-email,
@@ -1838,8 +2088,13 @@ input[type="range"]::-moz-range-track {
   padding: 14px;
   border: 1px solid rgba(15,23,42,0.15);
   border-radius: 10px;
-  margin-top: 10px;
   font-size: 1rem;
+  margin-top: 10px;
+  background: #fff;
+}
+
+.gtm-textarea {
+  min-height: 110px;
 }
 
 .gtm-field-row {
@@ -1851,6 +2106,11 @@ input[type="range"]::-moz-range-track {
 .two-cols > div {
   flex: 1;
 }
+
+
+/* -----------------------------------------------------------
+   9. NAVIGATION BUTTONS
+   ----------------------------------------------------------- */
 
 .gtm-nav-buttons {
   display: flex;
@@ -1869,6 +2129,11 @@ input[type="range"]::-moz-range-track {
 .gtm-btn-primary {
   background: var(--blue);
   color: #fff;
+  transition: background 0.2s;
+}
+
+.gtm-btn-primary:hover {
+  background: var(--navy);
 }
 
 .gtm-btn-secondary {
@@ -1876,13 +2141,21 @@ input[type="range"]::-moz-range-track {
   color: var(--ink);
 }
 
+
+/* -----------------------------------------------------------
+   10. ERROR STATE (VALIDATION)
+   ----------------------------------------------------------- */
+
 .gtm-error.visible {
   color: #d62828;
   font-size: 0.9rem;
   margin-top: 6px;
 }
 
-/* RESULT PAGE PREMIUM STYLES */
+
+/* -----------------------------------------------------------
+   11. RESULT PAGE — HERO
+   ----------------------------------------------------------- */
 
 .result-wrap {
   max-width: 820px;
@@ -1909,7 +2182,11 @@ input[type="range"]::-moz-range-track {
   line-height: 1.55;
 }
 
-/* SCORE CARD */
+
+/* -----------------------------------------------------------
+   12. SCORE CARD
+   ----------------------------------------------------------- */
+
 .score-display {
   background: #fff;
   border: 1px solid rgba(0,0,0,0.06);
@@ -1943,7 +2220,11 @@ input[type="range"]::-moz-range-track {
   font-size: 1rem;
 }
 
-/* REPORT STATUS */
+
+/* -----------------------------------------------------------
+   13. REPORT STATUS
+   ----------------------------------------------------------- */
+
 .report-status {
   margin-top: 40px;
   margin-bottom: 60px;
@@ -1962,7 +2243,11 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 12px;
 }
 
-/* PATTERN */
+
+/* -----------------------------------------------------------
+   14. PATTERN PLACEHOLDER
+   ----------------------------------------------------------- */
+
 .pattern-section h2 {
   font-size: 1.45rem;
   color: var(--ink);
@@ -1979,7 +2264,11 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 60px;
 }
 
-/* NEXT STEPS */
+
+/* -----------------------------------------------------------
+   15. NEXT STEPS
+   ----------------------------------------------------------- */
+
 .next-steps h2 {
   font-size: 1.45rem;
   color: var(--ink);
@@ -2005,7 +2294,11 @@ input[type="range"]::-moz-range-track {
   color: var(--ink);
 }
 
-/* CTA */
+
+/* -----------------------------------------------------------
+   16. RESULT PAGE CTA BLOCK
+   ----------------------------------------------------------- */
+
 .cta-block {
   text-align: center;
   margin-top: 50px;
@@ -2025,9 +2318,10 @@ input[type="range"]::-moz-range-track {
   text-decoration: underline;
 }
 
-/* ===========================================================
-   GRIP DIAMOND — RESULT PAGE
-   =========================================================== */
+
+/* -----------------------------------------------------------
+   17. GRIP DIAMOND — RESULT PAGE COMPONENT
+   ----------------------------------------------------------- */
 
 .grip-diamond-section {
   margin-top: 60px;
@@ -2046,6 +2340,7 @@ input[type="range"]::-moz-range-track {
   color: rgba(11,19,43,0.65);
 }
 
+/* Diamond wrapper: stable, centered, zoom-proof */
 .grip-diamond-wrapper {
   position: relative;
   width: 260px;
@@ -2057,14 +2352,14 @@ input[type="range"]::-moz-range-track {
   height: auto;
 }
 
-/* diamond outline */
+/* Outline */
 .grip-diamond-outline {
   fill: none;
   stroke: rgba(11,19,43,0.25);
   stroke-width: 2;
 }
 
-/* fill */
+/* Fill */
 .grip-diamond-fill {
   fill: rgba(0,70,165,0.12);
   stroke: var(--blue);
@@ -2072,7 +2367,7 @@ input[type="range"]::-moz-range-track {
   transition: all 0.3s ease;
 }
 
-/* labels */
+/* Labels */
 .grip-label {
   position: absolute;
   font-size: 0.9rem;
@@ -2104,6 +2399,7 @@ input[type="range"]::-moz-range-track {
   transform: translateY(-50%);
 }
 
+/* Small mobile adjustments */
 @media (max-width: 480px) {
   .grip-diamond-wrapper {
     width: 200px;
@@ -2118,186 +2414,52 @@ input[type="range"]::-moz-range-track {
   }
 }
 
-/* ===========================================================
-   BLOCK 7 — GTM SCORE RESULT PAGE (GRIP COMPONENT)
+
+/* -----------------------------------------------------------
+   END BLOCK 7
    =========================================================== */
 
-.grip-result {
-  margin-top: 72px;
-  margin-bottom: 72px;
-}
-
-.grip-result-header {
-  max-width: 720px;
-  margin: 0 auto 32px;
-  text-align: left;
-}
-
-.grip-result-header h2 {
-  margin-bottom: 8px;
-}
-
-.grip-result-header p {
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: rgba(15, 23, 42, 0.84);
-}
-
-.grip-result-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.05fr);
-  gap: 28px;
-  align-items: stretch;
-}
-
-/* Gebruik bestaande hero-health en diamond-card styling,
-   maar zorg dat ze netjes in deze grid passen */
-
-.grip-health-card {
-  height: 100%;
-}
-
-.grip-diamond-card .diamond-canvas {
-  height: 320px !important;
-}
-
-.grip-diamond-card .diamond-svg {
-  max-width: 320px !important;
-}
-
-/* Kleinere schermen: onder elkaar */
-
-@media (max-width: 960px) {
-  .grip-result {
-    margin-top: 56px;
-    margin-bottom: 56px;
-  }
-
-  .grip-result-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ==========================================
-   GRIP DIAMOND — Caugia Premium Version
-========================================== */
-
-.grip-diamond-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.06);
-  margin-top: 40px;
-}
-
-.grip-diamond-title {
-  font-size: 1.4rem;
-  color: var(--ink);
-  text-align: center;
-  margin-bottom: 30px;
-  letter-spacing: 0.5px;
-}
-
-.grip-diamond-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-}
-
-#gripDiamondSVG {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Labels */
-
-.grip-diamond-label {
-  position: absolute;
-  font-size: 1rem;
-  color: rgba(11,19,43,0.85);
-  font-weight: 500;
-}
-
-.grip-diamond-label.top {
-  top: -26px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.grip-diamond-label.bottom {
-  bottom: -26px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.grip-diamond-label.left {
-  left: -26px;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: right;
-  width: 80px;
-}
-
-.grip-diamond-label.right {
-  right: -26px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 80px;
-}
-
-/* CLARITY + DIAMOND STORYTELLING TUNING */
-
-.home-section .clarity-list {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 22px;
-}
-
-.home-section .clarity-list li {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgba(15,23,42,0.9);
-}
-
-.home-section .clarity-list strong {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.home-section h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 26px;
-  margin-bottom: 10px;
-  color: var(--ink);
-}
 /* ===========================================================
-   STORY BLOCK — CLARITY + GRIP DIAMOND (CAUGIA STYLE)
+   CAUGIA CONSULTING — PRODUCTION CSS v8.0
+   BLOCK 8 — Story Sections (Clarity + GRIP Diamond + Forces)
+   Calm • Narrative • Structured
    =========================================================== */
+
+
+/* -----------------------------------------------------------
+   1. STORY SECTION WRAPPER
+   ----------------------------------------------------------- */
 
 .story-section {
-  margin: clamp(80px, 10vw, 120px) 0;
+  margin: clamp(60px, 8vw, 100px) 0;
 }
+
+
+/* -----------------------------------------------------------
+   2. STORY ROWS (TEXT + VISUAL)
+   ----------------------------------------------------------- */
 
 .story-row {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(40px, 6vw, 70px);
   align-items: center;
-  margin-bottom: clamp(80px, 8vw, 110px);
+  margin-bottom: clamp(40px, 5vw, 60px);
 }
 
 .story-row.reverse {
   grid-template-columns: 1fr 1.2fr;
 }
 
+
+/* -----------------------------------------------------------
+   3. TEXT COLUMN
+   ----------------------------------------------------------- */
+
 .story-column.text h2 {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--blue);
   margin-bottom: 20px;
 }
 
@@ -2315,18 +2477,57 @@ input[type="range"]::-moz-range-track {
   margin-bottom: 16px;
 }
 
-.story-column.visual img {
-  width: 100%;
-  height: auto;
-  border-radius: 18px;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.06);
-  display: block;
+.story-column.text p:last-child {
+  margin-bottom: 0;
 }
 
 
-/* ===========================================================
-   RESPONSIVE — KEEP THE CAUGIA CALMNESS
-   =========================================================== */
+/* -----------------------------------------------------------
+   4. VISUAL COLUMN (IMAGES)
+   ----------------------------------------------------------- */
+
+.story-column.visual img,
+.story-img img {
+  width: 100%;
+  height: auto;
+  max-width: 560px;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.06);
+}
+
+
+/* -----------------------------------------------------------
+   5. FOUR FORCES / LABELLED LIST
+   ----------------------------------------------------------- */
+
+.story-forces {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.story-forces li {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.story-forces li strong {
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;
+}
+
+
+/* -----------------------------------------------------------
+   6. RESPONSIVE BEHAVIOUR
+   ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
 
@@ -2337,11 +2538,11 @@ input[type="range"]::-moz-range-track {
   }
 
   .story-column.visual {
-    order: -1; /* Foto boven tekst */
+    order: -1; /* beeld boven tekst op tablet/mobiel */
   }
 
   .story-section {
-    margin: 60px 0;
+    margin: 50px 0;
   }
 }
 
@@ -2359,105 +2560,285 @@ input[type="range"]::-moz-range-track {
     gap: 30px;
   }
 
-  .story-column.visual img {
+  .story-column.visual img,
+  .story-img img {
     border-radius: 14px;
   }
 }
 
 /* ===========================================================
-   STORY BLOCK — FIXES: SPACING + BLUE HEADINGS
+   GLOBAL HOVER OVERRIDE (CARDS)
+   Removes all hover movement and shadow amplification
    =========================================================== */
 
-/* TITLES IN CAUGIA BLUE */
-.story-column.text h2 {
-  color: var(--blue); /* exact hetzelfde blauw als al je H2’s */
+.card:hover,
+.service-card:hover,
+.marketplace-card:hover,
+.home-module:hover,
+.home-product:hover,
+.modules-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+  background: inherit !important;
 }
 
-/* Paragraph spacing consistent houden */
-.story-column.text p:last-child {
-  margin-bottom: 0;
-}
+/* ===========================
+   GRIP HEALTH CARD REFINEMENT
+   =========================== */
 
-/* LESS SPACE BETWEEN THE TWO BLOCKS */
-.story-row {
-  margin-bottom: clamp(40px, 5vw, 60px); /* was 80–110px → veel rustiger nu */
-}
-
-/* Top & bottom margins van hele section minder groot */
-.story-section {
-  margin: clamp(60px, 8vw, 100px) 0; /* iets compacter */
-}
-
-/* On mobile nóg iets compacter */
-@media (max-width: 640px) {
-  .story-row {
-    margin-bottom: 40px;
-  }
-
-  .story-section {
-    margin: 50px 0;
-  }
-}
-
-/* ===========================================================
-   STORY BLOCK IMAGE RESPONSIVENESS
-   =========================================================== */
-
-.story-img img {
-  width: 100%;
-  height: auto;
-  max-width: 560px;        /* perfect formaat voor jouw layout */
+.grip-health-card {
+  background: #ffffff;
   border-radius: 16px;
-  object-fit: cover;
-  display: block;
-}
-
-@media (max-width: 900px) {
-  .story-row {
-    flex-direction: column;
-    gap: 32px;
-  }
-  
-  .story-img img {
-    max-width: 100%;
-  }
-}
-
-/* ===========================================================
-   STORY BLOCK — PERFECT FORCE ALIGNMENT
-   =========================================================== */
-
-.story-forces {
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 0;
-}
-
-.story-forces li {
-  display: grid;
-  grid-template-columns: 140px 1fr;  /* labels exact uitgelijnd */
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  padding: 28px 30px 26px;
   line-height: 1.55;
-  color: rgba(15, 23, 42, 0.85);
 }
 
-.story-forces li strong {
-  color: var(--ink);
+.grip-health-heading h2 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.grip-health-intro {
+  margin-top: 4px;
+  color: rgba(15, 23, 42, 0.76);
+}
+
+.grip-health-score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 22px;
+  margin-bottom: 8px;
+  gap: 16px;
+}
+
+.grip-health-score-main {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.grip-score-big {
+  font-size: 2.6rem;
   font-weight: 700;
-  text-align: right;     /* labels strak rechts uitlijnen voor orde */
+  color: var(--ink);
+  line-height: 1;
 }
 
-/* Mobile stacked layout */
-@media (max-width: 600px) {
-  .story-forces li {
-    grid-template-columns: 1fr;
-    text-align: left;
+.grip-score-unit {
+  font-size: 0.95rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.grip-health-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.grip-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.grip-pill-band {
+  background: rgba(243, 108, 33, 0.08);
+  color: #92400e;
+}
+
+.grip-pill-stability {
+  background: rgba(248, 113, 113, 0.08);
+  color: #b91c1c;
+}
+
+/* Metrics rows */
+
+.grip-health-metrics {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grip-health-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 72px auto;
+  column-gap: 14px;
+  align-items: center;
+}
+
+.grip-health-label {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.grip-health-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.grip-health-bar span {
+  position: absolute;
+  inset: 0;
+  width: var(--value, 50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue), var(--accent));
+}
+
+.grip-health-score {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.78);
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.grip-health-chip {
+  justify-self: end;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.grip-chip-critical {
+  background: rgba(248, 113, 113, 0.06);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #b91c1c;
+}
+
+.grip-chip-strong {
+  background: rgba(59, 130, 246, 0.06);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #1d4ed8;
+}
+
+.grip-health-footer {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.grip-archetype-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.grip-archetype-body {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.78);
+}
+
+/* Responsive tweak */
+@media (max-width: 900px) {
+  .grip-health-card {
+    padding: 22px 18px 22px;
   }
-  
-  .story-forces li strong {
-    text-align: left;
-    margin-bottom: 2px;
+  .grip-health-row {
+    grid-template-columns: 110px minmax(0, 1fr);
+    row-gap: 4px;
   }
+  .grip-health-score,
+  .grip-health-chip {
+    justify-self: flex-start;
+  }
+  .grip-health-score-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ===========================
+   DIAMOND SIZE AND LAYOUT
+   =========================== */
+
+.grip-diamond-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  padding: 28px 30px 30px;
+}
+
+.grip-diamond-header h2 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.grip-diamond-intro {
+  margin-top: 4px;
+  color: rgba(15, 23, 42, 0.76);
+}
+
+.grip-diamond-hint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.grip-diamond-canvas {
+  position: relative;
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 10px;
+}
+
+.grip-diamond-svg {
+  width: 320px;
+  max-width: 100%;
+}
+
+/* Diamond labels around the edges */
+
+.grip-diamond-label {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.86);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.grip-diamond-label-top {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grip-diamond-label-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.grip-diamond-label-left {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grip-diamond-label-right {
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
 }
