@@ -2397,3 +2397,66 @@ input[type="range"]::-moz-range-track {
     margin: 50px 0;
   }
 }
+
+/* ===========================================================
+   STORY BLOCK IMAGE RESPONSIVENESS
+   =========================================================== */
+
+.story-img img {
+  width: 100%;
+  height: auto;
+  max-width: 560px;        /* perfect formaat voor jouw layout */
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .story-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .story-img img {
+    max-width: 100%;
+  }
+}
+
+/* ===========================================================
+   STORY BLOCK — PERFECT FORCE ALIGNMENT
+   =========================================================== */
+
+.story-forces {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.story-forces li {
+  display: grid;
+  grid-template-columns: 140px 1fr;  /* labels exact uitgelijnd */
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.story-forces li strong {
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;     /* labels strak rechts uitlijnen voor orde */
+}
+
+/* Mobile stacked layout */
+@media (max-width: 600px) {
+  .story-forces li {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  
+  .story-forces li strong {
+    text-align: left;
+    margin-bottom: 2px;
+  }
+}
