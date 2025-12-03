@@ -2581,3 +2581,263 @@ input[type="range"]::-moz-range-track {
   border-color: inherit !important;
   background: inherit !important;
 }
+
+/* ===========================
+   GRIP HEALTH CARD REFINEMENT
+   =========================== */
+
+.grip-health-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  padding: 28px 30px 26px;
+  line-height: 1.55;
+}
+
+.grip-health-heading h2 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.grip-health-intro {
+  margin-top: 4px;
+  color: rgba(15, 23, 42, 0.76);
+}
+
+.grip-health-score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 22px;
+  margin-bottom: 8px;
+  gap: 16px;
+}
+
+.grip-health-score-main {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.grip-score-big {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.grip-score-unit {
+  font-size: 0.95rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.grip-health-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.grip-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.grip-pill-band {
+  background: rgba(243, 108, 33, 0.08);
+  color: #92400e;
+}
+
+.grip-pill-stability {
+  background: rgba(248, 113, 113, 0.08);
+  color: #b91c1c;
+}
+
+/* Metrics rows */
+
+.grip-health-metrics {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grip-health-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 72px auto;
+  column-gap: 14px;
+  align-items: center;
+}
+
+.grip-health-label {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.grip-health-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.grip-health-bar span {
+  position: absolute;
+  inset: 0;
+  width: var(--value, 50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue), var(--accent));
+}
+
+.grip-health-score {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.78);
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.grip-health-chip {
+  justify-self: end;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.grip-chip-critical {
+  background: rgba(248, 113, 113, 0.06);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #b91c1c;
+}
+
+.grip-chip-strong {
+  background: rgba(59, 130, 246, 0.06);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #1d4ed8;
+}
+
+.grip-health-footer {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.grip-archetype-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.grip-archetype-body {
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.78);
+}
+
+/* Responsive tweak */
+@media (max-width: 900px) {
+  .grip-health-card {
+    padding: 22px 18px 22px;
+  }
+  .grip-health-row {
+    grid-template-columns: 110px minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  .grip-health-score,
+  .grip-health-chip {
+    justify-self: flex-start;
+  }
+  .grip-health-score-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ===========================
+   DIAMOND SIZE AND LAYOUT
+   =========================== */
+
+.grip-diamond-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  padding: 28px 30px 30px;
+}
+
+.grip-diamond-header h2 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.grip-diamond-intro {
+  margin-top: 4px;
+  color: rgba(15, 23, 42, 0.76);
+}
+
+.grip-diamond-hint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.grip-diamond-canvas {
+  position: relative;
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 10px;
+}
+
+.grip-diamond-svg {
+  width: 320px;
+  max-width: 100%;
+}
+
+/* Diamond labels around the edges */
+
+.grip-diamond-label {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.86);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.grip-diamond-label-top {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grip-diamond-label-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.grip-diamond-label-left {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grip-diamond-label-right {
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
