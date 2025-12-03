@@ -383,110 +383,128 @@
       </p>
     </section>
 
-    <!-- =========================================
-         TOP GRID: DIAMOND + HEALTH PANEL
-    ========================================== -->
-    <section class="grip-top-grid">
-
-      <!-- LEFT: DIAMOND -->
-      <article class="grip-diamond-card">
+   <!-- GRIP DIAMOND + YOUR GRIP HEALTH -->
+<section class="home-section">
+  <div class="container">
+    <div class="diamond-split">
+      
+      <!-- LEFT: GRIP DIAMOND -->
+      <article class="card grip-diamond-card">
         <div class="grip-diamond-header">
-          <div class="grip-diamond-eyebrow">Grip diamond</div>
-          <h2>System shape</h2>
-          <p class="grip-diamond-intro">
-            The size and balance of the diamond show how Guidance, Resources, Implementation and Performance move
-            together. A narrow diamond signals fragility. A wide but uneven shape signals stress on specific parts
-            of the engine.
+          <h2>GRIP Diamond</h2>
+          <p class="grip-diamond-intro">System shape of your revenue engine</p>
+          <p class="grip-diamond-hint">
+            The diamond shows how Guidance, Resources, Implementation and Performance move together.
+            A narrow diamond signals fragility. A wide but uneven shape signals stress on specific
+            parts of the system.
           </p>
-          <p class="grip-diamond-hint">Move a slider and watch the system shape respond.</p>
         </div>
 
         <div class="grip-diamond-canvas">
-          <svg id="gripDiamondSVG" class="grip-diamond-svg" viewBox="0 0 260 260" aria-hidden="true">
-            <!-- Grid rings and live shape will be injected with JavaScript -->
-          </svg>
-
+          <!-- Labels outside the diamond -->
           <div class="grip-diamond-label grip-diamond-label-top">Guidance</div>
           <div class="grip-diamond-label grip-diamond-label-right">Implementation</div>
-          <div class="grip-diamond-label grip-diamond-label-left">Resources</div>
           <div class="grip-diamond-label grip-diamond-label-bottom">Performance</div>
+          <div class="grip-diamond-label grip-diamond-label-left">Resources</div>
+
+          <!-- Diamond SVG (je kunt ids koppelen aan je JS als je wil) -->
+          <svg
+            class="grip-diamond-svg"
+            viewBox="0 0 320 320"
+            aria-hidden="true"
+          >
+            <!-- Raster -->
+            <g class="grip-diamond-grid">
+              <polygon class="grip-diamond-outline" points="160,30 290,160 160,290 30,160" />
+              <polygon class="grip-diamond-outline" points="160,60 260,160 160,260 60,160" />
+              <polygon class="grip-diamond-outline" points="160,90 230,160 160,230 90,160" />
+              <polygon class="grip-diamond-outline" points="160,120 200,160 160,200 120,160" />
+            </g>
+
+            <!-- Vulvorm (hier kun je met JS de punten laten bewegen) -->
+            <polygon
+              id="gripDiamondFill"
+              class="grip-diamond-fill"
+              points="160,80 245,160 160,240 75,160"
+            ></polygon>
+
+            <!-- Centerpunt -->
+            <circle cx="160" cy="160" r="5" fill="#0046A5"></circle>
+          </svg>
         </div>
       </article>
 
-      <!-- RIGHT: HEALTH PANEL -->
-      <article class="grip-health-card">
+      <!-- RIGHT: YOUR GRIP HEALTH -->
+      <article class="card grip-health-card">
         <div class="grip-health-heading">
-          <p class="grip-eyebrow">Your GRIP health</p>
-          <h2>How your system is leaning today</h2>
+          <h2>Your GRIP health</h2>
           <p class="grip-health-intro">
             This panel combines the four GRIP scores into a single view. It shows the overall health,
-            the maturity band and the balance across your revenue engine.
+            the maturity band and how evenly the system is balanced.
           </p>
         </div>
 
         <div class="grip-health-score-row">
           <div class="grip-health-score-main">
-            <span id="gripOverallScore" class="grip-score-big">55</span>
+            <span class="grip-score-big">55</span>
             <span class="grip-score-unit">/ 100</span>
           </div>
+
           <div class="grip-health-badges">
-            <span id="gripMaturityBand" class="grip-pill grip-pill-band">Developing</span>
-            <span id="gripStabilityIndex" class="grip-pill grip-pill-stability">Unstable</span>
+            <span class="grip-pill grip-pill-band">Developing</span>
+            <span class="grip-pill grip-pill-stability">Fragile</span>
           </div>
         </div>
 
+        <!-- Nieuwe korte uitleg bij Developing / Fragile -->
+        <p class="grip-health-legend">
+          <strong>Developing</strong> means the overall score sits in the middle band.
+          <strong>Fragile</strong> means one or two dimensions lag behind the others and pull the system down.
+        </p>
+
         <div class="grip-health-metrics">
-          <!-- Guidance -->
           <div class="grip-health-row">
-            <div class="grip-health-label">Guidance</div>
-            <div class="grip-health-bar">
-              <span id="gripBarGuidance" style="--value:45%;"></span>
-            </div>
-            <div id="gripScoreGuidance" class="grip-health-score">45 / 100</div>
-            <div id="gripChipGuidance" class="grip-health-chip grip-chip-critical">Critical</div>
+            <span class="grip-health-label">Guidance</span>
+            <div class="grip-health-bar"><span style="--value: 45%;"></span></div>
+            <span class="grip-health-score">45 / 100</span>
+            <span class="grip-health-chip grip-chip-critical">Critical</span>
           </div>
 
-          <!-- Resources -->
           <div class="grip-health-row">
-            <div class="grip-health-label">Resources</div>
-            <div class="grip-health-bar">
-              <span id="gripBarResources" style="--value:48%;"></span>
-            </div>
-            <div id="gripScoreResources" class="grip-health-score">48 / 100</div>
-            <div id="gripChipResources" class="grip-health-chip grip-chip-critical">Critical</div>
+            <span class="grip-health-label">Resources</span>
+            <div class="grip-health-bar"><span style="--value: 48%;"></span></div>
+            <span class="grip-health-score">48 / 100</span>
+            <span class="grip-health-chip grip-chip-critical">Critical</span>
           </div>
 
-          <!-- Implementation -->
           <div class="grip-health-row">
-            <div class="grip-health-label">Implementation</div>
-            <div class="grip-health-bar">
-              <span id="gripBarImplementation" style="--value:85%;"></span>
-            </div>
-            <div id="gripScoreImplementation" class="grip-health-score">85 / 100</div>
-            <div id="gripChipImplementation" class="grip-health-chip grip-chip-strong">Strong</div>
+            <span class="grip-health-label">Implementation</span>
+            <div class="grip-health-bar"><span style="--value: 85%;"></span></div>
+            <span class="grip-health-score">85 / 100</span>
+            <span class="grip-health-chip grip-chip-strong">Balanced</span>
           </div>
 
-          <!-- Performance -->
           <div class="grip-health-row">
-            <div class="grip-health-label">Performance</div>
-            <div class="grip-health-bar">
-              <span id="gripBarPerformance" style="--value:43%;"></span>
-            </div>
-            <div id="gripScorePerformance" class="grip-health-score">43 / 100</div>
-            <div id="gripChipPerformance" class="grip-health-chip grip-chip-critical">Critical</div>
+            <span class="grip-health-label">Performance</span>
+            <div class="grip-health-bar"><span style="--value: 43%;"></span></div>
+            <span class="grip-health-score">43 / 100</span>
+            <span class="grip-health-chip grip-chip-critical">Critical</span>
           </div>
         </div>
 
         <div class="grip-health-footer">
-          <p class="grip-eyebrow small">GRIP archetype and pattern</p>
-          <h3 id="gripArchetypeName" class="grip-archetype-name">The Overextended Execution</h3>
-          <p id="gripArchetypeBody" class="grip-archetype-body">
-            Execution is running ahead of direction. You can win deals but the story, ICP and focus are not yet
-            clear enough. Alignment where you plan, say and do work feels heavy and noisy.
+          <div class="grip-archetype-name">The Leaky Bucket</div>
+          <p class="grip-archetype-body">
+            Inputs and activity look reasonable but results are not yet catching up. Review conversion,
+            retention and expansion paths. Fix the few steps where value leaks out of the system before
+            chasing more volume.
           </p>
         </div>
       </article>
-    </section>
+
+    </div>
+  </div>
+</section>
 
     <!-- =========================================
          MID GRID: ADJUST + CURRENT SHAPE
