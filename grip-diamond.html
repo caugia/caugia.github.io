@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,14 +11,14 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
+  <link rel="stylesheet" href="assets/caugia.css?v=7.5" />
 
   <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
 
   <style>
     /* ===========================================================
-       GRIP DIAMOND PAGE v3.4 — CAUGIA STYLE
+       GRIP DIAMOND PAGE v3.5  Caugia style
        Scoped to .grip-page to avoid side effects
     ============================================================ */
 
@@ -120,7 +119,7 @@
       color: rgba(100, 116, 139, 1);
     }
 
-    /* ---------- Diamond card (left, big version) ---------- */
+    /* ---------- Diamond card (left) ---------- */
 
     .grip-diamond-card {
       padding-top: 24px;
@@ -157,7 +156,7 @@
 
     .grip-diamond-visual {
       position: relative;
-      height: 360px;
+      height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -165,18 +164,20 @@
 
     .grip-diamond-outer-circle {
       position: absolute;
-      width: 320px;
-      height: 320px;
+      width: 360px;
+      height: 360px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, rgba(148, 163, 184, 0.15), transparent 60%);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(148, 163, 184, 0.18), transparent 55%),
+        radial-gradient(circle at 70% 80%, rgba(148, 163, 184, 0.12), transparent 65%);
       border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: 0 32px 70px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 36px 80px rgba(15, 23, 42, 0.09);
     }
 
     .grip-diamond-svg {
       position: relative;
-      width: 240px;
-      height: 240px;
+      width: 280px;
+      height: 280px;
       z-index: 1;
     }
 
@@ -191,6 +192,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .grip-diamond-label-chip::before {
@@ -208,13 +210,13 @@
     }
 
     .grip-label-right {
-      right: 10%;
+      right: 12%;
       top: 50%;
       transform: translateY(-50%);
     }
 
     .grip-label-left {
-      left: 10%;
+      left: 12%;
       top: 50%;
       transform: translateY(-50%);
     }
@@ -246,6 +248,49 @@
       font-size: 0.86rem;
       color: rgba(15, 23, 42, 0.78);
       margin-bottom: 18px;
+    }
+
+    .grip-overall {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .grip-overall-value {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .grip-overall-max {
+      font-size: 0.9rem;
+      color: rgba(148, 163, 184, 1);
+    }
+
+    .grip-overall-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .grip-overall-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148, 163, 184, 1);
+    }
+
+    .grip-overall-band-pill {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
     .grip-health-row {
@@ -281,6 +326,7 @@
       border-radius: 999px;
       background: linear-gradient(90deg, var(--blue), var(--accent));
       width: 50%;
+      transition: width 0.18s ease-in-out;
     }
 
     .grip-health-pill {
@@ -291,6 +337,7 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .pill-unstable {
@@ -321,49 +368,6 @@
       background: rgba(34, 197, 94, 0.08);
       color: #166534;
       border: 1px solid rgba(34, 197, 94, 0.5);
-    }
-
-    .grip-overall {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .grip-overall-value {
-      font-size: 2.3rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .grip-overall-max {
-      font-size: 0.9rem;
-      color: rgba(148, 163, 184, 1);
-    }
-
-    .grip-overall-meta {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .grip-overall-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(148, 163, 184, 1);
-    }
-
-    .grip-overall-band-pill {
-      font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
     }
 
     /* ---------- Adjust your GRIP dimensions ---------- */
@@ -449,6 +453,12 @@
       border: 2px solid var(--blue);
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
       margin-top: -5px;
+      transition: box-shadow 0.12s ease-in-out, transform 0.12s ease-in-out;
+    }
+
+    .grip-slider-wrap input[type="range"]:active::-webkit-slider-thumb {
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+      transform: scale(1.02);
     }
 
     .grip-slider-wrap input[type="range"]::-moz-range-thumb {
@@ -458,6 +468,12 @@
       background: #fff;
       border: 2px solid var(--blue);
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+      transition: box-shadow 0.12s ease-in-out, transform 0.12s ease-in-out;
+    }
+
+    .grip-slider-wrap input[type="range"]:active::-moz-range-thumb {
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+      transform: scale(1.02);
     }
 
     /* ---------- Insight cards ---------- */
@@ -586,22 +602,18 @@
 <main>
   <div class="wrap">
 
-    <!-- =========================================
-         HERO
-    ========================================== -->
+    <!-- HERO -->
     <section class="grip-hero">
       <div class="grip-hero-eyebrow">The GRIP Framework</div>
       <h1>The GTM Health Diamond</h1>
       <p>
-        Adjust the four GRIP dimensions and see how your revenue system behaves as one whole.  
+        Adjust the four GRIP dimensions and see how your revenue system behaves as one whole.
         The diamond mirrors the structure used in the GTM Intelligence Report and turns abstract performance
         into a clear, calm picture for leadership.
       </p>
     </section>
 
-    <!-- =========================================
-         TOP GRID: DIAMOND + HEALTH PANEL
-    ========================================== -->
+    <!-- TOP GRID: DIAMOND + HEALTH PANEL -->
     <section class="grip-top-grid">
 
       <!-- LEFT: DIAMOND -->
@@ -622,8 +634,8 @@
         <div class="grip-diamond-visual">
           <div class="grip-diamond-outer-circle"></div>
 
-          <svg id="gripDiamondSVG" class="grip-diamond-svg" viewBox="0 0 260 260">
-            <!-- Grid rings and live shape will be injected with JavaScript -->
+          <svg id="gripDiamondSVG" class="grip-diamond-svg" viewBox="0 0 260 260" aria-hidden="true">
+            <!-- Grid rings and live shape are injected with JavaScript -->
           </svg>
 
           <div class="grip-diamond-label-chip grip-label-top">Guidance</div>
@@ -702,7 +714,7 @@
         </div>
 
         <div style="margin-top:16px; border-top:1px solid rgba(226,232,240,1); padding-top:14px;">
-          <div class="grip-health-eyebrow" style="margin-bottom:4px;">GRIP archetype and pattern</div>
+          <div class="grip-health-eyebrow" style="margin-bottom:4px;">Grip archetype and pattern</div>
           <h3 id="archetypeName" style="margin-bottom:4px;">The Overextended Execution</h3>
           <p id="archetypeBody">
             Execution is running ahead of direction. You can win deals but the story, ICP and focus are not yet
@@ -712,9 +724,7 @@
       </article>
     </section>
 
-    <!-- =========================================
-         MID GRID: ADJUST + CURRENT SHAPE
-    ========================================== -->
+    <!-- MID GRID: ADJUST + CURRENT SHAPE -->
     <section class="grip-mid-grid">
 
       <!-- LEFT: ADJUST YOUR GRIP DIMENSIONS -->
@@ -809,9 +819,7 @@
       </article>
     </section>
 
-    <!-- =========================================
-         BOTTOM GRID: PRIORITY + EXEC SUMMARY
-    ========================================== -->
+    <!-- BOTTOM GRID: PRIORITY + EXEC SUMMARY -->
     <section class="grip-bottom-grid">
 
       <!-- LEFT: PRIORITY SEQUENCE -->
@@ -842,9 +850,7 @@
       </article>
     </section>
 
-    <!-- =========================================
-         CTA
-    ========================================== -->
+    <!-- CTA -->
     <section class="grip-cta">
       <h2>Ready for a complete GTM diagnostic</h2>
       <p>
@@ -869,9 +875,7 @@
   <a href="mailto:tom@caugia.com">tom@caugia.com</a>
 </footer>
 
-<!-- =========================================
-     HEADER TOGGLE SCRIPT
-========================================== -->
+<!-- HEADER TOGGLE SCRIPT -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const toggle = document.querySelector(".menu-toggle");
@@ -892,9 +896,7 @@
   });
 </script>
 
-<!-- =========================================
-     GRIP DIAMOND ENGINE
-========================================== -->
+<!-- GRIP DIAMOND ENGINE -->
 <script>
   (function () {
     const state = {
@@ -902,6 +904,13 @@
       resources: 48,
       implementation: 85,
       performance: 43
+    };
+
+    const lastDiamond = {
+      guidance: state.guidance,
+      resources: state.resources,
+      implementation: state.implementation,
+      performance: state.performance
     };
 
     function bandFromScore(score) {
@@ -936,7 +945,7 @@
 
       const cx = 130;
       const cy = 130;
-      const maxR = 90;
+      const maxR = 110;
 
       function pt(angleDeg, value) {
         const rad = angleDeg * Math.PI / 180;
@@ -948,7 +957,6 @@
       }
 
       const rings = [30, 60, 90];
-
       let grid = "";
       rings.forEach(ring => {
         const G = pt(90, ring);
@@ -981,6 +989,33 @@
       `;
 
       svg.innerHTML = grid + shape;
+    }
+
+    function animateDiamond(from, to, duration) {
+      const start = performance.now();
+
+      function frame(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = t * (2 - t); // ease out
+
+        const g = from.guidance + (to.guidance - from.guidance) * eased;
+        const r = from.resources + (to.resources - from.resources) * eased;
+        const i = from.implementation + (to.implementation - from.implementation) * eased;
+        const p = from.performance + (to.performance - from.performance) * eased;
+
+        drawDiamond(g, r, i, p);
+
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          lastDiamond.guidance = to.guidance;
+          lastDiamond.resources = to.resources;
+          lastDiamond.implementation = to.implementation;
+          lastDiamond.performance = to.performance;
+        }
+      }
+
+      requestAnimationFrame(frame);
     }
 
     function describeShape(g, r, i, p) {
@@ -1210,7 +1245,7 @@
         stabEl.className = "grip-health-pill " + stab.pillClass;
       }
 
-      function updateDim(key, value, meterId, scoreId, chipId, adjustId) {
+      function updateDim(value, meterId, scoreId, chipId, adjustId) {
         const meter = document.getElementById(meterId);
         if (meter) meter.style.width = value + "%";
 
@@ -1228,12 +1263,26 @@
         if (adj) adj.textContent = value;
       }
 
-      updateDim("Guidance", g, "meterGuidance", "scoreGuidance", "chipGuidance", "adjustGuidanceValue");
-      updateDim("Resources", r, "meterResources", "scoreResources", "chipResources", "adjustResourcesValue");
-      updateDim("Implementation", i, "meterImplementation", "scoreImplementation", "chipImplementation", "adjustImplementationValue");
-      updateDim("Performance", p, "meterPerformance", "scorePerformance", "chipPerformance", "adjustPerformanceValue");
+      updateDim(g, "meterGuidance", "scoreGuidance", "chipGuidance", "adjustGuidanceValue");
+      updateDim(r, "meterResources", "scoreResources", "chipResources", "adjustResourcesValue");
+      updateDim(i, "meterImplementation", "scoreImplementation", "chipImplementation", "adjustImplementationValue");
+      updateDim(p, "meterPerformance", "scorePerformance", "chipPerformance", "adjustPerformanceValue");
 
-      drawDiamond(g, r, i, p);
+      animateDiamond(
+        {
+          guidance: lastDiamond.guidance,
+          resources: lastDiamond.resources,
+          implementation: lastDiamond.implementation,
+          performance: lastDiamond.performance
+        },
+        {
+          guidance: g,
+          resources: r,
+          implementation: i,
+          performance: p
+        },
+        120
+      );
 
       const shape = describeShape(g, r, i, p);
 
@@ -1284,6 +1333,8 @@
       bindSlider("sliderResources", "resources");
       bindSlider("sliderImplementation", "implementation");
       bindSlider("sliderPerformance", "performance");
+
+      drawDiamond(state.guidance, state.resources, state.implementation, state.performance);
       render();
     });
   })();
