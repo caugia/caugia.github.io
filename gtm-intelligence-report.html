@@ -3342,29 +3342,32 @@
     </div>
   </div>
 
-</form> <!-- IMPORTANT: end of assessment form -->
+            <!-- END OF QUESTIONS -->
+          </form> <!-- end of assessment form -->
 
-</div> <!-- /gi-main-card -->
-</div> <!-- /gi-app -->
-</div> <!-- /gi-shell -->
-</div> <!-- /wrap -->
+        </div> <!-- /gi-main-card -->
+      </div> <!-- /gi-app -->
+
+    </div> <!-- /gi-shell -->
+  </div> <!-- /wrap -->
 </main>
 
-<!-- FOOTER -->
-<footer class="cg-footer">
-  <div class="container cg-footer-inner">
-    <p>Caugia Consulting · GTM Intelligence</p>
-    <p class="cg-footer-meta">&copy; 2025 Caugia. All rights reserved.</p>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p>Caugia Consulting · GTM Intelligence</p>
+      <p>&copy; 2025 Caugia. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 
-<!-- DEBUG PANEL (optional) -->
+<!-- DEBUG PANEL -->
 <div id="gi-debug" style="display:none; padding:20px; background:#f9fafb; border-top:1px solid #e5e7eb; font-family:monospace; font-size:12px; margin-top:32px;">
-  <h3 style="margin:0 0 8px 0; font-size:13px;">GTM Intelligence Debug Mode</h3>
+  <h3 style="margin:0 0 8px; font-size:13px;">GTM Intelligence Debug Mode</h3>
   <pre id="gi-debug-output" style="white-space:pre-wrap; margin:0;"></pre>
 </div>
 
-<!-- NAV TOGGLE -->
+<!-- MOBILE NAV -->
 <script>
 (function () {
   var toggle = document.querySelector(".menu-toggle");
@@ -3382,19 +3385,19 @@
 <script>
 (function () {
 
-  /* ============================
-     GLOBAL CONFIG
-  ============================ */
   var STORAGE_KEY = "gtmIntelligence_v1";
   var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
 
   function $(q) { return document.querySelector(q); }
   function $all(q) { return Array.from(document.querySelectorAll(q)); }
-  function dbg(msg, o) { if (DEBUG_MODE) console.log("[GTM DEBUG]", msg, o || ""); }
 
-  /* ============================
-     PILLAR DEFINITIES
-  ============================ */
+  function dbg(msg, o) {
+    if (DEBUG_MODE) console.log("[GTM DEBUG]", msg, o || "");
+  }
+
+  /* =========================================
+     PILLAR DEFINITIONS
+  ========================================= */
   var PILLAR_DEFS = [
     { id: "0", label: "Organizational Context" },
     { id: "1", label: "GTM Strategy & Leadership" },
@@ -3415,9 +3418,9 @@
   var orderedQuestions = [];
   var currentIndex = 0;
 
-  /* ============================
-     MATURITY
-  ============================ */
+  /* =========================================
+     MATURITY CALC
+  ========================================= */
   function getMaturity(score100) {
     if (score100 <= 20) return "At Risk";
     if (score100 <= 40) return "Unstable";
@@ -3427,22 +3430,22 @@
     return "Best in Class";
   }
 
-  /* ============================
+  /* =========================================
      COLLECT ANSWERS
-  ============================ */
+  ========================================= */
   function collectAnswers() {
     var ctx = {};
     var pillars = {};
     var totalScore = 0;
     var scored = 0;
 
-    // Pillar 0 — context
+    // Pillar 0
     $all(".gi-question[data-pillar='0']").forEach(function (q) {
       var el = q.querySelector("input, textarea, select");
       if (el && el.name) ctx[el.name] = el.value.trim();
     });
 
-    // Scored pillars
+    // Scored questions
     $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
       if (pid === "0") return;
@@ -3457,10 +3460,7 @@
 
       if (sel) {
         pillars[pid].questions_answered++;
-
-        // Gebruik de value (0, 2, 5, 7, 10) als score
         var s = parseInt(sel.getAttribute("data-score") || sel.value, 10);
-
         if (!isNaN(s)) {
           scored++;
           totalScore += s;
@@ -3469,7 +3469,6 @@
       }
     });
 
-    // Normaliseer naar 0–100, max per vraag = 10
     var normalized = scored ? Math.round((totalScore / (scored * 10)) * 100) : 0;
 
     return {
@@ -3484,21 +3483,20 @@
     };
   }
 
-  /* ============================
+  /* =========================================
      PROGRESS BAR
-  ============================ */
+  ========================================= */
   function updateProgressUI(n) {
-    var max = 240; // 12 pilaren × 20 vragen
+    var max = 240;
     var pct = Math.round((n / max) * 100);
-
     $("#gi-progress-bar").style.width = pct + "%";
     $("#gi-progress-count").textContent = n + " of " + max + " answered";
     $("#gi-progress-percent").textContent = pct + "%";
   }
 
-  /* ============================
+  /* =========================================
      PILLAR CHIPS
-  ============================ */
+  ========================================= */
   function renderPillarChips() {
     var container = $("#gi-pillars-list");
     if (!container) return;
@@ -3537,9 +3535,9 @@
     });
   }
 
-  /* ============================
+  /* =========================================
      STEPPER
-  ============================ */
+  ========================================= */
   function updateStepHeader() {
     var q = orderedQuestions[currentIndex];
     var pid = q.getAttribute("data-pillar");
@@ -3579,12 +3577,12 @@
     if (idx > -1) goTo(idx);
   }
 
-  /* ============================
+  /* =========================================
      INIT
-  ============================ */
+  ========================================= */
   document.addEventListener("DOMContentLoaded", function () {
 
-    // Count per pillar
+    // Count questions per pillar
     PILLAR_DEFS.forEach(function (d) { PILLAR_TOTALS[d.id] = 0; });
     $all(".gi-question[data-pillar]").forEach(function (q) {
       var pid = q.getAttribute("data-pillar");
@@ -3593,14 +3591,14 @@
 
     renderPillarChips();
 
-    // Stepper
     orderedQuestions = $all(".gi-question[data-pillar]");
     orderedQuestions.forEach(function (q, i) {
       q.style.display = i === 0 ? "block" : "none";
     });
+
     updateStepHeader();
 
-    // Autosave events
+    // Autosave
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
       .forEach(function (el) {
         el.addEventListener("change", function () {
@@ -3611,13 +3609,13 @@
         });
       });
 
-    // Buttons
+    // Nav buttons
     $("#gi-btn-prev").onclick = function () { goTo(currentIndex - 1); };
     $("#gi-btn-next").onclick = function () { goTo(currentIndex + 1); };
 
     $("#gi-btn-save").onclick = function () {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
-      $("#gi-footer-status").textContent = "Saved locally.";
+      $("#gi-footer-status").textContent = "Saved.";
     };
 
     $("#gi-btn-clear").onclick = function () {
@@ -3638,14 +3636,13 @@
       }).then(function () {
         $("#gi-footer-status").textContent = "Submitted.";
       }).catch(function () {
-        $("#gi-footer-status").textContent = "Error submitting. Please try again.";
+        $("#gi-footer-status").textContent = "Error submitting. Try again.";
       });
     };
   });
 
 })();
 </script>
-
 
 </body>
 </html>
