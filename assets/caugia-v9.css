@@ -650,3 +650,200 @@ textarea {
   visibility: hidden !important;
   opacity: 0 !important;
 }
+
+/* =======================================================================
+   CAUGIA — FORM + QUESTION ENGINE STYLING
+   Group fields, selects, inputs, radio cards, layout polish
+======================================================================= */
+
+/* --- Base inputs --- */
+.gi-input,
+.gi-select,
+.gi-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #D5D8DF);
+  background: white;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--ink, #0B132B);
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gi-input:focus,
+.gi-select:focus,
+.gi-textarea:focus {
+  outline: none;
+  border-color: var(--blue, #0046A5);
+  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.15);
+}
+
+/* --- Textarea --- */
+.gi-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* =======================================================================
+   GROUP QUESTIONS
+======================================================================= */
+
+.gi-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+  margin-top: 10px;
+}
+
+.gi-group-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gi-group-field.full {
+  grid-column: 1 / 3;
+}
+
+.gi-group-field label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink, #0B132B);
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+/* =======================================================================
+   RADIO OPTION CARDS
+======================================================================= */
+
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border, #D5D8DF);
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background: white;
+  transition: border 0.15s ease, background 0.15s ease;
+}
+
+.gi-option-card:hover {
+  border-color: var(--blue, #0046A5);
+}
+
+.gi-option-card input[type="radio"] {
+  transform: scale(1.2);
+}
+
+/* Selected state */
+.gi-option-card input[type="radio"]:checked + span {
+  font-weight: 600;
+  color: var(--blue, #0046A5);
+}
+
+/* =======================================================================
+   BUTTON BAR
+======================================================================= */
+
+.gi-nav-row {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gi-btn {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #F5F6FA;
+  border: 1px solid var(--border, #D5D8DF);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease, border 0.15s ease;
+}
+
+.gi-btn:hover {
+  background: #EEEFF5;
+}
+
+.gi-primary {
+  background: var(--blue, #0046A5);
+  color: white;
+  border-color: var(--blue, #0046A5);
+}
+
+.gi-primary:hover {
+  background: #003b8c;
+}
+
+/* =======================================================================
+   QUESTION CARD POLISH
+======================================================================= */
+
+.gi-question-card {
+  padding: 32px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border, #D5D8DF);
+  box-shadow: 0 0 0 0 transparent;
+}
+
+.gi-question-header {
+  margin-bottom: 24px;
+}
+
+.gi-question-kicker {
+  font-size: 14px;
+  color: var(--blue, #0046A5);
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gi-question-title {
+  font-size: 24px;
+  color: var(--ink, #0B132B);
+  margin-bottom: 8px;
+}
+
+.gi-question-sub {
+  font-size: 15px;
+  color: #4A4F59;
+  opacity: 0.8;
+}
+
+/* =======================================================================
+   RIGHT SIDEBAR PROGRESS
+======================================================================= */
+
+.gi-progress-fill {
+  background: var(--blue, #0046A5);
+  height: 6px;
+  width: 0%;
+  border-radius: 4px;
+}
+
+/* =======================================================================
+   MOBILE
+======================================================================= */
+
+@media (max-width: 900px) {
+  .gi-shell {
+    grid-template-columns: 1fr !important;
+  }
+
+  .gi-left,
+  .gi-right {
+    display: none;
+  }
+
+  .gi-group {
+    grid-template-columns: 1fr;
+  }
+}
