@@ -3143,4 +3143,3 @@ const PILLAR_META = {
    EXPORT (use whichever your build system uses)
    =========================================================== */
 
-export { QUESTIONS, PILLAR_META };
