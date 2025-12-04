@@ -70,9 +70,8 @@
   <button id="gi-next">Next</button>
   <button id="gi-clear">Clear</button>
 </div>
-<p id="gi-status"></p>
+<p id="gi-status" style="font-size:0.9rem; color:#6b7280; margin-top:12px;"></p> 
 
-<p id="gi-status" style="font-size:0.9rem; color:#6b7280; margin-top:12px;"></p>        
 
       </div> <!-- end questions -->
 
@@ -262,54 +261,7 @@ function collectAnswers() {
   return data;
 }
 <script>
-// =========================================================
-// CLEAR ENGINE + STATUS INDICATOR v1.0
-// =========================================================
 
-// UI element
-const statusEl = document.getElementById("gi-status");
-const clearBtn = document.getElementById("gi-clear");
-
-// Render status message (auto-clears after 3 sec)
-function setStatus(msg) {
-  statusEl.textContent = msg;
-  statusEl.style.opacity = 1;
-
-  setTimeout(() => {
-    statusEl.style.opacity = 0.6;
-  }, 3000);
-}
-
-// Clear all saved data
-function clearAll() {
-  // 1. Clear inputs
-  questions.forEach(q => {
-    const text = q.querySelector("input[type='text']");
-    if (text) text.value = "";
-
-    const ta = q.querySelector("textarea");
-    if (ta) ta.value = "";
-
-    const radios = q.querySelectorAll("input[type='radio']");
-    radios.forEach(r => r.checked = false);
-  });
-
-  // 2. Clear local storage
-  localStorage.removeItem(STORAGE_KEY);
-
-  // 3. UI feedback
-  setStatus("All answers cleared.");
-
-  // 4. Reset progress bar
-  updateProgress(currentIndex);
-}
-
-// Attach handler
-clearBtn.addEventListener("click", clearAll);
-
-</script>
-
-  
 // ------------------------------------------
 // Apply saved answers into fields
 // ------------------------------------------
