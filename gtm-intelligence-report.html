@@ -3410,357 +3410,329 @@
 <!-- MAIN GTM INTELLIGENCE ENGINE -->
 <script>
 (function () {
+  // Kleine helpers
+  var $  = function (sel) { return document.querySelector(sel); };
+  var $$ = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
 
-  var STORAGE_KEY = "gtmIntelligence_v1";
-  var DEBUG_MODE = window.location.search.indexOf("debug=1") !== -1;
+  document.addEventListener("DOMContentLoaded", function () {
+    var form = $("#gtm-intel-form");
+    if (!form) return;
 
-  function $(q)  { return document.querySelector(q); }
-  function $all(q) { return Array.from(document.querySelectorAll(q)); }
+    /* =====================================================
+       1. VRAAG + PROGRESS LOGIC
+    ===================================================== */
+    var questions = $$(".gi-question");
+    var TOTAL_QUESTIONS = questions.length;
 
-  function dbg(msg, o) {
-    if (DEBUG_MODE) console.log("[GTM DEBUG]", msg, o || "");
-  }
+    var countEl = $("#gi-progress-count");
+    var pctEl   = $("#gi-progress-percent");
+    var barEl   = $("#gi-progress-bar");
 
-  /* =========================================
-     PILLAR DEFINITIONS
-  ========================================= */
-  var PILLAR_DEFS = [
-    { id: "0",  label: "Organizational Context" },
-    { id: "1",  label: "GTM Strategy & Leadership" },
-    { id: "2",  label: "Market Intelligence" },
-    { id: "3",  label: "Product Marketing" },
-    { id: "4",  label: "Inbound Engine" },
-    { id: "5",  label: "Outbound Engine" },
-    { id: "6",  label: "Sales Execution" },
-    { id: "7",  label: "Customer Success & Expansion" },
-    { id: "8",  label: "Product & Engineering" },
-    { id: "9",  label: "Brand & Communications" },
-    { id: "10", label: "Data & Insights" },
-    { id: "11", label: "Operations & Systems" },
-    { id: "12", label: "Leadership & Alignment" }
-  ];
+    function isQuestionAnswered(q) {
+      if (!q) return false;
 
-  var PILLAR_TOTALS = {};
-  var orderedQuestions = [];
-  var currentIndex = 0;
-  var TOTAL_QUESTIONS = 0; // wordt gevuld zodra alle vragen zijn ingelezen
-
-  /* =========================================
-     MATURITY CALC
-  ========================================= */
-  function getMaturity(score100) {
-    if (score100 <= 20) return "At Risk";
-    if (score100 <= 40) return "Unstable";
-    if (score100 <= 70) return "Developing";
-    if (score100 <= 85) return "Performing";
-    if (score100 <= 95) return "High Performing";
-    return "Best in Class";
-  }
-
-  /* =========================================
-     COLLECT ANSWERS
-  ========================================= */
-  function collectAnswers() {
-    var ctx     = {};
-    var pillars = {};
-    var totalScore = 0;
-    var scored     = 0;
-
-    // Context pillar
-    $all(".gi-question[data-pillar='0']").forEach(function (q) {
-      var el = q.querySelector("input, textarea, select");
-      if (el && el.name) ctx[el.name] = el.value.trim();
-    });
-
-    // Scored pillars
-    $all(".gi-question[data-pillar]").forEach(function (q) {
-      var pid = q.getAttribute("data-pillar");
-      if (pid === "0") return;
-
-      if (!pillars[pid]) {
-        pillars[pid] = { questions_answered: 0, raw_score: 0 };
+      // Radio buttons
+      if (q.querySelector("input[type='radio']:checked")) {
+        return true;
       }
 
-      var sel =
-        q.querySelector("input[type='radio']:checked") ||
-        q.querySelector("select") ||
-        q.querySelector("textarea") ||
-        q.querySelector("input[type='text']");
+      // Tekstvelden
+      var textFields = q.querySelectorAll(
+        "textarea, input[type='text'], input[type='email'], input[type='number']"
+      );
+      for (var i = 0; i < textFields.length; i++) {
+        var v = textFields[i].value;
+        if (v && v.trim() !== "") return true;
+      }
 
-      if (sel) {
-        pillars[pid].questions_answered++;
+      // Selects
+      var selects = q.querySelectorAll("select");
+      for (var j = 0; j < selects.length; j++) {
+        var sVal = selects[j].value;
+        if (sVal && sVal.trim() !== "") return true;
+      }
 
-        var s = parseInt(sel.getAttribute("data-score") || sel.value, 10);
-        if (!isNaN(s)) {
-          scored++;
-          totalScore += s;
-          pillars[pid].raw_score += s;
+      return false;
+    }
+
+    function countAnsweredQuestions() {
+      var answered = 0;
+      for (var i = 0; i < questions.length; i++) {
+        if (isQuestionAnswered(questions[i])) answered++;
+      }
+      return answered;
+    }
+
+    function updateProgressUI() {
+      var answered = countAnsweredQuestions();
+      var pct = TOTAL_QUESTIONS > 0
+        ? Math.round((answered / TOTAL_QUESTIONS) * 100)
+        : 0;
+
+      if (barEl)   barEl.style.width = pct + "%";
+      if (countEl) countEl.textContent = answered + " of " + TOTAL_QUESTIONS + " answered";
+      if (pctEl)   pctEl.textContent   = pct + "%";
+    }
+
+    // Init
+    updateProgressUI();
+
+    // Bij elke wijziging in het formulier
+    form.addEventListener("change", function () {
+      var err = form.querySelector(".gi-question-error");
+      if (err) err.classList.remove("gi-question-error");
+      updateProgressUI();
+    });
+
+    /* =====================================================
+       2. PILAAR-NAVIGATIE (1–12), CONTEXT BLIJFT VAST
+    ===================================================== */
+    var sections = $$(".gi-section[data-pillar]");
+    if (!sections.length) return; // geen pilaren gevonden
+
+    // Sorteren op data-pillar, just in case
+    sections.sort(function (a, b) {
+      var pa = parseInt(a.getAttribute("data-pillar"), 10) || 0;
+      var pb = parseInt(b.getAttribute("data-pillar"), 10) || 0;
+      return pa - pb;
+    });
+
+    var chipsWrap   = $("#gi-pillars-list");
+    var headerTitle = $("#gi-pillar-title");
+    var headerMeta  = $("#gi-pillar-meta");
+
+    var currentIndex = 0;
+    var chips = [];
+
+    var prevBtn  = $("#gi-btn-prev");
+    var nextBtn  = $("#gi-btn-next");
+
+    function setActivePillar(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= sections.length) idx = sections.length - 1;
+      currentIndex = idx;
+
+      // Alleen de actieve pilaar tonen
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = (i === currentIndex) ? "block" : "none";
+      }
+
+      // Header bijwerken
+      var active = sections[currentIndex];
+      if (active) {
+        var h2 = active.querySelector("h2");
+        var p  = active.querySelector("p");
+        if (headerTitle && h2) headerTitle.textContent = h2.textContent;
+        if (headerMeta  && p)  headerMeta.textContent  = p.textContent;
+      }
+
+      // Chips bijwerken
+      for (var j = 0; j < chips.length; j++) {
+        if (j === currentIndex) {
+          chips[j].classList.add("is-active");
+        } else {
+          chips[j].classList.remove("is-active");
         }
       }
-    });
 
-    var normalized = scored ? Math.round((totalScore / (scored * 10)) * 100) : 0;
+      // Prev/Next state
+      if (prevBtn) prevBtn.disabled = currentIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentIndex === sections.length - 1;
 
-    return {
-      context: ctx,
-      scores: {
-        total_questions_answered: scored,
-        total_raw_score: totalScore,
-        total_normalized_0_100: normalized,
-        total_maturity: getMaturity(normalized),
-        pillars: pillars
-      }
-    };
-  }
-
-/* ============================
-   PROGRESS BAR (DYNAMIC)
-============================ */
-  <div class="gi-nav-sticky">
-  <button id="gi-prev" class="gi-nav-btn">Previous</button>
-  <button id="gi-next" class="gi-nav-btn gi-nav-primary">Next</button>
-</div>
-
-function updateProgressUI(n) {
-  var total = TOTAL_QUESTIONS || 0;
-  var pct   = total > 0 ? Math.round((n / total) * 100) : 0;
-
-  $("#gi-progress-bar").style.width = pct + "%";
-  $("#gi-progress-count").textContent = n + " of " + total + " answered";
-  $("#gi-progress-percent").textContent = pct + "%";
-  
-  }
-
-  /* =========================================
-     PILLAR CHIPS
-  ========================================= */
-  function renderPillarChips() {
-    var container = $("#gi-pillars-list");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    PILLAR_DEFS.forEach(function (d) {
-      if (d.id === "0") return;
-
-      var chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "gi-pillar-chip";
-      chip.dataset.pillarId = d.id;
-      chip.innerHTML = '<span>' + d.label + '</span><span id="gi-pillar-status-' + d.id + '">0%</span>';
-      chip.addEventListener("click", function () { goToPillar(d.id); });
-
-      container.appendChild(chip);
-    });
-  }
-
-  function updatePillarChips(scores) {
-    PILLAR_DEFS.forEach(function (d) {
-      if (d.id === "0") return;
-
-      var total = PILLAR_TOTALS[d.id] || 0;
-      var ans   = scores[d.id] ? scores[d.id].questions_answered : 0;
-      var pct   = total ? Math.round((ans / total) * 100) : 0;
-
-      var statusEl = $("#gi-pillar-status-" + d.id);
-      if (statusEl) statusEl.textContent = pct + "%";
-
-      var chip = document.querySelector('.gi-pillar-chip[data-pillar-id="' + d.id + '"]');
-      if (chip) {
-        chip.classList.toggle("is-active", pct > 0 && pct < 100);
-        chip.classList.toggle("is-complete", pct === 100);
-      }
-    });
-  }
-
-  /* =========================================
-     STEPPER
-  ========================================= */
-  function updateStepHeader() {
-    if (!orderedQuestions.length) return;
-
-    var q   = orderedQuestions[currentIndex];
-    var pid = q.getAttribute("data-pillar");
-    var def = PILLAR_DEFS.find(function (x) { return x.id === pid; });
-
-    var title = $("#gi-pillar-title");
-    var meta  = $("#gi-pillar-meta");
-
-    if (pid === "0") {
-      if (title) title.textContent = "Organizational Context";
-      if (meta)  meta.textContent  = "These questions help interpret your GTM system.";
-    } else {
-      var list = orderedQuestions.filter(function (x) {
-        return x.getAttribute("data-pillar") === pid;
-      });
-      var pos = list.indexOf(q) + 1;
-
-      if (title) {
-        title.textContent = "Pillar " + pid + " · " + (def ? def.label : "");
-      }
-      if (meta) {
-        meta.textContent = "Question " + pos + " of " + list.length;
+      // Terug naar boven van de kaart
+      var mainCard = document.querySelector(".gi-main-card");
+      if (mainCard) {
+        var rect = mainCard.getBoundingClientRect();
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        window.scrollTo({
+          top: rect.top + scrollTop - 40,
+          behavior: "smooth"
+        });
       }
     }
 
-    var prevBtn = $("#gi-btn-prev");
-    var nextBtn = $("#gi-btn-next");
+    // Chips opbouwen
+    if (chipsWrap) {
+      chipsWrap.innerHTML = "";
+      for (var i = 0; i < sections.length; i++) {
+        var sec   = sections[i];
+        var h2    = sec.querySelector("h2");
+        var title = h2 ? h2.textContent : "Pillar " + (i + 1);
 
-    if (prevBtn) prevBtn.disabled = currentIndex === 0;
-    if (nextBtn) nextBtn.disabled = currentIndex === orderedQuestions.length - 1;
-  }
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "gi-pillar-chip";
+        chip.textContent = title;
+        chip.setAttribute("data-pillar-index", i);
 
-  function goTo(idx) {
-    if (idx < 0 || idx >= orderedQuestions.length) return;
+        chip.addEventListener("click", (function (index) {
+          return function () {
+            setActivePillar(index);
+          };
+        })(i));
 
-    orderedQuestions[currentIndex].style.display = "none";
-    orderedQuestions[idx].style.display = "block";
+        chipsWrap.appendChild(chip);
+        chips.push(chip);
+      }
+    }
 
-    currentIndex = idx;
-    updateStepHeader();
-  }
+    // Start met pilaar 1
+    setActivePillar(0);
 
-  function goToPillar(pid) {
-    var q = orderedQuestions.find(function (x) {
-      return x.getAttribute("data-pillar") === pid;
-    });
-    var idx = orderedQuestions.indexOf(q);
-    if (idx > -1) goTo(idx);
-  }
-
-  /* =========================================
-     INIT
-  ========================================= */
-  document.addEventListener("DOMContentLoaded", function () {
-
-    // Count questions per pillar
-    PILLAR_DEFS.forEach(function (d) { PILLAR_TOTALS[d.id] = 0; });
-
-    $all(".gi-question[data-pillar]").forEach(function (q) {
-      var pid = q.getAttribute("data-pillar");
-      if (!PILLAR_TOTALS[pid]) PILLAR_TOTALS[pid] = 0;
-      PILLAR_TOTALS[pid]++;
-    });
-
-    renderPillarChips();
-
- // Stepper
-orderedQuestions = $all(".gi-question[data-pillar]");
-
-// totaal vragen dynamisch tellen (MC + context)
-TOTAL_QUESTIONS = orderedQuestions.length;
-
-// Hide all pillars except context (pillar 0)
-var allSections = $all(".gi-section");
-allSections.forEach(function (sec) {
-  var p = sec.getAttribute("data-pillar");
-  sec.style.display = (p === "0") ? "block" : "none";
-});
-
-function updateStepHeader(pillarIndex) {
-  var active = pillarIndex !== undefined ? pillarIndex : CURRENT_PILLAR;
-  var sections = $all(".gi-section");
-  var titleEl = $("#gi-pillar-title");
-  var metaEl  = $("#gi-pillar-meta");
-
-  var activeSection = sections[active];
-  if (activeSection) {
-    var h2 = activeSection.querySelector("h2");
-    var p  = activeSection.querySelector("p");
-
-    if (titleEl && h2)  titleEl.textContent = h2.textContent;
-    if (metaEl && p)    metaEl.textContent  = p.textContent;
-  }
-}
-
-    // Autosave
-    $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
-      .forEach(function (el) {
-        el.addEventListener("change", function () {
-          var p = collectAnswers();
-          updateProgressUI(p.scores.total_questions_answered);
-          updatePillarChips(p.scores.pillars);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
-        });
-      });
-
-    // Navigation buttons
-    var prevBtn   = $("#gi-btn-prev");
-    var nextBtn   = $("#gi-btn-next");
-    var saveBtn   = $("#gi-btn-save");
-    var clearBtn  = $("#gi-btn-clear");
-    var submitBtn = $("#gi-btn-submit");
-    var statusEl  = $("#gi-footer-status");
-
+    /* =====================================================
+       3. PREVIOUS / NEXT BUTTONS
+    ===================================================== */
     if (prevBtn) {
-      prevBtn.onclick = function () { goTo(currentIndex - 1); };
+      prevBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        setActivePillar(currentIndex - 1);
+      });
     }
 
     if (nextBtn) {
-      nextBtn.onclick = function () { goTo(currentIndex + 1); };
+      nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        setActivePillar(currentIndex + 1);
+      });
+    }
+
+    /* =====================================================
+       4. SAVE / CLEAR (LOCAL STORAGE)
+    ===================================================== */
+    var saveBtn  = $("#gi-btn-save");
+    var clearBtn = $("#gi-btn-clear");
+    var statusEl = $("#gi-footer-status");
+    var STORAGE_KEY = "caugia_gi_answers_v1";
+
+    function serializeForm() {
+      var data = {};
+      var fields = form.querySelectorAll("input, textarea, select");
+      for (var i = 0; i < fields.length; i++) {
+        var f = fields[i];
+        if (!f.name) continue;
+
+        if (f.type === "radio") {
+          if (!f.checked) continue;
+          data[f.name] = f.value;
+        } else {
+          data[f.name] = f.value;
+        }
+      }
+      return data;
+    }
+
+    function applyFormData(data) {
+      if (!data) return;
+      var fields = form.querySelectorAll("input, textarea, select");
+      for (var i = 0; i < fields.length; i++) {
+        var f = fields[i];
+        var name = f.name;
+        if (!name || !(name in data)) continue;
+        var val = data[name];
+
+        if (f.type === "radio") {
+          f.checked = (f.value === val);
+        } else {
+          f.value = val;
+        }
+      }
+    }
+
+    function saveProgress() {
+      try {
+        var payload = serializeForm();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        if (statusEl) statusEl.textContent = "Progress saved in this browser.";
+      } catch (e) {
+        if (statusEl) statusEl.textContent = "Unable to save progress (browser storage issue).";
+      }
+    }
+
+    function loadProgress() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        applyFormData(data);
+        updateProgressUI();
+        if (statusEl) statusEl.textContent = "Progress loaded from this browser.";
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function clearProgress() {
+      if (window.confirm("Clear all answers from this device?")) {
+        form.reset();
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        updateProgressUI();
+        if (statusEl) statusEl.textContent = "All answers cleared on this device.";
+      }
     }
 
     if (saveBtn) {
-      saveBtn.onclick = function () {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
-        if (statusEl) statusEl.textContent = "Progress saved locally in this browser.";
-      };
+      saveBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        saveProgress();
+      });
     }
 
     if (clearBtn) {
-      clearBtn.onclick = function () {
-        localStorage.removeItem(STORAGE_KEY);
-        var form = document.getElementById("gtm-intel-form");
-        if (form) form.reset();
-        updateProgressUI(0);
-        if (statusEl) statusEl.textContent = "Answers cleared for this device.";
-      };
-    }
-
- /* ============================
-   REQUIRE ALL QUESTIONS FILLED
-============================ */
-var giForm = document.getElementById("gtm-intel-form");
-if (giForm) {
-  giForm.addEventListener("submit", function (e) {
-    var unanswered = [];
-
-    $all(".gi-question").forEach(function (q) {
-      var isAnswered = false;
-
-      // Check radio buttons
-      var selectedRadio = q.querySelector('input[type="radio"]:checked');
-      if (selectedRadio) {
-        isAnswered = true;
-      }
-
-      // Check text, textarea, email, number
-      var fields = q.querySelectorAll("textarea, input[type='text'], input[type='email'], input[type='number']");
-      fields.forEach(function (f) {
-        if (f.value && f.value.trim() !== "") {
-          isAnswered = true;
-        }
+      clearBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        clearProgress();
       });
-
-      if (!isAnswered) {
-        unanswered.push(q);
-      }
-    });
-
-    if (unanswered.length > 0) {
-      e.preventDefault();
-
-      var first = unanswered[0];
-      first.classList.add("gi-question-error");
-      first.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  });
-}
 
-  });
+    // Direct proberen te laden bij start
+    loadProgress();
 
+    /* =====================================================
+       5. ALLE 265 VRAGEN VERPLICHT + WEBHOOK SUBMIT
+    ===================================================== */
+    var WEBHOOK_URL = "https://hook.make.com/REPLACE_WEBHOOK"; // later vervangen
+
+    form.addEventListener("submit", function (e) {
+      // Check of alles beantwoord is
+      var firstUnanswered = null;
+      for (var i = 0; i < questions.length; i++) {
+        var q = questions[i];
+        if (!isQuestionAnswered(q)) {
+          firstUnanswered = q;
+          break;
+        }
+      }
+
+      if (firstUnanswered) {
+        e.preventDefault();
+        firstUnanswered.classList.add("gi-question-error");
+        firstUnanswered.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (statusEl) statusEl.textContent = "Please answer all questions before submitting.";
+        return;
+      }
+
+      // Alles ingevuld → payload naar Make
+      e.preventDefault();
+      var payload = serializeForm();
+
+      if (statusEl) statusEl.textContent = "Submitting assessment...";
+
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function () {
+        if (statusEl) statusEl.textContent =
+          "Submitted. You can still adjust answers until Caugia confirms receipt.";
+      }).catch(function () {
+        if (statusEl) statusEl.textContent =
+          "Error submitting. Please try again.";
+      });
+    });
+  });
 })();
 </script>
+
 
 </body>
 </html>
