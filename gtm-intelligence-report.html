@@ -3585,22 +3585,46 @@
     // Start met pilaar 1
     setActivePillar(0);
 
-    /* =====================================================
-       3. PREVIOUS / NEXT BUTTONS
-    ===================================================== */
-    if (prevBtn) {
-      prevBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        setActivePillar(currentIndex - 1);
-      });
-    }
+   /* ============================
+   3. QUESTION-BY-QUESTION NAVIGATION
+============================ */
 
-    if (nextBtn) {
-      nextBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        setActivePillar(currentIndex + 1);
-      });
+let currentIndex = 0;
+
+function showCurrentQuestion() {
+  orderedQuestions.forEach(function (q, i) {
+    q.style.display = i === currentIndex ? "block" : "none";
+  });
+
+  updateProgressUI(countAnswered());
+}
+
+if (nextBtn) {
+  nextBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentIndex < orderedQuestions.length - 1) {
+      currentIndex++;
+      showCurrentQuestion();
+      scrollToTop();
     }
+  });
+}
+
+if (prevBtn) {
+  prevBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentIndex > 0) {
+      currentIndex--;
+      showCurrentQuestion();
+      scrollToTop();
+    }
+  });
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 
     /* =====================================================
        4. SAVE / CLEAR (LOCAL STORAGE)
