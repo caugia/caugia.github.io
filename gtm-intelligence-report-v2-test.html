@@ -4,20 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Caugia Consulting | GTM Clarity for B2B SaaS</title>
-  <meta name="description" content="Caugia Consulting helps executives and go-to-market leaders turn scattered efforts into one GTM system. The GTM Framework, the GRIP Diamond and the GTM Score give you a calm, structured way to understand your revenue engine, align leadership and improve performance in the right order." />
+  <title>The GTM Intelligence Report | Caugia Consulting</title>
 
+  <!-- Favicon -->
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/caugia-v9.css" />
 
-  <!-- 🔒 SECURITY: Protect this entire page -->
+  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 </head>
+
 <body>
 
+<!-- ===========================================================
+    HEADER (identiek aan index.html)
+=========================================================== -->
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
@@ -26,31 +31,143 @@
     </a>
 
     <nav class="nav-desktop">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
-      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="gtm-score.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a class="cta" href="mailto:hello@caugia.com">Contact</a>
-    </nav>
-
-    <button class="menu-toggle" aria-label="Open navigation">
-      <span></span>
-    </button>
-
-    <nav class="nav-mobile">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a href="mailto:hello@caugia.com">Contact</a>
+      <a class="cta" href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
 
-<main>
-  <div class="wrap">
+<!-- ===========================================================
+    MAIN LAYOUT — ONE AND ONLY GI STRUCTURE
+=========================================================== -->
+<main class="gi-main">
+
+  <div class="gi-shell">
+
+    <!-- =======================================================
+         LEFT SIDEBAR — STATIC INFO
+    ======================================================= -->
+    <aside class="gi-left">
+
+      <div class="gi-left-title">Premium GTM Assessment</div>
+      <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
+
+      <p class="gi-left-desc">
+        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system
+        and produces a personalized, system-level intelligence report.
+        Your progress saves automatically.
+      </p>
+
+      <div class="gi-left-meta">
+        12 pillars • 265 questions • ~40 minutes
+      </div>
+
+      <div class="gi-left-subheading">Pillars Included</div>
+
+      <ul class="gi-left-pillar-list" id="gi-left-pillar-list">
+        <li data-p="0" class="active">Context</li>
+        <li data-p="1">Pillar 1 — GTM Strategy & Leadership</li>
+        <li data-p="2">Pillar 2 — Market Intelligence</li>
+        <li data-p="3">Pillar 3 — Product Marketing</li>
+        <li data-p="4">Pillar 4 — Demand Generation</li>
+        <li data-p="5">Pillar 5 — Sales Execution</li>
+        <li data-p="6">Pillar 6 — Customer Success & Expansion</li>
+        <li data-p="7">Pillar 7 — Revenue Operations & Systems</li>
+        <li data-p="8">Pillar 8 — Pricing & Packaging</li>
+        <li data-p="9">Pillar 9 — Brand & Communications</li>
+        <li data-p="10">Pillar 10 — Data & Insights</li>
+        <li data-p="11">Pillar 11 — Enablement</li>
+        <li data-p="12">Pillar 12 — Leadership & Alignment</li>
+      </ul>
+
+      <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
+
+    </aside>
+
+    <!-- =======================================================
+         CENTER — QUESTION ENGINE
+    ======================================================= -->
+    <section class="gi-center">
+
+      <div class="gi-question-card" id="gi-question-card">
+
+        <div class="gi-question-header">
+          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
+          <h2 class="gi-question-title" id="gi-question-title"></h2>
+          <p class="gi-question-sub" id="gi-question-sub"></p>
+        </div>
+
+        <div class="gi-question-body" id="gi-question-body"></div>
+
+        <div class="gi-nav-row">
+          <button class="gi-btn gi-prev" id="gi-prev-btn">Previous</button>
+          <button class="gi-btn gi-save" id="gi-save-btn">Save</button>
+          <button class="gi-btn gi-clear" id="gi-clear-btn">Clear</button>
+          <button class="gi-btn gi-primary gi-next" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary gi-submit" id="gi-submit-btn">
+            Submit assessment
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         RIGHT SIDEBAR — PILLAR META + PROGRESS
+    ======================================================= -->
+    <aside class="gi-right">
+
+      <div class="gi-progress-box">
+
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 265</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
+
+        <div class="gi-right-pillar">
+          <div class="gi-right-pillar-name" id="gi-pillar-name">Context</div>
+          <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+</main>
+
+<!-- ===========================================================
+    FOOTER
+=========================================================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">© 2025 Caugia Consulting</div>
+    <div class="footer-right">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===========================================================
+    SCRIPT: QUESTION ENGINE + QUESTIONS DATA
+=========================================================== -->
+<script src="assets/QUESTIONS.js"></script>
+<script src="assets/engine.js"></script>
+
+</body>
+</html>
+
 
 
 <!-- ===========================================================
