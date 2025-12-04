@@ -12,6 +12,205 @@
   <script src="/auth.js"></script>
 </head>
 
+  <script>
+// =========================================================
+// CAUGIA GTM INTELLIGENCE ENGINE v2.0
+// One engine • Clean • Stable • No conflicts
+// =========================================================
+
+// ----------------------------------------------
+// BASIC DOM REFERENCES
+// ----------------------------------------------
+const questions = Array.from(document.querySelectorAll(".gi-question"));
+const pillarTitle = document.getElementById("gi-pillar-title");
+const pillarMeta = document.getElementById("gi-pillar-meta");
+const pillarLabel = document.getElementById("gi-pillar-step");
+const sidebarPillars = Array.from(document.querySelectorAll(".gi-side-pillar-list li"));
+const statusEl = document.getElementById("gi-status");
+
+const btnPrev = document.getElementById("gi-prev");
+const btnNext = document.getElementById("gi-next");
+const btnClear = document.getElementById("gi-clear");
+
+let currentIndex = 0;
+const totalQuestions = questions.length;
+const STORAGE_KEY = "caugia_gi_test_v2";
+
+// ----------------------------------------------
+// TEMP PILLAR STRUCTURE FOR TESTING PURPOSES
+// ----------------------------------------------
+const pillarStructure = [
+  { start: 0, end: 0, title: "Context Capture", meta: "Your goals, constraints and direction." },
+  { start: 1, end: 2, title: "Market Intelligence", meta: "How well you read markets and competitors." }
+];
+
+// ----------------------------------------------
+// INTERNAL HELPERS
+// ----------------------------------------------
+function hideAllQuestions() {
+  questions.forEach(q => q.style.display = "none");
+}
+
+function showQuestion(index) {
+  hideAllQuestions();
+  const q = questions[index];
+  if (!q) return;
+
+  q.style.display = "block";
+  updatePillarHeader(index);
+  updateSidebar(index);
+  updateProgress(index);
+}
+
+// ----------------------------------------------
+// UPDATE: PILLAR HEADER (title + meta + counter)
+// ----------------------------------------------
+function updatePillarHeader(index) {
+  const pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
+  if (!pillar) return;
+
+  pillarTitle.textContent = pillar.title;
+  pillarMeta.textContent = pillar.meta;
+
+  const number = pillarStructure.indexOf(pillar) + 1;
+  const total = pillarStructure.length;
+
+  pillarLabel.textContent = `Pillar ${number} of ${total}`;
+}
+
+// ----------------------------------------------
+// UPDATE: SIDEBAR HIGHLIGHT
+// ----------------------------------------------
+function updateSidebar(index) {
+  sidebarPillars.forEach(li => li.classList.remove("is-active"));
+
+  const pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
+  if (!pillar) return;
+
+  sidebarPillars[pillarStructure.indexOf(pillar)].classList.add("is-active");
+}
+
+// ----------------------------------------------
+// UPDATE: PROGRESS BAR
+// ----------------------------------------------
+function updateProgress(index) {
+  const completed = index + 1;
+  const pct = Math.round((completed / totalQuestions) * 100);
+
+  document.getElementById("gi-progress-count").textContent = `${completed} of ${totalQuestions}`;
+  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
+  document.getElementById("gi-progress-bar").style.width = pct + "%";
+}
+
+// ----------------------------------------------
+// SAVE ENGINE
+// ----------------------------------------------
+function collectAnswers() {
+  const data = {};
+
+  questions.forEach((q, i) => {
+    const key = `q${i}`;
+
+    const text = q.querySelector("input[type='text']");
+    if (text) data[key] = text.value;
+
+    const radios = q.querySelectorAll("input[type='radio']");
+    if (radios.length > 0) {
+      const checked = q.querySelector("input[type='radio']:checked");
+      data[key] = checked ? checked.value : "";
+    }
+  });
+
+  return data;
+}
+
+function saveProgress() {
+  const payload = collectAnswers();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  statusEl.textContent = "Progress saved.";
+}
+
+// Auto-save on every change
+questions.forEach(q => {
+  q.addEventListener("input", saveProgress);
+  q.addEventListener("change", saveProgress);
+});
+
+// ----------------------------------------------
+// RESTORE ENGINE
+// ----------------------------------------------
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  const data = JSON.parse(raw);
+
+  questions.forEach((q, i) => {
+    const key = `q${i}`;
+    if (!(key in data)) return;
+
+    const value = data[key];
+
+    const text = q.querySelector("input[type='text']");
+    if (text) text.value = value;
+
+    const radios = q.querySelectorAll("input[type='radio']");
+    radios.forEach(r => r.checked = (r.value === value));
+  });
+}
+
+// ----------------------------------------------
+// CLEAR ENGINE
+// ----------------------------------------------
+function clearAll() {
+  questions.forEach(q => {
+    const text = q.querySelector("input[type='text']");
+    if (text) text.value = "";
+
+    q.querySelectorAll("input[type='radio']").forEach(r => (r.checked = false));
+  });
+
+  localStorage.removeItem(STORAGE_KEY);
+  statusEl.textContent = "All answers cleared.";
+
+  updateProgress(currentIndex);
+}
+
+btnClear.addEventListener("click", clearAll);
+
+// ----------------------------------------------
+// NAVIGATION
+// ----------------------------------------------
+function updateNavButtons() {
+  btnPrev.disabled = currentIndex === 0;
+  btnNext.disabled = currentIndex === totalQuestions - 1;
+}
+
+btnPrev.addEventListener("click", () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
+
+btnNext.addEventListener("click", () => {
+  if (currentIndex < totalQuestions - 1) {
+    currentIndex++;
+    showQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
+
+// ----------------------------------------------
+// INIT SEQUENCE
+// ----------------------------------------------
+restoreProgress();
+showQuestion(0);
+updateNavButtons();
+</script>
+
+  
 <body>
 
 <main class="gi-main">
