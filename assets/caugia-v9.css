@@ -1,59 +1,342 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE REPORT
-   PREMIUM ASSESSMENT SKIN v9.0
-   Calm • Structured • Enterprise-grade
+   CAUGIA CONSULTING — PRODUCTION CSS v9.1
+   Calm • Professional • Modern • Enterprise-grade
+   COMPLETE, CLEAN, SAFE FOR FULL SITE
    =========================================================== */
 
-/* Root variables */
+
+/* -----------------------------------------------------------
+   ROOT VARIABLES
+   ----------------------------------------------------------- */
+
 :root {
-  --ink: #0B132B;
+  --ink: #0b132b;
   --blue: #0046A5;
-  --navy: #1E2A44;
+  --navy: #002A5C;
+
+  --accent: #F36C21;
+  --accent-soft: rgba(243,108,33,0.10);
+
   --silver: #E6E9EF;
-  --bg: #F5F7FB;
+  --silver-soft: rgba(0,0,0,0.06);
+
+  --bg-light: #F7F9FC;
+  --bg-white: #FFFFFF;
+
   --radius: 14px;
+  --radius-lg: 18px;
+
   --transition: 0.22s ease;
+
+  --maxw: 1180px;
+  --header-h: 72px;
 }
 
-/* ===========================================================
-   GLOBAL
-   =========================================================== */
 
-body {
-  background: var(--bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
-  color: var(--ink);
+/* -----------------------------------------------------------
+   RESET
+   ----------------------------------------------------------- */
+
+*, *::before, *::after {
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
 }
 
-h1, h2, h3 {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-light);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
   color: var(--ink);
-  font-weight: 600;
-  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.55;
+}
+
+
+/* -----------------------------------------------------------
+   GLOBAL ELEMENTS
+   ----------------------------------------------------------- */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 p {
-  line-height: 1.55;
-  margin: 0;
+  margin-bottom: 16px;
 }
 
+ul {
+  list-style: none;
+}
+
+
 /* ===========================================================
-   LAYOUT GRID — LEFT / CENTER / RIGHT
+   HEADER — IDENTICAL TO HOMEPAGE
+   =========================================================== */
+
+header {
+  background: var(--bg-white);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+header .inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  height: 26px;   /* FIX: Removes giant logo in GI page */
+}
+
+.brand span {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+
+/* Desktop navigation */
+.nav-desktop {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+}
+
+.nav-desktop a {
+  font-size: 15px;
+  color: rgba(11,19,43,0.75);
+  transition: color var(--transition);
+}
+
+.nav-desktop a:hover,
+.nav-desktop a.active {
+  color: var(--blue);
+}
+
+.nav-desktop .cta {
+  background: var(--blue);
+  color: #fff !important;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+
+/* Mobile toggle */
+.menu-toggle {
+  display: none;
+}
+
+/* Mobile nav (hidden on desktop) */
+.nav-mobile {
+  display: none;
+}
+
+
+/* -----------------------------------------------------------
+   RESPONSIVE HEADER
+   ----------------------------------------------------------- */
+
+@media (max-width: 780px) {
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+  }
+
+  .menu-toggle span {
+    width: 26px;
+    height: 3px;
+    background: var(--ink);
+    display: block;
+    position: relative;
+  }
+
+  .nav-mobile {
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .nav-mobile a {
+    padding: 6px 0;
+    font-size: 16px;
+  }
+}
+
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+
+footer {
+  background: var(--bg-white);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  margin-top: 80px;
+}
+
+.footer-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: rgba(11,19,43,0.6);
+}
+
+.footer-right a {
+  margin-left: 16px;
+  color: rgba(11,19,43,0.7);
+}
+
+
+/* ===========================================================
+   BUTTONS (ONLY BUTTONS HAVE HOVER — PER REQUIREMENT)
+   =========================================================== */
+
+.gi-btn,
+button,
+.cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.gi-btn.gi-primary,
+.cta-primary {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+button:hover,
+.cta:hover,
+.gi-btn:hover {
+  background: rgba(0,70,165,0.08);
+}
+
+.gi-btn.gi-primary:hover {
+  background: #00398A;
+}
+
+
+/* ===========================================================
+   CARD MODULES (GLOBAL)
+   =========================================================== */
+
+.card,
+.module,
+.service-card,
+.marketplace-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 28px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);   /* subtle shadows */
+  transition: none;  /* no hover transforms per your rule */
+}
+
+
+/* ===========================================================
+   FAQ (Services)
+   =========================================================== */
+
+.faq details {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 18px 0;
+}
+
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.faq summary::before {
+  content: "►";
+  font-size: 0.8rem;
+  color: rgba(15,23,42,0.55);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.faq details[open] summary::before {
+  content: "▼";
+  color: var(--blue);
+}
+
+.faq details p {
+  margin-top: 12px;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+
+/* ===========================================================
+   GTM INTELLIGENCE REPORT — LAYOUT
    =========================================================== */
 
 .gi-main {
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 60px 32px 120px;
+  padding: 60px 0 100px;
 }
 
 .gi-shell {
+  max-width: 1480px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 340px 1fr 300px;
-  gap: 48px;
+  grid-template-columns: 320px 1fr 330px;
+  gap: 42px;
+  padding: 0 24px;
 }
 
 @media (max-width: 1100px) {
@@ -62,788 +345,270 @@ p {
   }
 }
 
-/* ===========================================================
-   LEFT SIDEBAR — Sticky informational panel
-   =========================================================== */
+
+/* -----------------------------------------------------------
+   LEFT SIDEBAR
+   ----------------------------------------------------------- */
 
 .gi-left {
   position: sticky;
-  top: 96px;
-  align-self: start;
-  height: fit-content;
+  top: calc(var(--header-h) + 24px);
+  align-self: flex-start;
 }
 
 .gi-left-title {
-  font-size: 12px;
-  letter-spacing: 0.18em;
+  font-size: 13px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: rgba(11,19,43,0.55);
   margin-bottom: 8px;
 }
 
 .gi-left-h1 {
-  font-size: 28px;
-  line-height: 1.2;
-  margin-bottom: 14px;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink);
 }
 
 .gi-left-desc {
-  font-size: 14px;
-  color: rgba(11,19,43,0.7);
-  max-width: 320px;
-  margin-bottom: 18px;
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: rgba(11,19,43,0.75);
 }
 
 .gi-left-meta {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
-  padding: 14px 16px;
-  border-radius: var(--radius);
-  font-size: 13px;
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
-
-.gi-left-subheading {
-  margin: 24px 0 10px;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--blue);
-}
-
-.gi-left-pillar-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 22px 0;
+  color: rgba(11,19,43,0.65);
+  margin-bottom: 22px;
 }
 
 .gi-left-pillar-list li {
-  padding: 8px 12px;
-  margin-bottom: 6px;
-  font-size: 13px;
-  border-radius: 10px;
-  background: #f6f8fc;
-  border: 1px solid rgba(11,19,43,0.06);
-  color: rgba(11,19,43,0.8);
+  padding: 8px 0;
+  font-size: 15px;
+  color: rgba(11,19,43,0.75);
+  transition: color var(--transition);
 }
 
 .gi-left-pillar-list li.active {
-  border-left: 4px solid var(--blue);
-  background: #eef3ff;
+  color: var(--blue);
   font-weight: 600;
 }
 
 .gi-left-faq {
-  display: inline-block;
   margin-top: 20px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--blue);
   text-decoration: underline;
 }
 
-/* ===========================================================
-   CENTER COLUMN — Question Engine
-   =========================================================== */
 
-.gi-center {
-  width: 100%;
-}
+/* -----------------------------------------------------------
+   QUESTION CARD (CENTER)
+   ----------------------------------------------------------- */
 
 .gi-question-card {
   background: #fff;
-  border-radius: var(--radius);
-  padding: 32px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 12px 34px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  min-height: 440px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 36px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-/* Header */
-.gi-question-header .gi-question-kicker {
-  font-size: 12px;
+.gi-question-header {
+  margin-bottom: 26px;
+}
+
+.gi-question-kicker {
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: rgba(11,19,43,0.55);
-  margin-bottom: 4px;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  margin-bottom: 6px;
 }
 
 .gi-question-title {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
 .gi-question-sub {
-  font-size: 14px;
-  color: rgba(11,19,43,0.65);
-  max-width: 560px;
+  font-size: 15px;
+  color: rgba(11,19,43,0.7);
 }
 
-/* Input area */
+
+/* --- Input styling --- */
+
 .gi-question-body input,
 .gi-question-body textarea,
 .gi-question-body select {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(11,19,43,0.14);
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.12);
   background: #fff;
   font-size: 15px;
 }
 
-textarea {
-  min-height: 100px;
+.gi-question-body textarea {
+  min-height: 120px;
 }
 
-/* ===========================================================
-   BUTTON ROW — Perfectly aligned, always same size
-   =========================================================== */
 
-.gi-nav-row {
-  margin-top: auto;
+/* --- Radio (option card style) --- */
+
+.gi-option-card {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
-}
-
-.gi-btn {
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid rgba(11,19,43,0.14);
-  background: #fff;
-  transition: var(--transition);
-}
-
-.gi-btn:hover {
-  background: #f0f3fa;
-}
-
-.gi-primary {
-  background: var(--blue);
-  color: #fff;
-  border-color: var(--blue);
-}
-
-.gi-primary:hover {
-  background: #003c91;
-}
-
-/* Hide submit until final pillar */
-.gi-submit {
-  display: none;
-}
-
-/* ===========================================================
-   RIGHT SIDEBAR — Progress + Pillar Context
-   =========================================================== */
-
-.gi-right {
-  position: sticky;
-  top: 96px;
-  align-self: start;
-  height: fit-content;
-}
-
-.gi-progress-box {
-  background: #fff;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border: 1px solid rgba(0,0,0,0.14);
   border-radius: var(--radius);
-  padding: 22px 24px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+  background: #f9fafc;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-.gi-progress-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: rgba(11,19,43,0.6);
-  margin-bottom: 8px;
+.gi-option-card input[type="radio"] {
+  margin-top: 3px;
 }
 
-.gi-progress-track {
-  height: 6px;
-  background: var(--silver);
-  border-radius: 999px;
-  overflow: hidden;
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: #eef4ff;
 }
 
-.gi-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--blue), #F36C21);
-  border-radius: 999px;
-  transition: width 0.25s ease-out;
-}
-
-.gi-right-pillar {
-  margin-top: 18px;
-}
-
-.gi-right-pillar-name {
-  font-size: 15px;
+.gi-option-card input:checked + span {
   font-weight: 600;
-  margin-bottom: 4px;
-  color: var(--ink);
 }
 
-.gi-right-pillar-desc {
-  font-size: 13px;
-  color: rgba(11,19,43,0.7);
-  line-height: 1.55;
+
+/* -----------------------------------------------------------
+   GROUP FIELDS (CONTEXT Q1–Q5)
+   ----------------------------------------------------------- */
+
+.gi-group-field {
+  margin-bottom: 16px;
 }
 
-/* ===========================================================
-   RESPONSIVE (mobile/tablet)
-   =========================================================== */
-
-@media (max-width: 1100px) {
-  .gi-right {
-    position: relative;
-    top: 0;
-  }
-}
-
-@media (max-width: 640px) {
-
-  .gi-main {
-    padding: 32px 18px 80px;
-  }
-
-  .gi-question-card {
-    padding: 22px;
-  }
-
-  .gi-nav-row {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-
-  .gi-btn {
-    flex: 1 0 calc(50% - 6px);
-    text-align: center;
-  }
-}
-
-/* ============================================================
-   CAUGIA CONSULTING — GROUP FIELD LAYOUT v9.1
-   Clean • Calm • Structured • Professional
-   Applies to all q.type === "group"
-   ============================================================ */
-
-.gi-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 24px;
-  margin-top: 20px;
-}
-
-/* Full-width fields (e.g. name, ARR, YoY) */
-.gi-field.full {
-  grid-column: 1 / 3;
-}
-
-/* Labels */
-.gi-field label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-
-/* Input styling */
-.gi-field input[type="text"],
-.gi-field input[type="number"],
-.gi-field textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 8px;
-  background: #fff;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--ink);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* Hover + focus */
-.gi-field input:focus,
-.gi-field textarea:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.10);
-  outline: none;
-}
-
-/* Textarea height for multi-line answers */
-.gi-field textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* Responsive layout: single column on mobile */
-@media (max-width: 720px) {
-  .gi-group {
-    grid-template-columns: 1fr;
-  }
-  .gi-field.full {
-    grid-column: 1 / 2;
-  }
-}
-
-/* ============================================================
-   CAUGIA CONSULTING — NAVIGATION BUTTONS v9.1
-   Clean • Calm • Professional • Consistent
-   ============================================================ */
-
-.gi-nav-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 32px;
-}
-
-.gi-btn {
-  appearance: none;
-  border: 1px solid rgba(0,0,0,0.15);
-  background: #fff;
-  color: var(--ink);
-  padding: 10px 22px;
-  font-size: 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.15s ease;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Hover (subtle) */
-.gi-btn:hover {
-  border-color: rgba(0,0,0,0.25);
-  background: #fafbfc;
-}
-
-/* PRIMARY BUTTONS (Next, Submit) */
-.gi-btn.gi-primary {
-  background: var(--blue);
-  color: #fff;
-  border-color: var(--blue);
-}
-
-.gi-btn.gi-primary:hover {
-  background: #003b8a;
-  border-color: #003b8a;
-}
-
-/* Disabled state (if used later) */
-.gi-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Consistent sizing for all buttons */
-.gi-btn,
-.gi-btn.gi-primary {
-  min-width: 88px;
-}
-
-/* Mobile layout */
-@media (max-width: 720px) {
-  .gi-nav-row {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  .gi-btn {
-    flex: 1;
-  }
-}
-
-/* ============================================================
-   CAUGIA SELECT DROPDOWNS v9.1
-   Calm • Structured • Professional
-============================================================ */
-
-.gi-select-wrap {
-  width: 100%;
-  margin-top: 12px;
-}
-
-.gi-select {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--ink);
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 8px;
-  background: #fff;
-  appearance: none;
-  cursor: pointer;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* subtle hover */
-.gi-select:hover {
-  border-color: rgba(0,0,0,0.25);
-}
-
-/* focus effect */
-.gi-select:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.12);
-}
-
-/* arrow styling (remove native iOS arrow issues) */
-.gi-select::-ms-expand {
-  display: none;
-}
-
-/* ===========================================================
-   GROUP FIELDS — Premium Caugia Layout
-   =========================================================== */
-
-.gi-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px 28px;
-  margin-top: 16px;
-  margin-bottom: 12px;
-  padding: 24px;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 14px;
-}
-
-/* Full-width rows */
-.gi-group-field.full {
-  grid-column: 1 / 3;
-}
-
-/* Label */
 .gi-group-field label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
+  margin-bottom: 5px;
   font-weight: 500;
-  color: var(--ink);
+  font-size: 15px;
 }
 
-/* Input */
 .gi-group-field input {
   width: 100%;
-  padding: 12px 14px;
-  font-size: 15px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.12);
   background: #fff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 15px;
 }
 
-/* Hover */
-.gi-group-field input:hover {
-  border-color: var(--blue);
-}
 
-/* Focus */
-.gi-group-field input:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(0,70,165,0.15);
-}
+/* -----------------------------------------------------------
+   SELECT DROPDOWNS
+   ----------------------------------------------------------- */
 
-/* Improve spacing inside question card */
-.gi-question-body .gi-group {
-  margin-top: 20px;
-}
-
-/* Mobile layout */
-@media (max-width: 780px) {
-  .gi-group {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-  .gi-group-field.full {
-    grid-column: 1;
-  }
-}
-
-/* ===========================================================
-   SELECT FIELDS — Premium Caugia Dropdown
-   =========================================================== */
-
-.gi-select {
+.gi-select-wrapper {
   position: relative;
-  width: 100%;
+  margin-bottom: 16px;
 }
 
-.gi-select select {
-  width: 100%;
+.gi-select-wrapper select {
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  padding: 12px 42px 12px 14px;
-  font-size: 15px;
-  color: var(--ink);
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.12);
   background: #fff;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 15px;
 }
 
-/* Hover */
-.gi-select select:hover {
-  border-color: var(--blue);
-}
-
-/* Focus */
-.gi-select select:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(0,70,165,0.15);
-}
-
-/* Custom dropdown arrow */
-.gi-select::after {
+.gi-select-wrapper::after {
   content: "▾";
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
-  color: var(--ink);
-  pointer-events: none;
+  color: rgba(11,19,43,0.6);
 }
 
-/* Label alignment */
-.gi-select-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-}
 
-/* Wrapper for layout consistency */
-.gi-select-wrapper {
-  margin-bottom: 14px;
-}
-
-/* Remove giant logo inside question card (browser autofill artifact or SVG fallback) */
-.gi-question-card img {
-  display: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-/* =======================================================================
-   CAUGIA — FORM + QUESTION ENGINE STYLING
-   Group fields, selects, inputs, radio cards, layout polish
-======================================================================= */
-
-/* --- Base inputs --- */
-.gi-input,
-.gi-select,
-.gi-textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--border, #D5D8DF);
-  background: white;
-  font-size: 16px;
-  font-family: inherit;
-  color: var(--ink, #0B132B);
-  transition: border 0.15s ease, box-shadow 0.15s ease;
-}
-
-.gi-input:focus,
-.gi-select:focus,
-.gi-textarea:focus {
-  outline: none;
-  border-color: var(--blue, #0046A5);
-  box-shadow: 0 0 0 2px rgba(0, 70, 165, 0.15);
-}
-
-/* --- Textarea --- */
-.gi-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* =======================================================================
-   GROUP QUESTIONS
-======================================================================= */
-
-.gi-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px 24px;
-  margin-top: 10px;
-}
-
-.gi-group-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.gi-group-field.full {
-  grid-column: 1 / 3;
-}
-
-.gi-group-field label {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink, #0B132B);
-  opacity: 0.8;
-  margin-bottom: 2px;
-}
-
-/* =======================================================================
-   RADIO OPTION CARDS
-======================================================================= */
-
-.gi-option-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--border, #D5D8DF);
-  border-radius: 8px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  background: white;
-  transition: border 0.15s ease, background 0.15s ease;
-}
-
-.gi-option-card:hover {
-  border-color: var(--blue, #0046A5);
-}
-
-.gi-option-card input[type="radio"] {
-  transform: scale(1.2);
-}
-
-/* Selected state */
-.gi-option-card input[type="radio"]:checked + span {
-  font-weight: 600;
-  color: var(--blue, #0046A5);
-}
-
-/* =======================================================================
-   BUTTON BAR
-======================================================================= */
+/* -----------------------------------------------------------
+   NAV BUTTON ROW
+   ----------------------------------------------------------- */
 
 .gi-nav-row {
-  margin-top: 28px;
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 30px;
 }
 
 .gi-btn {
-  flex: 1;
-  padding: 14px 16px;
-  border-radius: 8px;
-  background: #F5F6FA;
-  border: 1px solid var(--border, #D5D8DF);
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.15s ease, border 0.15s ease;
+  min-width: 110px;
 }
 
-.gi-btn:hover {
-  background: #EEEFF5;
+
+/* -----------------------------------------------------------
+   RIGHT SIDEBAR — PROGRESS
+   ----------------------------------------------------------- */
+
+.gi-right {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  align-self: flex-start;
 }
 
-.gi-primary {
-  background: var(--blue, #0046A5);
-  color: white;
-  border-color: var(--blue, #0046A5);
+.gi-progress-box {
+  background: #fff;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.08);
 }
 
-.gi-primary:hover {
-  background: #003b8c;
-}
-
-/* =======================================================================
-   QUESTION CARD POLISH
-======================================================================= */
-
-.gi-question-card {
-  padding: 32px;
-  background: white;
-  border-radius: 12px;
-  border: 1px solid var(--border, #D5D8DF);
-  box-shadow: 0 0 0 0 transparent;
-}
-
-.gi-question-header {
-  margin-bottom: 24px;
-}
-
-.gi-question-kicker {
+.gi-progress-top {
   font-size: 14px;
-  color: var(--blue, #0046A5);
-  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.gi-question-title {
-  font-size: 24px;
-  color: var(--ink, #0B132B);
-  margin-bottom: 8px;
+.gi-progress-track {
+  height: 6px;
+  background: var(--silver);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
-
-.gi-question-sub {
-  font-size: 15px;
-  color: #4A4F59;
-  opacity: 0.8;
-}
-
-/* =======================================================================
-   RIGHT SIDEBAR PROGRESS
-======================================================================= */
 
 .gi-progress-fill {
-  background: var(--blue, #0046A5);
-  height: 6px;
+  height: 100%;
   width: 0%;
-  border-radius: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--accent));
 }
 
-/* =======================================================================
-   MOBILE
-======================================================================= */
-
-@media (max-width: 900px) {
-  .gi-shell {
-    grid-template-columns: 1fr !important;
-  }
-
-  .gi-left,
-  .gi-right {
-    display: none;
-  }
-
-  .gi-group {
-    grid-template-columns: 1fr;
-  }
+.gi-right-pillar-name {
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 4px;
 }
+
+.gi-right-pillar-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(11,19,43,0.75);
+}
+
+
+/* ===========================================================
+   END — CAUGIA CSS v9.1
+   =========================================================== */
+
