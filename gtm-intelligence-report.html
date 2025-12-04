@@ -3695,22 +3695,46 @@ updateProgressUI(0);
       };
     }
 
-    if (submitBtn) {
-      submitBtn.onclick = function () {
-        var payload = collectAnswers();
-        if (statusEl) statusEl.textContent = "Submitting assessment...";
+ /* ============================
+   REQUIRE ALL QUESTIONS FILLED
+============================ */
+var giForm = document.getElementById("gtm-intel-form");
+if (giForm) {
+  giForm.addEventListener("submit", function (e) {
+    var unanswered = [];
 
-        fetch("https://hook.make.com/REPLACE_WEBHOOK", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        }).then(function () {
-          if (statusEl) statusEl.textContent = "Submitted. You can still adjust answers until Caugia confirms receipt.";
-        }).catch(function () {
-          if (statusEl) statusEl.textContent = "Error submitting. Please try again.";
-        });
-      };
+    $all(".gi-question").forEach(function (q) {
+      var isAnswered = false;
+
+      // Check radio buttons
+      var selectedRadio = q.querySelector('input[type="radio"]:checked');
+      if (selectedRadio) {
+        isAnswered = true;
+      }
+
+      // Check text, textarea, email, number
+      var fields = q.querySelectorAll("textarea, input[type='text'], input[type='email'], input[type='number']");
+      fields.forEach(function (f) {
+        if (f.value && f.value.trim() !== "") {
+          isAnswered = true;
+        }
+      });
+
+      if (!isAnswered) {
+        unanswered.push(q);
+      }
+    });
+
+    if (unanswered.length > 0) {
+      e.preventDefault();
+
+      var first = unanswered[0];
+      first.classList.add("gi-question-error");
+      first.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+  });
+}
+
   });
 
 })();
