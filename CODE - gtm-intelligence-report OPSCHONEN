@@ -3301,4 +3301,452 @@
 
 </div>
 
+          <!-- END OF QUESTIONS -->
+
+          <!-- Hidden submit button so Enter-key submits the form -->
+          <button type="submit" id="gi-hidden-submit" style="display:none;">Submit</button>
+        </form>
+        <!-- FORM END -->
+
+        <!-- FOOTER ACTIONS -->
+        <div class="gi-footer-actions">
+          <div class="gi-footer-actions-left">
+            <button type="button" id="gi-btn-prev" class="gi-nav-btn">Previous</button>
+            <button type="button" id="gi-btn-next" class="gi-nav-btn">Next</button>
+          </div>
+
+          <div class="gi-footer-actions-right">
+            <button type="button" id="gi-btn-save" class="cta--ghost">Save progress</button>
+            <button type="button" id="gi-btn-clear" class="gi-nav-btn">Clear</button>
+            <button type="button" id="gi-btn-submit" class="cta">Submit assessment</button>
+          </div>
+        </div>
+
+        <p id="gi-footer-status" class="gi-footer-status" aria-live="polite"></p>
+
+      </div> <!-- /gi-main-card -->
+    </div> <!-- /gi-app -->
+  </div> <!-- /gi-shell -->
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p>Caugia Consulting · GTM Intelligence</p>
+      <p>&copy; 2025 Caugia. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- DEBUG PANEL -->
+<div
+  id="gi-debug"
+  style="display:none; padding:20px; background:#f9fafb; border-top:1px solid #e5e7eb; font-family:monospace; font-size:12px; margin-top:32px;"
+>
+  <h3 style="margin:0 0 8px; font-size:13px;">GTM Intelligence Debug Mode</h3>
+  <pre id="gi-debug-output" style="white-space:pre-wrap; margin:0;"></pre>
+</div>
+
+<!-- MOBILE NAV TOGGLE -->
+<script>
+(function () {
+  var toggle = document.querySelector(".menu-toggle");
+  var nav = document.querySelector(".nav-mobile");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", function () {
+    nav.classList.toggle("nav-open");
+    toggle.classList.toggle("nav-open");
+  });
+})();
+</script>
+
+<!-- MAIN GTM INTELLIGENCE ENGINE -->
+<script>
+(function () {
+  // Small helpers
+  function $(sel) {
+    return document.querySelector(sel);
+  }
+  function $$(sel) {
+    return Array.prototype.slice.call(document.querySelectorAll(sel));
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var form = $("#gtm-intel-form");
+    if (!form) return;
+
+    /* =====================================================
+       1. QUESTION + PROGRESS LOGIC
+    ===================================================== */
+    var questions = $$(".gi-question");
+    var TOTAL_QUESTIONS = questions.length;
+
+    var countEl = $("#gi-progress-count");
+    var pctEl   = $("#gi-progress-percent");
+    var barEl   = $("#gi-progress-bar");
+    var statusEl = $("#gi-footer-status");
+
+    // Debug panel
+    var debugPanel  = $("#gi-debug");
+    var debugOutput = $("#gi-debug-output");
+    var debugEnabled = false;
+
+    if (debugPanel && debugOutput && /debug=1/.test(window.location.search)) {
+      debugEnabled = true;
+      debugPanel.style.display = "block";
+    }
+
+    function logDebug(message) {
+      if (!debugEnabled || !debugOutput) return;
+      var stamp = new Date().toISOString();
+      debugOutput.textContent =
+        "[" + stamp + "] " + message + "\n\n" + debugOutput.textContent;
+    }
+
+    function isQuestionAnswered(q) {
+      if (!q) return false;
+
+      // Radio buttons
+      if (q.querySelector("input[type='radio']:checked")) {
+        return true;
+      }
+
+      // Text fields
+      var textFields = q.querySelectorAll(
+        "textarea, input[type='text'], input[type='email'], input[type='number']"
+      );
+      for (var i = 0; i < textFields.length; i++) {
+        var v = textFields[i].value;
+        if (v && v.trim() !== "") return true;
+      }
+
+      // Selects
+      var selects = q.querySelectorAll("select");
+      for (var j = 0; j < selects.length; j++) {
+        var sVal = selects[j].value;
+        if (sVal && sVal.trim() !== "") return true;
+      }
+
+      return false;
+    }
+
+    function countAnsweredQuestions() {
+      var answered = 0;
+      for (var i = 0; i < questions.length; i++) {
+        if (isQuestionAnswered(questions[i])) answered++;
+      }
+      return answered;
+    }
+
+    function updateProgressUI() {
+      var answered = countAnsweredQuestions();
+      var pct = TOTAL_QUESTIONS > 0
+        ? Math.round((answered / TOTAL_QUESTIONS) * 100)
+        : 0;
+
+      if (barEl) {
+        barEl.style.width = pct + "%";
+      }
+      if (countEl) {
+        countEl.textContent = answered + " of " + TOTAL_QUESTIONS + " answered";
+      }
+      if (pctEl) {
+        pctEl.textContent = pct + "%";
+      }
+
+      logDebug("Progress updated: " + answered + " / " + TOTAL_QUESTIONS + " (" + pct + "%)");
+    }
+
+    // Init
+    updateProgressUI();
+
+    // On any change in the form
+    form.addEventListener("change", function () {
+      var err = form.querySelector(".gi-question-error");
+      if (err) err.classList.remove("gi-question-error");
+      updateProgressUI();
+    });
+
+    /* =====================================================
+       2. PILLAR NAVIGATION (1–12), CONTEXT FIXED
+    ===================================================== */
+    var sections = $$(".gi-section[data-pillar]");
+    if (!sections.length) return;
+
+    // Ensure sections are sorted by pillar index
+    sections.sort(function (a, b) {
+      var pa = parseInt(a.getAttribute("data-pillar"), 10) || 0;
+      var pb = parseInt(b.getAttribute("data-pillar"), 10) || 0;
+      return pa - pb;
+    });
+
+    var chipsWrap   = $("#gi-pillars-list");
+    var headerTitle = $("#gi-pillar-title");
+    var headerMeta  = $("#gi-pillar-meta");
+
+    var prevBtn  = $("#gi-btn-prev");
+    var nextBtn  = $("#gi-btn-next");
+
+    var pillarIndex = 0;
+    var chips = [];
+
+    function setActivePillar(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= sections.length) idx = sections.length - 1;
+      pillarIndex = idx;
+
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = (i === pillarIndex) ? "block" : "none";
+      }
+
+      var active = sections[pillarIndex];
+      if (active) {
+        var h2 = active.querySelector("h2");
+        var p  = active.querySelector("p");
+        if (headerTitle && h2) headerTitle.textContent = h2.textContent;
+        if (headerMeta  && p) headerMeta.textContent  = p.textContent;
+      }
+
+      for (var j = 0; j < chips.length; j++) {
+        if (j === pillarIndex) {
+          chips[j].classList.add("is-active");
+        } else {
+          chips[j].classList.remove("is-active");
+        }
+      }
+
+      if (prevBtn) prevBtn.disabled = pillarIndex === 0;
+      if (nextBtn) nextBtn.disabled = pillarIndex === sections.length - 1;
+
+      var mainCard = document.querySelector(".gi-main-card");
+      if (mainCard) {
+        var rect = mainCard.getBoundingClientRect();
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        window.scrollTo({
+          top: rect.top + scrollTop - 40,
+          behavior: "smooth"
+        });
+      }
+
+      logDebug("Active pillar set to index " + pillarIndex);
+    }
+
+    // Build chips
+    if (chipsWrap) {
+      chipsWrap.innerHTML = "";
+      for (var i = 0; i < sections.length; i++) {
+        var sec   = sections[i];
+        var h2    = sec.querySelector("h2");
+        var title = h2 ? h2.textContent : "Pillar " + (i + 1);
+
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "gi-pillar-chip";
+        chip.textContent = title;
+        chip.setAttribute("data-pillar-index", i);
+
+        chip.addEventListener("click", (function (index) {
+          return function () {
+            setActivePillar(index);
+          };
+        })(i));
+
+        chipsWrap.appendChild(chip);
+        chips.push(chip);
+      }
+    }
+
+    // Prev / Next navigation between pillars
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        setActivePillar(pillarIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        setActivePillar(pillarIndex + 1);
+      });
+    }
+
+    // Start with pillar 1 (index 0)
+    setActivePillar(0);
+
+    /* =====================================================
+       3. SAVE / CLEAR (LOCAL STORAGE)
+    ===================================================== */
+    var saveBtn  = $("#gi-btn-save");
+    var clearBtn = $("#gi-btn-clear");
+    var STORAGE_KEY = "caugia_gi_answers_v1";
+
+    function serializeForm() {
+      var data = {};
+      var fields = form.querySelectorAll("input, textarea, select");
+      for (var i = 0; i < fields.length; i++) {
+        var f = fields[i];
+        if (!f.name) continue;
+
+        if (f.type === "radio") {
+          if (!f.checked) continue;
+          data[f.name] = f.value;
+        } else {
+          data[f.name] = f.value;
+        }
+      }
+      return data;
+    }
+
+    function applyFormData(data) {
+      if (!data) return;
+      var fields = form.querySelectorAll("input, textarea, select");
+      for (var i = 0; i < fields.length; i++) {
+        var f = fields[i];
+        var name = f.name;
+        if (!name || !(name in data)) continue;
+        var val = data[name];
+
+        if (f.type === "radio") {
+          f.checked = (f.value === val);
+        } else {
+          f.value = val;
+        }
+      }
+    }
+
+    function saveProgress() {
+      try {
+        var payload = serializeForm();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        if (statusEl) statusEl.textContent = "Progress saved in this browser.";
+        logDebug("Progress saved (" + Object.keys(payload).length + " fields).");
+      } catch (e) {
+        if (statusEl) statusEl.textContent = "Unable to save progress on this device.";
+        logDebug("Error saving progress: " + e.message);
+      }
+    }
+
+    function loadProgress() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          logDebug("No saved progress found.");
+          return;
+        }
+        var data = JSON.parse(raw);
+        applyFormData(data);
+        updateProgressUI();
+        if (statusEl) statusEl.textContent = "Progress loaded from this browser.";
+        logDebug("Progress loaded (" + Object.keys(data).length + " fields).");
+      } catch (e) {
+        logDebug("Error loading progress: " + e.message);
+      }
+    }
+
+    function clearProgress() {
+      if (!window.confirm("Clear all answers from this device?")) return;
+
+      form.reset();
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {
+        // ignore
+      }
+      updateProgressUI();
+      if (statusEl) statusEl.textContent = "All answers cleared on this device.";
+      logDebug("Progress cleared by user.");
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        saveProgress();
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        clearProgress();
+      });
+    }
+
+    // Load immediately on start
+    loadProgress();
+
+    /* =====================================================
+       4. REQUIRE ALL QUESTIONS + WEBHOOK SUBMIT
+    ===================================================== */
+    var WEBHOOK_URL = "https://hook.make.com/REPLACE_WEBHOOK"; // replace later
+
+    // Visible submit button triggers the real form submit
+    var visibleSubmitBtn = $("#gi-btn-submit");
+    if (visibleSubmitBtn) {
+      visibleSubmitBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (typeof form.requestSubmit === "function") {
+          form.requestSubmit();
+        } else {
+          // Fallback for older browsers
+          var evt = document.createEvent("Event");
+          evt.initEvent("submit", true, true);
+          form.dispatchEvent(evt);
+        }
+      });
+    }
+
+    form.addEventListener("submit", function (e) {
+      // Enforce that all questions are answered
+      var firstUnanswered = null;
+      for (var i = 0; i < questions.length; i++) {
+        var q = questions[i];
+        if (!isQuestionAnswered(q)) {
+          firstUnanswered = q;
+          break;
+        }
+      }
+
+      if (firstUnanswered) {
+        e.preventDefault();
+        firstUnanswered.classList.add("gi-question-error");
+        firstUnanswered.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (statusEl) statusEl.textContent = "Please answer all questions before submitting.";
+        logDebug("Submit blocked: unanswered question detected.");
+        return;
+      }
+
+      // Everything filled → send payload to Make
+      e.preventDefault();
+      var payload = serializeForm();
+
+      if (statusEl) statusEl.textContent = "Submitting assessment...";
+      logDebug("Submitting payload with " + Object.keys(payload).length + " fields.");
+
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function () {
+          if (statusEl) {
+            statusEl.textContent =
+              "Submitted. You can still adjust answers until Caugia confirms receipt.";
+          }
+          logDebug("Submission successful.");
+        })
+        .catch(function (err) {
+          if (statusEl) {
+            statusEl.textContent = "Error submitting. Please try again.";
+          }
+          logDebug("Submission error: " + (err && err.message ? err.message : "unknown error"));
+        });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
 
