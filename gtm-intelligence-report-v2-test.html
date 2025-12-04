@@ -65,6 +65,11 @@
           </div>
         </div>
 
+        <div class="gi-test-nav">
+  <button id="gi-prev">Previous</button>
+  <button id="gi-next">Next</button>
+</div>
+
       </div> <!-- end questions -->
 
       <!-- For now we do NOT include Next/Prev buttons in this test -->
@@ -182,4 +187,40 @@ function initAssessment() {
 
 initAssessment();
 
+</script>
+
+<script>
+// =========================================================
+// NEXT / PREVIOUS ENGINE v1.0
+// =========================================================
+
+// Buttons
+const btnPrev = document.getElementById('gi-prev');
+const btnNext = document.getElementById('gi-next');
+
+// Update button states (disable at edges)
+function updateNavButtons() {
+  btnPrev.disabled = currentIndex === 0;
+  btnNext.disabled = currentIndex === totalQuestions - 1;
+}
+
+updateNavButtons();
+
+// Go to next question
+btnNext.addEventListener('click', () => {
+  if (currentIndex < totalQuestions - 1) {
+    currentIndex++;
+    renderQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
+
+// Go to previous question
+btnPrev.addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
 </script>
