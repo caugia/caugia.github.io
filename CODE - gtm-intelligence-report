@@ -3658,8 +3658,11 @@ orderedQuestions = $all(".gi-question[data-pillar]");
 // totaal vragen dynamisch tellen (MC + context)
 TOTAL_QUESTIONS = orderedQuestions.length;
 
-orderedQuestions.forEach(function (q, i) {
-  q.style.display = i === 0 ? "block" : "none";
+// Hide all pillars except context (pillar 0)
+var allSections = $all(".gi-section");
+allSections.forEach(function (sec) {
+  var p = sec.getAttribute("data-pillar");
+  sec.style.display = (p === "0") ? "block" : "none";
 });
 
 updateStepHeader();
