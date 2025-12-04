@@ -3079,65 +3079,6 @@ const QUESTIONS = [
 
 ]; // END QUESTIONS ARRAY
 
-/* ===========================================================
-   PILLAR META — NAME + DESCRIPTION FOR RIGHT SIDEBAR
-   Used by the rendering engine in your HTML.
-   =========================================================== */
-
-const PILLAR_META = {
-  0: {
-    name: "Context",
-    desc: "Foundational information about your company, motion, economics and GTM structure to personalize the full intelligence report."
-  },
-  1: {
-    name: "GTM Strategy & Leadership",
-    desc: "Evaluates clarity of strategy, leadership alignment and your ability to steer GTM with focus and structure."
-  },
-  2: {
-    name: "Market Intelligence",
-    desc: "Assesses how well you understand market signals, competitive dynamics and customer needs to guide GTM."
-  },
-  3: {
-    name: "Product Marketing",
-    desc: "Evaluates clarity of narrative, ICP definition, value messaging and how effectively PMM enables GTM motions."
-  },
-  4: {
-    name: "Demand Generation",
-    desc: "Measures efficiency, consistency and scalability of your pipeline creation engine across all channels."
-  },
-  5: {
-    name: "Sales Execution",
-    desc: "Assesses process strength, deal quality, forecasting accuracy and consistency of your sales operating system."
-  },
-  6: {
-    name: "Customer Success & Expansion",
-    desc: "Evaluates retention, expansion, onboarding, adoption and CS’s strategic contribution to predictable revenue."
-  },
-  7: {
-    name: "Revenue Operations & Systems",
-    desc: "Measures the strength of systems, automation, workflows, governance and integration across GTM."
-  },
-  8: {
-    name: "Product & Packaging",
-    desc: "Evaluates product clarity, packaging, pricing, roadmap input and commercial readiness."
-  },
-  9: {
-    name: "Brand & Communications",
-    desc: "Assesses clarity, consistency and strategic impact of narrative, messaging and communication."
-  },
-  10: {
-    name: "Data & Insights",
-    desc: "Evaluates data foundations, dashboards, accuracy, reporting, forecasting and decision support."
-  },
-  11: {
-    name: "Operations & Systems",
-    desc: "Assesses scalability, workflow strength, documentation, cadence, integration and execution reliability."
-  },
-  12: {
-    name: "Leadership & Alignment",
-    desc: "Evaluates leadership clarity, collaboration, accountability, communication and organizational alignment."
-  }
-};
 
 /* ===========================================================
    EXPORT (use whichever your build system uses)
