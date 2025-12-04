@@ -507,3 +507,72 @@ textarea {
 .gi-select::-ms-expand {
   display: none;
 }
+
+/* ===========================================================
+   GROUP FIELDS — Premium Caugia Layout
+   =========================================================== */
+
+.gi-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 28px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+
+/* Full-width rows */
+.gi-group-field.full {
+  grid-column: 1 / 3;
+}
+
+/* Label */
+.gi-group-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Input */
+.gi-group-field input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover */
+.gi-group-field input:hover {
+  border-color: var(--blue);
+}
+
+/* Focus */
+.gi-group-field input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(0,70,165,0.15);
+}
+
+/* Improve spacing inside question card */
+.gi-question-body .gi-group {
+  margin-top: 20px;
+}
+
+/* Mobile layout */
+@media (max-width: 780px) {
+  .gi-group {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .gi-group-field.full {
+    grid-column: 1;
+  }
+}
