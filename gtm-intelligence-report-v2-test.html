@@ -1,228 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>GTM Intelligence Report — Test Build</title>
+<title>GTM Intelligence Report | Caugia Consulting</title>
+<link rel="stylesheet" href="assets/caugia.css?v=9.0" />
 
-  <link rel="stylesheet" href="assets/caugia.css?v=9.0">
-
-  <!-- SECURITY -->
-  <script src="/auth.js"></script>
+<!-- SECURITY -->
+<script src="/auth.js"></script>
 </head>
 
-  <script>
-// =========================================================
-// CAUGIA GTM INTELLIGENCE ENGINE v2.0
-// One engine • Clean • Stable • No conflicts
-// =========================================================
-
-// ----------------------------------------------
-// BASIC DOM REFERENCES
-// ----------------------------------------------
-const questions = Array.from(document.querySelectorAll(".gi-question"));
-const pillarTitle = document.getElementById("gi-pillar-title");
-const pillarMeta = document.getElementById("gi-pillar-meta");
-const pillarLabel = document.getElementById("gi-pillar-step");
-const sidebarPillars = Array.from(document.querySelectorAll(".gi-side-pillar-list li"));
-const statusEl = document.getElementById("gi-status");
-
-const btnPrev = document.getElementById("gi-prev");
-const btnNext = document.getElementById("gi-next");
-const btnClear = document.getElementById("gi-clear");
-
-let currentIndex = 0;
-const totalQuestions = questions.length;
-const STORAGE_KEY = "caugia_gi_test_v2";
-
-// ----------------------------------------------
-// TEMP PILLAR STRUCTURE FOR TESTING PURPOSES
-// ----------------------------------------------
-const pillarStructure = [
-  { start: 0, end: 0, title: "Context Capture", meta: "Your goals, constraints and direction." },
-  { start: 1, end: 2, title: "Market Intelligence", meta: "How well you read markets and competitors." }
-];
-
-// ----------------------------------------------
-// INTERNAL HELPERS
-// ----------------------------------------------
-function hideAllQuestions() {
-  questions.forEach(q => q.style.display = "none");
-}
-
-function showQuestion(index) {
-  hideAllQuestions();
-  const q = questions[index];
-  if (!q) return;
-
-  q.style.display = "block";
-  updatePillarHeader(index);
-  updateSidebar(index);
-  updateProgress(index);
-}
-
-// ----------------------------------------------
-// UPDATE: PILLAR HEADER (title + meta + counter)
-// ----------------------------------------------
-function updatePillarHeader(index) {
-  const pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
-  if (!pillar) return;
-
-  pillarTitle.textContent = pillar.title;
-  pillarMeta.textContent = pillar.meta;
-
-  const number = pillarStructure.indexOf(pillar) + 1;
-  const total = pillarStructure.length;
-
-  pillarLabel.textContent = `Pillar ${number} of ${total}`;
-}
-
-// ----------------------------------------------
-// UPDATE: SIDEBAR HIGHLIGHT
-// ----------------------------------------------
-function updateSidebar(index) {
-  sidebarPillars.forEach(li => li.classList.remove("is-active"));
-
-  const pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
-  if (!pillar) return;
-
-  sidebarPillars[pillarStructure.indexOf(pillar)].classList.add("is-active");
-}
-
-// ----------------------------------------------
-// UPDATE: PROGRESS BAR
-// ----------------------------------------------
-function updateProgress(index) {
-  const completed = index + 1;
-  const pct = Math.round((completed / totalQuestions) * 100);
-
-  document.getElementById("gi-progress-count").textContent = `${completed} of ${totalQuestions}`;
-  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
-  document.getElementById("gi-progress-bar").style.width = pct + "%";
-}
-
-// ----------------------------------------------
-// SAVE ENGINE
-// ----------------------------------------------
-function collectAnswers() {
-  const data = {};
-
-  questions.forEach((q, i) => {
-    const key = `q${i}`;
-
-    const text = q.querySelector("input[type='text']");
-    if (text) data[key] = text.value;
-
-    const radios = q.querySelectorAll("input[type='radio']");
-    if (radios.length > 0) {
-      const checked = q.querySelector("input[type='radio']:checked");
-      data[key] = checked ? checked.value : "";
-    }
-  });
-
-  return data;
-}
-
-function saveProgress() {
-  const payload = collectAnswers();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-  statusEl.textContent = "Progress saved.";
-}
-
-// Auto-save on every change
-questions.forEach(q => {
-  q.addEventListener("input", saveProgress);
-  q.addEventListener("change", saveProgress);
-});
-
-// ----------------------------------------------
-// RESTORE ENGINE
-// ----------------------------------------------
-function restoreProgress() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return;
-
-  const data = JSON.parse(raw);
-
-  questions.forEach((q, i) => {
-    const key = `q${i}`;
-    if (!(key in data)) return;
-
-    const value = data[key];
-
-    const text = q.querySelector("input[type='text']");
-    if (text) text.value = value;
-
-    const radios = q.querySelectorAll("input[type='radio']");
-    radios.forEach(r => r.checked = (r.value === value));
-  });
-}
-
-// ----------------------------------------------
-// CLEAR ENGINE
-// ----------------------------------------------
-function clearAll() {
-  questions.forEach(q => {
-    const text = q.querySelector("input[type='text']");
-    if (text) text.value = "";
-
-    q.querySelectorAll("input[type='radio']").forEach(r => (r.checked = false));
-  });
-
-  localStorage.removeItem(STORAGE_KEY);
-  statusEl.textContent = "All answers cleared.";
-
-  updateProgress(currentIndex);
-}
-
-btnClear.addEventListener("click", clearAll);
-
-// ----------------------------------------------
-// NAVIGATION
-// ----------------------------------------------
-function updateNavButtons() {
-  btnPrev.disabled = currentIndex === 0;
-  btnNext.disabled = currentIndex === totalQuestions - 1;
-}
-
-btnPrev.addEventListener("click", () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showQuestion(currentIndex);
-    updateNavButtons();
-  }
-});
-
-btnNext.addEventListener("click", () => {
-  if (currentIndex < totalQuestions - 1) {
-    currentIndex++;
-    showQuestion(currentIndex);
-    updateNavButtons();
-  }
-});
-
-// ----------------------------------------------
-// INIT SEQUENCE
-// ----------------------------------------------
-restoreProgress();
-showQuestion(0);
-updateNavButtons();
-</script>
-
-  
 <body>
 
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- ========== LEFT SIDEBAR ========== -->
+    <!-- =============================
+         LEFT SIDEBAR
+         ============================= -->
     <aside class="gi-side">
       <div class="gi-side-eyebrow">GTM Intelligence</div>
       <h1>Assessment</h1>
+
       <div class="gi-side-meta">Executive Diagnostic</div>
 
-      <p>This is a minimal test build. Sidebar will later contain the full pillar overview + FAQ.</p>
+      <p>This sidebar will later contain the full pillar structure and FAQ. For the v1.0 test we keep it minimal.</p>
 
       <h3 style="margin-top:24px;">Pillars</h3>
       <ul class="gi-side-pillar-list">
@@ -231,26 +34,29 @@ updateNavButtons();
       </ul>
     </aside>
 
-    <!-- ========== RIGHT MAIN CARD ========== -->
+
+    <!-- =============================
+         RIGHT MAIN CARD
+         ============================= -->
     <div class="gi-main-card">
 
-      <!-- Top meta area -->
+      <!-- PILLAR HEADER -->
       <div id="gi-pillar-step" class="gi-step-label">Pillar 1 of 2</div>
       <h2 id="gi-pillar-title">Context Capture</h2>
       <p id="gi-pillar-meta">Capturing essential background about goals, growth stage and constraints.</p>
 
-      <!-- Progress -->
+      <!-- PROGRESS -->
       <div class="gi-progress">
         <div class="gi-progress-top">
           <span id="gi-progress-count">1 of 3</span>
           <span id="gi-progress-percent">33%</span>
         </div>
         <div id="gi-progress-track">
-          <div id="gi-progress-bar" style="width:33%;"></div>
+          <div id="gi-progress-bar"></div>
         </div>
       </div>
 
-      <!-- QUESTIONS WRAPPER -->
+      <!-- QUESTIONS -->
       <div class="gi-questions">
 
         <!-- QUESTION 1 -->
@@ -279,16 +85,191 @@ updateNavButtons();
           </div>
         </div>
 
-        <!-- TEMP NAVIGATION -->
-        <div class="gi-test-nav">
-          <button id="gi-prev">Previous</button>
-          <button id="gi-next">Next</button>
-          <button id="gi-clear">Clear</button>
+      </div> <!-- /gi-questions -->
+
+      <!-- FOOTER BUTTONS -->
+      <div class="gi-footer-actions">
+        <div class="gi-footer-actions-left">
+          <button id="gi-prev" class="gi-nav-btn">Previous</button>
+          <button id="gi-next" class="gi-nav-btn">Next</button>
         </div>
 
-        <p id="gi-status" style="font-size:0.9rem; color:#6b7280; margin-top:12px;"></p>
-
+        <div class="gi-footer-actions-right">
+          <button id="gi-save" class="cta--ghost">Save</button>
+          <button id="gi-clear" class="gi-nav-btn">Clear</button>
+          <button id="gi-submit" class="cta">Submit</button>
+        </div>
       </div>
-    </div>
-  </div>
+
+      <p id="gi-status" style="font-size:0.9rem; color:#6b7280; margin-top:12px;"></p>
+
+    </div> <!-- /gi-main-card -->
+  </div> <!-- /gi-shell -->
 </main>
+
+
+
+
+<!-- ================================================
+     GTM INTELLIGENCE ENGINE v1.0
+     ================================================ -->
+<script>
+// ------------------------
+// DOM REFERENCES
+// ------------------------
+const questions = Array.from(document.querySelectorAll(".gi-question"));
+const pillarTitle = document.getElementById("gi-pillar-title");
+const pillarMeta = document.getElementById("gi-pillar-meta");
+const pillarStep = document.getElementById("gi-pillar-step");
+
+const sidebarPillars = Array.from(document.querySelectorAll(".gi-side-pillar-list li"));
+const statusEl = document.getElementById("gi-status");
+
+const btnPrev = document.getElementById("gi-prev");
+const btnNext = document.getElementById("gi-next");
+const btnSave = document.getElementById("gi-save");
+const btnClear = document.getElementById("gi-clear");
+const btnSubmit = document.getElementById("gi-submit");
+
+let currentIndex = 0;
+const totalQuestions = questions.length;
+const STORAGE_KEY = "caugia_gti_v1";
+
+// ------------------------
+// PILLAR STRUCTURE (temp)
+// ------------------------
+const pillarStructure = [
+  { start: 0, end: 0, title: "Context Capture", meta: "Capturing essential background..." },
+  { start: 1, end: 2, title: "Market Intelligence", meta: "How well you read the market." }
+];
+
+// ------------------------
+function hideAll() {
+  questions.forEach(q => q.style.display = "none");
+}
+
+function showQuestion(index) {
+  hideAll();
+  questions[index].style.display = "block";
+
+  updatePillar(index);
+  updateSidebar(index);
+  updateProgress(index);
+}
+
+function updatePillar(index) {
+  const p = pillarStructure.find(p => index >= p.start && index <= p.end);
+  const number = pillarStructure.indexOf(p) + 1;
+
+  pillarTitle.textContent = p.title;
+  pillarMeta.textContent = p.meta;
+  pillarStep.textContent = `Pillar ${number} of ${pillarStructure.length}`;
+}
+
+function updateSidebar(index) {
+  sidebarPillars.forEach(li => li.classList.remove("is-active"));
+  const p = pillarStructure.find(p => index >= p.start && index <= p.end);
+  sidebarPillars[pillarStructure.indexOf(p)].classList.add("is-active");
+}
+
+function updateProgress(index) {
+  const completed = index + 1;
+  const pct = Math.round((completed / totalQuestions) * 100);
+
+  document.getElementById("gi-progress-count").textContent = `${completed} of ${totalQuestions}`;
+  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
+  document.getElementById("gi-progress-bar").style.width = pct + "%";
+}
+
+// ------------------------
+// SAVE / RESTORE
+// ------------------------
+function collectAnswers() {
+  const data = {};
+  questions.forEach((q, i) => {
+    const text = q.querySelector("input[type='text']");
+    const radio = q.querySelector("input[type='radio']:checked");
+
+    data[`q${i}`] = text ? text.value : radio ? radio.value : "";
+  });
+  return data;
+}
+
+function saveProgress() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
+  statusEl.textContent = "Progress saved.";
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  const data = JSON.parse(raw);
+
+  questions.forEach((q, i) => {
+    const text = q.querySelector("input[type='text']");
+    const radios = q.querySelectorAll("input[type='radio']");
+
+    if (text) text.value = data[`q${i}`] || "";
+    radios.forEach(r => r.checked = r.value === data[`q${i}`]);
+  });
+}
+
+btnSave.addEventListener("click", saveProgress);
+
+// ------------------------
+// CLEAR
+// ------------------------
+function clearAll() {
+  questions.forEach(q => {
+    const text = q.querySelector("input[type='text']");
+    if (text) text.value = "";
+    q.querySelectorAll("input[type='radio']").forEach(r => r.checked = false);
+  });
+  localStorage.removeItem(STORAGE_KEY);
+  statusEl.textContent = "All answers cleared.";
+}
+btnClear.addEventListener("click", clearAll);
+
+// ------------------------
+// NAVIGATION
+// ------------------------
+function updateNavButtons() {
+  btnPrev.disabled = currentIndex === 0;
+  btnNext.disabled = currentIndex === totalQuestions - 1;
+}
+
+btnPrev.addEventListener("click", () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
+
+btnNext.addEventListener("click", () => {
+  if (currentIndex < totalQuestions - 1) {
+    currentIndex++;
+    showQuestion(currentIndex);
+    updateNavButtons();
+  }
+});
+
+// ------------------------
+// SUBMIT (placeholder)
+// ------------------------
+btnSubmit.addEventListener("click", () => {
+  saveProgress();
+  alert("Submit endpoint coming next.");
+});
+
+// ------------------------
+// INIT
+// ------------------------
+restoreProgress();
+showQuestion(0);
+updateNavButtons();
+
+</script>
+
+</body>
+</html>
