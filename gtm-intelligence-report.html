@@ -3642,13 +3642,18 @@
 
     renderPillarChips();
 
-    orderedQuestions = $all(".gi-question[data-pillar]");
-    orderedQuestions.forEach(function (q, i) {
-      q.style.display = i === 0 ? "block" : "none";
-    });
+  orderedQuestions = $all(".gi-question[data-pillar]");
 
-    updateStepHeader();
-    updateProgressUI(0);
+// totaal vragen dynamisch tellen (MC + context)
+TOTAL_QUESTIONS = orderedQuestions.length;
+
+orderedQuestions.forEach(function (q, i) {
+  q.style.display = i === 0 ? "block" : "none";
+});
+
+updateStepHeader();
+updateProgressUI(0);
+
 
     // Autosave
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
