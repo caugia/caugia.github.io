@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GTM Intelligence Report | Caugia Consulting</title>
-<link rel="stylesheet" href="assets/caugia.css?v=9.0" />
+  <title>GTM Intelligence Report — Test Build</title>
 
-<!-- Security -->
-<script src="/auth.js"></script>
+  <link rel="stylesheet" href="assets/caugia.css?v=9.0">
+
+  <!-- SECURITY -->
+  <script src="/auth.js"></script>
 </head>
 
 <body>
@@ -16,15 +17,13 @@
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- =============================
-         LEFT SIDEBAR
-         ============================= -->
+    <!-- ========== LEFT SIDEBAR ========== -->
     <aside class="gi-side">
       <div class="gi-side-eyebrow">GTM Intelligence</div>
       <h1>Assessment</h1>
       <div class="gi-side-meta">Executive Diagnostic</div>
 
-      <p>This sidebar will later contain the full pillar overview and FAQ.</p>
+      <p>This is a minimal test build. Sidebar will later contain the full pillar overview + FAQ.</p>
 
       <h3 style="margin-top:24px;">Pillars</h3>
       <ul class="gi-side-pillar-list">
@@ -33,17 +32,11 @@
       </ul>
     </aside>
 
-    <!-- =============================
-         RIGHT MAIN CARD
-         ============================= -->
+    <!-- ========== RIGHT MAIN CARD ========== -->
     <div class="gi-main-card">
 
-      <!-- PILLAR HEADER -->
-      <h2 id="gi-pillar-title">Context Capture</h2>
-      <p id="gi-pillar-meta">Capturing essential background about goals, growth stage and constraints.</p>
-
-      <!-- PROGRESS -->
-      <div class="gi-progress">
+      <!-- PROGRESS TOP -->
+      <div class="gi-progress" style="margin-bottom:18px;">
         <div class="gi-progress-top">
           <span id="gi-progress-count">1 of 3</span>
           <span id="gi-progress-percent">33%</span>
@@ -53,92 +46,90 @@
         </div>
       </div>
 
-      <!-- QUESTIONS -->
+      <!-- PILLAR TITLE -->
+      <h2 id="gi-pillar-title">Context Capture</h2>
+      <p id="gi-pillar-meta" style="margin-bottom:22px;">
+        Capturing essential background about goals, growth stage and constraints.
+      </p>
+
+      <!-- QUESTIONS WRAPPER -->
       <div class="gi-questions">
 
         <!-- QUESTION 1 -->
-        <div class="gi-question" data-required="true">
+        <div class="gi-question">
           <label>What is your primary GTM priority for the next 12 months?</label>
           <input type="text" name="q1" />
-          <p class="gi-error-msg"></p>
         </div>
 
         <!-- QUESTION 2 -->
-        <div class="gi-question" data-required="true">
+        <div class="gi-question">
           <label>How clearly defined is your ICP?</label>
           <div class="gi-options">
-            <label><input type="radio" name="q2" value="1"> Not defined</label>
-            <label><input type="radio" name="q2" value="2"> Somewhat defined</label>
-            <label><input type="radio" name="q2" value="3"> Clearly defined</label>
+            <label class="gi-opt"><input type="radio" name="q2" value="1"> Not defined</label>
+            <label class="gi-opt"><input type="radio" name="q2" value="2"> Somewhat defined</label>
+            <label class="gi-opt"><input type="radio" name="q2" value="3"> Clearly defined</label>
           </div>
-          <p class="gi-error-msg"></p>
         </div>
 
         <!-- QUESTION 3 -->
-        <div class="gi-question" data-required="true">
+        <div class="gi-question">
           <label>How confident are you in your competitor understanding?</label>
           <div class="gi-options">
-            <label><input type="radio" name="q3" value="low"> Low</label>
-            <label><input type="radio" name="q3" value="medium"> Medium</label>
-            <label><input type="radio" name="q3" value="high"> High</label>
+            <label class="gi-opt"><input type="radio" name="q3" value="low"> Low</label>
+            <label class="gi-opt"><input type="radio" name="q3" value="medium"> Medium</label>
+            <label class="gi-opt"><input type="radio" name="q3" value="high"> High</label>
           </div>
-          <p class="gi-error-msg"></p>
         </div>
 
       </div>
 
-      <!-- FOOTER BUTTONS -->
-      <div class="gi-footer-actions">
-        <div>
-          <button id="gi-prev" class="gi-nav-btn">Previous</button>
-          <button id="gi-next" class="gi-nav-btn">Next</button>
-        </div>
-
-        <div>
-          <button id="gi-save" class="cta--ghost">Save</button>
-          <button id="gi-clear" class="gi-nav-btn">Clear</button>
-          <button id="gi-submit" class="cta">Submit</button>
-        </div>
+      <!-- ACTION BUTTONS -->
+      <div class="gi-actions">
+        <button class="gi-btn" id="gi-prev">Previous</button>
+        <button class="gi-btn" id="gi-next">Next</button>
+        <button class="gi-btn" id="gi-save">Save</button>
+        <button class="gi-btn gi-btn-ghost" id="gi-clear">Clear</button>
+        <button class="gi-btn gi-btn-primary" id="gi-submit">Submit</button>
       </div>
 
-      <p id="gi-status" class="gi-status-line"></p>
+      <!-- STATUS MESSAGE -->
+      <p id="gi-status" class="gi-status"></p>
 
     </div>
   </div>
 </main>
 
-
-<!-- ==========================================================
-     GTM INTELLIGENCE ENGINE v1.1
-     ========================================================== -->
+<!-- ================================
+     JS ENGINE — v1.1
+================================ -->
 <script>
+// =========================================================
+// CAUGIA GTM INTELLIGENCE ENGINE v1.1
+// =========================================================
+
+// DOM HOOKS
 const questions = Array.from(document.querySelectorAll(".gi-question"));
 const sidebarPillars = Array.from(document.querySelectorAll(".gi-side-pillar-list li"));
-
 const pillarTitle = document.getElementById("gi-pillar-title");
-const pillarMeta  = document.getElementById("gi-pillar-meta");
+const pillarMeta = document.getElementById("gi-pillar-meta");
 
-const statusEl = document.getElementById("gi-status");
-const btnPrev  = document.getElementById("gi-prev");
-const btnNext  = document.getElementById("gi-next");
-const btnSave  = document.getElementById("gi-save");
+const btnPrev = document.getElementById("gi-prev");
+const btnNext = document.getElementById("gi-next");
 const btnClear = document.getElementById("gi-clear");
-const btnSubmit = document.getElementById("gi-submit");
+const btnSave = document.getElementById("gi-save");
+const statusEl = document.getElementById("gi-status");
 
-let currentIndex = 0;
-const STORAGE_KEY = "caugia_gti_v11";
+let currentIndex = 0;  
+const totalQuestions = questions.length;
+const STORAGE_KEY = "caugia_gi_test_v11";
 
-// ----------------------------------------------------
-// PILLAR DEFINITION
-// ----------------------------------------------------
+// TEMP PILLAR STRUCTURE
 const pillarStructure = [
-  { start: 0, end: 0, title: "Context Capture", meta: "Capturing essential background..." },
+  { start: 0, end: 0, title: "Context Capture", meta: "Your goals, constraints and direction." },
   { start: 1, end: 2, title: "Market Intelligence", meta: "How well you read markets and competitors." }
 ];
 
-// ----------------------------------------------------
-// CORE DISPLAY FUNCTIONS
-// ----------------------------------------------------
+// HELPERS
 function hideAll() {
   questions.forEach(q => q.style.display = "none");
 }
@@ -153,6 +144,7 @@ function showQuestion(i) {
 
 function updatePillar(i) {
   const p = pillarStructure.find(p => i >= p.start && i <= p.end);
+  if (!p) return;
   pillarTitle.textContent = p.title;
   pillarMeta.textContent = p.meta;
 }
@@ -160,148 +152,85 @@ function updatePillar(i) {
 function updateSidebar(i) {
   sidebarPillars.forEach(li => li.classList.remove("is-active"));
   const p = pillarStructure.find(p => i >= p.start && i <= p.end);
-  sidebarPillars[pillarStructure.indexOf(p)].classList.add("is-active");
+  if (!p) return;
+  const index = pillarStructure.indexOf(p);
+  sidebarPillars[index].classList.add("is-active");
 }
 
 function updateProgress(i) {
-  const completed = i + 1;
-  const total = questions.length;
-  const pct = Math.round((completed / total) * 100);
-
-  document.getElementById("gi-progress-count").textContent =
-    `${completed} of ${total}`;
-
-  document.getElementById("gi-progress-percent").textContent =
-    `${pct}%`;
-
+  const pct = Math.round(((i + 1) / totalQuestions) * 100);
+  document.getElementById("gi-progress-count").textContent = `${i+1} of ${totalQuestions}`;
+  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
   document.getElementById("gi-progress-bar").style.width = pct + "%";
 }
 
-// ----------------------------------------------------
-// VALIDATION
-// ----------------------------------------------------
-function validateQuestion(i) {
-  const q = questions[i];
-  const required = q.dataset.required === "true";
-  const errorEl = q.querySelector(".gi-error-msg");
-
-  errorEl.textContent = "";
-  q.classList.remove("gi-question-error");
-
-  if (!required) return true;
-
-  const text = q.querySelector("input[type='text']");
-  if (text && text.value.trim() === "") {
-    errorEl.textContent = "This question is required.";
-    q.classList.add("gi-question-error");
-    return false;
-  }
-
-  const checked = q.querySelector("input[type='radio']:checked");
-  if (q.querySelectorAll("input[type='radio']").length > 0 && !checked) {
-    errorEl.textContent = "Please select an option.";
-    q.classList.add("gi-question-error");
-    return false;
-  }
-
-  return true;
-}
-
-// ----------------------------------------------------
-// NAVIGATION
-// ----------------------------------------------------
-function updateNavButtons() {
-  btnPrev.disabled = currentIndex === 0;
-  btnNext.disabled = currentIndex === questions.length - 1;
-}
-
-btnPrev.addEventListener("click", () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showQuestion(currentIndex);
-    updateNavButtons();
-  }
-});
-
-btnNext.addEventListener("click", () => {
-  if (!validateQuestion(currentIndex)) return;
-
-  if (currentIndex < questions.length - 1) {
-    currentIndex++;
-    showQuestion(currentIndex);
-    updateNavButtons();
-  }
-});
-
-// ----------------------------------------------------
-// SAVE ENGINE
-// ----------------------------------------------------
-function collectAnswers() {
+// SAVE
+function collect() {
   const data = {};
   questions.forEach((q, i) => {
     const text = q.querySelector("input[type='text']");
-    const radio = q.querySelector("input[type='radio']:checked");
-    data[`q${i}`] = text ? text.value : radio ? radio.value : "";
+    if (text) data[`q${i}`] = text.value;
+
+    const radios = q.querySelectorAll("input[type='radio']");
+    if (radios.length) {
+      const checked = q.querySelector("input[type='radio']:checked");
+      data[`q${i}`] = checked ? checked.value : "";
+    }
   });
   return data;
 }
 
-function saveProgress() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectAnswers()));
-  statusEl.textContent = "Progress saved.";
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
+  statusEl.textContent = "Saved.";
 }
 
-btnSave.addEventListener("click", saveProgress);
-
-// ----------------------------------------------------
-// RESTORE ENGINE
-// ----------------------------------------------------
-function restoreProgress() {
+// RESTORE
+function restore() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return;
-
   const data = JSON.parse(raw);
 
   questions.forEach((q, i) => {
     const text = q.querySelector("input[type='text']");
-    const radios = q.querySelectorAll("input[type='radio']");
-
     if (text) text.value = data[`q${i}`] || "";
+
+    const radios = q.querySelectorAll("input[type='radio']");
     radios.forEach(r => r.checked = (r.value === data[`q${i}`]));
   });
 }
 
-// ----------------------------------------------------
-// CLEAR ENGINE
-// ----------------------------------------------------
+// CLEAR ALL
 function clearAll() {
   questions.forEach(q => {
-    const text = q.querySelector("input[type='text']");
-    if (text) text.value = "";
+    const t = q.querySelector("input[type='text']");
+    if (t) t.value = "";
     q.querySelectorAll("input[type='radio']").forEach(r => (r.checked = false));
-    q.querySelector(".gi-error-msg").textContent = "";
-    q.classList.remove("gi-question-error");
   });
+
   localStorage.removeItem(STORAGE_KEY);
   statusEl.textContent = "All answers cleared.";
 }
-btnClear.addEventListener("click", clearAll);
 
-// ----------------------------------------------------
-// SUBMIT (placeholder)
-// ----------------------------------------------------
-btnSubmit.addEventListener("click", () => {
-  if (!validateQuestion(currentIndex)) return;
-  saveProgress();
-  alert("Submit endpoint coming next!");
-});
+// NAVIGATION
+btnNext.onclick = () => {
+  if (currentIndex < totalQuestions - 1) {
+    currentIndex++;
+    showQuestion(currentIndex);
+  }
+};
+btnPrev.onclick = () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showQuestion(currentIndex);
+  }
+};
+btnSave.onclick = save;
+btnClear.onclick = clearAll;
 
-// ----------------------------------------------------
 // INIT
-// ----------------------------------------------------
-restoreProgress();
+restore();
 showQuestion(0);
-updateNavButtons();
 </script>
 
 </body>
