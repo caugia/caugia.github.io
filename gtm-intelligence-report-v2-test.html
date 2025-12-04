@@ -224,3 +224,96 @@ btnPrev.addEventListener('click', () => {
   }
 });
 </script>
+
+<script>
+// =========================================================
+// SAVE / RESTORE ENGINE v1.0
+// =========================================================
+
+const STORAGE_KEY = "caugia_gi_testdata_v1";
+
+// ------------------------------------------
+// Serialize all form fields into a JS object
+// ------------------------------------------
+function collectAnswers() {
+  const data = {};
+
+  questions.forEach((q, i) => {
+    // Text fields
+    const text = q.querySelector("input[type='text']");
+    if (text) data[`q${i}`] = text.value;
+
+    // Textareas
+    const ta = q.querySelector("textarea");
+    if (ta) data[`q${i}`] = ta.value;
+
+    // Radios
+    const radios = q.querySelectorAll("input[type='radio']");
+    if (radios.length > 0) {
+      const checked = q.querySelector("input[type='radio']:checked");
+      data[`q${i}`] = checked ? checked.value : "";
+    }
+  });
+
+  return data;
+}
+
+// ------------------------------------------
+// Apply saved answers into fields
+// ------------------------------------------
+function applyAnswers(data) {
+  if (!data) return;
+
+  questions.forEach((q, i) => {
+    const key = `q${i}`;
+    if (!(key in data)) return;
+
+    const value = data[key];
+
+    // Text
+    let text = q.querySelector("input[type='text']");
+    if (text) text.value = value;
+
+    // Textarea
+    let ta = q.querySelector("textarea");
+    if (ta) ta.value = value;
+
+    // Radios
+    let radios = q.querySelectorAll("input[type='radio']");
+    radios.forEach(r => {
+      r.checked = (r.value === value);
+    });
+  });
+}
+
+// ------------------------------------------
+// Save to localStorage
+// ------------------------------------------
+function saveProgress() {
+  const payload = collectAnswers();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  console.log("Progress saved", payload);
+}
+
+// ------------------------------------------
+// Restore on page load
+// ------------------------------------------
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  const data = JSON.parse(raw);
+  applyAnswers(data);
+}
+
+// ------------------------------------------
+// AUTO-SAVE on any input change
+// ------------------------------------------
+questions.forEach(q => {
+  q.addEventListener("input", saveProgress);
+  q.addEventListener("change", saveProgress);
+});
+
+// Run restore immediately on load
+restoreProgress();
+
+</script>
