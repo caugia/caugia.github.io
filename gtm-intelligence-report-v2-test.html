@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
   <link rel="stylesheet" href="assets/caugia-v9.css" />
@@ -10,7 +11,6 @@
   <!-- SECURITY -->
   <script src="/auth.js"></script>
 </head>
-
 <body>
 
 <header>
@@ -19,6 +19,7 @@
       <img src="assets/C-logo.png" alt="">
       <span>Caugia Consulting</span>
     </a>
+
     <nav class="nav-desktop">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -30,13 +31,12 @@
   </div>
 </header>
 
+
 <!-- ===========================================================
-     CAUGIA CONSULTING — GTM INTELLIGENCE REPORT v2
-     Canonical HTML Skeleton (for 265-question engine)
+     GTM INTELLIGENCE REPORT — LAYOUT
 =========================================================== -->
 
 <main class="gi-main">
-
   <div class="gi-shell">
 
     <!-- ========================= LEFT SIDEBAR ========================= -->
@@ -47,12 +47,10 @@
 
       <p class="gi-left-desc">
         A structured, 12-pillar diagnostic that evaluates your entire go to market system
-        and produces a personalized, system-level intelligence report. Your progress saves automatically.
+        and produces a personalized intelligence report. Your progress saves automatically.
       </p>
 
-      <div class="gi-left-meta">
-        12 pillars • 265 questions • ~40 minutes
-      </div>
+      <div class="gi-left-meta">12 pillars • 265 questions • ~40 minutes</div>
 
       <div class="gi-left-subheading">Pillars Included</div>
 
@@ -73,17 +71,15 @@
       </ul>
 
       <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
-
     </aside>
+
 
     <!-- ========================= CENTER QUESTION ENGINE ========================= -->
     <section class="gi-center">
-
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
           <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
-
           <h2 class="gi-question-title" id="gi-question-title"></h2>
           <p class="gi-question-sub" id="gi-question-sub"></p>
         </div>
@@ -99,8 +95,8 @@
         </div>
 
       </div>
-
     </section>
+
 
     <!-- ========================= RIGHT SIDEBAR ========================= -->
     <aside class="gi-right">
@@ -128,6 +124,7 @@
   </div>
 </main>
 
+
 <footer>
   <div class="footer-inner">
     <div class="footer-left">© 2025 Caugia Consulting</div>
@@ -139,98 +136,47 @@
   </div>
 </footer>
 
+
 <!-- ===========================================================
-     FULL QUESTION ENGINE v1.0 + PILLAR META
+     LOAD QUESTIONS FIRST
+=========================================================== -->
+<script src="assets/QUESTIONS.js"></script>
+
+
+<!-- ===========================================================
+     QUESTION ENGINE v1.0
 =========================================================== -->
 <script>
 
-/* ============================================
-   PILLAR META — RIGHT SIDEBAR CONTEXT
-============================================ */
+/* PILLAR META */
 let PILLAR_META = {
-
-  0: {
-    name: "Context",
-    desc: "This section captures essential background information so the assessment can correctly interpret your responses."
-  },
-  1: {
-    name: "GTM Strategy & Leadership",
-    desc: "This pillar assesses strategic clarity, leadership cohesion and how effectively direction is translated into execution."
-  },
-  2: {
-    name: "Market Intelligence",
-    desc: "This pillar evaluates your understanding of market dynamics, customers and competitors, ensuring decisions are anchored in reality."
-  },
-  3: {
-    name: "Product Marketing",
-    desc: "This pillar analyzes the strength of your narrative, ICP definition, messaging and overall value communication."
-  },
-  4: {
-    name: "Demand Generation",
-    desc: "This pillar reviews your ability to generate qualified pipeline across channels, systems and funnel stages."
-  },
-  5: {
-    name: "Sales Execution",
-    desc: "This pillar measures the consistency and effectiveness of your sales motion, including qualification, deal flow and forecasting."
-  },
-  6: {
-    name: "Customer Success & Expansion",
-    desc: "This pillar evaluates onboarding quality, value delivery, customer health and expansion maturity."
-  },
-  7: {
-    name: "Revenue Operations & Systems",
-    desc: "This pillar assesses your process architecture, tooling stack, workflows, data flows and operational quality."
-  },
-  8: {
-    name: "Pricing & Packaging",
-    desc: "This pillar examines pricing logic, packaging fit, discounting discipline and monetization alignment with customer value."
-  },
-  9: {
-    name: "Brand & Communications",
-    desc: "This pillar evaluates brand clarity, credibility, communication quality and consistency across touchpoints."
-  },
-  10: {
-    name: "Data & Insights",
-    desc: "This pillar reviews the availability, accuracy and decision-making utility of your GTM data."
-  },
-  11: {
-    name: "Enablement",
-    desc: "This pillar assesses how well teams are equipped with the skills, training and structure needed for consistent performance."
-  },
-  12: {
-    name: "Leadership & Alignment",
-    desc: "This pillar evaluates cross-functional alignment, accountability, communication and leadership rhythm."
-  }
-
+  0: { name: "Context", desc: "This section captures essential background information so the assessment can interpret your responses." },
+  1: { name: "GTM Strategy & Leadership", desc: "This pillar assesses strategic clarity, leadership cohesion and execution rhythm." },
+  2: { name: "Market Intelligence", desc: "This pillar evaluates understanding of market, customer and competitive dynamics." },
+  3: { name: "Product Marketing", desc: "This pillar analyzes ICP clarity, narrative and value communication." },
+  4: { name: "Demand Generation", desc: "This pillar reviews your ability to generate qualified pipeline across channels." },
+  5: { name: "Sales Execution", desc: "This pillar measures qualification, forecasting and deal excellence." },
+  6: { name: "Customer Success & Expansion", desc: "This pillar evaluates onboarding, value delivery and expansion maturity." },
+  7: { name: "Revenue Operations & Systems", desc: "This pillar assesses tooling, workflows, processes and data flows." },
+  8: { name: "Pricing & Packaging", desc: "This pillar examines pricing logic, packaging structure and monetization strength." },
+  9: { name: "Brand & Communications", desc: "This pillar evaluates clarity, consistency and credibility of your brand." },
+  10: { name: "Data & Insights", desc: "This pillar reviews availability and accuracy of your GTM data." },
+  11: { name: "Enablement", desc: "This pillar evaluates training, readiness and performance support." },
+  12: { name: "Leadership & Alignment", desc: "This pillar evaluates alignment, accountability and cultural health." }
 };
 
-/* ===========================================================
-   QUESTION ENGINE v1.0 (as previously provided)
-=========================================================== */
 
-/* GLOBAL STATE */
+/* GLOBAL ENGINE STATE */
 let currentIndex = 0;
-const STORAGE_KEY = "caugia_gtm_report_v1";
-let QUESTIONS = []; /* ← wordt later gevuld met 265 vragen */
+const STORAGE_KEY = "caugia_gtm_report_v2";
+let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
-function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (!saved) return {};
-  try { return JSON.parse(saved); } catch { return {}; }
-}
-let STATE = loadState();
-
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-}
-setInterval(saveState, 1000);
-
-/* DOM SHORTCUTS */
+/* DOM */
 const qTitle = document.getElementById("gi-question-title");
 const qSub = document.getElementById("gi-question-sub");
 const qBody = document.getElementById("gi-question-body");
-
 const kicker = document.getElementById("gi-question-kicker");
+
 const rightName = document.getElementById("gi-pillar-name");
 const rightDesc = document.getElementById("gi-pillar-desc");
 
@@ -246,129 +192,124 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
 
+
 /* RENDERING */
 function renderQuestion() {
   const q = QUESTIONS[currentIndex];
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
-  qTitle.textContent = q.title;
-  qSub.textContent = "";
+  qTitle.textContent = q.title || "";
+  qSub.textContent = q.subtitle || "";
 
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
-  leftPillars.forEach(li => {
-    li.classList.toggle("active", Number(li.dataset.p) === q.pillar);
-  });
+  leftPillars.forEach(li =>
+    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
+  );
 
   qBody.innerHTML = buildInput(q);
 
   if (STATE[q.id] !== undefined) {
     const el = qBody.querySelector("[name='q']");
     if (el) el.value = STATE[q.id];
-    if (q.type === "radio") {
-      const selected = qBody.querySelector(`input[value="${STATE[q.id]}"]`);
-      if (selected) selected.checked = true;
-    }
   }
 
-  updateNav();
   updateProgress();
+  updateNav();
 }
 
-/* INPUT BUILDER */
 function buildInput(q) {
   if (q.type === "text") return `<input type="text" name="q">`;
-  if (q.type === "number") return `<input type="number" name="q">`;
   if (q.type === "textarea") return `<textarea name="q"></textarea>`;
+  if (q.type === "number") return `<input type="number" name="q">`;
+
   if (q.type === "radio") {
     return q.options.map(opt => `
       <label class="gi-option-card">
         <input type="radio" name="q" value="${opt}">
         <span>${opt}</span>
-      </label>
-    `).join("");
+      </label>`).join("");
   }
-  return "Unsupported question type";
+
+  return `<p>Unsupported question type</p>`;
 }
 
-/* NAVIGATION + SAVE */
-function storeCurrentAnswer() {
+
+/* NAVIGATION */
+function storeCurrent() {
   const q = QUESTIONS[currentIndex];
   const el = qBody.querySelector("[name='q']");
   if (!el) return;
+
   if (q.type === "radio") {
     const selected = qBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
   } else {
     STATE[q.id] = el.value;
   }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
 
-btnNext.addEventListener("click", () => {
-  storeCurrentAnswer();
-  if (currentIndex < QUESTIONS.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  }
-});
+btnNext.onclick = () => {
+  storeCurrent();
+  if (currentIndex < QUESTIONS.length - 1) currentIndex++;
+  renderQuestion();
+};
 
-btnPrev.addEventListener("click", () => {
-  storeCurrentAnswer();
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
-});
+btnPrev.onclick = () => {
+  storeCurrent();
+  if (currentIndex > 0) currentIndex--;
+  renderQuestion();
+};
 
-btnSave.addEventListener("click", () => {
-  storeCurrentAnswer();
-  saveState();
-});
+btnSave.onclick = storeCurrent;
 
-btnClear.addEventListener("click", () => {
+btnClear.onclick = () => {
   delete STATE[QUESTIONS[currentIndex].id];
-  qBody.querySelectorAll("[name='q']").forEach(el => {
-    if (el.type === "radio") el.checked = false;
-    else el.value = "";
-  });
-  saveState();
-});
+  qBody.querySelector("[name='q']").value = "";
+  storeCurrent();
+};
 
-btnSubmit.addEventListener("click", () => {
-  storeCurrentAnswer();
-  saveState();
-  alert("Your assessment has been submitted. A full diagnostic report will be generated.");
-});
+btnSubmit.onclick = () => {
+  storeCurrent();
+  alert("Your assessment has been submitted.");
+};
 
-/* NAV */
-function updateNav() {
-  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
-  const last = currentIndex === QUESTIONS.length - 1;
-  btnNext.style.display = last ? "none" : "inline-block";
-  btnSubmit.style.display = last ? "inline-block" : "none";
-}
 
 /* PROGRESS */
 function updateProgress() {
   const answered = Object.keys(STATE).length;
   const total = QUESTIONS.length;
-  progressCount.textContent = `${answered} / ${total}`;
   const pct = Math.round((answered / total) * 100);
+
+  progressCount.textContent = `${answered} / ${total}`;
   progressPercent.textContent = `${pct}%`;
   progressBar.style.width = pct + "%";
 }
 
-/* INIT */
-function startAssessment() {
-  renderQuestion();
+
+/* NAV BUTTON LOGIC */
+function updateNav() {
+  const last = currentIndex === QUESTIONS.length - 1;
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+  btnNext.style.display = last ? "none" : "inline-block";
+  btnSubmit.style.display = last ? "inline-block" : "none";
 }
-document.addEventListener("DOMContentLoaded", startAssessment);
+
+
+/* START AFTER QUESTIONS LOADED */
+window.addEventListener("load", () => {
+  if (!QUESTIONS || QUESTIONS.length === 0) {
+    console.error("QUESTIONS.js failed to load or is empty.");
+    return;
+  }
+  renderQuestion();
+});
 
 </script>
 
-<script src="assets/QUESTIONS.js"></script>
-  
 </body>
 </html>
