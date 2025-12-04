@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
 
-  <!-- 🔒 SECURITY -->
+  <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
 </head>
 
@@ -89,6 +89,11 @@
           </div>
         </div>
 
+        <!-- PILLAR CHIPS NAV -->
+        <div class="gi-pillars-nav">
+          <div id="gi-pillars-list" class="gi-pillars-list" aria-label="GTM pillars"></div>
+        </div>
+
         <!-- PILLAR HEADER -->
         <div class="gi-main-header">
           <h2 id="gi-pillar-title" class="gi-card-title"></h2>
@@ -97,17 +102,17 @@
 
         <!-- INTRO COPY -->
         <p class="gi-intro-text">
-          Move through the questions in order or jump between pillars using the chips above.
+          Move through the questions one by one using the navigation bar, or jump between pillars using the chips above.
           You can change answers at any moment before submitting.
         </p>
 
         <!-- STICKY ACTION BAR -->
         <div class="gi-action-bar">
-          <button id="gi-prev" type="button" class="gi-ab-btn">Previous</button>
-          <button id="gi-save" type="button" class="gi-ab-btn gi-ab-secondary">Save</button>
-          <button id="gi-clear" type="button" class="gi-ab-btn gi-ab-secondary">Clear</button>
-          <button id="gi-next" type="button" class="gi-ab-btn gi-ab-primary">Next</button>
-          <button id="gi-submit" type="submit" class="gi-ab-btn gi-ab-primary">Submit</button>
+          <button id="gi-prev"   type="button" class="gi-ab-btn">Previous</button>
+          <button id="gi-save"   type="button" class="gi-ab-btn gi-ab-secondary">Save</button>
+          <button id="gi-clear"  type="button" class="gi-ab-btn gi-ab-secondary">Clear</button>
+          <button id="gi-next"   type="button" class="gi-ab-btn gi-ab-primary">Next</button>
+          <button id="gi-submit" type="button" class="gi-ab-btn gi-ab-primary">Submit</button>
         </div>
 
         <!-- FORM START -->
@@ -3303,7 +3308,7 @@
 
           <!-- END OF QUESTIONS -->
 
-          <!-- Hidden submit button so Enter-key submits the form -->
+ <!-- Hidden submit button so Enter-key submits the form -->
           <button type="submit" id="gi-hidden-submit" style="display:none;">Submit</button>
         </form>
         <!-- FORM END -->
@@ -3380,16 +3385,17 @@
        1. QUESTION + PROGRESS LOGIC
     ===================================================== */
     var questions = $$(".gi-question");
+    var sections  = $$(".gi-section[data-pillar]");
     var TOTAL_QUESTIONS = questions.length;
 
-    var countEl = $("#gi-progress-count");
-    var pctEl   = $("#gi-progress-percent");
-    var barEl   = $("#gi-progress-bar");
-    var statusEl = $("#gi-footer-status");
+    var countEl   = $("#gi-progress-count");
+    var pctEl     = $("#gi-progress-percent");
+    var barEl     = $("#gi-progress-bar");
+    var statusEl  = $("#gi-footer-status");
 
     // Debug panel
-    var debugPanel  = $("#gi-debug");
-    var debugOutput = $("#gi-debug-output");
+    var debugPanel   = $("#gi-debug");
+    var debugOutput  = $("#gi-debug-output");
     var debugEnabled = false;
 
     if (debugPanel && debugOutput && /debug=1/.test(window.location.search)) {
@@ -3407,12 +3413,12 @@
     function isQuestionAnswered(q) {
       if (!q) return false;
 
-      // Radio buttons
+      // Radios
       if (q.querySelector("input[type='radio']:checked")) {
         return true;
       }
 
-      // Text fields
+      // Textual fields
       var textFields = q.querySelectorAll(
         "textarea, input[type='text'], input[type='email'], input[type='number']"
       );
@@ -3458,7 +3464,7 @@
       logDebug("Progress updated: " + answered + " / " + TOTAL_QUESTIONS + " (" + pct + "%)");
     }
 
-    // Init
+    // Init progress
     updateProgressUI();
 
     // On any change in the form
@@ -3469,56 +3475,56 @@
     });
 
     /* =====================================================
-       2. PILLAR NAVIGATION (1–12), CONTEXT FIXED
+       2. ONE-QUESTION FLOW + PILLAR CHIPS
     ===================================================== */
-    var sections = $$(".gi-section[data-pillar]");
-    if (!sections.length) return;
+    if (!sections.length || !questions.length) {
+      logDebug("No sections or questions found. Aborting engine.");
+      return;
+    }
 
-    // Ensure sections are sorted by pillar index
-    sections.sort(function (a, b) {
-      var pa = parseInt(a.getAttribute("data-pillar"), 10) || 0;
-      var pb = parseInt(b.getAttribute("data-pillar"), 10) || 0;
-      return pa - pb;
-    });
-
-    var chipsWrap   = $("#gi-pillars-list");
     var headerTitle = $("#gi-pillar-title");
     var headerMeta  = $("#gi-pillar-meta");
+    var chipsWrap   = $("#gi-pillars-list");
+    var chips       = [];
 
-    var prevBtn  = $("#gi-btn-prev");
-    var nextBtn  = $("#gi-btn-next");
+    var currentQuestionIndex = 0;
 
-    var pillarIndex = 0;
-    var chips = [];
-
-    function setActivePillar(idx) {
-      if (idx < 0) idx = 0;
-      if (idx >= sections.length) idx = sections.length - 1;
-      pillarIndex = idx;
-
-      for (var i = 0; i < sections.length; i++) {
-        sections[i].style.display = (i === pillarIndex) ? "block" : "none";
+    function getSectionForQuestion(q) {
+      var node = q;
+      while (node && !node.classList.contains("gi-section")) {
+        node = node.parentElement;
       }
+      return node;
+    }
 
-      var active = sections[pillarIndex];
-      if (active) {
-        var h2 = active.querySelector("h2");
-        var p  = active.querySelector("p");
-        if (headerTitle && h2) headerTitle.textContent = h2.textContent;
-        if (headerMeta  && p) headerMeta.textContent  = p.textContent;
-      }
+    function updateHeaderForQuestion(q) {
+      var section = getSectionForQuestion(q);
+      if (!section) return;
 
-      for (var j = 0; j < chips.length; j++) {
-        if (j === pillarIndex) {
-          chips[j].classList.add("is-active");
+      var h2 = section.querySelector("h2");
+      var p  = section.querySelector("p");
+
+      if (headerTitle && h2) headerTitle.textContent = h2.textContent;
+      if (headerMeta  && p)  headerMeta.textContent  = p.textContent;
+    }
+
+    function getPillarIdForSection(section) {
+      if (!section) return null;
+      return section.getAttribute("data-pillar");
+    }
+
+    function setActiveChipForPillar(pillarId) {
+      for (var i = 0; i < chips.length; i++) {
+        var chip = chips[i];
+        if (chip.getAttribute("data-pillar") === String(pillarId)) {
+          chip.classList.add("is-active");
         } else {
-          chips[j].classList.remove("is-active");
+          chip.classList.remove("is-active");
         }
       }
+    }
 
-      if (prevBtn) prevBtn.disabled = pillarIndex === 0;
-      if (nextBtn) nextBtn.disabled = pillarIndex === sections.length - 1;
-
+    function scrollMainCardTop() {
       var mainCard = document.querySelector(".gi-main-card");
       if (mainCard) {
         var rect = mainCard.getBoundingClientRect();
@@ -3528,58 +3534,121 @@
           behavior: "smooth"
         });
       }
-
-      logDebug("Active pillar set to index " + pillarIndex);
     }
 
-    // Build chips
+    function showQuestionAt(index) {
+      if (index < 0) index = 0;
+      if (index >= questions.length) index = questions.length - 1;
+      currentQuestionIndex = index;
+
+      // Hide all questions
+      for (var i = 0; i < questions.length; i++) {
+        questions[i].style.display = "none";
+      }
+
+      var activeQ = questions[currentQuestionIndex];
+      if (activeQ) {
+        activeQ.style.display = "block";
+      }
+
+      // Only keep the parent section visible
+      for (var j = 0; j < sections.length; j++) {
+        sections[j].style.display = "none";
+      }
+      var activeSection = getSectionForQuestion(activeQ);
+      if (activeSection) {
+        activeSection.style.display = "block";
+      }
+
+      // Header + chips
+      updateHeaderForQuestion(activeQ);
+      var pillarId = getPillarIdForSection(activeSection);
+      setActiveChipForPillar(pillarId);
+
+      // Prev/Next button state
+      var atFirst = currentQuestionIndex === 0;
+      var atLast  = currentQuestionIndex === questions.length - 1;
+
+      var prevButtons = [$("#gi-prev"), $("#gi-btn-prev")].filter(Boolean);
+      var nextButtons = [$("#gi-next"), $("#gi-btn-next")].filter(Boolean);
+
+      prevButtons.forEach(function (btn) { btn.disabled = atFirst; });
+      nextButtons.forEach(function (btn) { btn.disabled = atLast; });
+
+      // Scroll to top of card
+      scrollMainCardTop();
+
+      // Progress
+      updateProgressUI();
+
+      logDebug("Question index set to " + currentQuestionIndex + " (pillar " + pillarId + ")");
+    }
+
+    // Build chips (Context + 12 pillars)
     if (chipsWrap) {
       chipsWrap.innerHTML = "";
+      sections.sort(function (a, b) {
+        var pa = parseInt(a.getAttribute("data-pillar"), 10) || 0;
+        var pb = parseInt(b.getAttribute("data-pillar"), 10) || 0;
+        return pa - pb;
+      });
+
       for (var i = 0; i < sections.length; i++) {
-        var sec   = sections[i];
-        var h2    = sec.querySelector("h2");
-        var title = h2 ? h2.textContent : "Pillar " + (i + 1);
+        var sec     = sections[i];
+        var pillar  = sec.getAttribute("data-pillar");
+        var h2      = sec.querySelector("h2");
+        var title   = h2 ? h2.textContent : "Pillar " + pillar;
 
         var chip = document.createElement("button");
         chip.type = "button";
         chip.className = "gi-pillar-chip";
         chip.textContent = title;
-        chip.setAttribute("data-pillar-index", i);
+        chip.setAttribute("data-pillar", pillar);
 
-        chip.addEventListener("click", (function (index) {
-          return function () {
-            setActivePillar(index);
-          };
-        })(i));
+        (function (sectionRef) {
+          chip.addEventListener("click", function () {
+            // Jump to first question of that section
+            var firstQ = sectionRef.querySelector(".gi-question");
+            if (!firstQ) return;
+            var idx = questions.indexOf(firstQ);
+            if (idx === -1) return;
+            showQuestionAt(idx);
+          });
+        })(sec);
 
         chipsWrap.appendChild(chip);
         chips.push(chip);
       }
     }
 
-    // Prev / Next navigation between pillars
-    if (prevBtn) {
-      prevBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        setActivePillar(pillarIndex - 1);
-      });
-    }
+    // Wire up question-level prev/next (sticky + footer)
+    var prevButtons = [$("#gi-prev"), $("#gi-btn-prev")].filter(Boolean);
+    var nextButtons = [$("#gi-next"), $("#gi-btn-next")].filter(Boolean);
 
-    if (nextBtn) {
-      nextBtn.addEventListener("click", function (e) {
+    prevButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
         e.preventDefault();
-        setActivePillar(pillarIndex + 1);
+        if (currentQuestionIndex > 0) {
+          showQuestionAt(currentQuestionIndex - 1);
+        }
       });
-    }
+    });
 
-    // Start with pillar 1 (index 0)
-    setActivePillar(0);
+    nextButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (currentQuestionIndex < questions.length - 1) {
+          showQuestionAt(currentQuestionIndex + 1);
+        }
+      });
+    });
+
+    // Start on first question
+    showQuestionAt(0);
 
     /* =====================================================
        3. SAVE / CLEAR (LOCAL STORAGE)
     ===================================================== */
-    var saveBtn  = $("#gi-btn-save");
-    var clearBtn = $("#gi-btn-clear");
     var STORAGE_KEY = "caugia_gi_answers_v1";
 
     function serializeForm() {
@@ -3659,19 +3728,22 @@
       logDebug("Progress cleared by user.");
     }
 
-    if (saveBtn) {
-      saveBtn.addEventListener("click", function (e) {
+    var saveButtons  = [$("#gi-btn-save"), $("#gi-save")].filter(Boolean);
+    var clearButtons = [$("#gi-btn-clear"), $("#gi-clear")].filter(Boolean);
+
+    saveButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
         e.preventDefault();
         saveProgress();
       });
-    }
+    });
 
-    if (clearBtn) {
-      clearBtn.addEventListener("click", function (e) {
+    clearButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
         e.preventDefault();
         clearProgress();
       });
-    }
+    });
 
     // Load immediately on start
     loadProgress();
@@ -3681,21 +3753,21 @@
     ===================================================== */
     var WEBHOOK_URL = "https://hook.make.com/REPLACE_WEBHOOK"; // replace later
 
-    // Visible submit button triggers the real form submit
-    var visibleSubmitBtn = $("#gi-btn-submit");
-    if (visibleSubmitBtn) {
-      visibleSubmitBtn.addEventListener("click", function (e) {
+    // Visible submit buttons (sticky + footer)
+    var visibleSubmitButtons = [$("#gi-btn-submit"), $("#gi-submit")].filter(Boolean);
+
+    visibleSubmitButtons.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
         e.preventDefault();
         if (typeof form.requestSubmit === "function") {
           form.requestSubmit();
         } else {
-          // Fallback for older browsers
           var evt = document.createEvent("Event");
           evt.initEvent("submit", true, true);
           form.dispatchEvent(evt);
         }
       });
-    }
+    });
 
     form.addEventListener("submit", function (e) {
       // Enforce that all questions are answered
@@ -3748,4 +3820,4 @@
 </script>
 
 </body>
-</html>
+</html>         
