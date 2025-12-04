@@ -280,18 +280,19 @@ function buildInput(q) {
   }
 
   /* SELECT (dropdown) */
-  if (q.type === "select") {
-    return `
-      <div class="gi-select-wrap">
-        <select name="q" class="gi-select">
-          <option value="">Select an option…</option>
-          ${q.options.map(opt => `
-            <option value="${opt}">${opt}</option>
-          `).join("")}
-        </select>
-      </div>
-    `;
-  }
+if (q.type === "select") {
+  return `
+    <div class="gi-select-wrap">
+      <select name="q" class="gi-select">
+        <option value="">Select an option…</option>
+        ${q.options
+          .map(opt => `<option value="${opt}">${opt}</option>`)
+          .join("")}
+      </select>
+    </div>
+  `;
+}
+
 
   
   /* FALLBACK (for debugging) */
