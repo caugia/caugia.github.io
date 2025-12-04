@@ -299,6 +299,222 @@
   </div>
 </footer>
 
+  <script>
+/* ===========================================================
+   CAUGIA CONSULTING — GTM INTELLIGENCE REPORT ENGINE v1.0
+   Pure Vanilla JS • Autosave • 265 questions • Premium UX
+   =========================================================== */
+
+/* ============================================
+   GLOBAL STATE
+============================================ */
+let currentIndex = 0;
+
+/* Autosave key */
+const STORAGE_KEY = "caugia_gtm_report_v1";
+
+/* Will be filled in Step 3E (all 265 questions) */
+let QUESTIONS = [];
+
+/* ============================================
+   LOAD / SAVE MECHANISME
+============================================ */
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return {};
+  try { return JSON.parse(saved); }
+  catch { return {}; }
+}
+
+let STATE = loadState();
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+}
+
+/* Autosave elke seconde */
+setInterval(saveState, 1000);
+
+/* ============================================
+   SHORTCUTS TO DOM
+============================================ */
+const qCard = document.getElementById("gi-question-card");
+const qTitle = document.getElementById("gi-question-title");
+const qSub = document.getElementById("gi-question-sub");
+const qBody = document.getElementById("gi-question-body");
+
+const kicker = document.getElementById("gi-question-kicker");
+const rightName = document.getElementById("gi-pillar-name");
+const rightDesc = document.getElementById("gi-pillar-desc");
+
+const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
+
+const btnPrev = document.getElementById("gi-prev-btn");
+const btnNext = document.getElementById("gi-next-btn");
+const btnSubmit = document.getElementById("gi-submit-btn");
+const btnClear = document.getElementById("gi-clear-btn");
+const btnSave = document.getElementById("gi-save-btn");
+
+const progressCount = document.getElementById("gi-progress-count");
+const progressPercent = document.getElementById("gi-progress-percent");
+const progressBar = document.getElementById("gi-progress-bar");
+
+/* ============================================
+   PILLAR META — wordt in Step 3E gevuld
+============================================ */
+let PILLAR_META = {}; // { 0:{name:"...",desc:"..."}, ... }
+
+/* ============================================
+   RENDERING VAN DE ACTUELE VRAAG
+============================================ */
+function renderQuestion() {
+  const q = QUESTIONS[currentIndex];
+  if (!q) return;
+
+  kicker.textContent = PILLAR_META[q.pillar].name;
+  qTitle.textContent = q.title;
+  qSub.textContent = ""; // Style B = ultra clean
+
+  /* actieve pillar rechts */
+  rightName.textContent = PILLAR_META[q.pillar].name;
+  rightDesc.textContent = PILLAR_META[q.pillar].desc;
+
+  /* actieve pillar links blauw */
+  leftPillars.forEach(li => {
+    li.classList.toggle("active", Number(li.dataset.p) === q.pillar);
+  });
+
+  /* input renderen */
+  qBody.innerHTML = buildInput(q);
+
+  /* opgeslagen waarde invullen */
+  if (STATE[q.id] !== undefined) {
+    const el = qBody.querySelector("[name='q']");
+    if (el) el.value = STATE[q.id];
+    if (q.type === "radio") {
+      const selected = qBody.querySelector(
+        "input[type='radio'][value='" + STATE[q.id] + "']"
+      );
+      if (selected) selected.checked = true;
+    }
+  }
+
+  updateNav();
+  updateProgress();
+}
+
+/* ============================================
+   INPUT BUILDER
+============================================ */
+function buildInput(q) {
+  if (q.type === "text") {
+    return `<input type="text" name="q">`;
+  }
+  if (q.type === "number") {
+    return `<input type="number" name="q">`;
+  }
+  if (q.type === "textarea") {
+    return `<textarea name="q"></textarea>`;
+  }
+  if (q.type === "radio") {
+    return q.options.map(opt => `
+      <label class="gi-option-card">
+        <input type="radio" name="q" value="${opt}">
+        <span>${opt}</span>
+      </label>
+    `).join("");
+  }
+  return "Unsupported question type";
+}
+
+/* ============================================
+   NAVIGATION + SAVE
+============================================ */
+function storeCurrentAnswer() {
+  const q = QUESTIONS[currentIndex];
+  const el = qBody.querySelector("[name='q']");
+  if (!el) return;
+  if (q.type === "radio") {
+    const selected = qBody.querySelector("input[type='radio']:checked");
+    if (selected) STATE[q.id] = selected.value;
+  } else {
+    STATE[q.id] = el.value;
+  }
+}
+
+btnNext.addEventListener("click", () => {
+  storeCurrentAnswer();
+  if (currentIndex < QUESTIONS.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  }
+});
+
+btnPrev.addEventListener("click", () => {
+  storeCurrentAnswer();
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
+});
+
+btnSave.addEventListener("click", () => {
+  storeCurrentAnswer();
+  saveState();
+});
+
+btnClear.addEventListener("click", () => {
+  delete STATE[QUESTIONS[currentIndex].id];
+  qBody.querySelectorAll("[name='q']").forEach(el => {
+    if (el.type === "radio") el.checked = false;
+    else el.value = "";
+  });
+  saveState();
+});
+
+/* ============================================
+   SUBMIT
+============================================ */
+btnSubmit.addEventListener("click", () => {
+  storeCurrentAnswer();
+  saveState();
+  alert("Your assessment has been submitted. The full report will be generated.");
+});
+
+/* ============================================
+   NAV UPDATE
+============================================ */
+function updateNav() {
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+
+  const last = currentIndex === QUESTIONS.length - 1;
+  btnNext.style.display = last ? "none" : "inline-block";
+  btnSubmit.style.display = last ? "inline-block" : "none";
+}
+
+/* ============================================
+   PROGRESS UPDATE
+============================================ */
+function updateProgress() {
+  const answered = Object.keys(STATE).length;
+  const total = QUESTIONS.length;
+
+  progressCount.textContent = `${answered} / ${total}`;
+  const pct = Math.round((answered / total) * 100);
+  progressPercent.textContent = `${pct}%`;
+  progressBar.style.width = pct + "%";
+}
+
+/* ============================================
+   INIT
+============================================ */
+function startAssessment() {
+  renderQuestion();
+}
+
+document.addEventListener("DOMContentLoaded", startAssessment);
+</script>
+
 
 </body>
 </html>
