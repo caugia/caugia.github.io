@@ -221,20 +221,47 @@ function renderQuestion() {
 }
 
 function buildInput(q) {
-  if (q.type === "text") return `<input type="text" name="q">`;
-  if (q.type === "textarea") return `<textarea name="q"></textarea>`;
-  if (q.type === "number") return `<input type="number" name="q">`;
+
+  /* GROUP TYPE (multiple fields in one question) */
+  if (q.type === "group") {
+    return `
+      <div class="gi-group">
+        ${q.fields.map(f => `
+          <div class="gi-field ${f.full ? "full" : "half"}">
+            <label>${f.label}</label>
+            <input type="text" name="${f.name}">
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  /* BASIC TYPES */
+  if (q.type === "text") {
+    return `<input type="text" name="q">`;
+  }
+
+  if (q.type === "textarea") {
+    return `<textarea name="q"></textarea>`;
+  }
+
+  if (q.type === "number") {
+    return `<input type="number" name="q">`;
+  }
 
   if (q.type === "radio") {
     return q.options.map(opt => `
       <label class="gi-option-card">
         <input type="radio" name="q" value="${opt}">
         <span>${opt}</span>
-      </label>`).join("");
+      </label>
+    `).join("");
   }
 
-  return `<p>Unsupported question type</p>`;
+  /* FALLBACK (for debugging) */
+  return `<p>Unsupported question type: ${q.type}</p>`;
 }
+
 
 
 /* NAVIGATION */
