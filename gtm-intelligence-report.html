@@ -3657,7 +3657,21 @@ allSections.forEach(function (sec) {
   sec.style.display = (p === "0") ? "block" : "none";
 });
 
-updateStepHeader(0); // start with context
+function updateStepHeader(pillarIndex) {
+  var active = pillarIndex !== undefined ? pillarIndex : CURRENT_PILLAR;
+  var sections = $all(".gi-section");
+  var titleEl = $("#gi-pillar-title");
+  var metaEl  = $("#gi-pillar-meta");
+
+  var activeSection = sections[active];
+  if (activeSection) {
+    var h2 = activeSection.querySelector("h2");
+    var p  = activeSection.querySelector("p");
+
+    if (titleEl && h2)  titleEl.textContent = h2.textContent;
+    if (metaEl && p)    metaEl.textContent  = p.textContent;
+  }
+}
 
     // Autosave
     $all("#gtm-intel-form input, #gtm-intel-form select, #gtm-intel-form textarea")
