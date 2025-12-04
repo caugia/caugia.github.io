@@ -1,549 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+// =========================================================
+// CAUGIA GTM INTELLIGENCE REPORT — JS ENGINE v1.0
+// Init • Pillar Linking • Question Rendering
+// =========================================================
 
-  <title>GTM Intelligence Report | Caugia Consulting</title>
+// ---------------------------
+// 1. Collect DOM Elements
+// ---------------------------
+const questions = Array.from(document.querySelectorAll('.gi-question'));
+const pillarTitle = document.getElementById('gi-pillar-title');
+const pillarMeta  = document.getElementById('gi-pillar-meta');
+const pillarLabel = document.getElementById('gi-pillar-step');
+const sidebarPillars = Array.from(document.querySelectorAll('.gi-side-pillar-list li'));
 
-  <!-- Brand + Security -->
-  <link rel="icon" href="assets/C-logo.png" type="image/png">
-  <script src="/auth.js"></script>
-</head>
-<body>
+let currentIndex = 0;
+const totalQuestions = questions.length;
 
-<main class="gi-main">
-
-  <!-- ========================================= -->
-  <!--  LEFT SIDEBAR — FIXED CONSULTANCY PANEL    -->
-  <!-- ========================================= -->
-  <aside class="gi-side">
-
-    <div class="gi-side-header">
-      <div class="gi-side-eyebrow">GTM Intelligence Report</div>
-      <h1>Complete Go-To-Market Diagnostic</h1>
-      <p class="gi-side-meta">A calm, structured and complete assessment of your revenue system.</p>
-    </div>
-
-    <!-- PROGRESS -->
-    <div class="gi-progress">
-      <div class="gi-progress-top">
-        <span id="gi-progress-count">0 of 0</span>
-        <span id="gi-progress-percent">0%</span>
-      </div>
-      <div id="gi-progress-track">
-        <div id="gi-progress-bar"></div>
-      </div>
-    </div>
-
-    <!-- PILLAR OVERVIEW (non-interactive) -->
-    <div class="gi-side-pillars">
-      <div class="gi-side-pillars-title">Pillars Overview</div>
-
-      <ul class="gi-side-pillar-list">
-        <li data-pillar="0">Context Capture</li>
-        <li data-pillar="1">Market Intelligence</li>
-        <li data-pillar="2">ICP & Segmentation</li>
-        <li data-pillar="3">Product Marketing</li>
-        <li data-pillar="4">Demand Generation</li>
-        <li data-pillar="5">Funnel & Sales Execution</li>
-        <li data-pillar="6">Pipeline & Forecasting</li>
-        <li data-pillar="7">Revenue Operations</li>
-        <li data-pillar="8">Enablement</li>
-        <li data-pillar="9">Customer Success</li>
-        <li data-pillar="10">Planning & Governance</li>
-        <li data-pillar="11">Organizational Alignment</li>
-        <li data-pillar="12">Tool Stack & Systems</li>
-      </ul>
-    </div>
-
-    <!-- =========================== -->
-    <!-- FAQ IN SIDEBAR (PREMIUM)     -->
-    <!-- =========================== -->
-    <div class="gi-faq">
-      <div class="gi-faq-title">Frequently Asked Questions</div>
-
-      <details>
-        <summary>How long does the assessment take?</summary>
-        <p>Most leaders complete it in 25–35 minutes. You can save progress at any time.</p>
-      </details>
-
-      <details>
-        <summary>Can I pause and resume?</summary>
-        <p>Yes. Your progress is stored locally in your browser.</p>
-      </details>
-
-      <details>
-        <summary>What happens with my answers?</summary>
-        <p>Once submitted, your responses generate a structured, system-level intelligence report.</p>
-      </details>
-
-      <details>
-        <summary>Will I receive a GTM Intelligence Report?</summary>
-        <p>Yes. Caugia will reach out with next steps once your assessment is received.</p>
-      </details>
-    </div>
-
-  </aside>
+// Define how many questions belong to each pillar
+// (You will update this when all pillars & all questions are added)
+const pillarStructure = [
+  { start: 0, end: 4,  title: "Context Capture", meta: "Capturing essential background about goals, growth stage and constraints." },
+  { start: 5, end: 29, title: "Market Intelligence", meta: "How well your organization reads markets, competitors and signals." },
+  // ... add other pillars here ...
+];
 
 
-
-  <!-- ========================================= -->
-  <!--  RIGHT SIDE — MAIN QUESTION FLOW           -->
-  <!-- ========================================= -->
-  <section class="gi-main-card">
-
-    <!-- Pillar INTRO (changes dynamically) -->
-    <header class="gi-pillar-header">
-      <div class="gi-pillar-label" id="gi-pillar-step">Pillar 1 of 12</div>
-      <h2 id="gi-pillar-title">Market Intelligence</h2>
-      <p id="gi-pillar-meta">Understanding how well your organization reads markets, competitors and signals.</p>
-    </header>
-
-    <!-- QUESTION AREA -->
-    <div class="gi-question-area">
-      <!-- JS will show ONE question at a time -->
-      
-      <div class="gi-question" data-question-index="0">
-        <label>How clearly is your category defined internally?</label>
-        <div class="gi-options">
-          <label><input type="radio" name="q1" value="1">We do not have a clear category</label>
-          <label><input type="radio" name="q1" value="2">Partially defined, inconsistent across teams</label>
-          <label><input type="radio" name="q1" value="3">Mostly defined but not documented</label>
-          <label><input type="radio" name="q1" value="4">Clearly defined and documented</label>
-        </div>
-      </div>
-
-      <!-- More questions auto-generated below ... -->
-
-    </div>
-
-
-    <!-- FOOTER NAVIGATION -->
-    <footer class="gi-footer-actions">
-      <div class="gi-footer-actions-left">
-        <button type="button" id="gi-btn-prev" class="gi-nav-btn">Previous</button>
-        <button type="button" id="gi-btn-next" class="gi-nav-btn">Next</button>
-      </div>
-
-      <div class="gi-footer-actions-right">
-        <button type="button" id="gi-btn-save" class="cta--ghost">Save</button>
-        <button type="button" id="gi-btn-clear" class="gi-nav-btn">Clear</button>
-        <button type="button" id="gi-btn-submit" class="cta">Submit assessment</button>
-      </div>
-
-      <p id="gi-footer-status" class="gi-footer-status"></p>
-    </footer>
-
-  </section>
-
-</main>
-/* ==============================================================
-   CAUGIA — GTM INTELLIGENCE REPORT
-   Premium Assessment Skin v9.0
-   Calm • Professional • Minimal • Enterprise-grade
-   ============================================================== */
-
-
-/* --------------------------------------------------------------
-   0. ROOT VARIABLES (local namespace override)
--------------------------------------------------------------- */
-
-.gi-main {
-  --gi-ink: #0b132b;
-  --gi-blue: #0046A5;
-  --gi-navy: #002A5C;
-  --gi-accent: #F36C21;
-  --gi-silver: #E6E9EF;
-  --gi-bg-light: #f5f7fb;
-  --gi-radius: 12px;
-  --gi-transition: 0.22s ease;
-  --gi-max-width: 1480px;
+// ---------------------------
+// 2. Hide all questions
+// ---------------------------
+function hideAllQuestions() {
+  questions.forEach(q => q.style.display = "none");
 }
 
 
-/* --------------------------------------------------------------
-   1. GLOBAL WRAPPER
--------------------------------------------------------------- */
+// ---------------------------
+// 3. Render Current Question
+// ---------------------------
+function renderQuestion(index) {
+  hideAllQuestions();
+  const q = questions[index];
+  if (!q) return;
 
-.gi-main {
-  background: var(--gi-bg-light);
-  max-width: var(--gi-max-width);
-  margin: 0 auto;
-  padding: 48px 32px;
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 48px;
-}
+  q.style.display = "block";
 
-@media (max-width: 960px) {
-  .gi-main {
-    grid-template-columns: 1fr;
-    padding: 32px 20px;
-  }
+  updatePillarForIndex(index);
+  updateSidebarPillar(index);
+  updateProgress(index);
 }
 
 
-/* --------------------------------------------------------------
-   2. LEFT SIDEBAR
--------------------------------------------------------------- */
+// ---------------------------
+// 4. Determine active pillar
+// ---------------------------
+function updatePillarForIndex(index) {
+  let pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
+  if (!pillar) return;
 
-.gi-side {
-  position: sticky;
-  top: 96px;
-  align-self: start;
-  padding-right: 24px;
-  border-right: 1px solid rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
+  pillarTitle.textContent = pillar.title;
+  pillarMeta.textContent  = pillar.meta;
 
-@media (max-width: 960px) {
-  .gi-side {
-    position: relative;
-    border-right: none;
-    padding-right: 0;
-  }
-}
+  const pillarNumber = pillarStructure.indexOf(pillar) + 1;
+  const totalPillars = pillarStructure.length;
 
-.gi-side-eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--gi-blue);
-  margin-bottom: 6px;
-}
-
-.gi-side h1 {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--gi-ink);
-  margin: 0 0 6px;
-}
-
-.gi-side-meta {
-  font-size: 14px;
-  color: rgba(11,19,43,0.72);
-  line-height: 1.55;
-  max-width: 360px;
+  pillarLabel.textContent = `Pillar ${pillarNumber} of ${totalPillars}`;
 }
 
 
-/* --------------------------------------------------------------
-   3. PROGRESS BAR
--------------------------------------------------------------- */
+// ---------------------------
+// 5. Sidebar pillar highlight
+// ---------------------------
+function updateSidebarPillar(index) {
+  sidebarPillars.forEach(li => li.classList.remove('is-active'));
 
-.gi-progress {
-  margin-bottom: 8px;
-}
+  let pillar = pillarStructure.find(p => index >= p.start && index <= p.end);
+  if (!pillar) return;
 
-.gi-progress-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: rgba(11,19,43,0.65);
-  margin-bottom: 6px;
-}
-
-#gi-progress-track {
-  width: 100%;
-  height: 6px;
-  background: var(--gi-silver);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-#gi-progress-bar {
-  height: 100%;
-  background: var(--gi-blue);
-  width: 0%;
-  border-radius: 4px;
-  transition: width 0.22s ease-out;
+  const pillarIndex = pillarStructure.indexOf(pillar);
+  sidebarPillars[pillarIndex].classList.add('is-active');
 }
 
 
-/* --------------------------------------------------------------
-   4. PILLARS LIST (non-interactive)
--------------------------------------------------------------- */
+// ---------------------------
+// 6. Progress Update
+// ---------------------------
+function updateProgress(index) {
+  const bar = document.getElementById('gi-progress-bar');
+  const count = document.getElementById('gi-progress-count');
+  const percent = document.getElementById('gi-progress-percent');
 
-.gi-side-pillars-title {
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(11,19,43,0.55);
-  margin-bottom: 10px;
-}
+  const completed = index + 1;
+  const percentage = Math.round((completed / totalQuestions) * 100);
 
-.gi-side-pillar-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+  count.textContent = `${completed} of ${totalQuestions}`;
+  percent.textContent = `${percentage}%`;
 
-.gi-side-pillar-list li {
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  color: rgba(11,19,43,0.8);
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.05);
-}
-
-.gi-side-pillar-list li.is-active {
-  border-color: var(--gi-blue);
-  background: #eef3ff;
-  color: var(--gi-blue);
+  bar.style.width = `${percentage}%`;
 }
 
 
-/* --------------------------------------------------------------
-   5. FAQ SECTION (Sidebar)
--------------------------------------------------------------- */
-
-.gi-faq-title {
-  font-size: 12.2px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(11,19,43,0.55);
-  margin-bottom: 10px;
-  font-weight: 600;
+// ---------------------------
+// 7. Initialize Page
+// ---------------------------
+function initAssessment() {
+  hideAllQuestions();
+  renderQuestion(0);
 }
 
-.gi-faq details {
-  background: #fff;
-  border-radius: 10px;
-  padding: 14px 16px;
-  border: 1px solid rgba(0,0,0,0.06);
-  margin-bottom: 8px;
-}
+initAssessment();
 
-.gi-faq summary {
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--gi-ink);
-}
-
-.gi-faq details[open] summary {
-  color: var(--gi-blue);
-}
-
-.gi-faq p {
-  font-size: 13px;
-  color: rgba(11,19,43,0.75);
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
-
-/* --------------------------------------------------------------
-   6. RIGHT SIDE — MAIN ASSESSMENT CARD
--------------------------------------------------------------- */
-
-.gi-main-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 32px 32px 40px;
-  box-shadow: 0 24px 60px rgba(11, 19, 43, 0.05);
-  border: 1px solid rgba(11, 19, 43, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-}
-
-@media (max-width: 640px) {
-  .gi-main-card {
-    padding: 22px;
-  }
-}
-
-
-/* --------------------------------------------------------------
-   7. PILLAR HEADER (title + description)
--------------------------------------------------------------- */
-
-.gi-pillar-label {
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(11,19,43,0.55);
-  margin-bottom: 4px;
-}
-
-#gi-pillar-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--gi-ink);
-}
-
-#gi-pillar-meta {
-  font-size: 15px;
-  color: rgba(11,19,43,0.75);
-  line-height: 1.55;
-  max-width: 600px;
-}
-
-
-/* --------------------------------------------------------------
-   8. QUESTION AREA
--------------------------------------------------------------- */
-
-.gi-question-area {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.gi-question {
-  background: #fff;
-  padding: 28px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.gi-question label {
-  display: block;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  color: var(--gi-ink);
-}
-
-
-/* --------------------------------------------------------------
-   9. RADIO OPTION STYLING
--------------------------------------------------------------- */
-
-.gi-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.gi-options label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: #f7f9fc;
-  border: 1px solid rgba(0,0,0,0.06);
-  font-size: 15px;
-  color: rgba(11,19,43,0.85);
-  cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease;
-}
-
-.gi-options label:hover {
-  background: #eef3ff;
-  border-color: var(--gi-blue);
-}
-
-.gi-options input[type="radio"] {
-  transform: scale(1.1);
-  margin-top: 2px;
-}
-
-.gi-options label.selected {
-  border-color: var(--gi-blue);
-  background: #eef3ff;
-  box-shadow: 0 0 0 2px rgba(0,70,165,0.12);
-}
-
-
-/* --------------------------------------------------------------
-   10. ERROR STATE
--------------------------------------------------------------- */
-
-.gi-question-error {
-  border-color: var(--gi-accent) !important;
-  box-shadow: 0 0 0 2px rgba(243,108,33,0.20) !important;
-}
-
-
-/* --------------------------------------------------------------
-   11. FOOTER ACTION BAR
--------------------------------------------------------------- */
-
-.gi-footer-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(0,0,0,0.06);
-}
-
-.gi-nav-btn {
-  padding: 10px 16px;
-  font-size: 14px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid var(--gi-silver);
-  cursor: pointer;
-  transition: background 0.18s ease;
-}
-
-.gi-nav-btn:hover {
-  background: #f1f4fa;
-}
-
-.cta--ghost {
-  padding: 10px 18px;
-  border-radius: 8px;
-  background: #eef2fb;
-  border: 1px solid rgba(0,0,0,0.05);
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.cta {
-  padding: 10px 18px;
-  border-radius: 8px;
-  background: var(--gi-blue);
-  color: #fff;
-  font-size: 14px;
-  border: 1px solid var(--gi-blue);
-  cursor: pointer;
-}
-
-#gi-footer-status {
-  font-size: 13px;
-  color: rgba(11,19,43,0.75);
-}
-
-
-/* --------------------------------------------------------------
-   12. ZERO-HOVER MOVEMENT (Premium calm)
--------------------------------------------------------------- */
-
-.gi-options label,
-.gi-question,
-.gi-main-card,
-.gi-side-pillar-list li,
-.gi-faq details {
-  transform: none !important;
-}
-
-
-/* --------------------------------------------------------------
-   13. ENSURE ABOVE THE FOLD
--------------------------------------------------------------- */
-
-.gi-main-card {
-  min-height: calc(100vh - 160px);
-}
-
-
-
-</body>
-</html>
+</script>
