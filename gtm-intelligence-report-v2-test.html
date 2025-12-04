@@ -4,12 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>GTM Intelligence Report — Test Build</title>
+  <title>GTM Intelligence Report — Test Build v2.0</title>
 
   <link rel="stylesheet" href="assets/caugia.css?v=9.0">
 
   <!-- SECURITY -->
   <script src="/auth.js"></script>
+
+  <style>
+    /* --- Minimal layout polish for buttons & modal --- */
+
+    .gi-actions {
+      display:flex;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .gi-btn {
+      padding:10px 18px;
+      font-size:14px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.1);
+      cursor:pointer;
+      flex:1;
+      text-align:center;
+      background:#f8f9fb;
+    }
+
+    .gi-btn-primary {
+      background:var(--blue);
+      color:white;
+      border-color:var(--blue);
+    }
+
+    .gi-btn-ghost {
+      background:#eef2f6;
+      color:var(--ink);
+    }
+
+    /* Modal */
+    .gi-modal-overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+    }
+
+    .gi-modal {
+      background:white;
+      border-radius:12px;
+      padding:26px;
+      width:90%;
+      max-width:380px;
+      text-align:left;
+      box-shadow:0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .gi-modal-actions {
+      margin-top:20px;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    .gi-btn-danger {
+      background:#b91c1c;
+      color:white;
+      border-color:#b91c1c;
+    }
+
+    .gi-btn-secondary {
+      background:#f3f4f6;
+    }
+
+    .gi-status {
+      font-size:0.9rem;
+      margin-top:10px;
+      color:#6b7280;
+    }
+  </style>
 </head>
 
 <body>
@@ -46,38 +122,35 @@
         </div>
       </div>
 
-      <!-- PILLAR TITLE -->
+      <!-- PILLAR HEADER -->
       <h2 id="gi-pillar-title">Context Capture</h2>
       <p id="gi-pillar-meta" style="margin-bottom:22px;">
         Capturing essential background about goals, growth stage and constraints.
       </p>
 
-      <!-- QUESTIONS WRAPPER -->
+      <!-- QUESTIONS -->
       <div class="gi-questions">
 
-        <!-- QUESTION 1 -->
         <div class="gi-question">
           <label>What is your primary GTM priority for the next 12 months?</label>
-          <input type="text" name="q1" />
+          <input type="text" name="q1" required />
         </div>
 
-        <!-- QUESTION 2 -->
         <div class="gi-question">
           <label>How clearly defined is your ICP?</label>
           <div class="gi-options">
-            <label class="gi-opt"><input type="radio" name="q2" value="1"> Not defined</label>
-            <label class="gi-opt"><input type="radio" name="q2" value="2"> Somewhat defined</label>
-            <label class="gi-opt"><input type="radio" name="q2" value="3"> Clearly defined</label>
+            <label><input type="radio" name="q2" value="1" required> Not defined</label>
+            <label><input type="radio" name="q2" value="2"> Somewhat defined</label>
+            <label><input type="radio" name="q2" value="3"> Clearly defined</label>
           </div>
         </div>
 
-        <!-- QUESTION 3 -->
         <div class="gi-question">
           <label>How confident are you in your competitor understanding?</label>
           <div class="gi-options">
-            <label class="gi-opt"><input type="radio" name="q3" value="low"> Low</label>
-            <label class="gi-opt"><input type="radio" name="q3" value="medium"> Medium</label>
-            <label class="gi-opt"><input type="radio" name="q3" value="high"> High</label>
+            <label><input type="radio" name="q3" value="low" required> Low</label>
+            <label><input type="radio" name="q3" value="medium"> Medium</label>
+            <label><input type="radio" name="q3" value="high"> High</label>
           </div>
         </div>
 
@@ -92,7 +165,6 @@
         <button class="gi-btn gi-btn-primary" id="gi-submit">Submit</button>
       </div>
 
-      <!-- STATUS MESSAGE -->
       <p id="gi-status" class="gi-status"></p>
 
     </div>
@@ -100,142 +172,8 @@
 </main>
 
 <!-- ================================
-     JS ENGINE — v1.1
+     CLEAR CONFIRMATION MODAL
 ================================ -->
-<script>
-// =========================================================
-// CAUGIA GTM INTELLIGENCE ENGINE v1.1
-// =========================================================
-
-// DOM HOOKS
-const questions = Array.from(document.querySelectorAll(".gi-question"));
-const sidebarPillars = Array.from(document.querySelectorAll(".gi-side-pillar-list li"));
-const pillarTitle = document.getElementById("gi-pillar-title");
-const pillarMeta = document.getElementById("gi-pillar-meta");
-
-const btnPrev = document.getElementById("gi-prev");
-const btnNext = document.getElementById("gi-next");
-const btnClear = document.getElementById("gi-clear");
-const btnSave = document.getElementById("gi-save");
-const statusEl = document.getElementById("gi-status");
-
-let currentIndex = 0;  
-const totalQuestions = questions.length;
-const STORAGE_KEY = "caugia_gi_test_v11";
-
-// TEMP PILLAR STRUCTURE
-const pillarStructure = [
-  { start: 0, end: 0, title: "Context Capture", meta: "Your goals, constraints and direction." },
-  { start: 1, end: 2, title: "Market Intelligence", meta: "How well you read markets and competitors." }
-];
-
-// HELPERS
-function hideAll() {
-  questions.forEach(q => q.style.display = "none");
-}
-
-function showQuestion(i) {
-  hideAll();
-  questions[i].style.display = "block";
-  updatePillar(i);
-  updateSidebar(i);
-  updateProgress(i);
-}
-
-function updatePillar(i) {
-  const p = pillarStructure.find(p => i >= p.start && i <= p.end);
-  if (!p) return;
-  pillarTitle.textContent = p.title;
-  pillarMeta.textContent = p.meta;
-}
-
-function updateSidebar(i) {
-  sidebarPillars.forEach(li => li.classList.remove("is-active"));
-  const p = pillarStructure.find(p => i >= p.start && i <= p.end);
-  if (!p) return;
-  const index = pillarStructure.indexOf(p);
-  sidebarPillars[index].classList.add("is-active");
-}
-
-function updateProgress(i) {
-  const pct = Math.round(((i + 1) / totalQuestions) * 100);
-  document.getElementById("gi-progress-count").textContent = `${i+1} of ${totalQuestions}`;
-  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
-  document.getElementById("gi-progress-bar").style.width = pct + "%";
-}
-
-// SAVE
-function collect() {
-  const data = {};
-  questions.forEach((q, i) => {
-    const text = q.querySelector("input[type='text']");
-    if (text) data[`q${i}`] = text.value;
-
-    const radios = q.querySelectorAll("input[type='radio']");
-    if (radios.length) {
-      const checked = q.querySelector("input[type='radio']:checked");
-      data[`q${i}`] = checked ? checked.value : "";
-    }
-  });
-  return data;
-}
-
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
-  statusEl.textContent = "Saved.";
-}
-
-// RESTORE
-function restore() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return;
-  const data = JSON.parse(raw);
-
-  questions.forEach((q, i) => {
-    const text = q.querySelector("input[type='text']");
-    if (text) text.value = data[`q${i}`] || "";
-
-    const radios = q.querySelectorAll("input[type='radio']");
-    radios.forEach(r => r.checked = (r.value === data[`q${i}`]));
-  });
-}
-
-// CLEAR ALL
-function clearAll() {
-  questions.forEach(q => {
-    const t = q.querySelector("input[type='text']");
-    if (t) t.value = "";
-    q.querySelectorAll("input[type='radio']").forEach(r => (r.checked = false));
-  });
-
-  localStorage.removeItem(STORAGE_KEY);
-  statusEl.textContent = "All answers cleared.";
-}
-
-// NAVIGATION
-btnNext.onclick = () => {
-  if (currentIndex < totalQuestions - 1) {
-    currentIndex++;
-    showQuestion(currentIndex);
-  }
-};
-btnPrev.onclick = () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showQuestion(currentIndex);
-  }
-};
-btnSave.onclick = save;
-btnClear.onclick = clearAll;
-
-// INIT
-restore();
-showQuestion(0);
-</script>
-  
-<!-- =========================================================
-     CAUGIA — CLEAR CONFIRMATION MODAL (v1.0)
-     ========================================================= -->
 <div id="gi-modal-overlay" class="gi-modal-overlay" hidden>
   <div class="gi-modal">
     <h2>Clear all answers?</h2>
@@ -243,17 +181,198 @@ showQuestion(0);
     <p>You cannot undo this action.</p>
 
     <div class="gi-modal-actions">
-      <button id="gi-modal-cancel" class="gi-btn-secondary">
-        Cancel
-      </button>
-
-      <button id="gi-modal-confirm" class="gi-btn-danger">
-        Clear all answers
-      </button>
+      <button id="gi-modal-cancel" class="gi-btn-secondary">Cancel</button>
+      <button id="gi-modal-confirm" class="gi-btn-danger">Clear all answers</button>
     </div>
   </div>
 </div>
 
-  
+<!-- ================================
+     JS ENGINE v2.0
+================================ -->
+<script>
+/* FULL JS ENGINE v2.0 — ALL IN ONE PLACE */
+
+const questions = [...document.querySelectorAll(".gi-question")];
+const sidebarPillars = [...document.querySelectorAll(".gi-side-pillar-list li")];
+const pillarTitle = document.getElementById("gi-pillar-title");
+const pillarMeta = document.getElementById("gi-pillar-meta");
+const statusEl = document.getElementById("gi-status");
+
+const btnPrev = document.getElementById("gi-prev");
+const btnNext = document.getElementById("gi-next");
+const btnSave = document.getElementById("gi-save");
+const btnClear = document.getElementById("gi-clear");
+const btnSubmit = document.getElementById("gi-submit");
+
+const modal = document.getElementById("gi-modal-overlay");
+const modalCancel = document.getElementById("gi-modal-cancel");
+const modalConfirm = document.getElementById("gi-modal-confirm");
+
+let currentIndex = 0;
+const totalQuestions = questions.length;
+const STORAGE_KEY = "caugia_gi_v2";
+const WEBHOOK_URL = "https://placeholder.make.com/webhook"; /* ← replace later */
+
+/* Pillars */
+const pillars = [
+  { start:0, end:0, title:"Context Capture", meta:"Your goals, constraints and direction." },
+  { start:1, end:2, title:"Market Intelligence", meta:"How well you read markets and competitors." }
+];
+
+/* Helpers */
+function hideAll(){questions.forEach(q=>q.style.display="none");}
+
+function showQuestion(i){
+  hideAll();
+  questions[i].style.display="block";
+
+  updatePillar(i);
+  updateSidebar(i);
+  updateProgress(i);
+}
+
+function updatePillar(i){
+  const p = pillars.find(p=>i>=p.start && i<=p.end);
+  if(!p) return;
+  pillarTitle.textContent = p.title;
+  pillarMeta.textContent  = p.meta;
+}
+
+function updateSidebar(i){
+  sidebarPillars.forEach(li=>li.classList.remove("is-active"));
+  const p = pillars.find(p=>i>=p.start && i<=p.end);
+  if(!p) return;
+  sidebarPillars[pillars.indexOf(p)].classList.add("is-active");
+}
+
+function updateProgress(i){
+  const pct = Math.round(((i+1)/totalQuestions)*100);
+  document.getElementById("gi-progress-count").textContent = `${i+1} of ${totalQuestions}`;
+  document.getElementById("gi-progress-percent").textContent = `${pct}%`;
+  document.getElementById("gi-progress-bar").style.width = pct+"%";
+}
+
+/* Saving */
+function collect(){
+  const data={};
+  questions.forEach((q,i)=>{
+    const text=q.querySelector("input[type='text']");
+    if(text) data[`q${i}`]=text.value;
+
+    const radios=q.querySelectorAll("input[type='radio']");
+    if(radios.length){
+      const checked=q.querySelector("input[type='radio']:checked");
+      data[`q${i}`]=checked?checked.value:"";
+    }
+  });
+  return data;
+}
+
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
+  statusEl.textContent="Saved.";
+}
+
+/* Restore */
+function restore(){
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw) return;
+  const data=JSON.parse(raw);
+
+  questions.forEach((q,i)=>{
+    const text=q.querySelector("input[type='text']");
+    if(text) text.value=data[`q${i}`]||"";
+
+    const radios=q.querySelectorAll("input[type='radio']`);
+    radios.forEach(r=>r.checked=(r.value===data[`q${i}`]));
+  });
+}
+
+/* Next/Prev */
+btnNext.onclick=()=>{
+  if(!validateCurrent()) return;
+  if(currentIndex<totalQuestions-1){
+    currentIndex++;
+    showQuestion(currentIndex);
+  }
+};
+
+btnPrev.onclick=()=>{
+  if(currentIndex>0){
+    currentIndex--;
+    showQuestion(currentIndex);
+  }
+};
+
+/* Validation */
+function validateCurrent(){
+  const q=questions[currentIndex];
+
+  const text=q.querySelector("input[type='text'][required]");
+  if(text && !text.value.trim()){
+    statusEl.textContent="Please fill in this field before continuing.";
+    return false;
+  }
+
+  const radios=q.querySelectorAll("input[type='radio'][required]");
+  if(radios.length){
+    const any=[...radios].some(r=>r.checked);
+    if(!any){
+      statusEl.textContent="Please select an option.";
+      return false;
+    }
+  }
+
+  statusEl.textContent="";
+  return true;
+}
+
+/* Clear with modal */
+btnClear.onclick=()=>modal.hidden=false;
+modalCancel.onclick=()=>modal.hidden=true;
+
+modalConfirm.onclick=()=>{
+  localStorage.removeItem(STORAGE_KEY);
+  questions.forEach(q=>{
+    const text=q.querySelector("input[type='text']");
+    if(text) text.value="";
+    q.querySelectorAll("input[type='radio']").forEach(r=>r.checked=false);
+  });
+  modal.hidden=true;
+  statusEl.textContent="All answers cleared.";
+};
+
+/* Submit */
+btnSubmit.onclick=async()=>{
+  if(!validateCurrent()) return;
+
+  const payload=collect();
+
+  try {
+    await fetch(WEBHOOK_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+
+    window.location.href="/gtm-intelligence-report-submitted.html";
+  } catch(e){
+    statusEl.textContent="Submission failed. Try again.";
+  }
+};
+
+/* Auto-save */
+questions.forEach(q=>{
+  q.addEventListener("input", save);
+  q.addEventListener("change", save);
+});
+
+/* Init */
+restore();
+showQuestion(0);
+
+</script>
+
 </body>
 </html>
