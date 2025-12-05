@@ -1,138 +1,142 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v9.5
-   SUPER MAX ULTRA EDITION — Enterprise GTM UI
-   Calm • Minimal • Precision • Lightning-fast
+   CAUGIA CONSULTING — PRODUCTION CSS v9.6 ULTRA MIAMI EDITION
+   Calm • Enterprise • Ultra Clean • Assessment Mode Only
 =========================================================== */
+
 
 /* -----------------------------------------------------------
    ROOT VARIABLES
 ----------------------------------------------------------- */
 :root {
   --ink: #0B132B;
-  --ink-soft: #3a4250;
+  --ink-soft: #4a4f59;
   --blue: #0046A5;
-  --blue-dark: #003985;
-  --blue-light: #F4F7FF;
+  --blue-dark: #003b88;
+  --light: #F7F9FC;
 
-  --border: rgba(0,0,0,0.10);
-  --border-soft: rgba(0,0,0,0.06);
-
+  --border: rgba(0,0,0,0.09);
   --radius: 14px;
-  --radius-sm: 8px;
+  --radius-sm: 10px;
 
-  --shadow-soft: 0 2px 8px rgba(0,0,0,0.04);
-  --shadow-card: 0 6px 18px rgba(0,0,0,0.06);
-  --shadow-strong: 0 6px 20px rgba(0,45,185,0.10);
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.04);
+  --shadow-card: 0 6px 28px rgba(0,0,0,0.07);
 
-  --transition: 0.25s cubic-bezier(.22,1,.36,1);
+  --transition: 0.22s cubic-bezier(.22,1,.36,1);
 }
+
 
 /* -----------------------------------------------------------
    GLOBAL RESET
 ----------------------------------------------------------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  color: var(--ink);
-  background: white;
-  line-height: 1.45;
-  scroll-behavior: smooth;
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
 }
+
+html {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  background: white;
+  color: var(--ink);
+}
+
+body {
+  min-height: 100vh;
+}
+
 
 /* -----------------------------------------------------------
-   HEADER
+   HEADER — ULTRA CLEAN
 ----------------------------------------------------------- */
-header {
+.gi-header {
+  border-bottom: 1px solid #ececec;
   background: white;
-  border-bottom: 1px solid var(--border-soft);
+  height: 70px;
+  display: flex;
+  align-items: center;
 }
 
-header .inner {
-  max-width: 1180px;
+.gi-header .inner {
+  max-width: 1380px;
   margin: 0 auto;
-  height: 64px;
-  padding: 0 24px;
+  padding: 0 28px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-header .brand {
+.gi-header .brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
 }
 
-header .brand img {
-  width: 28px;
-  height: 28px;
+.gi-header .brand.no-link {
+  pointer-events: none;
 }
 
-header .brand span {
+.gi-header .brand img {
+  width: 30px;
+  height: 30px;
+}
+
+.gi-header .brand span {
   font-size: 18px;
   font-weight: 600;
-  color: var(--ink);
 }
 
-.nav-desktop a {
-  margin-left: 24px;
-  color: var(--ink-soft);
-  text-decoration: none;
+.contact-btn {
+  background: var(--blue);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  color: white;
   font-size: 15px;
+  text-decoration: none;
   transition: var(--transition);
 }
 
-.nav-desktop a:hover {
-  color: var(--ink);
+.contact-btn:hover {
+  background: var(--blue-dark);
 }
 
-.nav-desktop .cta {
-  background: var(--blue);
-  padding: 9px 16px;
-  border-radius: var(--radius-sm);
-  color: white;
-  margin-left: 28px;
-}
 
 /* -----------------------------------------------------------
-   MAIN GRID (ULTRA EDITION)
+   MAIN LAYOUT — ULTRA GRID
 ----------------------------------------------------------- */
 .gi-main {
-  display: flex;
-  justify-content: center;
-  padding-top: 48px;
+  padding: 48px 0 120px 0;
 }
 
 .gi-shell {
-  width: 100%;
   max-width: 1600px;
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
-  gap: 48px;
+  margin: 0 auto;
   padding: 0 32px;
+
+  display: grid;
+  grid-template-columns: 300px 1fr 310px;
+  gap: 40px;
   align-items: start;
 }
 
 .gi-shell > * {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 180px);
 }
 
+
 /* -----------------------------------------------------------
-   LEFT COLUMN — INFORMATION PANEL
+   LEFT COLUMN — INFO PANEL
 ----------------------------------------------------------- */
 .gi-left-info {
   position: sticky;
   top: 32px;
+  align-self: flex-start;
 }
 
 .gi-info-title {
   font-size: 13px;
-  text-transform: uppercase;
   color: var(--blue);
-  margin-bottom: 4px;
+  text-transform: uppercase;
   font-weight: 600;
+  margin-bottom: 6px;
 }
 
 .gi-info-h1 {
@@ -143,116 +147,132 @@ header .brand span {
 
 .gi-info-desc {
   font-size: 15px;
-  color: var(--ink-soft);
-  margin-bottom: 16px;
-  line-height: 1.6;
+  opacity: 0.9;
+  line-height: 1.55;
+  margin-bottom: 12px;
 }
 
 .gi-info-meta {
   font-size: 14px;
-  color: #555;
-  margin-bottom: 16px;
+  opacity: 0.75;
+  margin-bottom: 14px;
 }
 
 .gi-info-faq {
-  color: var(--blue);
   font-size: 14px;
-  display: inline-block;
-  margin-bottom: 20px;
+  color: var(--blue);
   text-decoration: none;
+  display: inline-block;
+  margin-bottom: 24px;
 }
 
 .gi-info-faq:hover {
   text-decoration: underline;
 }
 
-/* Progress container */
+
+/* --- PROGRESS BOX --- */
 .gi-progress-box {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
+  margin-bottom: 22px;
   box-shadow: var(--shadow-soft);
-  margin-bottom: 16px;
 }
 
 .gi-progress-top {
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 8px;
   font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .gi-progress-track {
   height: 7px;
-  width: 100%;
   background: #eef1f6;
-  border-radius: 30px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .gi-progress-fill {
   height: 100%;
+  background: var(--blue);
   width: 0%;
-  background: linear-gradient(90deg, #0046A5, #0b62d1);
-  transition: width 0.35s cubic-bezier(.22,1,.36,1);
+  transition: width 0.35s ease;
 }
 
 .gi-left-info .gi-reset {
-  margin-top: 14px;
   width: 100%;
+  margin-top: 16px;
 }
+
+
+/* --- CONTEXT MICROCOPY --- */
+.gi-context-description {
+  margin-top: 26px;
+  padding-right: 8px;
+}
+
+.gi-context-description h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.gi-context-description p {
+  font-size: 14px;
+  opacity: 0.82;
+  line-height: 1.55;
+}
+
 
 /* -----------------------------------------------------------
-   CENTER — QUESTION ENGINE
+   CENTER COLUMN — QUESTION CARD
 ----------------------------------------------------------- */
-.gi-center {
-  min-height: auto;
-}
-
 .gi-question-card {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 34px;
+  padding: 36px;
   box-shadow: var(--shadow-soft);
-  transition: var(--transition);
 }
 
-.gi-question-card:hover {
-  box-shadow: var(--shadow-card);
+.gi-question-header {
+  margin-bottom: 24px;
 }
 
 .gi-question-kicker {
   font-size: 13px;
   color: var(--blue);
+  text-transform: uppercase;
   font-weight: 600;
   margin-bottom: 6px;
-  text-transform: uppercase;
 }
 
 .gi-question-title {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .gi-question-sub {
   font-size: 15px;
-  color: var(--ink-soft);
-  margin-bottom: 22px;
+  opacity: 0.75;
+  margin-bottom: 16px;
 }
 
-/* Inputs */
+/* INPUTS */
 .gi-question-body input,
 .gi-question-body textarea,
 .gi-question-body select {
   width: 100%;
-  padding: 13px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid #d4d9e2;
-  background: #F8FAFD;
+  padding: 14px 15px;
+  border-radius: var(--radius);
+  border: 1px solid #d1d7e0;
+  font-size: 15px;
+  background: #f8fafc;
   transition: var(--transition);
 }
 
@@ -261,32 +281,40 @@ header .brand span {
 .gi-question-body select:focus {
   background: white;
   border-color: var(--blue);
-  box-shadow: 0 0 0 1px var(--blue);
+  box-shadow: 0 0 0 2px rgba(0,70,165,0.15);
 }
 
+.gi-question-body textarea {
+  height: 140px;
+  resize: vertical;
+}
+
+/* 2-COLUMN GROUPS */
 .gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
 
-.gi-group-field label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  display: block;
-}
-
 .gi-group-field.full {
   grid-column: 1 / -1;
 }
+
+.gi-group-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
 
 /* Option cards */
 .gi-option-card {
   display: flex;
   align-items: center;
+  gap: 12px;
   padding: 14px 16px;
-  border-radius: var(--radius-sm);
   border: 1px solid #d1d7e0;
+  border-radius: var(--radius);
   background: white;
   cursor: pointer;
   transition: var(--transition);
@@ -294,18 +322,19 @@ header .brand span {
 
 .gi-option-card:hover {
   border-color: var(--blue);
-  background: var(--blue-light);
+  background: #f3f6ff;
 }
 
 .gi-option-card:has(input:checked) {
-  border-color: var(--blue);
   background: #eef4ff;
-  box-shadow: var(--shadow-strong);
+  border-color: var(--blue);
+  box-shadow: var(--shadow-card);
 }
 
-/* Buttons */
+
+/* NAV BUTTONS */
 .gi-nav-row {
-  margin-top: 26px;
+  margin-top: 28px;
   display: flex;
   gap: 12px;
 }
@@ -313,15 +342,15 @@ header .brand span {
 .gi-btn {
   padding: 11px 20px;
   border-radius: var(--radius-sm);
-  background: #F5F7FA;
   border: 1px solid var(--border);
+  background: #f5f7fa;
   cursor: pointer;
   transition: var(--transition);
   font-size: 14px;
 }
 
 .gi-btn:hover {
-  background: #ECEFF4;
+  background: #eceff4;
 }
 
 .gi-btn.gi-primary {
@@ -333,6 +362,7 @@ header .brand span {
 .gi-btn.gi-primary:hover {
   opacity: 0.92;
 }
+
 
 /* -----------------------------------------------------------
    RIGHT COLUMN — PILLAR NAVIGATION
@@ -350,64 +380,98 @@ header .brand span {
 
 .gi-pillar-nav {
   list-style: none;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .gi-pillar-nav li {
-  padding: 10px 14px;
-  font-size: 14px;
-  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: var(--transition);
+  font-size: 14px;
   border: 1px solid transparent;
 }
 
 .gi-pillar-nav li:hover {
-  background: #F4F7FF;
+  background: #f1f4f9;
 }
 
 .gi-pillar-nav li.active {
   background: var(--blue);
   color: white;
   border-color: var(--blue);
-  box-shadow: var(--shadow-strong);
+  font-weight: 600;
 }
 
-/* Description card */
+/* ACTIVE PILLAR DESCRIPTION */
 .gi-pillar-desc-box {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
+  padding: 16px;
   box-shadow: var(--shadow-soft);
 }
 
 .gi-pillar-desc-box h3 {
   font-size: 16px;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
 .gi-pillar-desc-box p {
   font-size: 14px;
-  line-height: 1.55;
-  opacity: 0.85;
+  opacity: 0.8;
+  line-height: 1.45;
 }
+
+
+/* -----------------------------------------------------------
+   FOOTER
+----------------------------------------------------------- */
+.gi-footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.gi-footer .footer-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.gi-footer .footer-links a {
+  margin-left: 16px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.gi-footer .footer-links a:hover {
+  color: var(--ink);
+}
+
 
 /* -----------------------------------------------------------
    RESPONSIVE
 ----------------------------------------------------------- */
-@media (max-width: 1300px) {
-  .gi-shell {
-    grid-template-columns: 240px 1fr 260px;
-  }
-}
-
 @media (max-width: 1100px) {
   .gi-shell {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
-  .gi-left-info, .gi-right-pillars {
+  .gi-left-info,
+  .gi-right-pillars {
     position: static;
-    margin-bottom: 32px;
+  }
+  .gi-question-card {
+    padding: 30px;
+  }
+  .gi-group {
+    grid-template-columns: 1fr;
   }
 }
