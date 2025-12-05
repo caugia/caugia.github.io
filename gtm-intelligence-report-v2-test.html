@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
   <!-- Favicon -->
@@ -13,11 +14,11 @@
   <!-- CSS -->
   <link rel="stylesheet" href="assets/caugia-v9.1.css" />
 
-  <!-- SECURITY -->
+  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <!-- ===========================================================
-       HYBRID DEBUG MODE SYSTEM
+       HYBRID DEBUG MODE + VALIDATOR + DARK MODE + INSPECTOR
   ============================================================ -->
   <style>
     :root {
@@ -28,110 +29,103 @@
       --dark-border: #2A2E39;
     }
 
+    /* Global validation outline */
     * { outline: var(--validator-outline); }
 
+    /* Dark mode */
     body.debug-dark {
       background: var(--dark-bg);
       color: var(--dark-text);
     }
-    body.debug-dark header,
+
     body.debug-dark .gi-question-card,
+    body.debug-dark .gi-progress-box,
     body.debug-dark .gi-left,
-    body.debug-dark .gi-right,
-    body.debug-dark .gi-progress-box {
-      background: var(--dark-card) !important;
-      border-color: var(--dark-border) !important;
-      color: var(--dark-text) !important;
+    body.debug-dark .gi-right {
+      background: var(--dark-card);
+      border-color: var(--dark-border);
     }
 
     body.debug-dark input,
     body.debug-dark textarea,
     body.debug-dark select {
-      background: #11141A !important;
-      border-color: var(--dark-border) !important;
-      color: var(--dark-text) !important;
+      background: #11141A;
+      color: var(--dark-text);
+      border-color: var(--dark-border);
     }
 
-    #debug-toggle-btn {
-      position: fixed;
-      bottom: 22px;
-      right: 22px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: #0046A5;
-      color: white;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      z-index: 9999;
-    }
-
+    /* Debug Panel */
     #debug-panel {
       position: fixed;
-      bottom: 90px;
-      right: 22px;
-      width: 260px;
-      padding: 18px;
+      bottom: 20px;
+      right: 20px;
+      width: 240px;
       background: white;
       border: 1px solid #ddd;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      z-index: 9999;
-      display: none;
+      padding: 12px 16px;
       font-size: 14px;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+      display: none;
+      z-index: 9999;
     }
 
     #debug-panel button {
       width: 100%;
-      padding: 8px 10px;
+      padding: 8px;
       margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
       background: #f5f7fa;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       cursor: pointer;
     }
     #debug-panel button:hover { background: #e8ecf2; }
 
-    #validator-banner {
-      display: none;
+    /* Badge */
+    #debug-badge {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      z-index: 9999;
+      padding: 6px 10px;
       background: #0046A5;
       color: white;
-      padding: 8px 14px;
-      border-radius: 6px;
       font-size: 13px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+      display: none;
+      z-index: 9999;
     }
   </style>
 
   <script>
+    /* ============================================================
+       DEBUG MODE CONTROLLER
+    ============================================================ */
+    let debugEnabled = false;
+
     function toggleDebugPanel() {
-      const p = document.getElementById("debug-panel");
-      p.style.display = p.style.display === "block" ? "none" : "block";
+      debugEnabled = !debugEnabled;
+      document.getElementById("debug-panel").style.display =
+        debugEnabled ? "block" : "none";
     }
 
     function enableValidator() {
-      document.documentElement.style.setProperty("--validator-outline","1px dashed rgba(255,0,0,0.6)");
-      const b = document.getElementById("validator-banner");
-      b.textContent = "Validator Mode Enabled";
-      b.style.display = "inline-block";
+      document.documentElement.style.setProperty("--validator-outline","1px dashed red");
+      const badge = document.getElementById("debug-badge");
+      badge.textContent = "Validator ON";
+      badge.style.display = "inline-block";
     }
 
     function disableValidator() {
       document.documentElement.style.setProperty("--validator-outline","0px solid transparent");
-      document.getElementById("validator-banner").style.display = "none";
+      document.getElementById("debug-badge").style.display = "none";
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle("debug-dark");
     }
 
-    function enableInspector() {
+    function inspectElements() {
       document.body.addEventListener("mouseover", e => {
         e.target.style.boxShadow = "0 0 0 2px #FF8800 inset";
       });
@@ -142,29 +136,45 @@
   </script>
 </head>
 
-
 <body>
 
-<!-- Debug UI -->
-<div id="validator-banner">Validator Enabled</div>
-<button id="debug-toggle-btn" onclick="toggleDebugPanel()">🛠</button>
+<!-- Debug badge -->
+<div id="debug-badge">Validator ON</div>
 
+<!-- Debug control panel -->
 <div id="debug-panel">
   <strong>Debug Tools</strong><br><br>
   <button onclick="enableValidator()">Enable Validator</button>
   <button onclick="disableValidator()">Disable Validator</button>
   <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-  <button onclick="enableInspector()">Enable Inspector</button>
+  <button onclick="inspectElements()">Enable Inspector</button>
 </div>
 
+<!-- Floating debug toggle -->
+<button onclick="toggleDebugPanel()"
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0046A5;
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 9999;">
+  🛠
+</button>
 
 <!-- ===========================================================
-     HEADER
+    HEADER
 =========================================================== -->
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="">
+      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
       <span>Caugia Consulting</span>
     </a>
 
@@ -179,21 +189,23 @@
   </div>
 </header>
 
-
 <!-- ===========================================================
-     MAIN LAYOUT
+    3-COLUMN LAYOUT
 =========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
-
-    <!-- LEFT SIDEBAR -->
+    <!-- =======================================================
+         LEFT SIDEBAR
+    ======================================================= -->
     <aside class="gi-left">
+
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-left-desc">
-        A structured, 12-pillar diagnostic that evaluates your
-        entire GTM system and produces a personalized performance blueprint.
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and produces a personalized, system-level
+        intelligence report. Your progress saves automatically.
       </p>
 
       <div class="gi-left-meta">
@@ -217,12 +229,14 @@
         <li data-p="11">11 — Enablement</li>
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
+
+      <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
+
     </aside>
 
-
-    <!-- ===========================================================
-         CENTER — QUESTION ENGINE UI
-    ============================================================ -->
+    <!-- =======================================================
+         CENTER — QUESTION ENGINE
+    ======================================================= -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -244,9 +258,10 @@
 
       </div>
     </section>
-    <!-- ===========================================================
-         RIGHT SIDEBAR — PROGRESS, PILLAR CONTEXT, RESET
-    ============================================================ -->
+
+    <!-- =======================================================
+         RIGHT SIDEBAR — PROGRESS + PILLAR META + RESET
+    ======================================================= -->
     <aside class="gi-right">
 
       <div class="gi-progress-box">
@@ -265,130 +280,79 @@
           <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
         </div>
 
+        <!-- RESET BUTTON (clean, safe) -->
         <div class="gi-reset-wrap">
-          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset assessment</button>
+          <button class="gi-btn gi-reset" id="gi-reset-btn">
+            Reset assessment
+          </button>
         </div>
 
       </div>
 
     </aside>
 
-  </div>
+  </div> <!-- END gi-shell -->
 </main>
-
-
 <!-- ===========================================================
-     FOOTER
-=========================================================== -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">© 2025 Caugia Consulting</div>
-    <div class="footer-right">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </div>
-</footer>
-
-
-<!-- ===========================================================
-     LOAD QUESTIONS FILE (QUESTIONS.js)
-=========================================================== -->
-<script src="assets/QUESTIONS.js"></script>
-
-
-<!-- ===========================================================
-     PILLAR META DEFINITIONS — 12 PILLARS
+    QUESTION ENGINE v1.3 — Accurate Progress + Validation
 =========================================================== -->
 <script>
-const PILLAR_META = {
-  0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses correctly."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates clarity of strategy, leadership cohesion and alignment into execution."},
-  2:{name:"Market Intelligence",desc:"Assesses market awareness, customer insight and competitive understanding."},
-  3:{name:"Product Marketing",desc:"Reviews ICP clarity, messaging precision and value articulation."},
-  4:{name:"Demand Generation",desc:"Evaluates pipeline generation, channels, segmentation and funnel performance."},
-  5:{name:"Sales Execution",desc:"Measures qualification quality, deal flow consistency and forecasting accuracy."},
-  6:{name:"Customer Success & Expansion",desc:"Assesses onboarding, value delivery, customer outcomes and expansion maturity."},
-  7:{name:"Revenue Operations & Systems",desc:"Evaluates workflows, tooling architecture, processes and operational quality."},
-  8:{name:"Pricing & Packaging",desc:"Assesses monetization logic, customer fit, structure and discount discipline."},
-  9:{name:"Brand & Communications",desc:"Evaluates brand clarity, credibility, differentiation and consistency."},
-  10:{name:"Data & Insights",desc:"Assesses GTM data availability, quality, structure and decision-making usefulness."},
-  11:{name:"Enablement",desc:"Evaluates readiness, skills, training systems and performance enablement maturity."},
-  12:{name:"Leadership & Alignment",desc:"Measures cross-functional alignment, accountability, rhythm and cohesion."}
-};
-</script>
-<!-- ===========================================================
-     QUESTION ENGINE v1.2 — Stable Hybrid Mode Version
-=========================================================== -->
-<script>
+
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
-
-/* Load saved state */
 let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
-/* Auto-save every second */
+/* Save state every 0.8s */
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
-setInterval(saveState, 1000);
+setInterval(saveState, 800);
 
 
-/* -----------------------------------------------------------
-   DOM SHORTCUTS
------------------------------------------------------------ */
-const qTitle        = document.getElementById("gi-question-title");
-const qSub          = document.getElementById("gi-question-sub");
-const qBody         = document.getElementById("gi-question-body");
-const kicker        = document.getElementById("gi-question-kicker");
-const rightName     = document.getElementById("gi-pillar-name");
-const rightDesc     = document.getElementById("gi-pillar-desc");
+/* ------------------- DOM ELEMENTS ------------------- */
+const qTitle = document.getElementById("gi-question-title");
+const qSub = document.getElementById("gi-question-sub");
+const qBody = document.getElementById("gi-question-body");
+const kicker = document.getElementById("gi-question-kicker");
+const rightName = document.getElementById("gi-pillar-name");
+const rightDesc = document.getElementById("gi-pillar-desc");
 
-const leftPillars   = document.querySelectorAll("#gi-left-pillar-list li");
+const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
 
-const btnPrev       = document.getElementById("gi-prev-btn");
-const btnNext       = document.getElementById("gi-next-btn");
-const btnSubmit     = document.getElementById("gi-submit-btn");
-const btnClear      = document.getElementById("gi-clear-btn");
-const btnSave       = document.getElementById("gi-save-btn");
-const btnReset      = document.getElementById("gi-reset-btn");
+const btnPrev = document.getElementById("gi-prev-btn");
+const btnNext = document.getElementById("gi-next-btn");
+const btnSubmit = document.getElementById("gi-submit-btn");
+const btnClear = document.getElementById("gi-clear-btn");
+const btnSave = document.getElementById("gi-save-btn");
+const btnReset = document.getElementById("gi-reset-btn");
 
-const progressCount   = document.getElementById("gi-progress-count");
+const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
-const progressBar     = document.getElementById("gi-progress-bar");
+const progressBar = document.getElementById("gi-progress-bar");
 
 
 
 /* ===========================================================
-     RENDER A QUESTION
+   RENDER QUESTION
 =========================================================== */
 function renderQuestion() {
-
   const q = QUESTIONS[currentIndex];
   if (!q) return;
 
-  /* Update UI text */
   kicker.textContent = PILLAR_META[q.pillar].name;
   qTitle.textContent = q.title || "";
-  qSub.textContent   = q.sub || "";
+  qSub.textContent = q.sub || "";
 
-  /* Right sidebar pillar label */
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
-  /* Highlight active pillar */
   leftPillars.forEach(li =>
     li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
   );
 
-  /* Inject input fields */
   qBody.innerHTML = buildInput(q);
 
-  /* Restore saved state */
   restoreState(q);
-
-  /* Update nav + progress */
   updateNav();
   updateProgress();
 }
@@ -396,40 +360,7 @@ function renderQuestion() {
 
 
 /* ===========================================================
-     RESTORE STATE INTO INPUT FIELDS
-=========================================================== */
-function restoreState(q) {
-
-  /* Group question with multiple sub-fields */
-  if (q.type === "group") {
-    q.fields.forEach(f => {
-      const el = qBody.querySelector(`input[name="${f.name}"]`);
-      if (el && STATE[f.name] !== undefined) {
-        el.value = STATE[f.name];
-      }
-    });
-    return;
-  }
-
-  const stored = STATE[q.id];
-  if (stored === undefined) return;
-
-  /* For radios */
-  const radio = qBody.querySelector(`input[type=radio][value="${stored}"]`);
-  if (radio) {
-    radio.checked = true;
-    return;
-  }
-
-  /* For text/select/textarea */
-  const el = qBody.querySelector("[name='q']");
-  if (el) el.value = stored;
-}
-
-
-
-/* ===========================================================
-     BUILD INPUT FIELD HTML BASED ON QUESTION TYPE
+   INPUT BUILDER
 =========================================================== */
 function buildInput(q) {
 
@@ -466,29 +397,58 @@ function buildInput(q) {
         ${q.fields.map(f => `
           <div class="gi-group-field ${f.full ? "full" : ""}">
             <label>${f.label}</label>
-            <input type="text" name="${f.name}">
+            <input type="text" name="group_${q.id}_${f.name}">
           </div>
         `).join("")}
       </div>
     `;
 
-  return `<p>Unsupported field type</p>`;
+  return `<p>Unsupported question type</p>`;
 }
 
 
 
 /* ===========================================================
-     STORE CURRENT ANSWERS
+   RESTORE SAVED ANSWER
 =========================================================== */
-function storeCurrentAnswer() {
+function restoreState(q) {
 
-  const q = QUESTIONS[currentIndex];
-
-  /* Complex group fields */
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = qBody.querySelector(`input[name="${f.name}"]`);
-      if (el) STATE[f.name] = el.value || "";
+      const key = `group_${q.id}_${f.name}`;
+      const el = qBody.querySelector(`input[name="${key}"]`);
+      if (el && STATE[key] !== undefined) {
+        el.value = STATE[key];
+      }
+    });
+    return;
+  }
+
+  const stored = STATE[q.id];
+  if (stored === undefined) return;
+
+  if (q.type === "radio") {
+    const r = qBody.querySelector(`input[value="${stored}"]`);
+    if (r) r.checked = true;
+  }
+
+  const el = qBody.querySelector("[name='q']");
+  if (el) el.value = stored;
+}
+
+
+
+/* ===========================================================
+   SAVE CURRENT ANSWER
+=========================================================== */
+function storeCurrentAnswer() {
+  const q = QUESTIONS[currentIndex];
+
+  if (q.type === "group") {
+    q.fields.forEach(f => {
+      const key = `group_${q.id}_${f.name}`;
+      const el = qBody.querySelector(`input[name="${key}"]`);
+      if (el) STATE[key] = el.value.trim();
     });
     return;
   }
@@ -496,24 +456,85 @@ function storeCurrentAnswer() {
   const el = qBody.querySelector("[name='q']");
   if (!el) return;
 
-  /* Radios */
   if (q.type === "radio") {
     const selected = qBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
     return;
   }
 
-  /* Simple value */
-  STATE[q.id] = el.value;
+  STATE[q.id] = el.value.trim();
 }
 
 
 
 /* ===========================================================
-     BUTTON EVENTS
+   VALIDATION — MUST FILL BEFORE NEXT
+=========================================================== */
+function validateCurrent() {
+  const q = QUESTIONS[currentIndex];
+
+  if (q.type === "group") {
+    return q.fields.every(f => {
+      const key = `group_${q.id}_${f.name}`;
+      return STATE[key] && STATE[key].trim() !== "";
+    });
+  }
+
+  const val = STATE[q.id];
+  return val !== undefined && val !== "";
+}
+
+
+
+/* ===========================================================
+   PROGRESS CALCULATION (REAL FIX)
+=========================================================== */
+function getAnsweredCount() {
+  let count = 0;
+
+  QUESTIONS.forEach(q => {
+    if (q.type === "group") {
+      const filled = q.fields.every(f => {
+        const key = `group_${q.id}_${f.name}`;
+        return STATE[key] && STATE[key].trim() !== "";
+      });
+      if (filled) count++;
+    } else {
+      const v = STATE[q.id];
+      if (v !== undefined && v !== "") count++;
+    }
+  });
+
+  return count;
+}
+
+
+
+/* ===========================================================
+   UPDATE PROGRESS BAR
+=========================================================== */
+function updateProgress() {
+  const answered = getAnsweredCount();
+  const total = QUESTIONS.length;
+
+  progressCount.textContent = `${answered} / ${total}`;
+  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
+  progressBar.style.width = `${(answered / total) * 100}%`;
+}
+
+
+
+/* ===========================================================
+   BUTTON EVENTS
 =========================================================== */
 btnNext.addEventListener("click", () => {
   storeCurrentAnswer();
+
+  if (!validateCurrent()) {
+    alert("Please complete all fields before continuing.");
+    return;
+  }
+
   if (currentIndex < QUESTIONS.length - 1) currentIndex++;
   renderQuestion();
 });
@@ -528,26 +549,32 @@ btnClear.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
 
   if (q.type === "group") {
-    q.fields.forEach(f => delete STATE[f.name]);
+    q.fields.forEach(f => {
+      const key = `group_${q.id}_${f.name}`;
+      delete STATE[key];
+    });
   } else {
     delete STATE[q.id];
   }
 
   qBody.querySelectorAll("input, textarea, select").forEach(el => el.value = "");
+  updateProgress();
 });
 
 btnSave.addEventListener("click", saveState);
 
 btnSubmit.addEventListener("click", () => {
   storeCurrentAnswer();
+
+  if (!validateCurrent()) {
+    alert("Please complete all fields before submitting.");
+    return;
+  }
+
   saveState();
   alert("Your assessment has been submitted.");
 });
 
-
-/* ===========================================================
-     RESET ENTIRE ASSESSMENT
-=========================================================== */
 btnReset.addEventListener("click", () => {
   if (!confirm("Reset the entire assessment?")) return;
 
@@ -560,32 +587,24 @@ btnReset.addEventListener("click", () => {
 });
 
 
+
 /* ===========================================================
-     NAVIGATION + PROGRESS BAR
+   NAVIGATION BUTTON VISIBILITY
 =========================================================== */
 function updateNav() {
   btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
 
   const last = currentIndex === QUESTIONS.length - 1;
-  btnNext.style.display   = last ? "none" : "inline-block";
+
+  btnNext.style.display = last ? "none" : "inline-block";
   btnSubmit.style.display = last ? "inline-block" : "none";
 }
 
-function updateProgress() {
-  const answered = countAnsweredQuestions();
-  const total    = QUESTIONS.length;
-
-  progressCount.textContent = `${answered} / ${total}`;
-  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
-  progressBar.style.width = `${(answered / total) * 100}%`;
-}
 
 
 /* ===========================================================
-     INITIALIZE ENGINE
+   INIT
 =========================================================== */
 document.addEventListener("DOMContentLoaded", renderQuestion);
-</script>
 
-</body>
-</html>
+</script>
