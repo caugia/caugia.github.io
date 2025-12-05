@@ -4143,3 +4143,55 @@ body {
   border-color: var(--blue);
   color: white;
 }
+
+/* RIGHT COLUMN — Above-the-fold optimized */
+.gi-right-pillars {
+  position: sticky;
+  top: 32px;
+  max-height: calc(100vh - 64px); /* ensures above the fold */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Pillar nav fits beautifully */
+.gi-pillar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px; /* scroll comfort */
+}
+
+.gi-pillar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.gi-pillar-nav::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 20px;
+}
+
+.gi-pillar-nav li {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.gi-pillar-nav li.active {
+  background: var(--blue);
+  color: white;
+  font-weight: 600;
+}
+
+/* Pillar description stays visible */
+.gi-pillar-desc-box {
+  flex-shrink: 0;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
