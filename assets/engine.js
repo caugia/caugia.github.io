@@ -58,12 +58,23 @@ const progressBar = document.getElementById("gi-progress-bar");
 
 /* ---------------- RENDER ---------------- */
 function renderQuestion() {
+  if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) {
+    console.error("❌ QUESTIONS array not available");
+    return;
+  }
+  
   const q = window.QUESTIONS[currentIndex];
   if (!q) return;
 
-  kicker.textContent = PILLAR_META[q.pillar].name;
-  rightName.textContent = PILLAR_META[q.pillar].name;
-  rightDesc.textContent = PILLAR_META[q.pillar].desc;
+  // Check if PILLAR_META exists
+  if (!window.PILLAR_META) {
+    console.error("❌ PILLAR_META not loaded");
+    return;
+  }
+
+  kicker.textContent = window.PILLAR_META[q.pillar].name;
+  rightName.textContent = window.PILLAR_META[q.pillar].name;
+  rightDesc.textContent = window.PILLAR_META[q.pillar].desc;
 
   qTitle.textContent = q.title || "";
   qSub.textContent = q.sub || "";
@@ -164,7 +175,10 @@ function validate(q) {
 
 /* ---------------- SAVE ---------------- */
 function storeCurrentAnswer() {
+  if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) return;
+  
   const q = window.QUESTIONS[currentIndex];
+  if (!q) return;
 
   if (q.type === "group") {
     q.fields.forEach(f => {
@@ -186,7 +200,11 @@ function storeCurrentAnswer() {
 
 /* ---------------- NAVIGATION ---------------- */
 btnNext.addEventListener("click", () => {
+  if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) return;
+  
   const q = window.QUESTIONS[currentIndex];
+  if (!q) return;
+  
   storeCurrentAnswer();
 
   if (!validate(q)) {
@@ -205,7 +223,10 @@ btnPrev.addEventListener("click", () => {
 });
 
 btnClear.addEventListener("click", () => {
+  if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) return;
+  
   const q = window.QUESTIONS[currentIndex];
+  if (!q) return;
 
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
@@ -233,6 +254,8 @@ btnReset.addEventListener("click", () => {
 
 /* ---------------- PROGRESS ---------------- */
 function updateProgress() {
+  if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) return;
+  
   let answered = 0;
 
   window.QUESTIONS.forEach(q => {
