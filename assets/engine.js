@@ -259,6 +259,33 @@ btnSubmit.addEventListener("click", () => {
   alert("Your assessment has been submitted. A full diagnostic report will be generated.");
 });
 
+/* ============================================
+   RESET BUTTON
+============================================ */
+const btnReset = document.getElementById("gi-reset-btn");
+
+if (btnReset) {
+  btnReset.addEventListener("click", () => {
+    if (!confirm("Are you sure you want to reset the entire assessment?")) return;
+
+    // 1. LocalStorage leegmaken
+    localStorage.removeItem(STORAGE_KEY);
+
+    // 2. STATE leegmaken
+    STATE = {};
+
+    // 3. Terug naar vraag 1
+    currentIndex = 0;
+
+    // 4. Volledig opnieuw renderen
+    renderQuestion();
+
+    // 5. Progress terug op 0%
+    updateProgress();
+  });
+}
+
+
 /* ===========================================================
    NAV + PROGRESS
 =========================================================== */
