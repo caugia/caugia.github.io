@@ -12,7 +12,7 @@
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/caugia-v9.1.css?v=3">
+  <link rel="stylesheet" href="assets/caugia-v9.1.css?v=3" />
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
@@ -36,7 +36,9 @@
       color: var(--dark-text);
     }
     body.debug-dark .gi-question-card,
-    body.debug-dark .gi-progress-box {
+    body.debug-dark .gi-progress-box,
+    body.debug-dark .gi-left,
+    body.debug-dark .gi-right {
       background: var(--dark-card);
       border-color: var(--dark-border);
     }
@@ -48,6 +50,7 @@
       border-color: var(--dark-border);
     }
 
+    /* Debug Panel */
     #debug-panel {
       display: none;
       position: fixed;
@@ -90,23 +93,29 @@
   </style>
 
   <script>
+    let debugEnabled = false;
+
     function toggleDebugPanel() {
-      const panel = document.getElementById("debug-panel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
+      debugEnabled = !debugEnabled;
+      document.getElementById("debug-panel").style.display =
+        debugEnabled ? "block" : "none";
     }
+
     function enableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
-      const badge = document.getElementById("debug-badge");
-      badge.textContent = "Validator ON";
-      badge.style.display = "inline-block";
+      document.getElementById("debug-badge").textContent = "Validator ON";
+      document.getElementById("debug-badge").style.display = "inline-block";
     }
+
     function disableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "0px solid transparent");
       document.getElementById("debug-badge").style.display = "none";
     }
+
     function toggleDarkMode() {
       document.body.classList.toggle("debug-dark");
     }
+
     function inspectElements() {
       document.body.addEventListener("mouseover", e => {
         e.target.style.boxShadow = "0 0 0 2px #FF8800 inset";
@@ -120,12 +129,12 @@
 
 <body>
 
-<!-- Floating debug toggle -->
+<!-- Floating debug trigger -->
 <button onclick="toggleDebugPanel()"
-  style="position: fixed; bottom: 20px; right: 20px;
-         width: 52px; height: 52px; border-radius: 50%;
-         background:#0046A5; color:white; border:none;
-         font-size:22px; cursor:pointer; z-index:9999;">
+        style="position: fixed; bottom: 20px; right: 20px;
+               width: 52px; height: 52px; border-radius: 50%;
+               background:#0046A5; color:white; border:none;
+               font-size:22px; cursor:pointer; z-index:9999;">
   🛠
 </button>
 
@@ -162,7 +171,7 @@
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- LEFT -->
+    <!-- LEFT SIDEBAR -->
     <aside class="gi-left">
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
@@ -217,9 +226,11 @@
       </div>
     </section>
 
-    <!-- RIGHT -->
+    <!-- RIGHT SIDEBAR -->
     <aside class="gi-right">
+
       <div class="gi-progress-box">
+
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
@@ -237,11 +248,14 @@
         <div class="gi-reset-wrap">
           <button class="gi-btn gi-reset" id="gi-reset-btn">Reset assessment</button>
         </div>
+
       </div>
+
     </aside>
 
   </div>
 </main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -259,7 +273,7 @@
 
 <!-- PILLAR META -->
 <script>
-const PILLAR_META = {
+let PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses correctly."},
   1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity, leadership cohesion and alignment into execution."},
   2:{name:"Market Intelligence",desc:"Assesses market awareness, customer insight and competitive understanding."},
@@ -276,7 +290,7 @@ const PILLAR_META = {
 };
 </script>
 
-<!-- ENGINE -->
+<!-- LOAD ENGINE (v2.0) -->
 <script src="assets/engine.js"></script>
 
 </body>
