@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v5.0-A
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v5.0-A (FIXED)
    Stable • Clean • No Alerts • Future-Ready Explain Mode
    QUESTIONS is NEVER declared here — only read from window.QUESTIONS
 =========================================================== */
@@ -88,7 +88,7 @@ function setExplainPlaceholder(q) {
 
 /* ---------------------- RENDER ---------------------- */
 function renderQuestion() {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
@@ -189,7 +189,7 @@ function validate(q) {
 
 /* ---------------------- SAVE ---------------------- */
 function storeCurrentAnswer() {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
 
   if (q.type === "group") {
     q.fields.forEach(f => {
@@ -211,7 +211,7 @@ function storeCurrentAnswer() {
 
 /* ---------------------- NAVIGATION ---------------------- */
 btnNext.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
   storeCurrentAnswer();
 
   if (!validate(q)) return; // soft block, no alerts
@@ -227,7 +227,7 @@ btnPrev.addEventListener("click", () => {
 });
 
 btnClear.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
 
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
@@ -255,7 +255,7 @@ btnReset.addEventListener("click", () => {
 function updateProgress() {
   let answered = 0;
 
-  QUESTIONS.forEach(q => {
+  QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
       const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
       if (filled) answered++;
@@ -264,12 +264,27 @@ function updateProgress() {
     if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
   });
 
-  const total = QUESTIONS.length;
+  const total = QUESTIONS_REF.length;
   const pct = Math.round((answered / total) * 100);
 
   progressCount.textContent = `${answered} / ${total}`;
   progressPercent.textContent = `${pct}%`;
   progressBar.style.width = `${pct}%`;
+}
+
+/* ---------------------- NAVIGATION HELPERS ---------------------- */
+function updateNav() {
+  // Show/hide prev button
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+  
+  // Show/hide next vs submit
+  if (currentIndex === QUESTIONS_REF.length - 1) {
+    btnNext.style.display = "none";
+    btnSubmit.style.display = "inline-block";
+  } else {
+    btnNext.style.display = "inline-block";
+    btnSubmit.style.display = "none";
+  }
 }
 
 /* ---------------------- INIT ---------------------- */
