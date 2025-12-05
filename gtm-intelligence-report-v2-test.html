@@ -6,10 +6,12 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
+  <!-- Favicon -->
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
+  <!-- CSS -->
   <link rel="stylesheet" href="assets/caugia-v9.1.css" />
 
   <!-- 🔒 SECURITY -->
@@ -19,7 +21,7 @@
 <body>
 
 <!-- ===========================================================
-    HEADER — identical style to homepage, simplified
+    HEADER — identical style to homepage
 =========================================================== -->
 <header>
   <div class="inner">
@@ -40,22 +42,24 @@
 </header>
 
 <!-- ===========================================================
-    MAIN LAYOUT — three-column GTM Assessment Shell
+    MAIN LAYOUT — 3-column assessment UI
 =========================================================== -->
 <main class="gi-main">
 
   <div class="gi-shell">
 
-    <!-- ================= LEFT SIDEBAR ================= -->
+    <!-- =======================================================
+         LEFT SIDEBAR
+    ======================================================= -->
     <aside class="gi-left">
 
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-left-desc">
-        A structured, 12-pillar diagnostic that evaluates your
-        entire go-to-market system and produces a personalized,
-        system-level intelligence report. Your progress saves automatically.
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and produces a personalized, system-level
+        intelligence report. Your progress saves automatically.
       </p>
 
       <div class="gi-left-meta">
@@ -85,16 +89,15 @@
     </aside>
 
 
-    <!-- ================= CENTER — QUESTION ENGINE ================= -->
+    <!-- =======================================================
+         CENTER — QUESTION ENGINE
+    ======================================================= -->
     <section class="gi-center">
 
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
-          <div class="gi-question-kicker" id="gi-question-kicker">
-            Context
-          </div>
-
+          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
           <h2 class="gi-question-title" id="gi-question-title"></h2>
           <p class="gi-question-sub" id="gi-question-sub"></p>
         </div>
@@ -114,7 +117,9 @@
     </section>
 
 
-    <!-- ================= RIGHT SIDEBAR ================= -->
+    <!-- =======================================================
+         RIGHT SIDEBAR — PROGRESS + ACTIVE PILLAR + RESET BUTTON
+    ======================================================= -->
     <aside class="gi-right">
 
       <div class="gi-progress-box">
@@ -131,6 +136,11 @@
         <div class="gi-right-pillar">
           <div class="gi-right-pillar-name" id="gi-pillar-name">Context</div>
           <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
+        </div>
+
+        <!-- 🔥 RESET BUTTON — POSITION A -->
+        <div class="gi-reset-wrap">
+          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset assessment</button>
         </div>
 
       </div>
@@ -154,43 +164,20 @@
   </div>
 </footer>
 
+
 <!-- ===========================================================
-    SCRIPT: PILLAR META + QUESTION ENGINE
+    LOAD QUESTIONS
 =========================================================== -->
-
-<script>
-/* ===========================================================
-   PILLAR META — right sidebar descriptions
-=========================================================== */
-let PILLAR_META = {
-  0: { name: "Context", desc: "This section captures essential background information so the assessment can correctly interpret your responses." },
-  1: { name: "GTM Strategy & Leadership", desc: "Assesses clarity of strategy, leadership cohesion and translation of direction into execution." },
-  2: { name: "Market Intelligence", desc: "Evaluates customer insight, competitive awareness and market understanding." },
-  3: { name: "Product Marketing", desc: "Assesses narrative strength, ICP clarity and value communication." },
-  4: { name: "Demand Generation", desc: "Reviews pipeline generation, channel performance and funnel health." },
-  5: { name: "Sales Execution", desc: "Measures qualification quality, deal flow consistency and forecast accuracy." },
-  6: { name: "Customer Success & Expansion", desc: "Evaluates onboarding, value delivery, customer outcomes and expansion motion." },
-  7: { name: "Revenue Operations & Systems", desc: "Assesses workflow structure, tooling, data integrity and operational quality." },
-  8: { name: "Pricing & Packaging", desc: "Evaluates monetization logic, structure, packaging fit and discipline." },
-  9: { name: "Brand & Communications", desc: "Assesses clarity, credibility and consistency of your brand narrative." },
-  10: { name: "Data & Insights", desc: "Reviews availability, accuracy and decision-making usefulness of GTM data." },
-  11: { name: "Enablement", desc: "Evaluates training, readiness, skill development and performance support." },
-  12: { name: "Leadership & Alignment", desc: "Measures communication quality, accountability, alignment and leadership rhythm." }
-};
-</script>
-
-
-<!-- Load QUESTIONS and Engine -->
 <script src="assets/QUESTIONS.js"></script>
 
-<script>
-/* ===========================================================
-   QUESTION ENGINE v1.0
-=========================================================== */
 
-/* GLOBALS */
+<!-- ===========================================================
+    QUESTION ENGINE v1.1 + RESET BUTTON
+=========================================================== -->
+<script>
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
+
 let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
 function saveState() {
@@ -198,10 +185,12 @@ function saveState() {
 }
 setInterval(saveState, 800);
 
-/* DOM */
+
+/* ================= DOM ================= */
 const qTitle   = document.getElementById("gi-question-title");
 const qSub     = document.getElementById("gi-question-sub");
 const qBody    = document.getElementById("gi-question-body");
+
 const kicker   = document.getElementById("gi-question-kicker");
 const rightName= document.getElementById("gi-pillar-name");
 const rightDesc= document.getElementById("gi-pillar-desc");
@@ -213,19 +202,20 @@ const btnNext   = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
 const btnClear  = document.getElementById("gi-clear-btn");
 const btnSave   = document.getElementById("gi-save-btn");
+const btnReset  = document.getElementById("gi-reset-btn");
 
 const progressCount  = document.getElementById("gi-progress-count");
 const progressPercent= document.getElementById("gi-progress-percent");
 const progressBar    = document.getElementById("gi-progress-bar");
 
 
-/* RENDER QUESTION */
+/* ================= RENDER ================= */
 function renderQuestion() {
   const q = QUESTIONS[currentIndex];
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
-  qTitle.textContent = q.title || "";
+  qTitle.textContent = q.title;
   qSub.textContent   = q.sub || "";
 
   rightName.textContent = PILLAR_META[q.pillar].name;
@@ -237,11 +227,22 @@ function renderQuestion() {
 
   qBody.innerHTML = buildInput(q);
 
-  if (STATE[q.id] !== undefined) {
-    const el = qBody.querySelector("[name='q']");
-    if (el) el.value = STATE[q.id];
-    const sel = qBody.querySelector(`input[type=radio][value="${STATE[q.id]}"]`);
-    if (sel) sel.checked = true;
+  if (q.type === "group") {
+    q.fields.forEach(f => {
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      if (el && STATE[f.name] !== undefined) {
+        el.value = STATE[f.name];
+      }
+    });
+  } else {
+    const stored = STATE[q.id];
+    if (stored !== undefined) {
+      const el = qBody.querySelector("[name='q']");
+      if (el) el.value = stored;
+
+      const r = qBody.querySelector(`input[type=radio][value="${stored}"]`);
+      if (r) r.checked = true;
+    }
   }
 
   updateNav();
@@ -249,7 +250,7 @@ function renderQuestion() {
 }
 
 
-/* INPUT BUILDER */
+/* ================= INPUT BUILDER ================= */
 function buildInput(q) {
 
   if (q.type === "text") return `<input type="text" name="q">`;
@@ -278,7 +279,6 @@ function buildInput(q) {
     `).join("");
   }
 
-  /* GROUP FIELDS */
   if (q.type === "group") {
     return `
       <div class="gi-group">
@@ -292,11 +292,11 @@ function buildInput(q) {
     `;
   }
 
-  return "Unsupported field type";
+  return `<p>Unsupported field type</p>`;
 }
 
 
-/* SAVE ANSWER */
+/* ================= SAVE ================= */
 function storeCurrentAnswer() {
   const q = QUESTIONS[currentIndex];
 
@@ -321,7 +321,7 @@ function storeCurrentAnswer() {
 }
 
 
-/* EVENTS */
+/* ================= EVENTS ================= */
 btnNext.addEventListener("click", () => {
   storeCurrentAnswer();
   if (currentIndex < QUESTIONS.length - 1) currentIndex++;
@@ -335,7 +335,14 @@ btnPrev.addEventListener("click", () => {
 });
 
 btnClear.addEventListener("click", () => {
-  delete STATE[QUESTIONS[currentIndex].id];
+  const q = QUESTIONS[currentIndex];
+
+  if (q.type === "group") {
+    q.fields.forEach(f => delete STATE[f.name]);
+  } else {
+    delete STATE[q.id];
+  }
+
   qBody.querySelectorAll("input, textarea, select")
       .forEach(el => el.value = "");
 });
@@ -349,9 +356,22 @@ btnSubmit.addEventListener("click", () => {
 });
 
 
-/* NAV + PROGRESS */
+/* ================= RESET BUTTON ================= */
+btnReset.addEventListener("click", () => {
+  if (!confirm("Are you sure you want to reset the entire assessment?")) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+  STATE = {};
+  currentIndex = 0;
+  renderQuestion();
+  updateProgress();
+});
+
+
+/* ================= NAV + PROGRESS ================= */
 function updateNav() {
   btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+
   const last = currentIndex === QUESTIONS.length - 1;
   btnNext.style.display = last ? "none" : "inline-block";
   btnSubmit.style.display = last ? "inline-block" : "none";
@@ -360,16 +380,15 @@ function updateNav() {
 function updateProgress() {
   const answered = Object.keys(STATE).length;
   const total = QUESTIONS.length;
+
   progressCount.textContent = `${answered} / ${total}`;
   progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
   progressBar.style.width = `${(answered / total) * 100}%`;
 }
 
 
-/* INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  renderQuestion();
-});
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded", renderQuestion);
 </script>
 
 </body>
