@@ -12,7 +12,7 @@
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/caugia-v9.1.css?v=3" />
+  <link rel="stylesheet" href="assets/caugia-v9.1.css?v=3">
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
@@ -36,9 +36,7 @@
       color: var(--dark-text);
     }
     body.debug-dark .gi-question-card,
-    body.debug-dark .gi-progress-box,
-    body.debug-dark .gi-left,
-    body.debug-dark .gi-right {
+    body.debug-dark .gi-progress-box {
       background: var(--dark-card);
       border-color: var(--dark-border);
     }
@@ -50,7 +48,6 @@
       border-color: var(--dark-border);
     }
 
-    /* Panel */
     #debug-panel {
       display: none;
       position: fixed;
@@ -78,7 +75,6 @@
       background: #e8ecf2;
     }
 
-    /* Debug Badge */
     #debug-badge {
       position: fixed;
       bottom: 20px;
@@ -94,29 +90,23 @@
   </style>
 
   <script>
-    let debugEnabled = false;
-
     function toggleDebugPanel() {
-      debugEnabled = !debugEnabled;
-      document.getElementById("debug-panel").style.display =
-        debugEnabled ? "block" : "none";
+      const panel = document.getElementById("debug-panel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
-
     function enableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
-      document.getElementById("debug-badge").textContent = "Validator ON";
-      document.getElementById("debug-badge").style.display = "inline-block";
+      const badge = document.getElementById("debug-badge");
+      badge.textContent = "Validator ON";
+      badge.style.display = "inline-block";
     }
-
     function disableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "0px solid transparent");
       document.getElementById("debug-badge").style.display = "none";
     }
-
     function toggleDarkMode() {
       document.body.classList.toggle("debug-dark");
     }
-
     function inspectElements() {
       document.body.addEventListener("mouseover", e => {
         e.target.style.boxShadow = "0 0 0 2px #FF8800 inset";
@@ -130,12 +120,12 @@
 
 <body>
 
-<!-- Floating debug trigger -->
+<!-- Floating debug toggle -->
 <button onclick="toggleDebugPanel()"
-        style="position: fixed; bottom: 20px; right: 20px;
-               width: 52px; height: 52px; border-radius: 50%;
-               background:#0046A5; color:white; border:none;
-               font-size:22px; cursor:pointer; z-index:9999;">
+  style="position: fixed; bottom: 20px; right: 20px;
+         width: 52px; height: 52px; border-radius: 50%;
+         background:#0046A5; color:white; border:none;
+         font-size:22px; cursor:pointer; z-index:9999;">
   🛠
 </button>
 
@@ -172,7 +162,7 @@
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- LEFT SIDEBAR -->
+    <!-- LEFT -->
     <aside class="gi-left">
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
@@ -226,11 +216,10 @@
 
       </div>
     </section>
-    <!-- RIGHT SIDEBAR -->
+
+    <!-- RIGHT -->
     <aside class="gi-right">
-
       <div class="gi-progress-box">
-
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
@@ -245,20 +234,14 @@
           <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
         </div>
 
-        <!-- RESET BUTTON -->
         <div class="gi-reset-wrap">
-          <button class="gi-btn gi-reset" id="gi-reset-btn">
-            Reset assessment
-          </button>
+          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset assessment</button>
         </div>
-
       </div>
-
     </aside>
 
   </div>
 </main>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -276,7 +259,7 @@
 
 <!-- PILLAR META -->
 <script>
-let PILLAR_META = {
+const PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses correctly."},
   1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity, leadership cohesion and alignment into execution."},
   2:{name:"Market Intelligence",desc:"Assesses market awareness, customer insight and competitive understanding."},
@@ -292,286 +275,9 @@ let PILLAR_META = {
  12:{name:"Leadership & Alignment",desc:"Measures cross-functional alignment, accountability, rhythm and cohesion."}
 };
 </script>
-<!-- ===========================================================
-    QUESTION ENGINE v1.3 — Fixed Progress, Validation, Stability
-=========================================================== -->
-<script>
 
-let currentIndex = 0;
-const STORAGE_KEY = "caugia_gtm_report_v1";
+<!-- ENGINE -->
+<script src="assets/engine.js"></script>
 
-/* Load saved answers */
-let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-}
-setInterval(saveState, 1000);
-
-/* DOM */
-const qTitle   = document.getElementById("gi-question-title");
-const qSub     = document.getElementById("gi-question-sub");
-const qBody    = document.getElementById("gi-question-body");
-const kicker   = document.getElementById("gi-question-kicker");
-const rightName= document.getElementById("gi-pillar-name");
-const rightDesc= document.getElementById("gi-pillar-desc");
-
-const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
-
-const btnPrev   = document.getElementById("gi-prev-btn");
-const btnNext   = document.getElementById("gi-next-btn");
-const btnSubmit = document.getElementById("gi-submit-btn");
-const btnClear  = document.getElementById("gi-clear-btn");
-const btnSave   = document.getElementById("gi-save-btn");
-const btnReset  = document.getElementById("gi-reset-btn");
-
-const progressCount  = document.getElementById("gi-progress-count");
-const progressPercent= document.getElementById("gi-progress-percent");
-const progressBar    = document.getElementById("gi-progress-bar");
-
-
-/* ===========================================================
-   RENDER QUESTION
-=========================================================== */
-function renderQuestion() {
-  const q = QUESTIONS[currentIndex];
-  if (!q) return;
-
-  kicker.textContent = PILLAR_META[q.pillar].name;
-  qTitle.textContent = q.title;
-  qSub.textContent   = q.sub || "";
-
-  rightName.textContent = PILLAR_META[q.pillar].name;
-  rightDesc.textContent = PILLAR_META[q.pillar].desc;
-
-  leftPillars.forEach(li =>
-    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
-  );
-
-  qBody.innerHTML = buildInput(q);
-
-  restoreState(q);
-
-  updateNav();
-  updateProgress();
-}
-
-
-/* ===========================================================
-   VALIDATION — DO NOT ALLOW NEXT IF EMPTY
-=========================================================== */
-function validateQuestion(q) {
-
-  if (q.type === "group") {
-    return q.fields.every(f => {
-      const el = qBody.querySelector(`input[name="${f.name}"]`);
-      return el && el.value.trim() !== "";
-    });
-  }
-
-  if (q.type === "radio") {
-    return qBody.querySelector("input:checked") !== null;
-  }
-
-  const el = qBody.querySelector("[name='q']");
-  return el && el.value.trim() !== "";
-}
-
-
-/* ===========================================================
-   RESTORE PREVIOUS ANSWERS
-=========================================================== */
-function restoreState(q) {
-
-  if (q.type === "group") {
-    q.fields.forEach(f => {
-      const el = qBody.querySelector(`input[name="${f.name}"]`);
-      if (el && STATE[f.name] !== undefined) {
-        el.value = STATE[f.name];
-      }
-    });
-    return;
-  }
-
-  const stored = STATE[q.id];
-  if (stored === undefined) return;
-
-  const radio = qBody.querySelector(`input[type=radio][value="${stored}"]`);
-  if (radio) { radio.checked = true; return; }
-
-  const el = qBody.querySelector("[name='q']");
-  if (el) el.value = stored;
-}
-
-
-/* ===========================================================
-   INPUT BUILDER — ALL QUESTION TYPES
-=========================================================== */
-function buildInput(q) {
-
-  if (q.type === "text")
-    return `<input type="text" name="q">`;
-
-  if (q.type === "number")
-    return `<input type="number" name="q">`;
-
-  if (q.type === "textarea")
-    return `<textarea name="q"></textarea>`;
-
-  if (q.type === "select")
-    return `
-      <div class="gi-select-wrap">
-        <select name="q" class="gi-select">
-          <option value="">Select an option…</option>
-          ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
-        </select>
-      </div>
-    `;
-
-  if (q.type === "radio")
-    return q.options.map(o => `
-      <label class="gi-option-card">
-        <input type="radio" name="q" value="${o}">
-        <span>${o}</span>
-      </label>
-    `).join("");
-
-  if (q.type === "group")
-    return `
-      <div class="gi-group">
-        ${q.fields.map(f => `
-          <div class="gi-group-field ${f.full ? "full" : ""}">
-            <label>${f.label}</label>
-            <input type="text" name="${f.name}">
-          </div>
-        `).join("")}
-      </div>
-    `;
-
-  return `<p>Unsupported field type</p>`;
-}
-
-
-/* ===========================================================
-   SAVE CURRENT ANSWER TO STATE
-=========================================================== */
-function storeCurrentAnswer() {
-  const q = QUESTIONS[currentIndex];
-
-  if (q.type === "group") {
-    q.fields.forEach(f => {
-      const el = qBody.querySelector(`input[name="${f.name}"]`);
-      STATE[f.name] = el ? el.value.trim() : "";
-    });
-    return;
-  }
-
-  const el = qBody.querySelector("[name='q']");
-  if (!el) return;
-
-  if (q.type === "radio") {
-    const selected = qBody.querySelector("input:checked");
-    if (selected) STATE[q.id] = selected.value;
-    return;
-  }
-
-  STATE[q.id] = el.value.trim();
-}
-
-
-/* ===========================================================
-   BUTTONS — NEXT / PREV / CLEAR / SAVE / SUBMIT
-=========================================================== */
-btnNext.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
-
-  if (!validateQuestion(q)) {
-    alert("Please complete the question before continuing.");
-    return;
-  }
-
-  storeCurrentAnswer();
-
-  if (currentIndex < QUESTIONS.length - 1) currentIndex++;
-  renderQuestion();
-});
-
-
-btnPrev.addEventListener("click", () => {
-  storeCurrentAnswer();
-  if (currentIndex > 0) currentIndex--;
-  renderQuestion();
-});
-
-
-btnClear.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
-
-  if (q.type === "group") {
-    q.fields.forEach(f => delete STATE[f.name]);
-  } else {
-    delete STATE[q.id];
-  }
-
-  qBody.querySelectorAll("input, textarea, select")
-       .forEach(el => el.value = "");
-});
-
-
-btnSave.addEventListener("click", saveState);
-
-
-btnSubmit.addEventListener("click", () => {
-  storeCurrentAnswer();
-  saveState();
-  alert("Your assessment has been submitted.");
-});
-
-
-/* ===========================================================
-   RESET ASSESSMENT
-=========================================================== */
-btnReset.addEventListener("click", () => {
-  if (!confirm("Reset the entire assessment?")) return;
-
-  localStorage.removeItem(STORAGE_KEY);
-  STATE = {};
-  currentIndex = 0;
-
-  renderQuestion();
-  updateProgress();
-});
-
-
-/* ===========================================================
-   PROGRESS BAR — FIXED (counts only answered questions)
-=========================================================== */
-function updateProgress() {
-  let answered = 0;
-
-  for (let q of QUESTIONS) {
-
-    if (q.type === "group") {
-      const allFilled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-      if (allFilled) answered++;
-    }
-
-    else if (STATE[q.id] && STATE[q.id].trim() !== "") {
-      answered++;
-    }
-  }
-
-  const total = QUESTIONS.length;
-
-  progressCount.textContent   = `${answered} / ${total}`;
-  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
-  progressBar.style.width     = `${(answered / total) * 100}%`;
-}
-
-
-/* ===========================================================
-   INIT
-=========================================================== */
-document.addEventListener("DOMContentLoaded", renderQuestion);
-
-</script>
+</body>
+</html>
