@@ -1,36 +1,30 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v9.6 ULTRA EDITION
-   Calm • Precision • Ultra-smooth • Enterprise-grade
-   All animations under 180ms • Zero visual noise
+   CAUGIA CONSULTING — PRODUCTION CSS v9.5
+   SUPER MAX ULTRA EDITION — Enterprise GTM UI
+   Calm • Minimal • Precision • Lightning-fast
 =========================================================== */
 
 /* -----------------------------------------------------------
-   VARIABLES
+   ROOT VARIABLES
 ----------------------------------------------------------- */
 :root {
   --ink: #0B132B;
-  --ink-soft: #404854;
+  --ink-soft: #3a4250;
   --blue: #0046A5;
-  --blue-dark: #003b88;
-  --blue-light: #F5F8FF;
+  --blue-dark: #003985;
+  --blue-light: #F4F7FF;
 
-  --accent: #F36C21;
+  --border: rgba(0,0,0,0.10);
+  --border-soft: rgba(0,0,0,0.06);
 
   --radius: 14px;
   --radius-sm: 8px;
 
-  --shadow-soft: 0 2px 10px rgba(0,0,0,0.05);
-  --shadow-card: 0 10px 30px rgba(0,0,0,0.08);
-  --shadow-active: 0 6px 20px rgba(0,60,160,0.16);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-card: 0 6px 18px rgba(0,0,0,0.06);
+  --shadow-strong: 0 6px 20px rgba(0,45,185,0.10);
 
-  --transition: 0.22s cubic-bezier(.22,1,.36,1);
-  --fade: fadeIn 0.25s ease;
-}
-
-/* Fade */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  --transition: 0.25s cubic-bezier(.22,1,.36,1);
 }
 
 /* -----------------------------------------------------------
@@ -38,22 +32,20 @@
 ----------------------------------------------------------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
+html, body {
   font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  background: white;
   color: var(--ink);
+  background: white;
   line-height: 1.45;
   scroll-behavior: smooth;
 }
-
-body { min-height: 100vh; }
 
 /* -----------------------------------------------------------
    HEADER
 ----------------------------------------------------------- */
 header {
   background: white;
-  border-bottom: 1px solid #e6e8ee;
+  border-bottom: 1px solid var(--border-soft);
 }
 
 header .inner {
@@ -71,11 +63,6 @@ header .brand {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  transition: opacity .2s;
-}
-
-header .brand:hover {
-  opacity: .8;
 }
 
 header .brand img {
@@ -90,7 +77,7 @@ header .brand span {
 }
 
 .nav-desktop a {
-  margin-left: 22px;
+  margin-left: 24px;
   color: var(--ink-soft);
   text-decoration: none;
   font-size: 15px;
@@ -102,59 +89,54 @@ header .brand span {
 }
 
 .nav-desktop .cta {
-  margin-left: 30px;
   background: var(--blue);
-  color: white;
-  padding: 8px 16px;
+  padding: 9px 16px;
   border-radius: var(--radius-sm);
-  transition: var(--transition);
-}
-
-.nav-desktop .cta:hover {
-  background: var(--blue-dark);
+  color: white;
+  margin-left: 28px;
 }
 
 /* -----------------------------------------------------------
-   GRID LAYOUT v10
+   MAIN GRID (ULTRA EDITION)
 ----------------------------------------------------------- */
-.gi-main { padding: 60px 0; }
+.gi-main {
+  display: flex;
+  justify-content: center;
+  padding-top: 48px;
+}
 
 .gi-shell {
+  width: 100%;
   max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 32px;
-
   display: grid;
-  grid-template-columns: 280px 1fr 300px;
-  gap: 40px;
-
+  grid-template-columns: 300px 1fr 300px;
+  gap: 48px;
+  padding: 0 32px;
   align-items: start;
 }
 
-/* keeps left & right frozen above-the-fold */
 .gi-shell > * {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 140px);
 }
 
 /* -----------------------------------------------------------
-   LEFT COLUMN — INFO PANEL
+   LEFT COLUMN — INFORMATION PANEL
 ----------------------------------------------------------- */
 .gi-left-info {
   position: sticky;
   top: 32px;
-  animation: var(--fade);
 }
 
 .gi-info-title {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--blue);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  color: var(--blue);
+  margin-bottom: 4px;
+  font-weight: 600;
 }
 
 .gi-info-h1 {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   margin-bottom: 14px;
 }
@@ -162,104 +144,104 @@ header .brand span {
 .gi-info-desc {
   font-size: 15px;
   color: var(--ink-soft);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
 
 .gi-info-meta {
   font-size: 14px;
-  color: #6c717c;
-  margin-bottom: 22px;
+  color: #555;
+  margin-bottom: 16px;
 }
 
 .gi-info-faq {
   color: var(--blue);
-  text-decoration: none;
-  font-size: 15px;
-  margin-bottom: 24px;
+  font-size: 14px;
   display: inline-block;
-  transition: opacity .2s;
+  margin-bottom: 20px;
+  text-decoration: none;
 }
 
 .gi-info-faq:hover {
-  opacity: 0.8;
+  text-decoration: underline;
 }
 
-/* Progress box */
+/* Progress container */
 .gi-progress-box {
   background: white;
-  border: 1px solid #e3e5ea;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 18px;
+  padding: 18px;
   box-shadow: var(--shadow-soft);
-  margin-bottom: 18px;
-  animation: var(--fade);
+  margin-bottom: 16px;
 }
 
 .gi-progress-top {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  font-weight: 600;
   margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .gi-progress-track {
-  background: #f0f2f7;
-  height: 6px;
+  height: 7px;
+  width: 100%;
+  background: #eef1f6;
   border-radius: 30px;
   overflow: hidden;
 }
 
 .gi-progress-fill {
-  background: var(--blue);
   height: 100%;
   width: 0%;
-  transition: width .3s cubic-bezier(.22,1,.36,1);
+  background: linear-gradient(90deg, #0046A5, #0b62d1);
+  transition: width 0.35s cubic-bezier(.22,1,.36,1);
 }
 
-/* Reset button (left column version) */
 .gi-left-info .gi-reset {
-  width: 100%;
   margin-top: 14px;
+  width: 100%;
 }
 
 /* -----------------------------------------------------------
    CENTER — QUESTION ENGINE
 ----------------------------------------------------------- */
 .gi-center {
-  min-height: 100%;
-  animation: var(--fade);
+  min-height: auto;
 }
 
 .gi-question-card {
   background: white;
-  border: 1px solid #e4e6eb;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 34px;
   box-shadow: var(--shadow-soft);
-  animation: var(--fade);
+  transition: var(--transition);
 }
 
-.gi-question-header { margin-bottom: 22px; }
+.gi-question-card:hover {
+  box-shadow: var(--shadow-card);
+}
 
 .gi-question-kicker {
   font-size: 13px;
   color: var(--blue);
-  text-transform: uppercase;
-  margin-bottom: 6px;
   font-weight: 600;
+  margin-bottom: 6px;
+  text-transform: uppercase;
 }
 
 .gi-question-title {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .gi-question-sub {
   font-size: 15px;
-  color: #60656f;
-  margin-bottom: 18px;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
 }
 
 /* Inputs */
@@ -267,68 +249,63 @@ header .brand span {
 .gi-question-body textarea,
 .gi-question-body select {
   width: 100%;
-  padding: 13px 15px;
-  font-size: 15px;
+  padding: 13px 14px;
   border-radius: var(--radius-sm);
-  background: #f7f9fc;
-  border: 1px solid #cfd6e0;
+  border: 1px solid #d4d9e2;
+  background: #F8FAFD;
   transition: var(--transition);
 }
-
-.gi-question-body textarea { height: 140px; resize: vertical; }
 
 .gi-question-body input:focus,
 .gi-question-body textarea:focus,
 .gi-question-body select:focus {
   background: white;
   border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(0,70,165,.18);
+  box-shadow: 0 0 0 1px var(--blue);
 }
 
-/* Option cards */
-.gi-option-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border: 1px solid #d6dbe5;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  background: white;
-  transition: var(--transition);
-}
-
-.gi-option-card:hover {
-  background: var(--blue-light);
-  border-color: var(--blue);
-  box-shadow: var(--shadow-soft);
-}
-
-.gi-option-card input {
-  transform: scale(1.2);
-}
-
-/* Active via :has() */
-.gi-option-card:has(input:checked) {
-  background: #eef4ff;
-  border-color: var(--blue);
-  box-shadow: var(--shadow-active);
-}
-
-/* Group fields */
 .gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
 
-.gi-group-field.full { grid-column: 1 / -1; }
+.gi-group-field label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+}
 
-/* -----------------------------------------------------------
-   BUTTONS (shared)
------------------------------------------------------------ */
+.gi-group-field.full {
+  grid-column: 1 / -1;
+}
+
+/* Option cards */
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #d1d7e0;
+  background: white;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.gi-option-card:has(input:checked) {
+  border-color: var(--blue);
+  background: #eef4ff;
+  box-shadow: var(--shadow-strong);
+}
+
+/* Buttons */
 .gi-nav-row {
-  margin-top: 24px;
+  margin-top: 26px;
   display: flex;
   gap: 12px;
 }
@@ -336,14 +313,16 @@ header .brand span {
 .gi-btn {
   padding: 11px 20px;
   border-radius: var(--radius-sm);
-  border: 1px solid #cfd6e0;
-  background: #f5f7fa;
+  background: #F5F7FA;
+  border: 1px solid var(--border);
   cursor: pointer;
   transition: var(--transition);
   font-size: 14px;
 }
 
-.gi-btn:hover { background: #eceff4; }
+.gi-btn:hover {
+  background: #ECEFF4;
+}
 
 .gi-btn.gi-primary {
   background: var(--blue);
@@ -351,7 +330,9 @@ header .brand span {
   border: none;
 }
 
-.gi-btn.gi-primary:hover { opacity: .9; }
+.gi-btn.gi-primary:hover {
+  opacity: 0.92;
+}
 
 /* -----------------------------------------------------------
    RIGHT COLUMN — PILLAR NAVIGATION
@@ -359,72 +340,74 @@ header .brand span {
 .gi-right-pillars {
   position: sticky;
   top: 32px;
-  animation: var(--fade);
 }
 
 .gi-pillars-title {
   font-size: 15px;
   font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--ink);
+  margin-bottom: 12px;
 }
 
 .gi-pillar-nav {
   list-style: none;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .gi-pillar-nav li {
   padding: 10px 14px;
-  margin-bottom: 4px;
+  font-size: 14px;
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
   cursor: pointer;
   transition: var(--transition);
+  border: 1px solid transparent;
 }
 
 .gi-pillar-nav li:hover {
-  background: var(--blue-light);
+  background: #F4F7FF;
 }
 
 .gi-pillar-nav li.active {
   background: var(--blue);
   color: white;
   border-color: var(--blue);
-  box-shadow: var(--shadow-active);
-  font-weight: 600;
+  box-shadow: var(--shadow-strong);
 }
 
-/* Active pillar description box */
+/* Description card */
 .gi-pillar-desc-box {
   background: white;
-  border: 1px solid #e3e5ea;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 18px;
+  padding: 18px;
   box-shadow: var(--shadow-soft);
-  animation: var(--fade);
 }
 
 .gi-pillar-desc-box h3 {
   font-size: 16px;
-  font-weight: 700;
   margin-bottom: 6px;
 }
 
 .gi-pillar-desc-box p {
   font-size: 14px;
-  color: #616670;
-  line-height: 1.45;
+  line-height: 1.55;
+  opacity: 0.85;
 }
 
 /* -----------------------------------------------------------
    RESPONSIVE
 ----------------------------------------------------------- */
-@media (max-width: 1280px) {
-  .gi-shell { grid-template-columns: 240px 1fr 260px; }
+@media (max-width: 1300px) {
+  .gi-shell {
+    grid-template-columns: 240px 1fr 260px;
+  }
 }
 
 @media (max-width: 1100px) {
-  .gi-shell { grid-template-columns: 1fr; }
-  .gi-left-info, .gi-right-pillars { position: static; }
+  .gi-shell {
+    grid-template-columns: 1fr;
+  }
+  .gi-left-info, .gi-right-pillars {
+    position: static;
+    margin-bottom: 32px;
+  }
 }
