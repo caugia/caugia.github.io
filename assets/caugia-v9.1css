@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — PRODUCTION CSS v9.1
+   CAUGIA CONSULTING — PRODUCTION CSS v9.1 FIXED
    Calm • Professional • Systematic • Enterprise-grade
    =========================================================== */
 
@@ -14,6 +14,9 @@
   --radius: 10px;
   --transition: 0.22s ease;
   --maxw: 1180px;
+
+  /* Validator mode visual highlight (off by default) */
+  --validator-outline: 0px solid transparent;
 }
 
 /* -----------------------------------------------------------
@@ -23,6 +26,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: var(--validator-outline);
 }
 
 html {
@@ -236,16 +240,18 @@ header .brand span {
   grid-column: 1 / -1;
 }
 
-/* LABEL STYLE */
-.gi-field label {
+.gi-group-field label {
   display: block;
   font-size: 14px;
   margin-bottom: 6px;
 }
 
-.gi-field {
-  display: flex;
-  flex-direction: column;
+.gi-group-field input {
+  padding: 12px;
+  border: 1px solid #ccd3dd;
+  border-radius: var(--radius);
+  background: #FAFCFF;
+  font-size: 15px;
 }
 
 /* -----------------------------------------------------------
@@ -299,6 +305,28 @@ header .brand span {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
+}
+
+/* RESET BUTTON */
+.gi-reset-wrap {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.gi-btn.gi-reset {
+  background: transparent;
+  border: 1px solid var(--silver);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.gi-btn.gi-reset:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: #f5f8ff;
 }
 
 /* -----------------------------------------------------------
@@ -361,24 +389,4 @@ header .brand span {
   .gi-group {
     grid-template-columns: 1fr;
   }
-}
-.gi-reset-wrap {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.gi-btn.gi-reset {
-  background: transparent;
-  border: 1px solid var(--silver);
-  color: var(--ink);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: 0.2s ease;
-}
-
-.gi-btn.gi-reset:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-  background: #f5f8ff;
 }
