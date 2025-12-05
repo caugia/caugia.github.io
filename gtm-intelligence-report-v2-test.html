@@ -6,41 +6,30 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-  <!-- ===========================================================
-       FAVICONS
-  ============================================================ -->
+  <!-- Favicon -->
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- ===========================================================
-       CSS (IMPORTANT: VERSION YOUR FILE)
-  ============================================================ -->
-  <link rel="stylesheet" href="assets/caugia-v9.1.css" />
+  <!-- CSS (latest) -->
+  <link rel="stylesheet" href="assets/caugia-v9.3.css?v=3" />
 
-  <!-- ===========================================================
-       🔒 SECURITY (MUST STAY)
-  ============================================================ -->
+  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <!-- ===========================================================
-       HYBRID DEBUG MODE
-       Includes validator, dark mode, inspector
+       HYBRID DEBUG MODE — Validator, Inspector, Dark Mode
   ============================================================ -->
   <style>
     :root {
       --validator-outline: 0px solid transparent;
-
-      /* Dark Mode */
       --dark-bg: #0F1117;
       --dark-text: #E9ECF2;
       --dark-card: #1A1D24;
-      --dark-border: #2A2E39;
+      --dark-border: #2C2F3A;
     }
 
-    * {
-      outline: var(--validator-outline);
-    }
+    * { outline: var(--validator-outline); }
 
     body.debug-dark {
       background: var(--dark-bg);
@@ -48,13 +37,12 @@
     }
 
     body.debug-dark .gi-question-card,
-    body.debug-dark .gi-progress-box,
-    body.debug-dark .gi-left,
-    body.debug-dark .gi-right {
+    body.debug-dark .gi-progress-box {
       background: var(--dark-card);
       border-color: var(--dark-border);
     }
 
+    /* Debug Panel UI */
     #debug-panel {
       display: none;
       position: fixed;
@@ -63,18 +51,19 @@
       width: 240px;
       background: white;
       border: 1px solid #ddd;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 14px;
       z-index: 9999;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.20);
+      font-size: 14px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.18);
     }
 
     #debug-panel button {
       width: 100%;
       padding: 9px;
       margin-top: 8px;
-      border: 1px solid #ccc;
       border-radius: 6px;
+      border: 1px solid #ccc;
       background: #f5f7fa;
       cursor: pointer;
     }
@@ -84,31 +73,34 @@
     }
 
     #debug-badge {
-      display: none;
       position: fixed;
       bottom: 20px;
       left: 20px;
       padding: 6px 10px;
       background: #0046A5;
       color: white;
-      border-radius: 6px;
       font-size: 13px;
+      border-radius: 6px;
       z-index: 9999;
+      display: none;
     }
   </style>
 
   <script>
-    /* Debug controller */
+    // ====================== DEBUG PANEL SYSTEM ======================
+    let debugOpen = false;
+
     function toggleDebugPanel() {
-      const p = document.getElementById("debug-panel");
-      p.style.display = p.style.display === "block" ? "none" : "block";
+      debugOpen = !debugOpen;
+      document.getElementById("debug-panel").style.display =
+        debugOpen ? "block" : "none";
     }
 
     function enableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
-      const b = document.getElementById("debug-badge");
-      b.textContent = "Validator ON";
-      b.style.display = "inline-block";
+      const badge = document.getElementById("debug-badge");
+      badge.innerHTML = "Validator ON";
+      badge.style.display = "inline-block";
     }
 
     function disableValidator() {
@@ -120,9 +112,9 @@
       document.body.classList.toggle("debug-dark");
     }
 
-    function inspectElements() {
+    function enableInspector() {
       document.body.addEventListener("mouseover", e => {
-        e.target.style.boxShadow = "0 0 0 2px #FF8800 inset";
+        e.target.style.boxShadow = "0 0 0 2px #FFA500 inset";
       });
       document.body.addEventListener("mouseout", e => {
         e.target.style.boxShadow = "none";
@@ -134,9 +126,7 @@
 
 <body>
 
-<!-- ===========================================================
-     DEBUG BUTTON
-=========================================================== -->
+<!-- Floating debug button -->
 <button onclick="toggleDebugPanel()"
         style="position: fixed; bottom: 20px; right: 20px;
                width: 52px; height: 52px; border-radius: 50%;
@@ -145,12 +135,13 @@
   🛠
 </button>
 
+<!-- Panel -->
 <div id="debug-panel">
   <strong>Debug Tools</strong><br><br>
   <button onclick="enableValidator()">Enable Validator</button>
   <button onclick="disableValidator()">Disable Validator</button>
   <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-  <button onclick="inspectElements()">Enable Inspector</button>
+  <button onclick="enableInspector()">Enable Inspector</button>
 </div>
 
 <div id="debug-badge">Validator ON</div>
@@ -161,7 +152,7 @@
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
+      <img src="assets/C-logo.png" alt="">
       <span>Caugia Consulting</span>
     </a>
 
@@ -177,25 +168,23 @@
 </header>
 
 <!-- ===========================================================
-     MAIN WRAPPER
+     MAIN GTM ASSESSMENT LAYOUT
 =========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- =======================================================
-         LEFT SIDEBAR
-    ======================================================= -->
+    <!-- LEFT SIDEBAR -->
     <aside class="gi-left">
-
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-left-desc">
-        A structured, 12-pillar diagnostic that evaluates your entire
-        go-to-market system and produces a personalized intelligence report.
+        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system.
       </p>
 
-      <div class="gi-left-meta">12 pillars • 265 questions • ~50 minutes</div>
+      <div class="gi-left-meta">
+        12 pillars • 265 questions • ~50 minutes
+      </div>
 
       <div class="gi-left-subheading">Pillars Included</div>
 
@@ -218,9 +207,7 @@
       <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
     </aside>
 
-    <!-- =======================================================
-         CENTER — QUESTION ENGINE
-    ======================================================= -->
+    <!-- CENTER QUESTION ENGINE -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -239,12 +226,11 @@
           <button class="gi-btn gi-primary gi-next" id="gi-next-btn">Next</button>
           <button class="gi-btn gi-primary gi-submit" id="gi-submit-btn">Submit</button>
         </div>
+
       </div>
     </section>
 
-    <!-- =======================================================
-         RIGHT SIDEBAR — PROGRESS
-    ======================================================= -->
+    <!-- RIGHT SIDEBAR -->
     <aside class="gi-right">
 
       <div class="gi-progress-box">
@@ -264,10 +250,9 @@
         </div>
 
         <div class="gi-reset-wrap">
-          <button class="gi-btn gi-reset" id="gi-reset-btn">
-            Reset assessment
-          </button>
+          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
         </div>
+
       </div>
 
     </aside>
@@ -290,30 +275,33 @@
 </footer>
 
 <!-- ===========================================================
-     LOAD QUESTIONS + META + ENGINE
+     SCRIPTS
 =========================================================== -->
+
+<!-- QUESTION DEFINITIONS -->
 <script src="assets/QUESTIONS.js"></script>
 
+<!-- PILLAR META -->
 <script>
-/* PILLAR META */
-let PILLAR_META = {
-  0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates clarity, cohesion and alignment into execution."},
-  2:{name:"Market Intelligence",desc:"Assesses your understanding of customers, competitors and market signals."},
-  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging and value articulation."},
-  4:{name:"Demand Generation",desc:"Reviews pipeline generation, segmentation and channel effectiveness."},
-  5:{name:"Sales Execution",desc:"Measures qualification, efficiency, deal flow and forecasting."},
-  6:{name:"Customer Success & Expansion",desc:"Assesses onboarding, value delivery, outcomes and expansion."},
-  7:{name:"Revenue Operations & Systems",desc:"Evaluates workflows, tooling, automation and operational quality."},
-  8:{name:"Pricing & Packaging",desc:"Assesses packaging logic, monetization structure and commercial discipline."},
-  9:{name:"Brand & Communications",desc:"Evaluates clarity, consistency and credibility of narrative."},
- 10:{name:"Data & Insights",desc:"Reviews availability, accuracy, depth and usability of GTM data."},
- 11:{name:"Enablement",desc:"Evaluates readiness, skills, training and sales enablement program."},
- 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability, communication and cohesion."}
+const PILLAR_META = {
+  0:{name:"Context",desc:"Captures essential background for correct interpretation."},
+  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity & execution alignment."},
+  2:{name:"Market Intelligence",desc:"Assesses customer & competitive awareness."},
+  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging & narrative strength."},
+  4:{name:"Demand Generation",desc:"Reviews pipeline health & channel effectiveness."},
+  5:{name:"Sales Execution",desc:"Measures qualification, deal flow & forecasting."},
+  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery & expansion."},
+  7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling & operational quality."},
+  8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic & pricing structure."},
+  9:{name:"Brand & Communications",desc:"Reviews clarity & consistency of communications."},
+ 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
+ 11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
+ 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
 };
 </script>
 
-<script src="assets/engine.js"></script>
+<!-- ENGINE v3.0 — MAX VERSTAPPEN EDITION -->
+<script src="assets/engine.js?v=3.0"></script>
 
 </body>
 </html>
