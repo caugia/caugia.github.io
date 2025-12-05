@@ -17,6 +17,7 @@ if (QUESTIONS.length === 0) {
   console.error("❌ QUESTIONS.js not loaded or empty.");
 }
 
+
 /* ---------------------- LOAD / SAVE ---------------------- */
 function loadState() {
   try {
