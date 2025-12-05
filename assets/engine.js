@@ -1,28 +1,17 @@
 /* ===========================================================
    CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.2 (Final Fix)
-   • FIXED: QUESTIONS redeclaration bug
-   • FIXED: Progress not updating
-   • FIXED: Missing initial question
-   • FULL support for: text, textarea, number, select, radio, scale, group
 =========================================================== */
 
-/* -----------------------------------------------------------
-   GLOBAL STATE
------------------------------------------------------------ */
+/* ---------------- STATE ---------------- */
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
 
-/* IMPORTANT:
-   QUESTIONS MUST COME FROM QUESTIONS.js ONLY.
-   Engine NEVER declares its own QUESTIONS variable.
------------------------------------------------------------ */
+/* Pull QUESTIONS ONLY from QUESTIONS.js */
 const QUESTIONS = window.QUESTIONS;
 
-/* -----------------------------------------------------------
-   LOAD / SAVE
------------------------------------------------------------ */
+/* ---------------- LOAD / SAVE ---------------- */
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -37,9 +26,7 @@ function saveState() {
 }
 setInterval(saveState, 800);
 
-/* -----------------------------------------------------------
-   DOM SHORTCUTS
------------------------------------------------------------ */
+/* ---------------- DOM ---------------- */
 const qTitle   = document.getElementById("gi-question-title");
 const qSub     = document.getElementById("gi-question-sub");
 const qBody    = document.getElementById("gi-question-body");
@@ -57,19 +44,14 @@ const btnClear  = document.getElementById("gi-clear-btn");
 const btnSave   = document.getElementById("gi-save-btn");
 const btnReset  = document.getElementById("gi-reset-btn");
 
-const progressCount  = document.getElementById("gi-progress-count");
-const progressPercent= document.getElementById("gi-progress-percent";
-const progressBar    = document.getElementById("gi-progress-bar");
+const progressCount   = document.getElementById("gi-progress-count");
+const progressPercent = document.getElementById("gi-progress-percent");
+const progressBar     = document.getElementById("gi-progress-bar");
 
-/* -----------------------------------------------------------
-   RENDER QUESTION
------------------------------------------------------------ */
+/* ---------------- RENDER QUESTION ---------------- */
 function renderQuestion() {
   const q = QUESTIONS[currentIndex];
-  if (!q) {
-    console.error("❌ Invalid index", currentIndex);
-    return;
-  }
+  if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
   qTitle.textContent = q.title || "";
@@ -89,10 +71,9 @@ function renderQuestion() {
   updateProgress();
 }
 
-/* -----------------------------------------------------------
-   INPUT BUILDER
------------------------------------------------------------ */
+/* ---------------- INPUT BUILDER ---------------- */
 function buildInput(q) {
+
   if (q.type === "text")
     return `<input type="text" name="q" class="gi-input">`;
 
@@ -130,17 +111,16 @@ function buildInput(q) {
       </div>
     `;
 
-  return `<p>Unsupported question type: ${q.type}</p>`;
+  return `<p>Unsupported question type</p>`;
 }
 
-/* -----------------------------------------------------------
-   RESTORE
------------------------------------------------------------ */
+/* ---------------- RESTORE ANSWER ---------------- */
 function restoreAnswer(q) {
+
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = qBody.querySelector(`[name="${f.name}"]`);
-      if (el && STATE[f.name]) el.value = STATE[f.name];
+      const input = qBody.querySelector(`[name="${f.name}"]`);
+      if (input && STATE[f.name]) input.value = STATE[f.name];
     });
     return;
   }
@@ -158,10 +138,9 @@ function restoreAnswer(q) {
   if (el) el.value = saved;
 }
 
-/* -----------------------------------------------------------
-   VALIDATION
------------------------------------------------------------ */
+/* ---------------- VALIDATION ---------------- */
 function validate(q) {
+
   if (q.type === "group")
     return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
 
@@ -172,9 +151,7 @@ function validate(q) {
   return el && el.value.trim() !== "";
 }
 
-/* -----------------------------------------------------------
-   SAVE
------------------------------------------------------------ */
+/* ---------------- SAVE CURRENT ANSWER ---------------- */
 function storeCurrentAnswer() {
   const q = QUESTIONS[currentIndex];
 
@@ -196,9 +173,7 @@ function storeCurrentAnswer() {
   if (el) STATE[q.id] = el.value.trim();
 }
 
-/* -----------------------------------------------------------
-   NAVIGATION
------------------------------------------------------------ */
+/* ---------------- NAVIGATION ---------------- */
 btnNext.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
   storeCurrentAnswer();
@@ -222,12 +197,8 @@ btnPrev.addEventListener("click", () => {
 
 btnClear.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
-
-  if (q.type === "group") {
-    q.fields.forEach(f => delete STATE[f.name]);
-  } else {
-    delete STATE[q.id];
-  }
+  if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
+  else delete STATE[q.id];
 
   renderQuestion();
 });
@@ -249,21 +220,18 @@ btnReset.addEventListener("click", () => {
   updateProgress();
 });
 
-/* -----------------------------------------------------------
-   PROGRESS
------------------------------------------------------------ */
+/* ---------------- PROGRESS BAR ---------------- */
 function updateProgress() {
   let answered = 0;
 
   QUESTIONS.forEach(q => {
     if (q.type === "group") {
-      const complete = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-      if (complete) answered++;
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (filled) answered++;
       return;
     }
 
-    if (STATE[q.id] && STATE[q.id].trim() !== "")
-      answered++;
+    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
   });
 
   const total = QUESTIONS.length;
@@ -274,9 +242,7 @@ function updateProgress() {
   progressBar.style.width = pct + "%";
 }
 
-/* -----------------------------------------------------------
-   INIT
------------------------------------------------------------ */
+/* ---------------- INIT ---------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderQuestion();
 });
