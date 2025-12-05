@@ -11,50 +11,42 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS (latest Ultra version) -->
-  <link rel="stylesheet" href="assets/caugia-v9.6.css?v=9.6"/>
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/caugia-v9.7.css?v=9.7"/>
 
-  <!-- 🔒 SECURITY -->
+  <!-- SECURITY -->
   <script src="/auth.js"></script>
 </head>
 
 <body>
 
-<button class="theme-toggle" onclick="document.body.classList.toggle('dark')">
-  Light / Dark
-</button>
-
-  
 <!-- ===========================================================
-     HEADER
+     HEADER (Minimal tool header, no site navigation)
 =========================================================== -->
-<header>
-  <div class="inner">
-    <div class="brand no-link">
-      <img src="assets/C-logo.png" alt="">
+<header class="gi-header">
+  <div class="gi-header-inner">
+    <div class="gi-brand">
+      <img src="assets/C-logo.png" alt="Caugia Logo">
       <span>Caugia Consulting</span>
     </div>
 
-    <a class="cta-only" href="contact.html">Contact</a>
+    <div class="gi-header-links">
+      <a href="contact.html" class="gi-contact-link">Contact</a>
+    </div>
   </div>
 </header>
 
 
-
 <!-- ===========================================================
-     MAIN LAYOUT v10 — 3 COLUMN ULTRA DESIGN
+     MAIN 3-COLUMN LAYOUT
 =========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
-
-    <!-- =====================================================
-         LEFT COLUMN — INFORMATION + PROGRESS + DESCRIPTION
-    ====================================================== -->
+    <!-- LEFT SIDEBAR — Information Panel -->
     <aside class="gi-left-info">
 
       <div class="gi-info-title">Premium GTM Assessment</div>
-
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-info-desc">
@@ -65,9 +57,9 @@
         12 pillars • 265 questions • ~50 minutes
       </div>
 
-      <a href="#faq" class="gi-info-faq">FAQ about the assessment</a>
+      <a href="#faq" class="gi-info-faq">FAQ</a>
 
-      <!-- PROGRESS BOX -->
+      <!-- Progress -->
       <div class="gi-progress-box">
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
@@ -79,60 +71,51 @@
         </div>
       </div>
 
-      <!-- RESET BUTTON -->
-      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+      <button id="gi-reset-btn" class="gi-btn gi-reset">Reset</button>
 
-      <!-- LEFT-SIDE PILLAR DESCRIPTION -->
-      <div class="gi-left-pillar-desc-box">
-        <h3 id="gi-left-pillar-desc-title">Context</h3>
-        <p id="gi-left-pillar-desc-text">
-          Captures essential background for correct interpretation.
+      <!-- EXPLANATION UNDER RESET -->
+      <div class="gi-context-box">
+        <h3>Context</h3>
+        <p>
+          Context provides the foundation for interpreting the rest of the assessment.
+          By capturing essential details about your company, the system can adjust
+          recommendations, highlight specific risks and determine the right priorities.
         </p>
       </div>
 
     </aside>
 
 
-
-
-    <!-- =====================================================
-         CENTER — QUESTION ENGINE
-    ====================================================== -->
+    <!-- CENTER — Question Engine -->
     <section class="gi-center">
-
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
-          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
-          <h2 class="gi-question-title" id="gi-question-title"></h2>
-          <p class="gi-question-sub" id="gi-question-sub"></p>
+          <div id="gi-question-kicker" class="gi-question-kicker">Context</div>
+          <h2 id="gi-question-title" class="gi-question-title"></h2>
+          <p id="gi-question-sub" class="gi-question-sub"></p>
         </div>
 
-        <div class="gi-question-body" id="gi-question-body"></div>
+        <div id="gi-question-body" class="gi-question-body"></div>
 
         <div class="gi-nav-row">
-          <button class="gi-btn gi-prev" id="gi-prev-btn">Previous</button>
-          <button class="gi-btn gi-save" id="gi-save-btn">Save</button>
-          <button class="gi-btn gi-clear" id="gi-clear-btn">Clear</button>
-          <button class="gi-btn gi-primary gi-next" id="gi-next-btn">Next</button>
-          <button class="gi-btn gi-primary gi-submit" id="gi-submit-btn">Submit</button>
+          <button id="gi-prev-btn" class="gi-btn gi-prev">Previous</button>
+          <button id="gi-save-btn" class="gi-btn gi-save">Save</button>
+          <button id="gi-clear-btn" class="gi-btn gi-clear">Clear</button>
+          <button id="gi-next-btn" class="gi-btn gi-primary gi-next">Next</button>
+          <button id="gi-submit-btn" class="gi-btn gi-primary gi-submit">Submit</button>
         </div>
 
       </div>
-
     </section>
 
 
-
-
-    <!-- =====================================================
-         RIGHT COLUMN — PILLAR NAVIGATION
-    ====================================================== -->
+    <!-- RIGHT SIDEBAR — Pillar Navigation -->
     <aside class="gi-right-pillars">
 
       <div class="gi-pillars-title">Pillars Included</div>
 
-      <ul class="gi-pillar-nav" id="gi-right-pillar-list">
+      <ul id="gi-left-pillar-list" class="gi-pillar-nav">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
         <li data-p="2">2 — Market Intelligence</li>
@@ -148,44 +131,17 @@
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
 
-      <!-- RIGHT-SIDE DESCRIPTION (optional — can hide or keep) -->
-      <div class="gi-pillar-desc-box">
-        <h3 id="gi-pillar-name">Context</h3>
-        <p id="gi-pillar-desc">Captures essential background for correct interpretation.</p>
-      </div>
-
     </aside>
 
   </div>
 </main>
 
 
-
-
-<!-- ===========================================================
-     FOOTER
-=========================================================== -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">© 2025 Caugia Consulting</div>
-    <div class="footer-right">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </div>
-</footer>
-
-
-
 <!-- ===========================================================
      SCRIPTS
 =========================================================== -->
+<script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- QUESTIONS DEFINITIONS -->
-<script src="assets/QUESTIONS.js?v=2"></script>
-
-<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background for correct interpretation."},
@@ -204,8 +160,7 @@ const PILLAR_META = {
 };
 </script>
 
-<!-- QUESTION ENGINE -->
-<script src="assets/engine.js?v=5001"></script>
+<script src="assets/engine.js?v=5000"></script>
 
 </body>
 </html>
