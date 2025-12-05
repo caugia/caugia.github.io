@@ -67,14 +67,14 @@ function renderQuestion() {
   if (!q) return;
 
   // Check if PILLAR_META exists
-  if (!window.PILLAR_META) {
+  if (typeof PILLAR_META === 'undefined') {
     console.error("❌ PILLAR_META not loaded");
     return;
   }
 
-  kicker.textContent = window.PILLAR_META[q.pillar].name;
-  rightName.textContent = window.PILLAR_META[q.pillar].name;
-  rightDesc.textContent = window.PILLAR_META[q.pillar].desc;
+  kicker.textContent = PILLAR_META[q.pillar].name;
+  rightName.textContent = PILLAR_META[q.pillar].name;
+  rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
   qTitle.textContent = q.title || "";
   qSub.textContent = q.sub || "";
