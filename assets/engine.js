@@ -11,9 +11,9 @@ const STORAGE_KEY = "caugia_gtm_report_v1";
 let STATE = loadState();
 
 /* ---------------------- QUESTIONS SOURCE ---------------------- */
-const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+const QUESTIONS_REF = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
 
-if (QUESTIONS.length === 0) {
+if (QUESTIONS_REF.length === 0) {
   console.error("❌ QUESTIONS.js not loaded or empty.");
 }
 
