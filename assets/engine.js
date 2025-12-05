@@ -1,5 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.2 (Final Fix)
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.3 (Final Fix)
+   QUESTIONS is NEVER declared here (only read from window)
 =========================================================== */
 
 /* ---------------- STATE ---------------- */
@@ -8,8 +9,14 @@ const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
 
-/* Pull QUESTIONS ONLY from QUESTIONS.js */
+/* ---------------- QUESTIONS SOURCE ---------------- */
+/* DO NOT declare QUESTIONS — only reference it */
 const QUESTIONS = window.QUESTIONS;
+
+/* Safety check */
+if (!QUESTIONS || !Array.isArray(QUESTIONS)) {
+  console.error("❌ QUESTIONS.js not loaded properly.");
+}
 
 /* ---------------- LOAD / SAVE ---------------- */
 function loadState() {
@@ -48,17 +55,17 @@ const progressCount   = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar     = document.getElementById("gi-progress-bar");
 
-/* ---------------- RENDER QUESTION ---------------- */
+/* ---------------- RENDER ---------------- */
 function renderQuestion() {
   const q = QUESTIONS[currentIndex];
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
-  qTitle.textContent = q.title || "";
-  qSub.textContent   = q.sub || "";
-
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
+
+  qTitle.textContent = q.title || "";
+  qSub.textContent   = q.sub || "";
 
   leftPillars.forEach(li =>
     li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
@@ -91,7 +98,7 @@ function buildInput(q) {
       </select>
     `;
 
-  if (q.type === "scale" || q.type === "radio")
+  if (q.type === "radio" || q.type === "scale")
     return q.options.map(o => `
       <label class="gi-option-card">
         <input type="radio" name="q" value="${o}">
@@ -105,7 +112,7 @@ function buildInput(q) {
         ${q.fields.map(f => `
           <div class="gi-group-field ${f.full ? "full" : ""}">
             <label>${f.label}</label>
-            <input type="text" name="${f.name}" class="gi-input">
+            <input type="text" name="${f.name}">
           </div>
         `).join("")}
       </div>
@@ -114,13 +121,13 @@ function buildInput(q) {
   return `<p>Unsupported question type</p>`;
 }
 
-/* ---------------- RESTORE ANSWER ---------------- */
+/* ---------------- RESTORE ---------------- */
 function restoreAnswer(q) {
 
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const input = qBody.querySelector(`[name="${f.name}"]`);
-      if (input && STATE[f.name]) input.value = STATE[f.name];
+      const el = qBody.querySelector(`[name="${f.name}"]`);
+      if (el && STATE[f.name]) el.value = STATE[f.name];
     });
     return;
   }
@@ -129,10 +136,7 @@ function restoreAnswer(q) {
   if (!saved) return;
 
   const radio = qBody.querySelector(`input[value="${saved}"]`);
-  if (radio) {
-    radio.checked = true;
-    return;
-  }
+  if (radio) return (radio.checked = true);
 
   const el = qBody.querySelector("[name='q']");
   if (el) el.value = saved;
@@ -144,14 +148,14 @@ function validate(q) {
   if (q.type === "group")
     return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
 
-  if (q.type === "scale" || q.type === "radio")
+  if (q.type === "radio" || q.type === "scale")
     return qBody.querySelector("input:checked") !== null;
 
   const el = qBody.querySelector("[name='q']");
   return el && el.value.trim() !== "";
 }
 
-/* ---------------- SAVE CURRENT ANSWER ---------------- */
+/* ---------------- SAVE ---------------- */
 function storeCurrentAnswer() {
   const q = QUESTIONS[currentIndex];
 
@@ -163,7 +167,7 @@ function storeCurrentAnswer() {
     return;
   }
 
-  if (q.type === "scale" || q.type === "radio") {
+  if (q.type === "radio" || q.type === "scale") {
     const selected = qBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
     return;
@@ -189,14 +193,13 @@ btnNext.addEventListener("click", () => {
 
 btnPrev.addEventListener("click", () => {
   storeCurrentAnswer();
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
+  if (currentIndex > 0) currentIndex--;
+  renderQuestion();
 });
 
 btnClear.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
+
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
 
@@ -208,11 +211,12 @@ btnSave.addEventListener("click", saveState);
 btnSubmit.addEventListener("click", () => {
   storeCurrentAnswer();
   saveState();
-  alert("Your assessment has been submitted.");
+  alert("Assessment submitted.");
 });
 
 btnReset.addEventListener("click", () => {
   if (!confirm("Reset entire assessment?")) return;
+
   localStorage.removeItem(STORAGE_KEY);
   STATE = {};
   currentIndex = 0;
@@ -220,7 +224,7 @@ btnReset.addEventListener("click", () => {
   updateProgress();
 });
 
-/* ---------------- PROGRESS BAR ---------------- */
+/* ---------------- PROGRESS ---------------- */
 function updateProgress() {
   let answered = 0;
 
@@ -230,7 +234,6 @@ function updateProgress() {
       if (filled) answered++;
       return;
     }
-
     if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
   });
 
@@ -243,6 +246,4 @@ function updateProgress() {
 }
 
 /* ---------------- INIT ---------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  renderQuestion();
-});
+document.addEventListener("DOMContentLoaded", renderQuestion);
