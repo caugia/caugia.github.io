@@ -11,88 +11,15 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS (v9.6 Ultra Edition) -->
-  <link rel="stylesheet" href="assets/caugia-v9.6.css?v=9.6" />
+  <!-- CSS (latest Ultra version) -->
+  <link rel="stylesheet" href="assets/caugia-v9.5.css?v=95" />
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
-
-  <!-- ===========================================================
-       DEBUG PANEL (kept intact for developers)
-  ============================================================ -->
-  <style>
-    :root { --validator-outline: 0px solid transparent; }
-    * { outline: var(--validator-outline); }
-
-    #debug-panel {
-      display:none; position:fixed; bottom:20px; right:20px;
-      width:250px; background:white; border:1px solid #ccc;
-      border-radius:10px; padding:14px; z-index:9999;
-      box-shadow:0 6px 20px rgba(0,0,0,0.18);
-    }
-
-    #debug-badge {
-      display:none; position:fixed; bottom:20px; left:20px;
-      background:#0046A5; color:white; padding:6px 12px;
-      border-radius:6px; font-size:13px; z-index:9999;
-    }
-  </style>
-
-  <script>
-    let debugOpen = false;
-
-    function toggleDebugPanel() {
-      debugOpen = !debugOpen;
-      document.getElementById("debug-panel").style.display =
-        debugOpen ? "block" : "none";
-    }
-
-    function enableValidator() {
-      document.documentElement.style.setProperty("--validator-outline","1px dashed red");
-      document.getElementById("debug-badge").style.display="inline-block";
-      document.getElementById("debug-badge").innerHTML="Validator ON";
-    }
-
-    function disableValidator() {
-      document.documentElement.style.setProperty("--validator-outline","0px solid transparent");
-      document.getElementById("debug-badge").style.display="none";
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("debug-dark");
-    }
-
-    function enableInspector() {
-      document.body.addEventListener("mouseover", e => {
-        e.target.style.boxShadow="0 0 0 2px orange inset";
-      });
-      document.body.addEventListener("mouseout", e => {
-        e.target.style.boxShadow="none";
-      });
-    }
-  </script>
 </head>
 
 <body>
 
-<!-- Debug Floating Button -->
-<button onclick="toggleDebugPanel()" style="
-  position:fixed; bottom:20px; right:20px;
-  width:52px; height:52px; border-radius:50%;
-  background:#0046A5; color:white; border:none;
-  font-size:22px; cursor:pointer; z-index:9999;">
-  🛠
-</button>
-
-<div id="debug-panel">
-  <strong>Debug Tools</strong><br><br>
-  <button onclick="enableValidator()">Enable Validator</button>
-  <button onclick="disableValidator()">Disable Validator</button>
-  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-  <button onclick="enableInspector()">Enable Inspector</button>
-</div>
-
-<div id="debug-badge">Validator ON</div>
 
 <!-- ===========================================================
      HEADER
@@ -115,18 +42,22 @@
   </div>
 </header>
 
+
+
 <!-- ===========================================================
-     MAIN GTM ASSESSMENT LAYOUT (ULTRA MODE)
+     MAIN LAYOUT v10 — 3 COLUMN ULTRA DESIGN
 =========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
+
     <!-- =====================================================
-         LEFT INFORMATION PANEL
+         LEFT COLUMN — INFORMATION + PROGRESS + DESCRIPTION
     ====================================================== -->
     <aside class="gi-left-info">
 
       <div class="gi-info-title">Premium GTM Assessment</div>
+
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-info-desc">
@@ -139,26 +70,39 @@
 
       <a href="#faq" class="gi-info-faq">FAQ about the assessment</a>
 
-      <!-- Progress -->
+      <!-- PROGRESS BOX -->
       <div class="gi-progress-box">
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
         </div>
+
         <div class="gi-progress-track">
           <div id="gi-progress-bar" class="gi-progress-fill"></div>
         </div>
       </div>
 
+      <!-- RESET BUTTON -->
       <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+
+      <!-- LEFT-SIDE PILLAR DESCRIPTION -->
+      <div class="gi-left-pillar-desc-box">
+        <h3 id="gi-left-pillar-desc-title">Context</h3>
+        <p id="gi-left-pillar-desc-text">
+          Captures essential background for correct interpretation.
+        </p>
+      </div>
 
     </aside>
 
 
+
+
     <!-- =====================================================
-         CENTER QUESTION ENGINE (unchanged)
+         CENTER — QUESTION ENGINE
     ====================================================== -->
     <section class="gi-center">
+
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
@@ -178,17 +122,20 @@
         </div>
 
       </div>
+
     </section>
 
 
+
+
     <!-- =====================================================
-         RIGHT PILLAR NAVIGATION (new)
+         RIGHT COLUMN — PILLAR NAVIGATION
     ====================================================== -->
     <aside class="gi-right-pillars">
 
       <div class="gi-pillars-title">Pillars Included</div>
 
-      <ul class="gi-pillar-nav" id="gi-pillar-nav">
+      <ul class="gi-pillar-nav" id="gi-right-pillar-list">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
         <li data-p="2">2 — Market Intelligence</li>
@@ -204,6 +151,7 @@
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
 
+      <!-- RIGHT-SIDE DESCRIPTION (optional — can hide or keep) -->
       <div class="gi-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">Captures essential background for correct interpretation.</p>
@@ -213,6 +161,9 @@
 
   </div>
 </main>
+
+
+
 
 <!-- ===========================================================
      FOOTER
@@ -228,12 +179,16 @@
   </div>
 </footer>
 
+
+
 <!-- ===========================================================
      SCRIPTS
 =========================================================== -->
 
-<script src="assets/QUESTIONS.js?v=1"></script>
+<!-- QUESTIONS DEFINITIONS -->
+<script src="assets/QUESTIONS.js?v=2"></script>
 
+<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background for correct interpretation."},
@@ -246,13 +201,14 @@ const PILLAR_META = {
   7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling & operational quality."},
   8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic & pricing structure."},
   9:{name:"Brand & Communications",desc:"Reviews clarity & consistency of communications."},
- 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
- 11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
- 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
+  10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
+  11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
+  12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
 };
 </script>
 
-<script src="assets/engine.js?v=5000"></script>
+<!-- QUESTION ENGINE -->
+<script src="assets/engine.js?v=5001"></script>
 
 </body>
 </html>
