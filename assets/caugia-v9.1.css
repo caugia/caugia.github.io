@@ -478,3 +478,94 @@ header .brand span {
   background: #27ae60;
   color: white;
 }
+
+/* -----------------------------------------------------------
+   MOBILE NAV — SLIDE-IN FROM RIGHT
+----------------------------------------------------------- */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+
+/* Overlay */
+.nav-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 9998;
+}
+
+/* Drawer */
+.nav-mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 260px;
+  height: 100vh;
+  background: white;
+  padding: 80px 20px 20px;
+  box-shadow: -3px 0 18px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: right .3s ease;
+  z-index: 9999;
+}
+
+.nav-mobile-drawer a {
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-mobile-drawer .cta {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 14px;
+  background: var(--blue);
+  color: white;
+  border-radius: 8px;
+}
+
+/* When menu is open */
+body.nav-open {
+  overflow: hidden;
+}
+
+body.nav-open .nav-mobile-overlay {
+  opacity: 1;
+  pointer-events: all;
+}
+
+body.nav-open .nav-mobile-drawer {
+  right: 0;
+}
+
+/* Show hamburger only below 960px */
+@media (max-width: 960px) {
+  .nav-mobile-toggle {
+    display: flex;
+  }
+  .nav-desktop {
+    display: none;
+  }
+}
