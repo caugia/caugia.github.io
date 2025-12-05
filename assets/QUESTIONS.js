@@ -3084,3 +3084,5 @@ const QUESTIONS = [
    EXPORT (use whichever your build system uses)
    =========================================================== */
 
+// Expose to window
+window.QUESTIONS = QUESTIONS;
