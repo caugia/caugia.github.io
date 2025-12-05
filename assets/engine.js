@@ -19,10 +19,9 @@ const QUESTIONS_REF = Array.isArray(window.QUESTIONS)
 
 /* Safety check */
 if (QUESTIONS_REF.length === 0) {
-  console.error("❌ QUESTIONS.js did not load or is empty.");
+  console.error("❌ QUESTIONS.js not loaded or is empty.");
 }
 
-}
 
 /* ---------------- LOAD / SAVE ---------------- */
 function loadState() {
