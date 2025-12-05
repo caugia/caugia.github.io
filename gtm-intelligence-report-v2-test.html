@@ -11,83 +11,34 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS (latest) -->
-  <link rel="stylesheet" href="assets/caugia-v9.6.css?v=9.6" />
+  <!-- CSS (v9.6 Ultra Edition) -->
+  <link rel="stylesheet" href="assets/caugia-v9.6-ultra.css?v=9.6" />
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <!-- ===========================================================
-       HYBRID DEBUG MODE — Validator, Inspector, Dark Mode
+       DEBUG PANEL (kept intact for developers)
   ============================================================ -->
   <style>
-    :root {
-      --validator-outline: 0px solid transparent;
-      --dark-bg: #0F1117;
-      --dark-text: #E9ECF2;
-      --dark-card: #1A1D24;
-      --dark-border: #2C2F3A;
-    }
-
+    :root { --validator-outline: 0px solid transparent; }
     * { outline: var(--validator-outline); }
 
-    body.debug-dark {
-      background: var(--dark-bg);
-      color: var(--dark-text);
-    }
-
-    body.debug-dark .gi-question-card,
-    body.debug-dark .gi-progress-box {
-      background: var(--dark-card);
-      border-color: var(--dark-border);
-    }
-
-    /* Debug Panel UI */
     #debug-panel {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 240px;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 14px;
-      z-index: 9999;
-      font-size: 14px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.18);
-    }
-
-    #debug-panel button {
-      width: 100%;
-      padding: 9px;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: #f5f7fa;
-      cursor: pointer;
-    }
-
-    #debug-panel button:hover {
-      background: #e8ecf2;
+      display:none; position:fixed; bottom:20px; right:20px;
+      width:250px; background:white; border:1px solid #ccc;
+      border-radius:10px; padding:14px; z-index:9999;
+      box-shadow:0 6px 20px rgba(0,0,0,0.18);
     }
 
     #debug-badge {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 6px 10px;
-      background: #0046A5;
-      color: white;
-      font-size: 13px;
-      border-radius: 6px;
-      z-index: 9999;
-      display: none;
+      display:none; position:fixed; bottom:20px; left:20px;
+      background:#0046A5; color:white; padding:6px 12px;
+      border-radius:6px; font-size:13px; z-index:9999;
     }
   </style>
 
   <script>
-    // ====================== DEBUG PANEL SYSTEM ======================
     let debugOpen = false;
 
     function toggleDebugPanel() {
@@ -97,15 +48,14 @@
     }
 
     function enableValidator() {
-      document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
-      const badge = document.getElementById("debug-badge");
-      badge.innerHTML = "Validator ON";
-      badge.style.display = "inline-block";
+      document.documentElement.style.setProperty("--validator-outline","1px dashed red");
+      document.getElementById("debug-badge").style.display="inline-block";
+      document.getElementById("debug-badge").innerHTML="Validator ON";
     }
 
     function disableValidator() {
-      document.documentElement.style.setProperty("--validator-outline", "0px solid transparent");
-      document.getElementById("debug-badge").style.display = "none";
+      document.documentElement.style.setProperty("--validator-outline","0px solid transparent");
+      document.getElementById("debug-badge").style.display="none";
     }
 
     function toggleDarkMode() {
@@ -114,28 +64,26 @@
 
     function enableInspector() {
       document.body.addEventListener("mouseover", e => {
-        e.target.style.boxShadow = "0 0 0 2px #FFA500 inset";
+        e.target.style.boxShadow="0 0 0 2px orange inset";
       });
       document.body.addEventListener("mouseout", e => {
-        e.target.style.boxShadow = "none";
+        e.target.style.boxShadow="none";
       });
     }
   </script>
-
 </head>
 
 <body>
 
-<!-- Floating debug button -->
-<button onclick="toggleDebugPanel()"
-        style="position: fixed; bottom: 20px; right: 20px;
-               width: 52px; height: 52px; border-radius: 50%;
-               background:#0046A5; color:white; border:none;
-               font-size:22px; cursor:pointer; z-index:9999;">
+<!-- Debug Floating Button -->
+<button onclick="toggleDebugPanel()" style="
+  position:fixed; bottom:20px; right:20px;
+  width:52px; height:52px; border-radius:50%;
+  background:#0046A5; color:white; border:none;
+  font-size:22px; cursor:pointer; z-index:9999;">
   🛠
 </button>
 
-<!-- Panel -->
 <div id="debug-panel">
   <strong>Debug Tools</strong><br><br>
   <button onclick="enableValidator()">Enable Validator</button>
@@ -168,44 +116,48 @@
 </header>
 
 <!-- ===========================================================
-     MAIN GTM ASSESSMENT LAYOUT (v10)
+     MAIN GTM ASSESSMENT LAYOUT (ULTRA MODE)
 =========================================================== -->
 <main class="gi-main">
-  <div class="gi-shell-3col">
+  <div class="gi-shell">
 
-    <!-- LEFT COLUMN — INFO + PROGRESS -->
+    <!-- =====================================================
+         LEFT INFORMATION PANEL
+    ====================================================== -->
     <aside class="gi-left-info">
 
-      <div class="gi-left-title">Premium GTM Assessment</div>
+      <div class="gi-info-title">Premium GTM Assessment</div>
+      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
 
-      <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
-
-      <p class="gi-left-desc">
+      <p class="gi-info-desc">
         A structured, 12-pillar diagnostic that evaluates your entire go-to-market system.
       </p>
 
-      <div class="gi-left-meta">
+      <div class="gi-info-meta">
         12 pillars • 265 questions • ~50 minutes
       </div>
 
-      <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
+      <a href="#faq" class="gi-info-faq">FAQ about the assessment</a>
 
+      <!-- Progress -->
       <div class="gi-progress-box">
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
         </div>
-
         <div class="gi-progress-track">
           <div id="gi-progress-bar" class="gi-progress-fill"></div>
         </div>
-
-        <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
       </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
 
     </aside>
 
-    <!-- CENTER COLUMN — ENGINE -->
+
+    <!-- =====================================================
+         CENTER QUESTION ENGINE (unchanged)
+    ====================================================== -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -228,12 +180,15 @@
       </div>
     </section>
 
-    <!-- RIGHT COLUMN — PILLAR NAVIGATION -->
+
+    <!-- =====================================================
+         RIGHT PILLAR NAVIGATION (new)
+    ====================================================== -->
     <aside class="gi-right-pillars">
 
-      <div class="gi-pillars-title">Pillars</div>
+      <div class="gi-pillars-title">Pillars Included</div>
 
-      <ul class="gi-pillar-list" id="gi-pillar-nav">
+      <ul class="gi-pillar-nav" id="gi-pillar-nav">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
         <li data-p="2">2 — Market Intelligence</li>
@@ -249,7 +204,7 @@
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
 
-      <div class="gi-pillar-active-desc">
+      <div class="gi-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">Captures essential background for correct interpretation.</p>
       </div>
@@ -277,10 +232,8 @@
      SCRIPTS
 =========================================================== -->
 
-<!-- QUESTION DEFINITIONS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background for correct interpretation."},
@@ -299,7 +252,6 @@ const PILLAR_META = {
 };
 </script>
 
-<!-- ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
 
 </body>
