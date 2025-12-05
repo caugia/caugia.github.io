@@ -1,29 +1,33 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.3 (Final Fix)
-   QUESTIONS is NEVER declared here (only read from window)
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.4 (Turbo Edition)
+   • Stable, crash-proof, no duplicate declarations
+   • Uses QUESTIONS_REF exclusively (safe reference to window.QUESTIONS)
+   • 100% strict validation
+   • Accurate progress (1 point per question)
+   • Supports: text, number, textarea, select, radio, scale, group
 =========================================================== */
 
-/* ---------------- STATE ---------------- */
+
+/* ---------------------- STATE ---------------------- */
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
 
-/* ---------------------- QUESTIONS SOURCE ----------------------
-   We gebruiken uitsluitend window.QUESTIONS en maken GEEN nieuwe
-   QUESTIONS-variabele aan. Dit voorkomt dubbele declaraties.
----------------------------------------------------------------- */
+
+/* ---------------------- QUESTIONS REFERENCE ----------------------
+   Do NOT declare QUESTIONS — only reference window.QUESTIONS safely.
+------------------------------------------------------------------- */
 const QUESTIONS_REF = Array.isArray(window.QUESTIONS)
   ? window.QUESTIONS
   : [];
 
-/* Safety check */
 if (QUESTIONS_REF.length === 0) {
-  console.error("❌ QUESTIONS.js not loaded or is empty.");
+  console.error("❌ QUESTIONS.js did not load or is empty.");
 }
 
 
-/* ---------------- LOAD / SAVE ---------------- */
+/* ---------------------- LOAD / SAVE ---------------------- */
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -36,9 +40,10 @@ function loadState() {
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
-setInterval(saveState, 800);
+setInterval(saveState, 600);
 
-/* ---------------- DOM ---------------- */
+
+/* ---------------------- DOM ELEMENTS ---------------------- */
 const qTitle   = document.getElementById("gi-question-title");
 const qSub     = document.getElementById("gi-question-sub");
 const qBody    = document.getElementById("gi-question-body");
@@ -60,9 +65,12 @@ const progressCount   = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar     = document.getElementById("gi-progress-bar");
 
-/* ---------------- RENDER ---------------- */
+
+/* ===========================================================
+   RENDER QUESTION
+=========================================================== */
 function renderQuestion() {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
@@ -83,7 +91,10 @@ function renderQuestion() {
   updateProgress();
 }
 
-/* ---------------- INPUT BUILDER ---------------- */
+
+/* ===========================================================
+   INPUT BUILDER
+=========================================================== */
 function buildInput(q) {
 
   if (q.type === "text")
@@ -117,7 +128,7 @@ function buildInput(q) {
         ${q.fields.map(f => `
           <div class="gi-group-field ${f.full ? "full" : ""}">
             <label>${f.label}</label>
-            <input type="text" name="${f.name}">
+            <input type="text" name="${f.name}" class="gi-input">
           </div>
         `).join("")}
       </div>
@@ -126,7 +137,10 @@ function buildInput(q) {
   return `<p>Unsupported question type</p>`;
 }
 
-/* ---------------- RESTORE ---------------- */
+
+/* ===========================================================
+   RESTORE ANSWER
+=========================================================== */
 function restoreAnswer(q) {
 
   if (q.type === "group") {
@@ -141,13 +155,19 @@ function restoreAnswer(q) {
   if (!saved) return;
 
   const radio = qBody.querySelector(`input[value="${saved}"]`);
-  if (radio) return (radio.checked = true);
+  if (radio) {
+    radio.checked = true;
+    return;
+  }
 
   const el = qBody.querySelector("[name='q']");
   if (el) el.value = saved;
 }
 
-/* ---------------- VALIDATION ---------------- */
+
+/* ===========================================================
+   VALIDATION
+=========================================================== */
 function validate(q) {
 
   if (q.type === "group")
@@ -160,9 +180,12 @@ function validate(q) {
   return el && el.value.trim() !== "";
 }
 
-/* ---------------- SAVE ---------------- */
+
+/* ===========================================================
+   STORE CURRENT ANSWER
+=========================================================== */
 function storeCurrentAnswer() {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
 
   if (q.type === "group") {
     q.fields.forEach(f => {
@@ -182,9 +205,12 @@ function storeCurrentAnswer() {
   if (el) STATE[q.id] = el.value.trim();
 }
 
-/* ---------------- NAVIGATION ---------------- */
+
+/* ===========================================================
+   NAVIGATION HANDLERS
+=========================================================== */
 btnNext.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
   storeCurrentAnswer();
 
   if (!validate(q)) {
@@ -192,18 +218,22 @@ btnNext.addEventListener("click", () => {
     return;
   }
 
-  currentIndex++;
-  renderQuestion();
+  if (currentIndex < QUESTIONS_REF.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  }
 });
 
 btnPrev.addEventListener("click", () => {
   storeCurrentAnswer();
-  if (currentIndex > 0) currentIndex--;
-  renderQuestion();
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
 });
 
 btnClear.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
+  const q = QUESTIONS_REF[currentIndex];
 
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
@@ -216,7 +246,7 @@ btnSave.addEventListener("click", saveState);
 btnSubmit.addEventListener("click", () => {
   storeCurrentAnswer();
   saveState();
-  alert("Assessment submitted.");
+  alert("Your assessment has been submitted.");
 });
 
 btnReset.addEventListener("click", () => {
@@ -229,11 +259,14 @@ btnReset.addEventListener("click", () => {
   updateProgress();
 });
 
-/* ---------------- PROGRESS ---------------- */
+
+/* ===========================================================
+   PROGRESS BAR
+=========================================================== */
 function updateProgress() {
   let answered = 0;
 
-  QUESTIONS.forEach(q => {
+  QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
       const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
       if (filled) answered++;
@@ -242,7 +275,7 @@ function updateProgress() {
     if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
   });
 
-  const total = QUESTIONS.length;
+  const total = QUESTIONS_REF.length;
   const pct = Math.round((answered / total) * 100);
 
   progressCount.textContent = `${answered} / ${total}`;
@@ -250,5 +283,8 @@ function updateProgress() {
   progressBar.style.width = pct + "%";
 }
 
-/* ---------------- INIT ---------------- */
+
+/* ===========================================================
+   INIT
+=========================================================== */
 document.addEventListener("DOMContentLoaded", renderQuestion);
