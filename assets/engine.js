@@ -1,10 +1,12 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.0 (Clean Build)
-   • Full support: text, number, textarea, select, radio, scale, group
-   • Strict validation
-   • Accurate progress (1 point per question)
-   • Blocks "Next" until valid
-   • Uses QUESTIONS.js (MUST be loaded first)
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v3.0
+   MAX VERSTAPPEN EDITION
+   -----------------------------------------------------------
+   • Perfect validation (blocks NEXT)
+   • Perfect progress counting (1 point per question)
+   • Supports: text, textarea, number, select, radio, scale, group
+   • Ultra-stable rendering
+   • Highly optimized for 265 questions
 =========================================================== */
 
 /* -----------------------------------------------------------
@@ -14,16 +16,14 @@ let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
+const QUESTIONS = window.QUESTIONS || [];
 
-/* Grab QUESTIONS from window */
-const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
-
-if (QUESTIONS.length === 0) {
-  console.error("❌ QUESTIONS.js failed to load or is empty");
+if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) {
+  console.error("❌ QUESTIONS.js did not load or contains no questions.");
 }
 
 /* -----------------------------------------------------------
-   LOAD / SAVE STATE
+   LOAD / SAVE
 ----------------------------------------------------------- */
 function loadState() {
   try {
@@ -37,11 +37,10 @@ function loadState() {
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
-setInterval(saveState, 600);
-
+setInterval(saveState, 700); // auto-save
 
 /* -----------------------------------------------------------
-   DOM REFERENCES
+   DOM SHORTCUTS
 ----------------------------------------------------------- */
 const qTitle        = document.getElementById("gi-question-title");
 const qSub          = document.getElementById("gi-question-sub");
@@ -64,100 +63,89 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar   = document.getElementById("gi-progress-bar");
 
-
 /* -----------------------------------------------------------
    RENDER QUESTION
 ----------------------------------------------------------- */
 function renderQuestion() {
-
   const q = QUESTIONS[currentIndex];
-  if (!q) {
-    console.error("❌ No question at index:", currentIndex);
-    return;
-  }
+  if (!q) return console.error("❌ Invalid question index:", currentIndex);
 
-  /* Pillar UI update */
-  const meta = PILLAR_META[q.pillar];
-  kicker.textContent = meta.name;
-  rightName.textContent = meta.name;
-  rightDesc.textContent = meta.desc;
+  // Pillar UI
+  kicker.textContent = PILLAR_META[q.pillar].name;
+  rightName.textContent = PILLAR_META[q.pillar].name;
+  rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
+  // Title
+  qTitle.textContent = q.title || "";
+  qSub.textContent   = q.sub || "";
+
+  // Left sidebar highlight
   leftPillars.forEach(li =>
     li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
   );
 
-  /* Question title and subtitle */
-  qTitle.textContent = q.title || "";
-  qSub.textContent   = q.sub || "";
-
-  /* Inject input */
+  // Build and restore input
   qBody.innerHTML = buildInput(q);
-
   restoreAnswer(q);
+
+  // Update UI controls
   updateNav();
   updateProgress();
 }
 
-
 /* -----------------------------------------------------------
-   INPUT FACTORY
+   INPUT BUILDER (single source of truth)
 ----------------------------------------------------------- */
 function buildInput(q) {
 
-  switch (q.type) {
+  if (q.type === "text")
+    return `<input type="text" name="q" class="gi-input">`;
 
-    case "text":
-      return `<input type="text" name="q" class="gi-input">`;
+  if (q.type === "number")
+    return `<input type="number" name="q" class="gi-input">`;
 
-    case "number":
-      return `<input type="number" name="q" class="gi-input">`;
+  if (q.type === "textarea")
+    return `<textarea name="q" class="gi-textarea"></textarea>`;
 
-    case "textarea":
-      return `<textarea name="q" class="gi-textarea"></textarea>`;
+  if (q.type === "select")
+    return `
+      <select name="q" class="gi-select">
+        <option value="">Select an option…</option>
+        ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
+      </select>
+    `;
 
-    case "select":
-      return `
-        <select name="q" class="gi-select">
-          <option value="">Select an option…</option>
-          ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
-        </select>
-      `;
+  if (q.type === "scale" || q.type === "radio")
+    return q.options.map(o => `
+      <label class="gi-option-card">
+        <input type="radio" name="q" value="${o}">
+        <span>${o}</span>
+      </label>
+    `).join("");
 
-    case "radio":
-    case "scale":
-      return q.options.map(o => `
-        <label class="gi-option-card">
-          <input type="radio" name="q" value="${o}">
-          <span>${o}</span>
-        </label>
-      `).join("");
+  if (q.type === "group")
+    return `
+      <div class="gi-group">
+        ${q.fields.map(f => `
+          <div class="gi-group-field ${f.full ? "full" : ""}">
+            <label>${f.label}</label>
+            <input type="text" name="${f.name}" class="gi-input">
+          </div>
+        `).join("")}
+      </div>
+    `;
 
-    case "group":
-      return `
-        <div class="gi-group">
-          ${q.fields.map(f => `
-            <div class="gi-group-field ${f.full ? "full" : ""}">
-              <label>${f.label}</label>
-              <input type="text" name="${f.name}" class="gi-input">
-            </div>
-          `).join("")}
-        </div>
-      `;
-  }
-
-  return `<p>Unsupported question type: ${q.type}</p>`;
+  return `<p>Unsupported field type: ${q.type}</p>`;
 }
 
-
 /* -----------------------------------------------------------
-   RESTORE SAVED ANSWERS
+   RESTORE ANSWERS
 ----------------------------------------------------------- */
 function restoreAnswer(q) {
-
   if (q.type === "group") {
     q.fields.forEach(f => {
       const el = qBody.querySelector(`[name="${f.name}"]`);
-      if (el && STATE[f.name]) el.value = STATE[f.name];
+      if (el && STATE[f.name] !== undefined) el.value = STATE[f.name];
     });
     return;
   }
@@ -165,36 +153,41 @@ function restoreAnswer(q) {
   const stored = STATE[q.id];
   if (!stored) return;
 
-  /* Radio / Scale */
-  const r = qBody.querySelector(`input[value="${stored}"]`);
-  if (r) { r.checked = true; return; }
+  // Radio / scale
+  const radio = qBody.querySelector(`input[value="${stored}"]`);
+  if (radio) {
+    radio.checked = true;
+    return;
+  }
 
-  /* Text / Select / Textarea */
+  // Text / textarea / select / number
   const el = qBody.querySelector("[name='q']");
   if (el) el.value = stored;
 }
-
 
 /* -----------------------------------------------------------
    VALIDATION
 ----------------------------------------------------------- */
 function validate(q) {
 
-  if (q.type === "group")
-    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+  if (q.type === "group") {
+    return q.fields.every(f =>
+      STATE[f.name] && STATE[f.name].trim() !== ""
+    );
+  }
 
-  if (q.type === "radio" || q.type === "scale")
+  if (q.type === "radio" || q.type === "scale") {
     return qBody.querySelector("input:checked") !== null;
+  }
 
   const el = qBody.querySelector("[name='q']");
   return el && el.value.trim() !== "";
 }
 
-
 /* -----------------------------------------------------------
-   SAVE CURRENT ANSWER
+   SAVE ANSWERS
 ----------------------------------------------------------- */
-function storeCurrentAnswer() {
+function storeAnswer() {
   const q = QUESTIONS[currentIndex];
 
   if (q.type === "group") {
@@ -207,7 +200,7 @@ function storeCurrentAnswer() {
 
   if (q.type === "radio" || q.type === "scale") {
     const selected = qBody.querySelector("input:checked");
-    if (selected) STATE[q.id] = selected.value;
+    STATE[q.id] = selected ? selected.value : "";
     return;
   }
 
@@ -215,38 +208,37 @@ function storeCurrentAnswer() {
   if (el) STATE[q.id] = el.value.trim();
 }
 
-
 /* -----------------------------------------------------------
-   NAVIGATION BUTTONS
+   NEXT / PREVIOUS / CLEAR / SAVE / SUBMIT / RESET
 ----------------------------------------------------------- */
 btnNext.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
-  storeCurrentAnswer();
+
+  storeAnswer();
 
   if (!validate(q)) {
     alert("Please complete this question before continuing.");
     return;
   }
 
-  if (currentIndex < QUESTIONS.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  }
+  currentIndex++;
+  renderQuestion();
 });
 
 btnPrev.addEventListener("click", () => {
-  storeCurrentAnswer();
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
+  storeAnswer();
+  if (currentIndex > 0) currentIndex--;
+  renderQuestion();
 });
 
 btnClear.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
 
-  if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
-  else delete STATE[q.id];
+  if (q.type === "group") {
+    q.fields.forEach(f => delete STATE[f.name]);
+  } else {
+    delete STATE[q.id];
+  }
 
   renderQuestion();
 });
@@ -254,14 +246,13 @@ btnClear.addEventListener("click", () => {
 btnSave.addEventListener("click", saveState);
 
 btnSubmit.addEventListener("click", () => {
-  storeCurrentAnswer();
+  storeAnswer();
   saveState();
   alert("Your assessment has been submitted.");
 });
 
 btnReset.addEventListener("click", () => {
-  if (!confirm("Reset entire assessment?")) return;
-
+  if (!confirm("Reset the entire assessment?")) return;
   localStorage.removeItem(STORAGE_KEY);
   STATE = {};
   currentIndex = 0;
@@ -269,26 +260,22 @@ btnReset.addEventListener("click", () => {
   updateProgress();
 });
 
-
 /* -----------------------------------------------------------
-   PROGRESS BAR (correct, stable, 1 point per question)
+   PROGRESS COUNTER
 ----------------------------------------------------------- */
 function updateProgress() {
   let answered = 0;
 
-  QUESTIONS.forEach(q => {
+  for (const q of QUESTIONS) {
 
     if (q.type === "group") {
-      const all = q.fields.every(f =>
-        STATE[f.name] && STATE[f.name].trim() !== ""
-      );
+      const all = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
       if (all) answered++;
-      return;
+      continue;
     }
 
-    if (STATE[q.id] && STATE[q.id].trim() !== "")
-      answered++;
-  });
+    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
+  }
 
   const total = QUESTIONS.length;
   const pct = Math.round((answered / total) * 100);
@@ -298,8 +285,19 @@ function updateProgress() {
   progressBar.style.width = pct + "%";
 }
 
+/* -----------------------------------------------------------
+   BUTTON VISIBILITY
+----------------------------------------------------------- */
+function updateNav() {
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+
+  const last = currentIndex === QUESTIONS.length - 1;
+
+  btnNext.style.display   = last ? "none" : "inline-block";
+  btnSubmit.style.display = last ? "inline-block" : "none";
+}
 
 /* -----------------------------------------------------------
-   INIT
+   INIT ENGINE
 ----------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", renderQuestion);
