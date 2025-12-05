@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v5.0-A (FIXED)
-   Stable • Clean • No Alerts • Future-Ready Explain Mode
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v5.1-FINAL
+   Stable • Clean • Validated • No Errors
    QUESTIONS is NEVER declared here — only read from window.QUESTIONS
 =========================================================== */
 
@@ -10,12 +10,12 @@ const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
 
-/* QUESTIONS SOURCE — never redeclare */
-const QUESTIONS = window.QUESTIONS;
-if (!Array.isArray(QUESTIONS)) {
-  console.error("❌ QUESTIONS.js not loaded or invalid.");
-}
+/* ---------------------- QUESTIONS SOURCE ---------------------- */
+const QUESTIONS_REF = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
 
+if (QUESTIONS_REF.length === 0) {
+  console.error("❌ QUESTIONS.js not loaded or empty.");
+}
 
 /* ---------------------- LOAD / SAVE ---------------------- */
 function loadState() {
@@ -33,13 +33,13 @@ function saveState() {
 setInterval(saveState, 700);
 
 /* ---------------------- DOM ---------------------- */
-const qTitle   = document.getElementById("gi-question-title");
-const qSub     = document.getElementById("gi-question-sub");
-const qBody    = document.getElementById("gi-question-body");
+const qTitle     = document.getElementById("gi-question-title");
+const qSub       = document.getElementById("gi-question-sub");
+const qBody      = document.getElementById("gi-question-body");
 
-const kicker   = document.getElementById("gi-question-kicker");
-const rightName= document.getElementById("gi-pillar-name");
-const rightDesc= document.getElementById("gi-pillar-desc");
+const kicker     = document.getElementById("gi-question-kicker");
+const rightName  = document.getElementById("gi-pillar-name");
+const rightDesc  = document.getElementById("gi-pillar-desc");
 
 const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
 
@@ -54,9 +54,7 @@ const progressCount   = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar     = document.getElementById("gi-progress-bar");
 
-/* ---------------------- EXPLAIN MODE ----------------------
-   Future AI — currently a hidden placeholder
-------------------------------------------------------------- */
+/* ---------------------- EXPLAIN MODE (placeholder) ---------------------- */
 let explainEnabled = false;
 
 function toggleExplain() {
@@ -74,7 +72,6 @@ function setExplainPlaceholder(q) {
     return;
   }
 
-  box.style.display = "block";
   box.innerHTML = `
     <div class="gi-explain-inner">
       <strong>Why this question matters</strong>
@@ -83,6 +80,7 @@ function setExplainPlaceholder(q) {
       <p><em>Question:</em> ${q.title}</p>
     </div>
   `;
+  box.style.display = "block";
 }
 
 /* ---------------------- RENDER ---------------------- */
@@ -90,7 +88,7 @@ function renderQuestion() {
   const q = QUESTIONS_REF[currentIndex];
   if (!q) return;
 
-  kicker.textContent = PILLAR_META[q.pillar].name;
+  kicker.textContent    = PILLAR_META[q.pillar].name;
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
@@ -130,22 +128,24 @@ function buildInput(q) {
     `;
 
   if (q.type === "radio" || q.type === "scale")
-    return q.options.map(o => `
+    return q.options
+      .map(o => `
       <label class="gi-option-card">
         <input type="radio" name="q" value="${o}">
         <span>${o}</span>
-      </label>
-    `).join("");
+      </label>`
+    ).join("");
 
   if (q.type === "group")
     return `
       <div class="gi-group">
-        ${q.fields.map(f => `
-          <div class="gi-group-field ${f.full ? "full" : ""}">
-            <label>${f.label}</label>
-            <input type="text" name="${f.name}">
-          </div>
-        `).join("")}
+        ${q.fields
+          .map(f => `
+            <div class="gi-group-field ${f.full ? "full" : ""}">
+              <label>${f.label}</label>
+              <input type="text" name="${f.name}">
+            </div>`
+          ).join("")}
       </div>
     `;
 
@@ -213,7 +213,7 @@ btnNext.addEventListener("click", () => {
   const q = QUESTIONS_REF[currentIndex];
   storeCurrentAnswer();
 
-  if (!validate(q)) return; // soft block, no alerts
+  if (!validate(q)) return;
 
   currentIndex++;
   renderQuestion();
@@ -256,7 +256,9 @@ function updateProgress() {
 
   QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      const filled = q.fields.every(f =>
+        STATE[f.name] && STATE[f.name].trim() !== ""
+      );
       if (filled) answered++;
       return;
     }
@@ -273,10 +275,8 @@ function updateProgress() {
 
 /* ---------------------- NAVIGATION HELPERS ---------------------- */
 function updateNav() {
-  // Show/hide prev button
   btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
-  
-  // Show/hide next vs submit
+
   if (currentIndex === QUESTIONS_REF.length - 1) {
     btnNext.style.display = "none";
     btnSubmit.style.display = "inline-block";
