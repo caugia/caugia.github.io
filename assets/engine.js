@@ -1,145 +1,130 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE REPORT ENGINE v1.5
+   CAUGIA CONSULTING — GTM INTELLIGENCE REPORT ENGINE v2.0
    Supports:
-   - text
-   - number
-   - textarea
+   - text, number, textarea
    - radio groups
    - select dropdowns
-   - group fields (multiple inputs per question)
-   Pure Vanilla JS — Autosave — 265 Questions
+   - scale (Likert, 1–5)  ← NEW
+   - group fields (multi-input)
+   - full progress calculation
 =========================================================== */
 
-/* ===========================================================
+/* -----------------------------------------------------------
    GLOBAL STATE
-=========================================================== */
+----------------------------------------------------------- */
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 
 let STATE = loadState();
-
-/* Questions come from QUESTIONS.js */
 let QUESTIONS = window.QUESTIONS || [];
 
 if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) {
   console.error("ERROR: QUESTIONS.js did not load or is empty.");
 }
 
-/* ===========================================================
+/* -----------------------------------------------------------
    LOAD / SAVE
-=========================================================== */
+----------------------------------------------------------- */
 function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (!saved) return {};
-  try { return JSON.parse(saved); }
+  const s = localStorage.getItem(STORAGE_KEY);
+  if (!s) return {};
+  try { return JSON.parse(s); }
   catch { return {}; }
 }
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
-setInterval(saveState, 1000);
+setInterval(saveState, 900);
 
-/* ===========================================================
+/* -----------------------------------------------------------
    DOM SHORTCUTS
-=========================================================== */
-const qCard = document.getElementById("gi-question-card");
-const qTitle = document.getElementById("gi-question-title");
-const qSub = document.getElementById("gi-question-sub");
-const qBody = document.getElementById("gi-question-body");
+----------------------------------------------------------- */
+const qTitle   = document.getElementById("gi-question-title");
+const qSub     = document.getElementById("gi-question-sub");
+const qBody    = document.getElementById("gi-question-body");
 
-const kicker = document.getElementById("gi-question-kicker");
-const rightName = document.getElementById("gi-pillar-name");
-const rightDesc = document.getElementById("gi-pillar-desc");
+const kicker   = document.getElementById("gi-question-kicker");
+const rightName= document.getElementById("gi-pillar-name");
+const rightDesc= document.getElementById("gi-pillar-desc");
 
 const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
 
-const btnPrev = document.getElementById("gi-prev-btn");
-const btnNext = document.getElementById("gi-next-btn");
+const btnPrev   = document.getElementById("gi-prev-btn");
+const btnNext   = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
-const btnClear = document.getElementById("gi-clear-btn");
-const btnSave = document.getElementById("gi-save-btn");
+const btnClear  = document.getElementById("gi-clear-btn");
+const btnSave   = document.getElementById("gi-save-btn");
+const btnReset  = document.getElementById("gi-reset-btn");
 
-const progressCount = document.getElementById("gi-progress-count");
-const progressPercent = document.getElementById("gi-progress-percent");
-const progressBar = document.getElementById("gi-progress-bar");
+const progressCount  = document.getElementById("gi-progress-count");
+const progressPercent= document.getElementById("gi-progress-percent");
+const progressBar    = document.getElementById("gi-progress-bar");
 
-/* ===========================================================
-   RENDERING LOGIC
-=========================================================== */
+/* -----------------------------------------------------------
+   RENDER QUESTION
+----------------------------------------------------------- */
 function renderQuestion() {
   const q = QUESTIONS[currentIndex];
   if (!q) return;
 
-  /* Pillar Kicker */
   kicker.textContent = PILLAR_META[q.pillar].name;
-
-  /* Title + Subtext */
   qTitle.textContent = q.title || "";
-  qSub.textContent = q.description || "";
+  qSub.textContent   = q.sub || "";
 
-  /* Right Sidebar */
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
 
-  /* Left Sidebar highlight */
-  leftPillars.forEach(li => {
-    const isActive = Number(li.dataset.p) === q.pillar;
-    li.classList.toggle("active", isActive);
-  });
+  leftPillars.forEach(li =>
+    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
+  );
 
-  /* Render the input element(s) */
   qBody.innerHTML = buildInput(q);
-
-  /* Fill stored answers */
   restoreAnswer(q);
-
-  /* Update navigation + progress */
   updateNav();
   updateProgress();
 }
 
-/* ===========================================================
-   INPUT GENERATOR
-=========================================================== */
+/* -----------------------------------------------------------
+   INPUT BUILDER (now includes SCALE)
+----------------------------------------------------------- */
 function buildInput(q) {
-  /* TYPE: text */
-  if (q.type === "text") {
+
+  if (q.type === "text")
     return `<input type="text" name="q" class="gi-input">`;
-  }
 
-  /* TYPE: number */
-  if (q.type === "number") {
+  if (q.type === "number")
     return `<input type="number" name="q" class="gi-input">`;
-  }
 
-  /* TYPE: textarea */
-  if (q.type === "textarea") {
+  if (q.type === "textarea")
     return `<textarea name="q" class="gi-textarea"></textarea>`;
-  }
 
-  /* TYPE: radio */
-  if (q.type === "radio") {
-    return q.options.map(opt => `
-      <label class="gi-option-card">
-        <input type="radio" name="q" value="${opt}">
-        <span>${opt}</span>
-      </label>
-    `).join("");
-  }
-
-  /* TYPE: select */
-  if (q.type === "select") {
+  if (q.type === "select")
     return `
       <select name="q" class="gi-select">
         <option value="">Select an option…</option>
         ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
       </select>
     `;
-  }
 
-  /* TYPE: group (multiple fields per question) */
-  if (q.type === "group") {
+  /* NEW: Likert scale rendered as radio option cards */
+  if (q.type === "scale")
+    return q.options.map(o => `
+      <label class="gi-option-card">
+        <input type="radio" name="q" value="${o}">
+        <span>${o}</span>
+      </label>
+    `).join("");
+
+  if (q.type === "radio")
+    return q.options.map(o => `
+      <label class="gi-option-card">
+        <input type="radio" name="q" value="${o}">
+        <span>${o}</span>
+      </label>
+    `).join("");
+
+  if (q.type === "group")
     return `
       <div class="gi-group">
         ${q.fields.map(f => `
@@ -150,75 +135,94 @@ function buildInput(q) {
         `).join("")}
       </div>
     `;
-  }
 
   return `<p>Unsupported question type: ${q.type}</p>`;
 }
 
-/* ===========================================================
-   RESTORE ANSWERS
-=========================================================== */
+/* -----------------------------------------------------------
+   RESTORE ANSWERS (supports scale)
+----------------------------------------------------------- */
 function restoreAnswer(q) {
-  /* GROUP */
+
   if (q.type === "group") {
     q.fields.forEach(f => {
       const input = qBody.querySelector(`[name="${f.name}"]`);
-      if (!input) return;
-      if (STATE[f.name] !== undefined) {
+      if (input && STATE[f.name] !== undefined) {
         input.value = STATE[f.name];
       }
     });
     return;
   }
 
-  /* SIMPLE */
-  const el = qBody.querySelector("[name='q']");
-  if (!el) return;
+  const stored = STATE[q.id];
+  if (stored === undefined) return;
 
-  if (STATE[q.id] !== undefined) {
-    if (q.type === "radio") {
-      const selected = qBody.querySelector(`input[value="${STATE[q.id]}"]`);
-      if (selected) selected.checked = true;
-    } else if (q.type === "select") {
-      el.value = STATE[q.id];
-    } else {
-      el.value = STATE[q.id];
-    }
+  if (q.type === "scale" || q.type === "radio") {
+    const node = qBody.querySelector(`input[value="${stored}"]`);
+    if (node) node.checked = true;
+    return;
   }
+
+  const el = qBody.querySelector("[name='q']");
+  if (el) el.value = stored;
 }
 
-/* ===========================================================
-   SAVE ANSWERS
-=========================================================== */
+/* -----------------------------------------------------------
+   VALIDATION (supports scale)
+----------------------------------------------------------- */
+function validate(q) {
+
+  if (q.type === "group") {
+    return q.fields.every(f => {
+      const v = STATE[f.name];
+      return v !== undefined && v.trim() !== "";
+    });
+  }
+
+  if (q.type === "scale" || q.type === "radio") {
+    return qBody.querySelector("input:checked") !== null;
+  }
+
+  const el = qBody.querySelector("[name='q']");
+  return el && el.value.trim() !== "";
+}
+
+/* -----------------------------------------------------------
+   SAVE ANSWERS (supports scale)
+----------------------------------------------------------- */
 function storeCurrentAnswer() {
   const q = QUESTIONS[currentIndex];
 
-  /* GROUP question */
   if (q.type === "group") {
     q.fields.forEach(f => {
       const input = qBody.querySelector(`[name="${f.name}"]`);
-      if (input) STATE[f.name] = input.value;
+      STATE[f.name] = input ? input.value.trim() : "";
     });
     return;
   }
 
-  /* SIMPLE question */
-  const el = qBody.querySelector("[name='q']");
-  if (!el) return;
-
-  if (q.type === "radio") {
-    const selected = qBody.querySelector("input[type='radio']:checked");
+  if (q.type === "scale" || q.type === "radio") {
+    const selected = qBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
-  } else {
-    STATE[q.id] = el.value;
+    return;
   }
+
+  const el = qBody.querySelector("[name='q']");
+  if (el) STATE[q.id] = el.value.trim();
 }
 
-/* ===========================================================
-   NAVIGATION EVENTS
-=========================================================== */
+/* -----------------------------------------------------------
+   BUTTON HANDLERS
+----------------------------------------------------------- */
 btnNext.addEventListener("click", () => {
+  const q = QUESTIONS[currentIndex];
   storeCurrentAnswer();
+
+  if (!validate(q)) {
+    alert("Please complete the question before continuing.");
+    return;
+  }
+
   if (currentIndex < QUESTIONS.length - 1) {
     currentIndex++;
     renderQuestion();
@@ -233,62 +237,66 @@ btnPrev.addEventListener("click", () => {
   }
 });
 
+btnClear.addEventListener("click", () => {
+  const q = QUESTIONS[currentIndex];
+  if (q.type === "group") {
+    q.fields.forEach(f => delete STATE[f.name]);
+  } else {
+    delete STATE[q.id];
+  }
+  renderQuestion();
+});
+
 btnSave.addEventListener("click", () => {
   storeCurrentAnswer();
   saveState();
 });
 
-btnClear.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
-
-  /* Clear group */
-  if (q.type === "group") {
-    q.fields.forEach(f => delete STATE[f.name]);
-    renderQuestion();
-    return;
-  }
-
-  /* Clear simple */
-  delete STATE[q.id];
-  renderQuestion();
-});
-
 btnSubmit.addEventListener("click", () => {
   storeCurrentAnswer();
   saveState();
-  alert("Your assessment has been submitted. A full diagnostic report will be generated.");
+  alert("Your assessment has been submitted.");
 });
 
-/* ============================================
-   RESET BUTTON
-============================================ */
-const btnReset = document.getElementById("gi-reset-btn");
+btnReset.addEventListener("click", () => {
+  if (!confirm("Reset the entire assessment?")) return;
 
-if (btnReset) {
-  btnReset.addEventListener("click", () => {
-    if (!confirm("Are you sure you want to reset the entire assessment?")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  STATE = {};
+  currentIndex = 0;
+  renderQuestion();
+  updateProgress();
+});
 
-    // 1. LocalStorage leegmaken
-    localStorage.removeItem(STORAGE_KEY);
+/* -----------------------------------------------------------
+   PROGRESS — fixed to count *questions*, not keys
+----------------------------------------------------------- */
+function updateProgress() {
+  let answered = 0;
 
-    // 2. STATE leegmaken
-    STATE = {};
+  for (const q of QUESTIONS) {
+    if (q.type === "group") {
+      const all = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (all) answered++;
+      continue;
+    }
 
-    // 3. Terug naar vraag 1
-    currentIndex = 0;
+    if (STATE[q.id] && STATE[q.id].trim() !== "") {
+      answered++;
+    }
+  }
 
-    // 4. Volledig opnieuw renderen
-    renderQuestion();
+  const total = QUESTIONS.length;
+  progressCount.textContent = `${answered} / ${total}`;
 
-    // 5. Progress terug op 0%
-    updateProgress();
-  });
+  const pct = Math.round((answered / total) * 100);
+  progressPercent.textContent = pct + "%";
+  progressBar.style.width = pct + "%";
 }
 
-
-/* ===========================================================
-   NAV + PROGRESS
-=========================================================== */
+/* -----------------------------------------------------------
+   NAVIGATION STATE
+----------------------------------------------------------- */
 function updateNav() {
   btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
 
@@ -297,20 +305,9 @@ function updateNav() {
   btnSubmit.style.display = last ? "inline-block" : "none";
 }
 
-function updateProgress() {
-  const answered = Object.keys(STATE).length;
-  const total = QUESTIONS.length;
-  progressCount.textContent = `${answered} / ${total}`;
-
-  const pct = Math.round((answered / total) * 100);
-  progressPercent.textContent = `${pct}%`;
-  progressBar.style.width = pct + "%";
-}
-
-/* ===========================================================
+/* -----------------------------------------------------------
    INIT
-=========================================================== */
+----------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderQuestion();
 });
-
