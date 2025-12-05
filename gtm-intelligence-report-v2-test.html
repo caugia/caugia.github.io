@@ -18,25 +18,163 @@
   <script src="/auth.js"></script>
 
   <!-- ===========================================================
-       AUTO CSS VALIDATOR MODE
-       Call enableValidator() in DevTools to outline all elements
+       DEBUG MODE + VALIDATOR + DARK MODE + VISUAL INSPECTOR
   ============================================================ -->
+  <style>
+    :root {
+      --validator-outline: 0px solid transparent;
+      --dark-bg: #0F1117;
+      --dark-text: #E9ECF2;
+      --dark-card: #1A1D24;
+      --dark-border: #2A2E39;
+    }
+
+    /* Debug outline mode */
+    * {
+      outline: var(--validator-outline);
+    }
+
+    /* Dark mode toggles through a class on <body> */
+    body.debug-dark {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    body.debug-dark .gi-question-card,
+    body.debug-dark .gi-progress-box,
+    body.debug-dark .gi-left,
+    body.debug-dark .gi-right {
+      background: var(--dark-card);
+      border-color: var(--dark-border);
+    }
+
+    body.debug-dark input,
+    body.debug-dark textarea,
+    body.debug-dark select {
+      background: #11141A;
+      color: var(--dark-text);
+      border-color: var(--dark-border);
+    }
+
+    /* Debug UI panel (floating) */
+    #debug-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+      z-index: 9999;
+      width: 240px;
+    }
+
+    #debug-panel button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #f5f7fa;
+      cursor: pointer;
+    }
+
+    #debug-panel button:hover {
+      background: #e8ecf2;
+    }
+
+    #debug-badge {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 13px;
+      background: #0046A5;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+
   <script>
+    /* ============================================
+       DEBUG SYSTEM CONTROLLER
+    ============================================ */
+
+    let debugEnabled = false;
+
+    function toggleDebugPanel() {
+      debugEnabled = !debugEnabled;
+      document.getElementById("debug-panel").style.display =
+        debugEnabled ? "block" : "none";
+    }
+
     function enableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
-      console.log("%cCSS Validator ENABLED", "color: green; font-weight: bold;");
+      document.getElementById("debug-badge").textContent = "Validator ON";
+      document.getElementById("debug-badge").style.display = "inline-block";
     }
+
     function disableValidator() {
       document.documentElement.style.setProperty("--validator-outline", "0px solid transparent");
-      console.log("%cCSS Validator DISABLED", "color: orange; font-weight: bold;");
+      document.getElementById("debug-badge").style.display = "none";
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("debug-dark");
+    }
+
+    function inspectElements() {
+      document.body.addEventListener("mouseover", e => {
+        e.target.style.boxShadow = "0 0 0 2px #FF8800 inset";
+      });
+
+      document.body.addEventListener("mouseout", e => {
+        e.target.style.boxShadow = "none";
+      });
     }
   </script>
 </head>
 
 <body>
 
+<!-- Floating debug button -->
+<div id="debug-badge">Validator ON</div>
+
+<div id="debug-panel" style="display:none">
+  <strong>Debug Tools</strong><br><br>
+
+  <button onclick="enableValidator()">Enable Validator</button>
+  <button onclick="disableValidator()">Disable Validator</button>
+
+  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <button onclick="inspectElements()">Enable Inspector</button>
+</div>
+
+<button onclick="toggleDebugPanel()"
+        style="
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background: #0046A5;
+          color: white;
+          border: none;
+          font-size: 22px;
+          cursor: pointer;
+          z-index: 9999;
+        ">
+  🛠
+</button>
+
 <!-- ===========================================================
-    HEADER — identical style to homepage
+    HEADER
 =========================================================== -->
 <header>
   <div class="inner">
@@ -55,7 +193,6 @@
     </nav>
   </div>
 </header>
-
 <!-- ===========================================================
     MAIN LAYOUT — 3-column assessment UI
 =========================================================== -->
@@ -88,15 +225,15 @@
         <li data-p="1">Pillar 1 — GTM Strategy & Leadership</li>
         <li data-p="2">Pillar 2 — Market Intelligence</li>
         <li data-p="3">Pillar 3 — Product Marketing</li>
-        <li data-p="4">Pillar 4 — Demand Generation</li>
-        <li data-p="5">Pillar 5 — Sales Execution</li>
-        <li data-p="6">Pillar 6 — Customer Success & Expansion</li>
-        <li data-p="7">Pillar 7 — Revenue Operations & Systems</li>
-        <li data-p="8">Pillar 8 — Pricing & Packaging</li>
-        <li data-p="9">Pillar 9 — Brand & Communications</li>
-        <li data-p="10">Pillar 10 — Data & Insights</li>
-        <li data-p="11">Pillar 11 — Enablement</li>
-        <li data-p="12">Pillar 12 — Leadership & Alignment</li>
+        <li data-p="4">Demand Generation</li>
+        <li data-p="5">Sales Execution</li>
+        <li data-p="6">Customer Success & Expansion</li>
+        <li data-p="7">Revenue Operations & Systems</li>
+        <li data-p="8">Pricing & Packaging</li>
+        <li data-p="9">Brand & Communications</li>
+        <li data-p="10">Data & Insights</li>
+        <li data-p="11">Enablement</li>
+        <li data-p="12">Leadership & Alignment</li>
       </ul>
 
       <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
@@ -108,7 +245,6 @@
          CENTER — QUESTION ENGINE
     ======================================================= -->
     <section class="gi-center">
-
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
@@ -128,12 +264,11 @@
         </div>
 
       </div>
-
     </section>
 
 
     <!-- =======================================================
-         RIGHT SIDEBAR — PROGRESS + ACTIVE PILLAR + RESET BUTTON
+         RIGHT SIDEBAR — PROGRESS + ACTIVE PILLAR + RESET
     ======================================================= -->
     <aside class="gi-right">
 
@@ -155,7 +290,9 @@
 
         <!-- 🔥 RESET BUTTON -->
         <div class="gi-reset-wrap">
-          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset assessment</button>
+          <button class="gi-btn gi-reset" id="gi-reset-btn">
+            Reset assessment
+          </button>
         </div>
 
       </div>
@@ -164,6 +301,7 @@
 
   </div>
 </main>
+
 
 <!-- ===========================================================
     FOOTER
@@ -179,186 +317,293 @@
   </div>
 </footer>
 
+
 <!-- ===========================================================
     LOAD QUESTIONS
 =========================================================== -->
 <script src="assets/QUESTIONS.js"></script>
 
+
 <!-- ===========================================================
-    PILLAR META
+    PILLAR META DEFINITIONS
 =========================================================== -->
 <script>
 let PILLAR_META = {
-  0:{name:"Context",desc:"This section captures essential background information so the assessment can interpret your responses."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity, cohesion and execution alignment."},
-  2:{name:"Market Intelligence",desc:"Assesses your understanding of customers, competitors and market signals."},
-  3:{name:"Product Marketing",desc:"Evaluates narrative clarity, ICP definition and value communication."},
-  4:{name:"Demand Generation",desc:"Reviews pipeline generation, channels and funnel performance."},
-  5:{name:"Sales Execution",desc:"Measures qualification, deal flow, closing motion and forecasting."},
-  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery, outcomes and expansion maturity."},
-  7:{name:"Revenue Operations & Systems",desc:"Assesses processes, tooling, workflows and operational quality."},
-  8:{name:"Pricing & Packaging",desc:"Evaluates pricing logic, structure and monetization alignment."},
-  9:{name:"Brand & Communications",desc:"Assesses clarity, credibility and consistency of messaging."},
- 10:{name:"Data & Insights",desc:"Reviews availability, quality and decision-making usefulness."},
- 11:{name:"Enablement",desc:"Evaluates training, skill development and readiness."},
- 12:{name:"Leadership & Alignment",desc:"Measures accountability, rhythm, communication and cohesion."}
+  0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses correctly."},
+  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity, leadership cohesion and alignment into execution."},
+  2:{name:"Market Intelligence",desc:"Assesses market awareness, customer insight and competitive understanding."},
+  3:{name:"Product Marketing",desc:"Reviews ICP clarity, messaging precision and value articulation."},
+  4:{name:"Demand Generation",desc:"Evaluates pipeline generation, channels, segmentation and funnel performance."},
+  5:{name:"Sales Execution",desc:"Measures qualification quality, deal flow consistency and forecasting accuracy."},
+  6:{name:"Customer Success & Expansion",desc:"Assesses onboarding, value delivery, outcomes and expansion maturity."},
+  7:{name:"Revenue Operations & Systems",desc:"Evaluates processes, workflows, tooling architecture and operational quality."},
+  8:{name:"Pricing & Packaging",desc:"Assesses monetization logic, customer fit, structure and discipline."},
+  9:{name:"Brand & Communications",desc:"Evaluates clarity, credibility and consistency of your external communication."},
+  10:{name:"Data & Insights",desc:"Assesses GTM data availability, accuracy and decision-making usefulness."},
+  11:{name:"Enablement",desc:"Evaluates readiness, training, skills and organizational enablement maturity."},
+  12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability, communication and leadership rhythm."}
 };
 </script>
-
 <!-- ===========================================================
-    QUESTION ENGINE v1.1
+    QUESTION ENGINE v1.2 — Stable Production Version
 =========================================================== -->
 <script>
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
+
+/* Load state from localStorage */
 let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
-function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); }
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+}
 setInterval(saveState, 800);
 
-/* DOM */
-const qTitle=document.getElementById("gi-question-title");
-const qSub=document.getElementById("gi-question-sub");
-const qBody=document.getElementById("gi-question-body");
-const kicker=document.getElementById("gi-question-kicker");
-const rightName=document.getElementById("gi-pillar-name");
-const rightDesc=document.getElementById("gi-pillar-desc");
 
-const leftPillars=document.querySelectorAll("#gi-left-pillar-list li");
+/* ================= DOM SHORTCUTS ================= */
+const qTitle        = document.getElementById("gi-question-title");
+const qSub          = document.getElementById("gi-question-sub");
+const qBody         = document.getElementById("gi-question-body");
+const kicker        = document.getElementById("gi-question-kicker");
+const rightName     = document.getElementById("gi-pillar-name");
+const rightDesc     = document.getElementById("gi-pillar-desc");
 
-const btnPrev=document.getElementById("gi-prev-btn");
-const btnNext=document.getElementById("gi-next-btn");
-const btnSubmit=document.getElementById("gi-submit-btn");
-const btnClear=document.getElementById("gi-clear-btn");
-const btnSave=document.getElementById("gi-save-btn");
-const btnReset=document.getElementById("gi-reset-btn");
+const leftPillars   = document.querySelectorAll("#gi-left-pillar-list li");
 
-const progressCount=document.getElementById("gi-progress-count");
-const progressPercent=document.getElementById("gi-progress-percent");
-const progressBar=document.getElementById("gi-progress-bar");
+const btnPrev       = document.getElementById("gi-prev-btn");
+const btnNext       = document.getElementById("gi-next-btn");
+const btnSubmit     = document.getElementById("gi-submit-btn");
+const btnClear      = document.getElementById("gi-clear-btn");
+const btnSave       = document.getElementById("gi-save-btn");
+const btnReset      = document.getElementById("gi-reset-btn");
 
-/* RENDER */
-function renderQuestion(){
-  const q=QUESTIONS[currentIndex];
-  if(!q)return;
+const progressCount = document.getElementById("gi-progress-count");
+const progressPercent = document.getElementById("gi-progress-percent");
+const progressBar   = document.getElementById("gi-progress-bar");
 
-  kicker.textContent=PILLAR_META[q.pillar].name;
-  qTitle.textContent=q.title;
-  qSub.textContent=q.sub||"";
 
-  rightName.textContent=PILLAR_META[q.pillar].name;
-  rightDesc.textContent=PILLAR_META[q.pillar].desc;
 
-  leftPillars.forEach(li=>li.classList.toggle("active",Number(li.dataset.p)===q.pillar));
+/* ===========================================================
+    RENDER A QUESTION
+=========================================================== */
+function renderQuestion() {
 
-  qBody.innerHTML=buildInput(q);
+  const q = QUESTIONS[currentIndex];
+  if (!q) return;
 
-  /* restore answers */
-  if(q.type==="group"){
-    q.fields.forEach(f=>{
-      const el=qBody.querySelector(`input[name="${f.name}"]`);
-      if(el && STATE[f.name]!==undefined){ el.value=STATE[f.name]; }
-    });
-  } else {
-    const stored=STATE[q.id];
-    if(stored!==undefined){
-      const el=qBody.querySelector("[name='q']");
-      if(el) el.value=stored;
-      const r=qBody.querySelector(`input[value="${stored}"]`);
-      if(r) r.checked=true;
-    }
-  }
+  /* Update pillar label */
+  kicker.textContent = PILLAR_META[q.pillar].name;
+
+  /* Title + subtitle */
+  qTitle.textContent = q.title || "";
+  qSub.textContent   = q.sub || "";
+
+  /* Right sidebar pillar description */
+  rightName.textContent = PILLAR_META[q.pillar].name;
+  rightDesc.textContent = PILLAR_META[q.pillar].desc;
+
+  /* Left sidebar active pillar highlight */
+  leftPillars.forEach(li =>
+    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
+  );
+
+  /* Inject HTML for the input */
+  qBody.innerHTML = buildInput(q);
+
+  restoreState(q);
 
   updateNav();
   updateProgress();
 }
 
-/* INPUT BUILDER */
-function buildInput(q){
-  if(q.type==="text")return `<input type="text" name="q">`;
-  if(q.type==="number")return `<input type="number" name="q">`;
-  if(q.type==="textarea")return `<textarea name="q"></textarea>`;
-  if(q.type==="select")return `
-    <div class="gi-select-wrap">
-      <select name="q" class="gi-select">
-        <option value="">Select an option…</option>
-        ${q.options.map(o=>`<option value="${o}">${o}</option>`).join("")}
-      </select>
-    </div>`;
-  if(q.type==="radio")return q.options.map(o=>`
-    <label class="gi-option-card">
-      <input type="radio" name="q" value="${o}">
-      <span>${o}</span>
-    </label>`).join("");
-  if(q.type==="group")return `
-    <div class="gi-group">
-      ${q.fields.map(f=>`
-        <div class="gi-group-field ${f.full?"full":""}">
-          <label>${f.label}</label>
-          <input type="text" name="${f.name}">
-        </div>`).join("")}
-    </div>`;
-  return `<p>Unsupported field type</p>`;
-}
 
-/* SAVE */
-function storeCurrentAnswer(){
-  const q=QUESTIONS[currentIndex];
 
-  if(q.type==="group"){
-    q.fields.forEach(f=>{
-      const el=qBody.querySelector(`input[name="${f.name}"]`);
-      if(el) STATE[f.name]=el.value||"";
+/* ===========================================================
+    RESTORE SAVED ANSWERS
+=========================================================== */
+function restoreState(q) {
+
+  if (q.type === "group") {
+    q.fields.forEach(f => {
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      if (el && STATE[f.name] !== undefined) {
+        el.value = STATE[f.name];
+      }
     });
     return;
   }
 
-  const el=qBody.querySelector("[name='q']");
-  if(!el)return;
+  const stored = STATE[q.id];
+  if (stored === undefined) return;
 
-  if(q.type==="radio"){
-    const r=qBody.querySelector("input:checked");
-    if(r) STATE[q.id]=r.value;
+  /* For radio inputs */
+  const radio = qBody.querySelector(`input[type=radio][value="${stored}"]`);
+  if (radio) {
+    radio.checked = true;
     return;
   }
 
-  STATE[q.id]=el.value;
+  /* For text/select/textarea */
+  const el = qBody.querySelector("[name='q']");
+  if (el) el.value = stored;
 }
 
-/* EVENTS */
-btnNext.addEventListener("click",()=>{storeCurrentAnswer();if(currentIndex<QUESTIONS.length-1)currentIndex++;renderQuestion();});
-btnPrev.addEventListener("click",()=>{storeCurrentAnswer();if(currentIndex>0)currentIndex--;renderQuestion();});
-btnClear.addEventListener("click",()=>{const q=QUESTIONS[currentIndex];if(q.type==="group"){q.fields.forEach(f=>delete STATE[f.name]);}else{delete STATE[q.id];}qBody.querySelectorAll("input,textarea,select").forEach(el=>el.value="");});
-btnSave.addEventListener("click",saveState);
-btnSubmit.addEventListener("click",()=>{storeCurrentAnswer();saveState();alert("Your assessment has been submitted.");});
 
-/* RESET */
-btnReset.addEventListener("click",()=>{
-  if(!confirm("Reset the entire assessment?"))return;
+
+/* ===========================================================
+    INPUT FACTORY
+=========================================================== */
+function buildInput(q) {
+
+  if (q.type === "text")
+    return `<input type="text" name="q">`;
+
+  if (q.type === "number")
+    return `<input type="number" name="q">`;
+
+  if (q.type === "textarea")
+    return `<textarea name="q"></textarea>`;
+
+  if (q.type === "select")
+    return `
+      <div class="gi-select-wrap">
+        <select name="q" class="gi-select">
+          <option value="">Select an option…</option>
+          ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
+        </select>
+      </div>
+    `;
+
+  if (q.type === "radio")
+    return q.options.map(o => `
+      <label class="gi-option-card">
+        <input type="radio" name="q" value="${o}">
+        <span>${o}</span>
+      </label>
+    `).join("");
+
+  if (q.type === "group")
+    return `
+      <div class="gi-group">
+        ${q.fields.map(f => `
+          <div class="gi-group-field ${f.full ? "full" : ""}">
+            <label>${f.label}</label>
+            <input type="text" name="${f.name}">
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+  return `<p>Unsupported question type</p>`;
+}
+
+
+
+/* ===========================================================
+    SAVE CURRENT ANSWER
+=========================================================== */
+function storeCurrentAnswer() {
+
+  const q = QUESTIONS[currentIndex];
+
+  if (q.type === "group") {
+    q.fields.forEach(f => {
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      if (el) STATE[f.name] = el.value || "";
+    });
+    return;
+  }
+
+  const el = qBody.querySelector("[name='q']");
+  if (!el) return;
+
+  if (q.type === "radio") {
+    const selected = qBody.querySelector("input:checked");
+    if (selected) STATE[q.id] = selected.value;
+    return;
+  }
+
+  STATE[q.id] = el.value;
+}
+
+
+
+/* ===========================================================
+    BUTTON EVENTS
+=========================================================== */
+btnNext.addEventListener("click", () => {
+  storeCurrentAnswer();
+  if (currentIndex < QUESTIONS.length - 1) currentIndex++;
+  renderQuestion();
+});
+
+btnPrev.addEventListener("click", () => {
+  storeCurrentAnswer();
+  if (currentIndex > 0) currentIndex--;
+  renderQuestion();
+});
+
+btnClear.addEventListener("click", () => {
+  const q = QUESTIONS[currentIndex];
+
+  if (q.type === "group") {
+    q.fields.forEach(f => delete STATE[f.name]);
+  } else {
+    delete STATE[q.id];
+  }
+
+  qBody.querySelectorAll("input, textarea, select").forEach(el => el.value = "");
+});
+
+btnSave.addEventListener("click", saveState);
+
+btnSubmit.addEventListener("click", () => {
+  storeCurrentAnswer();
+  saveState();
+  alert("Your assessment has been submitted.");
+});
+
+
+/* ===========================================================
+    RESET BUTTON (wipe all + restart)
+=========================================================== */
+btnReset.addEventListener("click", () => {
+  if (!confirm("Reset the entire assessment?")) return;
+
   localStorage.removeItem(STORAGE_KEY);
-  STATE={};
-  currentIndex=0;
+  STATE = {};
+  currentIndex = 0;
+
   renderQuestion();
   updateProgress();
 });
 
-/* NAV + PROGRESS */
-function updateNav(){
-  btnPrev.style.display=currentIndex===0?"none":"inline-block";
-  const last=currentIndex===QUESTIONS.length-1;
-  btnNext.style.display=last?"none":"inline-block";
-  btnSubmit.style.display=last?"inline-block":"none";
+
+/* ===========================================================
+    NAVIGATION + PROGRESS BAR
+=========================================================== */
+function updateNav() {
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+
+  const last = currentIndex === QUESTIONS.length - 1;
+  btnNext.style.display   = last ? "none" : "inline-block";
+  btnSubmit.style.display = last ? "inline-block" : "none";
 }
 
-function updateProgress(){
-  const answered=Object.keys(STATE).length;
-  const total=QUESTIONS.length;
-  progressCount.textContent=`${answered} / ${total}`;
-  progressPercent.textContent=`${Math.round((answered/total)*100)}%`;
-  progressBar.style.width=`${(answered/total)*100}%`;
+function updateProgress() {
+  const answered = Object.keys(STATE).length;
+  const total    = QUESTIONS.length;
+
+  progressCount.textContent = `${answered} / ${total}`;
+  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
+  progressBar.style.width = `${(answered / total) * 100}%`;
 }
 
-document.addEventListener("DOMContentLoaded",renderQuestion);
+
+/* ===========================================================
+    INIT
+=========================================================== */
+document.addEventListener("DOMContentLoaded", renderQuestion);
 </script>
 
 </body>
