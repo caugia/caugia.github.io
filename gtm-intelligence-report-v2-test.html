@@ -168,14 +168,16 @@
 </header>
 
 <!-- ===========================================================
-     MAIN GTM ASSESSMENT LAYOUT
+     MAIN GTM ASSESSMENT LAYOUT (v10)
 =========================================================== -->
 <main class="gi-main">
-  <div class="gi-shell">
+  <div class="gi-shell-3col">
 
-    <!-- LEFT SIDEBAR -->
-    <aside class="gi-left">
+    <!-- LEFT COLUMN — INFO + PROGRESS -->
+    <aside class="gi-left-info">
+
       <div class="gi-left-title">Premium GTM Assessment</div>
+
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-left-desc">
@@ -186,28 +188,24 @@
         12 pillars • 265 questions • ~50 minutes
       </div>
 
-      <div class="gi-left-subheading">Pillars Included</div>
-
-      <ul class="gi-left-pillar-list" id="gi-left-pillar-list">
-        <li data-p="0" class="active">0 — Context</li>
-        <li data-p="1">1 — GTM Strategy & Leadership</li>
-        <li data-p="2">2 — Market Intelligence</li>
-        <li data-p="3">3 — Product Marketing</li>
-        <li data-p="4">4 — Demand Generation</li>
-        <li data-p="5">5 — Sales Execution</li>
-        <li data-p="6">6 — Customer Success & Expansion</li>
-        <li data-p="7">7 — Revenue Operations & Systems</li>
-        <li data-p="8">8 — Pricing & Packaging</li>
-        <li data-p="9">9 — Brand & Communications</li>
-        <li data-p="10">10 — Data & Insights</li>
-        <li data-p="11">11 — Enablement</li>
-        <li data-p="12">12 — Leadership & Alignment</li>
-      </ul>
-
       <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
+
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 265</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
+
+        <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+      </div>
+
     </aside>
 
-    <!-- CENTER QUESTION ENGINE -->
+    <!-- CENTER COLUMN — ENGINE -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -230,29 +228,30 @@
       </div>
     </section>
 
-    <!-- RIGHT SIDEBAR -->
-    <aside class="gi-right">
+    <!-- RIGHT COLUMN — PILLAR NAVIGATION -->
+    <aside class="gi-right-pillars">
 
-      <div class="gi-progress-box">
+      <div class="gi-pillars-title">Pillars</div>
 
-        <div class="gi-progress-top">
-          <span id="gi-progress-count">0 / 265</span>
-          <span id="gi-progress-percent">0%</span>
-        </div>
+      <ul class="gi-pillar-list" id="gi-pillar-nav">
+        <li data-p="0" class="active">0 — Context</li>
+        <li data-p="1">1 — GTM Strategy & Leadership</li>
+        <li data-p="2">2 — Market Intelligence</li>
+        <li data-p="3">3 — Product Marketing</li>
+        <li data-p="4">4 — Demand Generation</li>
+        <li data-p="5">5 — Sales Execution</li>
+        <li data-p="6">6 — Customer Success & Expansion</li>
+        <li data-p="7">7 — Revenue Operations & Systems</li>
+        <li data-p="8">8 — Pricing & Packaging</li>
+        <li data-p="9">9 — Brand & Communications</li>
+        <li data-p="10">10 — Data & Insights</li>
+        <li data-p="11">11 — Enablement</li>
+        <li data-p="12">12 — Leadership & Alignment</li>
+      </ul>
 
-        <div class="gi-progress-track">
-          <div id="gi-progress-bar" class="gi-progress-fill"></div>
-        </div>
-
-        <div class="gi-right-pillar">
-          <div class="gi-right-pillar-name" id="gi-pillar-name">Context</div>
-          <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
-        </div>
-
-        <div class="gi-reset-wrap">
-          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
-        </div>
-
+      <div class="gi-pillar-active-desc">
+        <h3 id="gi-pillar-name">Context</h3>
+        <p id="gi-pillar-desc">Captures essential background for correct interpretation.</p>
       </div>
 
     </aside>
@@ -300,8 +299,8 @@ const PILLAR_META = {
 };
 </script>
 
+<!-- ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
-
 
 </body>
 </html>
