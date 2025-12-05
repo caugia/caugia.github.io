@@ -12,13 +12,13 @@
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/caugia-v9.1.css" />
+  <link rel="stylesheet" href="assets/caugia-v9.1.css?v=3" />
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <!-- ===========================================================
-       HYBRID DEBUG MODE + VALIDATOR + DARK MODE + INSPECTOR
+       HYBRID DEBUG MODE (Validator, Dark Mode, Inspector)
   ============================================================ -->
   <style>
     :root {
@@ -29,15 +29,12 @@
       --dark-border: #2A2E39;
     }
 
-    /* Global validation outline */
     * { outline: var(--validator-outline); }
 
-    /* Dark mode */
     body.debug-dark {
       background: var(--dark-bg);
       color: var(--dark-text);
     }
-
     body.debug-dark .gi-question-card,
     body.debug-dark .gi-progress-box,
     body.debug-dark .gi-left,
@@ -45,7 +42,6 @@
       background: var(--dark-card);
       border-color: var(--dark-border);
     }
-
     body.debug-dark input,
     body.debug-dark textarea,
     body.debug-dark select {
@@ -54,53 +50,50 @@
       border-color: var(--dark-border);
     }
 
-    /* Debug Panel */
+    /* Panel */
     #debug-panel {
+      display: none;
       position: fixed;
       bottom: 20px;
       right: 20px;
       width: 240px;
       background: white;
       border: 1px solid #ddd;
-      padding: 12px 16px;
-      font-size: 14px;
       border-radius: 10px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-      display: none;
+      padding: 14px;
       z-index: 9999;
+      font-size: 14px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.18);
     }
-
     #debug-panel button {
       width: 100%;
-      padding: 8px;
+      padding: 9px;
       margin-top: 8px;
-      background: #f5f7fa;
-      border: 1px solid #ccc;
       border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #f5f7fa;
       cursor: pointer;
     }
-    #debug-panel button:hover { background: #e8ecf2; }
+    #debug-panel button:hover {
+      background: #e8ecf2;
+    }
 
-    /* Badge */
+    /* Debug Badge */
     #debug-badge {
       position: fixed;
       bottom: 20px;
       left: 20px;
       padding: 6px 10px;
+      border-radius: 6px;
       background: #0046A5;
       color: white;
       font-size: 13px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
       display: none;
       z-index: 9999;
     }
   </style>
 
   <script>
-    /* ============================================================
-       DEBUG MODE CONTROLLER
-    ============================================================ */
     let debugEnabled = false;
 
     function toggleDebugPanel() {
@@ -110,14 +103,13 @@
     }
 
     function enableValidator() {
-      document.documentElement.style.setProperty("--validator-outline","1px dashed red");
-      const badge = document.getElementById("debug-badge");
-      badge.textContent = "Validator ON";
-      badge.style.display = "inline-block";
+      document.documentElement.style.setProperty("--validator-outline", "1px dashed red");
+      document.getElementById("debug-badge").textContent = "Validator ON";
+      document.getElementById("debug-badge").style.display = "inline-block";
     }
 
     function disableValidator() {
-      document.documentElement.style.setProperty("--validator-outline","0px solid transparent");
+      document.documentElement.style.setProperty("--validator-outline", "0px solid transparent");
       document.getElementById("debug-badge").style.display = "none";
     }
 
@@ -138,10 +130,15 @@
 
 <body>
 
-<!-- Debug badge -->
-<div id="debug-badge">Validator ON</div>
+<!-- Floating debug trigger -->
+<button onclick="toggleDebugPanel()"
+        style="position: fixed; bottom: 20px; right: 20px;
+               width: 52px; height: 52px; border-radius: 50%;
+               background:#0046A5; color:white; border:none;
+               font-size:22px; cursor:pointer; z-index:9999;">
+  🛠
+</button>
 
-<!-- Debug control panel -->
 <div id="debug-panel">
   <strong>Debug Tools</strong><br><br>
   <button onclick="enableValidator()">Enable Validator</button>
@@ -150,27 +147,9 @@
   <button onclick="inspectElements()">Enable Inspector</button>
 </div>
 
-<!-- Floating debug toggle -->
-<button onclick="toggleDebugPanel()"
-  style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #0046A5;
-    color: white;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 9999;">
-  🛠
-</button>
+<div id="debug-badge">Validator ON</div>
 
-<!-- ===========================================================
-    HEADER
-=========================================================== -->
+<!-- HEADER -->
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
@@ -189,28 +168,20 @@
   </div>
 </header>
 
-<!-- ===========================================================
-    3-COLUMN LAYOUT
-=========================================================== -->
+<!-- MAIN -->
 <main class="gi-main">
   <div class="gi-shell">
-    <!-- =======================================================
-         LEFT SIDEBAR
-    ======================================================= -->
-    <aside class="gi-left">
 
+    <!-- LEFT SIDEBAR -->
+    <aside class="gi-left">
       <div class="gi-left-title">Premium GTM Assessment</div>
       <h1 class="gi-left-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-left-desc">
-        A structured, 12-pillar diagnostic that evaluates your entire
-        go-to-market system and produces a personalized, system-level
-        intelligence report. Your progress saves automatically.
+        A structured, 12-pillar diagnostic that evaluates your full GTM system.
       </p>
 
-      <div class="gi-left-meta">
-        12 pillars • 265 questions • ~40 minutes
-      </div>
+      <div class="gi-left-meta">12 pillars • 265 questions • ~50 minutes</div>
 
       <div class="gi-left-subheading">Pillars Included</div>
 
@@ -231,12 +202,9 @@
       </ul>
 
       <a href="#faq" class="gi-left-faq">FAQ about the assessment</a>
-
     </aside>
 
-    <!-- =======================================================
-         CENTER — QUESTION ENGINE
-    ======================================================= -->
+    <!-- CENTER -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -258,10 +226,7 @@
 
       </div>
     </section>
-
-    <!-- =======================================================
-         RIGHT SIDEBAR — PROGRESS + PILLAR META + RESET
-    ======================================================= -->
+    <!-- RIGHT SIDEBAR -->
     <aside class="gi-right">
 
       <div class="gi-progress-box">
@@ -280,7 +245,7 @@
           <p class="gi-right-pillar-desc" id="gi-pillar-desc"></p>
         </div>
 
-        <!-- RESET BUTTON (clean, safe) -->
+        <!-- RESET BUTTON -->
         <div class="gi-reset-wrap">
           <button class="gi-btn gi-reset" id="gi-reset-btn">
             Reset assessment
@@ -291,45 +256,78 @@
 
     </aside>
 
-  </div> <!-- END gi-shell -->
+  </div>
 </main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">© 2025 Caugia Consulting</div>
+    <div class="footer-right">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- LOAD QUESTIONS -->
+<script src="assets/QUESTIONS.js"></script>
+
+<!-- PILLAR META -->
+<script>
+let PILLAR_META = {
+  0:{name:"Context",desc:"Captures essential background so the assessment can interpret your responses correctly."},
+  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity, leadership cohesion and alignment into execution."},
+  2:{name:"Market Intelligence",desc:"Assesses market awareness, customer insight and competitive understanding."},
+  3:{name:"Product Marketing",desc:"Reviews ICP clarity, messaging precision and value articulation."},
+  4:{name:"Demand Generation",desc:"Evaluates pipeline generation, segmentation, channels and funnel health."},
+  5:{name:"Sales Execution",desc:"Measures qualification, deal flow, efficiency and forecasting accuracy."},
+  6:{name:"Customer Success & Expansion",desc:"Assesses onboarding quality, value delivery, outcomes and expansion maturity."},
+  7:{name:"Revenue Operations & Systems",desc:"Evaluates workflows, tooling architecture, automation and operational quality."},
+  8:{name:"Pricing & Packaging",desc:"Assesses monetization logic, packaging structure and commercial discipline."},
+  9:{name:"Brand & Communications",desc:"Evaluates clarity, consistency and credibility of your narrative."},
+ 10:{name:"Data & Insights",desc:"Assesses availability, accuracy, structure and decision-making usefulness of GTM data."},
+ 11:{name:"Enablement",desc:"Evaluates training, readiness, playbooks and skill development."},
+ 12:{name:"Leadership & Alignment",desc:"Measures cross-functional alignment, accountability, rhythm and cohesion."}
+};
+</script>
 <!-- ===========================================================
-    QUESTION ENGINE v1.3 — Accurate Progress + Validation
+    QUESTION ENGINE v1.3 — Fixed Progress, Validation, Stability
 =========================================================== -->
 <script>
 
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
+
+/* Load saved answers */
 let STATE = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
-/* Save state every 0.8s */
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
-setInterval(saveState, 800);
+setInterval(saveState, 1000);
 
-
-/* ------------------- DOM ELEMENTS ------------------- */
-const qTitle = document.getElementById("gi-question-title");
-const qSub = document.getElementById("gi-question-sub");
-const qBody = document.getElementById("gi-question-body");
-const kicker = document.getElementById("gi-question-kicker");
-const rightName = document.getElementById("gi-pillar-name");
-const rightDesc = document.getElementById("gi-pillar-desc");
+/* DOM */
+const qTitle   = document.getElementById("gi-question-title");
+const qSub     = document.getElementById("gi-question-sub");
+const qBody    = document.getElementById("gi-question-body");
+const kicker   = document.getElementById("gi-question-kicker");
+const rightName= document.getElementById("gi-pillar-name");
+const rightDesc= document.getElementById("gi-pillar-desc");
 
 const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
 
-const btnPrev = document.getElementById("gi-prev-btn");
-const btnNext = document.getElementById("gi-next-btn");
+const btnPrev   = document.getElementById("gi-prev-btn");
+const btnNext   = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
-const btnClear = document.getElementById("gi-clear-btn");
-const btnSave = document.getElementById("gi-save-btn");
-const btnReset = document.getElementById("gi-reset-btn");
+const btnClear  = document.getElementById("gi-clear-btn");
+const btnSave   = document.getElementById("gi-save-btn");
+const btnReset  = document.getElementById("gi-reset-btn");
 
-const progressCount = document.getElementById("gi-progress-count");
-const progressPercent = document.getElementById("gi-progress-percent");
-const progressBar = document.getElementById("gi-progress-bar");
-
+const progressCount  = document.getElementById("gi-progress-count");
+const progressPercent= document.getElementById("gi-progress-percent");
+const progressBar    = document.getElementById("gi-progress-bar");
 
 
 /* ===========================================================
@@ -340,8 +338,8 @@ function renderQuestion() {
   if (!q) return;
 
   kicker.textContent = PILLAR_META[q.pillar].name;
-  qTitle.textContent = q.title || "";
-  qSub.textContent = q.sub || "";
+  qTitle.textContent = q.title;
+  qSub.textContent   = q.sub || "";
 
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
@@ -353,14 +351,61 @@ function renderQuestion() {
   qBody.innerHTML = buildInput(q);
 
   restoreState(q);
+
   updateNav();
   updateProgress();
 }
 
 
+/* ===========================================================
+   VALIDATION — DO NOT ALLOW NEXT IF EMPTY
+=========================================================== */
+function validateQuestion(q) {
+
+  if (q.type === "group") {
+    return q.fields.every(f => {
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      return el && el.value.trim() !== "";
+    });
+  }
+
+  if (q.type === "radio") {
+    return qBody.querySelector("input:checked") !== null;
+  }
+
+  const el = qBody.querySelector("[name='q']");
+  return el && el.value.trim() !== "";
+}
+
 
 /* ===========================================================
-   INPUT BUILDER
+   RESTORE PREVIOUS ANSWERS
+=========================================================== */
+function restoreState(q) {
+
+  if (q.type === "group") {
+    q.fields.forEach(f => {
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      if (el && STATE[f.name] !== undefined) {
+        el.value = STATE[f.name];
+      }
+    });
+    return;
+  }
+
+  const stored = STATE[q.id];
+  if (stored === undefined) return;
+
+  const radio = qBody.querySelector(`input[type=radio][value="${stored}"]`);
+  if (radio) { radio.checked = true; return; }
+
+  const el = qBody.querySelector("[name='q']");
+  if (el) el.value = stored;
+}
+
+
+/* ===========================================================
+   INPUT BUILDER — ALL QUESTION TYPES
 =========================================================== */
 function buildInput(q) {
 
@@ -397,58 +442,26 @@ function buildInput(q) {
         ${q.fields.map(f => `
           <div class="gi-group-field ${f.full ? "full" : ""}">
             <label>${f.label}</label>
-            <input type="text" name="group_${q.id}_${f.name}">
+            <input type="text" name="${f.name}">
           </div>
         `).join("")}
       </div>
     `;
 
-  return `<p>Unsupported question type</p>`;
+  return `<p>Unsupported field type</p>`;
 }
 
 
-
 /* ===========================================================
-   RESTORE SAVED ANSWER
-=========================================================== */
-function restoreState(q) {
-
-  if (q.type === "group") {
-    q.fields.forEach(f => {
-      const key = `group_${q.id}_${f.name}`;
-      const el = qBody.querySelector(`input[name="${key}"]`);
-      if (el && STATE[key] !== undefined) {
-        el.value = STATE[key];
-      }
-    });
-    return;
-  }
-
-  const stored = STATE[q.id];
-  if (stored === undefined) return;
-
-  if (q.type === "radio") {
-    const r = qBody.querySelector(`input[value="${stored}"]`);
-    if (r) r.checked = true;
-  }
-
-  const el = qBody.querySelector("[name='q']");
-  if (el) el.value = stored;
-}
-
-
-
-/* ===========================================================
-   SAVE CURRENT ANSWER
+   SAVE CURRENT ANSWER TO STATE
 =========================================================== */
 function storeCurrentAnswer() {
   const q = QUESTIONS[currentIndex];
 
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const key = `group_${q.id}_${f.name}`;
-      const el = qBody.querySelector(`input[name="${key}"]`);
-      if (el) STATE[key] = el.value.trim();
+      const el = qBody.querySelector(`input[name="${f.name}"]`);
+      STATE[f.name] = el ? el.value.trim() : "";
     });
     return;
   }
@@ -466,78 +479,23 @@ function storeCurrentAnswer() {
 }
 
 
-
 /* ===========================================================
-   VALIDATION — MUST FILL BEFORE NEXT
-=========================================================== */
-function validateCurrent() {
-  const q = QUESTIONS[currentIndex];
-
-  if (q.type === "group") {
-    return q.fields.every(f => {
-      const key = `group_${q.id}_${f.name}`;
-      return STATE[key] && STATE[key].trim() !== "";
-    });
-  }
-
-  const val = STATE[q.id];
-  return val !== undefined && val !== "";
-}
-
-
-
-/* ===========================================================
-   PROGRESS CALCULATION (REAL FIX)
-=========================================================== */
-function getAnsweredCount() {
-  let count = 0;
-
-  QUESTIONS.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f => {
-        const key = `group_${q.id}_${f.name}`;
-        return STATE[key] && STATE[key].trim() !== "";
-      });
-      if (filled) count++;
-    } else {
-      const v = STATE[q.id];
-      if (v !== undefined && v !== "") count++;
-    }
-  });
-
-  return count;
-}
-
-
-
-/* ===========================================================
-   UPDATE PROGRESS BAR
-=========================================================== */
-function updateProgress() {
-  const answered = getAnsweredCount();
-  const total = QUESTIONS.length;
-
-  progressCount.textContent = `${answered} / ${total}`;
-  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
-  progressBar.style.width = `${(answered / total) * 100}%`;
-}
-
-
-
-/* ===========================================================
-   BUTTON EVENTS
+   BUTTONS — NEXT / PREV / CLEAR / SAVE / SUBMIT
 =========================================================== */
 btnNext.addEventListener("click", () => {
-  storeCurrentAnswer();
+  const q = QUESTIONS[currentIndex];
 
-  if (!validateCurrent()) {
-    alert("Please complete all fields before continuing.");
+  if (!validateQuestion(q)) {
+    alert("Please complete the question before continuing.");
     return;
   }
+
+  storeCurrentAnswer();
 
   if (currentIndex < QUESTIONS.length - 1) currentIndex++;
   renderQuestion();
 });
+
 
 btnPrev.addEventListener("click", () => {
   storeCurrentAnswer();
@@ -545,36 +503,34 @@ btnPrev.addEventListener("click", () => {
   renderQuestion();
 });
 
+
 btnClear.addEventListener("click", () => {
   const q = QUESTIONS[currentIndex];
 
   if (q.type === "group") {
-    q.fields.forEach(f => {
-      const key = `group_${q.id}_${f.name}`;
-      delete STATE[key];
-    });
+    q.fields.forEach(f => delete STATE[f.name]);
   } else {
     delete STATE[q.id];
   }
 
-  qBody.querySelectorAll("input, textarea, select").forEach(el => el.value = "");
-  updateProgress();
+  qBody.querySelectorAll("input, textarea, select")
+       .forEach(el => el.value = "");
 });
+
 
 btnSave.addEventListener("click", saveState);
 
+
 btnSubmit.addEventListener("click", () => {
   storeCurrentAnswer();
-
-  if (!validateCurrent()) {
-    alert("Please complete all fields before submitting.");
-    return;
-  }
-
   saveState();
   alert("Your assessment has been submitted.");
 });
 
+
+/* ===========================================================
+   RESET ASSESSMENT
+=========================================================== */
 btnReset.addEventListener("click", () => {
   if (!confirm("Reset the entire assessment?")) return;
 
@@ -587,19 +543,30 @@ btnReset.addEventListener("click", () => {
 });
 
 
-
 /* ===========================================================
-   NAVIGATION BUTTON VISIBILITY
+   PROGRESS BAR — FIXED (counts only answered questions)
 =========================================================== */
-function updateNav() {
-  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+function updateProgress() {
+  let answered = 0;
 
-  const last = currentIndex === QUESTIONS.length - 1;
+  for (let q of QUESTIONS) {
 
-  btnNext.style.display = last ? "none" : "inline-block";
-  btnSubmit.style.display = last ? "inline-block" : "none";
+    if (q.type === "group") {
+      const allFilled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (allFilled) answered++;
+    }
+
+    else if (STATE[q.id] && STATE[q.id].trim() !== "") {
+      answered++;
+    }
+  }
+
+  const total = QUESTIONS.length;
+
+  progressCount.textContent   = `${answered} / ${total}`;
+  progressPercent.textContent = `${Math.round((answered / total) * 100)}%`;
+  progressBar.style.width     = `${(answered / total) * 100}%`;
 }
-
 
 
 /* ===========================================================
