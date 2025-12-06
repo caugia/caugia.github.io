@@ -1,162 +1,363 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+/* ===========================================================
+   CAUGIA CONSULTING — CSS v9.8 SUPER MAX EDITION
+   Clean • Ultra-fast • No legacy • No background logos
+   =========================================================== */
 
-  <title>The GTM Intelligence Report | Caugia Consulting</title>
+/* ------------------------------
+   ROOT VARIABLES
+--------------------------------*/
+:root {
+  --ink: #0B132B;
+  --ink-soft: #3a4250;
+  --blue: #0046A5;
+  --blue-dark: #003b88;
+  --blue-light: #F4F7FF;
 
-  <!-- Favicon -->
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+  --radius: 12px;
+  --radius-sm: 8px;
 
-  <!-- CSS (Super Max v9.7) -->
-  <link rel="stylesheet" href="assets/caugia-v9.7.css?v=9.7"/>
+  --border: rgba(0,0,0,0.10);
 
-  <!-- 🔒 SECURITY -->
-  <script src="/auth.js"></script>
-</head>
+  --shadow-soft: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-card: 0 6px 18px rgba(0,0,0,0.08);
 
-<body>
+  --transition: .22s cubic-bezier(.22,1,.36,1);
+}
 
-<!-- =========================================
-     HEADER
-========================================= -->
-<header class="gi-header">
-  <div class="gi-header-inner">
-    <div class="gi-header-left">
-      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
-      <span class="gi-header-brand">Caugia Consulting</span>
-    </div>
-    <div class="gi-header-right">
-      <a href="contact.html" class="gi-contact-link">Contact</a>
-    </div>
-  </div>
-</header>
+/* ------------------------------
+   HARD RESET — NO BACKGROUND LOGOS
+--------------------------------*/
+body::before,
+body::after,
+.gi-bg-logo,
+.gi-hero-bg,
+.background-logo {
+  display: none !important;
+  content: none !important;
+}
 
+body {
+  background: white !important;
+  position: static !important;
+  z-index: auto !important;
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  color: var(--ink);
+}
 
-<!-- =========================================
-     MAIN 3-COLUMN LAYOUT
-========================================= -->
-<main class="gi-main">
-  <div class="gi-shell">
+/* ===========================================================
+   HEADER (Contact only)
+=========================================================== */
+.gi-header {
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
 
-    <!-- LEFT INFO PANEL -->
-    <aside class="gi-left-info">
+.gi-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-      <div class="gi-info-title">Premium GTM Assessment</div>
-      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+.gi-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-      <p class="gi-info-desc">
-        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system
-        and reveals strengths, risks and hidden dependencies across the full revenue engine.
-      </p>
+.gi-logo {
+  width: 28px;
+  height: 28px;
+}
 
-      <div class="gi-info-meta">
-        12 pillars • 265 questions • ~50 minutes
-      </div>
+.gi-header-brand {
+  font-size: 18px;
+  font-weight: 600;
+}
 
-      <!-- Progress -->
-      <div class="gi-progress-box">
-        <div class="gi-progress-top">
-          <span id="gi-progress-count">0 / 265</span>
-          <span id="gi-progress-percent">0%</span>
-        </div>
-        <div class="gi-progress-track">
-          <div id="gi-progress-bar" class="gi-progress-fill"></div>
-        </div>
-      </div>
+.gi-contact-link {
+  color: var(--blue);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--blue);
+  transition: var(--transition);
+}
 
-      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+.gi-contact-link:hover {
+  background: var(--blue);
+  color: white;
+}
 
-      <!-- LEFT PILLAR DESCRIPTION -->
-      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
-        <h3 id="gi-left-pillar-title">Context</h3>
-        <p id="gi-left-pillar-text">
-          Context provides the foundation for interpreting the rest of the assessment.
-          By capturing essential details about your company, the system can adjust
-          recommendations, highlight specific risks and determine the right priorities.
-        </p>
-      </div>
+/* ===========================================================
+   MAIN GRID
+=========================================================== */
+.gi-main {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
-    </aside>
+.gi-shell {
+  max-width: 1600px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  gap: 40px;
+  padding: 0 32px;
+  position: relative;
+}
 
+/* ===========================================================
+   LEFT INFO PANEL
+=========================================================== */
+.gi-left-info {
+  position: sticky;
+  top: 32px;
+  align-self: start;
+}
 
-    <!-- CENTER QUESTION ENGINE -->
-    <section class="gi-center">
-      <div class="gi-question-card" id="gi-question-card">
+.gi-info-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
 
-        <div class="gi-question-header">
-          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
-          <h2 class="gi-question-title" id="gi-question-title"></h2>
-          <p class="gi-question-sub" id="gi-question-sub"></p>
-        </div>
+.gi-info-h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
 
-        <div class="gi-question-body" id="gi-question-body"></div>
+.gi-info-desc {
+  font-size: 15px;
+  opacity: .85;
+  margin-bottom: 12px;
+}
 
-        <div class="gi-nav-row">
-          <button class="gi-btn" id="gi-prev-btn">Previous</button>
-          <button class="gi-btn" id="gi-save-btn">Save</button>
-          <button class="gi-btn" id="gi-clear-btn">Clear</button>
-          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
-        </div>
+.gi-info-meta {
+  font-size: 14px;
+  opacity: .7;
+  margin-bottom: 20px;
+}
 
-      </div>
-    </section>
+/* Progress */
+.gi-progress-box {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-soft);
+}
 
+.gi-progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-    <!-- RIGHT PILLAR NAV -->
-    <aside class="gi-right-pillars">
-      <div class="gi-pillars-title">Pillars</div>
+.gi-progress-track {
+  height: 7px;
+  background: #eef1f6;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}
 
-      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
-        <li data-p="0" class="active">0 — Context</li>
-        <li data-p="1">1 — GTM Strategy & Leadership</li>
-        <li data-p="2">2 — Market Intelligence</li>
-        <li data-p="3">3 — Product Marketing</li>
-        <li data-p="4">4 — Demand Generation</li>
-        <li data-p="5">5 — Sales Execution</li>
-        <li data-p="6">6 — Customer Success & Expansion</li>
-        <li data-p="7">7 — Revenue Operations & Systems</li>
-        <li data-p="8">8 — Pricing & Packaging</li>
-        <li data-p="9">9 — Brand & Communications</li>
-        <li data-p="10">10 — Data & Insights</li>
-        <li data-p="11">11 — Enablement</li>
-        <li data-p="12">12 — Leadership & Alignment</li>
-      </ul>
-    </aside>
+.gi-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--blue);
+  transition: width .35s ease;
+}
 
-  </div>
-</main>
+/* Left pillar description */
+.gi-pillar-desc-box {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: white;
+  box-shadow: var(--shadow-soft);
+}
 
+.gi-pillar-desc-box h3 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
 
-<!-- =========================================
-     SCRIPTS
-========================================= -->
+.gi-pillar-desc-box p {
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: .8;
+}
 
-<script src="assets/QUESTIONS.js?v=1"></script>
+/* Reset button */
+.gi-btn.gi-reset {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: var(--radius-sm);
+}
 
-<script>
-const PILLAR_META = {
-  0:{name:"Context",desc:"Captures essential background for correct interpretation."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity & execution alignment."},
-  2:{name:"Market Intelligence",desc:"Assesses customer & competitive awareness."},
-  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging & narrative strength."},
-  4:{name:"Demand Generation",desc:"Reviews pipeline health & channel effectiveness."},
-  5:{name:"Sales Execution",desc:"Measures qualification, deal flow & forecasting."},
-  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery & expansion."},
-  7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling & operational quality."},
-  8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic & pricing structure."},
-  9:{name:"Brand & Communications",desc:"Reviews clarity & consistency of communications."},
- 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
- 11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
- 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
-};
-</script>
+/* ===========================================================
+   CENTER QUESTION ENGINE
+=========================================================== */
+.gi-center {
+  position: relative;
+  z-index: 20;
+}
 
-<script src="assets/engine.js?v=5000"></script>
+.gi-question-card {
+  background: white;
+  padding: 36px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
 
-</body>
-</html>
+/* Header */
+.gi-question-kicker {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.gi-question-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.gi-question-sub {
+  font-size: 15px;
+  opacity: .75;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.gi-question-body input,
+.gi-question-body textarea,
+.gi-question-body select {
+  width: 100%;
+  font-size: 15px;
+  padding: 13px 14px;
+  border-radius: var(--radius);
+  border: 1px solid #d1d7e0;
+  background: #f7f9fc;
+  margin-bottom: 18px;
+}
+
+.gi-question-body input:focus,
+.gi-question-body textarea:focus,
+.gi-question-body select:focus {
+  background: white;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 1px var(--blue);
+  outline: none;
+}
+
+.gi-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.gi-group-field.full {
+  grid-column: 1 / -1;
+}
+
+/* Navigation buttons */
+.gi-nav-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.gi-btn {
+  padding: 11px 20px;
+  border: 1px solid var(--border);
+  background: #f5f7fa;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gi-btn:hover {
+  background: #e8ecf2;
+}
+
+.gi-btn.gi-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+.gi-btn.gi-primary:hover {
+  background: var(--blue-dark);
+}
+
+/* ===========================================================
+   RIGHT PILLARS
+=========================================================== */
+.gi-right-pillars {
+  position: sticky;
+  top: 32px;
+  z-index: 10;
+}
+
+.gi-pillars-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.gi-pillar-nav {
+  list-style: none;
+  padding: 0;
+}
+
+.gi-pillar-nav li {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gi-pillar-nav li:hover {
+  background: var(--blue-light);
+}
+
+.gi-pillar-nav li.active {
+  background: var(--blue);
+  color: white;
+  font-weight: 600;
+}
+
+/* ===========================================================
+   MOBILE
+=========================================================== */
+@media (max-width: 1100px) {
+  .gi-shell {
+    grid-template-columns: 1fr;
+  }
+  .gi-left-info,
+  .gi-right-pillars {
+    position: static;
+    margin-bottom: 32px;
+  }
+}
