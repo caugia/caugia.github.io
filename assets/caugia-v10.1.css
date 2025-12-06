@@ -326,26 +326,12 @@ body.dark .gi-question-card {
   margin-bottom: 0;
 }
 
-/* Body (scrollable) */
+/* Body (NO SCROLL - content fits in viewport with 2-column layout) */
 .gi-question-body {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
   padding-right: 12px;
   margin-bottom: 20px;
-}
-
-.gi-question-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.gi-question-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.gi-question-body::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
-  border-radius: 10px;
 }
 
 /* Inputs */
@@ -372,10 +358,82 @@ body.dark .gi-question-card {
   grid-column: 1 / -1;
 }
 
-/* Radio/Scale options (2 columns for long lists) */
-.gi-question-body .gi-radio-label {
-  display: block;
-  margin-bottom: 10px;
+/* Radio/Scale options - 2 COLUMN GRID */
+.gi-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  background: white;
+}
+
+body.dark .gi-option-card {
+  background: #0D1117;
+  border-color: #1E293B;
+}
+
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.gi-option-card input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.gi-option-card input[type="radio"]:checked ~ span {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.gi-option-card span {
+  flex: 1;
+  font-size: 15px;
+}
+
+/* 2-column layout for radio/scale options */
+.gi-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  background: white;
+}
+
+body.dark .gi-option-card {
+  background: #111827;
+}
+
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.gi-option-card input[type="radio"]:checked + span {
+  font-weight: 600;
+  color: var(--blue);
 }
 
 /* Buttons (fixed at bottom) */
