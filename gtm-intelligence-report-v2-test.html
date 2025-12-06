@@ -1,1 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>The GTM Intelligence Report | Caugia Consulting</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="assets/C-logo.png">
+  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+
+  <!-- CSS (Super Max v9.7) -->
+  <link rel="stylesheet" href="assets/caugia-v9.8.css?v=9.8"/>
+
+  <!-- 🔒 SECURITY -->
+  <script src="/auth.js"></script>
+</head>
+
+<body>
+
+<!-- =========================================
+     HEADER
+========================================= -->
+<header class="gi-header">
+  <div class="gi-header-inner">
+    <div class="gi-header-left">
+      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
+      <span class="gi-header-brand">Caugia Consulting</span>
+    </div>
+    <div class="gi-header-right">
+      <a href="contact.html" class="gi-contact-link">Contact</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- =========================================
+     MAIN 3-COLUMN LAYOUT
+========================================= -->
+<main class="gi-main">
+  <div class="gi-shell">
+
+    <!-- LEFT INFO PANEL -->
+    <aside class="gi-left-info">
+
+      <div class="gi-info-title">Premium GTM Assessment</div>
+      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+
+      <p class="gi-info-desc">
+        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system
+        and reveals strengths, risks and hidden dependencies across the full revenue engine.
+      </p>
+
+      <div class="gi-info-meta">
+        12 pillars • 265 questions • ~50 minutes
+      </div>
+
+      <!-- Progress -->
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 265</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
+      </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+
+      <!-- LEFT PILLAR DESCRIPTION -->
+      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+        <h3 id="gi-left-pillar-title">Context</h3>
+        <p id="gi-left-pillar-text">
+          Context provides the foundation for interpreting the rest of the assessment.
+          By capturing essential details about your company, the system can adjust
+          recommendations, highlight specific risks and determine the right priorities.
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CENTER QUESTION ENGINE -->
+    <section class="gi-center">
+      <div class="gi-question-card" id="gi-question-card">
+
+        <div class="gi-question-header">
+          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
+          <h2 class="gi-question-title" id="gi-question-title"></h2>
+          <p class="gi-question-sub" id="gi-question-sub"></p>
+        </div>
+
+        <div class="gi-question-body" id="gi-question-body"></div>
+
+        <div class="gi-nav-row">
+          <button class="gi-btn" id="gi-prev-btn">Previous</button>
+          <button class="gi-btn" id="gi-save-btn">Save</button>
+          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- RIGHT PILLAR NAV -->
+    <aside class="gi-right-pillars">
+      <div class="gi-pillars-title">Pillars</div>
+
+      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
+        <li data-p="0" class="active">0 — Context</li>
+        <li data-p="1">1 — GTM Strategy & Leadership</li>
+        <li data-p="2">2 — Market Intelligence</li>
+        <li data-p="3">3 — Product Marketing</li>
+        <li data-p="4">4 — Demand Generation</li>
+        <li data-p="5">5 — Sales Execution</li>
+        <li data-p="6">6 — Customer Success & Expansion</li>
+        <li data-p="7">7 — Revenue Operations & Systems</li>
+        <li data-p="8">8 — Pricing & Packaging</li>
+        <li data-p="9">9 — Brand & Communications</li>
+        <li data-p="10">10 — Data & Insights</li>
+        <li data-p="11">11 — Enablement</li>
+        <li data-p="12">12 — Leadership & Alignment</li>
+      </ul>
+    </aside>
+
+  </div>
+</main>
+
+
+<!-- =========================================
+     SCRIPTS
+========================================= -->
+
+<script src="assets/QUESTIONS.js?v=1"></script>
+
+<script>
+const PILLAR_META = {
+  0:{name:"Context",desc:"Captures essential background for correct interpretation."},
+  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity & execution alignment."},
+  2:{name:"Market Intelligence",desc:"Assesses customer & competitive awareness."},
+  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging & narrative strength."},
+  4:{name:"Demand Generation",desc:"Reviews pipeline health & channel effectiveness."},
+  5:{name:"Sales Execution",desc:"Measures qualification, deal flow & forecasting."},
+  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery & expansion."},
+  7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling & operational quality."},
+  8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic & pricing structure."},
+  9:{name:"Brand & Communications",desc:"Reviews clarity & consistency of communications."},
+ 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
+ 11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
+ 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
+};
+</script>
+
+<script src="assets/engine.js?v=5000"></script>
+
+</body>
+</html>
