@@ -6,32 +6,33 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-  <!-- Brand Assets -->
-  <link rel="icon" href="assets/C-logo.png" type="image/png">
+  <!-- Favicon -->
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
+  <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="assets/caugia-v9.8.css?v=9.8"/>
+  <!-- CSS v10.1 SUPER MAX ULTRA -->
+  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
-  <!-- SECURITY -->
+  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 </head>
 
 <body>
 
-<!-- ======================================================
-     HEADER (Brand left + Contact + Toggle)
-====================================================== -->
+<!-- ===========================================================
+     HEADER — Only logo + brand + Contact + Dark Mode
+=========================================================== -->
 <header class="gi-header">
   <div class="gi-header-inner">
 
     <div class="gi-header-left">
-      <img src="assets/C-logo.png" alt="" class="gi-logo">
+      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
 
     <div class="gi-header-right">
-      <button id="gi-dark-toggle" class="gi-dark-toggle">☀</button>
+      <button id="darkToggle" class="gi-dark-toggle">Dark</button>
       <a href="contact.html" class="gi-contact-link">Contact</a>
     </div>
 
@@ -39,23 +40,25 @@
 </header>
 
 
-
-<!-- ======================================================
-     MAIN 3-COLUMN LAYOUT
-====================================================== -->
+<!-- ===========================================================
+     MAIN LAYOUT — Left • Center • Right
+=========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
-
-    <!-- LEFT PANEL -->
+    <!-- =======================================================
+         LEFT INFO PANEL
+    ======================================================== -->
     <aside class="gi-left-info">
 
       <div class="gi-info-title">Premium GTM Assessment</div>
+
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-info-desc">
-        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system
-        and reveals strengths, risks and hidden dependencies across the full revenue engine.
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and reveals strengths, risks and hidden
+        dependencies across the full revenue engine.
       </p>
 
       <div class="gi-info-meta">12 pillars • 265 questions • ~50 minutes</div>
@@ -73,21 +76,22 @@
 
       <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
 
-      <!-- PILLAR DESCRIPTION LEFT ONLY -->
-      <div class="gi-pillar-desc-box">
+      <!-- LEFT PILLAR DESCRIPTION -->
+      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-left-pillar-title">Context</h3>
         <p id="gi-left-pillar-text">
           Context provides the foundation for interpreting the rest of the assessment.
-          By capturing essential details about your company, the system can adjust recommendations,
-          highlight specific risks and determine the right priorities.
+          By capturing essential details about your company, the system adjusts
+          recommendations, highlights risks and identifies the right priorities.
         </p>
       </div>
 
     </aside>
 
 
-
-    <!-- CENTER QUESTION ENGINE (THIS WAS BROKEN BEFORE) -->
+    <!-- =======================================================
+         CENTER ENGINE
+    ======================================================== -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -99,6 +103,7 @@
 
         <div class="gi-question-body" id="gi-question-body"></div>
 
+        <!-- NAVIGATION -->
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn" id="gi-save-btn">Save</button>
@@ -111,9 +116,11 @@
     </section>
 
 
-
-    <!-- RIGHT PILLARS -->
+    <!-- =======================================================
+         RIGHT PILLAR LIST
+    ======================================================== -->
     <aside class="gi-right-pillars">
+
       <div class="gi-pillars-title">Pillars</div>
 
       <ul class="gi-pillar-nav" id="gi-left-pillar-list">
@@ -131,65 +138,54 @@
         <li data-p="11">11 — Enablement</li>
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
+
     </aside>
 
   </div>
 </main>
 
 
-
-<!-- ======================================================
-     FAQ FLOATING BUTTON (Caugia Blue)
-====================================================== -->
-<a href="#faq" class="gi-faq-button">FAQ</a>
-
+<!-- ===========================================================
+     FLOATING FAQ BUTTON
+=========================================================== -->
+<a href="faq.html" class="gi-faq-button">FAQ</a>
 
 
-<!-- ======================================================
-     SCRIPTS
-====================================================== -->
+<!-- ===========================================================
+     SCRIPT BLOCKS
+=========================================================== -->
 
 <!-- 1. Load QUESTIONS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- 2. PILLAR META -->
+<!-- 2. PILLAR META (ESSENTIAL FOR ENGINE) -->
 <script>
 const PILLAR_META = {
-  0:{name:"Context",desc:"Captures essential background for correct interpretation."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity & execution alignment."},
-  2:{name:"Market Intelligence",desc:"Assesses customer & competitive awareness."},
-  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging & narrative strength."},
-  4:{name:"Demand Generation",desc:"Reviews pipeline health & channel effectiveness."},
-  5:{name:"Sales Execution",desc:"Measures qualification, deal flow & forecasting."},
-  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery & expansion."},
-  7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling & operational quality."},
-  8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic & pricing structure."},
-  9:{name:"Brand & Communications",desc:"Reviews clarity & consistency of communications."},
- 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability & decision value."},
- 11:{name:"Enablement",desc:"Assesses training, skills & readiness."},
- 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability & communication."}
+  0:{name:"Context", desc:"Captures essential background for correct interpretation."},
+  1:{name:"GTM Strategy & Leadership", desc:"Evaluates strategic clarity & execution alignment."},
+  2:{name:"Market Intelligence", desc:"Assesses customer & competitive awareness."},
+  3:{name:"Product Marketing", desc:"Evaluates ICP clarity, messaging & narrative strength."},
+  4:{name:"Demand Generation", desc:"Reviews pipeline health & channel effectiveness."},
+  5:{name:"Sales Execution", desc:"Measures qualification, deal flow & forecasting."},
+  6:{name:"Customer Success & Expansion", desc:"Evaluates onboarding, value delivery & expansion."},
+  7:{name:"Revenue Operations & Systems", desc:"Assesses workflows, tooling & operational quality."},
+  8:{name:"Pricing & Packaging", desc:"Evaluates monetization logic & pricing structure."},
+  9:{name:"Brand & Communications", desc:"Reviews clarity & consistency of communications."},
+ 10:{name:"Data & Insights", desc:"Evaluates data accuracy & availability."},
+ 11:{name:"Enablement", desc:"Assesses training, skills & readiness."},
+ 12:{name:"Leadership & Alignment", desc:"Measures alignment, communication & accountability."}
 };
 </script>
 
-<!-- 3. ENGINE -->
+<!-- 3. ENGINE (must load last) -->
 <script src="assets/engine.js?v=5000"></script>
 
-<!-- 4. DARK MODE TOGGLE (C-AUGIA BLUE STYLE) -->
+<!-- 4. DARK MODE TOGGLE -->
 <script>
-const toggleBtn = document.getElementById("gi-dark-toggle");
-const body = document.body;
-
-if(localStorage.getItem("caugia-dark") === "1") {
-  body.classList.add("dark");
-  toggleBtn.textContent = "★";
-}
-
-toggleBtn.onclick = () => {
-  body.classList.toggle("dark");
-  const dark = body.classList.contains("dark");
-  toggleBtn.textContent = dark ? "★" : "☀";
-  localStorage.setItem("caugia-dark", dark ? "1" : "0");
-};
+const toggle = document.getElementById("darkToggle");
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
 </script>
 
 </body>
