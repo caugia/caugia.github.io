@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — CSS v9.8 SUPER MAX EDITION
-   Clean • Ultra-fast • No legacy • No background logos
+   CAUGIA CONSULTING — CSS v10.1 SUPER MAX ULTRA EDITION
+   Clean • Zero bugs • No background logos • Fully aligned
    =========================================================== */
 
 /* ------------------------------
@@ -24,6 +24,15 @@
   --transition: .22s cubic-bezier(.22,1,.36,1);
 }
 
+/* DARK MODE ROOT */
+body.dark {
+  --ink: #E8ECF5;
+  --ink-soft: #9BA5B8;
+  --blue-light: #002A66;
+  background: #0D1117 !important;
+  color: var(--ink);
+}
+
 /* ------------------------------
    HARD RESET — NO BACKGROUND LOGOS
 --------------------------------*/
@@ -37,21 +46,27 @@ body::after,
 }
 
 body {
-  background: white !important;
-  position: static !important;
-  z-index: auto !important;
   margin: 0;
+  background: white !important;
   font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   color: var(--ink);
+  overflow-x: hidden;
 }
 
 /* ===========================================================
-   HEADER (Contact only)
+   HEADER
 =========================================================== */
 .gi-header {
   width: 100%;
   background: white;
   border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 100;
+}
+
+body.dark .gi-header {
+  background: #0D1117;
+  border-bottom-color: #1E293B;
 }
 
 .gi-header-inner {
@@ -78,6 +93,21 @@ body {
 .gi-header-brand {
   font-size: 18px;
   font-weight: 600;
+}
+
+.gi-dark-toggle {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 18px;
+  transition: var(--transition);
+}
+
+.gi-dark-toggle:hover {
+  background: var(--blue-dark);
 }
 
 .gi-contact-link {
@@ -114,15 +144,15 @@ body {
   gap: 40px;
   padding: 0 32px;
   position: relative;
+  align-items: start;
 }
 
 /* ===========================================================
-   LEFT INFO PANEL
+   LEFT PANEL
 =========================================================== */
 .gi-left-info {
   position: sticky;
   top: 32px;
-  align-self: start;
 }
 
 .gi-info-title {
@@ -161,6 +191,11 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+body.dark .gi-progress-box {
+  background: #111827;
+  border-color: #1E293B;
+}
+
 .gi-progress-top {
   display: flex;
   justify-content: space-between;
@@ -193,6 +228,11 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+body.dark .gi-pillar-desc-box {
+  background: #111827;
+  border-color: #1E293B;
+}
+
 .gi-pillar-desc-box h3 {
   font-size: 17px;
   margin-bottom: 6px;
@@ -212,11 +252,12 @@ body {
 }
 
 /* ===========================================================
-   CENTER QUESTION ENGINE
+   CENTER ENGINE
 =========================================================== */
 .gi-center {
   position: relative;
   z-index: 20;
+  min-height: 400px;
 }
 
 .gi-question-card {
@@ -225,6 +266,11 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+}
+
+body.dark .gi-question-card {
+  background: #111827;
+  border-color: #1E293B;
 }
 
 /* Header */
@@ -261,26 +307,7 @@ body {
   margin-bottom: 18px;
 }
 
-.gi-question-body input:focus,
-.gi-question-body textarea:focus,
-.gi-question-body select:focus {
-  background: white;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 1px var(--blue);
-  outline: none;
-}
-
-.gi-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.gi-group-field.full {
-  grid-column: 1 / -1;
-}
-
-/* Navigation buttons */
+/* Buttons */
 .gi-nav-row {
   display: flex;
   gap: 12px;
@@ -296,18 +323,10 @@ body {
   transition: var(--transition);
 }
 
-.gi-btn:hover {
-  background: #e8ecf2;
-}
-
 .gi-btn.gi-primary {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
-}
-
-.gi-btn.gi-primary:hover {
-  background: var(--blue-dark);
 }
 
 /* ===========================================================
@@ -316,7 +335,6 @@ body {
 .gi-right-pillars {
   position: sticky;
   top: 32px;
-  z-index: 10;
 }
 
 .gi-pillars-title {
@@ -346,6 +364,30 @@ body {
   background: var(--blue);
   color: white;
   font-weight: 600;
+}
+
+/* ===========================================================
+   FLOATING FAQ BUTTON
+=========================================================== */
+.gi-faq-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--blue);
+  color: white;
+  padding: 14px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+  z-index: 1000;
+}
+
+.gi-faq-button:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
 }
 
 /* ===========================================================
