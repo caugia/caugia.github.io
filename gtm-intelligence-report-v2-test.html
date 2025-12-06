@@ -6,43 +6,48 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-  <!-- Favicon -->
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
+  <!-- Brand Assets -->
+  <link rel="icon" href="assets/C-logo.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS (Super Max v9.7) -->
-  <link rel="stylesheet" href="assets/caugia-v9.8.css?v=9.8"/>
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/caugia-v9.7.css?v=9.7"/>
 
-  <!-- 🔒 SECURITY -->
+  <!-- SECURITY -->
   <script src="/auth.js"></script>
 </head>
 
 <body>
 
-<!-- =========================================
-     HEADER
-========================================= -->
+<!-- ======================================================
+     HEADER (Brand left + Contact + Toggle)
+====================================================== -->
 <header class="gi-header">
   <div class="gi-header-inner">
+
     <div class="gi-header-left">
-      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
+      <img src="assets/C-logo.png" alt="" class="gi-logo">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
+
     <div class="gi-header-right">
+      <button id="gi-dark-toggle" class="gi-dark-toggle">☀</button>
       <a href="contact.html" class="gi-contact-link">Contact</a>
     </div>
+
   </div>
 </header>
 
 
-<!-- =========================================
+
+<!-- ======================================================
      MAIN 3-COLUMN LAYOUT
-========================================= -->
+====================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- LEFT INFO PANEL -->
+
+    <!-- LEFT PANEL -->
     <aside class="gi-left-info">
 
       <div class="gi-info-title">Premium GTM Assessment</div>
@@ -53,11 +58,9 @@
         and reveals strengths, risks and hidden dependencies across the full revenue engine.
       </p>
 
-      <div class="gi-info-meta">
-        12 pillars • 265 questions • ~50 minutes
-      </div>
+      <div class="gi-info-meta">12 pillars • 265 questions • ~50 minutes</div>
 
-      <!-- Progress -->
+      <!-- PROGRESS -->
       <div class="gi-progress-box">
         <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
@@ -70,20 +73,21 @@
 
       <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
 
-      <!-- LEFT PILLAR DESCRIPTION -->
-      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+      <!-- PILLAR DESCRIPTION LEFT ONLY -->
+      <div class="gi-pillar-desc-box">
         <h3 id="gi-left-pillar-title">Context</h3>
         <p id="gi-left-pillar-text">
           Context provides the foundation for interpreting the rest of the assessment.
-          By capturing essential details about your company, the system can adjust
-          recommendations, highlight specific risks and determine the right priorities.
+          By capturing essential details about your company, the system can adjust recommendations,
+          highlight specific risks and determine the right priorities.
         </p>
       </div>
 
     </aside>
 
 
-    <!-- CENTER QUESTION ENGINE -->
+
+    <!-- CENTER QUESTION ENGINE (THIS WAS BROKEN BEFORE) -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -107,7 +111,8 @@
     </section>
 
 
-    <!-- RIGHT PILLAR NAV -->
+
+    <!-- RIGHT PILLARS -->
     <aside class="gi-right-pillars">
       <div class="gi-pillars-title">Pillars</div>
 
@@ -132,12 +137,22 @@
 </main>
 
 
-<!-- =========================================
-     SCRIPTS
-========================================= -->
 
+<!-- ======================================================
+     FAQ FLOATING BUTTON (Caugia Blue)
+====================================================== -->
+<a href="#faq" class="gi-faq-button">FAQ</a>
+
+
+
+<!-- ======================================================
+     SCRIPTS
+====================================================== -->
+
+<!-- 1. Load QUESTIONS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
+<!-- 2. PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context",desc:"Captures essential background for correct interpretation."},
@@ -156,7 +171,26 @@ const PILLAR_META = {
 };
 </script>
 
+<!-- 3. ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
+
+<!-- 4. DARK MODE TOGGLE (C-AUGIA BLUE STYLE) -->
+<script>
+const toggleBtn = document.getElementById("gi-dark-toggle");
+const body = document.body;
+
+if(localStorage.getItem("caugia-dark") === "1") {
+  body.classList.add("dark");
+  toggleBtn.textContent = "★";
+}
+
+toggleBtn.onclick = () => {
+  body.classList.toggle("dark");
+  const dark = body.classList.contains("dark");
+  toggleBtn.textContent = dark ? "★" : "☀";
+  localStorage.setItem("caugia-dark", dark ? "1" : "0");
+};
+</script>
 
 </body>
 </html>
