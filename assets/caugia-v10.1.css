@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — CSS v10.1 SUPER MAX ULTRA EDITION
-   Clean • Zero bugs • No background logos • Fully aligned
+   CAUGIA CONSULTING — CSS v10.2 NO-SCROLL EDITION
+   Above the fold • Viewport-locked • Inner scroll only
    =========================================================== */
 
 /* ------------------------------
@@ -50,7 +50,8 @@ body {
   background: white !important;
   font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   color: var(--ink);
-  overflow-x: hidden;
+  overflow: hidden; /* NO PAGE SCROLL */
+  height: 100vh;
 }
 
 /* ===========================================================
@@ -60,7 +61,9 @@ body {
   width: 100%;
   background: white;
   border-bottom: 1px solid #e5e7eb;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 100;
 }
 
@@ -126,33 +129,52 @@ body.dark .gi-header {
 }
 
 /* ===========================================================
-   MAIN GRID
+   MAIN GRID — VIEWPORT LOCKED
 =========================================================== */
 .gi-main {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  height: calc(100vh - 64px); /* Full height minus header */
+  margin-top: 64px; /* Header offset */
   display: flex;
   justify-content: center;
   width: 100%;
+  overflow: hidden;
 }
 
 .gi-shell {
   max-width: 1600px;
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 280px 1fr 300px;
   gap: 40px;
-  padding: 0 32px;
+  padding: 32px;
   position: relative;
   align-items: start;
+  overflow: hidden;
 }
 
 /* ===========================================================
-   LEFT PANEL
+   LEFT PANEL — SCROLLABLE
 =========================================================== */
 .gi-left-info {
-  position: sticky;
-  top: 32px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px;
+}
+
+/* Custom scrollbar */
+.gi-left-info::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gi-left-info::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gi-left-info::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
 }
 
 .gi-info-title {
@@ -252,12 +274,13 @@ body.dark .gi-pillar-desc-box {
 }
 
 /* ===========================================================
-   CENTER ENGINE
+   CENTER ENGINE — CONTROLLED HEIGHT
 =========================================================== */
 .gi-center {
-  position: relative;
-  z-index: 20;
-  min-height: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .gi-question-card {
@@ -266,6 +289,10 @@ body.dark .gi-pillar-desc-box {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 body.dark .gi-question-card {
@@ -273,7 +300,12 @@ body.dark .gi-question-card {
   border-color: #1E293B;
 }
 
-/* Header */
+/* Header (fixed) */
+.gi-question-header {
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
 .gi-question-kicker {
   font-size: 13px;
   text-transform: uppercase;
@@ -291,7 +323,29 @@ body.dark .gi-question-card {
 .gi-question-sub {
   font-size: 15px;
   opacity: .75;
+  margin-bottom: 0;
+}
+
+/* Body (scrollable) */
+.gi-question-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px;
   margin-bottom: 20px;
+}
+
+.gi-question-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gi-question-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gi-question-body::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
 }
 
 /* Inputs */
@@ -307,11 +361,30 @@ body.dark .gi-question-card {
   margin-bottom: 18px;
 }
 
-/* Buttons */
+/* Group fields (2 columns for long forms) */
+.gi-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.gi-group-field.full {
+  grid-column: 1 / -1;
+}
+
+/* Radio/Scale options (2 columns for long lists) */
+.gi-question-body .gi-radio-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Buttons (fixed at bottom) */
 .gi-nav-row {
+  flex-shrink: 0;
   display: flex;
   gap: 12px;
-  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
 }
 
 .gi-btn {
@@ -330,11 +403,26 @@ body.dark .gi-question-card {
 }
 
 /* ===========================================================
-   RIGHT PILLARS
+   RIGHT PILLARS — SCROLLABLE
 =========================================================== */
 .gi-right-pillars {
-  position: sticky;
-  top: 32px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 12px;
+}
+
+.gi-right-pillars::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gi-right-pillars::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gi-right-pillars::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
 }
 
 .gi-pillars-title {
@@ -354,6 +442,7 @@ body.dark .gi-question-card {
   border-radius: 8px;
   cursor: pointer;
   transition: var(--transition);
+  margin-bottom: 4px;
 }
 
 .gi-pillar-nav li:hover {
@@ -394,12 +483,36 @@ body.dark .gi-question-card {
    MOBILE
 =========================================================== */
 @media (max-width: 1100px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  
+  .gi-main {
+    height: auto;
+    margin-top: 64px;
+    overflow-y: auto;
+  }
+  
   .gi-shell {
     grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: visible;
   }
+  
   .gi-left-info,
   .gi-right-pillars {
-    position: static;
+    height: auto;
+    overflow-y: visible;
     margin-bottom: 32px;
+  }
+  
+  .gi-question-card {
+    height: auto;
+  }
+  
+  .gi-question-body {
+    overflow-y: visible;
+    max-height: none;
   }
 }
