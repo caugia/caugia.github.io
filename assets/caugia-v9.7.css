@@ -1,237 +1,222 @@
-/* ============================================================
-   CAUGIA CONSULTING — CSS v9.7 ULTRA CLEAN MIAMI (Garrix Edition)
-   Sleek • Minimal • Premium • Above-the-fold Optimized
-============================================================ */
+/* ===========================================================
+   CAUGIA CONSULTING — PRODUCTION CSS v9.7 (Super Max Hero Edition)
+   Extreme clarity • Enterprise minimalism • No friction • No scroll
+=========================================================== */
 
-
-/* ------------------------------------------------------------
-   ROOT
------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   VARIABLES
+----------------------------------------------------------- */
 :root {
   --ink: #0B132B;
-  --ink-soft: #3a4250;
-  --blue: #0057E5; /* Ultra Miami Blue */
-  --blue-dark: #0044B5;
+  --ink-soft: #3f4655;
+  --blue: #0046A5;
   --light: #F7F9FC;
   --border: rgba(0,0,0,0.10);
-  --radius: 12px;
+
+  --radius: 14px;
   --radius-sm: 8px;
+
   --shadow: 0 4px 16px rgba(0,0,0,0.05);
-  --shadow-strong: 0 6px 24px rgba(0,60,190,0.12);
-  --transition: 0.22s cubic-bezier(.22,1,.36,1);
-  --header-h: 68px;
+  --shadow-strong: 0 6px 25px rgba(0,0,0,0.08);
+
+  --transition: 0.22s ease;
 }
 
-/* ------------------------------------------------------------
+/* -----------------------------------------------------------
    GLOBAL RESET
------------------------------------------------------------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+----------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-html {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+html, body {
+  height: 100%;
   background: white;
   color: var(--ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.45;
+  overflow: hidden; /* No scroll — clean assessment UI */
 }
 
-body {
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-
-/* ------------------------------------------------------------
-   HEADER — GARrix Minimal Edition
------------------------------------------------------------- */
-.gi-header {
+/* -----------------------------------------------------------
+   HEADER — Simplified for assessment flow
+----------------------------------------------------------- */
+header {
   background: white;
-  border-bottom: 1px solid #e6e6e6;
-  height: var(--header-h);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
   display: flex;
   align-items: center;
 }
 
-.gi-header-inner {
-  max-width: 1400px;
+header .inner {
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 32px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 0 24px;
 }
 
-.gi-brand {
+/* Logo perfectly aligned */
+header .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  text-decoration: none;
+  pointer-events: none; /* Not clickable */
 }
 
-.gi-brand img {
-  width: 30px;
-  height: 30px;
-  display: block;
+header .brand img {
+  width: 28px;
+  height: 28px;
 }
 
-.gi-brand span {
+header .brand span {
   font-size: 18px;
   font-weight: 600;
   color: var(--ink);
   position: relative;
-  top: 1px;
+  top: 1px; /* Micro-alignment fix */
 }
 
-.gi-header-links .gi-contact-link {
-  font-size: 15px;
+/* Contact button only */
+header .contact-btn {
+  margin-left: auto;
+  background: var(--blue);
+  color: white;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
   text-decoration: none;
-  color: var(--blue);
   transition: var(--transition);
 }
 
-.gi-header-links .gi-contact-link:hover {
-  color: var(--blue-dark);
+header .contact-btn:hover {
+  opacity: 0.9;
 }
 
-
-/* ------------------------------------------------------------
-   MAIN GRID
------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   3-COLUMN LAYOUT
+----------------------------------------------------------- */
 .gi-main {
-  padding-top: 32px;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px; /* Lift whole interface upward (pillar 12 fix) */
 }
 
 .gi-shell {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0 32px;
+  max-width: 1580px;
+  width: 100%;
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
-  grid-gap: 40px;
-  align-items: start;
+  grid-template-columns: 300px 1fr 280px;
+  gap: 42px;
+  padding: 0 28px;
+  height: calc(100vh - 84px); /* No scroll */
 }
 
-
-/* ------------------------------------------------------------
-   LEFT SIDEBAR — Information Panel
------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   LEFT — INFORMATION PANEL (PILLAR DESCRIPTION LIVES HERE)
+----------------------------------------------------------- */
 .gi-left-info {
-  position: sticky;
-  top: calc(var(--header-h) + 24px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 8px;
 }
 
 .gi-info-title {
   font-size: 13px;
-  color: var(--blue);
   text-transform: uppercase;
-  font-weight: 600;
+  color: var(--blue);
   margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .gi-info-h1 {
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .gi-info-desc {
   font-size: 15px;
   color: var(--ink-soft);
   margin-bottom: 14px;
+  line-height: 1.55;
 }
 
 .gi-info-meta {
   font-size: 14px;
-  color: #6d6d6d;
-  margin-bottom: 16px;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
 }
 
 .gi-info-faq {
   font-size: 14px;
   color: var(--blue);
   text-decoration: none;
-  display: inline-block;
-  margin-bottom: 22px;
+  margin-top: auto;
+  padding-bottom: 14px;
 }
-.gi-info-faq:hover { text-decoration: underline; }
 
+.gi-info-faq:hover {
+  text-decoration: underline;
+}
 
-/* Progress bar */
+/* PROGRESS BAR (Now on the left) */
 .gi-progress-box {
   background: white;
   border: 1px solid var(--border);
-  padding: 16px;
   border-radius: var(--radius);
+  padding: 16px;
   box-shadow: var(--shadow);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .gi-progress-top {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
   margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .gi-progress-track {
-  width: 100%;
+  background: #eef1f6;
+  border-radius: 10px;
   height: 6px;
-  border-radius: 8px;
-  background: #EAEFF6;
   overflow: hidden;
 }
 
 .gi-progress-fill {
+  background: var(--blue);
   width: 0%;
   height: 100%;
-  background: var(--blue);
   transition: width 0.3s ease;
 }
 
-
-/* Reset button */
+/* RESET BTN */
 .gi-left-info .gi-reset {
-  margin-top: 12px;
   width: 100%;
+  margin-top: 10px;
 }
 
-
-/* Context explanation box */
-.gi-context-box {
-  margin-top: 22px;
-  padding: 18px;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.gi-context-box h3 {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.gi-context-box p {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-
-
-/* ------------------------------------------------------------
-   CENTER — Question Engine
------------------------------------------------------------- */
-.gi-center {
-  width: 100%;
-}
-
+/* -----------------------------------------------------------
+   CENTER — QUESTION ENGINE
+----------------------------------------------------------- */
 .gi-question-card {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 32px;
+  padding: 34px;
+  height: 100%;
   box-shadow: var(--shadow);
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .gi-question-header {
@@ -239,10 +224,10 @@ body {
 }
 
 .gi-question-kicker {
-  color: var(--blue);
   font-size: 13px;
-  text-transform: uppercase;
+  color: var(--blue);
   font-weight: 600;
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 
@@ -255,87 +240,102 @@ body {
 .gi-question-sub {
   font-size: 15px;
   color: var(--ink-soft);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
+.gi-question-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+}
 
 /* Inputs */
 .gi-question-body input,
-.gi-question-body select,
-.gi-question-body textarea {
+.gi-question-body textarea,
+.gi-question-body select {
   width: 100%;
-  padding: 13px 14px;
+  padding: 14px 16px;
   font-size: 15px;
-  border: 1px solid #cfd5df;
   border-radius: var(--radius-sm);
+  border: 1px solid #d1d7e0;
   background: var(--light);
   transition: var(--transition);
 }
 
+.gi-question-body textarea {
+  height: 140px;
+  resize: vertical;
+}
+
 .gi-question-body input:focus,
-.gi-question-body select:focus,
-.gi-question-body textarea:focus {
-  background: white;
+.gi-question-body textarea:focus,
+.gi-question-body select:focus {
   border-color: var(--blue);
+  background: white;
   box-shadow: 0 0 0 1px var(--blue);
 }
 
-.gi-group {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 20px;
+/* Option cards */
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid #d1d7e0;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: white;
 }
-.gi-group-field.full { grid-column: 1/-1; }
 
-.gi-group-field label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: #F4F8FF;
 }
 
+.gi-option-card:has(input:checked) {
+  border-color: var(--blue);
+  background: #eaf1ff;
+  box-shadow: var(--shadow-strong);
+}
 
-/* Navigation buttons */
+/* Navigation row */
 .gi-nav-row {
+  margin-top: 28px;
   display: flex;
   gap: 12px;
-  margin-top: 24px;
 }
 
 .gi-btn {
-  padding: 11px 20px;
+  padding: 12px 22px;
   border-radius: var(--radius-sm);
+  background: #F5F7FA;
+  border: 1px solid var(--border);
   cursor: pointer;
-  border: 1px solid #d3d8e2;
-  background: #F3F6FA;
   transition: var(--transition);
 }
 
 .gi-btn:hover {
-  background: #E7EBF2;
+  background: #eceff4;
 }
 
 .gi-btn.gi-primary {
   background: var(--blue);
+  border: none;
   color: white;
-  border-color: var(--blue);
 }
 
 .gi-btn.gi-primary:hover {
-  background: var(--blue-dark);
+  opacity: 0.9;
 }
 
-
-
-/* ------------------------------------------------------------
-   RIGHT COLUMN — Pillar Navigation
------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   RIGHT — PILLAR NAVIGATION
+----------------------------------------------------------- */
 .gi-right-pillars {
-  position: sticky;
-  top: calc(var(--header-h) + 24px);
-  max-height: calc(100vh - var(--header-h) - 48px);
-  overflow-y: auto;
-  padding-right: 4px;
+  position: relative;
+  padding-top: 8px;
 }
 
 .gi-pillars-title {
@@ -352,10 +352,9 @@ body {
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   margin-bottom: 4px;
-  font-size: 14px;
   cursor: pointer;
-  border: 1px solid transparent;
   transition: var(--transition);
+  border: 1px solid transparent;
 }
 
 .gi-pillar-nav li:hover {
@@ -367,26 +366,13 @@ body {
   color: white;
   border-color: var(--blue);
   font-weight: 600;
-  box-shadow: var(--shadow-strong);
 }
 
-
-
-/* ------------------------------------------------------------
-   MEDIA — Clean Responsive
------------------------------------------------------------- */
-@media (max-width: 1200px) {
-  .gi-shell {
-    grid-template-columns: 250px 1fr 250px;
-  }
-}
-
-@media (max-width: 980px) {
-  .gi-shell {
-    grid-template-columns: 1fr;
-  }
-  .gi-left-info,
-  .gi-right-pillars {
-    position: static;
+/* -----------------------------------------------------------
+   RESPONSIVE (STRUCTURE IS DESKTOP-ONLY)
+----------------------------------------------------------- */
+@media (max-width: 1100px) {
+  body {
+    overflow-y: auto;
   }
 }
