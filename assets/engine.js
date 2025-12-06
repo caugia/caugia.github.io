@@ -128,13 +128,16 @@ function buildInput(q) {
     `;
 
   if (q.type === "radio" || q.type === "scale")
-    return q.options
-      .map(o => `
-      <label class="gi-option-card">
-        <input type="radio" name="q" value="${o}">
-        <span>${o}</span>
-      </label>`
-    ).join("");
+    return `
+      <div class="gi-options-grid">
+        ${q.options.map(o => `
+          <label class="gi-option-card">
+            <input type="radio" name="q" value="${o}">
+            <span>${o}</span>
+          </label>`
+        ).join("")}
+      </div>
+    `;
 
   if (q.type === "group")
     return `
