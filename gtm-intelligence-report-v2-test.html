@@ -6,170 +6,144 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-  <link rel="stylesheet" href="assets/caugia-v9.7.css?v=9.7" />
+  <!-- Branding -->
+  <link rel="icon" href="assets/C-logo.png" type="image/png">
 
-  <!-- Security -->
+  <!-- CSS Super Max Hero Edition -->
+  <link rel="stylesheet" href="assets/caugia-v9.7.css?v=9.7"/>
+
+  <!-- SECURITY -->
   <script src="/auth.js"></script>
 </head>
 
+
 <body>
 
-<!-- ============================
-     SUPER MAX HERO TOPBAR
-=============================== -->
-<header class="sm-topbar">
-  <div class="sm-topbar-inner">
+<!-- HEADER -->
+<header>
+  <div class="inner">
+    <a class="brand">
+      <img src="assets/C-logo.png" alt="">
+      <span>Caugia Consulting</span>
+    </a>
 
-    <div class="sm-topbar-brand">
-      <img src="assets/C-logo.png" alt="Caugia logo" class="sm-logo">
-      <span>Caugia Consulting — GTM Intelligence Assessment</span>
-    </div>
-
-    <a href="contact.html" class="sm-topbar-contact">Contact</a>
+    <a href="contact.html" class="contact-btn">Contact</a>
   </div>
 </header>
 
 
-<!-- ============================
-     MAIN LAYOUT GRID
-=============================== -->
-<main class="sm-shell">
+<!-- MAIN LAYOUT -->
+<main class="gi-main">
+  <div class="gi-shell">
 
-  <!-- ============================
-       LEFT PANEL (INFO)
-  =============================== -->
-  <aside class="sm-left">
 
-    <div class="sm-left-section">
-      <div class="sm-label">Premium GTM Assessment</div>
-      <h1 class="sm-h1">The GTM Intelligence Report</h1>
+    <!-- LEFT — INFO PANEL -->
+    <aside class="gi-left-info">
 
-      <p class="sm-desc">
-        A structured 12-pillar diagnostic that evaluates your entire go-to-market system.
+      <div class="gi-info-title">Premium GTM Assessment</div>
+
+      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+
+      <p class="gi-info-desc">
+        A structured, 12-pillar diagnostic that evaluates your entire go-to-market system and reveals 
+        strengths, risks and hidden dependencies across the full revenue engine.
       </p>
 
-      <div class="sm-meta">12 pillars • 265 questions • ~50 minutes</div>
+      <p class="gi-info-meta">12 pillars • 265 questions • ~50 minutes</p>
 
-      <a href="#faq" class="sm-faq">FAQ</a>
 
-      <!-- Progress -->
-      <div class="sm-progress-box">
-        <div class="sm-progress-top">
+      <!-- PROGRESS -->
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
         </div>
 
-        <div class="sm-progress-track">
-          <div id="gi-progress-bar" class="sm-progress-fill"></div>
+        <div class="gi-progress-track">
+          <div class="gi-progress-fill" id="gi-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Dynamic pillar description (ENGINE writes here!) -->
+      <div id="gi-left-pillar-desc-box" class="gi-pillar-desc-box">
+        <h3 id="gi-pillar-name">Context</h3>
+        <p id="gi-pillar-desc">Captures essential background for correct interpretation.</p>
+      </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+
+      <a href="#faq" class="gi-info-faq">FAQ</a>
+    </aside>
+
+
+
+
+
+    <!-- CENTER — QUESTION ENGINE -->
+    <section class="gi-center">
+
+      <div class="gi-question-card">
+
+        <!-- HEADER (Engine fills) -->
+        <div class="gi-question-header">
+          <div id="gi-question-kicker" class="gi-question-kicker">Context</div>
+          <h2 id="gi-question-title" class="gi-question-title"></h2>
+          <p id="gi-question-sub" class="gi-question-sub"></p>
         </div>
 
-        <button id="gi-reset-btn" class="sm-btn sm-reset">Reset</button>
+        <!-- QUESTION BODY — ENGINE MUST FIND THIS EXACT ID -->
+        <div id="gi-question-body" class="gi-question-body"></div>
+
+        <!-- BUTTONS -->
+        <div class="gi-nav-row">
+          <button id="gi-prev-btn" class="gi-btn">Previous</button>
+          <button id="gi-save-btn" class="gi-btn">Save</button>
+          <button id="gi-clear-btn" class="gi-btn">Clear</button>
+          <button id="gi-next-btn" class="gi-btn gi-primary">Next</button>
+          <button id="gi-submit-btn" class="gi-btn gi-primary">Submit</button>
+        </div>
+
       </div>
 
-      <!-- ACTIVE PILLAR DESCRIPTION -->
-      <div id="sm-pillar-desc" class="sm-pillar-desc-card">
-        <h3 id="sm-pillar-desc-title">Context</h3>
-        <p id="sm-pillar-desc-text">
-          Context provides the foundation for interpreting the rest of the assessment.
-          By capturing essential details about your company, the system can adjust recommendations,
-          highlight specific risks and determine the right priorities.
-        </p>
-      </div>
-    </div>
-
-  </aside>
+    </section>
 
 
-  <!-- ============================
-       CENTER: QUESTION ENGINE CARD
-  =============================== -->
-  <section class="sm-center">
-    <div class="sm-question-card" id="gi-question-card">
-
-      <div class="gi-question-header">
-        <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
-        <h2 class="gi-question-title" id="gi-question-title"></h2>
-        <p class="gi-question-sub" id="gi-question-sub"></p>
-      </div>
-
-      <div class="gi-question-body" id="gi-question-body"></div>
-
-      <div class="gi-nav-row">
-        <button class="sm-btn" id="gi-prev-btn">Previous</button>
-        <button class="sm-btn" id="gi-save-btn">Save</button>
-        <button class="sm-btn" id="gi-clear-btn">Clear</button>
-        <button class="sm-btn sm-primary" id="gi-next-btn">Next</button>
-        <button class="sm-btn sm-primary" id="gi-submit-btn">Submit</button>
-      </div>
-
-    </div>
-  </section>
 
 
-  <!-- ============================
-       RIGHT: PILLAR NAVIGATION
-  =============================== -->
-  <aside class="sm-right">
 
-    <div class="sm-right-title">Pillars Included</div>
+    <!-- RIGHT — PILLAR NAVIGATION -->
+    <aside class="gi-right-pillars">
 
-    <ul class="sm-pillar-nav" id="gi-right-pillar-list">
+      <div class="gi-pillars-title">Pillars</div>
 
-      <li data-p="0" class="active">0 — Context</li>
-      <li data-p="1">1 — GTM Strategy & Leadership</li>
-      <li data-p="2">2 — Market Intelligence</li>
-      <li data-p="3">3 — Product Marketing</li>
-      <li data-p="4">4 — Demand Generation</li>
-      <li data-p="5">5 — Sales Execution</li>
-      <li data-p="6">6 — Customer Success & Expansion</li>
-      <li data-p="7">7 — Revenue Operations & Systems</li>
-      <li data-p="8">8 — Pricing & Packaging</li>
-      <li data-p="9">9 — Brand & Communications</li>
-      <li data-p="10">10 — Data & Insights</li>
-      <li data-p="11">11 — Enablement</li>
-      <li data-p="12">12 — Leadership & Alignment</li>
+      <ul id="gi-right-pillar-nav" class="gi-pillar-nav">
+        <li data-p="0" class="active">0 — Context</li>
+        <li data-p="1">1 — GTM Strategy & Leadership</li>
+        <li data-p="2">2 — Market Intelligence</li>
+        <li data-p="3">3 — Product Marketing</li>
+        <li data-p="4">4 — Demand Generation</li>
+        <li data-p="5">5 — Sales Execution</li>
+        <li data-p="6">6 — Customer Success & Expansion</li>
+        <li data-p="7">7 — Revenue Operations & Systems</li>
+        <li data-p="8">8 — Pricing & Packaging</li>
+        <li data-p="9">9 — Brand & Communications</li>
+        <li data-p="10">10 — Data & Insights</li>
+        <li data-p="11">11 — Enablement</li>
+        <li data-p="12">12 — Leadership & Alignment</li>
+      </ul>
 
-    </ul>
+    </aside>
 
-  </aside>
 
+  </div>
 </main>
 
 
-<!-- ======================================================
-     REQUIRED SCRIPTS
-========================================================= -->
+
+
+
+<!-- SCRIPTS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
-
-<script>
-/* Mapping pillar descriptions for left-side dynamic card */
-const PILLAR_DESCRIPTIONS = {
-  0: {
-    title: "Context",
-    text: "Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system can adjust recommendations, highlight specific risks and determine the right priorities."
-  },
-  1: {
-    title: "GTM Strategy & Leadership",
-    text: "This pillar evaluates the clarity and cohesion of your go-to-market strategy and leadership alignment. Strong foundations here ensure every team moves with the same intent."
-  },
-  // ... (klaar voor alle 13 pillars – vul ik op verzoek volledig aan)
-};
-
-/* Update left description when pillar changes */
-function updateLeftDescription(p) {
-  const meta = PILLAR_DESCRIPTIONS[p];
-  if (!meta) return;
-
-  document.getElementById("sm-pillar-desc-title").textContent = meta.title;
-  document.getElementById("sm-pillar-desc-text").textContent = meta.text;
-}
-
-/* Hook into engine updates */
-document.addEventListener("pillarChange", e => {
-  updateLeftDescription(e.detail.pillar);
-});
-</script>
-
 <script src="assets/engine.js?v=5000"></script>
 
 </body>
