@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="assets/C-logo.png">
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <!-- CSS (Super Max v9.8) -->
+  <!-- CSS v10.1 SUPER MAX ULTRA -->
   <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
   <!-- 🔒 SECURITY -->
@@ -20,32 +20,30 @@
 
 <body>
 
-<!-- ======================================================
-     HEADER — Minimal (Contact only)
-======================================================= -->
+<!-- ===========================================================
+     HEADER — Logo + Brand + Contact + Dark Mode
+=========================================================== -->
 <header class="gi-header">
   <div class="gi-header-inner">
     <div class="gi-header-left">
       <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
-
     <div class="gi-header-right">
+      <button id="darkToggle" class="gi-dark-toggle">Dark</button>
       <a href="contact.html" class="gi-contact-link">Contact</a>
     </div>
   </div>
 </header>
 
 
-<!-- ======================================================
-     MAIN GRID LAYOUT
-======================================================= -->
+<!-- ===========================================================
+     MAIN LAYOUT
+=========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- ======================================================
-         LEFT PANEL
-    ======================================================= -->
+    <!-- LEFT INFO PANEL -->
     <aside class="gi-left-info">
 
       <div class="gi-info-title">Premium GTM Assessment</div>
@@ -53,14 +51,12 @@
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
 
       <p class="gi-info-desc">
-        A structured, 12-pillar diagnostic that evaluates your entire go-to-market
-        system and reveals strengths, risks and hidden dependencies across the
-        full revenue engine.
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and reveals strengths, risks and hidden
+        dependencies across the full revenue engine.
       </p>
 
-      <div class="gi-info-meta">
-        12 pillars • 265 questions • ~50 minutes
-      </div>
+      <div class="gi-info-meta">12 pillars • 265 questions • ~50 minutes</div>
 
       <!-- Progress -->
       <div class="gi-progress-box">
@@ -68,7 +64,6 @@
           <span id="gi-progress-count">0 / 265</span>
           <span id="gi-progress-percent">0%</span>
         </div>
-
         <div class="gi-progress-track">
           <div id="gi-progress-bar" class="gi-progress-fill"></div>
         </div>
@@ -76,23 +71,20 @@
 
       <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
 
-      <!-- LEFT PILLAR DESCRIPTION (Engine-controlled) -->
-      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+      <!-- LEFT PILLAR DESCRIPTION — FIXED IDs -->
+      <div class="gi-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
           Context provides the foundation for interpreting the rest of the assessment.
           By capturing essential details about your company, the system adjusts
-          recommendations, highlights the most relevant risks and identifies the
-          right priorities.
+          recommendations, highlights risks and identifies the right priorities.
         </p>
       </div>
 
     </aside>
 
 
-    <!-- ======================================================
-         CENTER — QUESTION ENGINE
-    ======================================================= -->
+    <!-- CENTER ENGINE -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -104,6 +96,7 @@
 
         <div class="gi-question-body" id="gi-question-body"></div>
 
+        <!-- Navigation -->
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn" id="gi-save-btn">Save</button>
@@ -116,9 +109,7 @@
     </section>
 
 
-    <!-- ======================================================
-         RIGHT — PILLAR NAVIGATION
-    ======================================================= -->
+    <!-- RIGHT PILLAR NAV -->
     <aside class="gi-right-pillars">
 
       <div class="gi-pillars-title">Pillars</div>
@@ -145,34 +136,43 @@
 </main>
 
 
-<!-- ======================================================
-     SCRIPTS
-======================================================= -->
+<!-- FLOATING FAQ BUTTON -->
+<a href="faq.html" class="gi-faq-button">FAQ</a>
 
-<!-- Load QUESTIONS -->
+
+<!-- SCRIPTS ================================================= -->
+
+<!-- QUESTIONS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- Restore PILLAR_META -->
+<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
-  0:{name:"Context",desc:"Captures essential background for correct interpretation."},
-  1:{name:"GTM Strategy & Leadership",desc:"Evaluates strategic clarity & execution alignment."},
-  2:{name:"Market Intelligence",desc:"Assesses customer and competitive awareness."},
-  3:{name:"Product Marketing",desc:"Evaluates ICP clarity, messaging and narrative strength."},
-  4:{name:"Demand Generation",desc:"Reviews pipeline health and channel effectiveness."},
-  5:{name:"Sales Execution",desc:"Measures qualification quality, deal flow and forecasting."},
-  6:{name:"Customer Success & Expansion",desc:"Evaluates onboarding, value delivery and expansion."},
-  7:{name:"Revenue Operations & Systems",desc:"Assesses workflows, tooling and operational excellence."},
-  8:{name:"Pricing & Packaging",desc:"Evaluates monetization logic and pricing structure."},
-  9:{name:"Brand & Communications",desc:"Reviews clarity and consistency of communications."},
- 10:{name:"Data & Insights",desc:"Evaluates data accuracy, availability and decision value."},
- 11:{name:"Enablement",desc:"Assesses training, skills and readiness."},
- 12:{name:"Leadership & Alignment",desc:"Measures alignment, accountability and communication quality."}
+  0:{name:"Context", desc:"Captures essential background for correct interpretation."},
+  1:{name:"GTM Strategy & Leadership", desc:"Evaluates strategic clarity & execution alignment."},
+  2:{name:"Market Intelligence", desc:"Assesses customer & competitive awareness."},
+  3:{name:"Product Marketing", desc:"Evaluates ICP clarity, messaging & narrative strength."},
+  4:{name:"Demand Generation", desc:"Reviews pipeline health & channel effectiveness."},
+  5:{name:"Sales Execution", desc:"Measures qualification, deal flow & forecasting."},
+  6:{name:"Customer Success & Expansion", desc:"Evaluates onboarding, value delivery & expansion."},
+  7:{name:"Revenue Operations & Systems", desc:"Assesses workflows, tooling & operational quality."},
+  8:{name:"Pricing & Packaging", desc:"Evaluates monetization logic & pricing structure."},
+  9:{name:"Brand & Communications", desc:"Reviews clarity & consistency of communications."},
+ 10:{name:"Data & Insights", desc:"Evaluates data accuracy & availability."},
+ 11:{name:"Enablement", desc:"Assesses training, skills & readiness."},
+ 12:{name:"Leadership & Alignment", desc:"Measures alignment, communication & accountability."}
 };
 </script>
 
-<!-- Engine (must load last) -->
+<!-- ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
+
+<!-- DARK MODE -->
+<script>
+document.getElementById("darkToggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
+</script>
 
 </body>
 </html>
