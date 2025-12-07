@@ -1740,7 +1740,7 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 7 — PRODUCT & PACKAGING (20 QUESTIONS)
+   PILLAR 7 — PRICING & PACKAGING (20 QUESTIONS)
    =========================================================== */
 
 {
