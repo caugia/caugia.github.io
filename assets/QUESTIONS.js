@@ -160,19 +160,18 @@ const QUESTIONS = [
    Q8 — ACV Range (Picklist)
    ----------------------------------------------------------- */
 {
-  id: 8,
-  pillar: 0,
-  type: "radio",
-  title: "Your average contract value (ACV)",
-  options: [
-    "< €2,000",
-    "€2,000 – €10,000",
-    "€10,000 – €30,000",
-    "€30,000 – €75,000",
-    "€75,000 – €150,000",
-    "> €150,000"
-  ]
-},
+     id: 8,
+     pillar: 0,
+     type: "radio",
+     title: "What is your primary target customer segment?",
+     options: [
+       "SMB (< 50 employees)",
+       "Mid-market (50-1000 employees)",
+       "Enterprise (1000-5000 employees)",
+       "Large Enterprise (5000+ employees)",
+       "Mixed across segments"
+     ]
+   },
 
 /* -----------------------------------------------------------
    Q9 — Primary Buyer Persona
@@ -231,18 +230,20 @@ const QUESTIONS = [
    Q12 — GTM Maturity Stage
    ----------------------------------------------------------- */
 {
-  id: 12,
-  pillar: 0,
-  type: "radio",
-  title: "Current GTM maturity stage",
-  options: [
-    "Early / Pre-structure",
-    "Developing",
-    "Scaling",
-    "Expanding",
-    "Enterprise"
-  ]
-},
+     id: 12,
+     pillar: 0,
+     type: "radio",
+     title: "What is your current funding stage?",
+     options: [
+       "Bootstrapped / Self-funded",
+       "Pre-seed",
+       "Seed",
+       "Series A",
+       "Series B",
+       "Series C+",
+       "Public / IPO"
+     ]
+   },
 
 /* -----------------------------------------------------------
    Q13 — Primary Geographic Markets
