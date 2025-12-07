@@ -144,7 +144,7 @@ function buildInput(q) {
       <div class="gi-group">
         ${q.fields
           .map(f => `
-            <div class="gi-group-field ${f.full ? "full" : ""}">
+            <div class="gi-group-field">
               <label>${f.label}</label>
               <input type="text" name="${f.name}">
             </div>`
