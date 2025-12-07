@@ -65,12 +65,15 @@ const QUESTIONS = [
   title: "Your go to market team structure",
   fields: [
     { name: "ae", label: "Account Executives (#)" },
-    { name: "sdr", label: "Sales Development Representatives (#)" },
+    { name: "sdr", label: "SDR/BDR (#)" },
     { name: "am", label: "Account Managers (#)" },
     { name: "csm", label: "Customer Success Managers (#)" },
+    { name: "se", label: "Solution Engineers (#)" },
+    { name: "partner", label: "Partner/Channel team (#)" },
     { name: "marketing", label: "Marketing team size (#)" },
     { name: "enablement", label: "Enablement team (#)" },
-    { name: "revops", label: "Revenue Operations team (#)", full: true }
+    { name: "revops", label: "Revenue Operations team (#)" },
+    { name: "leadership", label: "GTM Leadership (#)" }
   ]
 },
 
