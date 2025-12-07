@@ -127,7 +127,7 @@ const QUESTIONS = [
 {
   id: 6,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "What best describes your go to market motion?",
   options: [
     "Inbound-led",
@@ -145,7 +145,7 @@ const QUESTIONS = [
 {
   id: 7,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Your primary revenue model",
   options: [
     "SaaS subscription (recurring)",
@@ -162,7 +162,7 @@ const QUESTIONS = [
 {
   id: 8,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Your average contract value (ACV)",
   options: [
     "< €2,000",
@@ -180,7 +180,7 @@ const QUESTIONS = [
 {
   id: 9,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Primary buyer persona",
   options: [
     "Individual contributor",
@@ -198,7 +198,7 @@ const QUESTIONS = [
 {
   id: 10,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Sales cycle complexity",
   options: [
     "Low (quick decisions, < 30 days)",
@@ -215,7 +215,7 @@ const QUESTIONS = [
 {
   id: 11,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Size of your full go to market team",
   options: [
     "1–5 people",
@@ -233,7 +233,7 @@ const QUESTIONS = [
 {
   id: 12,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Current GTM maturity stage",
   options: [
     "Early / Pre-structure",
@@ -330,7 +330,7 @@ const QUESTIONS = [
 {
   id: 21,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "How would you describe your product complexity?",
   options: ["Simple", "Moderately complex", "Complex", "Highly complex"]
 },
@@ -341,7 +341,7 @@ const QUESTIONS = [
 {
   id: 22,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Market type",
   options: [
     "New / emerging category",
@@ -357,7 +357,7 @@ const QUESTIONS = [
 {
   id: 23,
   pillar: 0,
-  type: "select",
+  type: "radio",
   title: "Primary deployment model",
   options: [
     "Cloud / SaaS",
