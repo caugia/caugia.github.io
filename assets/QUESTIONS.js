@@ -13,8 +13,10 @@ const QUESTIONS = [
    generate a context-aware intelligence report.
    =========================================================== */
 
-/* Q1 — Identity & Company Profile
-   ----------------------------------------------------------- */
+/* ===========================================================
+   PILLAR 0 — CONTEXT (25 QUESTIONS)
+   =========================================================== */
+
 {
   id: 1,
   pillar: 0,
@@ -34,8 +36,6 @@ const QUESTIONS = [
   ]
 },
    
-/* Q2 — SaaS Performance & Revenue Economics
-   ----------------------------------------------------------- */
 {
   id: 2,
   pillar: 0,
@@ -55,9 +55,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q3 — GTM Team Structure & Capacity
-   ----------------------------------------------------------- */
 {
   id: 3,
   pillar: 0,
@@ -77,9 +74,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q4 — Revenue Goals, History & Trajectory
-   ----------------------------------------------------------- */
 {
   id: 4,
   pillar: 0,
@@ -99,9 +93,6 @@ const QUESTIONS = [
   ]
 },
 
-   /* -----------------------------------------------------------
-   Q5 — Revenue Engine Health & Pipeline Performance
-   ----------------------------------------------------------- */
 {
   id: 5,
   pillar: 0,
@@ -113,17 +104,14 @@ const QUESTIONS = [
     { name: "lead_response", label: "Lead response time (hours)" },
     { name: "demo_close", label: "Demo-to-close rate (%)" },
     { name: "win_rate", label: "Win rate (%)" },
-    { name: "expansion_share", label: "Expansion % of total ARR" },
     { name: "mql_sql", label: "MQL → SQL conversion rate (%)" },
     { name: "sql_cw", label: "SQL → Closed Won conversion rate (%)" },
     { name: "ramp_time", label: "Average ramp time for new AEs (months)" },
-    { name: "onboarding_time", label: "Customer onboarding time (days)" }
+    { name: "onboarding_time", label: "Customer onboarding time (days)" },
+    { name: "deal_velocity", label: "Average days to close (first touch to close)" }
   ]
 },
 
-/* -----------------------------------------------------------
-   Q6 — GTM Motion Type
-   ----------------------------------------------------------- */
 {
   id: 6,
   pillar: 0,
@@ -139,9 +127,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q7 — Revenue Model
-   ----------------------------------------------------------- */
 {
   id: 7,
   pillar: 0,
@@ -156,26 +141,20 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q8 — ACV Range (Picklist)
-   ----------------------------------------------------------- */
 {
-     id: 8,
-     pillar: 0,
-     type: "radio",
-     title: "What is your primary target customer segment?",
-     options: [
-       "SMB (< 50 employees)",
-       "Mid-market (50-1000 employees)",
-       "Enterprise (1000-5000 employees)",
-       "Large Enterprise (5000+ employees)",
-       "Mixed across segments"
-     ]
-   },
+  id: 8,
+  pillar: 0,
+  type: "radio",
+  title: "What is your primary target customer segment?",
+  options: [
+    "SMB (< 50 employees)",
+    "Mid-market (50-1000 employees)",
+    "Enterprise (1000-5000 employees)",
+    "Large Enterprise (5000+ employees)",
+    "Mixed across segments"
+  ]
+},
 
-/* -----------------------------------------------------------
-   Q9 — Primary Buyer Persona
-   ----------------------------------------------------------- */
 {
   id: 9,
   pillar: 0,
@@ -191,9 +170,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q10 — Sales Cycle Complexity
-   ----------------------------------------------------------- */
 {
   id: 10,
   pillar: 0,
@@ -208,9 +184,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q11 — Full GTM Team Size
-   ----------------------------------------------------------- */
 {
   id: 11,
   pillar: 0,
@@ -226,28 +199,22 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q12 — GTM Maturity Stage
-   ----------------------------------------------------------- */
 {
-     id: 12,
-     pillar: 0,
-     type: "radio",
-     title: "What is your current funding stage?",
-     options: [
-       "Bootstrapped / Self-funded",
-       "Pre-seed",
-       "Seed",
-       "Series A",
-       "Series B",
-       "Series C+",
-       "Public / IPO"
-     ]
-   },
+  id: 12,
+  pillar: 0,
+  type: "radio",
+  title: "What is your current funding stage?",
+  options: [
+    "Bootstrapped / Self-funded",
+    "Pre-seed",
+    "Seed",
+    "Series A",
+    "Series B",
+    "Series C+",
+    "Public / IPO"
+  ]
+},
 
-/* -----------------------------------------------------------
-   Q13 — Primary Geographic Markets
-   ----------------------------------------------------------- */
 {
   id: 13,
   pillar: 0,
@@ -255,9 +222,6 @@ const QUESTIONS = [
   title: "Your primary geographic markets"
 },
 
-/* -----------------------------------------------------------
-   Q14 — Product Description
-   ----------------------------------------------------------- */
 {
   id: 14,
   pillar: 0,
@@ -265,9 +229,6 @@ const QUESTIONS = [
   title: "Briefly describe your product or solution"
 },
 
-/* -----------------------------------------------------------
-   Q15 — Ideal Customer Profile
-   ----------------------------------------------------------- */
 {
   id: 15,
   pillar: 0,
@@ -275,9 +236,6 @@ const QUESTIONS = [
   title: "Who is your ideal customer and why do they buy from you?"
 },
 
-/* -----------------------------------------------------------
-   Q16 — GTM Priority
-   ----------------------------------------------------------- */
 {
   id: 16,
   pillar: 0,
@@ -285,9 +243,6 @@ const QUESTIONS = [
   title: "Your top GTM priority for the next 6–12 months"
 },
 
-/* -----------------------------------------------------------
-   Q17 — Primary Challenge
-   ----------------------------------------------------------- */
 {
   id: 17,
   pillar: 0,
@@ -295,9 +250,6 @@ const QUESTIONS = [
   title: "Your biggest challenge across revenue, pipeline or execution"
 },
 
-/* -----------------------------------------------------------
-   Q18 — Performance Drag
-   ----------------------------------------------------------- */
 {
   id: 18,
   pillar: 0,
@@ -305,9 +257,6 @@ const QUESTIONS = [
   title: "What is currently slowing down GTM performance?"
 },
 
-/* -----------------------------------------------------------
-   Q19 — Trigger for Assessment
-   ----------------------------------------------------------- */
 {
   id: 19,
   pillar: 0,
@@ -315,9 +264,6 @@ const QUESTIONS = [
   title: "What has changed recently that makes this assessment important?"
 },
 
-/* -----------------------------------------------------------
-   Q20 — Critical Business Outcome
-   ----------------------------------------------------------- */
 {
   id: 20,
   pillar: 0,
@@ -325,9 +271,6 @@ const QUESTIONS = [
   title: "What is your most important business outcome to achieve this year?"
 },
 
-/* -----------------------------------------------------------
-   Q21 — Product Complexity
-   ----------------------------------------------------------- */
 {
   id: 21,
   pillar: 0,
@@ -336,9 +279,6 @@ const QUESTIONS = [
   options: ["Simple", "Moderately complex", "Complex", "Highly complex"]
 },
 
-/* -----------------------------------------------------------
-   Q22 — Market Type
-   ----------------------------------------------------------- */
 {
   id: 22,
   pillar: 0,
@@ -352,9 +292,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q23 — Deployment Model
-   ----------------------------------------------------------- */
 {
   id: 23,
   pillar: 0,
@@ -368,9 +305,6 @@ const QUESTIONS = [
   ]
 },
 
-/* -----------------------------------------------------------
-   Q24 — Customer Count
-   ----------------------------------------------------------- */
 {
   id: 24,
   pillar: 0,
@@ -378,9 +312,6 @@ const QUESTIONS = [
   title: "Number of paying customers"
 },
 
-/* -----------------------------------------------------------
-   Q25 — Additional Context
-   ----------------------------------------------------------- */
 {
   id: 25,
   pillar: 0,
@@ -388,13 +319,237 @@ const QUESTIONS = [
   title: "Anything else we should know about your GTM context?"
 },
 
-
-   /* ===========================================================
-   PILLAR 1 — MARKET INTELLIGENCE (20 QUESTIONS)
+/* ===========================================================
+   PILLAR 1 — GTM STRATEGY & LEADERSHIP (20 QUESTIONS) **NEW**
    =========================================================== */
 
 {
   id: 1001, pillar: 1, type: "scale",
+  title: "We have a clear written GTM strategy.",
+  options: [
+    "No documented strategy",
+    "Basic informal strategy",
+    "Solid documented strategy",
+    "Strong comprehensive strategy",
+    "Fully integrated strategic plan"
+  ]
+},
+{
+  id: 1002, pillar: 1, type: "scale",
+  title: "Our GTM strategy is aligned with business objectives.",
+  options: [
+    "No alignment",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Fully integrated business + GTM strategy"
+  ]
+},
+{
+  id: 1003, pillar: 1, type: "scale",
+  title: "Our GTM strategy defines clear market priorities.",
+  options: [
+    "No market priorities",
+    "Vague priorities",
+    "Solid market focus",
+    "Strong prioritization",
+    "Highly disciplined market strategy"
+  ]
+},
+{
+  id: 1004, pillar: 1, type: "scale",
+  title: "We have a clear GTM roadmap for the next 12-18 months.",
+  options: [
+    "No roadmap",
+    "Basic quarterly plans",
+    "Solid roadmap",
+    "Strong roadmap with milestones",
+    "Fully detailed strategic roadmap"
+  ]
+},
+{
+  id: 1005, pillar: 1, type: "scale",
+  title: "Product and GTM strategies are tightly integrated.",
+  options: [
+    "Very disconnected",
+    "Some integration",
+    "Solid integration",
+    "Strong integration",
+    "Fully unified product-GTM strategy"
+  ]
+},
+{
+  id: 1006, pillar: 1, type: "scale",
+  title: "We set clear GTM goals and track progress systematically.",
+  options: [
+    "No goal tracking",
+    "Informal goals",
+    "Solid goal structure",
+    "Strong goal governance",
+    "Best-in-class goal operating system"
+  ]
+},
+{
+  id: 1007, pillar: 1, type: "scale",
+  title: "Our GTM strategy defines our competitive advantage clearly.",
+  options: [
+    "No competitive strategy",
+    "Basic differentiation",
+    "Solid competitive positioning",
+    "Strong advantage defined",
+    "Highly defensible strategic position"
+  ]
+},
+{
+  id: 1008, pillar: 1, type: "scale",
+  title: "We prioritize GTM investments based on strategic impact.",
+  options: [
+    "No prioritization",
+    "Ad-hoc decisions",
+    "Solid prioritization",
+    "Strong strategic allocation",
+    "Highly disciplined resource strategy"
+  ]
+},
+{
+  id: 1009, pillar: 1, type: "scale",
+  title: "We understand which GTM motions drive the most revenue.",
+  options: [
+    "No insight",
+    "Basic understanding",
+    "Solid understanding",
+    "Strong data-driven insight",
+    "Deep strategic motion intelligence"
+  ]
+},
+{
+  id: 1010, pillar: 1, type: "scale",
+  title: "Our GTM strategy accounts for market changes and trends.",
+  options: [
+    "Static strategy",
+    "Occasional updates",
+    "Solid adaptability",
+    "Strong dynamic strategy",
+    "Highly adaptive strategic planning"
+  ]
+},
+{
+  id: 1011, pillar: 1, type: "scale",
+  title: "We have a clear go-to-market playbook by segment or persona.",
+  options: [
+    "No playbooks",
+    "Basic playbooks",
+    "Solid segment playbooks",
+    "Strong tailored playbooks",
+    "Highly refined playbook system"
+  ]
+},
+{
+  id: 1012, pillar: 1, type: "scale",
+  title: "We align sales, marketing and CS around a unified GTM plan.",
+  options: [
+    "Very misaligned",
+    "Some alignment",
+    "Solid alignment",
+    "Strong unified plan",
+    "Fully integrated GTM execution"
+  ]
+},
+{
+  id: 1013, pillar: 1, type: "scale",
+  title: "Our GTM strategy addresses both new customer acquisition and expansion.",
+  options: [
+    "No balance",
+    "Acquisition-focused only",
+    "Solid dual focus",
+    "Strong balanced strategy",
+    "Optimized new + expansion engine"
+  ]
+},
+{
+  id: 1014, pillar: 1, type: "scale",
+  title: "We test and validate new GTM approaches before scaling.",
+  options: [
+    "No testing",
+    "Occasional pilots",
+    "Solid testing process",
+    "Strong validation approach",
+    "Highly systematic test-and-scale"
+  ]
+},
+{
+  id: 1015, pillar: 1, type: "scale",
+  title: "Our GTM strategy informs hiring and capacity planning.",
+  options: [
+    "No connection",
+    "Weak connection",
+    "Solid connection",
+    "Strong strategic hiring",
+    "Fully integrated talent strategy"
+  ]
+},
+{
+  id: 1016, pillar: 1, type: "scale",
+  title: "We understand trade-offs between different GTM motions.",
+  options: [
+    "No clarity",
+    "Basic understanding",
+    "Solid understanding",
+    "Strong trade-off analysis",
+    "Deep strategic motion intelligence"
+  ]
+},
+{
+  id: 1017, pillar: 1, type: "scale",
+  title: "Our GTM strategy is based on validated market insights.",
+  options: [
+    "Opinion-based",
+    "Some validation",
+    "Solid insight foundation",
+    "Strong data validation",
+    "Fully insight-driven strategy"
+  ]
+},
+{
+  id: 1018, pillar: 1, type: "scale",
+  title: "We revisit and refine our GTM strategy regularly.",
+  options: [
+    "Never updated",
+    "Rarely updated",
+    "Annually updated",
+    "Quarterly reviews",
+    "Continuous strategic refinement"
+  ]
+},
+{
+  id: 1019, pillar: 1, type: "scale",
+  title: "Our GTM strategy drives decision-making across the company.",
+  options: [
+    "Not used",
+    "Occasionally referenced",
+    "Solid influence",
+    "Strong decision driver",
+    "Central to all GTM decisions"
+  ]
+},
+{
+  id: 1020, pillar: 1, type: "scale",
+  title: "GTM Strategy is a competitive advantage for our company.",
+  options: [
+    "No advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major strategic differentiator"
+  ]
+},
+
+/* ===========================================================
+   PILLAR 2 — MARKET INTELLIGENCE (20 QUESTIONS)
+   =========================================================== */
+
+{
+  id: 2001, pillar: 2, type: "scale",
   title: "We have a clearly defined Ideal Customer Profile (ICP).",
   options: [
     "No ICP",
@@ -405,7 +560,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1002, pillar: 1, type: "scale",
+  id: 2002, pillar: 2, type: "scale",
   title: "We understand our market size, segments and growth drivers.",
   options: [
     "No insight",
@@ -416,7 +571,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1003, pillar: 1, type: "scale",
+  id: 2003, pillar: 2, type: "scale",
   title: "We understand customer needs, pains and buying triggers.",
   options: [
     "No customer insight",
@@ -427,7 +582,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1004, pillar: 1, type: "scale",
+  id: 2004, pillar: 2, type: "scale",
   title: "Our competitive landscape is well understood.",
   options: [
     "No competitive insight",
@@ -438,18 +593,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1005, pillar: 1, type: "scale",
-  title: "We have clear positioning that differentiates us.",
-  options: [
-    "No positioning",
-    "Basic positioning",
-    "Decent positioning",
-    "Strong differentiation",
-    "Highly differentiated and defendable"
-  ]
-},
-{
-  id: 1006, pillar: 1, type: "scale",
+  id: 2005, pillar: 2, type: "scale",
   title: "We monitor market trends and competitor moves consistently.",
   options: [
     "No monitoring",
@@ -460,8 +604,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1007, pillar: 1, type: "scale",
-  title: "We understand our buyers’ decision criteria.",
+  id: 2006, pillar: 2, type: "scale",
+  title: "We understand our buyers' decision criteria.",
   options: [
     "No insight",
     "Basic understanding",
@@ -471,7 +615,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1008, pillar: 1, type: "scale",
+  id: 2007, pillar: 2, type: "scale",
   title: "We use customer research to shape product and GTM priorities.",
   options: [
     "No research",
@@ -482,7 +626,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1009, pillar: 1, type: "scale",
+  id: 2008, pillar: 2, type: "scale",
   title: "We understand barriers to adoption in our market.",
   options: [
     "No insight",
@@ -493,7 +637,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1010, pillar: 1, type: "scale",
+  id: 2009, pillar: 2, type: "scale",
   title: "We have clear insight into switching triggers from competitor tools.",
   options: [
     "No insight",
@@ -504,7 +648,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1011, pillar: 1, type: "scale",
+  id: 2010, pillar: 2, type: "scale",
   title: "We understand economic trends shaping buyer behavior.",
   options: [
     "No understanding",
@@ -515,7 +659,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1012, pillar: 1, type: "scale",
+  id: 2011, pillar: 2, type: "scale",
   title: "We segment our market effectively.",
   options: [
     "No segmentation",
@@ -526,7 +670,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1013, pillar: 1, type: "scale",
+  id: 2012, pillar: 2, type: "scale",
   title: "Our ICP segmentation aligns with revenue potential.",
   options: [
     "No alignment",
@@ -537,7 +681,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1014, pillar: 1, type: "scale",
+  id: 2013, pillar: 2, type: "scale",
   title: "We understand which personas influence deals most.",
   options: [
     "No insight",
@@ -548,7 +692,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1015, pillar: 1, type: "scale",
+  id: 2014, pillar: 2, type: "scale",
   title: "Our win-loss analysis produces actionable insights.",
   options: [
     "No win-loss program",
@@ -559,7 +703,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1016, pillar: 1, type: "scale",
+  id: 2015, pillar: 2, type: "scale",
   title: "We know which customer segments produce the highest LTV.",
   options: [
     "No insight",
@@ -570,7 +714,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1017, pillar: 1, type: "scale",
+  id: 2016, pillar: 2, type: "scale",
   title: "We have strong insight into partner ecosystem dynamics.",
   options: [
     "No insight",
@@ -581,7 +725,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1018, pillar: 1, type: "scale",
+  id: 2017, pillar: 2, type: "scale",
   title: "We understand sensitivity to pricing across segments.",
   options: [
     "No insight",
@@ -592,7 +736,18 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1019, pillar: 1, type: "scale",
+  id: 2018, pillar: 2, type: "scale",
+  title: "We track emerging competitors and market disruptors.",
+  options: [
+    "No tracking",
+    "Occasional awareness",
+    "Solid monitoring",
+    "Strong tracking system",
+    "Deep market intelligence network"
+  ]
+},
+{
+  id: 2019, pillar: 2, type: "scale",
   title: "Our market intelligence drives our GTM strategy.",
   options: [
     "Not used",
@@ -603,7 +758,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 1020, pillar: 1, type: "scale",
+  id: 2020, pillar: 2, type: "scale",
   title: "Market Intelligence acts as a strategic GTM enabler.",
   options: [
     "Not strategic",
@@ -615,11 +770,11 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 2 — PRODUCT MARKETING (20 QUESTIONS)
+   PILLAR 3 — PRODUCT MARKETING (20 QUESTIONS)
    =========================================================== */
 
 {
-  id: 2001, pillar: 2, type: "scale",
+  id: 3001, pillar: 3, type: "scale",
   title: "Our messaging is clear, compelling and communicates value.",
   options: [
     "Very unclear",
@@ -630,18 +785,18 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2002, pillar: 2, type: "scale",
-  title: "We position our product clearly against competitors.",
+  id: 3002, pillar: 3, type: "scale",
+  title: "We have clear positioning that differentiates us.",
   options: [
     "No positioning",
     "Basic positioning",
-    "Solid positioning",
+    "Decent positioning",
     "Strong differentiation",
-    "Highly differentiated strategic positioning"
+    "Highly differentiated and defendable"
   ]
 },
 {
-  id: 2003, pillar: 2, type: "scale",
+  id: 3003, pillar: 3, type: "scale",
   title: "Our value proposition resonates with ICP segments.",
   options: [
     "No resonance",
@@ -652,7 +807,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2004, pillar: 2, type: "scale",
+  id: 3004, pillar: 3, type: "scale",
   title: "Our product narrative is clear and emotionally engaging.",
   options: [
     "No narrative",
@@ -663,7 +818,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2005, pillar: 2, type: "scale",
+  id: 3005, pillar: 3, type: "scale",
   title: "We tailor messaging effectively across personas.",
   options: [
     "No personalization",
@@ -674,7 +829,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2006, pillar: 2, type: "scale",
+  id: 3006, pillar: 3, type: "scale",
   title: "Our product marketing materials support sales effectively.",
   options: [
     "No usable materials",
@@ -685,7 +840,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2007, pillar: 2, type: "scale",
+  id: 3007, pillar: 3, type: "scale",
   title: "We have strong insight into what messages win deals.",
   options: [
     "No insight",
@@ -696,7 +851,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2008, pillar: 2, type: "scale",
+  id: 3008, pillar: 3, type: "scale",
   title: "We have compelling proof points, case studies and ROI materials.",
   options: [
     "None",
@@ -707,18 +862,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2009, pillar: 2, type: "scale",
-  title: "We communicate value clearly rather than focusing on features.",
-  options: [
-    "Feature-heavy messaging",
-    "Some value messaging",
-    "Solid value messaging",
-    "Strong value-first communication",
-    "Deep value-centric GTM messaging"
-  ]
-},
-{
-  id: 2010, pillar: 2, type: "scale",
+  id: 3009, pillar: 3, type: "scale",
   title: "Our PMM team collaborates closely with Sales, Marketing and Product.",
   options: [
     "Very siloed",
@@ -729,7 +873,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2011, pillar: 2, type: "scale",
+  id: 3010, pillar: 3, type: "scale",
   title: "We maintain standardized messaging frameworks.",
   options: [
     "No frameworks",
@@ -740,29 +884,18 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2012, pillar: 2, type: "scale",
-  title: "We understand which product capabilities drive conversion.",
+  id: 3011, pillar: 3, type: "scale",
+  title: "We understand which features resonate most with buyers.",
   options: [
     "No insight",
     "Basic understanding",
     "Solid understanding",
-    "Strong insight",
-    "Deep capability intelligence"
+    "Strong feature intelligence",
+    "Deep buyer preference intelligence"
   ]
 },
 {
-  id: 2013, pillar: 2, type: "scale",
-  title: "We understand usage patterns leading to retention.",
-  options: [
-    "No insight",
-    "Basic insight",
-    "Solid insight",
-    "Strong insight",
-    "Deep retention intelligence"
-  ]
-},
-{
-  id: 2014, pillar: 2, type: "scale",
+  id: 3012, pillar: 3, type: "scale",
   title: "Our PMM team influences product roadmap priorities.",
   options: [
     "No influence",
@@ -773,8 +906,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2015, pillar: 2, type: "scale",
-  title: "We understand blockers that slow adoption.",
+  id: 3013, pillar: 3, type: "scale",
+  title: "We understand blockers that slow product adoption.",
   options: [
     "No clarity",
     "Basic assumption",
@@ -784,7 +917,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2016, pillar: 2, type: "scale",
+  id: 3014, pillar: 3, type: "scale",
   title: "We support new product launches with strong GTM releases.",
   options: [
     "No launch motion",
@@ -795,7 +928,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2017, pillar: 2, type: "scale",
+  id: 3015, pillar: 3, type: "scale",
   title: "Our website and collateral communicate value effectively.",
   options: [
     "Very weak",
@@ -806,7 +939,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2018, pillar: 2, type: "scale",
+  id: 3016, pillar: 3, type: "scale",
   title: "We maintain strong competitive PMM insights.",
   options: [
     "None",
@@ -817,7 +950,29 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2019, pillar: 2, type: "scale",
+  id: 3017, pillar: 3, type: "scale",
+  title: "Our messaging adapts to different buying stages.",
+  options: [
+    "No adaptation",
+    "Basic stage awareness",
+    "Solid stage messaging",
+    "Strong journey alignment",
+    "Highly refined buyer journey messaging"
+  ]
+},
+{
+  id: 3018, pillar: 3, type: "scale",
+  title: "We produce effective demo and presentation materials.",
+  options: [
+    "No demo materials",
+    "Basic materials",
+    "Solid demo content",
+    "Strong demo assets",
+    "Best-in-class demo engine"
+  ]
+},
+{
+  id: 3019, pillar: 3, type: "scale",
   title: "Product Marketing is a strategic driver of GTM success.",
   options: [
     "Not strategic",
@@ -828,7 +983,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 2020, pillar: 2, type: "scale",
+  id: 3020, pillar: 3, type: "scale",
   title: "Our messaging, narrative & positioning system is a GTM advantage.",
   options: [
     "No advantage",
@@ -840,11 +995,11 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 3 — DEMAND GENERATION (20 QUESTIONS)
+   PILLAR 4 — DEMAND GENERATION (20 QUESTIONS)
    =========================================================== */
 
 {
-  id: 3001, pillar: 3, type: "scale",
+  id: 4001, pillar: 4, type: "scale",
   title: "We have a clear demand generation strategy.",
   options: [
     "No strategy",
@@ -855,7 +1010,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3002, pillar: 3, type: "scale",
+  id: 4002, pillar: 4, type: "scale",
   title: "Our inbound channels generate high-quality pipeline.",
   options: [
     "No pipeline",
@@ -866,7 +1021,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3003, pillar: 3, type: "scale",
+  id: 4003, pillar: 4, type: "scale",
   title: "Our outbound motion generates predictable pipeline.",
   options: [
     "No outbound",
@@ -877,7 +1032,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3004, pillar: 3, type: "scale",
+  id: 4004, pillar: 4, type: "scale",
   title: "Paid media drives efficient pipeline.",
   options: [
     "No paid media",
@@ -888,7 +1043,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3005, pillar: 3, type: "scale",
+  id: 4005, pillar: 4, type: "scale",
   title: "Our website converts effectively.",
   options: [
     "Very low CVR",
@@ -899,7 +1054,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3006, pillar: 3, type: "scale",
+  id: 4006, pillar: 4, type: "scale",
   title: "We execute strong ABM motions.",
   options: [
     "No ABM",
@@ -910,7 +1065,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3007, pillar: 3, type: "scale",
+  id: 4007, pillar: 4, type: "scale",
   title: "We have strong lead nurturing.",
   options: [
     "No nurturing",
@@ -921,7 +1076,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3008, pillar: 3, type: "scale",
+  id: 4008, pillar: 4, type: "scale",
   title: "We use content effectively to generate demand.",
   options: [
     "No content",
@@ -932,7 +1087,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3009, pillar: 3, type: "scale",
+  id: 4009, pillar: 4, type: "scale",
   title: "We track ROI across channels effectively.",
   options: [
     "No tracking",
@@ -943,7 +1098,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3010, pillar: 3, type: "scale",
+  id: 4010, pillar: 4, type: "scale",
   title: "Sales & Marketing align strongly on pipeline creation.",
   options: [
     "Very misaligned",
@@ -954,7 +1109,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3011, pillar: 3, type: "scale",
+  id: 4011, pillar: 4, type: "scale",
   title: "We have clear SLAs for lead follow-up.",
   options: [
     "No SLAs",
@@ -965,7 +1120,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3012, pillar: 3, type: "scale",
+  id: 4012, pillar: 4, type: "scale",
   title: "We have strong segmentation for personalized demand gen.",
   options: [
     "No segmentation",
@@ -976,7 +1131,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3013, pillar: 3, type: "scale",
+  id: 4013, pillar: 4, type: "scale",
   title: "We use data to optimize campaigns continuously.",
   options: [
     "No optimization",
@@ -987,7 +1142,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3014, pillar: 3, type: "scale",
+  id: 4014, pillar: 4, type: "scale",
   title: "We generate predictable pipeline coverage.",
   options: [
     "No predictability",
@@ -998,7 +1153,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3015, pillar: 3, type: "scale",
+  id: 4015, pillar: 4, type: "scale",
   title: "We run consistent experiments to improve performance.",
   options: [
     "No experiments",
@@ -1009,7 +1164,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3016, pillar: 3, type: "scale",
+  id: 4016, pillar: 4, type: "scale",
   title: "We partner closely with SDRs for effective pipeline.",
   options: [
     "No collaboration",
@@ -1020,7 +1175,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3017, pillar: 3, type: "scale",
+  id: 4017, pillar: 4, type: "scale",
   title: "We have strong event strategy (webinars, field events, conferences).",
   options: [
     "No event strategy",
@@ -1031,7 +1186,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3018, pillar: 3, type: "scale",
+  id: 4018, pillar: 4, type: "scale",
   title: "Demand Gen contributes strategically to revenue planning.",
   options: [
     "No contribution",
@@ -1042,7 +1197,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3019, pillar: 3, type: "scale",
+  id: 4019, pillar: 4, type: "scale",
   title: "Our DG engine supports efficient scaling.",
   options: [
     "Not scalable",
@@ -1053,7 +1208,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 3020, pillar: 3, type: "scale",
+  id: 4020, pillar: 4, type: "scale",
   title: "Demand Generation is a strategic pillar of GTM.",
   options: [
     "Not strategic",
@@ -1065,11 +1220,11 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 4 — SALES EXECUTION (20 QUESTIONS)
+   PILLAR 5 — SALES EXECUTION (20 QUESTIONS)
    =========================================================== */
 
 {
-  id: 4001, pillar: 4, type: "scale",
+  id: 5001, pillar: 5, type: "scale",
   title: "We have a clear, documented sales process.",
   options: [
     "No process",
@@ -1080,7 +1235,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4002, pillar: 4, type: "scale",
+  id: 5002, pillar: 5, type: "scale",
   title: "We qualify deals effectively.",
   options: [
     "No qualification",
@@ -1091,7 +1246,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4003, pillar: 4, type: "scale",
+  id: 5003, pillar: 5, type: "scale",
   title: "Our pipeline management is strong.",
   options: [
     "Very weak",
@@ -1102,7 +1257,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4004, pillar: 4, type: "scale",
+  id: 5004, pillar: 5, type: "scale",
   title: "Our forecasting is reliable.",
   options: [
     "Very unreliable",
@@ -1113,7 +1268,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4005, pillar: 4, type: "scale",
+  id: 5005, pillar: 5, type: "scale",
   title: "Reps have strong product knowledge.",
   options: [
     "Very weak",
@@ -1124,7 +1279,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4006, pillar: 4, type: "scale",
+  id: 5006, pillar: 5, type: "scale",
   title: "Reps deliver compelling demos.",
   options: [
     "Very weak",
@@ -1135,7 +1290,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4007, pillar: 4, type: "scale",
+  id: 5007, pillar: 5, type: "scale",
   title: "We run strong MEDDIC/BANT or equivalent qualification.",
   options: [
     "No methodology",
@@ -1146,8 +1301,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4008, pillar: 4, type: "scale",
-  title: "We coach reps consistently.",
+  id: 5008, pillar: 5, type: "scale",
+  title: "We provide consistent sales coaching.",
   options: [
     "No coaching",
     "Weak coaching",
@@ -1157,7 +1312,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4009, pillar: 4, type: "scale",
+  id: 5009, pillar: 5, type: "scale",
   title: "We understand why we win and lose deals.",
   options: [
     "No insight",
@@ -1168,7 +1323,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4010, pillar: 4, type: "scale",
+  id: 5010, pillar: 5, type: "scale",
   title: "We handle objections effectively.",
   options: [
     "Very weak",
@@ -1179,7 +1334,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4011, pillar: 4, type: "scale",
+  id: 5011, pillar: 5, type: "scale",
   title: "We run strong enterprise sales motions.",
   options: [
     "No enterprise capability",
@@ -1190,7 +1345,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4012, pillar: 4, type: "scale",
+  id: 5012, pillar: 5, type: "scale",
   title: "Our sales compensation model drives the right behaviors.",
   options: [
     "Very misaligned",
@@ -1201,7 +1356,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4013, pillar: 4, type: "scale",
+  id: 5013, pillar: 5, type: "scale",
   title: "We manage territories effectively.",
   options: [
     "No territories",
@@ -1212,7 +1367,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4014, pillar: 4, type: "scale",
+  id: 5014, pillar: 5, type: "scale",
   title: "We manage pricing and discounting effectively.",
   options: [
     "Very weak",
@@ -1223,8 +1378,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4015, pillar: 4, type: "scale",
-  title: "We have strong sales enablement.",
+  id: 5015, pillar: 5, type: "scale",
+  title: "Sales reps have access to effective enablement materials.",
   options: [
     "No enablement",
     "Weak enablement",
@@ -1234,7 +1389,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4016, pillar: 4, type: "scale",
+  id: 5016, pillar: 5, type: "scale",
   title: "Sales and Marketing collaborate strongly.",
   options: [
     "Very siloed",
@@ -1245,7 +1400,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4017, pillar: 4, type: "scale",
+  id: 5017, pillar: 5, type: "scale",
   title: "We track rep performance with strong clarity.",
   options: [
     "No insight",
@@ -1256,7 +1411,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4018, pillar: 4, type: "scale",
+  id: 5018, pillar: 5, type: "scale",
   title: "We manage sales velocity effectively.",
   options: [
     "No insight",
@@ -1267,7 +1422,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4019, pillar: 4, type: "scale",
+  id: 5019, pillar: 5, type: "scale",
   title: "We remove friction from the sales process proactively.",
   options: [
     "No removal",
@@ -1278,7 +1433,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 4020, pillar: 4, type: "scale",
+  id: 5020, pillar: 5, type: "scale",
   title: "Sales Execution is a strategic GTM enabler.",
   options: [
     "Not strategic",
@@ -1289,12 +1444,12 @@ const QUESTIONS = [
   ]
 },
 
-   /* ===========================================================
-   PILLAR 5 — CUSTOMER SUCCESS & EXPANSION (20 QUESTIONS)
+/* ===========================================================
+   PILLAR 6 — CUSTOMER SUCCESS & EXPANSION (20 QUESTIONS)
    =========================================================== */
 
 {
-  id: 5001, pillar: 5, type: "scale",
+  id: 6001, pillar: 6, type: "scale",
   title: "We onboard customers effectively and set them up for early value.",
   options: [
     "Very weak onboarding",
@@ -1305,7 +1460,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5002, pillar: 5, type: "scale",
+  id: 6002, pillar: 6, type: "scale",
   title: "We manage customer health proactively.",
   options: [
     "No health model",
@@ -1316,7 +1471,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5003, pillar: 5, type: "scale",
+  id: 6003, pillar: 6, type: "scale",
   title: "We understand key drivers of retention and churn.",
   options: [
     "No insight",
@@ -1327,7 +1482,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5004, pillar: 5, type: "scale",
+  id: 6004, pillar: 6, type: "scale",
   title: "We run effective QBRs and customer reviews.",
   options: [
     "No QBR structure",
@@ -1338,7 +1493,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5005, pillar: 5, type: "scale",
+  id: 6005, pillar: 6, type: "scale",
   title: "Our CS team collaborates effectively with Product and Sales.",
   options: [
     "Very siloed",
@@ -1349,7 +1504,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5006, pillar: 5, type: "scale",
+  id: 6006, pillar: 6, type: "scale",
   title: "We identify expansion opportunities proactively.",
   options: [
     "No expansion motion",
@@ -1360,7 +1515,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5007, pillar: 5, type: "scale",
+  id: 6007, pillar: 6, type: "scale",
   title: "We have a strong renewal motion.",
   options: [
     "Very weak",
@@ -1371,7 +1526,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5008, pillar: 5, type: "scale",
+  id: 6008, pillar: 6, type: "scale",
   title: "We measure customer adoption effectively.",
   options: [
     "No measurement",
@@ -1382,8 +1537,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5009, pillar: 5, type: "scale",
-  title: "We provide strong customer education and enablement.",
+  id: 6009, pillar: 6, type: "scale",
+  title: "We provide strong customer education and training.",
   options: [
     "No education",
     "Basic education",
@@ -1393,7 +1548,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5010, pillar: 5, type: "scale",
+  id: 6010, pillar: 6, type: "scale",
   title: "We manage accounts effectively across CS and AM.",
   options: [
     "No structure",
@@ -1404,7 +1559,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5011, pillar: 5, type: "scale",
+  id: 6011, pillar: 6, type: "scale",
   title: "We communicate value to customers regularly.",
   options: [
     "No communication",
@@ -1415,7 +1570,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5012, pillar: 5, type: "scale",
+  id: 6012, pillar: 6, type: "scale",
   title: "We use customer feedback to drive improvements.",
   options: [
     "No feedback loop",
@@ -1426,7 +1581,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5013, pillar: 5, type: "scale",
+  id: 6013, pillar: 6, type: "scale",
   title: "We collaborate with Sales on renewals and upsell opportunities.",
   options: [
     "Very siloed",
@@ -1437,7 +1592,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5014, pillar: 5, type: "scale",
+  id: 6014, pillar: 6, type: "scale",
   title: "We manage at-risk accounts proactively.",
   options: [
     "No risk management",
@@ -1448,7 +1603,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5015, pillar: 5, type: "scale",
+  id: 6015, pillar: 6, type: "scale",
   title: "We maintain strong CS documentation and processes.",
   options: [
     "No documentation",
@@ -1459,7 +1614,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5016, pillar: 5, type: "scale",
+  id: 6016, pillar: 6, type: "scale",
   title: "We run scalable CS operations.",
   options: [
     "Not scalable",
@@ -1470,7 +1625,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5017, pillar: 5, type: "scale",
+  id: 6017, pillar: 6, type: "scale",
   title: "We integrate CS data effectively across systems.",
   options: [
     "No integration",
@@ -1481,7 +1636,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5018, pillar: 5, type: "scale",
+  id: 6018, pillar: 6, type: "scale",
   title: "Customer Success is a strategic driver of revenue.",
   options: [
     "Not strategic",
@@ -1492,7 +1647,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5019, pillar: 5, type: "scale",
+  id: 6019, pillar: 6, type: "scale",
   title: "Our CS function supports efficient and predictable growth.",
   options: [
     "Not supportive",
@@ -1503,7 +1658,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5020, pillar: 5, type: "scale",
+  id: 6020, pillar: 6, type: "scale",
   title: "Customer Success is a competitive advantage.",
   options: [
     "Not an advantage",
@@ -1514,957 +1669,47 @@ const QUESTIONS = [
   ]
 },
 
-/* ===========================================================
-   PILLAR 6 — REVENUE OPERATIONS & SYSTEMS (20 QUESTIONS)
-   =========================================================== */
-
-{
-  id: 6001, pillar: 6, type: "scale",
-  title: "We have a unified RevOps function across Sales, Marketing and CS.",
-  options: [
-    "No unified ops",
-    "Basic siloed ops",
-    "Solid ops",
-    "Strong unified ops",
-    "Fully integrated RevOps engine"
-  ]
-},
-{
-  id: 6002, pillar: 6, type: "scale",
-  title: "Our CRM is well configured and supports efficient workflows.",
-  options: [
-    "Very poor CRM setup",
-    "Basic setup",
-    "Solid CRM",
-    "Strong CRM setup",
-    "Highly optimized CRM"
-  ]
-},
-{
-  id: 6003, pillar: 6, type: "scale",
-  title: "We maintain clear documented GTM workflows.",
-  options: [
-    "No documentation",
-    "Outdated or basic documentation",
-    "Solid documentation",
-    "Strong documentation",
-    "Fully standardized GTM operating system"
-  ]
-},
-{
-  id: 6004, pillar: 6, type: "scale",
-  title: "We automate repetitive GTM tasks effectively.",
-  options: [
-    "No automation",
-    "Basic automation",
-    "Solid automation",
-    "Strong automation",
-    "Highly automated GTM architecture"
-  ]
-},
-{
-  id: 6005, pillar: 6, type: "scale",
-  title: "We maintain strong data quality across systems.",
-  options: [
-    "Very poor data quality",
-    "Basic quality",
-    "Solid quality",
-    "Strong data quality",
-    "Deep governed data excellence"
-  ]
-},
-{
-  id: 6006, pillar: 6, type: "scale",
-  title: "Handoffs between GTM teams are clear and reliable.",
-  options: [
-    "Very inconsistent",
-    "Basic handoffs",
-    "Solid handoffs",
-    "Strong handoffs",
-    "Highly predictable handoff engine"
-  ]
-},
-{
-  id: 6007, pillar: 6, type: "scale",
-  title: "We have strong cross-functional collaboration.",
-  options: [
-    "Very siloed",
-    "Some collaboration",
-    "Solid collaboration",
-    "Strong collaboration",
-    "Highly aligned GTM operations"
-  ]
-},
-{
-  id: 6008, pillar: 6, type: "scale",
-  title: "Our GTM tools integrate well across systems.",
-  options: [
-    "Major silos",
-    "Some integrations",
-    "Solid integrations",
-    "Strong integrations",
-    "Fully coherent GTM architecture"
-  ]
-},
-{
-  id: 6009, pillar: 6, type: "scale",
-  title: "We operate with a clear GTM cadence.",
-  options: [
-    "No cadence",
-    "Basic cadence",
-    "Solid cadence",
-    "Strong cadence",
-    "Highly orchestrated GTM rhythm"
-  ]
-},
-{
-  id: 6010, pillar: 6, type: "scale",
-  title: "We maintain strong systems administration.",
-  options: [
-    "No governance",
-    "Basic governance",
-    "Solid governance",
-    "Strong governance",
-    "Highly mature governance engine"
-  ]
-},
-{
-  id: 6011, pillar: 6, type: "scale",
-  title: "We maintain clean standardized data structures.",
-  options: [
-    "No structure",
-    "Basic structure",
-    "Solid structure",
-    "Strong structure",
-    "Highly optimized data architecture"
-  ]
-},
-{
-  id: 6012, pillar: 6, type: "scale",
-  title: "We maintain SLAs for GTM operations.",
-  options: [
-    "No SLAs",
-    "Basic SLAs",
-    "Solid SLAs",
-    "Strong SLAs",
-    "Highly reliable operations engine"
-  ]
-},
-{
-  id: 6013, pillar: 6, type: "scale",
-  title: "We regularly evaluate and refine GTM processes.",
-  options: [
-    "No improvement motion",
-    "Occasional improvements",
-    "Solid improvement motion",
-    "Strong continuous improvement",
-    "Highly optimized improvement engine"
-  ]
-},
-{
-  id: 6014, pillar: 6, type: "scale",
-  title: "Ops provides strong analytics and insights.",
-  options: [
-    "No analytics",
-    "Basic reporting",
-    "Solid insights",
-    "Strong analytics",
-    "Highly strategic insights engine"
-  ]
-},
-{
-  id: 6015, pillar: 6, type: "scale",
-  title: "We maintain a strong enablement program for tools and workflows.",
-  options: [
-    "No enablement",
-    "Basic enablement",
-    "Solid enablement",
-    "Strong enablement",
-    "Highly strategic enablement"
-  ]
-},
-{
-  id: 6016, pillar: 6, type: "scale",
-  title: "We run quarterly and annual planning with strong alignment.",
-  options: [
-    "No planning",
-    "Basic planning",
-    "Solid planning",
-    "Strong planning",
-    "Highly strategic planning engine"
-  ]
-},
-{
-  id: 6017, pillar: 6, type: "scale",
-  title: "We manage GTM capacity proactively.",
-  options: [
-    "No capacity management",
-    "Basic capacity handling",
-    "Solid capacity management",
-    "Strong capacity planning",
-    "Highly predictive resourcing engine"
-  ]
-},
-{
-  id: 6018, pillar: 6, type: "scale",
-  title: "Ops collaborates with Product on GTM readiness.",
-  options: [
-    "No collaboration",
-    "Basic collaboration",
-    "Solid collaboration",
-    "Strong collaboration",
-    "Highly strategic launch engine"
-  ]
-},
-{
-  id: 6019, pillar: 6, type: "scale",
-  title: "Our RevOps team has the skills and influence to support GTM effectively.",
-  options: [
-    "Very limited",
-    "Basic capability",
-    "Solid capability",
-    "Strong capability",
-    "Highly strategic RevOps"
-  ]
-},
-{
-  id: 6020, pillar: 6, type: "scale",
-  title: "Revenue Operations is a strategic enabler of predictable revenue.",
-  options: [
-    "Not strategic",
-    "Some impact",
-    "Solid impact",
-    "Strong strategic role",
-    "Highly strategic revenue backbone"
-  ]
-},
 
 /* ===========================================================
-   PILLAR 7 — PRICING & PACKAGING (20 QUESTIONS)
+   PILLAR 7 — REVENUE OPERATIONS & SYSTEMS (20 QUESTIONS)
    =========================================================== */
 
 {
   id: 7001, pillar: 7, type: "scale",
-  title: "Our product strategy is clear and aligned with GTM.",
-  options: [
-    "No strategy",
-    "Basic, misaligned strategy",
-    "Solid strategy",
-    "Strong alignment",
-    "Fully aligned strategic product engine"
-  ]
-},
-{
-  id: 7002, pillar: 7, type: "scale",
-  title: "Our product solves a clear, validated problem for our ICP.",
-  options: [
-    "No validation",
-    "Limited validation",
-    "Solid validation",
-    "Strong validation",
-    "Deep problem validation guiding roadmap"
-  ]
-},
-{
-  id: 7003, pillar: 7, type: "scale",
-  title: "Our packaging (modules, tiers, bundles) is clear and aligned to value.",
-  options: [
-    "Confusing packaging",
-    "Basic structure",
-    "Solid packaging",
-    "Strong clarity",
-    "Highly optimized packaging"
-  ]
-},
-{
-  id: 7004, pillar: 7, type: "scale",
-  title: "Our pricing model is clear and predictable.",
-  options: [
-    "Very unclear",
-    "Basic pricing",
-    "Solid pricing",
-    "Strong clarity",
-    "Highly intuitive pricing"
-  ]
-},
-{
-  id: 7005, pillar: 7, type: "scale",
-  title: "Our pricing is validated with customers.",
-  options: [
-    "No validation",
-    "Basic assumptions",
-    "Some validation",
-    "Strong validation",
-    "Deep pricing intelligence"
-  ]
-},
-{
-  id: 7006, pillar: 7, type: "scale",
-  title: "Customers understand the value at each tier.",
-  options: [
-    "No clarity",
-    "Basic clarity",
-    "Solid clarity",
-    "Strong clarity",
-    "Highly clear value per tier"
-  ]
-},
-{
-  id: 7007, pillar: 7, type: "scale",
-  title: "Our onboarding supports fast time-to-value.",
-  options: [
-    "Poor onboarding",
-    "Basic onboarding",
-    "Solid onboarding",
-    "Strong onboarding",
-    "Best-in-class activation engine"
-  ]
-},
-{
-  id: 7008, pillar: 7, type: "scale",
-  title: "We understand which product capabilities drive conversion.",
-  options: [
-    "No insight",
-    "Limited insight",
-    "Solid insight",
-    "Strong insight",
-    "Deep capability intelligence"
-  ]
-},
-{
-  id: 7009, pillar: 7, type: "scale",
-  title: "Our product roadmap is informed by customer and GTM feedback.",
-  options: [
-    "No input",
-    "Some input",
-    "Solid input",
-    "Strong insight loop",
-    "Fully data-driven roadmap"
-  ]
-},
-{
-  id: 7010, pillar: 7, type: "scale",
-  title: "Our product is easy to demo and supports sales.",
-  options: [
-    "Difficult to demo",
-    "Basic demo ability",
-    "Solid demo-ability",
-    "Strong demo fit",
-    "Highly demoable product"
-  ]
-},
-{
-  id: 7011, pillar: 7, type: "scale",
-  title: "We understand which product usage patterns correlate with retention.",
-  options: [
-    "No insight",
-    "Basic insight",
-    "Solid insight",
-    "Strong insight",
-    "Deep retention intelligence"
-  ]
-},
-{
-  id: 7012, pillar: 7, type: "scale",
-  title: "Our PLG or trial motion drives conversion effectively.",
-  options: [
-    "No PLG motion",
-    "Basic trial",
-    "Solid PLG",
-    "Strong PLG engine",
-    "Highly optimized PLG system"
-  ]
-},
-{
-  id: 7013, pillar: 7, type: "scale",
-  title: "Our product documentation helps customers succeed.",
-  options: [
-    "Very poor documentation",
-    "Basic docs",
-    "Solid docs",
-    "Strong documentation",
-    "Best-in-class customer education"
-  ]
-},
-{
-  id: 7014, pillar: 7, type: "scale",
-  title: "Our packaging supports upsell and expansion.",
-  options: [
-    "No expansion structure",
-    "Basic structure",
-    "Solid structure",
-    "Strong expansion fit",
-    "Highly optimized expansion architecture"
-  ]
-},
-{
-  id: 7015, pillar: 7, type: "scale",
-  title: "We clearly differentiate product tiers.",
-  options: [
-    "No differentiation",
-    "Basic differentiation",
-    "Solid differentiation",
-    "Strong clarity",
-    "Highly strategic tiering"
-  ]
-},
-{
-  id: 7016, pillar: 7, type: "scale",
-  title: "We understand which product gaps block deals.",
-  options: [
-    "No clarity",
-    "Basic clarity",
-    "Solid clarity",
-    "Strong clarity",
-    "Deep blocker intelligence"
-  ]
-},
-{
-  id: 7017, pillar: 7, type: "scale",
-  title: "We support strong partner or ecosystem integrations.",
-  options: [
-    "No integrations",
-    "Basic integrations",
-    "Solid integrations",
-    "Strong ecosystem fit",
-    "Highly strategic integration system"
-  ]
-},
-{
-  id: 7018, pillar: 7, type: "scale",
-  title: "We support strong in-product onboarding and guidance.",
-  options: [
-    "No guidance",
-    "Basic guidance",
-    "Solid guidance",
-    "Strong guidance",
-    "Best-in-class activation guidance"
-  ]
-},
-{
-  id: 7019, pillar: 7, type: "scale",
-  title: "We measure product adoption across segments effectively.",
-  options: [
-    "No measurement",
-    "Basic measurement",
-    "Solid measurement",
-    "Strong analytics",
-    "Highly granular adoption intelligence"
-  ]
-},
-{
-  id: 7020, pillar: 7, type: "scale",
-  title: "Product & Packaging is a strategic driver of predictable revenue.",
-  options: [
-    "Not strategic",
-    "Some strategic impact",
-    "Solid strategic impact",
-    "Strong driver",
-    "Highly strategic product engine"
-  ]
-},
-
-/* ===========================================================
-   PILLAR 8 — BRAND & COMMUNICATIONS (20 QUESTIONS)
-   =========================================================== */
-
-{
-  id: 8001, pillar: 8, type: "scale",
-  title: "Our brand narrative is clear and compelling.",
-  options: [
-    "No narrative",
-    "Basic narrative",
-    "Decent narrative",
-    "Strong narrative",
-    "Highly differentiated strategic narrative"
-  ]
-},
-{
-  id: 8002, pillar: 8, type: "scale",
-  title: "Our visual identity is consistent across all assets.",
-  options: [
-    "No consistency",
-    "Basic consistency",
-    "Solid consistency",
-    "Strong consistency",
-    "Fully unified identity"
-  ]
-},
-{
-  id: 8003, pillar: 8, type: "scale",
-  title: "We maintain clear brand guidelines used by all teams.",
-  options: [
-    "No guidelines",
-    "Basic guidelines",
-    "Solid guidelines",
-    "Strong adoption",
-    "Best-in-class brand governance"
-  ]
-},
-{
-  id: 8004, pillar: 8, type: "scale",
-  title: "Our messaging is consistent across all channels.",
-  options: [
-    "No consistency",
-    "Basic consistency",
-    "Solid consistency",
-    "Strong alignment",
-    "Fully aligned messaging"
-  ]
-},
-{
-  id: 8005, pillar: 8, type: "scale",
-  title: "We tell a compelling brand story.",
-  options: [
-    "No story",
-    "Generic story",
-    "Decent story",
-    "Strong emotional story",
-    "Deep compelling brand narrative"
-  ]
-},
-{
-  id: 8006, pillar: 8, type: "scale",
-  title: "Our communication style is clear and professional.",
-  options: [
-    "No clarity",
-    "Basic clarity",
-    "Solid clarity",
-    "Strong clarity",
-    "Highly refined communication style"
-  ]
-},
-{
-  id: 8007, pillar: 8, type: "scale",
-  title: "We communicate value clearly rather than focusing on features.",
-  options: [
-    "Feature-centric",
-    "Some value communication",
-    "Solid value messaging",
-    "Strong value-first messaging",
-    "Deep value articulation"
-  ]
-},
-{
-  id: 8008, pillar: 8, type: "scale",
-  title: "We maintain consistent brand presence across channels.",
-  options: [
-    "No consistency",
-    "Basic presence",
-    "Solid presence",
-    "Strong consistency",
-    "Fully unified brand engine"
-  ]
-},
-{
-  id: 8009, pillar: 8, type: "scale",
-  title: "We have strong PR, analyst, and thought leadership motions.",
-  options: [
-    "No initiatives",
-    "Basic initiatives",
-    "Solid initiatives",
-    "Strong initiatives",
-    "Highly influential brand engine"
-  ]
-},
-{
-  id: 8010, pillar: 8, type: "scale",
-  title: "We communicate consistently with customers.",
-  options: [
-    "No communication",
-    "Basic communication",
-    "Solid communication",
-    "Strong communication",
-    "Highly orchestrated communication engine"
-  ]
-},
-{
-  id: 8011, pillar: 8, type: "scale",
-  title: "We use storytelling effectively in marketing.",
-  options: [
-    "No storytelling",
-    "Basic storytelling",
-    "Solid storytelling",
-    "Strong storytelling",
-    "Highly effective storytelling engine"
-  ]
-},
-{
-  id: 8012, pillar: 8, type: "scale",
-  title: "Our brand is distinctive and recognizable.",
-  options: [
-    "Not distinctive",
-    "Some distinctiveness",
-    "Solid distinctiveness",
-    "Strong differentiation",
-    "Highly recognizable unique brand"
-  ]
-},
-{
-  id: 8013, pillar: 8, type: "scale",
-  title: "We position ourselves clearly against competitors.",
-  options: [
-    "No positioning",
-    "Basic positioning",
-    "Solid positioning",
-    "Strong positioning",
-    "Highly differentiated position"
-  ]
-},
-{
-  id: 8014, pillar: 8, type: "scale",
-  title: "We have a strong social media presence.",
-  options: [
-    "No presence",
-    "Basic presence",
-    "Solid presence",
-    "Strong presence",
-    "Highly strategic social engine"
-  ]
-},
-{
-  id: 8015, pillar: 8, type: "scale",
-  title: "We maintain strong messaging frameworks.",
-  options: [
-    "No frameworks",
-    "Basic frameworks",
-    "Solid frameworks",
-    "Strong adoption",
-    "Best-in-class messaging architecture"
-  ]
-},
-{
-  id: 8016, pillar: 8, type: "scale",
-  title: "Our thought leadership builds category authority.",
-  options: [
-    "No leadership",
-    "Basic leadership",
-    "Solid leadership",
-    "Strong leadership",
-    "Highly influential category authority"
-  ]
-},
-{
-  id: 8017, pillar: 8, type: "scale",
-  title: "We communicate clearly during launches and updates.",
-  options: [
-    "No structure",
-    "Basic structure",
-    "Solid structure",
-    "Strong communication",
-    "Highly orchestrated communication engine"
-  ]
-},
-{
-  id: 8018, pillar: 8, type: "scale",
-  title: "We measure brand perception effectively.",
-  options: [
-    "No measurement",
-    "Basic measurement",
-    "Solid measurement",
-    "Strong insight",
-    "Deep strategic brand intelligence"
-  ]
-},
-{
-  id: 8019, pillar: 8, type: "scale",
-  title: "We maintain strong internal communication.",
+  title: "We have strong CRM hygiene and data quality.",
   options: [
     "Very weak",
     "Weak",
     "Solid",
     "Strong",
-    "Highly aligned internal communication ecosystem"
+    "Best-in-class CRM hygiene"
   ]
 },
 {
-  id: 8020, pillar: 8, type: "scale",
-  title: "Brand & Communications is a strategic GTM driver.",
+  id: 7002, pillar: 7, type: "scale",
+  title: "Our CRM supports our sales process effectively.",
   options: [
-    "Not strategic",
-    "Some strategic impact",
-    "Solid impact",
-    "Strong strategic driver",
-    "Highly strategic brand engine"
-  ]
-},
-
-   /* ===========================================================
-   PILLAR 9 — DATA & INSIGHTS (20 QUESTIONS)
-   =========================================================== */
-
-{
-  id: 9001, pillar: 9, type: "scale",
-  title: "We have clear, documented definitions for core GTM metrics.",
-  options: [
-    "No definitions",
-    "Informal definitions",
-    "Basic documentation",
-    "Strong documented definitions",
-    "Fully standardized metric system"
+    "Not supportive",
+    "Weak support",
+    "Solid support",
+    "Strong support",
+    "Highly optimized CRM"
   ]
 },
 {
-  id: 9002, pillar: 9, type: "scale",
-  title: "We operate with a single source of truth for GTM reporting.",
-  options: [
-    "Multiple conflicting sources",
-    "Some consolidation",
-    "Mostly unified",
-    "Clear primary source",
-    "Fully unified, trusted data foundation"
-  ]
-},
-{
-  id: 9003, pillar: 9, type: "scale",
-  title: "We have dashboards that cover the full GTM funnel.",
-  options: [
-    "No dashboards",
-    "Basic top-funnel dashboards",
-    "Solid funnel coverage",
-    "Comprehensive funnel dashboards",
-    "Full-funnel intelligence used daily"
-  ]
-},
-{
-  id: 9004, pillar: 9, type: "scale",
-  title: "Leaders use dashboards regularly to run reviews and make decisions.",
-  options: [
-    "Rare usage",
-    "Occasional usage",
-    "Regular usage",
-    "Core to reviews",
-    "Deeply data-driven leadership culture"
-  ]
-},
-{
-  id: 9005, pillar: 9, type: "scale",
-  title: "We track a focused set of KPIs aligned to strategy.",
-  options: [
-    "No KPI system",
-    "Unfocused KPIs",
-    "Solid KPI set",
-    "Strong strategic KPIs",
-    "Highly strategic KPI model"
-  ]
-},
-{
-  id: 9006, pillar: 9, type: "scale",
-  title: "We have a clear attribution model to understand revenue drivers.",
-  options: [
-    "No attribution",
-    "Weak attribution",
-    "Solid attribution",
-    "Strong attribution",
-    "Advanced attribution shaping GTM"
-  ]
-},
-{
-  id: 9007, pillar: 9, type: "scale",
-  title: "Pipeline and revenue reporting is accurate and trusted.",
-  options: [
-    "Frequently challenged",
-    "Basic accuracy",
-    "Generally trusted",
-    "Strong reliability",
-    "Highly reliable reporting foundation"
-  ]
-},
-{
-  id: 9008, pillar: 9, type: "scale",
-  title: "GTM data quality is actively monitored and managed.",
-  options: [
-    "Unknown / poor",
-    "Some cleanup",
-    "Solid monitoring",
-    "Strong data quality program",
-    "Proactive data excellence"
-  ]
-},
-{
-  id: 9009, pillar: 9, type: "scale",
-  title: "Teams have self-service access to the data they need.",
-  options: [
-    "No access",
-    "Limited access",
-    "Solid access",
-    "Broad access",
-    "Fully democratized, self-serve analytics"
-  ]
-},
-{
-  id: 9010, pillar: 9, type: "scale",
-  title: "We have a consistent reporting cadence (daily, weekly, monthly).",
-  options: [
-    "No cadence",
-    "Ad-hoc cadence",
-    "Solid cadence",
-    "Strong cadence",
-    "Fully orchestrated reporting rhythm"
-  ]
-},
-{
-  id: 9011, pillar: 9, type: "scale",
-  title: "Our forecasting process is supported by reliable data.",
-  options: [
-    "Opinion-based forecasting",
-    "Basic data support",
-    "Solid forecasting",
-    "Strong forecasting",
-    "Highly reliable, data-driven forecasting"
-  ]
-},
-{
-  id: 9012, pillar: 9, type: "scale",
-  title: "We can segment and analyze performance easily (region, ICP, channel).",
-  options: [
-    "Very limited segmentation",
-    "Basic segmentation",
-    "Solid segmentation",
-    "Strong segmentation",
-    "Deep flexible segmentation engine"
-  ]
-},
-{
-  id: 9013, pillar: 9, type: "scale",
-  title: "We analyze product usage to support GTM decisions.",
-  options: [
-    "No usage analytics",
-    "Basic metrics",
-    "Solid analytics",
-    "Strong analytics",
-    "Deep product intelligence"
-  ]
-},
-{
-  id: 9014, pillar: 9, type: "scale",
-  title: "We measure the impact of experiments with reliable analytics.",
-  options: [
-    "No measurement",
-    "Basic measurement",
-    "Solid measurement",
-    "Strong measurement",
-    "Systematic experimentation engine"
-  ]
-},
-{
-  id: 9015, pillar: 9, type: "scale",
-  title: "Data ownership and governance are clearly defined.",
-  options: [
-    "No governance",
-    "Weak governance",
-    "Solid governance",
-    "Strong governance",
-    "Mature governance with stewardship"
-  ]
-},
-{
-  id: 9016, pillar: 9, type: "scale",
-  title: "Our systems integrate well so data flows reliably.",
-  options: [
-    "Major silos",
-    "Some integrations",
-    "Solid integrations",
-    "Strong integrations",
-    "Highly coherent system architecture"
-  ]
-},
-{
-  id: 9017, pillar: 9, type: "scale",
-  title: "Dashboards and reports connect directly to strategic objectives.",
-  options: [
-    "No connection",
-    "Weak alignment",
-    "Solid alignment",
-    "Strong alignment",
-    "Fully strategy-aligned reporting system"
-  ]
-},
-{
-  id: 9018, pillar: 9, type: "scale",
-  title: "We can quickly drill down from KPIs to root causes.",
-  options: [
-    "Very difficult",
-    "Manual, slow",
-    "Decent drill-down",
-    "Strong drill-down",
-    "Fast, systematic root-cause engine"
-  ]
-},
-{
-  id: 9019, pillar: 9, type: "scale",
-  title: "We set data-driven targets and track improvements over time.",
-  options: [
-    "Not data-driven",
-    "Somewhat data-driven",
-    "Solid target system",
-    "Strong target tracking",
-    "Deep benchmark-driven target engine"
-  ]
-},
-{
-  id: 9020, pillar: 9, type: "scale",
-  title: "Data & Insights is a strategic partner to leadership and GTM.",
-  options: [
-    "Pure reporting",
-    "Some advisory role",
-    "Solid partnership",
-    "Strong strategic partner",
-    "Highly strategic insights engine"
-  ]
-},
-
-/* ===========================================================
-   PILLAR 10 — OPERATIONS & SYSTEMS (20 QUESTIONS)
-   =========================================================== */
-
-{
-  id: 10001, pillar: 10, type: "scale",
-  title: "We have clear documented processes for all major GTM workflows.",
+  id: 7003, pillar: 7, type: "scale",
+  title: "We have documented GTM workflows and processes.",
   options: [
     "No documentation",
     "Basic documentation",
     "Solid documentation",
     "Strong documentation",
-    "Fully standardized GTM operating system"
+    "Comprehensive RevOps playbook"
   ]
 },
 {
-  id: 10002, pillar: 10, type: "scale",
-  title: "We have strong cross-functional alignment across GTM.",
-  options: [
-    "Very poor alignment",
-    "Basic alignment",
-    "Solid alignment",
-    "Strong alignment",
-    "Highly aligned execution engine"
-  ]
-},
-{
-  id: 10003, pillar: 10, type: "scale",
-  title: "We operate with a clear GTM cadence.",
-  options: [
-    "No cadence",
-    "Basic cadence",
-    "Solid cadence",
-    "Strong cadence",
-    "Highly orchestrated operating rhythm"
-  ]
-},
-{
-  id: 10004, pillar: 10, type: "scale",
-  title: "Our tech stack is well configured and used effectively.",
-  options: [
-    "Poor configuration",
-    "Basic setup",
-    "Solid setup",
-    "Strong configuration",
-    "Highly optimized GTM system"
-  ]
-},
-{
-  id: 10005, pillar: 10, type: "scale",
-  title: "We automate repetitive GTM tasks effectively.",
+  id: 7004, pillar: 7, type: "scale",
+  title: "We use automation to improve GTM efficiency.",
   options: [
     "No automation",
     "Basic automation",
@@ -2474,621 +1719,1306 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 10006, pillar: 10, type: "scale",
-  title: "We maintain strong data quality standards.",
+  id: 7005, pillar: 7, type: "scale",
+  title: "Our tech stack integrates well across systems.",
   options: [
-    "Very poor quality",
-    "Basic standards",
-    "Solid quality",
-    "Strong quality program",
-    "Deep governed data operations"
+    "Very fragmented",
+    "Weak integration",
+    "Solid integration",
+    "Strong integration",
+    "Highly coherent tech architecture"
+  ]
+},
+{
+  id: 7006, pillar: 7, type: "scale",
+  title: "We have strong lead routing and assignment.",
+  options: [
+    "No routing",
+    "Weak routing",
+    "Solid routing",
+    "Strong routing",
+    "Highly optimized lead engine"
+  ]
+},
+{
+  id: 7007, pillar: 7, type: "scale",
+  title: "We manage our tech stack cost-effectively.",
+  options: [
+    "Very inefficient",
+    "Inefficient",
+    "Solid efficiency",
+    "Strong efficiency",
+    "Highly optimized tech spend"
+  ]
+},
+{
+  id: 7008, pillar: 7, type: "scale",
+  title: "RevOps supports Sales and Marketing effectively.",
+  options: [
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Highly strategic RevOps partner"
+  ]
+},
+{
+  id: 7009, pillar: 7, type: "scale",
+  title: "We have strong GTM cadences (e.g. pipeline reviews, forecasting).",
+  options: [
+    "No cadence",
+    "Weak cadence",
+    "Solid cadence",
+    "Strong cadence",
+    "Highly disciplined GTM rhythm"
+  ]
+},
+{
+  id: 7010, pillar: 7, type: "scale",
+  title: "We measure and optimize GTM efficiency.",
+  options: [
+    "No measurement",
+    "Basic measurement",
+    "Solid measurement",
+    "Strong optimization",
+    "Highly data-driven efficiency engine"
+  ]
+},
+{
+  id: 7011, pillar: 7, type: "scale",
+  title: "We have strong governance around data and process changes.",
+  options: [
+    "No governance",
+    "Weak governance",
+    "Solid governance",
+    "Strong governance",
+    "Best-in-class change management"
+  ]
+},
+{
+  id: 7012, pillar: 7, type: "scale",
+  title: "We manage territories and quotas effectively.",
+  options: [
+    "No structure",
+    "Weak structure",
+    "Solid structure",
+    "Strong structure",
+    "Highly strategic territory design"
+  ]
+},
+{
+  id: 7013, pillar: 7, type: "scale",
+  title: "RevOps collaborates cross-functionally with GTM teams.",
+  options: [
+    "Very siloed",
+    "Limited collaboration",
+    "Solid collaboration",
+    "Strong collaboration",
+    "Highly integrated RevOps function"
+  ]
+},
+{
+  id: 7014, pillar: 7, type: "scale",
+  title: "We have strong reporting and dashboards.",
+  options: [
+    "No reporting",
+    "Weak reporting",
+    "Solid reporting",
+    "Strong dashboards",
+    "Best-in-class BI infrastructure"
+  ]
+},
+{
+  id: 7015, pillar: 7, type: "scale",
+  title: "We use data to drive GTM decisions.",
+  options: [
+    "No data usage",
+    "Weak data usage",
+    "Solid data-driven",
+    "Strong data-driven",
+    "Highly analytical GTM culture"
+  ]
+},
+{
+  id: 7016, pillar: 7, type: "scale",
+  title: "RevOps drives process consistency across teams.",
+  options: [
+    "No consistency",
+    "Weak consistency",
+    "Solid consistency",
+    "Strong consistency",
+    "Highly standardized GTM operations"
+  ]
+},
+{
+  id: 7017, pillar: 7, type: "scale",
+  title: "We run effective pipeline and forecast reviews.",
+  options: [
+    "No reviews",
+    "Weak reviews",
+    "Solid reviews",
+    "Strong reviews",
+    "Highly disciplined forecast governance"
+  ]
+},
+{
+  id: 7018, pillar: 7, type: "scale",
+  title: "We manage GTM tool adoption effectively.",
+  options: [
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Highly strategic tool enablement"
+  ]
+},
+{
+  id: 7019, pillar: 7, type: "scale",
+  title: "RevOps is a strategic GTM enabler.",
+  options: [
+    "Not strategic",
+    "Some strategic role",
+    "Solid strategic role",
+    "Strong enabler",
+    "Highly strategic RevOps function"
+  ]
+},
+{
+  id: 7020, pillar: 7, type: "scale",
+  title: "Revenue Operations is a competitive advantage.",
+  options: [
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
+  ]
+},
+
+/* ===========================================================
+   PILLAR 8 — PRICING & PACKAGING (20 QUESTIONS)
+   =========================================================== */
+
+{
+  id: 8001, pillar: 8, type: "scale",
+  title: "We have a clear pricing strategy.",
+  options: [
+    "No strategy",
+    "Basic strategy",
+    "Solid strategy",
+    "Strong strategy",
+    "Highly strategic pricing model"
+  ]
+},
+{
+  id: 8002, pillar: 8, type: "scale",
+  title: "Our packaging aligns with how customers adopt and use our product.",
+  options: [
+    "Very misaligned",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Perfectly aligned packaging"
+  ]
+},
+{
+  id: 8003, pillar: 8, type: "scale",
+  title: "Our pricing model is easy to understand and sell.",
+  options: [
+    "Very confusing",
+    "Somewhat confusing",
+    "Solid clarity",
+    "Strong clarity",
+    "Highly intuitive pricing"
+  ]
+},
+{
+  id: 8004, pillar: 8, type: "scale",
+  title: "We understand willingness to pay across segments.",
+  options: [
+    "No insight",
+    "Basic insight",
+    "Solid insight",
+    "Strong insight",
+    "Deep pricing intelligence"
+  ]
+},
+{
+  id: 8005, pillar: 8, type: "scale",
+  title: "Our pricing supports expansion and upsell.",
+  options: [
+    "No support",
+    "Weak support",
+    "Solid support",
+    "Strong support",
+    "Highly optimized expansion pricing"
+  ]
+},
+{
+  id: 8006, pillar: 8, type: "scale",
+  title: "We align pricing with value delivered.",
+  options: [
+    "Very misaligned",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Perfectly value-aligned pricing"
+  ]
+},
+{
+  id: 8007, pillar: 8, type: "scale",
+  title: "Our pricing supports fast time-to-value.",
+  options: [
+    "Very slow",
+    "Slow",
+    "Solid",
+    "Strong",
+    "Highly optimized for speed-to-value"
+  ]
+},
+{
+  id: 8008, pillar: 8, type: "scale",
+  title: "We understand which features drive willingness to pay.",
+  options: [
+    "No insight",
+    "Basic insight",
+    "Solid insight",
+    "Strong insight",
+    "Deep feature-value intelligence"
+  ]
+},
+{
+  id: 8009, pillar: 8, type: "scale",
+  title: "Our pricing is competitive and market-informed.",
+  options: [
+    "No market insight",
+    "Weak market insight",
+    "Solid market insight",
+    "Strong market alignment",
+    "Highly strategic pricing positioning"
+  ]
+},
+{
+  id: 8010, pillar: 8, type: "scale",
+  title: "Our pricing is easy for Sales to sell.",
+  options: [
+    "Very difficult",
+    "Difficult",
+    "Solid",
+    "Easy",
+    "Highly sales-friendly pricing"
+  ]
+},
+{
+  id: 8011, pillar: 8, type: "scale",
+  title: "We understand price sensitivity by segment.",
+  options: [
+    "No insight",
+    "Basic insight",
+    "Solid insight",
+    "Strong insight",
+    "Deep segment pricing intelligence"
+  ]
+},
+{
+  id: 8012, pillar: 8, type: "scale",
+  title: "Our pricing supports both PLG and sales-led motions.",
+  options: [
+    "Not supportive",
+    "Weak support",
+    "Solid support",
+    "Strong support",
+    "Highly optimized hybrid pricing"
+  ]
+},
+{
+  id: 8013, pillar: 8, type: "scale",
+  title: "We tailor pricing to different personas or use cases.",
+  options: [
+    "No tailoring",
+    "Basic tailoring",
+    "Solid tailoring",
+    "Strong tailoring",
+    "Highly persona-optimized pricing"
+  ]
+},
+{
+  id: 8014, pillar: 8, type: "scale",
+  title: "We provide clear ROI and value justification for pricing.",
+  options: [
+    "No justification",
+    "Weak justification",
+    "Solid justification",
+    "Strong justification",
+    "Highly compelling ROI narrative"
+  ]
+},
+{
+  id: 8015, pillar: 8, type: "scale",
+  title: "We manage discounting strategically.",
+  options: [
+    "No discipline",
+    "Weak discipline",
+    "Solid discipline",
+    "Strong discipline",
+    "Highly strategic discount governance"
+  ]
+},
+{
+  id: 8016, pillar: 8, type: "scale",
+  title: "We identify pricing/packaging gaps that block deals.",
+  options: [
+    "No insight",
+    "Basic insight",
+    "Solid insight",
+    "Strong insight",
+    "Deep pricing friction intelligence"
+  ]
+},
+{
+  id: 8017, pillar: 8, type: "scale",
+  title: "We test and validate pricing regularly.",
+  options: [
+    "No testing",
+    "Occasional testing",
+    "Solid testing",
+    "Strong validation",
+    "Highly systematic pricing optimization"
+  ]
+},
+{
+  id: 8018, pillar: 8, type: "scale",
+  title: "Our pricing adapts to different geographies.",
+  options: [
+    "No adaptation",
+    "Weak adaptation",
+    "Solid adaptation",
+    "Strong localization",
+    "Highly optimized geo pricing"
+  ]
+},
+{
+  id: 8019, pillar: 8, type: "scale",
+  title: "We measure pricing performance and impact.",
+  options: [
+    "No measurement",
+    "Weak measurement",
+    "Solid measurement",
+    "Strong insight",
+    "Deep pricing analytics"
+  ]
+},
+{
+  id: 8020, pillar: 8, type: "scale",
+  title: "Pricing & Packaging is a competitive advantage.",
+  options: [
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
+  ]
+},
+
+/* ===========================================================
+   PILLAR 9 — BRAND & COMMUNICATIONS (20 QUESTIONS)
+   =========================================================== */
+
+{
+  id: 9001, pillar: 9, type: "scale",
+  title: "We have a clear brand narrative and story.",
+  options: [
+    "No narrative",
+    "Weak narrative",
+    "Solid narrative",
+    "Strong narrative",
+    "Highly compelling brand story"
+  ]
+},
+{
+  id: 9002, pillar: 9, type: "scale",
+  title: "Our brand communicates trust and authority.",
+  options: [
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Highly trusted brand"
+  ]
+},
+{
+  id: 9003, pillar: 9, type: "scale",
+  title: "We have strong visual brand identity.",
+  options: [
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Best-in-class visual identity"
+  ]
+},
+{
+  id: 9004, pillar: 9, type: "scale",
+  title: "Our brand is consistent across all touchpoints.",
+  options: [
+    "Very inconsistent",
+    "Inconsistent",
+    "Solid consistency",
+    "Strong consistency",
+    "Perfectly consistent brand"
+  ]
+},
+{
+  id: 9005, pillar: 9, type: "scale",
+  title: "We communicate thought leadership effectively.",
+  options: [
+    "No thought leadership",
+    "Weak thought leadership",
+    "Solid thought leadership",
+    "Strong thought leadership",
+    "Highly influential thought leadership"
+  ]
+},
+{
+  id: 9006, pillar: 9, type: "scale",
+  title: "Our PR and media strategy drives brand awareness.",
+  options: [
+    "No PR strategy",
+    "Weak PR strategy",
+    "Solid PR strategy",
+    "Strong PR execution",
+    "Highly strategic PR engine"
+  ]
+},
+{
+  id: 9007, pillar: 9, type: "scale",
+  title: "We emphasize value and outcomes in our communications.",
+  options: [
+    "Feature-focused only",
+    "Some value messaging",
+    "Solid value focus",
+    "Strong value emphasis",
+    "Deep value-driven narrative"
+  ]
+},
+{
+  id: 9008, pillar: 9, type: "scale",
+  title: "We use customer stories and testimonials effectively.",
+  options: [
+    "No customer stories",
+    "Weak usage",
+    "Solid usage",
+    "Strong usage",
+    "Highly strategic proof engine"
+  ]
+},
+{
+  id: 9009, pillar: 9, type: "scale",
+  title: "Our brand differentiates us clearly in the market.",
+  options: [
+    "No differentiation",
+    "Weak differentiation",
+    "Solid differentiation",
+    "Strong differentiation",
+    "Highly differentiated brand"
+  ]
+},
+{
+  id: 9010, pillar: 9, type: "scale",
+  title: "We have a strong social media presence.",
+  options: [
+    "No presence",
+    "Weak presence",
+    "Solid presence",
+    "Strong presence",
+    "Highly influential social presence"
+  ]
+},
+{
+  id: 9011, pillar: 9, type: "scale",
+  title: "Our brand supports sales and demand generation.",
+  options: [
+    "No support",
+    "Weak support",
+    "Solid support",
+    "Strong support",
+    "Highly strategic brand-GTM alignment"
+  ]
+},
+{
+  id: 9012, pillar: 9, type: "scale",
+  title: "We use content marketing strategically.",
+  options: [
+    "No content marketing",
+    "Weak content",
+    "Solid content",
+    "Strong content engine",
+    "Highly strategic content system"
+  ]
+},
+{
+  id: 9013, pillar: 9, type: "scale",
+  title: "We communicate our position in the competitive landscape clearly.",
+  options: [
+    "No clarity",
+    "Weak clarity",
+    "Solid clarity",
+    "Strong clarity",
+    "Highly strategic competitive messaging"
+  ]
+},
+{
+  id: 9014, pillar: 9, type: "scale",
+  title: "Our internal teams understand and embody the brand.",
+  options: [
+    "No alignment",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Deeply embedded brand culture"
+  ]
+},
+{
+  id: 9015, pillar: 9, type: "scale",
+  title: "We maintain strong brand messaging frameworks.",
+  options: [
+    "No frameworks",
+    "Weak frameworks",
+    "Solid frameworks",
+    "Strong frameworks",
+    "Best-in-class messaging architecture"
+  ]
+},
+{
+  id: 9016, pillar: 9, type: "scale",
+  title: "We invest in brand awareness strategically.",
+  options: [
+    "No investment",
+    "Weak investment",
+    "Solid investment",
+    "Strong investment",
+    "Highly strategic brand investment"
+  ]
+},
+{
+  id: 9017, pillar: 9, type: "scale",
+  title: "Our brand evolves with our GTM strategy.",
+  options: [
+    "Static brand",
+    "Weak evolution",
+    "Solid evolution",
+    "Strong evolution",
+    "Highly adaptive brand strategy"
+  ]
+},
+{
+  id: 9018, pillar: 9, type: "scale",
+  title: "We measure brand performance and perception.",
+  options: [
+    "No measurement",
+    "Weak measurement",
+    "Solid measurement",
+    "Strong measurement",
+    "Deep brand analytics"
+  ]
+},
+{
+  id: 9019, pillar: 9, type: "scale",
+  title: "Brand & Communications drives GTM success.",
+  options: [
+    "Not a driver",
+    "Weak driver",
+    "Solid driver",
+    "Strong driver",
+    "Highly strategic brand function"
+  ]
+},
+{
+  id: 9020, pillar: 9, type: "scale",
+  title: "Brand & Communications is a competitive advantage.",
+  options: [
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
+  ]
+},
+
+/* ===========================================================
+   PILLAR 10 — DATA & INSIGHTS (20 QUESTIONS)
+   =========================================================== */
+
+{
+  id: 10001, pillar: 10, type: "scale",
+  title: "We have clear definitions for key GTM metrics.",
+  options: [
+    "No definitions",
+    "Weak definitions",
+    "Solid definitions",
+    "Strong definitions",
+    "Best-in-class metric governance"
+  ]
+},
+{
+  id: 10002, pillar: 10, type: "scale",
+  title: "Our GTM data is reliable and accurate.",
+  options: [
+    "Very unreliable",
+    "Unreliable",
+    "Solid reliability",
+    "Strong reliability",
+    "Highly trusted data"
+  ]
+},
+{
+  id: 10003, pillar: 10, type: "scale",
+  title: "We use data to drive GTM decisions consistently.",
+  options: [
+    "No data usage",
+    "Weak usage",
+    "Solid usage",
+    "Strong usage",
+    "Deeply data-driven culture"
+  ]
+},
+{
+  id: 10004, pillar: 10, type: "scale",
+  title: "We track leading indicators effectively.",
+  options: [
+    "No tracking",
+    "Weak tracking",
+    "Solid tracking",
+    "Strong tracking",
+    "Highly predictive indicator system"
+  ]
+},
+{
+  id: 10005, pillar: 10, type: "scale",
+  title: "We have strong attribution models.",
+  options: [
+    "No attribution",
+    "Weak attribution",
+    "Solid attribution",
+    "Strong attribution",
+    "Best-in-class multi-touch attribution"
+  ]
+},
+{
+  id: 10006, pillar: 10, type: "scale",
+  title: "We measure GTM efficiency effectively.",
+  options: [
+    "No measurement",
+    "Weak measurement",
+    "Solid measurement",
+    "Strong measurement",
+    "Deep efficiency intelligence"
   ]
 },
 {
   id: 10007, pillar: 10, type: "scale",
-  title: "Hand-offs between GTM teams are clearly defined and reliable.",
+  title: "We run strong cohort analysis.",
   options: [
-    "Very inconsistent",
-    "Basic hand-offs",
-    "Solid hand-offs",
-    "Strong hand-offs",
-    "Seamless automated hand-offs"
+    "No cohort analysis",
+    "Basic cohort analysis",
+    "Solid cohort analysis",
+    "Strong cohort intelligence",
+    "Highly sophisticated cohort system"
   ]
 },
 {
   id: 10008, pillar: 10, type: "scale",
-  title: "We maintain clear documentation and enablement for all tools and workflows.",
+  title: "We have clear visibility into pipeline health.",
   options: [
-    "No documentation",
-    "Basic documentation",
-    "Solid documentation",
-    "Strong documentation",
-    "Full structured knowledge base"
+    "No visibility",
+    "Weak visibility",
+    "Solid visibility",
+    "Strong visibility",
+    "Deep pipeline intelligence"
   ]
 },
 {
   id: 10009, pillar: 10, type: "scale",
-  title: "Our GTM systems are well integrated.",
+  title: "We segment performance data effectively.",
   options: [
-    "Very poor integration",
-    "Basic integration",
-    "Solid integration",
-    "Strong integration",
-    "Highly reliable connected architecture"
+    "No segmentation",
+    "Weak segmentation",
+    "Solid segmentation",
+    "Strong segmentation",
+    "Highly granular segmentation"
   ]
 },
 {
   id: 10010, pillar: 10, type: "scale",
-  title: "We maintain strong systems administration.",
+  title: "We forecast accurately using data.",
   options: [
-    "No governance",
-    "Basic governance",
-    "Solid governance",
-    "Strong governance",
-    "Best-in-class governance"
+    "No forecasting",
+    "Weak forecasting",
+    "Solid forecasting",
+    "Strong forecasting",
+    "Highly predictive forecasting"
   ]
 },
 {
   id: 10011, pillar: 10, type: "scale",
-  title: "We maintain consistent SLAs across GTM operations.",
+  title: "We use predictive analytics to inform GTM.",
   options: [
-    "No SLAs",
-    "Basic SLAs",
-    "Solid SLAs",
-    "Strong SLAs",
-    "Highly reliable operations engine"
+    "No predictive analytics",
+    "Basic analytics",
+    "Solid analytics",
+    "Strong analytics",
+    "Highly advanced predictive models"
   ]
 },
 {
   id: 10012, pillar: 10, type: "scale",
-  title: "We track process performance and continuously improve workflows.",
+  title: "Our dashboards provide actionable insights.",
   options: [
-    "No improvement",
-    "Occasional improvements",
-    "Solid improvements",
-    "Strong continuous improvement",
-    "Fully optimized improvement engine"
+    "No dashboards",
+    "Weak dashboards",
+    "Solid dashboards",
+    "Strong dashboards",
+    "Best-in-class BI infrastructure"
   ]
 },
 {
   id: 10013, pillar: 10, type: "scale",
-  title: "Our RevOps team has the skills and capacity to support GTM.",
+  title: "We run effective performance reviews using data.",
   options: [
-    "No dedicated ops",
-    "Basic ops",
-    "Solid ops",
-    "Strong ops",
-    "Highly strategic ops engine"
+    "No reviews",
+    "Weak reviews",
+    "Solid reviews",
+    "Strong reviews",
+    "Highly data-driven review culture"
   ]
 },
 {
   id: 10014, pillar: 10, type: "scale",
-  title: "We manage GTM projects with clear owners and timelines.",
+  title: "We identify patterns and trends in GTM data.",
   options: [
-    "No project management",
-    "Ad-hoc management",
-    "Solid project management",
-    "Strong management",
-    "Highly reliable execution engine"
+    "No pattern detection",
+    "Weak detection",
+    "Solid detection",
+    "Strong detection",
+    "Deep trend intelligence"
   ]
 },
 {
   id: 10015, pillar: 10, type: "scale",
-  title: "We run quarterly and annual planning with clear outputs.",
+  title: "We benchmark our performance against industry standards.",
   options: [
-    "No planning",
-    "Basic planning",
-    "Solid planning",
-    "Strong planning",
-    "Highly aligned strategic planning"
+    "No benchmarking",
+    "Weak benchmarking",
+    "Solid benchmarking",
+    "Strong benchmarking",
+    "Deep competitive intelligence"
   ]
 },
 {
   id: 10016, pillar: 10, type: "scale",
-  title: "We have strong change management for new tools and processes.",
+  title: "Our data systems integrate well across platforms.",
   options: [
-    "No change management",
-    "Basic communication",
-    "Solid change management",
-    "Strong adoption",
-    "Highly effective change engine"
+    "Very fragmented",
+    "Weak integration",
+    "Solid integration",
+    "Strong integration",
+    "Highly unified data architecture"
   ]
 },
 {
   id: 10017, pillar: 10, type: "scale",
-  title: "We monitor capacity needs to avoid bottlenecks.",
+  title: "We use data to optimize resource allocation.",
   options: [
-    "No capacity management",
-    "Basic insight",
-    "Solid management",
-    "Strong planning",
-    "Predictive resourcing engine"
+    "No optimization",
+    "Weak optimization",
+    "Solid optimization",
+    "Strong optimization",
+    "Highly strategic resource intelligence"
   ]
 },
 {
   id: 10018, pillar: 10, type: "scale",
-  title: "We maintain strong onboarding and enablement for GTM roles.",
+  title: "We measure customer lifetime value (LTV) accurately.",
   options: [
-    "No onboarding",
-    "Basic onboarding",
-    "Solid onboarding",
-    "Strong onboarding",
-    "Best-in-class enablement"
+    "No measurement",
+    "Weak measurement",
+    "Solid measurement",
+    "Strong measurement",
+    "Deep LTV intelligence"
   ]
 },
 {
   id: 10019, pillar: 10, type: "scale",
-  title: "We use retrospectives and feedback loops to improve execution.",
+  title: "Data & Insights drives GTM performance.",
   options: [
-    "No retrospectives",
-    "Occasional retrospectives",
-    "Solid retrospectives",
-    "Strong retrospectives",
-    "Continuous improvement engine"
+    "Not a driver",
+    "Weak driver",
+    "Solid driver",
+    "Strong driver",
+    "Highly strategic insights function"
   ]
 },
 {
   id: 10020, pillar: 10, type: "scale",
-  title: "Operations & Systems is a strategic enabler of predictable revenue.",
+  title: "Data & Insights is a competitive advantage.",
   options: [
-    "Not strategic",
-    "Some impact",
-    "Solid impact",
-    "Strong enabler",
-    "Highly strategic GTM backbone"
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
   ]
 },
 
 /* ===========================================================
    PILLAR 11 — ENABLEMENT (20 QUESTIONS)
-   Training, playbooks, onboarding, knowledge management
    =========================================================== */
 
 {
   id: 11001, pillar: 11, type: "scale",
   title: "We have structured onboarding for new GTM hires.",
   options: [
-    "No onboarding program",
-    "Basic informal onboarding",
-    "Solid onboarding program",
-    "Strong structured onboarding",
-    "Best-in-class onboarding engine"
+    "No onboarding",
+    "Weak onboarding",
+    "Solid onboarding",
+    "Strong onboarding",
+    "Best-in-class onboarding program"
   ]
 },
 {
   id: 11002, pillar: 11, type: "scale",
-  title: "New sales reps ramp to full productivity predictably.",
+  title: "We reduce ramp time for new hires effectively.",
   options: [
-    "Very unpredictable ramp",
-    "Inconsistent ramp",
-    "Solid ramp time",
-    "Strong predictable ramp",
-    "Highly optimized ramp engine"
+    "Very slow ramp",
+    "Slow ramp",
+    "Solid ramp",
+    "Strong ramp",
+    "Highly efficient ramp system"
   ]
 },
 {
   id: 11003, pillar: 11, type: "scale",
-  title: "We maintain up-to-date playbooks for key GTM motions.",
+  title: "We provide ongoing training and skill development.",
   options: [
-    "No playbooks",
-    "Outdated or incomplete playbooks",
-    "Solid playbooks",
-    "Strong comprehensive playbooks",
-    "Best-in-class playbook library"
+    "No training",
+    "Weak training",
+    "Solid training",
+    "Strong training",
+    "Highly strategic learning culture"
   ]
 },
 {
   id: 11004, pillar: 11, type: "scale",
-  title: "Our GTM teams have access to the training they need.",
+  title: "We have strong sales playbooks.",
   options: [
-    "No training available",
-    "Limited ad-hoc training",
-    "Solid training programs",
-    "Strong training access",
-    "Comprehensive enablement platform"
+    "No playbooks",
+    "Weak playbooks",
+    "Solid playbooks",
+    "Strong playbooks",
+    "Best-in-class playbook system"
   ]
 },
 {
   id: 11005, pillar: 11, type: "scale",
-  title: "We provide strong product training and certification.",
+  title: "Our enablement content is accessible and easy to use.",
   options: [
-    "No product training",
-    "Basic informal training",
-    "Solid product training",
-    "Strong certification program",
-    "Best-in-class product enablement"
+    "Very hard to use",
+    "Hard to use",
+    "Solid accessibility",
+    "Strong accessibility",
+    "Highly intuitive enablement platform"
   ]
 },
 {
   id: 11006, pillar: 11, type: "scale",
-  title: "Sales teams have access to high-quality sales collateral.",
+  title: "We provide role-specific enablement.",
   options: [
-    "No collateral",
-    "Outdated or limited collateral",
-    "Solid collateral library",
-    "Strong sales enablement content",
-    "Comprehensive content engine"
+    "No role-specific content",
+    "Weak role content",
+    "Solid role content",
+    "Strong role enablement",
+    "Highly tailored enablement system"
   ]
 },
 {
   id: 11007, pillar: 11, type: "scale",
-  title: "We maintain a central knowledge base for GTM teams.",
+  title: "We certify reps before they start selling.",
   options: [
-    "No knowledge base",
-    "Basic scattered documentation",
-    "Solid knowledge base",
-    "Strong organized knowledge hub",
-    "Best-in-class knowledge system"
+    "No certification",
+    "Weak certification",
+    "Solid certification",
+    "Strong certification",
+    "Highly rigorous certification program"
   ]
 },
 {
   id: 11008, pillar: 11, type: "scale",
-  title: "We provide ongoing coaching and skill development.",
+  title: "We provide consistent coaching to GTM teams.",
   options: [
     "No coaching",
-    "Occasional informal coaching",
-    "Solid coaching program",
-    "Strong systematic coaching",
-    "Elite coaching culture"
+    "Weak coaching",
+    "Solid coaching",
+    "Strong coaching",
+    "Best-in-class coaching culture"
   ]
 },
 {
   id: 11009, pillar: 11, type: "scale",
-  title: "Our enablement content is easy to find and access.",
+  title: "We equip teams with effective sales and marketing collateral.",
   options: [
-    "Very difficult to find",
-    "Basic discoverability",
-    "Solid accessibility",
-    "Strong searchability",
-    "Instant, intuitive access"
+    "No collateral",
+    "Weak collateral",
+    "Solid collateral",
+    "Strong collateral",
+    "Best-in-class enablement assets"
   ]
 },
 {
   id: 11010, pillar: 11, type: "scale",
-  title: "We track enablement effectiveness and ROI.",
+  title: "Enablement aligns closely with Product Marketing.",
   options: [
-    "No measurement",
-    "Basic tracking",
-    "Solid measurement",
-    "Strong ROI visibility",
-    "Deep enablement intelligence"
+    "Very disconnected",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Deeply integrated enablement-PMM"
   ]
 },
 {
   id: 11011, pillar: 11, type: "scale",
-  title: "We provide strong competitive intelligence and battle cards.",
+  title: "We measure enablement effectiveness.",
   options: [
-    "No competitive enablement",
-    "Outdated battle cards",
-    "Solid competitive content",
-    "Strong battle card system",
-    "Real-time competitive intelligence"
+    "No measurement",
+    "Weak measurement",
+    "Solid measurement",
+    "Strong measurement",
+    "Deep enablement analytics"
   ]
 },
 {
   id: 11012, pillar: 11, type: "scale",
-  title: "We enable teams on new product launches effectively.",
-  options: [
-    "No launch enablement",
-    "Basic launch communication",
-    "Solid launch enablement",
-    "Strong launch readiness",
-    "Best-in-class launch engine"
-  ]
-},
-{
-  id: 11013, pillar: 11, type: "scale",
-  title: "Managers are trained to coach their teams effectively.",
-  options: [
-    "No manager training",
-    "Basic manager training",
-    "Solid manager development",
-    "Strong manager enablement",
-    "Elite manager development program"
-  ]
-},
-{
-  id: 11014, pillar: 11, type: "scale",
-  title: "We provide just-in-time enablement when teams need it.",
-  options: [
-    "No on-demand support",
-    "Limited reactive support",
-    "Solid on-demand resources",
-    "Strong just-in-time enablement",
-    "Instant contextual enablement"
-  ]
-},
-{
-  id: 11015, pillar: 11, type: "scale",
-  title: "We maintain standardized GTM processes and workflows.",
-  options: [
-    "No standardization",
-    "Inconsistent processes",
-    "Solid process documentation",
-    "Strong standardized workflows",
-    "Fully operationalized GTM system"
-  ]
-},
-{
-  id: 11016, pillar: 11, type: "scale",
-  title: "We regularly update enablement content to keep it relevant.",
+  title: "We update enablement materials regularly.",
   options: [
     "Never updated",
     "Rarely updated",
     "Solid update cadence",
-    "Strong regular updates",
-    "Real-time content maintenance"
+    "Strong update cadence",
+    "Continuous enablement evolution"
+  ]
+},
+{
+  id: 11013, pillar: 11, type: "scale",
+  title: "We provide competitive enablement effectively.",
+  options: [
+    "No competitive enablement",
+    "Weak enablement",
+    "Solid enablement",
+    "Strong enablement",
+    "Best-in-class competitive intelligence"
+  ]
+},
+{
+  id: 11014, pillar: 11, type: "scale",
+  title: "We provide enablement for objection handling.",
+  options: [
+    "No objection training",
+    "Weak training",
+    "Solid training",
+    "Strong training",
+    "Highly strategic objection enablement"
+  ]
+},
+{
+  id: 11015, pillar: 11, type: "scale",
+  title: "Enablement supports deal execution effectively.",
+  options: [
+    "No support",
+    "Weak support",
+    "Solid support",
+    "Strong support",
+    "Highly strategic deal enablement"
+  ]
+},
+{
+  id: 11016, pillar: 11, type: "scale",
+  title: "We run strong product training for GTM teams.",
+  options: [
+    "No product training",
+    "Weak training",
+    "Solid training",
+    "Strong training",
+    "Deep product expertise program"
   ]
 },
 {
   id: 11017, pillar: 11, type: "scale",
-  title: "Our enablement team collaborates closely with GTM leaders.",
+  title: "Enablement collaborates closely with Sales leadership.",
   options: [
     "Very disconnected",
-    "Limited collaboration",
-    "Solid partnership",
-    "Strong alignment",
-    "Fully integrated enablement function"
+    "Weak collaboration",
+    "Solid collaboration",
+    "Strong collaboration",
+    "Deeply integrated enablement-sales"
   ]
 },
 {
   id: 11018, pillar: 11, type: "scale",
-  title: "We provide role-specific training paths for different GTM roles.",
+  title: "We use real-world scenarios and role-play effectively.",
   options: [
-    "No role-specific training",
-    "Generic training only",
-    "Solid role-specific content",
-    "Strong learning paths",
-    "Personalized learning engine"
+    "No role-play",
+    "Weak role-play",
+    "Solid role-play",
+    "Strong role-play",
+    "Highly immersive training system"
   ]
 },
 {
   id: 11019, pillar: 11, type: "scale",
-  title: "Teams can contribute to and improve enablement content.",
+  title: "Enablement drives GTM performance and consistency.",
   options: [
-    "No contribution mechanism",
-    "Limited feedback",
-    "Solid contribution loop",
-    "Strong collaborative content",
-    "Fully crowd-sourced knowledge system"
+    "Not a driver",
+    "Weak driver",
+    "Solid driver",
+    "Strong driver",
+    "Highly strategic enablement function"
   ]
 },
 {
   id: 11020, pillar: 11, type: "scale",
-  title: "Enablement is a strategic driver of GTM performance.",
+  title: "Enablement is a competitive advantage.",
   options: [
-    "Not strategic",
-    "Limited impact",
-    "Solid impact",
-    "Strong strategic enabler",
-    "Highly strategic performance multiplier"
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
   ]
 },
 
-   /* ===========================================================
+/* ===========================================================
    PILLAR 12 — LEADERSHIP & ALIGNMENT (20 QUESTIONS)
    =========================================================== */
 
 {
   id: 12001, pillar: 12, type: "scale",
-  title: "Our leadership team provides a clear and consistent GTM direction.",
+  title: "GTM leadership provides clear direction and priorities.",
   options: [
-    "No clear direction",
-    "Inconsistent direction",
-    "Reasonably clear direction",
-    "Strong, steady direction",
-    "Exceptionally clear strategic direction"
+    "No clarity",
+    "Weak clarity",
+    "Solid clarity",
+    "Strong clarity",
+    "Highly clear strategic direction"
   ]
 },
 {
   id: 12002, pillar: 12, type: "scale",
-  title: "Leadership aligns product, marketing, sales and CS around shared goals.",
+  title: "Sales, Marketing and CS are aligned on goals.",
   options: [
-    "Severely siloed",
-    "Some alignment",
-    "Moderate alignment",
-    "Strong cross-functional alignment",
-    "Fully unified GTM leadership"
+    "Very misaligned",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Perfectly aligned GTM organization"
   ]
 },
 {
   id: 12003, pillar: 12, type: "scale",
-  title: "Leaders communicate priorities effectively and keep teams focused.",
+  title: "Leadership holds teams accountable to goals.",
   options: [
-    "Poor prioritization",
-    "Some clarity",
-    "Solid prioritization",
-    "Strong priority communication",
-    "Elite focus and strategic clarity"
+    "No accountability",
+    "Weak accountability",
+    "Solid accountability",
+    "Strong accountability",
+    "Highly disciplined accountability culture"
   ]
 },
 {
   id: 12004, pillar: 12, type: "scale",
-  title: "Leadership enforces accountability in a fair and consistent way.",
+  title: "We have strong cross-functional collaboration.",
   options: [
-    "No accountability",
-    "Weak accountability",
-    "Reasonable accountability",
-    "Strong accountability culture",
-    "High-performance accountability engine"
+    "Very siloed",
+    "Weak collaboration",
+    "Solid collaboration",
+    "Strong collaboration",
+    "Deeply collaborative culture"
   ]
 },
 {
   id: 12005, pillar: 12, type: "scale",
-  title: "Leaders foster a culture of trust, transparency and psychological safety.",
+  title: "GTM leadership makes data-driven decisions.",
   options: [
-    "Unsafe environment",
-    "Partially safe",
-    "Generally safe",
-    "Strong trust culture",
-    "Deep, consistent psychological safety"
+    "Opinion-based",
+    "Some data usage",
+    "Solid data-driven",
+    "Strong data-driven",
+    "Deeply analytical leadership"
   ]
 },
 {
   id: 12006, pillar: 12, type: "scale",
-  title: "Leaders coach and develop managers effectively.",
+  title: "Leadership communicates GTM strategy effectively.",
   options: [
-    "No coaching",
-    "Basic coaching",
-    "Solid coaching",
-    "Strong development support",
-    "Best-in-class leadership development"
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Best-in-class strategic communication"
   ]
 },
 {
   id: 12007, pillar: 12, type: "scale",
-  title: "Leadership teams model the behaviours they expect from others.",
+  title: "We have strong executive sponsorship for GTM initiatives.",
   options: [
-    "Poor modelling",
-    "Inconsistent modelling",
-    "Generally aligned",
-    "Strong behavioural modelling",
-    "Highly consistent leadership example"
+    "No sponsorship",
+    "Weak sponsorship",
+    "Solid sponsorship",
+    "Strong sponsorship",
+    "Highly engaged executive support"
   ]
 },
 {
   id: 12008, pillar: 12, type: "scale",
-  title: "Leadership decision-making is structured and predictable.",
+  title: "Leadership removes blockers proactively.",
   options: [
-    "Chaotic decisions",
-    "Some structure",
-    "Solid decision frameworks",
-    "Strong decision operating system",
-    "Highly disciplined strategic decision culture"
+    "No blocker removal",
+    "Weak removal",
+    "Solid removal",
+    "Strong removal",
+    "Highly proactive leadership"
   ]
 },
 {
   id: 12009, pillar: 12, type: "scale",
-  title: "Executives resolve misalignment quickly and effectively.",
+  title: "We run effective GTM leadership meetings.",
   options: [
-    "Misalignment persists",
-    "Slow resolution",
-    "Reasonably effective",
-    "Strong resolution process",
-    "Highly proactive alignment engine"
+    "No meetings",
+    "Weak meetings",
+    "Solid meetings",
+    "Strong meetings",
+    "Highly effective leadership cadence"
   ]
 },
 {
   id: 12010, pillar: 12, type: "scale",
-  title: "Leadership creates calm during periods of uncertainty.",
+  title: "Leadership fosters a high-performance culture.",
   options: [
-    "Creates confusion",
-    "Some clarity",
-    "Solid clarity",
-    "Strong stabilizing force",
-    "Highly calming, consistent leadership"
+    "No performance culture",
+    "Weak culture",
+    "Solid culture",
+    "Strong culture",
+    "Best-in-class performance culture"
   ]
 },
 {
   id: 12011, pillar: 12, type: "scale",
-  title: "Leaders reinforce a culture of continuous improvement.",
+  title: "We have clear roles and responsibilities across GTM teams.",
   options: [
-    "No improvement mindset",
-    "Occasional focus",
-    "Solid improvement culture",
-    "Strong continuous improvement",
-    "Deeply institutionalized improvement mindset"
+    "Very unclear",
+    "Weak clarity",
+    "Solid clarity",
+    "Strong clarity",
+    "Perfectly clear organizational design"
   ]
 },
 {
   id: 12012, pillar: 12, type: "scale",
-  title: "Leaders ensure resources are allocated effectively to GTM priorities.",
+  title: "Leadership invests in the right areas for growth.",
   options: [
-    "Misaligned resources",
-    "Some alignment",
-    "Reasonable alignment",
+    "Misaligned investment",
+    "Weak alignment",
+    "Solid alignment",
     "Strong alignment",
-    "Highly optimized GTM resource engine"
+    "Highly strategic resource allocation"
   ]
 },
 {
   id: 12013, pillar: 12, type: "scale",
-  title: "Leadership teams operate with clear rituals and a predictable cadence.",
+  title: "We have strong feedback loops between leadership and teams.",
   options: [
-    "No cadence",
-    "Irregular cadence",
-    "Moderate cadence",
-    "Strong leadership cadence",
-    "Highly structured operating rhythm"
+    "No feedback loop",
+    "Weak loop",
+    "Solid loop",
+    "Strong loop",
+    "Highly effective feedback culture"
   ]
 },
 {
   id: 12014, pillar: 12, type: "scale",
-  title: "Leaders encourage healthy debate to improve decisions.",
+  title: "Leadership adapts strategy based on performance data.",
   options: [
-    "No debate",
-    "Some challenge",
-    "Solid debate",
-    "Strong debate culture",
-    "Deep, structured challenge culture"
+    "Static strategy",
+    "Weak adaptation",
+    "Solid adaptation",
+    "Strong adaptation",
+    "Highly adaptive strategic leadership"
   ]
 },
 {
   id: 12015, pillar: 12, type: "scale",
-  title: "Leadership reinforces the GTM strategy across the company.",
+  title: "We maintain a strong GTM operating rhythm.",
   options: [
-    "Rare reinforcement",
-    "Occasional reinforcement",
-    "Solid reinforcement",
-    "Strong reinforcement",
-    "Deep, consistent strategy reinforcement"
+    "No rhythm",
+    "Weak rhythm",
+    "Solid rhythm",
+    "Strong rhythm",
+    "Highly disciplined operating cadence"
   ]
 },
 {
   id: 12016, pillar: 12, type: "scale",
-  title: "Leaders effectively manage organisational change.",
+  title: "Leadership aligns GTM strategy with company strategy.",
   options: [
-    "Poor change leadership",
-    "Somewhat effective",
-    "Solid change leadership",
-    "Strong change leadership",
-    "Highly effective change engine"
+    "Very misaligned",
+    "Weak alignment",
+    "Solid alignment",
+    "Strong alignment",
+    "Perfectly aligned strategy"
   ]
 },
 {
   id: 12017, pillar: 12, type: "scale",
-  title: "Leadership ensures the GTM org maintains high execution standards.",
+  title: "We have clear escalation paths for GTM challenges.",
   options: [
-    "Low standards",
-    "Inconsistent standards",
-    "Solid standards",
-    "Strong performance expectations",
-    "Elite execution culture"
+    "No escalation paths",
+    "Weak paths",
+    "Solid paths",
+    "Strong paths",
+    "Highly effective escalation system"
   ]
 },
 {
   id: 12018, pillar: 12, type: "scale",
-  title: "The executive team is unified and presents a consistent message.",
+  title: "Leadership builds trust and psychological safety.",
   options: [
-    "Fragmented",
-    "Often inconsistent",
-    "Generally aligned",
-    "Strong unified team",
-    "Highly cohesive and aligned leadership"
+    "Very weak",
+    "Weak",
+    "Solid",
+    "Strong",
+    "Highly trusting culture"
   ]
 },
 {
   id: 12019, pillar: 12, type: "scale",
-  title: "Leadership visibly supports GTM strategy, processes and teams.",
+  title: "Leadership & Alignment drives GTM execution.",
   options: [
-    "Low visible support",
-    "Some support",
-    "Solid support",
-    "Strong aligned support",
-    "Highly strategic leadership sponsorship"
+    "Not a driver",
+    "Weak driver",
+    "Solid driver",
+    "Strong driver",
+    "Highly strategic leadership function"
   ]
 },
 {
   id: 12020, pillar: 12, type: "scale",
-  title: "Leadership acts as a multiplier for GTM performance.",
+  title: "Leadership & Alignment is a competitive advantage.",
   options: [
-    "No multiplier effect",
-    "Limited impact",
-    "Solid positive impact",
-    "Strong multiplier",
-    "Major strategic multiplier for GTM"
+    "Not an advantage",
+    "Weak advantage",
+    "Solid advantage",
+    "Strong advantage",
+    "Major competitive advantage"
   ]
-},
+}
 
 
 /* ===========================================================
