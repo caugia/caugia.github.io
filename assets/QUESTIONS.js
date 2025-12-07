@@ -98,7 +98,8 @@ const QUESTIONS = [
     { name: "growth_constraint", label: "Biggest growth constraint" }
   ]
 },
-/* -----------------------------------------------------------
+
+   /* -----------------------------------------------------------
    Q5 — Revenue Engine Health & Pipeline Performance
    ----------------------------------------------------------- */
 {
@@ -109,10 +110,14 @@ const QUESTIONS = [
   fields: [
     { name: "pipeline_cov", label: "Pipeline coverage (x vs. target)" },
     { name: "sales_cycle", label: "Average sales cycle length (days)" },
+    { name: "lead_response", label: "Lead response time (hours)" },
+    { name: "demo_close", label: "Demo-to-close rate (%)" },
     { name: "win_rate", label: "Win rate (%)" },
-    { name: "expansion_share", label: "Expansion % of total ARR", full: true },
+    { name: "expansion_share", label: "Expansion % of total ARR" },
     { name: "mql_sql", label: "MQL → SQL conversion rate (%)" },
-    { name: "sql_cw", label: "SQL → Closed Won conversion rate (%)" }
+    { name: "sql_cw", label: "SQL → Closed Won conversion rate (%)" },
+    { name: "ramp_time", label: "Average ramp time for new AEs (months)" },
+    { name: "onboarding_time", label: "Customer onboarding time (days)" }
   ]
 },
 
