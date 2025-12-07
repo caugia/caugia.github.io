@@ -356,34 +356,58 @@ body.dark .gi-question-body select {
   color: var(--ink);
 }
 
-/* Group fields - 2 COLUMN GRID */
+/* Group fields - ALL HALF WIDTH + ELEGANT SPACING */
 .gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 .gi-group-field {
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: white;
+  transition: var(--transition);
 }
 
-.gi-group-field.full {
-  grid-column: 1 / -1;
+.gi-group-field:hover {
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(0, 70, 165, 0.08);
+}
+
+body.dark .gi-group-field {
+  background: #111827;
+  border-color: #1E293B;
+}
+
+body.dark .gi-group-field:hover {
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(0, 70, 165, 0.15);
 }
 
 .gi-group-field label {
   font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink);
 }
 
 .gi-group-field input {
   width: 100%;
-  padding: 11px 13px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 6px;
   font-size: 15px;
+  background: #f8f9fb;
+  transition: var(--transition);
+}
+
+.gi-group-field input:focus {
+  outline: none;
+  border-color: var(--blue);
   background: white;
 }
 
@@ -391,6 +415,11 @@ body.dark .gi-group-field input {
   background: #0D1117;
   border-color: #1E293B;
   color: var(--ink);
+}
+
+body.dark .gi-group-field input:focus {
+  border-color: var(--blue);
+  background: #111827;
 }
 
 /* Radio/Scale options - 2 COLUMN GRID */
