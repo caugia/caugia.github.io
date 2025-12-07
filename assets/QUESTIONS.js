@@ -2639,227 +2639,228 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 11 — LEADERSHIP & ALIGNMENT (20 QUESTIONS)
+   PILLAR 11 — ENABLEMENT (20 QUESTIONS)
+   Training, playbooks, onboarding, knowledge management
    =========================================================== */
 
 {
   id: 11001, pillar: 11, type: "scale",
-  title: "Leadership communicates a clear GTM vision and strategy.",
+  title: "We have structured onboarding for new GTM hires.",
   options: [
-    "No clear vision",
-    "Basic or inconsistent vision",
-    "Solid vision",
-    "Strong well-communicated vision",
-    "Highly compelling GTM vision"
+    "No onboarding program",
+    "Basic informal onboarding",
+    "Solid onboarding program",
+    "Strong structured onboarding",
+    "Best-in-class onboarding engine"
   ]
 },
 {
   id: 11002, pillar: 11, type: "scale",
-  title: "Leadership aligns company, product and GTM strategy.",
+  title: "New sales reps ramp to full productivity predictably.",
   options: [
-    "No alignment",
-    "Basic alignment",
-    "Solid alignment",
-    "Strong alignment",
-    "Fully integrated strategic alignment"
+    "Very unpredictable ramp",
+    "Inconsistent ramp",
+    "Solid ramp time",
+    "Strong predictable ramp",
+    "Highly optimized ramp engine"
   ]
 },
 {
   id: 11003, pillar: 11, type: "scale",
-  title: "Leadership sets clear priorities that focus the organization.",
+  title: "We maintain up-to-date playbooks for key GTM motions.",
   options: [
-    "No prioritization",
-    "Unclear priorities",
-    "Solid prioritization",
-    "Strong clarity",
-    "Highly disciplined prioritization"
+    "No playbooks",
+    "Outdated or incomplete playbooks",
+    "Solid playbooks",
+    "Strong comprehensive playbooks",
+    "Best-in-class playbook library"
   ]
 },
 {
   id: 11004, pillar: 11, type: "scale",
-  title: "Leadership fosters cross-functional collaboration.",
+  title: "Our GTM teams have access to the training they need.",
   options: [
-    "Highly siloed",
-    "Some collaboration",
-    "Solid collaboration",
-    "Strong collaboration",
-    "Highly aligned organization"
+    "No training available",
+    "Limited ad-hoc training",
+    "Solid training programs",
+    "Strong training access",
+    "Comprehensive enablement platform"
   ]
 },
 {
   id: 11005, pillar: 11, type: "scale",
-  title: "Leadership holds teams accountable through clear goals.",
+  title: "We provide strong product training and certification.",
   options: [
-    "Little accountability",
-    "Basic accountability",
-    "Solid accountability",
-    "Strong accountability",
-    "High-performance culture"
+    "No product training",
+    "Basic informal training",
+    "Solid product training",
+    "Strong certification program",
+    "Best-in-class product enablement"
   ]
 },
 {
   id: 11006, pillar: 11, type: "scale",
-  title: "Leadership creates psychological safety.",
+  title: "Sales teams have access to high-quality sales collateral.",
   options: [
-    "Low psychological safety",
-    "Some safety",
-    "Solid safety",
-    "Strong safe culture",
-    "Deep psychological safety"
+    "No collateral",
+    "Outdated or limited collateral",
+    "Solid collateral library",
+    "Strong sales enablement content",
+    "Comprehensive content engine"
   ]
 },
 {
   id: 11007, pillar: 11, type: "scale",
-  title: "Leadership invests in developing managers.",
+  title: "We maintain a central knowledge base for GTM teams.",
   options: [
-    "No development",
-    "Basic development",
-    "Solid development",
-    "Strong development",
-    "Highly intentional leadership development"
+    "No knowledge base",
+    "Basic scattered documentation",
+    "Solid knowledge base",
+    "Strong organized knowledge hub",
+    "Best-in-class knowledge system"
   ]
 },
 {
   id: 11008, pillar: 11, type: "scale",
-  title: "Leaders model expected behaviors.",
+  title: "We provide ongoing coaching and skill development.",
   options: [
-    "Not aligned to expectations",
-    "Partially aligned",
-    "Solid alignment",
-    "Strong modeling",
-    "Highly consistent leadership modeling"
+    "No coaching",
+    "Occasional informal coaching",
+    "Solid coaching program",
+    "Strong systematic coaching",
+    "Elite coaching culture"
   ]
 },
 {
   id: 11009, pillar: 11, type: "scale",
-  title: "We have aligned OKRs that cascade effectively.",
+  title: "Our enablement content is easy to find and access.",
   options: [
-    "No OKRs",
-    "Basic OKRs",
-    "Solid OKR practice",
-    "Strong aligned OKR system",
-    "Fully cascaded OKR engine"
+    "Very difficult to find",
+    "Basic discoverability",
+    "Solid accessibility",
+    "Strong searchability",
+    "Instant, intuitive access"
   ]
 },
 {
   id: 11010, pillar: 11, type: "scale",
-  title: "Leadership makes decisions using structured frameworks.",
+  title: "We track enablement effectiveness and ROI.",
   options: [
-    "No structure",
-    "Some structure",
-    "Solid frameworks",
-    "Strong frameworks",
-    "Highly systematic decision culture"
+    "No measurement",
+    "Basic tracking",
+    "Solid measurement",
+    "Strong ROI visibility",
+    "Deep enablement intelligence"
   ]
 },
 {
   id: 11011, pillar: 11, type: "scale",
-  title: "Leadership creates a calm, focused environment.",
+  title: "We provide strong competitive intelligence and battle cards.",
   options: [
-    "Highly reactive",
-    "Some reactivity",
-    "Solid calm environment",
-    "Strong calm environment",
-    "Highly predictable calm execution"
+    "No competitive enablement",
+    "Outdated battle cards",
+    "Solid competitive content",
+    "Strong battle card system",
+    "Real-time competitive intelligence"
   ]
 },
 {
   id: 11012, pillar: 11, type: "scale",
-  title: "Leadership encourages constructive debate.",
+  title: "We enable teams on new product launches effectively.",
   options: [
-    "Little challenge",
-    "Some debate",
-    "Solid debate",
-    "Strong debate",
-    "Deep culture of healthy challenge"
+    "No launch enablement",
+    "Basic launch communication",
+    "Solid launch enablement",
+    "Strong launch readiness",
+    "Best-in-class launch engine"
   ]
 },
 {
   id: 11013, pillar: 11, type: "scale",
-  title: "Leaders ensure teams have the necessary resources.",
+  title: "Managers are trained to coach their teams effectively.",
   options: [
-    "Not aligned",
-    "Some alignment",
-    "Solid alignment",
-    "Strong alignment",
-    "Highly optimized resourcing"
+    "No manager training",
+    "Basic manager training",
+    "Solid manager development",
+    "Strong manager enablement",
+    "Elite manager development program"
   ]
 },
 {
   id: 11014, pillar: 11, type: "scale",
-  title: "Leadership communicates transparently.",
+  title: "We provide just-in-time enablement when teams need it.",
   options: [
-    "Low transparency",
-    "Basic transparency",
-    "Solid transparency",
-    "Strong transparency",
-    "Highly reliable transparent communication"
+    "No on-demand support",
+    "Limited reactive support",
+    "Solid on-demand resources",
+    "Strong just-in-time enablement",
+    "Instant contextual enablement"
   ]
 },
 {
   id: 11015, pillar: 11, type: "scale",
-  title: "We have strong alignment within the executive team.",
+  title: "We maintain standardized GTM processes and workflows.",
   options: [
-    "Fragmented team",
-    "Some alignment",
-    "Solid alignment",
-    "Strong unity",
-    "Fully unified leadership team"
+    "No standardization",
+    "Inconsistent processes",
+    "Solid process documentation",
+    "Strong standardized workflows",
+    "Fully operationalized GTM system"
   ]
 },
 {
   id: 11016, pillar: 11, type: "scale",
-  title: "Leadership identifies and resolves misalignment quickly.",
+  title: "We regularly update enablement content to keep it relevant.",
   options: [
-    "Misalignment persists",
-    "Slow resolution",
-    "Solid resolution",
-    "Strong resolution",
-    "Highly proactive alignment engine"
+    "Never updated",
+    "Rarely updated",
+    "Solid update cadence",
+    "Strong regular updates",
+    "Real-time content maintenance"
   ]
 },
 {
   id: 11017, pillar: 11, type: "scale",
-  title: "Leaders coach teams effectively.",
+  title: "Our enablement team collaborates closely with GTM leaders.",
   options: [
-    "Little coaching",
-    "Basic coaching",
-    "Solid coaching",
-    "Strong coaching",
-    "Coaching excellence"
+    "Very disconnected",
+    "Limited collaboration",
+    "Solid partnership",
+    "Strong alignment",
+    "Fully integrated enablement function"
   ]
 },
 {
   id: 11018, pillar: 11, type: "scale",
-  title: "Leadership champions continuous improvement.",
+  title: "We provide role-specific training paths for different GTM roles.",
   options: [
-    "Low emphasis",
-    "Some emphasis",
-    "Solid emphasis",
-    "Strong improvement culture",
-    "Deep continuous improvement mindset"
+    "No role-specific training",
+    "Generic training only",
+    "Solid role-specific content",
+    "Strong learning paths",
+    "Personalized learning engine"
   ]
 },
 {
   id: 11019, pillar: 11, type: "scale",
-  title: "Leadership creates clarity during uncertainty.",
+  title: "Teams can contribute to and improve enablement content.",
   options: [
-    "High ambiguity",
-    "Some clarity",
-    "Solid clarity",
-    "Strong clarity",
-    "Highly reliable clarity"
+    "No contribution mechanism",
+    "Limited feedback",
+    "Solid contribution loop",
+    "Strong collaborative content",
+    "Fully crowd-sourced knowledge system"
   ]
 },
 {
   id: 11020, pillar: 11, type: "scale",
-  title: "Leadership acts as a strategic multiplier for GTM performance.",
+  title: "Enablement is a strategic driver of GTM performance.",
   options: [
     "Not strategic",
     "Limited impact",
     "Solid impact",
-    "Strong strategic leadership",
-    "Highly strategic multiplier"
+    "Strong strategic enabler",
+    "Highly strategic performance multiplier"
   ]
 },
 
