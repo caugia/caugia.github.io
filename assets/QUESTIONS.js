@@ -13,8 +13,7 @@ const QUESTIONS = [
    generate a context-aware intelligence report.
    =========================================================== */
 
-/* -----------------------------------------------------------
-   Q1 — Identity & Company Profile
+/* Q1 — Identity & Company Profile
    ----------------------------------------------------------- */
 {
   id: 1,
@@ -22,14 +21,17 @@ const QUESTIONS = [
   type: "group",
   title: "Tell us about you and your company",
   fields: [
-    { name: "fullname", label: "Your full name", full: true },
+    { name: "fullname", label: "Your full name" },
     { name: "role", label: "Your role or job title" },
+    { name: "email", label: "Email address" },
+    { name: "mobile", label: "Mobile number" },
     { name: "company", label: "Company name" },
     { name: "website", label: "Company website" },
-    { name: "country", label: "Country of headquarters", full: true }
+    { name: "sector", label: "Sector" },
+    { name: "country", label: "Country of headquarters" }
   ]
 },
-
+   
 /* -----------------------------------------------------------
    Q2 — SaaS Performance & Revenue Economics
    ----------------------------------------------------------- */
