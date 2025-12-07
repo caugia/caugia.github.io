@@ -34,8 +34,7 @@ const QUESTIONS = [
   ]
 },
    
-/* -----------------------------------------------------------
-   Q2 — SaaS Performance & Revenue Economics
+/* Q2 — SaaS Performance & Revenue Economics
    ----------------------------------------------------------- */
 {
   id: 2,
@@ -43,15 +42,16 @@ const QUESTIONS = [
   type: "group",
   title: "SaaS performance and revenue economics",
   fields: [
-    { name: "arr", label: "Current ARR (USD or EUR)", full: true },
+    { name: "arr", label: "Current ARR (USD or EUR)" },
     { name: "acv", label: "Average Contract Value (ACV)" },
     { name: "churn", label: "Customer churn rate (%)" },
     { name: "cpl", label: "Cost per Lead (CPL)" },
     { name: "cac", label: "Customer Acquisition Cost (CAC)" },
     { name: "nrr", label: "Net Revenue Retention (NRR %)" },
     { name: "nps", label: "Net Promoter Score (NPS)" },
-    { name: "expansion_rate", label: "Expansion revenue rate (%)" },
-    { name: "ltv", label: "Customer Lifetime Value (LTV)", full: true }
+    { name: "expansion", label: "Expansion revenue rate (%)" },
+    { name: "ltv", label: "Customer Lifetime Value (LTV)" },
+    { name: "payback", label: "Payback period (months)" }
   ]
 },
 
