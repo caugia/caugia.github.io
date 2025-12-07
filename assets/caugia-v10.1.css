@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — CSS v10.1 NO-SCROLL EDITION
+   CAUGIA CONSULTING — CSS v10.1 NORRIS SUCKS
    Above the fold • Viewport-locked • Inner scroll only
    =========================================================== */
 
@@ -98,19 +98,10 @@ body.dark .gi-header {
   font-weight: 600;
 }
 
-.gi-dark-toggle {
-  background: var(--blue);
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 18px;
-  transition: var(--transition);
-}
-
-.gi-dark-toggle:hover {
-  background: var(--blue-dark);
+.gi-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .gi-contact-link {
@@ -126,6 +117,22 @@ body.dark .gi-header {
 .gi-contact-link:hover {
   background: var(--blue);
   color: white;
+}
+
+.gi-dark-toggle {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.gi-dark-toggle:hover {
+  background: var(--blue-dark);
 }
 
 /* ===========================================================
@@ -177,24 +184,31 @@ body.dark .gi-header {
   border-radius: 10px;
 }
 
+body.dark .gi-left-info::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+}
+
 .gi-info-title {
   font-size: 13px;
   font-weight: 600;
   color: var(--blue);
   text-transform: uppercase;
   margin-bottom: 6px;
+  letter-spacing: 0.5px;
 }
 
 .gi-info-h1 {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 14px;
+  line-height: 1.2;
 }
 
 .gi-info-desc {
   font-size: 15px;
   opacity: .85;
   margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .gi-info-meta {
@@ -223,6 +237,7 @@ body.dark .gi-progress-box {
   justify-content: space-between;
   font-size: 14px;
   font-weight: 600;
+  margin-bottom: 8px;
 }
 
 .gi-progress-track {
@@ -230,7 +245,10 @@ body.dark .gi-progress-box {
   background: #eef1f6;
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 8px;
+}
+
+body.dark .gi-progress-track {
+  background: #1E293B;
 }
 
 .gi-progress-fill {
@@ -257,13 +275,15 @@ body.dark .gi-pillar-desc-box {
 
 .gi-pillar-desc-box h3 {
   font-size: 17px;
-  margin-bottom: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
 .gi-pillar-desc-box p {
   font-size: 14px;
-  line-height: 1.55;
-  opacity: .8;
+  line-height: 1.6;
+  opacity: .85;
+  margin: 0;
 }
 
 /* Reset button */
@@ -271,6 +291,27 @@ body.dark .gi-pillar-desc-box {
   width: 100%;
   margin-top: 12px;
   border-radius: var(--radius-sm);
+  background: #f5f7fa;
+  border: 1px solid var(--border);
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.gi-btn.gi-reset:hover {
+  background: #e8edf3;
+}
+
+body.dark .gi-btn.gi-reset {
+  background: #1E293B;
+  border-color: #334155;
+  color: var(--ink);
+}
+
+body.dark .gi-btn.gi-reset:hover {
+  background: #334155;
 }
 
 /* ===========================================================
@@ -303,7 +344,7 @@ body.dark .gi-question-card {
 /* Header (fixed) */
 .gi-question-header {
   flex-shrink: 0;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .gi-question-kicker {
@@ -311,19 +352,22 @@ body.dark .gi-question-card {
   text-transform: uppercase;
   font-weight: 600;
   color: var(--blue);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
 }
 
 .gi-question-title {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .gi-question-sub {
   font-size: 15px;
   opacity: .75;
   margin-bottom: 0;
+  line-height: 1.5;
 }
 
 /* Body (NO SCROLL - content fits in viewport with 2-column layout) */
@@ -346,6 +390,15 @@ body.dark .gi-question-card {
   border: 1px solid #d1d7e0;
   background: #f7f9fc;
   margin-bottom: 18px;
+  transition: var(--transition);
+}
+
+.gi-question-body input:focus,
+.gi-question-body textarea:focus,
+.gi-question-body select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.1);
 }
 
 body.dark .gi-question-body input,
@@ -356,11 +409,18 @@ body.dark .gi-question-body select {
   color: var(--ink);
 }
 
+body.dark .gi-question-body input:focus,
+body.dark .gi-question-body textarea:focus,
+body.dark .gi-question-body select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.2);
+}
+
 /* Group fields - GOOD SPACING, NO BORDER BOX */
 .gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px 40px; /* vertical 24px, horizontal 40px (~1cm) */
+  gap: 24px 40px; /* vertical 24px, horizontal 40px */
 }
 
 .gi-group-field {
@@ -432,9 +492,14 @@ body.dark .gi-option-card {
   background: var(--blue-light);
 }
 
+body.dark .gi-option-card:hover {
+  background: #1E293B;
+}
+
 .gi-option-card input[type="radio"] {
   margin: 0;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .gi-option-card input[type="radio"]:checked ~ span {
@@ -445,42 +510,10 @@ body.dark .gi-option-card {
 .gi-option-card span {
   flex: 1;
   font-size: 15px;
+  line-height: 1.4;
 }
 
-/* 2-column layout for radio/scale options */
-.gi-options-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.gi-option-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition);
-  background: white;
-}
-
-body.dark .gi-option-card {
-  background: #111827;
-}
-
-.gi-option-card:hover {
-  border-color: var(--blue);
-  background: var(--blue-light);
-}
-
-.gi-option-card input[type="radio"]:checked + span {
-  font-weight: 600;
-  color: var(--blue);
-}
-
-/* Buttons (fixed at bottom) */
+/* Navigation buttons (fixed at bottom) */
 .gi-nav-row {
   flex-shrink: 0;
   display: flex;
@@ -489,19 +522,55 @@ body.dark .gi-option-card {
   border-top: 1px solid var(--border);
 }
 
+body.dark .gi-nav-row {
+  border-top-color: #1E293B;
+}
+
 .gi-btn {
   padding: 11px 20px;
   border: 1px solid var(--border);
   background: #f5f7fa;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
   transition: var(--transition);
+}
+
+.gi-btn:hover {
+  background: #e8edf3;
+  border-color: var(--blue);
 }
 
 .gi-btn.gi-primary {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
+}
+
+.gi-btn.gi-primary:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+}
+
+body.dark .gi-btn {
+  background: #1E293B;
+  border-color: #334155;
+  color: var(--ink);
+}
+
+body.dark .gi-btn:hover {
+  background: #334155;
+}
+
+body.dark .gi-btn.gi-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+body.dark .gi-btn.gi-primary:hover {
+  background: var(--blue-dark);
 }
 
 /* ===========================================================
@@ -527,6 +596,10 @@ body.dark .gi-option-card {
   border-radius: 10px;
 }
 
+body.dark .gi-right-pillars::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+}
+
 .gi-pillars-title {
   font-size: 15px;
   font-weight: 700;
@@ -536,6 +609,7 @@ body.dark .gi-option-card {
 .gi-pillar-nav {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .gi-pillar-nav li {
@@ -545,10 +619,15 @@ body.dark .gi-option-card {
   cursor: pointer;
   transition: var(--transition);
   margin-bottom: 4px;
+  line-height: 1.4;
 }
 
 .gi-pillar-nav li:hover {
   background: var(--blue-light);
+}
+
+body.dark .gi-pillar-nav li:hover {
+  background: #1E293B;
 }
 
 .gi-pillar-nav li.active {
@@ -579,10 +658,11 @@ body.dark .gi-option-card {
 .gi-faq-button:hover {
   background: var(--blue-dark);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
 /* ===========================================================
-   MOBILE
+   MOBILE RESPONSIVE
 =========================================================== */
 @media (max-width: 1100px) {
   body {
@@ -600,21 +680,65 @@ body.dark .gi-option-card {
     grid-template-columns: 1fr;
     height: auto;
     overflow-y: visible;
+    gap: 32px;
+    padding: 24px;
   }
   
   .gi-left-info,
   .gi-right-pillars {
     height: auto;
     overflow-y: visible;
-    margin-bottom: 32px;
+    padding-right: 0;
+    padding-left: 0;
   }
   
   .gi-question-card {
     height: auto;
+    padding: 24px;
   }
   
   .gi-question-body {
     overflow-y: visible;
     max-height: none;
+  }
+  
+  .gi-group {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .gi-options-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gi-nav-row {
+    flex-wrap: wrap;
+  }
+  
+  .gi-btn {
+    flex: 1;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gi-header-inner {
+    padding: 0 16px;
+  }
+  
+  .gi-shell {
+    padding: 16px;
+  }
+  
+  .gi-question-card {
+    padding: 20px;
+  }
+  
+  .gi-question-title {
+    font-size: 20px;
+  }
+  
+  .gi-info-h1 {
+    font-size: 24px;
   }
 }
