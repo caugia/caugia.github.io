@@ -1,1 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | GTM Intelligence Report | Caugia Consulting</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="assets/C-logo.png">
+  
+  <style>
+    /* ============================================
+       VARIABLES & RESET
+    ============================================ */
+    :root {
+      --ink: #0B132B;
+      --ink-soft: #3a4250;
+      --blue: #0046A5;
+      --blue-dark: #003b88;
+      --blue-light: #F4F7FF;
+      --border: rgba(0,0,0,0.10);
+      --radius: 12px;
+      --transition: .25s cubic-bezier(.22,1,.36,1);
+    }
 
+    body.dark {
+      --ink: #E8ECF5;
+      --ink-soft: #9BA5B8;
+      --blue-light: #002A66;
+      background: #0D1117 !important;
+      color: var(--ink);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      background: white;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    .faq-header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    body.dark .faq-header {
+      background: #0D1117;
+      border-bottom-color: #1E293B;
+    }
+
+    .faq-header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .faq-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .faq-logo {
+      width: 28px;
+      height: 28px;
+    }
+
+    .faq-brand {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .faq-header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .faq-dark-toggle {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .faq-dark-toggle:hover {
+      background: var(--blue-dark);
+    }
+
+    .faq-back-link {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--blue);
+      transition: var(--transition);
+    }
+
+    .faq-back-link:hover {
+      background: var(--blue);
+      color: white;
+    }
+
+    /* ============================================
+       MAIN CONTENT
+    ============================================ */
+    .faq-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 28px 100px;
+    }
+
+    .faq-hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .faq-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .faq-subtitle {
+      font-size: 18px;
+      color: var(--ink-soft);
+    }
+
+    /* ============================================
+       SEARCH BOX
+    ============================================ */
+    .faq-search-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    body.dark .faq-search-box {
+      background: #111827;
+      border-color: #1E293B;
+    }
+
+    .faq-search-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .faq-search-input::placeholder {
+      color: var(--ink-soft);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       FAQ SECTIONS
+    ============================================ */
+    .faq-section {
+      margin-bottom: 48px;
+    }
+
+    .faq-section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--blue);
+    }
+
+    /* ============================================
+       ACCORDION ITEMS
+    ============================================ */
+    .faq-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    body.dark .faq-item {
+      background: #111827;
+      border-color: #1E293B;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .faq-icon {
+      font-size: 20px;
+      transition: transform var(--transition);
+      color: var(--blue);
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 24px 20px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+
+    /* ============================================
+       NO RESULTS
+    ============================================ */
+    .faq-no-results {
+      text-align: center;
+      padding: 60px 20px;
+      display: none;
+    }
+
+    .faq-no-results.show {
+      display: block;
+    }
+
+    .faq-no-results h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .faq-no-results p {
+      color: var(--ink-soft);
+    }
+
+    /* ============================================
+       FOOTER CTA
+    ============================================ */
+    .faq-footer {
+      background: var(--blue-light);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    body.dark .faq-footer {
+      background: #111827;
+      border: 1px solid #1E293B;
+    }
+
+    .faq-footer h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .faq-footer p {
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+    }
+
+    .faq-contact-btn {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .faq-contact-btn:hover {
+      background: var(--blue-dark);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================
+       MOBILE
+    ============================================ */
+    @media (max-width: 768px) {
+      .faq-title {
+        font-size: 32px;
+      }
+
+      .faq-main {
+        padding: 40px 20px 80px;
+      }
+
+      .faq-section-title {
+        font-size: 20px;
+      }
+
+      .faq-question {
+        font-size: 15px;
+        padding: 16px 18px;
+      }
+
+      .faq-answer-inner {
+        padding: 0 18px 16px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+============================================ -->
+<header class="faq-header">
+  <div class="faq-header-inner">
+    <div class="faq-header-left">
+      <img src="assets/C-logo.png" class="faq-logo" alt="Caugia logo">
+      <span class="faq-brand">Caugia Consulting</span>
+    </div>
+    <div class="faq-header-right">
+      <button id="darkToggle" class="faq-dark-toggle">Dark</button>
+      <a href="gtm-intelligence-report-v2-test.html" class="faq-back-link">Back to Assessment</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================
+     MAIN CONTENT
+============================================ -->
+<main class="faq-main">
+  
+  <!-- Hero -->
+  <div class="faq-hero">
+    <h1 class="faq-title">Frequently Asked Questions</h1>
+    <p class="faq-subtitle">Everything you need to know about completing the GTM Intelligence Report</p>
+  </div>
+
+  <!-- Search -->
+  <div class="faq-search-box">
+    <input 
+      type="text" 
+      id="faqSearch" 
+      class="faq-search-input" 
+      placeholder="Search for answers..."
+    >
+  </div>
+
+  <!-- No Results Message -->
+  <div class="faq-no-results" id="noResults">
+    <h3>No results found</h3>
+    <p>Try a different search term or browse the categories below</p>
+  </div>
+
+  <!-- Section 1: Before You Begin -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">1. Before You Begin</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How long does the assessment take to complete?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          The assessment typically takes 45-60 minutes to complete. However, this depends on how readily you have access to your metrics and whether you need to consult with teammates or systems.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I complete it in multiple sessions?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes! Your progress is automatically saved every few seconds. You can close the page and return anytime to pick up exactly where you left off. Your answers remain saved in your browser.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Do I need access to CRM or analytics tools while answering?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          It's helpful but not required. Many questions ask for specific metrics (CAC, NRR, pipeline coverage, etc.). Having access to your CRM, analytics dashboard, or recent reports will make the process faster and more accurate.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What information should I have ready before starting?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <strong>Recommended cheat sheet:</strong><br>
+          • Current ARR, ACV, and revenue targets<br>
+          • CAC, LTV, NRR, churn rate<br>
+          • Win rate, sales cycle length, pipeline coverage<br>
+          • Team sizes (sales, marketing, CS, RevOps)<br>
+          • Key conversion rates (MQL→SQL, SQL→Won)<br>
+          • Growth metrics (YoY growth, expansion rate)
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Should multiple people fill this in together or individually?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          It depends on your preference. Some leaders prefer to complete it solo with data on hand, while others find it valuable to work through it with their RevOps or GTM leadership team to ensure accuracy and alignment on how things actually work.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I delegate parts of the assessment to teammates?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Technically yes, but we don't recommend it. The assessment is designed to be completed by one person (typically a GTM leader) who has visibility across the entire revenue engine. Delegating sections can lead to fragmented or inconsistent responses.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 2: Completing the Assessment -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">2. Completing the Assessment</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How do I save my progress?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Progress is saved automatically every few seconds as you type or select answers. There's also a "Save" button you can click manually if you want to ensure your latest answers are stored before closing the page.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I pause and resume later?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Absolutely. You can close the browser at any time and return later. Your progress is saved locally in your browser, so you'll pick up right where you left off on the same device.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I go back and change answers?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes! Use the "Previous" button to navigate back to earlier questions. You can change any answer at any time before final submission.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I skip questions and come back later?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes, you can leave questions blank and move forward. However, certain questions are required to progress (marked clearly in the interface). You can always use the pillar navigation on the right to jump between sections.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What happens if I close the page?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Nothing is lost. Your progress is saved in your browser's local storage. When you return and open the assessment again, you'll see exactly where you left off.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What if I don't know an answer?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          You have two options: (1) provide your best estimate, or (2) leave it blank. If you're unsure, it's better to estimate than to skip—approximations still provide valuable diagnostic signals. Just avoid wild guesses.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How precise do my answers need to be?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Approximate accuracy is fine. For example, if your churn rate is "somewhere between 4% and 6%", entering 5% is perfectly acceptable. The goal is directional accuracy, not forensic precision.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What if we don't track this metric yet?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          That's valuable information in itself. If you don't track something like CAC or NRR, you can either leave it blank or provide an educated guess. The fact that it's not tracked will be reflected in your maturity assessment.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Should I estimate or leave a question blank?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          If you can make a reasonable estimate, do so. Blank answers reduce the diagnostic value of the assessment. However, if you truly have no basis for an estimate, leaving it blank is better than guessing wildly.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Will leaving questions blank affect my score?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes, but only in that pillar. Blank answers mean we have less data to assess that specific area of your GTM system. Your overall GTM Score will still be calculated based on the questions you do answer.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Will my answers be visible to my team or colleagues?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. Your answers are private and only visible to you and Caugia Consulting. They are not shared with anyone else unless you explicitly choose to share your final report.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 3: Understanding the Questions -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">3. Understanding the Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What does a "maturity level" represent?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Maturity levels (often 1-5 scales) represent how developed, structured, or sophisticated a particular GTM capability is. Higher maturity typically means more process, documentation, predictability, and operational rigor.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Are there right or wrong answers?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. This is a diagnostic, not a test. There are no "correct" answers—only accurate or inaccurate reflections of your current reality. Honesty is far more valuable than trying to look good.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Why do some questions feel similar?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Some questions may seem overlapping because GTM systems are interconnected. For example, sales execution and revenue operations both touch pipeline management. The slight differences in wording help us triangulate a more accurate picture.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What if our situation doesn't match any option exactly?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Choose the option that's closest to your reality. GTM systems are messy and don't always fit neat categories. Pick the answer that best represents your current state, even if it's not a perfect match.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What if different teams work differently in our organization?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Answer based on the most common or representative state across your organization. If there's significant variation (e.g., EMEA operates very differently from North America), choose the answer that best reflects your primary or largest segment.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 4: Technical Issues -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">4. Technical Issues</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>My answers aren't saving — what should I do?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          First, check that your browser allows local storage (most do by default). If you're in private/incognito mode, your progress may not save. Try switching to a regular browser window. If issues persist, contact support.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>The page froze or crashed — will I lose progress?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. Progress is saved continuously in your browser. Simply refresh the page or reopen the assessment, and you'll be back where you left off. If you encounter persistent crashes, contact support with details about your browser and device.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>I clicked Reset by accident — can this be undone?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Unfortunately, no. The Reset button clears all saved progress immediately. There's no undo function. If this happens, you'll need to restart the assessment from the beginning. We recommend being very careful with that button!
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>The next/previous buttons aren't working.</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          This may happen if you haven't answered a required question. Check that all required fields on the current question have been filled in. If the issue persists, try refreshing the page or contact support.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Dark mode isn't working on my browser.</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Dark mode should work on all modern browsers. If the toggle button isn't responding, try clearing your browser cache or using a different browser. Supported browsers include Chrome, Firefox, Safari, and Edge (latest versions).
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Does this work on mobile?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes, the assessment is fully responsive and works on mobile devices. However, we recommend using a desktop or tablet for the best experience, especially since you may need to reference other tools or documents while answering.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Which browsers are fully supported?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          The assessment works best on the latest versions of Chrome, Firefox, Safari, and Edge. We recommend keeping your browser up to date for the smoothest experience. Internet Explorer is not supported.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 5: After Submission -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">5. After Submission</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>When will I receive my GTM Intelligence Report?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          You'll receive your comprehensive GTM Intelligence Report within 5-7 business days after submission. The report is custom-built based on your specific answers and includes detailed diagnostics, archetype classification, and strategic recommendations.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What happens immediately after I submit?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          You'll receive a confirmation email acknowledging your submission. Our team then begins analyzing your responses, mapping them to our GTM Framework, identifying patterns, and building your custom report.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I download or revisit my answers later?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          After submission, your answers are locked and stored securely. You won't be able to edit them, but you can request a copy of your raw answers by contacting support. Your final report will include the key data points you provided.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Will I see my GTM Score right away?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. Your GTM Score is calculated as part of the full analysis process and will be included in your final report. It's not generated instantly because it requires human review and contextual interpretation of your answers.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I share my report with my team?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Absolutely. Once you receive your report, you own it and can share it with anyone you choose—your leadership team, board, investors, or advisors. Many clients use it as a strategic planning tool with their GTM leadership.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What format will the report be in?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your GTM Intelligence Report will be delivered as a comprehensive PDF document, typically 30-50 pages. It includes visual diagnostics, detailed pillar assessments, your GTM Archetype classification, and actionable recommendations.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How are my answers analyzed?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your responses are mapped to our proprietary GTM Framework, which evaluates 12 pillars across 4 dimensions (Guidance, Resources, Implementation, Performance). We use pattern recognition, benchmarking, and expert analysis to identify strengths, gaps, and risks.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Is my data stored securely?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. All data is encrypted in transit and at rest. We follow industry-standard security practices and never share your data with third parties. Your information is used solely to generate your custom report and improve our diagnostic models (in anonymized, aggregated form).
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I redo the assessment in the future?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. Many clients retake the assessment 6-12 months later to measure progress. Each assessment is treated as a separate engagement and requires a new purchase. Comparing reports over time provides valuable insight into GTM evolution.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 6: Getting Help -->
+  <section class="faq-section">
+    <h2 class="faq-section-title">6. Getting Help</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How do I contact support during the assessment?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Email us at <strong>support@caugia.com</strong> with your question or issue. Include details about which question you're on and what you need help with. We typically respond within 4-6 business hours.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I schedule a call if I'm unsure about a question?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. If you're stuck or need clarification, you can book a 15-minute support call via our <a href="contact.html" style="color: var(--blue);">contact page</a>. This is especially helpful if you're uncertain about how to interpret specific questions in your context.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Who do I contact if something seems incorrect in the report?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Email <strong>support@caugia.com</strong> with specific details about what seems off. We'll review your report and answers to ensure accuracy. In rare cases, we may need to regenerate parts of the report if there was an analytical error.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Is there a glossary for GTM terminology?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. Your final GTM Intelligence Report includes a comprehensive glossary of all terms and metrics used throughout the assessment. If you need definitions during the assessment, email support and we'll clarify immediately.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>What's the expected response time for support?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          We aim to respond to all support inquiries within 4-6 business hours. During European business hours (9am-6pm CET), you can often expect responses within 1-2 hours. For urgent technical issues, we prioritize accordingly.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer CTA -->
+  <div class="faq-footer">
+    <h3>Still have questions?</h3>
+    <p>We're here to help. Reach out to our team anytime.</p>
+    <a href="contact.html" class="faq-contact-btn">Contact Support</a>
+  </div>
+
+</main>
+
+<!-- ============================================
+     JAVASCRIPT
+============================================ -->
+<script>
+  // Dark Mode Toggle
+  const darkToggle = document.getElementById('darkToggle');
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    darkToggle.textContent = document.body.classList.contains('dark') ? 'Light' : 'Dark';
+  });
+
+  // Accordion functionality
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+
+  // Search functionality
+  const searchInput = document.getElementById('faqSearch');
+  const sections = document.querySelectorAll('.faq-section');
+  const noResults = document.getElementById('noResults');
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    
+    if (searchTerm === '') {
+      sections.forEach(section => section.style.display = 'block');
+      noResults.classList.remove('show');
+      return;
+    }
+
+    let hasResults = false;
+
+    sections.forEach(section => {
+      const items = section.querySelectorAll('.faq-item');
+      let sectionHasMatch = false;
+
+      items.forEach(item => {
+        const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = 'block';
+          sectionHasMatch = true;
+          hasResults = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      section.style.display = sectionHasMatch ? 'block' : 'none';
+    });
+
+    noResults.classList.toggle('show', !hasResults);
+  });
+</script>
+
+</body>
+</html>
