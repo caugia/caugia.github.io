@@ -28,7 +28,9 @@ const QUESTIONS = [
     { name: "company", label: "Company name" },
     { name: "website", label: "Company website" },
     { name: "sector", label: "Sector" },
-    { name: "country", label: "Country of headquarters" }
+    { name: "country", label: "Country of headquarters" },
+    { name: "activity", label: "Core activity" },
+    { name: "companysize", label: "Company size" }
   ]
 },
    
