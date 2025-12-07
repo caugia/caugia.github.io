@@ -334,8 +334,9 @@ body.dark .gi-question-card {
   margin-bottom: 20px;
 }
 
-/* Inputs */
-.gi-question-body input,
+/* Single inputs (text, number, textarea, select) */
+.gi-question-body input[type="text"]:not(.gi-group-field input),
+.gi-question-body input[type="number"]:not(.gi-group-field input),
 .gi-question-body textarea,
 .gi-question-body select {
   width: 100%;
@@ -347,15 +348,49 @@ body.dark .gi-question-card {
   margin-bottom: 18px;
 }
 
-/* Group fields (2 columns for long forms) */
-.gi-group-grid {
+body.dark .gi-question-body input,
+body.dark .gi-question-body textarea,
+body.dark .gi-question-body select {
+  background: #0D1117;
+  border-color: #1E293B;
+  color: var(--ink);
+}
+
+/* Group fields - 2 COLUMN GRID */
+.gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
+.gi-group-field {
+  display: flex;
+  flex-direction: column;
+}
+
 .gi-group-field.full {
   grid-column: 1 / -1;
+}
+
+.gi-group-field label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.gi-group-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  background: white;
+}
+
+body.dark .gi-group-field input {
+  background: #0D1117;
+  border-color: #1E293B;
+  color: var(--ink);
 }
 
 /* Radio/Scale options - 2 COLUMN GRID */
