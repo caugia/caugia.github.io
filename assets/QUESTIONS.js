@@ -86,14 +86,18 @@ const QUESTIONS = [
   type: "group",
   title: "Revenue goals and performance trajectory",
   fields: [
-    { name: "target_fy", label: "Current FY revenue target", full: true },
+    { name: "target_fy", label: "Current FY revenue target" },
     { name: "current_perf", label: "Progress toward target (%)" },
     { name: "next_fy_target", label: "Next FY revenue target" },
-    { name: "growth_goal", label: "Desired YoY growth (%)", full: true },
-    { name: "yoy_last_year", label: "Actual YoY growth last year (%)", full: true }
+    { name: "arr_target", label: "ARR target for next FY" },
+    { name: "growth_goal", label: "Desired YoY growth (%)" },
+    { name: "yoy_last_year", label: "Actual YoY growth last year (%)" },
+    { name: "new_vs_expansion", label: "New business vs expansion split (%)" },
+    { name: "forecast_accuracy", label: "Forecast accuracy (%)" },
+    { name: "customer_target", label: "Customer acquisition target (#)" },
+    { name: "growth_constraint", label: "Biggest growth constraint" }
   ]
 },
-
 /* -----------------------------------------------------------
    Q5 — Revenue Engine Health & Pipeline Performance
    ----------------------------------------------------------- */
