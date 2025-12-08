@@ -176,17 +176,187 @@ function restoreAnswer(q) {
   if (el) el.value = saved;
 }
 
-/* ---------------------- VALIDATION ---------------------- */
-function validate(q) {
+/* ---------------------- SUBMIT TO MAKE.COM ---------------------- */
+btnSubmit.addEventListener("click", async () => {
+  storeCurrentAnswer();
+  saveState();
 
-  if (q.type === "group")
-    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+  // Validate all questions answered
+  const allAnswered = QUESTIONS_REF.every(q => {
+    if (q.type === "group") {
+      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+    }
+    return STATE[q.id] && STATE[q.id].trim() !== "";
+  });
 
-  if (q.type === "radio" || q.type === "scale")
-    return qBody.querySelector("input:checked") !== null;
+  if (!allAnswered) {
+    alert("Please complete all questions before submitting.");
+    return;
+  }
 
-  const el = qBody.querySelector("[name='q']");
-  return el && el.value.trim() !== "";
+  // Prepare payload
+  const payload = preparePayload();
+
+  // Show loading state
+  btnSubmit.textContent = "Submitting...";
+  btnSubmit.disabled = true;
+
+  try {
+    // POST to Make.com webhook
+    const response = await fetch("PLACEHOLDER_MAKECOM_WEBHOOK_URL", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Submission failed");
+
+    // Success
+    console.log("✅ Assessment submitted successfully");
+    
+    // Clear localStorage
+    localStorage.removeItem(STORAGE_KEY);
+    
+    // Redirect to thank you page
+    window.location.href = "/gtm-intelligence-thank-you.html";
+
+  } catch (error) {
+    console.error("❌ Submission error:", error);
+    alert("Submission failed. Please try again or contact hello@caugia.com");
+    
+    // Reset button
+    btnSubmit.textContent = "Submit";
+    btnSubmit.disabled = false;
+  }
+});
+
+/* ---------------------- PAYLOAD BUILDER ---------------------- */
+function preparePayload() {
+  // Extract customer info (Pillar 0 group fields)
+  const customer = {
+    fullname: STATE["fullname"] || "",
+    role: STATE["role"] || "",
+    email: STATE["email"] || "",
+    mobile: STATE["mobile"] || "",
+    company: STATE["company"] || "",
+    website: STATE["website"] || "",
+    sector: STATE["sector"] || "",
+    country: STATE["country"] || "",
+    activity: STATE["activity"] || "",
+    companysize: STATE["companysize"] || ""
+  };
+
+  // Extract context variables (Pillar 0 group fields)
+  const context = {
+    // SaaS performance
+    arr: STATE["arr"] || "",
+    acv: STATE["acv"] || "",
+    churn: STATE["churn"] || "",
+    cpl: STATE["cpl"] || "",
+    cac: STATE["cac"] || "",
+    nrr: STATE["nrr"] || "",
+    nps: STATE["nps"] || "",
+    expansion: STATE["expansion"] || "",
+    ltv: STATE["ltv"] || "",
+    payback: STATE["payback"] || "",
+    
+    // GTM team structure
+    ae: STATE["ae"] || "",
+    sdr: STATE["sdr"] || "",
+    am: STATE["am"] || "",
+    csm: STATE["csm"] || "",
+    se: STATE["se"] || "",
+    partner: STATE["partner"] || "",
+    marketing: STATE["marketing"] || "",
+    enablement: STATE["enablement"] || "",
+    revops: STATE["revops"] || "",
+    leadership: STATE["leadership"] || "",
+    
+    // Revenue goals
+    target_fy: STATE["target_fy"] || "",
+    current_perf: STATE["current_perf"] || "",
+    next_fy_target: STATE["next_fy_target"] || "",
+    arr_target: STATE["arr_target"] || "",
+    growth_goal: STATE["growth_goal"] || "",
+    yoy_last_year: STATE["yoy_last_year"] || "",
+    new_vs_expansion: STATE["new_vs_expansion"] || "",
+    forecast_accuracy: STATE["forecast_accuracy"] || "",
+    customer_target: STATE["customer_target"] || "",
+    growth_constraint: STATE["growth_constraint"] || "",
+    
+    // Revenue engine
+    pipeline_cov: STATE["pipeline_cov"] || "",
+    sales_cycle: STATE["sales_cycle"] || "",
+    lead_response: STATE["lead_response"] || "",
+    demo_close: STATE["demo_close"] || "",
+    win_rate: STATE["win_rate"] || "",
+    mql_sql: STATE["mql_sql"] || "",
+    sql_cw: STATE["sql_cw"] || "",
+    ramp_time: STATE["ramp_time"] || "",
+    onboarding_time: STATE["onboarding_time"] || "",
+    deal_velocity: STATE["deal_velocity"] || "",
+    
+    // Radio questions (Q6-Q12)
+    gtm_motion: STATE[6] || "",
+    revenue_model: STATE[7] || "",
+    target_segment: STATE[8] || "",
+    buyer_persona: STATE[9] || "",
+    sales_complexity: STATE[10] || "",
+    team_size: STATE[11] || "",
+    funding_stage: STATE[12] || "",
+    
+    // Text/textarea questions (Q13-Q25)
+    geo_markets: STATE[13] || "",
+    product_desc: STATE[14] || "",
+    ideal_customer: STATE[15] || "",
+    top_priority: STATE[16] || "",
+    biggest_challenge: STATE[17] || "",
+    gtm_slowdown: STATE[18] || "",
+    recent_change: STATE[19] || "",
+    business_outcome: STATE[20] || "",
+    product_complexity: STATE[21] || "",
+    market_type: STATE[22] || "",
+    deployment_model: STATE[23] || "",
+    paying_customers: STATE[24] || "",
+    additional_context: STATE[25] || ""
+  };
+
+  // Extract diagnostic answers (Pillars 1-12, questions 1001-12020)
+  const answers = {};
+  for (let id = 1001; id <= 12020; id++) {
+    if (STATE[id]) {
+      answers[`Q${id}`] = STATE[id];
+    }
+  }
+
+  // Metadata
+  const metadata = {
+    timestamp: new Date().toISOString(),
+    version: "v5.1",
+    total_questions: QUESTIONS_REF.length,
+    completion_rate: calculateCompletionRate()
+  };
+
+  return {
+    customer,
+    context,
+    answers,
+    metadata
+  };
+}
+
+/* ---------------------- COMPLETION RATE ---------------------- */
+function calculateCompletionRate() {
+  let answered = 0;
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (filled) answered++;
+    } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
+      answered++;
+    }
+  });
+  return Math.round((answered / QUESTIONS_REF.length) * 100);
 }
 
 /* ---------------------- SAVE ---------------------- */
