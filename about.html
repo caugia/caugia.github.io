@@ -5,26 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>About | Caugia Consulting</title>
-  <meta name="description"
-        content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations.">
+  <meta name="description" content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations.">
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0">
+  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <style>
-    /* ==========================================
-       ABOUT PAGE — STRUCTURED SECTIONS
-    ========================================== */
 
+    /* ================================
+       MICRO HERO
+    ================================ */
+    .micro-hero {
+      padding: 72px 0 48px;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .micro-hero h1 {
+      font-size: 2.3rem;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+    .micro-hero p {
+      font-size: 1.15rem;
+      color: rgba(15,23,42,0.7);
+      line-height: 1.55;
+    }
+
+    /* ================================
+       ANCHOR NAV
+    ================================ */
+    .about-nav {
+      max-width: 760px;
+      margin: 0 auto 42px;
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 64px;
+      background: white;
+      z-index: 20;
+    }
+    .about-nav a {
+      font-size: 0.95rem;
+      color: var(--blue);
+      opacity: 0.55;
+      transition: opacity 0.25s ease;
+      padding: 2px 0;
+    }
+    .about-nav a.active {
+      opacity: 1;
+      border-bottom: 2px solid var(--blue);
+    }
+    .about-nav a:hover {
+      opacity: 0.9;
+    }
+
+    /* ================================
+       VERTICAL CAUGIA LINE
+    ================================ */
     .about-section {
+      position: relative;
       padding: 64px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .about-section::before {
+      content: "";
+      position: absolute;
+      left: calc(50% - 420px);
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(0,0,0,0.06);
     }
 
     .about-wrap {
@@ -32,18 +91,14 @@
       margin: 0 auto;
     }
 
-    .about-heading {
-      margin-bottom: 20px;
-    }
-
     .about-heading h2 {
-      font-size: 1.9rem;
+      font-size: 1.85rem;
       color: var(--blue);
-      margin-bottom: 12px;
+      margin-bottom: 18px;
     }
 
     .about-body p {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       line-height: 1.6;
       color: rgba(15,23,42,0.88);
     }
@@ -53,22 +108,67 @@
       padding-left: 14px;
       border-left: 2px solid rgba(0,70,165,0.2);
     }
-
     .grip-list p {
       margin: 4px 0;
-      font-size: 1.06rem;
-      color: rgba(15,23,42,0.85);
     }
 
-    /* Smooth intro elevation */
-    .about-section:first-of-type {
-      padding-top: 48px;
+    /* ================================
+       FOUNDER CARD
+    ================================ */
+    .founder-card {
+      margin-top: 28px;
+      padding: 22px 28px;
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 10px;
+      background: #FAFBFF;
     }
+    .founder-card h3 {
+      color: var(--blue);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .founder-card p {
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+
+    /* ================================
+       CLOSING CTA
+    ================================ */
+    .closing-cta {
+      text-align: center;
+      padding: 80px 0 100px;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .closing-cta h2 {
+      font-size: 2rem;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+    .closing-cta p {
+      color: rgba(15,23,42,0.75);
+      margin-bottom: 28px;
+      font-size: 1.15rem;
+    }
+    .closing-cta a {
+      padding: 14px 26px;
+      background: var(--blue);
+      color: white;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      transition: opacity 0.25s ease;
+    }
+    .closing-cta a:hover {
+      opacity: 0.88;
+    }
+
   </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
@@ -100,131 +200,114 @@
   </div>
 </header>
 
-
 <main>
 
-  <!-- WHY -->
-  <section class="about-section">
+  <!-- MICRO HERO -->
+  <div class="micro-hero">
+    <h1>Clarity begins with structure</h1>
+    <p>The story behind Caugia and the principles that shape a calmer, stronger revenue system.</p>
+  </div>
+
+  <!-- ANCHOR NAV -->
+  <nav class="about-nav" id="aboutNav">
+    <a href="#why">Why</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#how">Approach</a>
+    <a href="#who">Founder</a>
+    <a href="#experience">Experience</a>
+    <a href="#outcome">Outcome</a>
+  </nav>
+
+  <!-- SECTIONS BELOW (unchanged content but improved layout) -->
+
+  <section id="why" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>Why Caugia exists</h2>
-      </div>
+      <div class="about-heading"><h2>Why Caugia exists</h2></div>
       <div class="about-body">
-        <p>
-          Many revenue organisations work hard but operate in systems that were never intentionally designed. Processes grow organically. Tools accumulate. Teams specialise. Each part functions, yet the overall engine becomes heavier each quarter.
-        </p>
-        <p>
-          In these environments effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Results depend on individual heroics instead of a system that carries the organisation forward.
-        </p>
-        <p>
-          Caugia was created to offer a calmer alternative. A way to read the entire revenue engine as one structure and replace scattered motion with a coherent operating model that restores clarity, alignment and control.
-        </p>
+        <p>Many revenue organisations work hard but operate in systems that were never intentionally designed. Processes grow organically. Tools accumulate. Teams specialise. Each part functions yet the overall engine becomes heavier each quarter.</p>
+        <p>In these environments effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Results depend on individual heroics instead of a system that carries the organisation forward.</p>
+        <p>Caugia was created to offer a calmer alternative. A way to read the entire revenue engine as one structure and replace scattered motion with a coherent operating model that restores clarity, alignment and control.</p>
       </div>
     </div>
   </section>
 
-  <!-- PHILOSOPHY -->
-  <section class="about-section">
+  <section id="philosophy" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>The philosophy</h2>
-      </div>
+      <div class="about-heading"><h2>The philosophy</h2></div>
       <div class="about-body">
-        <p>
-          Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.
-        </p>
-
+        <p>Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.</p>
         <div class="grip-list">
           <p>Guidance</p>
           <p>Resources</p>
           <p>Implementation</p>
           <p>Performance</p>
         </div>
-
-        <p>
-          When these forces align teams move with intention. When they drift apart the organisation compensates with effort. Meetings expand. Priorities shift. Progress slows under the weight of good intentions.
-        </p>
-        <p>
-          The GRIP Diamond makes this balance visible. It reveals where tension accumulates and why the system feels heavy, giving leaders a clear view of what to strengthen now and what to protect for later.
-        </p>
+        <p>When these forces align teams move with intention. When they drift apart the organisation compensates with effort. Meetings expand. Priorities shift. Progress slows under the weight of good intentions.</p>
+        <p>The GRIP Diamond makes this balance visible. It reveals where tension accumulates and why the system feels heavy, giving leaders a clear view of what to strengthen now and what to protect for later.</p>
       </div>
     </div>
   </section>
 
-  <!-- HOW -->
-  <section class="about-section">
+  <section id="how" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>How Caugia works</h2>
-      </div>
+      <div class="about-heading"><h2>How Caugia works</h2></div>
       <div class="about-body">
-        <p>
-          Caugia removes noise rather than adding more of it. The work begins by creating one shared model of the revenue engine. This model becomes the reference point for decisions, priorities and execution across all teams.
-        </p>
-        <p>
-          Once the system is visible leaders gain space to think clearly again. Decisions quieten. Priorities stabilise. The organisation moves with less urgency and more coordination. Energy shifts from reacting to designing.
-        </p>
+        <p>Caugia removes noise rather than adding more of it. The work begins by creating one shared model of the revenue engine. This model becomes the reference point for decisions, priorities and execution across all teams.</p>
+        <p>Once the system is visible leaders gain space to think clearly again. Decisions quieten. Priorities stabilise. The organisation moves with less urgency and more coordination. Energy shifts from reacting to designing.</p>
       </div>
     </div>
   </section>
 
-  <!-- WHO -->
-  <section class="about-section">
+  <section id="who" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>Who leads Caugia</h2>
-      </div>
+      <div class="about-heading"><h2>Who leads Caugia</h2></div>
       <div class="about-body">
-        <p>
-          Caugia is led by Tom Meijer. His work focuses on one idea. A revenue system should make performance predictable. It should reduce friction and not depend on pressure or speed to function.
-        </p>
-        <p>
-          Tom’s experience in modern SaaS environments shaped the principles behind Caugia. Environments where growth, complexity and ambition rise together. His work at Caugia turns these lessons into a calm and structured approach that strengthens organisations without overwhelming them.
-        </p>
+        <p>Caugia is led by Tom Meijer. His work focuses on one idea. A revenue system should make performance predictable. It should reduce friction and not depend on pressure or speed to function.</p>
+        <p>Tom’s experience in modern SaaS environments shaped the principles behind Caugia. Environments where growth, complexity and ambition rise together. His work at Caugia turns these lessons into a calm and structured approach that strengthens organisations without overwhelming them.</p>
+
+        <div class="founder-card">
+          <h3>About Tom</h3>
+          <p>Tom spent his career inside high-growth SaaS organisations where pressure, scale and complexity evolve together. What he saw consistently was not a lack of talent but a lack of structure. Teams performed but the system around them created friction.</p>
+          <p>Caugia is the result of years observing how revenue organisations behave under stress and what they need to operate with clarity. The frameworks behind Caugia are built to bring calm where speed once ruled and to help organisations move as one coherent system.</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section class="about-section">
+  <section id="experience" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>What it feels like</h2>
-      </div>
+      <div class="about-heading"><h2>What it feels like</h2></div>
       <div class="about-body">
-        <p>
-          Leaders often describe the experience in simple words. Calm. Clear. Grounded. Once the system becomes visible the organisation gains a new sense of control. Noise reduces. Focus returns. Teams move with a shared understanding instead of constant recalibration.
-        </p>
+        <p>Leaders often describe the experience in simple words. Calm. Clear. Grounded. Once the system becomes visible the organisation gains a new sense of control. Noise reduces. Focus returns. Teams move with a shared understanding instead of constant recalibration.</p>
       </div>
     </div>
   </section>
 
-  <!-- OUTCOME -->
-  <section class="about-section">
+  <section id="outcome" class="about-section">
     <div class="about-wrap">
-      <div class="about-heading">
-        <h2>The outcome</h2>
-      </div>
+      <div class="about-heading"><h2>The outcome</h2></div>
       <div class="about-body">
-        <p>
-          After the first cycle the revenue engine feels different. Not heavier but lighter. Not busier but clearer. Not more complex but more coherent.
-        </p>
-        <p>
-          Caugia removes friction and establishes a system that moves as one. A system leaders can trust and teams can rely on.
-        </p>
+        <p>After the first cycle the revenue engine feels different. Not heavier but lighter. Not busier but clearer. Not more complex but more coherent.</p>
+        <p>Caugia removes friction and establishes a system that moves as one. A system leaders can trust and teams can rely on.</p>
       </div>
     </div>
   </section>
+
+  <!-- CLOSING CTA -->
+  <div class="closing-cta">
+    <h2>Ready to design a calmer, stronger revenue system</h2>
+    <p>Caugia helps leadership teams build clarity, structure and coherence across their entire go to market engine.</p>
+    <a href="mailto:hello@caugia.com">Start the conversation</a>
+  </div>
 
 </main>
-
 
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
       <p>© 2025 Caugia Consulting</p>
     </div>
-
     <div class="footer-right">
       <a href="privacy.html">Privacy notice</a>
       <a href="mailto:info@caugia.com">info@caugia.com</a>
@@ -233,6 +316,24 @@
     </div>
   </div>
 </footer>
+
+<script>
+  /* Scroll spy for anchor nav */
+  const navLinks = document.querySelectorAll('.about-nav a');
+  const sections = document.querySelectorAll('.about-section');
+
+  function activateLink() {
+    let index = sections.length;
+
+    while(--index && window.scrollY + 120 < sections[index].offsetTop) {}
+
+    navLinks.forEach((link) => link.classList.remove('active'));
+    navLinks[index].classList.add('active');
+  }
+
+  activateLink();
+  window.addEventListener('scroll', activateLink);
+</script>
 
 </body>
 </html>
