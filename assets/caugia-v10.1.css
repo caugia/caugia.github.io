@@ -1,6 +1,10 @@
 /* ===========================================================
-   CAUGIA CONSULTING — CSS v10.1 NORRIS SUCKS
+   CAUGIA CONSULTING — CSS v10.1 FIXED
    Above the fold • Viewport-locked • Inner scroll only
+   
+   FIXES:
+   - Pillar description box: reduced top padding (text sits higher)
+   - Header buttons: Dark now appears RIGHT of Contact (proper order)
    =========================================================== */
 
 /* ------------------------------
@@ -112,6 +116,7 @@ body.dark .gi-header {
   border-radius: 8px;
   border: 1px solid var(--blue);
   transition: var(--transition);
+  order: 1; /* Contact comes FIRST */
 }
 
 .gi-contact-link:hover {
@@ -129,6 +134,7 @@ body.dark .gi-header {
   font-size: 14px;
   font-weight: 500;
   transition: var(--transition);
+  order: 2; /* Dark comes SECOND (to the right) */
 }
 
 .gi-dark-toggle:hover {
@@ -258,10 +264,10 @@ body.dark .gi-progress-track {
   transition: width .35s ease;
 }
 
-/* Left pillar description */
+/* Left pillar description - FIXED: Less top padding */
 .gi-pillar-desc-box {
   margin-top: 20px;
-  padding: 18px;
+  padding: 14px 18px 18px 18px; /* Top: 14px (was 18px) */
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: white;
@@ -277,6 +283,7 @@ body.dark .gi-pillar-desc-box {
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .gi-pillar-desc-box p {
