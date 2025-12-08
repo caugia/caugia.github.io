@@ -257,7 +257,6 @@ btnSubmit.addEventListener("click", async () => {
 
   try {
     const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
-
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
