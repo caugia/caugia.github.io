@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.0
-   Production Ready • Make.com Integration • Block 1 Complete
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.1
+   Production Ready • Make.com Integration • Explain Mode
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -48,6 +48,35 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
 
+/* ---------------------- EXPLAIN MODE ---------------------- */
+let explainEnabled = false;
+
+function toggleExplain() {
+  explainEnabled = !explainEnabled;
+  const box = document.getElementById("gi-explain-box");
+  if (box) box.style.display = explainEnabled ? "block" : "none";
+}
+
+function setExplainPlaceholder(q) {
+  const box = document.getElementById("gi-explain-box");
+  if (!box) return;
+
+  if (!explainEnabled) {
+    box.style.display = "none";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="gi-explain-inner">
+      <strong>Why this question matters</strong>
+      <p>This placeholder shows where future AI-powered guidance will appear.</p>
+      <p><em>Pillar:</em> ${PILLAR_META[q.pillar].name}</p>
+      <p><em>Question:</em> ${q.title}</p>
+    </div>
+  `;
+  box.style.display = "block";
+}
+
 /* ---------------------- RENDER QUESTION ---------------------- */
 function renderQuestion() {
   const q = QUESTIONS_REF[currentIndex];
@@ -65,6 +94,7 @@ function renderQuestion() {
 
   qBody.innerHTML = buildInput(q);
   restoreAnswer(q);
+  setExplainPlaceholder(q);
   updateNav();
   updateProgress();
 }
@@ -331,7 +361,7 @@ function preparePayload() {
 
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v6.0",
+    version: "v6.1",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
