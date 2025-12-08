@@ -256,7 +256,7 @@ btnSubmit.addEventListener("click", async () => {
   btnSubmit.disabled = true;
 
   try {
-    const response = await fetch("PLACEHOLDER_MAKECOM_WEBHOOK_URL", {
+    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
