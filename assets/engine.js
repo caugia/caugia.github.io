@@ -33,7 +33,7 @@ setInterval(saveState, 700);
    QUESTIONS SOURCE
 ----------------------------------------------------------- */
 
-const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+let QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
 if (!QUESTIONS.length) {
   console.error("❌ QUESTIONS.js missing or empty.");
 }
