@@ -1,17 +1,23 @@
+
+
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v7.2 — CLEAN ROOM EDITION
-   Fully rebuilt — zero conflicts — guaranteed working
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.1
+   Production Ready • Make.com Integration • Explain Mode
    =========================================================== */
 
-/* -----------------------------------------------------------
-   GLOBAL STATE
------------------------------------------------------------ */
-
+/* ---------------------- STATE ---------------------- */
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 let STATE = loadState();
 
-/* Persisted progress loader */
+/* ---------------------- QUESTIONS SOURCE ---------------------- */
+const QUESTIONS_REF = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+
+if (QUESTIONS_REF.length === 0) {
+  console.error("❌ QUESTIONS.js not loaded or empty.");
+}
+
+/* ---------------------- LOAD / SAVE ---------------------- */
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -21,147 +27,132 @@ function loadState() {
   }
 }
 
-/* Autosave */
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
 setInterval(saveState, 700);
 
-
-/* -----------------------------------------------------------
-   QUESTIONS SOURCE – ALWAYS FROM window.QUESTIONS
------------------------------------------------------------ */
-
-let QUESTIONS = [];
-if (Array.isArray(window.QUESTIONS)) {
-  QUESTIONS = window.QUESTIONS;
-} else {
-  console.error("❌ window.QUESTIONS not found.");
-}
-
-/* Hard stop if no questions */
-if (QUESTIONS.length === 0) {
-  console.error("❌ No questions loaded from QUESTIONS.js");
-}
-
-
-/* -----------------------------------------------------------
-   PILLAR META
------------------------------------------------------------ */
-
-const PILLAR_META = {
-  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction, priorities and accountability are defined."},
-  2:{name:"Market Intelligence", desc:"Strength of customer insight and competitive understanding."},
-  3:{name:"Product Marketing", desc:"Messaging, positioning and value articulation."},
-  4:{name:"Demand Generation", desc:"Predictability and quality of pipeline creation."},
-  5:{name:"Sales Execution", desc:"Sales consistency, forecasting and funnel health."},
-  6:{name:"Customer Success & Expansion", desc:"Retention, adoption and expansion readiness."},
-  7:{name:"Revenue Operations & Systems", desc:"Process automation, data health and tooling."},
-  8:{name:"Pricing & Packaging", desc:"Value structure, monetisation clarity and tiers."},
-  9:{name:"Brand & Communications", desc:"Narrative consistency, clarity and differentiation."},
-  10:{name:"Data & Insights", desc:"Visibility, reliability and actionability of GTM data."},
-  11:{name:"Enablement", desc:"Training, coaching and performance support."},
-  12:{name:"Leadership & Alignment", desc:"Cross-functional cohesion and shared GTM direction."}
-};
-
-
-/* -----------------------------------------------------------
-   DOM ELEMENTS
------------------------------------------------------------ */
-
-const elTitle = document.getElementById("gi-question-title");
-const elSub = document.getElementById("gi-question-sub");
-const elBody = document.getElementById("gi-question-body");
-
-const elKicker = document.getElementById("gi-question-kicker");
-const elRightName = document.getElementById("gi-pillar-name");
-const elRightDesc = document.getElementById("gi-pillar-desc");
-
-const elLeftPillars = document.querySelectorAll("#gi-left-pillar-list li");
-
+/* ---------------------- DOM ELEMENTS ---------------------- */
+const qTitle = document.getElementById("gi-question-title");
+const qSub = document.getElementById("gi-question-sub");
+const qBody = document.getElementById("gi-question-body");
+const kicker = document.getElementById("gi-question-kicker");
+const rightName = document.getElementById("gi-pillar-name");
+const rightDesc = document.getElementById("gi-pillar-desc");
+const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
 const btnPrev = document.getElementById("gi-prev-btn");
 const btnNext = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
 const btnClear = document.getElementById("gi-clear-btn");
 const btnSave = document.getElementById("gi-save-btn");
 const btnReset = document.getElementById("gi-reset-btn");
-const btnJumpLast = document.getElementById("gi-jump-last");
+const progressCount = document.getElementById("gi-progress-count");
+const progressPercent = document.getElementById("gi-progress-percent");
+const progressBar = document.getElementById("gi-progress-bar");
 
-const elProgressCount = document.getElementById("gi-progress-count");
-const elProgressPercent = document.getElementById("gi-progress-percent");
-const elProgressBar = document.getElementById("gi-progress-bar");
+/* ---------------------- EXPLAIN MODE ---------------------- */
+let explainEnabled = false;
 
-
-/* -----------------------------------------------------------
-   VIRTUAL DOM CACHE
------------------------------------------------------------ */
-
-let CACHE = [];
-
-function createNode(html) {
-  const t = document.createElement("template");
-  t.innerHTML = html.trim();
-  return t.content.firstChild;
+function toggleExplain() {
+  explainEnabled = !explainEnabled;
+  const box = document.getElementById("gi-explain-box");
+  if (box) box.style.display = explainEnabled ? "block" : "none";
 }
 
-function buildNode(q) {
+function setExplainPlaceholder(q) {
+  const box = document.getElementById("gi-explain-box");
+  if (!box) return;
+
+  if (!explainEnabled) {
+    box.style.display = "none";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="gi-explain-inner">
+      <strong>Why this question matters</strong>
+      <p>This placeholder shows where future AI-powered guidance will appear.</p>
+      <p><em>Pillar:</em> ${PILLAR_META[q.pillar].name}</p>
+      <p><em>Question:</em> ${q.title}</p>
+    </div>
+  `;
+  box.style.display = "block";
+}
+
+/* ---------------------- RENDER QUESTION ---------------------- */
+function renderQuestion() {
+  const q = QUESTIONS_REF[currentIndex];
+  if (!q) return;
+
+  kicker.textContent = PILLAR_META[q.pillar].name;
+  rightName.textContent = PILLAR_META[q.pillar].name;
+  rightDesc.textContent = PILLAR_META[q.pillar].desc;
+  qTitle.textContent = q.title || "";
+  qSub.textContent = q.sub || "";
+
+  leftPillars.forEach(li =>
+    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
+  );
+
+  qBody.innerHTML = buildInput(q);
+  restoreAnswer(q);
+  setExplainPlaceholder(q);
+  updateNav();
+  updateProgress();
+}
+
+/* ---------------------- BUILD INPUT ---------------------- */
+function buildInput(q) {
   if (q.type === "text")
-    return createNode(`<input type="text" name="q" class="gi-input">`);
+    return `<input type="text" name="q" class="gi-input">`;
 
   if (q.type === "number")
-    return createNode(`<input type="number" name="q" class="gi-input">`);
+    return `<input type="number" name="q" class="gi-input">`;
 
   if (q.type === "textarea")
-    return createNode(`<textarea name="q" class="gi-textarea"></textarea>`);
+    return `<textarea name="q" class="gi-textarea"></textarea>`;
 
   if (q.type === "select")
-    return createNode(`
+    return `
       <select name="q" class="gi-select">
         <option value="">Select an option…</option>
         ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
       </select>
-    `);
+    `;
 
   if (q.type === "radio" || q.type === "scale")
-    return createNode(`
+    return `
       <div class="gi-options-grid">
         ${q.options.map(o => `
           <label class="gi-option-card">
             <input type="radio" name="q" value="${o}">
             <span>${o}</span>
-          </label>`).join("")}
+          </label>`
+        ).join("")}
       </div>
-    `);
+    `;
 
   if (q.type === "group")
-    return createNode(`
+    return `
       <div class="gi-group">
-        ${q.fields.map(f => `
-          <div class="gi-group-field">
-            <label>${f.label}</label>
-            <input type="text" name="${f.name}">
-          </div>`).join("")}
+        ${q.fields
+          .map(f => `
+            <div class="gi-group-field">
+              <label>${f.label}</label>
+              <input type="text" name="${f.name}">
+            </div>`
+          ).join("")}
       </div>
-    `);
+    `;
 
-  return createNode(`<p>Unsupported question type</p>`);
+  return `<p>Unsupported question type</p>`;
 }
 
-function precache() {
-  CACHE = QUESTIONS.map(q => buildNode(q));
-}
-
-precache();
-
-
-/* -----------------------------------------------------------
-   RESTORE ANSWER
------------------------------------------------------------ */
+/* ---------------------- RESTORE ANSWER ---------------------- */
 function restoreAnswer(q) {
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = elBody.querySelector(`[name="${f.name}"]`);
+      const el = qBody.querySelector(`[name="${f.name}"]`);
       if (el && STATE[f.name]) el.value = STATE[f.name];
     });
     return;
@@ -170,152 +161,90 @@ function restoreAnswer(q) {
   const saved = STATE[q.id];
   if (!saved) return;
 
-  if (q.type === "radio" || q.type === "scale") {
-    const radio = elBody.querySelector(`input[value="${saved}"]`);
-    if (radio) radio.checked = true;
-  }
+  const radio = qBody.querySelector(`input[value="${saved}"]`);
+  if (radio) radio.checked = true;
 
-  const single = elBody.querySelector("[name='q']");
-  if (single) single.value = saved;
+  const el = qBody.querySelector("[name='q']");
+  if (el) el.value = saved;
 }
 
+/* ---------------------- VALIDATION ---------------------- */
+function validate(q) {
+  if (q.type === "group")
+    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
 
-/* -----------------------------------------------------------
-   STORE ANSWER
------------------------------------------------------------ */
-function storeAnswer() {
-  const q = QUESTIONS[currentIndex];
+  if (q.type === "radio" || q.type === "scale")
+    return qBody.querySelector("input:checked") !== null;
+
+  const el = qBody.querySelector("[name='q']");
+  return el && el.value.trim() !== "";
+}
+
+/* ---------------------- STORE CURRENT ANSWER ---------------------- */
+function storeCurrentAnswer() {
+  const q = QUESTIONS_REF[currentIndex];
 
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = elBody.querySelector(`[name="${f.name}"]`);
+      const el = qBody.querySelector(`[name="${f.name}"]`);
       STATE[f.name] = el ? el.value.trim() : "";
     });
     return;
   }
 
   if (q.type === "radio" || q.type === "scale") {
-    const selected = elBody.querySelector("input:checked");
+    const selected = qBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
     return;
   }
 
-  const input = elBody.querySelector("[name='q']");
-  if (input) STATE[q.id] = input.value.trim();
+  const el = qBody.querySelector("[name='q']");
+  if (el) STATE[q.id] = el.value.trim();
 }
 
-
-/* -----------------------------------------------------------
-   VALIDATE ANSWER
------------------------------------------------------------ */
-function validate(q) {
-  if (q.type === "group") {
-    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-  }
-  if (q.type === "radio" || q.type === "scale") {
-    return elBody.querySelector("input:checked") !== null;
-  }
-  const i = elBody.querySelector("[name='q']");
-  return i && i.value.trim() !== "";
-}
-
-
-/* -----------------------------------------------------------
-   RENDER QUESTION
------------------------------------------------------------ */
-function renderQuestion() {
-  const q = QUESTIONS[currentIndex];
-  if (!q) return;
-
-  elKicker.textContent = PILLAR_META[q.pillar].name;
-  elTitle.textContent = q.title;
-  elSub.textContent = q.sub || "";
-
-  elRightName.textContent = PILLAR_META[q.pillar].name;
-  elRightDesc.textContent = PILLAR_META[q.pillar].desc;
-
-  elLeftPillars.forEach(li =>
-    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
-  );
-
-  elBody.innerHTML = "";
-  elBody.appendChild(CACHE[currentIndex].cloneNode(true));
-
-  restoreAnswer(q);
-  updateNav();
-  updateProgress();
-}
-
-
-/* -----------------------------------------------------------
-   NAVIGATION BUTTONS
------------------------------------------------------------ */
+/* ---------------------- NAVIGATION ---------------------- */
 btnNext.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
-  storeAnswer();
+  const q = QUESTIONS_REF[currentIndex];
+  storeCurrentAnswer();
   if (!validate(q)) return;
   currentIndex++;
   renderQuestion();
 });
 
 btnPrev.addEventListener("click", () => {
-  storeAnswer();
+  storeCurrentAnswer();
   if (currentIndex > 0) currentIndex--;
   renderQuestion();
 });
 
 btnClear.addEventListener("click", () => {
-  const q = QUESTIONS[currentIndex];
-  if (q.type === "group") {
-    q.fields.forEach(f => delete STATE[f.name]);
-  } else {
-    delete STATE[q.id];
-  }
-  renderQuestion();
-});
-
-btnReset.addEventListener("click", () => {
-  if (!confirm("Reset entire assessment?")) return;
-  STATE = {};
-  localStorage.removeItem(STORAGE_KEY);
-  currentIndex = 0;
+  const q = QUESTIONS_REF[currentIndex];
+  if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
+  else delete STATE[q.id];
   renderQuestion();
 });
 
 btnSave.addEventListener("click", saveState);
 
+btnReset.addEventListener("click", () => {
+  if (!confirm("Reset entire assessment? All progress will be lost.")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  STATE = {};
+  currentIndex = 0;
+  renderQuestion();
+  updateProgress();
+});
 
-/* -----------------------------------------------------------
-   PROGRESS
------------------------------------------------------------ */
-function updateProgress() {
-  let answered = 0;
-
-  QUESTIONS.forEach(q => {
-    if (q.type === "group") {
-      if (q.fields.every(f => STATE[f.name])) answered++;
-    } else if (STATE[q.id]) {
-      answered++;
-    }
-  });
-
-  const pct = Math.round(answered / QUESTIONS.length * 100);
-
-  elProgressCount.textContent = `${answered} / ${QUESTIONS.length}`;
-  elProgressPercent.textContent = `${pct}%`;
-  elProgressBar.style.width = `${pct}%`;
-}
-
-
-/* -----------------------------------------------------------
-   SUBMIT LOGIC
------------------------------------------------------------ */
+/* ---------------------- SUBMIT TO MAKE.COM ---------------------- */
 btnSubmit.addEventListener("click", async () => {
-  storeAnswer();
+  storeCurrentAnswer();
+  saveState();
 
-  const allAnswered = QUESTIONS.every(q => {
-    if (q.type === "group") return q.fields.every(f => STATE[f.name]);
-    return STATE[q.id];
+  const allAnswered = QUESTIONS_REF.every(q => {
+    if (q.type === "group") {
+      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+    }
+    return STATE[q.id] && STATE[q.id].trim() !== "";
   });
 
   if (!allAnswered) {
@@ -323,39 +252,172 @@ btnSubmit.addEventListener("click", async () => {
     return;
   }
 
-  const payload = {
-    customer: STATE,
-    metadata: {
-      version: "v7.2",
-      completed_at: new Date().toISOString(),
-      total_questions: QUESTIONS.length
-    }
-  };
+  const payload = preparePayload();
 
-  btnSubmit.disabled = true;
   btnSubmit.textContent = "Submitting...";
+  btnSubmit.disabled = true;
 
   try {
-    await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
+    if (!response.ok) throw new Error("Submission failed");
+
+    console.log("✅ Assessment submitted successfully");
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = "/gtm-intelligence-thank-you.html";
 
-  } catch (e) {
-    alert("Submission failed.");
-    btnSubmit.disabled = false;
+  } catch (error) {
+    console.error("❌ Submission error:", error);
+    alert("Submission failed. Please try again or contact hello@caugia.com");
     btnSubmit.textContent = "Submit";
+    btnSubmit.disabled = false;
   }
 });
 
+/* ---------------------- PAYLOAD BUILDER ---------------------- */
+function preparePayload() {
+  const customer = {
+    fullname: STATE["fullname"] || "",
+    role: STATE["role"] || "",
+    email: STATE["email"] || "",
+    mobile: STATE["mobile"] || "",
+    company: STATE["company"] || "",
+    website: STATE["website"] || "",
+    sector: STATE["sector"] || "",
+    country: STATE["country"] || "",
+    activity: STATE["activity"] || "",
+    companysize: STATE["companysize"] || ""
+  };
 
-/* -----------------------------------------------------------
-   INIT
------------------------------------------------------------ */
+  const context = {
+    arr: STATE["arr"] || "",
+    acv: STATE["acv"] || "",
+    churn: STATE["churn"] || "",
+    cpl: STATE["cpl"] || "",
+    cac: STATE["cac"] || "",
+    nrr: STATE["nrr"] || "",
+    nps: STATE["nps"] || "",
+    expansion: STATE["expansion"] || "",
+    ltv: STATE["ltv"] || "",
+    payback: STATE["payback"] || "",
+    ae: STATE["ae"] || "",
+    sdr: STATE["sdr"] || "",
+    am: STATE["am"] || "",
+    csm: STATE["csm"] || "",
+    se: STATE["se"] || "",
+    partner: STATE["partner"] || "",
+    marketing: STATE["marketing"] || "",
+    enablement: STATE["enablement"] || "",
+    revops: STATE["revops"] || "",
+    leadership: STATE["leadership"] || "",
+    target_fy: STATE["target_fy"] || "",
+    current_perf: STATE["current_perf"] || "",
+    next_fy_target: STATE["next_fy_target"] || "",
+    arr_target: STATE["arr_target"] || "",
+    growth_goal: STATE["growth_goal"] || "",
+    yoy_last_year: STATE["yoy_last_year"] || "",
+    new_vs_expansion: STATE["new_vs_expansion"] || "",
+    forecast_accuracy: STATE["forecast_accuracy"] || "",
+    customer_target: STATE["customer_target"] || "",
+    growth_constraint: STATE["growth_constraint"] || "",
+    pipeline_cov: STATE["pipeline_cov"] || "",
+    sales_cycle: STATE["sales_cycle"] || "",
+    lead_response: STATE["lead_response"] || "",
+    demo_close: STATE["demo_close"] || "",
+    win_rate: STATE["win_rate"] || "",
+    mql_sql: STATE["mql_sql"] || "",
+    sql_cw: STATE["sql_cw"] || "",
+    ramp_time: STATE["ramp_time"] || "",
+    onboarding_time: STATE["onboarding_time"] || "",
+    deal_velocity: STATE["deal_velocity"] || "",
+    gtm_motion: STATE[6] || "",
+    revenue_model: STATE[7] || "",
+    target_segment: STATE[8] || "",
+    buyer_persona: STATE[9] || "",
+    sales_complexity: STATE[10] || "",
+    team_size: STATE[11] || "",
+    funding_stage: STATE[12] || "",
+    geo_markets: STATE[13] || "",
+    product_desc: STATE[14] || "",
+    ideal_customer: STATE[15] || "",
+    top_priority: STATE[16] || "",
+    biggest_challenge: STATE[17] || "",
+    gtm_slowdown: STATE[18] || "",
+    recent_change: STATE[19] || "",
+    business_outcome: STATE[20] || "",
+    product_complexity: STATE[21] || "",
+    market_type: STATE[22] || "",
+    deployment_model: STATE[23] || "",
+    paying_customers: STATE[24] || "",
+    additional_context: STATE[25] || ""
+  };
+
+  const answers = {};
+  for (let id = 1001; id <= 12020; id++) {
+    if (STATE[id]) answers[`Q${id}`] = STATE[id];
+  }
+
+  const metadata = {
+    timestamp: new Date().toISOString(),
+    version: "v6.1",
+    total_questions: QUESTIONS_REF.length,
+    completion_rate: calculateCompletionRate()
+  };
+
+  return { customer, context, answers, metadata };
+}
+
+/* ---------------------- COMPLETION RATE ---------------------- */
+function calculateCompletionRate() {
+  let answered = 0;
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (filled) answered++;
+    } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
+      answered++;
+    }
+  });
+  return Math.round((answered / QUESTIONS_REF.length) * 100);
+}
+
+/* ---------------------- PROGRESS ---------------------- */
+function updateProgress() {
+  let answered = 0;
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (filled) answered++;
+      return;
+    }
+    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
+  });
+
+  const total = QUESTIONS_REF.length;
+  const pct = Math.round((answered / total) * 100);
+  progressCount.textContent = `${answered} / ${total}`;
+  progressPercent.textContent = `${pct}%`;
+  progressBar.style.width = `${pct}%`;
+}
+
+/* ---------------------- NAVIGATION HELPERS ---------------------- */
+function updateNav() {
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+
+  if (currentIndex === QUESTIONS_REF.length - 1) {
+    btnNext.style.display = "none";
+    btnSubmit.style.display = "inline-block";
+  } else {
+    btnNext.style.display = "inline-block";
+    btnSubmit.style.display = "none";
+  }
+}
+
+/* ---------------------- INIT ---------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderQuestion();
 });
