@@ -93,6 +93,8 @@
          CENTER ENGINE
     ======================================================== -->
     <section class="gi-center">
+
+      <!-- QUESTION CARD (auto-height, no scrolling) -->
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
@@ -103,29 +105,37 @@
 
         <div class="gi-question-body" id="gi-question-body"></div>
 
-
-        <!-- =======================================================
-     NAVIGATION BLOCK — PREMIUM CAUGIA UX
-======================================================= -->
-
-<!-- UTILITY ACTIONS (SUBTLE, TOP-RIGHT) -->
-<div class="gi-utility-row">
-  <button class="gi-utility-btn" id="gi-save-btn">Save</button>
-  <button class="gi-utility-btn" id="gi-jump-first">First unanswered</button>
-  <button class="gi-utility-btn" id="gi-jump-last">Last answered</button>
-</div>
-
-<!-- PRIMARY NAVIGATION -->
-<div class="gi-nav-row">
-  <button class="gi-btn" id="gi-prev-btn">Previous</button>
-  <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-  <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
-  <button class="gi-btn" id="gi-clear-btn">Clear</button>
-</div>
-        <!-- ======================================================= -->
+      </div> <!-- END question card -->
 
 
-      </div> <!-- END gi-question-card -->
+      <!-- =======================================================
+           GLOBAL NAVIGATION (OUTSIDE THE CARD)
+      ======================================================== -->
+
+      <div class="gi-nav-global">
+
+        <!-- LEFT SIDE -->
+        <button class="gi-btn" id="gi-prev-btn">Previous</button>
+
+        <!-- CENTER UTILITY BUTTONS -->
+        <div class="gi-nav-center">
+          <button class="gi-btn" id="gi-jump-first">First unanswered</button>
+          <button class="gi-btn" id="gi-jump-last">Last answered</button>
+        </div>
+
+        <!-- RIGHT SIDE PRIMARY ACTIONS -->
+        <div class="gi-nav-right">
+          <button class="gi-btn" id="gi-save-btn">Save</button>
+          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
+        </div>
+
+      </div>
+
+      <!-- ======================================================= -->
+
+
     </section>
 
 
@@ -168,28 +178,32 @@
      SCRIPT BLOCKS
 =========================================================== -->
 
+<!-- QUESTIONS SOURCE -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
+<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction, priorities and accountability are defined. A strong strategic foundation ensures that teams focus on the same goals, understand what matters most and execute with greater predictability."},
-  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. Reliable insights reduce assumptions, guide positioning and ensure decisions are grounded in evidence rather than intuition."},
-  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value. Clear positioning, messaging and differentiation help teams communicate value consistently and equip sales with the materials needed to win more effectively."},
-  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably your inbound engine attracts, educates and converts your ICP. Strong demand systems combine content, channels and analytics to create reliable, high-quality pipeline."},
-  5:{name:"Sales Execution", desc:"Sales Execution evaluates how consistently opportunities progress through the funnel including discovery, deal management and forecasting discipline."},
-  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion reflects your ability to onboard customers, drive adoption, prevent churn and identify expansion opportunities."},
-  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations measures the quality of processes, data foundations and technology architecture powering the GTM engine."},
-  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging captures how clearly value is articulated and how well pricing supports acquisition and expansion."},
-  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates how clearly and consistently your company expresses its narrative."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures how reliably data is captured, organized and used to guide decisions."},
- 11:{name:"Enablement", desc:"Enablement determines how effectively teams are supported with training, materials and coaching."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects how well teams collaborate and operate toward a unified GTM vision."}
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction, priorities and accountability are defined."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably your inbound engine creates pipeline."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates how consistently opportunities progress through the funnel."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion reflects your ability to onboard, retain and expand customers."},
+  7:{name:"Revenue Operations & Systems", desc:"RevOps measures processes, data quality and system architecture."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging captures how clearly value is articulated and structured."},
+  9:{name:"Brand & Communications", desc:"Brand & Comms evaluates how consistently your company expresses its narrative."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures how reliably data is captured and used."},
+ 11:{name:"Enablement", desc:"Enablement evaluates how well teams are supported with training and materials."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects cross-functional clarity and unity."}
 };
 </script>
 
+<!-- ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
 
+<!-- DARK MODE TOGGLE -->
 <script>
 const toggle = document.getElementById("darkToggle");
 toggle.addEventListener("click", () => {
