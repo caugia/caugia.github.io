@@ -1,26 +1,26 @@
 /* ===========================================================
-   CAUGIA CONSULTING — CSS v10.1 NAV-PREMIUM FIXED
-   Premium form UX • Zero scroll • Perfect nav alignment
+   CAUGIA CONSULTING — CSS v10.1 FIXED
+   Above the fold • Viewport-locked • Inner scroll only
+   
+   FIXES:
+   - Pillar description box: reduced top padding (text sits higher)
+   - Header buttons: Dark now appears RIGHT of Contact (proper order)
    =========================================================== */
 
-/* ------------------------------
-   ROOT VARIABLES
---------------------------------*/
+/* ------------------------------ 
+   ROOT VARIABLES 
+   ------------------------------ */
 :root {
   --ink: #0B132B;
   --ink-soft: #3a4250;
   --blue: #0046A5;
   --blue-dark: #003b88;
   --blue-light: #F4F7FF;
-
   --radius: 12px;
   --radius-sm: 8px;
-
   --border: rgba(0,0,0,0.10);
-
   --shadow-soft: 0 4px 12px rgba(0,0,0,0.05);
   --shadow-card: 0 6px 18px rgba(0,0,0,0.08);
-
   --transition: .22s cubic-bezier(.22,1,.36,1);
 }
 
@@ -33,9 +33,9 @@ body.dark {
   color: var(--ink);
 }
 
-/* ------------------------------
-   HARD RESET — NO BACKGROUND LOGOS
---------------------------------*/
+/* ------------------------------ 
+   HARD RESET — NO BACKGROUND LOGOS 
+   ------------------------------ */
 body::before,
 body::after,
 .gi-bg-logo,
@@ -56,7 +56,7 @@ body {
 
 /* ===========================================================
    HEADER
-=========================================================== */
+   =========================================================== */
 .gi-header {
   width: 100%;
   background: white;
@@ -112,6 +112,7 @@ body.dark .gi-header {
   border-radius: 8px;
   border: 1px solid var(--blue);
   transition: var(--transition);
+  order: 1; /* Contact comes FIRST */
 }
 
 .gi-contact-link:hover {
@@ -129,6 +130,7 @@ body.dark .gi-header {
   font-size: 14px;
   font-weight: 500;
   transition: var(--transition);
+  order: 2; /* Dark comes SECOND (to the right) */
 }
 
 .gi-dark-toggle:hover {
@@ -137,10 +139,10 @@ body.dark .gi-header {
 
 /* ===========================================================
    MAIN GRID — VIEWPORT LOCKED
-=========================================================== */
+   =========================================================== */
 .gi-main {
-  height: calc(100vh - 64px);
-  margin-top: 64px;
+  height: calc(100vh - 64px); /* Full height minus header */
+  margin-top: 64px; /* Header offset */
   display: flex;
   justify-content: center;
   width: 100%;
@@ -162,10 +164,11 @@ body.dark .gi-header {
 
 /* ===========================================================
    LEFT PANEL — SCROLLABLE
-=========================================================== */
+   =========================================================== */
 .gi-left-info {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 12px;
 }
 
@@ -173,26 +176,34 @@ body.dark .gi-header {
 .gi-left-info::-webkit-scrollbar {
   width: 6px;
 }
+
+.gi-left-info::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .gi-left-info::-webkit-scrollbar-thumb {
   background: rgba(0,0,0,0.15);
   border-radius: 10px;
 }
 
-/* ===========================================================
-   LEFT PANEL CONTENT
-=========================================================== */
+body.dark .gi-left-info::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+}
+
 .gi-info-title {
   font-size: 13px;
   font-weight: 600;
   color: var(--blue);
   text-transform: uppercase;
   margin-bottom: 6px;
+  letter-spacing: 0.5px;
 }
 
 .gi-info-h1 {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 14px;
+  line-height: 1.2;
 }
 
 .gi-info-desc {
@@ -218,6 +229,11 @@ body.dark .gi-header {
   box-shadow: var(--shadow-soft);
 }
 
+body.dark .gi-progress-box {
+  background: #111827;
+  border-color: #1E293B;
+}
+
 .gi-progress-top {
   display: flex;
   justify-content: space-between;
@@ -233,6 +249,10 @@ body.dark .gi-header {
   overflow: hidden;
 }
 
+body.dark .gi-progress-track {
+  background: #1E293B;
+}
+
 .gi-progress-fill {
   height: 100%;
   width: 0%;
@@ -240,19 +260,66 @@ body.dark .gi-header {
   transition: width .35s ease;
 }
 
-/* LEFT pillar desc */
+/* Left pillar description - FIXED: Less top padding */
 .gi-pillar-desc-box {
   margin-top: 20px;
-  padding: 14px 18px 18px 18px;
+  padding: 14px 18px 18px 18px; /* Top: 14px (was 18px) */
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: white;
   box-shadow: var(--shadow-soft);
 }
 
+body.dark .gi-pillar-desc-box {
+  background: #111827;
+  border-color: #1E293B;
+}
+
+.gi-pillar-desc-box h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.gi-pillar-desc-box p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: .85;
+  margin: 0;
+}
+
+/* Reset button */
+.gi-btn.gi-reset {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: var(--radius-sm);
+  background: #f5f7fa;
+  border: 1px solid var(--border);
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.gi-btn.gi-reset:hover {
+  background: #e8edf3;
+}
+
+body.dark .gi-btn.gi-reset {
+  background: #1E293B;
+  border-color: #334155;
+  color: var(--ink);
+}
+
+body.dark .gi-btn.gi-reset:hover {
+  background: #334155;
+}
+
 /* ===========================================================
-   CENTER PANEL — ENGINE
-=========================================================== */
+   CENTER ENGINE — CONTROLLED HEIGHT
+   =========================================================== */
 .gi-center {
   height: 100%;
   display: flex;
@@ -272,7 +339,12 @@ body.dark .gi-header {
   overflow: hidden;
 }
 
-/* Question header */
+body.dark .gi-question-card {
+  background: #111827;
+  border-color: #1E293B;
+}
+
+/* Header (fixed) */
 .gi-question-header {
   flex-shrink: 0;
   margin-bottom: 24px;
@@ -284,22 +356,34 @@ body.dark .gi-header {
   font-weight: 600;
   color: var(--blue);
   margin-bottom: 8px;
+  letter-spacing: 0.5px;
 }
 
 .gi-question-title {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
+  line-height: 1.3;
 }
 
+.gi-question-sub {
+  font-size: 15px;
+  opacity: .75;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+/* Body (NO SCROLL - content fits in viewport with 2-column layout) */
 .gi-question-body {
   flex: 1;
-  overflow: hidden; /* NO SCROLL */
+  overflow: visible;
+  padding-right: 12px;
   margin-bottom: 20px;
 }
 
-/* Inputs */
-.gi-question-body input,
+/* Single inputs (text, number, textarea, select) */
+.gi-question-body input[type="text"]:not(.gi-group-field input),
+.gi-question-body input[type="number"]:not(.gi-group-field input),
 .gi-question-body textarea,
 .gi-question-body select {
   width: 100%;
@@ -317,59 +401,132 @@ body.dark .gi-header {
 .gi-question-body select:focus {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,70,165,0.1);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.1);
 }
 
-/* Group fields */
+body.dark .gi-question-body input,
+body.dark .gi-question-body textarea,
+body.dark .gi-question-body select {
+  background: #0D1117;
+  border-color: #1E293B;
+  color: var(--ink);
+}
+
+body.dark .gi-question-body input:focus,
+body.dark .gi-question-body textarea:focus,
+body.dark .gi-question-body select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.2);
+}
+
+/* Group fields - GOOD SPACING, NO BORDER BOX */
 .gi-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px 40px;
+  gap: 24px 40px; /* vertical 24px, horizontal 40px */
+}
+
+.gi-group-field {
+  display: flex;
+  flex-direction: column;
 }
 
 .gi-group-field label {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 8px;
+  color: var(--ink);
 }
 
-/* ===========================================================
-   UTILITY ROW — TOP-RIGHT BUTTONS
-=========================================================== */
-.gi-utility-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.gi-utility-btn {
-  padding: 8px 16px;
-  background: #f2f4f7;
+.gi-group-field input {
+  width: 100%;
+  padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
+  font-size: 15px;
+  background: white;
   transition: var(--transition);
 }
 
-.gi-utility-btn:hover {
-  background: #e6eaf0;
+.gi-group-field input:focus {
+  outline: none;
   border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.1);
 }
 
-/* ===========================================================
-   MAIN NAVIGATION — FIXED AT BOTTOM OF CARD
-=========================================================== */
+body.dark .gi-group-field input {
+  background: #0D1117;
+  border-color: #1E293B;
+  color: var(--ink);
+}
+
+body.dark .gi-group-field input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.2);
+}
+
+/* Radio/Scale options - 2 COLUMN GRID */
+.gi-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.gi-option-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  background: white;
+}
+
+body.dark .gi-option-card {
+  background: #0D1117;
+  border-color: #1E293B;
+}
+
+.gi-option-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+body.dark .gi-option-card:hover {
+  background: #1E293B;
+}
+
+.gi-option-card input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.gi-option-card input[type="radio"]:checked ~ span {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.gi-option-card span {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Navigation buttons (fixed at bottom) */
 .gi-nav-row {
   flex-shrink: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 18px;
+  gap: 12px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
-  gap: 10px;
+}
+
+body.dark .gi-nav-row {
+  border-top-color: #1E293B;
 }
 
 .gi-btn {
@@ -388,25 +545,74 @@ body.dark .gi-header {
   border-color: var(--blue);
 }
 
-/* Primary */
-.gi-primary {
+.gi-btn.gi-primary {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
 }
 
-.gi-primary:hover {
+.gi-btn.gi-primary:hover {
   background: var(--blue-dark);
   border-color: var(--blue-dark);
 }
 
+body.dark .gi-btn {
+  background: #1E293B;
+  border-color: #334155;
+  color: var(--ink);
+}
+
+body.dark .gi-btn:hover {
+  background: #334155;
+}
+
+body.dark .gi-btn.gi-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+body.dark .gi-btn.gi-primary:hover {
+  background: var(--blue-dark);
+}
+
 /* ===========================================================
-   RIGHT PILLARS
-=========================================================== */
+   RIGHT PILLARS — SCROLLABLE
+   =========================================================== */
 .gi-right-pillars {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-left: 12px;
+}
+
+.gi-right-pillars::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gi-right-pillars::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gi-right-pillars::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
+
+body.dark .gi-right-pillars::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+}
+
+.gi-pillars-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.gi-pillar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .gi-pillar-nav li {
@@ -414,16 +620,28 @@ body.dark .gi-header {
   font-size: 14px;
   border-radius: 8px;
   cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.gi-pillar-nav li:hover {
+  background: var(--blue-light);
+}
+
+body.dark .gi-pillar-nav li:hover {
+  background: #1E293B;
 }
 
 .gi-pillar-nav li.active {
   background: var(--blue);
   color: white;
+  font-weight: 600;
 }
 
 /* ===========================================================
    FLOATING FAQ BUTTON
-=========================================================== */
+   =========================================================== */
 .gi-faq-button {
   position: fixed;
   bottom: 24px;
@@ -432,6 +650,7 @@ body.dark .gi-header {
   color: white;
   padding: 14px 22px;
   border-radius: 50px;
+  text-decoration: none;
   font-size: 15px;
   font-weight: 600;
   box-shadow: var(--shadow-card);
@@ -439,11 +658,16 @@ body.dark .gi-header {
   z-index: 1000;
 }
 
-/* ===========================================================
-   RESPONSIVE — MOBILE AND TABLETS
-=========================================================== */
-@media (max-width: 1100px) {
+.gi-faq-button:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
 
+/* ===========================================================
+   MOBILE RESPONSIVE
+   =========================================================== */
+@media (max-width: 1100px) {
   body {
     overflow-y: auto;
     height: auto;
@@ -451,18 +675,24 @@ body.dark .gi-header {
 
   .gi-main {
     height: auto;
+    margin-top: 64px;
     overflow-y: auto;
   }
 
   .gi-shell {
     grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: visible;
     gap: 32px;
     padding: 24px;
   }
 
   .gi-left-info,
   .gi-right-pillars {
+    height: auto;
     overflow-y: visible;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   .gi-question-card {
@@ -470,21 +700,38 @@ body.dark .gi-header {
     padding: 24px;
   }
 
-  .gi-utility-row {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 14px;
+  .gi-question-body {
+    overflow-y: visible;
+    max-height: none;
+  }
+
+  .gi-group {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .gi-options-grid {
+    grid-template-columns: 1fr;
   }
 
   .gi-nav-row {
     flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 12px;
+  }
+
+  .gi-btn {
+    flex: 1;
+    min-width: 100px;
   }
 }
 
 @media (max-width: 640px) {
+  .gi-header-inner {
+    padding: 0 16px;
+  }
+
+  .gi-shell {
+    padding: 16px;
+  }
 
   .gi-question-card {
     padding: 20px;
@@ -494,16 +741,7 @@ body.dark .gi-header {
     font-size: 20px;
   }
 
-  .gi-btn {
-    width: 100%;
-    text-align: center;
-  }
-
-  .gi-primary {
-    width: 100%;
-  }
-
-  .gi-utility-btn {
-    width: 100%;
+  .gi-info-h1 {
+    font-size: 24px;
   }
 }
