@@ -94,7 +94,7 @@
     ======================================================== -->
     <section class="gi-center">
 
-      <!-- QUESTION CARD (auto-height, no scrolling) -->
+      <!-- QUESTION CARD -->
       <div class="gi-question-card" id="gi-question-card">
 
         <div class="gi-question-header">
@@ -109,32 +109,51 @@
 
 
       <!-- =======================================================
-           GLOBAL NAVIGATION (OUTSIDE THE CARD)
+           GLOBAL NAVIGATION — PERFECT DESKTOP + MOBILE MODE
       ======================================================== -->
 
       <div class="gi-nav-global">
 
-        <!-- LEFT SIDE -->
-        <button class="gi-btn" id="gi-prev-btn">Previous</button>
+        <!-- LEFT SIDE (Desktop) -->
+        <button class="gi-btn gi-nav-prev" id="gi-prev-btn">Previous</button>
 
         <!-- CENTER UTILITY BUTTONS -->
         <div class="gi-nav-center">
-          <button class="gi-btn" id="gi-jump-first">First unanswered</button>
-          <button class="gi-btn" id="gi-jump-last">Last answered</button>
+          <button class="gi-btn gi-utility" id="gi-jump-first">First unanswered</button>
+          <button class="gi-btn gi-utility" id="gi-jump-last">Last answered</button>
         </div>
 
         <!-- RIGHT SIDE PRIMARY ACTIONS -->
         <div class="gi-nav-right">
-          <button class="gi-btn" id="gi-save-btn">Save</button>
-          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+          <button class="gi-btn gi-utility" id="gi-save-btn">Save</button>
+          <button class="gi-btn gi-utility" id="gi-clear-btn">Clear</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
           <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
         </div>
 
       </div>
 
-      <!-- ======================================================= -->
+      <!-- MOBILE VERSION (Auto-stacked Buttons) -->
+      <div class="gi-nav-mobile">
+        <div class="gi-nav-mobile-row">
+          <button class="gi-btn" id="gi-prev-btn-mobile">Previous</button>
+          <button class="gi-btn gi-primary" id="gi-next-btn-mobile">Next</button>
+        </div>
 
+        <div class="gi-nav-mobile-row">
+          <button class="gi-btn" id="gi-save-btn-mobile">Save</button>
+          <button class="gi-btn" id="gi-clear-btn-mobile">Clear</button>
+        </div>
+
+        <div class="gi-nav-mobile-row">
+          <button class="gi-btn" id="gi-jump-first-mobile">First unanswered</button>
+          <button class="gi-btn" id="gi-jump-last-mobile">Last answered</button>
+        </div>
+
+        <button class="gi-btn gi-primary gi-nav-mobile-submit" id="gi-submit-btn-mobile">Submit</button>
+      </div>
+
+      <!-- End Navigation -->
 
     </section>
 
@@ -175,13 +194,11 @@
 
 
 <!-- ===========================================================
-     SCRIPT BLOCKS
+     SCRIPTS
 =========================================================== -->
 
-<!-- QUESTIONS SOURCE -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- PILLAR META -->
 <script>
 const PILLAR_META = {
   0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
@@ -192,18 +209,16 @@ const PILLAR_META = {
   5:{name:"Sales Execution", desc:"Sales Execution evaluates how consistently opportunities progress through the funnel."},
   6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion reflects your ability to onboard, retain and expand customers."},
   7:{name:"Revenue Operations & Systems", desc:"RevOps measures processes, data quality and system architecture."},
-  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging captures how clearly value is articulated and structured."},
-  9:{name:"Brand & Communications", desc:"Brand & Comms evaluates how consistently your company expresses its narrative."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures how reliably data is captured and used."},
- 11:{name:"Enablement", desc:"Enablement evaluates how well teams are supported with training and materials."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects cross-functional clarity and unity."}
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging articulates value and structures the offer."},
+  9:{name:"Brand & Communications", desc:"Brand & Communications expresses the company narrative."},
+ 10:{name:"Data & Insights", desc:"Data & Insights ensures decisions are grounded in trusted information."},
+ 11:{name:"Enablement", desc:"Enablement improves ramp, consistency and execution quality."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment ensures unified direction across GTM."}
 };
 </script>
 
-<!-- ENGINE -->
 <script src="assets/engine.js?v=5000"></script>
 
-<!-- DARK MODE TOGGLE -->
 <script>
 const toggle = document.getElementById("darkToggle");
 toggle.addEventListener("click", () => {
