@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.2
-   Stable • Production Ready • Jump-to-Last • Clickable Pillars
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
+   Stable • Production Ready • Jump Last • Jump First Unanswered
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -34,6 +34,7 @@ setInterval(saveState, 700);
 const qTitle = document.getElementById("gi-question-title");
 const qSub = document.getElementById("gi-question-sub");
 const qBody = document.getElementById("gi-question-body");
+
 const kicker = document.getElementById("gi-question-kicker");
 const rightName = document.getElementById("gi-pillar-name");
 const rightDesc = document.getElementById("gi-pillar-desc");
@@ -46,12 +47,12 @@ const btnClear = document.getElementById("gi-clear-btn");
 const btnSave = document.getElementById("gi-save-btn");
 const btnReset = document.getElementById("gi-reset-btn");
 
+const btnJumpLast = document.getElementById("gi-jump-last");
+const btnJumpFirst = document.getElementById("gi-jump-first"); /* NEW */
+
 const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
-
-/* NEW BUTTON (optional) */
-const btnJumpLast = document.getElementById("gi-jump-last");
 
 /* ---------------------- EXPLAIN MODE ---------------------- */
 let explainEnabled = false;
@@ -129,8 +130,8 @@ function buildInput(q) {
           <label class="gi-option-card">
             <input type="radio" name="q" value="${o}">
             <span>${o}</span>
-          </label>
-        `).join("")}
+          </label>`
+        ).join("")}
       </div>
     `;
 
@@ -181,7 +182,7 @@ function validate(q) {
   return el && el.value.trim() !== "";
 }
 
-/* ---------------------- STORE CURRENT ANSWER ---------------------- */
+/* ---------------------- STORE ANSWER ---------------------- */
 function storeCurrentAnswer() {
   const q = QUESTIONS_REF[currentIndex];
 
@@ -235,6 +236,80 @@ btnReset.addEventListener("click", () => {
   renderQuestion();
   updateProgress();
 });
+
+/* ---------------------- CLICKABLE PILLARS ---------------------- */
+leftPillars.forEach(li => {
+  li.addEventListener("click", () => {
+    const pillar = Number(li.dataset.p);
+    const idx = QUESTIONS_REF.findIndex(q => q.pillar === pillar);
+    if (idx >= 0) {
+      currentIndex = idx;
+      renderQuestion();
+    }
+  });
+});
+
+/* ---------------------- JUMP TO LAST ANSWERED ---------------------- */
+function jumpToLast() {
+  const keys = Object.keys(STATE)
+    .filter(k => !isNaN(Number(k)))
+    .map(Number);
+
+  if (!keys.length) return;
+
+  const lastId = Math.max(...keys);
+  const idx = QUESTIONS_REF.findIndex(q => q.id === lastId);
+
+  if (idx >= 0) {
+    currentIndex = idx;
+    renderQuestion();
+  }
+}
+
+if (btnJumpLast) btnJumpLast.addEventListener("click", jumpToLast);
+
+/* ---------------------- JUMP TO FIRST UNANSWERED ---------------------- */
+function jumpToFirstUnanswered() {
+  for (let i = 0; i < QUESTIONS_REF.length; i++) {
+    const q = QUESTIONS_REF[i];
+
+    if (q.type === "group") {
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (!filled) {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    } else {
+      if (!STATE[q.id] || STATE[q.id].trim() === "") {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    }
+  }
+}
+
+if (btnJumpFirst) btnJumpFirst.addEventListener("click", jumpToFirstUnanswered);
+
+/* ---------------------- PROGRESS ---------------------- */
+function updateProgress() {
+  let answered = 0;
+
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      if (q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "")) answered++;
+    } else {
+      if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
+    }
+  });
+
+  const pct = Math.round(answered / QUESTIONS_REF.length * 100);
+
+  progressCount.textContent = `${answered} / ${QUESTIONS_REF.length}`;
+  progressPercent.textContent = `${pct}%`;
+  progressBar.style.width = `${pct}%`;
+}
 
 /* ---------------------- SUBMIT TO MAKE.COM ---------------------- */
 btnSubmit.addEventListener("click", async () => {
@@ -362,98 +437,12 @@ function preparePayload() {
 
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v6.2",
+    version: "v6.3",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
 
   return { customer, context, answers, metadata };
-}
-
-/* ---------------------- COMPLETION RATE ---------------------- */
-function calculateCompletionRate() {
-  let answered = 0;
-  QUESTIONS_REF.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f =>
-        STATE[f.name] && STATE[f.name].trim() !== ""
-      );
-      if (filled) answered++;
-    } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
-      answered++;
-    }
-  });
-  return Math.round((answered / QUESTIONS_REF.length) * 100);
-}
-
-/* ---------------------- PROGRESS ---------------------- */
-function updateProgress() {
-  let answered = 0;
-  QUESTIONS_REF.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f =>
-        STATE[f.name] && STATE[f.name].trim() !== ""
-      );
-      if (filled) answered++;
-      return;
-    }
-    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
-  });
-
-  const total = QUESTIONS_REF.length;
-  const pct = Math.round((answered / total) * 100);
-  progressCount.textContent = `${answered} / ${total}`;
-  progressPercent.textContent = `${pct}%`;
-  progressBar.style.width = `${pct}%`;
-}
-
-/* ---------------------- CLICKABLE PILLARS  ---------------------- */
-leftPillars.forEach(li => {
-  li.addEventListener("click", () => {
-    const pillarIndex = Number(li.dataset.p);
-
-    // Find first question of that pillar
-    const firstIndex = QUESTIONS_REF.findIndex(q => q.pillar === pillarIndex);
-    if (firstIndex >= 0) {
-      currentIndex = firstIndex;
-      renderQuestion();
-    }
-  });
-});
-
-/* ---------------------- JUMP TO LAST ANSWERED ---------------------- */
-function jumpToLast() {
-  const keys = Object.keys(STATE)
-    .filter(k => !isNaN(Number(k)))
-    .map(k => Number(k));
-
-  if (!keys.length) return;
-
-  const lastId = Math.max(...keys);
-
-  // find index of question with this ID
-  const idx = QUESTIONS_REF.findIndex(q => q.id === lastId);
-  if (idx >= 0) {
-    currentIndex = idx;
-    renderQuestion();
-  }
-}
-
-if (btnJumpLast) {
-  btnJumpLast.addEventListener("click", jumpToLast);
-}
-
-/* ---------------------- NAVIGATION HELPERS ---------------------- */
-function updateNav() {
-  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
-
-  if (currentIndex === QUESTIONS_REF.length - 1) {
-    btnNext.style.display = "none";
-    btnSubmit.style.display = "inline-block";
-  } else {
-    btnNext.style.display = "inline-block";
-    btnSubmit.style.display = "none";
-  }
 }
 
 /* ---------------------- INIT ---------------------- */
