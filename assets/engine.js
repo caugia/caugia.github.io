@@ -1,5 +1,3 @@
-
-
 /* ===========================================================
    CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.1
    Production Ready • Make.com Integration • Explain Mode
