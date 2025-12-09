@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.2
-   Stable • Production Ready • Jump-to-Last • Clickable Pillars
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
+   Stable • Production Ready • Jump-to-Last • Jump-to-First
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -50,8 +50,9 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
 
-/* NEW BUTTON (optional) */
+/* OPTIONAL BUTTONS */
 const btnJumpLast = document.getElementById("gi-jump-last");
+const btnJumpFirst = document.getElementById("gi-jump-first");
 
 /* ---------------------- EXPLAIN MODE ---------------------- */
 let explainEnabled = false;
@@ -318,7 +319,7 @@ function preparePayload() {
     next_fy_target: STATE["next_fy_target"] || "",
     arr_target: STATE["arr_target"] || "",
     growth_goal: STATE["growth_goal"] || "",
-    yoy_last_year: STATE["yoy_last_year"] || "",
+    yoy_last_year: STATE["yoy_last_last_year"] || "", 
     new_vs_expansion: STATE["new_vs_expansion"] || "",
     forecast_accuracy: STATE["forecast_accuracy"] || "",
     customer_target: STATE["customer_target"] || "",
@@ -362,7 +363,7 @@ function preparePayload() {
 
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v6.2",
+    version: "v6.3",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
@@ -407,13 +408,12 @@ function updateProgress() {
   progressBar.style.width = `${pct}%`;
 }
 
-/* ---------------------- CLICKABLE PILLARS  ---------------------- */
+/* ---------------------- CLICKABLE PILLARS ---------------------- */
 leftPillars.forEach(li => {
   li.addEventListener("click", () => {
     const pillarIndex = Number(li.dataset.p);
-
-    // Find first question of that pillar
     const firstIndex = QUESTIONS_REF.findIndex(q => q.pillar === pillarIndex);
+
     if (firstIndex >= 0) {
       currentIndex = firstIndex;
       renderQuestion();
@@ -430,9 +430,8 @@ function jumpToLast() {
   if (!keys.length) return;
 
   const lastId = Math.max(...keys);
-
-  // find index of question with this ID
   const idx = QUESTIONS_REF.findIndex(q => q.id === lastId);
+
   if (idx >= 0) {
     currentIndex = idx;
     renderQuestion();
@@ -441,6 +440,34 @@ function jumpToLast() {
 
 if (btnJumpLast) {
   btnJumpLast.addEventListener("click", jumpToLast);
+}
+
+/* ---------------------- JUMP TO FIRST UNANSWERED ---------------------- */
+function jumpToFirstUnanswered() {
+  for (let i = 0; i < QUESTIONS_REF.length; i++) {
+    const q = QUESTIONS_REF[i];
+
+    if (q.type === "group") {
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (!filled) {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    } else {
+      if (!STATE[q.id] || STATE[q.id].trim() === "") {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    }
+  }
+
+  alert("All questions are already answered.");
+}
+
+if (btnJumpFirst) {
+  btnJumpFirst.addEventListener("click", jumpToFirstUnanswered);
 }
 
 /* ---------------------- NAVIGATION HELPERS ---------------------- */
