@@ -1,5 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.2 + Jump Fix
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
+   Production Ready • Make.com Integration • Jump Features Added
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -7,9 +8,8 @@ let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 let STATE = loadState();
 
-/* ---------------------- QUESTIONS ---------------------- */
+/* ---------------------- QUESTIONS SOURCE ---------------------- */
 const QUESTIONS_REF = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
-
 if (QUESTIONS_REF.length === 0) {
   console.error("❌ QUESTIONS.js not loaded or empty.");
 }
@@ -50,11 +50,40 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
 
-/* NEW BUTTON HOOKS */
+/* --- NEW BUTTONS --- */
 const btnJumpLast = document.getElementById("gi-jump-last");
 const btnJumpFirst = document.getElementById("gi-jump-first");
 
-/* ---------------------- RENDER ---------------------- */
+/* ---------------------- EXPLAIN MODE ---------------------- */
+let explainEnabled = false;
+
+function toggleExplain() {
+  explainEnabled = !explainEnabled;
+  const box = document.getElementById("gi-explain-box");
+  if (box) box.style.display = explainEnabled ? "block" : "none";
+}
+
+function setExplainPlaceholder(q) {
+  const box = document.getElementById("gi-explain-box");
+  if (!box) return;
+
+  if (!explainEnabled) {
+    box.style.display = "none";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="gi-explain-inner">
+      <strong>Why this question matters</strong>
+      <p>This placeholder shows where future AI-powered guidance will appear.</p>
+      <p><em>Pillar:</em> ${PILLAR_META[q.pillar].name}</p>
+      <p><em>Question:</em> ${q.title}</p>
+    </div>
+  `;
+  box.style.display = "block";
+}
+
+/* ---------------------- RENDER QUESTION ---------------------- */
 function renderQuestion() {
   const q = QUESTIONS_REF[currentIndex];
   if (!q) return;
@@ -72,6 +101,7 @@ function renderQuestion() {
 
   qBody.innerHTML = buildInput(q);
   restoreAnswer(q);
+  setExplainPlaceholder(q);
 
   updateNav();
   updateProgress();
@@ -79,43 +109,53 @@ function renderQuestion() {
 
 /* ---------------------- BUILD INPUT ---------------------- */
 function buildInput(q) {
-  if (q.type === "text") return `<input type="text" name="q" class="gi-input">`;
-  if (q.type === "number") return `<input type="number" name="q" class="gi-input">`;
-  if (q.type === "textarea") return `<textarea name="q" class="gi-textarea"></textarea>`;
-  if (q.type === "select") {
+  if (q.type === "text")
+    return `<input type="text" name="q" class="gi-input">`;
+
+  if (q.type === "number")
+    return `<input type="number" name="q" class="gi-input">`;
+
+  if (q.type === "textarea")
+    return `<textarea name="q" class="gi-textarea"></textarea>`;
+
+  if (q.type === "select")
     return `
       <select name="q" class="gi-select">
         <option value="">Select an option…</option>
         ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
       </select>
     `;
-  }
-  if (q.type === "radio" || q.type === "scale") {
+
+  if (q.type === "radio" || q.type === "scale")
     return `
       <div class="gi-options-grid">
-        ${q.options.map(o => `
-          <label class="gi-option-card">
-            <input type="radio" name="q" value="${o}">
-            <span>${o}</span>
-          </label>`).join("")}
+        ${q.options
+          .map(o => `
+            <label class="gi-option-card">
+              <input type="radio" name="q" value="${o}">
+              <span>${o}</span>
+            </label>`
+          ).join("")}
       </div>
     `;
-  }
-  if (q.type === "group") {
+
+  if (q.type === "group")
     return `
       <div class="gi-group">
-        ${q.fields.map(f => `
-          <div class="gi-group-field">
-            <label>${f.label}</label>
-            <input type="text" name="${f.name}">
-          </div>`).join("")}
+        ${q.fields
+          .map(f => `
+            <div class="gi-group-field">
+              <label>${f.label}</label>
+              <input type="text" name="${f.name}">
+            </div>`
+          ).join("")}
       </div>
     `;
-  }
+
   return `<p>Unsupported question type</p>`;
 }
 
-/* ---------------------- RESTORE ---------------------- */
+/* ---------------------- RESTORE ANSWER ---------------------- */
 function restoreAnswer(q) {
   if (q.type === "group") {
     q.fields.forEach(f => {
@@ -124,6 +164,7 @@ function restoreAnswer(q) {
     });
     return;
   }
+
   const saved = STATE[q.id];
   if (!saved) return;
 
@@ -134,7 +175,19 @@ function restoreAnswer(q) {
   if (el) el.value = saved;
 }
 
-/* ---------------------- STORE ANSWER ---------------------- */
+/* ---------------------- VALIDATION ---------------------- */
+function validate(q) {
+  if (q.type === "group")
+    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+
+  if (q.type === "radio" || q.type === "scale")
+    return qBody.querySelector("input:checked") !== null;
+
+  const el = qBody.querySelector("[name='q']");
+  return el && el.value.trim() !== "";
+}
+
+/* ---------------------- STORE CURRENT ANSWER ---------------------- */
 function storeCurrentAnswer() {
   const q = QUESTIONS_REF[currentIndex];
 
@@ -147,8 +200,8 @@ function storeCurrentAnswer() {
   }
 
   if (q.type === "radio" || q.type === "scale") {
-    const sel = qBody.querySelector("input:checked");
-    if (sel) STATE[q.id] = sel.value;
+    const selected = qBody.querySelector("input:checked");
+    if (selected) STATE[q.id] = selected.value;
     return;
   }
 
@@ -156,7 +209,7 @@ function storeCurrentAnswer() {
   if (el) STATE[q.id] = el.value.trim();
 }
 
-/* ---------------------- NAV BUTTONS ---------------------- */
+/* ---------------------- NAVIGATION ---------------------- */
 btnNext.addEventListener("click", () => {
   const q = QUESTIONS_REF[currentIndex];
   storeCurrentAnswer();
@@ -176,6 +229,17 @@ btnClear.addEventListener("click", () => {
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
   renderQuestion();
+});
+
+btnSave.addEventListener("click", saveState);
+
+btnReset.addEventListener("click", () => {
+  if (!confirm("Reset entire assessment? All progress will be lost.")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  STATE = {};
+  currentIndex = 0;
+  renderQuestion();
+  updateProgress();
 });
 
 /* ---------------------- CLICKABLE PILLARS ---------------------- */
