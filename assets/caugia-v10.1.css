@@ -820,3 +820,46 @@ body.dark .gi-jump-row .gi-btn:hover {
 .gi-nav-full .gi-btn {
   white-space: nowrap;
 }
+
+/* ===========================================================
+   NAV ROW — PERFECTED ALIGNMENT
+   One clean line • Elegant spacing • Caugia style
+=========================================================== */
+
+.gi-nav-row.gi-nav-full {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  flex-wrap: wrap; /* ensures perfect behaviour on smaller screens */
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.gi-nav-row.gi-nav-full .gi-btn {
+  min-width: 130px;         /* consistent CTA width */
+  text-align: center;
+  padding: 11px 16px;
+  font-size: 14.5px;
+}
+
+/* Make primary buttons slightly stronger */
+.gi-nav-row.gi-nav-full .gi-btn.gi-primary {
+  font-weight: 600;
+}
+
+/* Re-order buttons visually if desired */
+#gi-prev-btn      { order: 1; }
+#gi-jump-first    { order: 2; }
+#gi-jump-last     { order: 3; }
+#gi-save-btn      { order: 4; }
+#gi-clear-btn     { order: 5; }
+#gi-next-btn      { order: 6; }
+#gi-submit-btn    { order: 7; }
+
+/* Small screens — Wrapping becomes clean & centered */
+@media (max-width: 900px) {
+  .gi-nav-row.gi-nav-full {
+    justify-content: center;
+  }
+}
