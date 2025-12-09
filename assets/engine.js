@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.4
-   Stable • Production Ready • No Group Highlight • Premium Save Badge
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
+   Stable • Production Ready • Jump-to-Last • Jump-to-First
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -27,7 +27,6 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-  showSavedBadge();   // NEW — premium badge
 }
 setInterval(saveState, 700);
 
@@ -139,14 +138,12 @@ function buildInput(q) {
   if (q.type === "group")
     return `
       <div class="gi-group">
-        ${q.fields
-          .map(f => `
-            <div class="gi-group-field">
-              <label>${f.label}</label>
-              <input type="text" name="${f.name}">
-            </div>
-        `)
-          .join("")}
+        ${q.fields.map(f => `
+          <div class="gi-group-field">
+            <label>${f.label}</label>
+            <input type="text" name="${f.name}">
+          </div>
+        `).join("")}
       </div>
     `;
 
@@ -263,23 +260,21 @@ btnSubmit.addEventListener("click", async () => {
   btnSubmit.disabled = true;
 
   try {
-    const response = await fetch(
-      "https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }
-    );
+    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
 
     if (!response.ok) throw new Error("Submission failed");
 
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = "/gtm-intelligence-thank-you.html";
+
   } catch (error) {
     alert("Submission failed.");
-    btnSubmit.disabled = false;
     btnSubmit.textContent = "Submit";
+    btnSubmit.disabled = false;
   }
 });
 
@@ -298,34 +293,82 @@ function preparePayload() {
     companysize: STATE["companysize"] || ""
   };
 
-  const context = {};
-  const answers = {};
-
-  QUESTIONS_REF.forEach(q => {
-    if (q.pillar === 0) {
-      if (q.type === "group") {
-        q.fields.forEach(f => {
-          context[f.name] = STATE[f.name] || "";
-        });
-      } else {
-        context[q.id] = STATE[q.id] || "";
-      }
-    } else {
-      answers[`Q${q.id}`] = STATE[q.id] || "";
-    }
-  });
-
-  return {
-    customer,
-    context,
-    answers,
-    metadata: {
-      timestamp: new Date().toISOString(),
-      version: "v6.4",
-      total_questions: QUESTIONS_REF.length,
-      completion_rate: calculateCompletionRate()
-    }
+  const context = {
+    arr: STATE["arr"] || "",
+    acv: STATE["acv"] || "",
+    churn: STATE["churn"] || "",
+    cpl: STATE["cpl"] || "",
+    cac: STATE["cac"] || "",
+    nrr: STATE["nrr"] || "",
+    nps: STATE["nps"] || "",
+    expansion: STATE["expansion"] || "",
+    ltv: STATE["ltv"] || "",
+    payback: STATE["payback"] || "",
+    ae: STATE["ae"] || "",
+    sdr: STATE["sdr"] || "",
+    am: STATE["am"] || "",
+    csm: STATE["csm"] || "",
+    se: STATE["se"] || "",
+    partner: STATE["partner"] || "",
+    marketing: STATE["marketing"] || "",
+    enablement: STATE["enablement"] || "",
+    revops: STATE["revops"] || "",
+    leadership: STATE["leadership"] || "",
+    target_fy: STATE["target_fy"] || "",
+    current_perf: STATE["current_perf"] || "",
+    next_fy_target: STATE["next_fy_target"] || "",
+    arr_target: STATE["arr_target"] || "",
+    growth_goal: STATE["growth_goal"] || "",
+    yoy_last_year: STATE["yoy_last_last_year"] || "", 
+    new_vs_expansion: STATE["new_vs_expansion"] || "",
+    forecast_accuracy: STATE["forecast_accuracy"] || "",
+    customer_target: STATE["customer_target"] || "",
+    growth_constraint: STATE["growth_constraint"] || "",
+    pipeline_cov: STATE["pipeline_cov"] || "",
+    sales_cycle: STATE["sales_cycle"] || "",
+    lead_response: STATE["lead_response"] || "",
+    demo_close: STATE["demo_close"] || "",
+    win_rate: STATE["win_rate"] || "",
+    mql_sql: STATE["mql_sql"] || "",
+    sql_cw: STATE["sql_cw"] || "",
+    ramp_time: STATE["ramp_time"] || "",
+    onboarding_time: STATE["onboarding_time"] || "",
+    deal_velocity: STATE["deal_velocity"] || "",
+    gtm_motion: STATE[6] || "",
+    revenue_model: STATE[7] || "",
+    target_segment: STATE[8] || "",
+    buyer_persona: STATE[9] || "",
+    sales_complexity: STATE[10] || "",
+    team_size: STATE[11] || "",
+    funding_stage: STATE[12] || "",
+    geo_markets: STATE[13] || "",
+    product_desc: STATE[14] || "",
+    ideal_customer: STATE[15] || "",
+    top_priority: STATE[16] || "",
+    biggest_challenge: STATE[17] || "",
+    gtm_slowdown: STATE[18] || "",
+    recent_change: STATE[19] || "",
+    business_outcome: STATE[20] || "",
+    product_complexity: STATE[21] || "",
+    market_type: STATE[22] || "",
+    deployment_model: STATE[23] || "",
+    paying_customers: STATE[24] || "",
+    additional_context: STATE[25] || ""
   };
+
+  const answers = {};
+  for (let id = 1001; id <= 12020; id++) {
+    if (STATE[id]) answers[`Q${id}`] = STATE[id];
+  }
+
+  const metadata = {
+    timestamp: new Date().toISOString(),
+    version: "v6.3",
+    total_questions: QUESTIONS_REF.length,
+    completion_rate: calculateCompletionRate()
+  };
+
+  return { customer, context, answers, metadata };
 }
 
 /* ---------------------- COMPLETION RATE ---------------------- */
@@ -333,8 +376,8 @@ function calculateCompletionRate() {
   let answered = 0;
   QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(
-        f => STATE[f.name] && STATE[f.name].trim() !== ""
+      const filled = q.fields.every(f =>
+        STATE[f.name] && STATE[f.name].trim() !== ""
       );
       if (filled) answered++;
     } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
@@ -347,21 +390,19 @@ function calculateCompletionRate() {
 /* ---------------------- PROGRESS ---------------------- */
 function updateProgress() {
   let answered = 0;
-
   QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(
-        f => STATE[f.name] && STATE[f.name].trim() !== ""
+      const filled = q.fields.every(f =>
+        STATE[f.name] && STATE[f.name].trim() !== ""
       );
       if (filled) answered++;
-    } else {
-      if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
+      return;
     }
+    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
   });
 
   const total = QUESTIONS_REF.length;
   const pct = Math.round((answered / total) * 100);
-
   progressCount.textContent = `${answered} / ${total}`;
   progressPercent.textContent = `${pct}%`;
   progressBar.style.width = `${pct}%`;
@@ -371,9 +412,7 @@ function updateProgress() {
 leftPillars.forEach(li => {
   li.addEventListener("click", () => {
     const pillarIndex = Number(li.dataset.p);
-    const firstIndex = QUESTIONS_REF.findIndex(
-      q => q.pillar === pillarIndex
-    );
+    const firstIndex = QUESTIONS_REF.findIndex(q => q.pillar === pillarIndex);
 
     if (firstIndex >= 0) {
       currentIndex = firstIndex;
@@ -399,7 +438,9 @@ function jumpToLast() {
   }
 }
 
-if (btnJumpLast) btnJumpLast.addEventListener("click", jumpToLast);
+if (btnJumpLast) {
+  btnJumpLast.addEventListener("click", jumpToLast);
+}
 
 /* ---------------------- JUMP TO FIRST UNANSWERED ---------------------- */
 function jumpToFirstUnanswered() {
@@ -407,9 +448,7 @@ function jumpToFirstUnanswered() {
     const q = QUESTIONS_REF[i];
 
     if (q.type === "group") {
-      const filled = q.fields.every(
-        f => STATE[f.name] && STATE[f.name].trim() !== ""
-      );
+      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
       if (!filled) {
         currentIndex = i;
         renderQuestion();
@@ -427,40 +466,21 @@ function jumpToFirstUnanswered() {
   alert("All questions are already answered.");
 }
 
-if (btnJumpFirst) btnJumpFirst.addEventListener("click", jumpToFirstUnanswered);
+if (btnJumpFirst) {
+  btnJumpFirst.addEventListener("click", jumpToFirstUnanswered);
+}
 
-/* ---------------------- SAVED BADGE (NEW) ---------------------- */
-let savedTimer;
+/* ---------------------- NAVIGATION HELPERS ---------------------- */
+function updateNav() {
+  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
 
-function showSavedBadge() {
-  let badge = document.getElementById("gi-saved-badge");
-
-  if (!badge) {
-    badge = document.createElement("div");
-    badge.id = "gi-saved-badge";
-    badge.textContent = "Saved";
-    Object.assign(badge.style, {
-      position: "fixed",
-      bottom: "22px",
-      right: "22px",
-      background: "#0046A5",
-      color: "white",
-      padding: "6px 14px",
-      borderRadius: "8px",
-      fontSize: "13px",
-      opacity: "0",
-      transition: "opacity .3s ease",
-      zIndex: "9999"
-    });
-    document.body.appendChild(badge);
+  if (currentIndex === QUESTIONS_REF.length - 1) {
+    btnNext.style.display = "none";
+    btnSubmit.style.display = "inline-block";
+  } else {
+    btnNext.style.display = "inline-block";
+    btnSubmit.style.display = "none";
   }
-
-  badge.style.opacity = "1";
-
-  clearTimeout(savedTimer);
-  savedTimer = setTimeout(() => {
-    badge.style.opacity = "0";
-  }, 1400);
 }
 
 /* ---------------------- INIT ---------------------- */
