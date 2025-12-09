@@ -1,1035 +1,172 @@
-/* ===========================================================
-   CAUGIA CONSULTING — CSS v10.1 FIXED
-   Above the fold • Viewport-locked • Inner scroll only
-   
-   FIXES:
-   - Pillar description box: reduced top padding (text sits higher)
-   - Header buttons: Dark now appears RIGHT of Contact (proper order)
-   =========================================================== */
-
-/* ------------------------------
-   ROOT VARIABLES
---------------------------------*/
-:root {
-  --ink: #0B132B;
-  --ink-soft: #3a4250;
-  --blue: #0046A5;
-  --blue-dark: #003b88;
-  --blue-light: #F4F7FF;
-
-  --radius: 12px;
-  --radius-sm: 8px;
-
-  --border: rgba(0,0,0,0.10);
-
-  --shadow-soft: 0 4px 12px rgba(0,0,0,0.05);
-  --shadow-card: 0 6px 18px rgba(0,0,0,0.08);
-
-  --transition: .22s cubic-bezier(.22,1,.36,1);
-}
-
-/* DARK MODE ROOT */
-body.dark {
-  --ink: #E8ECF5;
-  --ink-soft: #9BA5B8;
-  --blue-light: #002A66;
-  background: #0D1117 !important;
-  color: var(--ink);
-}
-
-/* ------------------------------
-   HARD RESET — NO BACKGROUND LOGOS
---------------------------------*/
-body::before,
-body::after,
-.gi-bg-logo,
-.gi-hero-bg,
-.background-logo {
-  display: none !important;
-  content: none !important;
-}
-
-body {
-  margin: 0;
-  background: white !important;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  color: var(--ink);
-  overflow: hidden; /* NO PAGE SCROLL */
-  height: 100vh;
-}
-
-/* ===========================================================
-   HEADER
-=========================================================== */
-.gi-header {
-  width: 100%;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-}
-
-body.dark .gi-header {
-  background: #0D1117;
-  border-bottom-color: #1E293B;
-}
-
-.gi-header-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  height: 64px;
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.gi-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.gi-logo {
-  width: 28px;
-  height: 28px;
-}
-
-.gi-header-brand {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.gi-header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.gi-contact-link {
-  color: var(--blue);
-  font-weight: 500;
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--blue);
-  transition: var(--transition);
-  order: 1; /* Contact comes FIRST */
-}
-
-.gi-contact-link:hover {
-  background: var(--blue);
-  color: white;
-}
-
-.gi-dark-toggle {
-  background: var(--blue);
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: var(--transition);
-  order: 2; /* Dark comes SECOND (to the right) */
-}
-
-.gi-dark-toggle:hover {
-  background: var(--blue-dark);
-}
-
-/* ===========================================================
-   MAIN GRID — VIEWPORT LOCKED
-=========================================================== */
-.gi-main {
-  height: calc(100vh - 64px); /* Full height minus header */
-  margin-top: 64px; /* Header offset */
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  overflow: hidden;
-}
-
-.gi-shell {
-  max-width: 1600px;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 280px 1fr 300px;
-  gap: 40px;
-  padding: 32px;
-  position: relative;
-  align-items: start;
-  overflow: hidden;
-}
-
-/* ===========================================================
-   LEFT PANEL — SCROLLABLE
-=========================================================== */
-.gi-left-info {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 12px;
-}
-
-/* Custom scrollbar */
-.gi-left-info::-webkit-scrollbar {
-  width: 6px;
-}
-
-.gi-left-info::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.gi-left-info::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
-  border-radius: 10px;
-}
-
-body.dark .gi-left-info::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-}
-
-.gi-info-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--blue);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
-}
-
-.gi-info-h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  line-height: 1.2;
-}
-
-.gi-info-desc {
-  font-size: 15px;
-  opacity: .85;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-
-.gi-info-meta {
-  font-size: 14px;
-  opacity: .7;
-  margin-bottom: 20px;
-}
-
-/* Progress */
-.gi-progress-box {
-  background: white;
-  border: 1px solid var(--border);
-  padding: 16px;
-  border-radius: var(--radius);
-  margin-bottom: 18px;
-  box-shadow: var(--shadow-soft);
-}
-
-body.dark .gi-progress-box {
-  background: #111827;
-  border-color: #1E293B;
-}
-
-.gi-progress-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.gi-progress-track {
-  height: 7px;
-  background: #eef1f6;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-body.dark .gi-progress-track {
-  background: #1E293B;
-}
-
-.gi-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--blue);
-  transition: width .35s ease;
-}
-
-/* Left pillar description - FIXED: Less top padding */
-.gi-pillar-desc-box {
-  margin-top: 20px;
-  padding: 14px 18px 18px 18px; /* Top: 14px (was 18px) */
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: white;
-  box-shadow: var(--shadow-soft);
-}
-
-body.dark .gi-pillar-desc-box {
-  background: #111827;
-  border-color: #1E293B;
-}
-
-.gi-pillar-desc-box h3 {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-
-.gi-pillar-desc-box p {
-  font-size: 14px;
-  line-height: 1.6;
-  opacity: .85;
-  margin: 0;
-}
-
-/* Reset button */
-.gi-btn.gi-reset {
-  width: 100%;
-  margin-top: 12px;
-  border-radius: var(--radius-sm);
-  background: #f5f7fa;
-  border: 1px solid var(--border);
-  padding: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.gi-btn.gi-reset:hover {
-  background: #e8edf3;
-}
-
-body.dark .gi-btn.gi-reset {
-  background: #1E293B;
-  border-color: #334155;
-  color: var(--ink);
-}
-
-body.dark .gi-btn.gi-reset:hover {
-  background: #334155;
-}
-
-/* ===========================================================
-   CENTER ENGINE — CONTROLLED HEIGHT
-=========================================================== */
-.gi-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.gi-question-card {
-  background: white;
-  padding: 36px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-body.dark .gi-question-card {
-  background: #111827;
-  border-color: #1E293B;
-}
-
-/* Header (fixed) */
-.gi-question-header {
-  flex-shrink: 0;
-  margin-bottom: 24px;
-}
-
-.gi-question-kicker {
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--blue);
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
-
-.gi-question-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-
-.gi-question-sub {
-  font-size: 15px;
-  opacity: .75;
-  margin-bottom: 0;
-  line-height: 1.5;
-}
-
-/* Body (NO SCROLL - content fits in viewport with 2-column layout) */
-.gi-question-body {
-  flex: 1;
-  overflow: visible;
-  padding-right: 12px;
-  margin-bottom: 20px;
-}
-
-/* Single inputs (text, number, textarea, select) */
-.gi-question-body input[type="text"]:not(.gi-group-field input),
-.gi-question-body input[type="number"]:not(.gi-group-field input),
-.gi-question-body textarea,
-.gi-question-body select {
-  width: 100%;
-  font-size: 15px;
-  padding: 13px 14px;
-  border-radius: var(--radius);
-  border: 1px solid #d1d7e0;
-  background: #f7f9fc;
-  margin-bottom: 18px;
-  transition: var(--transition);
-}
-
-.gi-question-body input:focus,
-.gi-question-body textarea:focus,
-.gi-question-body select:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.1);
-}
-
-body.dark .gi-question-body input,
-body.dark .gi-question-body textarea,
-body.dark .gi-question-body select {
-  background: #0D1117;
-  border-color: #1E293B;
-  color: var(--ink);
-}
-
-body.dark .gi-question-body input:focus,
-body.dark .gi-question-body textarea:focus,
-body.dark .gi-question-body select:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.2);
-}
-
-/* Group fields - GOOD SPACING, NO BORDER BOX */
-.gi-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px 40px; /* vertical 24px, horizontal 40px */
-}
-
-.gi-group-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.gi-group-field label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.gi-group-field input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 15px;
-  background: white;
-  transition: var(--transition);
-}
-
-.gi-group-field input:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.1);
-}
-
-body.dark .gi-group-field input {
-  background: #0D1117;
-  border-color: #1E293B;
-  color: var(--ink);
-}
-
-body.dark .gi-group-field input:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0, 70, 165, 0.2);
-}
-
-/* Radio/Scale options - 2 COLUMN GRID */
-.gi-options-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.gi-option-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition);
-  background: white;
-}
-
-body.dark .gi-option-card {
-  background: #0D1117;
-  border-color: #1E293B;
-}
-
-.gi-option-card:hover {
-  border-color: var(--blue);
-  background: var(--blue-light);
-}
-
-body.dark .gi-option-card:hover {
-  background: #1E293B;
-}
-
-.gi-option-card input[type="radio"] {
-  margin: 0;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.gi-option-card input[type="radio"]:checked ~ span {
-  font-weight: 600;
-  color: var(--blue);
-}
-
-.gi-option-card span {
-  flex: 1;
-  font-size: 15px;
-  line-height: 1.4;
-}
-
-/* Navigation buttons (fixed at bottom) */
-.gi-nav-row {
-  flex-shrink: 0;
-  display: flex;
-  gap: 12px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-body.dark .gi-nav-row {
-  border-top-color: #1E293B;
-}
-
-.gi-btn {
-  padding: 11px 20px;
-  border: 1px solid var(--border);
-  background: #f5f7fa;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.gi-btn:hover {
-  background: #e8edf3;
-  border-color: var(--blue);
-}
-
-.gi-btn.gi-primary {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: white;
-}
-
-.gi-btn.gi-primary:hover {
-  background: var(--blue-dark);
-  border-color: var(--blue-dark);
-}
-
-body.dark .gi-btn {
-  background: #1E293B;
-  border-color: #334155;
-  color: var(--ink);
-}
-
-body.dark .gi-btn:hover {
-  background: #334155;
-}
-
-body.dark .gi-btn.gi-primary {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: white;
-}
-
-body.dark .gi-btn.gi-primary:hover {
-  background: var(--blue-dark);
-}
-
-/* ===========================================================
-   RIGHT PILLARS — SCROLLABLE
-=========================================================== */
-.gi-right-pillars {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-left: 12px;
-}
-
-.gi-right-pillars::-webkit-scrollbar {
-  width: 6px;
-}
-
-.gi-right-pillars::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.gi-right-pillars::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
-  border-radius: 10px;
-}
-
-body.dark .gi-right-pillars::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-}
-
-.gi-pillars-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-.gi-pillar-nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.gi-pillar-nav li {
-  padding: 10px 12px;
-  font-size: 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-bottom: 4px;
-  line-height: 1.4;
-}
-
-.gi-pillar-nav li:hover {
-  background: var(--blue-light);
-}
-
-body.dark .gi-pillar-nav li:hover {
-  background: #1E293B;
-}
-
-.gi-pillar-nav li.active {
-  background: var(--blue);
-  color: white;
-  font-weight: 600;
-}
-
-/* ===========================================================
-   FLOATING FAQ BUTTON
-=========================================================== */
-.gi-faq-button {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--blue);
-  color: white;
-  padding: 14px 22px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 600;
-  box-shadow: var(--shadow-card);
-  transition: var(--transition);
-  z-index: 1000;
-}
-
-.gi-faq-button:hover {
-  background: var(--blue-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-
-/* ===========================================================
-   MOBILE RESPONSIVE
-=========================================================== */
-@media (max-width: 1100px) {
-  body {
-    overflow-y: auto;
-    height: auto;
-  }
-  
-  .gi-main {
-    height: auto;
-    margin-top: 64px;
-    overflow-y: auto;
-  }
-  
-  .gi-shell {
-    grid-template-columns: 1fr;
-    height: auto;
-    overflow-y: visible;
-    gap: 32px;
-    padding: 24px;
-  }
-  
-  .gi-left-info,
-  .gi-right-pillars {
-    height: auto;
-    overflow-y: visible;
-    padding-right: 0;
-    padding-left: 0;
-  }
-  
-  .gi-question-card {
-    height: auto;
-    padding: 24px;
-  }
-  
-  .gi-question-body {
-    overflow-y: visible;
-    max-height: none;
-  }
-  
-  .gi-group {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .gi-options-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .gi-nav-row {
-    flex-wrap: wrap;
-  }
-  
-  .gi-btn {
-    flex: 1;
-    min-width: 100px;
-  }
-}
-
-@media (max-width: 640px) {
-  .gi-header-inner {
-    padding: 0 16px;
-  }
-  
-  .gi-shell {
-    padding: 16px;
-  }
-  
-  .gi-question-card {
-    padding: 20px;
-  }
-  
-  .gi-question-title {
-    font-size: 20px;
-  }
-  
-  .gi-info-h1 {
-    font-size: 24px;
-  }
-}
-
-.gi-jump-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.gi-jump-row .gi-btn {
-  padding: 9px 16px;
-  background: #f5f7fa;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.gi-jump-row .gi-btn:hover {
-  background: #e8edf3;
-  border-color: var(--blue);
-}
-
-body.dark .gi-jump-row .gi-btn {
-  background: #1E293B;
-  border-color: #334155;
-  color: var(--ink);
-}
-
-.gi-jump-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.gi-jump-row .gi-btn {
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--radius-sm);
-  background: #f5f7fa;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.gi-jump-row .gi-btn:hover {
-  background: #e8edf3;
-  border-color: var(--blue);
-}
-
-body.dark .gi-jump-row .gi-btn {
-  background: #1E293B;
-  border-color: #334155;
-  color: var(--ink);
-}
-
-body.dark .gi-jump-row .gi-btn:hover {
-  background: #334155;
-}
-
-.gi-nav-full {
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.gi-nav-full .gi-btn {
-  white-space: nowrap;
-}
-
-/* ===========================================================
-   NAV ROW — PERFECTED ALIGNMENT
-   One clean line • Elegant spacing • Caugia style
-=========================================================== */
-
-.gi-nav-row.gi-nav-full {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  flex-wrap: wrap; /* ensures perfect behaviour on smaller screens */
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.gi-nav-row.gi-nav-full .gi-btn {
-  min-width: 130px;         /* consistent CTA width */
-  text-align: center;
-  padding: 11px 16px;
-  font-size: 14.5px;
-}
-
-/* Make primary buttons slightly stronger */
-.gi-nav-row.gi-nav-full .gi-btn.gi-primary {
-  font-weight: 600;
-}
-
-/* Re-order buttons visually if desired */
-#gi-prev-btn      { order: 1; }
-#gi-jump-first    { order: 2; }
-#gi-jump-last     { order: 3; }
-#gi-save-btn      { order: 4; }
-#gi-clear-btn     { order: 5; }
-#gi-next-btn      { order: 6; }
-#gi-submit-btn    { order: 7; }
-
-/* Small screens — Wrapping becomes clean & centered */
-@media (max-width: 900px) {
-  .gi-nav-row.gi-nav-full {
-    justify-content: center;
-  }
-}
-
-/* -------------------------------------------------------
-   UTILITY ROW (Premium subtle styling)
-------------------------------------------------------- */
-.gi-utility-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  margin-bottom: 12px;
-}
-
-.gi-utility-btn {
-  background: transparent;
-  border: none;
-  color: var(--ink-soft);
-  font-size: 14px;
-  cursor: pointer;
-  padding: 6px 4px;
-  transition: var(--transition);
-}
-
-.gi-utility-btn:hover {
-  color: var(--blue);
-  text-decoration: underline;
-}
-
-/* -------------------------------------------------------
-   PRIMARY NAV (stays as-is, premium spacing)
-------------------------------------------------------- */
-.gi-nav-row {
-  display: flex;
-  gap: 14px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
-}
-
-/* =======================================================
-   FIX: Consistent button alignment on long group questions
-   Makes the top part scroll instead of pushing buttons down
-========================================================= */
-
-.gi-question-body {
-  overflow-y: auto;
-  max-height: calc(100% - 20px); /* preserves spacing */
-  padding-right: 12px;
-}
-
-/* Smooth scrolling inside the group fields */
-.gi-group {
-  padding-bottom: 12px;
-}
-
-/* Prevent group fields from forcing nav downward */
-.gi-question-card {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Navigation outside the card: consistent height ALWAYS */
-.gi-nav-global {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-/* center cluster */
-.gi-nav-center {
-  display: flex;
-  gap: 12px;
-}
-
-/* right cluster */
-.gi-nav-right {
-  display: flex;
-  gap: 12px;
-}
-
-/* card grows naturally */
-.gi-question-card {
-  height: auto !important;
-  display: block !important;
-  overflow: visible !important;
-}
-
-/* body should NEVER scroll */
-.gi-question-body {
-  overflow: visible !important;
-}
-/* ===========================================================
-   MOBILE NAVIGATION — CAUGIA ULTRA CLEAN VERSION
-   Applies below 900px (tablet + mobile)
-=========================================================== */
-
-@media (max-width: 900px) {
-
-  /* Hide desktop global navigation */
-  .gi-nav-global {
-    display: none !important;
-  }
-
-  /* Show mobile navigation */
-  .gi-nav-mobile {
-    display: flex !important;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 22px;
-  }
-
-  .gi-nav-mobile-row {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .gi-nav-mobile-row .gi-btn {
-    flex: 1;
-    font-size: 15px;
-    padding: 12px 14px;
-    border-radius: 10px;
-  }
-
-  .gi-nav-mobile-submit {
-    width: 100%;
-    margin-top: 6px;
-    font-size: 16px;
-    padding: 14px 16px;
-    border-radius: 12px;
-  }
-
-  /* Improve spacing around question card */
-  .gi-question-card {
-    padding: 24px 20px;
-  }
-
-  /* Ensure fields do NOT overflow horizontally */
-  .gi-group {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .gi-options-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Utility version for smaller phones (<500px) */
-  @media (max-width: 500px) {
-
-    .gi-nav-mobile-row .gi-btn {
-      font-size: 14px;
-      padding: 11px 12px;
-    }
-
-    .gi-nav-mobile-submit {
-      font-size: 15px;
-      padding: 12px 14px;
-    }
-
-    .gi-question-title {
-      font-size: 20px;
-    }
-
-    .gi-question-header {
-      margin-bottom: 16px;
-    }
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The GTM Intelligence Report | Caugia Consulting</title>
+
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="assets/C-logo.png">
+  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
+
+  <!-- Security -->
+  <script src="/auth.js"></script>
+</head>
+
+<body>
+
+<header class="gi-header">
+  <div class="gi-header-inner">
+
+    <div class="gi-header-left">
+      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
+      <span class="gi-header-brand">Caugia Consulting</span>
+    </div>
+
+    <div class="gi-header-right">
+      <button id="darkToggle" class="gi-dark-toggle">Dark</button>
+      <a href="contact.html" class="gi-contact-link">Contact</a>
+    </div>
+
+  </div>
+</header>
+
+
+<main class="gi-main">
+  <div class="gi-shell">
+
+    <!-- LEFT INFO PANEL -->
+    <aside class="gi-left-info">
+
+      <div class="gi-info-title">Premium GTM Assessment</div>
+
+      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+
+      <p class="gi-info-desc">
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and reveals strengths, risks and hidden
+        dependencies across the full revenue engine.
+      </p>
+
+      <div class="gi-info-meta">12 pillars • 265 questions • ~50 minutes</div>
+
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 265</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
+      </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+
+      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+        <h3 id="gi-pillar-name">Context</h3>
+        <p id="gi-pillar-desc">
+          Context provides the foundation for interpreting the rest of the assessment.
+          By capturing essential details about your company, the system adjusts
+          recommendations, highlights risks and identifies the right priorities.
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- CENTER ENGINE -->
+    <section class="gi-center">
+      <div class="gi-question-card" id="gi-question-card">
+
+        <div class="gi-question-header">
+          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
+          <h2 class="gi-question-title" id="gi-question-title"></h2>
+          <p class="gi-question-sub" id="gi-question-sub"></p>
+        </div>
+
+        <div class="gi-question-body" id="gi-question-body"></div>
+
+        <!-- ⭐ UTILITY BUTTONS (TOP RIGHT INSIDE CARD) -->
+        <div class="gi-utility-row">
+          <button class="gi-utility-btn" id="gi-save-btn">Save</button>
+          <button class="gi-utility-btn" id="gi-jump-first">First unanswered</button>
+          <button class="gi-utility-btn" id="gi-jump-last">Last answered</button>
+        </div>
+
+        <!-- ⭐ PRIMARY NAVIGATION (BOTTOM FIXED INSIDE CARD) -->
+        <div class="gi-nav-row">
+          <button class="gi-btn" id="gi-prev-btn">Previous</button>
+          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
+          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- RIGHT PILLARS -->
+    <aside class="gi-right-pillars">
+
+      <div class="gi-pillars-title">Pillars</div>
+
+      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
+        <li data-p="0" class="active">0 — Context</li>
+        <li data-p="1">1 — GTM Strategy & Leadership</li>
+        <li data-p="2">2 — Market Intelligence</li>
+        <li data-p="3">3 — Product Marketing</li>
+        <li data-p="4">4 — Demand Generation</li>
+        <li data-p="5">5 — Sales Execution</li>
+        <li data-p="6">6 — Customer Success & Expansion</li>
+        <li data-p="7">7 — Revenue Operations & Systems</li>
+        <li data-p="8">8 — Pricing & Packaging</li>
+        <li data-p="9">9 — Brand & Communications</li>
+        <li data-p="10">10 — Data & Insights</li>
+        <li data-p="11">11 — Enablement</li>
+        <li data-p="12">12 — Leadership & Alignment</li>
+      </ul>
+
+    </aside>
+
+  </div>
+</main>
+
+
+<a href="faq.html" class="gi-faq-button">FAQ</a>
+
+
+<script src="assets/QUESTIONS.js?v=1"></script>
+
+<script>
+const PILLAR_META = {
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion."},
+  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation."},
+  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
+ 11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction."}
+};
+</script>
+
+<script src="assets/engine.js?v=5000"></script>
+
+<script>
+const toggle = document.getElementById("darkToggle");
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
+</script>
+
+</body>
+</html>
