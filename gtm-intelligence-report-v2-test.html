@@ -12,7 +12,7 @@
   <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
   <!-- CSS v10.1 SUPER MAX ULTRA -->
- <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
+  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
   <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
@@ -21,7 +21,7 @@
 <body>
 
 <!-- ===========================================================
-     HEADER — Only logo + brand + Contact + Dark Mode
+     HEADER
 =========================================================== -->
 <header class="gi-header">
   <div class="gi-header-inner">
@@ -41,7 +41,7 @@
 
 
 <!-- ===========================================================
-     MAIN LAYOUT — Left • Center • Right
+     MAIN LAYOUT
 =========================================================== -->
 <main class="gi-main">
   <div class="gi-shell">
@@ -103,28 +103,33 @@
 
         <div class="gi-question-body" id="gi-question-body"></div>
 
-<!-- NAVIGATION -->
-<div class="gi-nav-row">
-  <button class="gi-btn" id="gi-prev-btn">Previous</button>
-  <button class="gi-btn" id="gi-save-btn">Save</button>
-  <button class="gi-btn" id="gi-clear-btn">Clear</button>
-  <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-  <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
-</div>
 
-<!-- JUMP BUTTONS (MUST BE INSIDE THE CARD) -->
-<div class="gi-jump-row">
-  <button class="gi-btn" id="gi-jump-first">First unanswered</button>
-  <button class="gi-btn" id="gi-jump-last">Last answered</button>
-</div>
+        <!-- =======================================================
+             🔥 NEW NAVIGATION BLOCK (only change!)
+        ======================================================== -->
+        <div class="gi-nav-row gi-nav-full">
 
-</div> <!-- END gi-question-card -->
+          <button class="gi-btn" id="gi-prev-btn">Previous</button>
 
-</section>
+          <button class="gi-btn" id="gi-jump-first">First unanswered</button>
+          <button class="gi-btn" id="gi-jump-last">Last answered</button>
+
+          <button class="gi-btn" id="gi-save-btn">Save</button>
+          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+
+          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
+
+        </div>
+        <!-- ======================================================= -->
+
+
+      </div> <!-- END gi-question-card -->
+    </section>
 
 
     <!-- =======================================================
-         RIGHT PILLAR LIST
+         RIGHT PILLARS
     ======================================================== -->
     <aside class="gi-right-pillars">
 
@@ -162,32 +167,28 @@
      SCRIPT BLOCKS
 =========================================================== -->
 
-<!-- 1. Load QUESTIONS -->
 <script src="assets/QUESTIONS.js?v=1"></script>
 
-<!-- 2. PILLAR META (ESSENTIAL FOR ENGINE) -->
 <script>
 const PILLAR_META = {
   0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
   1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction, priorities and accountability are defined. A strong strategic foundation ensures that teams focus on the same goals, understand what matters most and execute with greater predictability."},
-  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. Reliable insights reduce assumptions, guide positioning and ensure that decisions are grounded in evidence rather than intuition."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. Reliable insights reduce assumptions, guide positioning and ensure decisions are grounded in evidence rather than intuition."},
   3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value. Clear positioning, messaging and differentiation help teams communicate value consistently and equip sales with the materials needed to win more effectively."},
   4:{name:"Demand Generation", desc:"Demand Generation measures how predictably your inbound engine attracts, educates and converts your ICP. Strong demand systems combine content, channels and analytics to create reliable, high-quality pipeline."},
-  5:{name:"Sales Execution", desc:"Sales Execution evaluates how consistently opportunities progress through the funnel. This includes discovery quality, deal management, forecasting discipline and the ability to run a structured, repeatable sales process."},
-  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion reflects your ability to onboard customers effectively, drive adoption, prevent churn and identify expansion opportunities. Stable retention and healthy customer relationships strengthen long-term revenue."},
-  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations & Systems measures the quality of your processes, data foundations and technology architecture. When systems work smoothly and data is reliable, GTM teams operate as one unified and predictable engine."},
-  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging captures how clearly you articulate value and structure your offering. Well-designed pricing models improve win-rates, support expansion and help customers understand what they receive at each stage."},
-  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates how clearly and consistently your company expresses its narrative. Strong communication reinforces positioning, builds trust with buyers and ensures that all GTM functions speak with one coherent voice."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures how reliably your organization captures, organizes and uses information. Strong insight systems enable faster decisions, highlight risks early and provide clear visibility into performance across the GTM engine."},
- 11:{name:"Enablement", desc:"Enablement determines how effectively teams are supported with training, playbooks, materials and coaching. High-quality enablement shortens ramp time, improves consistency and strengthens performance across all GTM roles."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects how well teams collaborate, share information and operate toward a unified GTM vision. Clear alignment reduces friction, improves decision-making and ensures that execution across functions remains coordinated."}
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates how consistently opportunities progress through the funnel including discovery, deal management and forecasting discipline."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion reflects your ability to onboard customers, drive adoption, prevent churn and identify expansion opportunities."},
+  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations measures the quality of processes, data foundations and technology architecture powering the GTM engine."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging captures how clearly value is articulated and how well pricing supports acquisition and expansion."},
+  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates how clearly and consistently your company expresses its narrative."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures how reliably data is captured, organized and used to guide decisions."},
+ 11:{name:"Enablement", desc:"Enablement determines how effectively teams are supported with training, materials and coaching."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects how well teams collaborate and operate toward a unified GTM vision."}
 };
 </script>
 
-<!-- 3. ENGINE (must load last) -->
 <script src="assets/engine.js?v=5000"></script>
 
-<!-- 4. DARK MODE TOGGLE -->
 <script>
 const toggle = document.getElementById("darkToggle");
 toggle.addEventListener("click", () => {
