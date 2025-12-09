@@ -11,13 +11,13 @@ let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 let STATE = loadState();
 
-/* Load user progress */
+/* Load saved progress */
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
     return JSON.parse(raw);
-  } catch (err) {
+  } catch {
     return {};
   }
 }
@@ -30,18 +30,38 @@ setInterval(saveState, 700);
 
 
 /* -----------------------------------------------------------
-   QUESTIONS SOURCE (from QUESTIONS.js)
+   QUESTIONS SOURCE
 ----------------------------------------------------------- */
 
 const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
 if (!QUESTIONS.length) {
-  console.error("❌ QUESTIONS.js not loaded or empty.");
+  console.error("❌ QUESTIONS.js missing or empty.");
 }
 
 
 /* -----------------------------------------------------------
-   PILLAR INDEX MAP
-   Pillar 0 = 25 questions, others = 20 each
+   PILLAR META (required for rendering)
+----------------------------------------------------------- */
+
+const PILLAR_META = {
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction, priorities and accountability are defined. A strong strategic foundation ensures teams focus on the same goals, understand what matters most and execute predictably."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. Reliable insights reduce assumptions and strengthen positioning."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects customer insight to product value. Strong messaging, differentiation and enablement materials enhance sales effectiveness."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably your inbound engine attracts and converts your ICP. Strong demand systems create reliable, high-quality pipeline."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel discipline: discovery quality, opportunity management, forecasting and repeatability."},
+  6:{name:"Customer Success & Expansion", desc:"CS & Expansion assesses onboarding, adoption, retention and expansion readiness. Healthy customer relationships protect and grow ARR."},
+  7:{name:"Revenue Operations & Systems", desc:"RevOps & Systems evaluates data quality, automation, integrations and process consistency across GTM."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging measures clarity, value articulation, structure and monetisation strategy."},
+  9:{name:"Brand & Communications", desc:"Brand & Comms evaluates narrative, clarity, consistency and trust-building across channels."},
+  10:{name:"Data & Insights", desc:"Data & Insights evaluates reliability, accessibility and actionability of GTM data."},
+  11:{name:"Enablement", desc:"Enablement assesses training, coaching, playbooks and readiness support."},
+  12:{name:"Leadership & Alignment", desc:"Leadership & Alignment measures cross-functional cohesion, decision-making and shared GTM direction."}
+};
+
+
+/* -----------------------------------------------------------
+   PILLAR START INDEX MAP (0=25 questions, 1–12=20 each)
 ----------------------------------------------------------- */
 
 const PILLAR_START = {
@@ -89,7 +109,7 @@ const elProgressBar = document.getElementById("gi-progress-bar");
 
 
 /* -----------------------------------------------------------
-   TELEMETRY ENGINE (nested structure)
+   TELEMETRY ENGINE (nested)
 ----------------------------------------------------------- */
 
 let TELEMETRY = {};
@@ -128,7 +148,7 @@ function detectResumePoint() {
   const last = Math.max(...keys);
   if (last <= 1) return null;
 
-  return last - 1; // convert ID to index
+  return last - 1;
 }
 
 const resumeIndex = detectResumePoint();
@@ -215,10 +235,6 @@ function preCacheAllQuestions() {
 
 preCacheAllQuestions();
 
-/* ===========================================================
-   BLOCK 2 — NAVIGATION, VALIDATION, RESTORE, STORE, HIGHLIGHT
-=========================================================== */
-
 
 /* -----------------------------------------------------------
    RESTORE ANSWER
@@ -228,9 +244,7 @@ function restoreAnswer(q) {
   if (q.type === "group") {
     q.fields.forEach(f => {
       const el = elBody.querySelector(`[name="${f.name}"]`);
-      if (el && STATE[f.name]) {
-        el.value = STATE[f.name];
-      }
+      if (el && STATE[f.name]) el.value = STATE[f.name];
     });
     return;
   }
@@ -341,7 +355,7 @@ function renderQuestion() {
 
 
 /* -----------------------------------------------------------
-   NEXT / PREV
+   NEXT / PREV BUTTONS
 ----------------------------------------------------------- */
 
 btnNext.addEventListener("click", () => {
@@ -378,7 +392,8 @@ btnClear.addEventListener("click", () => {
   renderQuestion();
 });
 
-/* SAVE BUTTON */
+
+/* Save button */
 btnSave.addEventListener("click", saveState);
 
 
@@ -403,11 +418,11 @@ btnReset.addEventListener("click", () => {
 
 elLeftPillars.forEach(li => {
   li.addEventListener("click", () => {
-    const p = Number(li.dataset.p);
-    const index = PILLAR_START[p];
+    const pillar = Number(li.dataset.p);
+    const start = PILLAR_START[pillar];
 
     storeAnswer();
-    currentIndex = index;
+    currentIndex = start;
 
     renderQuestion();
   });
@@ -423,10 +438,9 @@ function jumpToLastAnswered() {
 
   if (!keys.length) return;
 
-  const max = Math.max(...keys.map(n => Number(n)));
-  const index = Math.max(0, max - 1);
+  const maxId = Math.max(...keys.map(k => Number(k)));
+  const index = Math.max(0, maxId - 1);
 
-  storeAnswer();
   currentIndex = index;
 
   renderQuestion();
@@ -446,8 +460,7 @@ function updateProgress() {
 
   QUESTIONS.forEach(q => {
     if (q.type === "group") {
-      const full = q.fields.every(f => STATE[f.name]);
-      if (full) answered++;
+      if (q.fields.every(f => STATE[f.name])) answered++;
     } else if (STATE[q.id]) {
       answered++;
     }
@@ -457,7 +470,6 @@ function updateProgress() {
 
   elProgressCount.textContent = `${answered} / ${QUESTIONS.length}`;
   elProgressPercent.textContent = `${pct}%`;
-
   elProgressBar.style.width = `${pct}%`;
 }
 
@@ -477,14 +489,13 @@ function updateNav() {
     btnSubmit.style.display = "none";
   }
 }
-
 /* ===========================================================
-   BLOCK 3 — RETRY, TELEMETRY EXPORT, PAYLOAD
+   BLOCK B — RETRY ENGINE, PAYLOAD, SUBMIT LOGIC, INIT
 =========================================================== */
 
 
 /* -----------------------------------------------------------
-   FETCH WITH RETRY (Make.com Safe)
+   FETCH WITH RETRY
 ----------------------------------------------------------- */
 
 async function fetchWithRetry(url, options, retries = 3, delay = 300) {
@@ -501,7 +512,7 @@ async function fetchWithRetry(url, options, retries = 3, delay = 300) {
 
 
 /* -----------------------------------------------------------
-   BUILD TELEMETRY OBJECT (nested)
+   TELEMETRY EXPORT (nested)
 ----------------------------------------------------------- */
 
 function buildTelemetry() {
@@ -516,7 +527,7 @@ function buildTelemetry() {
 
 
 /* -----------------------------------------------------------
-   BUILD PAYLOAD FOR MAKE.COM
+   PAYLOAD BUILDER (Make.com)
 ----------------------------------------------------------- */
 
 function buildPayload() {
@@ -538,7 +549,7 @@ function buildPayload() {
     }
   });
 
-  const payload = {
+  return {
     customer,
     context,
     answers,
@@ -549,17 +560,11 @@ function buildPayload() {
       total_questions: QUESTIONS.length
     }
   };
-
-  return payload;
 }
-
-/* ===========================================================
-   BLOCK 4 — SUBMIT ENGINE + INIT
-=========================================================== */
 
 
 /* -----------------------------------------------------------
-   SUBMIT ENGINE
+   SUBMIT ENGINE (Make.com Webhook)
 ----------------------------------------------------------- */
 
 btnSubmit.addEventListener("click", async () => {
@@ -593,11 +598,12 @@ btnSubmit.addEventListener("click", async () => {
       }
     );
 
-    if (!res.ok) throw new Error("Failed");
+    if (!res.ok) throw new Error("Bad response");
 
     localStorage.removeItem(STORAGE_KEY);
 
     window.location.href = "/gtm-intelligence-thank-you.html";
+
   } catch (err) {
     alert("Submission failed. Please try again.");
     btnSubmit.disabled = false;
@@ -607,7 +613,7 @@ btnSubmit.addEventListener("click", async () => {
 
 
 /* -----------------------------------------------------------
-   INIT
+   INIT ENGINE
 ----------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
