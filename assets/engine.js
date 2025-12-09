@@ -1,7 +1,6 @@
-
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.2
-   Stable • Production Ready • Jump-to-Last • Clickable Pillars
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
+   Stable • Production Ready • Jump-to-Last • Jump-to-First • Clickable Pillars
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -51,8 +50,8 @@ const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
 
-/* NEW BUTTON (optional) */
 const btnJumpLast = document.getElementById("gi-jump-last");
+const btnJumpFirst = document.getElementById("gi-jump-first");
 
 /* ---------------------- EXPLAIN MODE ---------------------- */
 let explainEnabled = false;
@@ -126,24 +125,30 @@ function buildInput(q) {
   if (q.type === "radio" || q.type === "scale")
     return `
       <div class="gi-options-grid">
-        ${q.options.map(o => `
+        ${q.options
+          .map(
+            o => `
           <label class="gi-option-card">
             <input type="radio" name="q" value="${o}">
             <span>${o}</span>
-          </label>
-        `).join("")}
+          </label>`
+          )
+          .join("")}
       </div>
     `;
 
   if (q.type === "group")
     return `
       <div class="gi-group">
-        ${q.fields.map(f => `
+        ${q.fields
+          .map(
+            f => `
           <div class="gi-group-field">
             <label>${f.label}</label>
             <input type="text" name="${f.name}">
-          </div>
-        `).join("")}
+          </div>`
+          )
+          .join("")}
       </div>
     `;
 
@@ -230,190 +235,19 @@ btnSave.addEventListener("click", saveState);
 
 btnReset.addEventListener("click", () => {
   if (!confirm("Reset entire assessment? All progress will be lost.")) return;
+
   localStorage.removeItem(STORAGE_KEY);
   STATE = {};
   currentIndex = 0;
+
   renderQuestion();
   updateProgress();
 });
 
-/* ---------------------- SUBMIT TO MAKE.COM ---------------------- */
-btnSubmit.addEventListener("click", async () => {
-  storeCurrentAnswer();
-  saveState();
-
-  const allAnswered = QUESTIONS_REF.every(q => {
-    if (q.type === "group") {
-      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-    }
-    return STATE[q.id] && STATE[q.id].trim() !== "";
-  });
-
-  if (!allAnswered) {
-    alert("Please complete all questions before submitting.");
-    return;
-  }
-
-  const payload = preparePayload();
-
-  btnSubmit.textContent = "Submitting...";
-  btnSubmit.disabled = true;
-
-  try {
-    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) throw new Error("Submission failed");
-
-    localStorage.removeItem(STORAGE_KEY);
-    window.location.href = "/gtm-intelligence-thank-you.html";
-
-  } catch (error) {
-    alert("Submission failed.");
-    btnSubmit.textContent = "Submit";
-    btnSubmit.disabled = false;
-  }
-});
-
-/* ---------------------- PAYLOAD BUILDER ---------------------- */
-function preparePayload() {
-  const customer = {
-    fullname: STATE["fullname"] || "",
-    role: STATE["role"] || "",
-    email: STATE["email"] || "",
-    mobile: STATE["mobile"] || "",
-    company: STATE["company"] || "",
-    website: STATE["website"] || "",
-    sector: STATE["sector"] || "",
-    country: STATE["country"] || "",
-    activity: STATE["activity"] || "",
-    companysize: STATE["companysize"] || ""
-  };
-
-  const context = {
-    arr: STATE["arr"] || "",
-    acv: STATE["acv"] || "",
-    churn: STATE["churn"] || "",
-    cpl: STATE["cpl"] || "",
-    cac: STATE["cac"] || "",
-    nrr: STATE["nrr"] || "",
-    nps: STATE["nps"] || "",
-    expansion: STATE["expansion"] || "",
-    ltv: STATE["ltv"] || "",
-    payback: STATE["payback"] || "",
-    ae: STATE["ae"] || "",
-    sdr: STATE["sdr"] || "",
-    am: STATE["am"] || "",
-    csm: STATE["csm"] || "",
-    se: STATE["se"] || "",
-    partner: STATE["partner"] || "",
-    marketing: STATE["marketing"] || "",
-    enablement: STATE["enablement"] || "",
-    revops: STATE["revops"] || "",
-    leadership: STATE["leadership"] || "",
-    target_fy: STATE["target_fy"] || "",
-    current_perf: STATE["current_perf"] || "",
-    next_fy_target: STATE["next_fy_target"] || "",
-    arr_target: STATE["arr_target"] || "",
-    growth_goal: STATE["growth_goal"] || "",
-    yoy_last_year: STATE["yoy_last_year"] || "",
-    new_vs_expansion: STATE["new_vs_expansion"] || "",
-    forecast_accuracy: STATE["forecast_accuracy"] || "",
-    customer_target: STATE["customer_target"] || "",
-    growth_constraint: STATE["growth_constraint"] || "",
-    pipeline_cov: STATE["pipeline_cov"] || "",
-    sales_cycle: STATE["sales_cycle"] || "",
-    lead_response: STATE["lead_response"] || "",
-    demo_close: STATE["demo_close"] || "",
-    win_rate: STATE["win_rate"] || "",
-    mql_sql: STATE["mql_sql"] || "",
-    sql_cw: STATE["sql_cw"] || "",
-    ramp_time: STATE["ramp_time"] || "",
-    onboarding_time: STATE["onboarding_time"] || "",
-    deal_velocity: STATE["deal_velocity"] || "",
-    gtm_motion: STATE[6] || "",
-    revenue_model: STATE[7] || "",
-    target_segment: STATE[8] || "",
-    buyer_persona: STATE[9] || "",
-    sales_complexity: STATE[10] || "",
-    team_size: STATE[11] || "",
-    funding_stage: STATE[12] || "",
-    geo_markets: STATE[13] || "",
-    product_desc: STATE[14] || "",
-    ideal_customer: STATE[15] || "",
-    top_priority: STATE[16] || "",
-    biggest_challenge: STATE[17] || "",
-    gtm_slowdown: STATE[18] || "",
-    recent_change: STATE[19] || "",
-    business_outcome: STATE[20] || "",
-    product_complexity: STATE[21] || "",
-    market_type: STATE[22] || "",
-    deployment_model: STATE[23] || "",
-    paying_customers: STATE[24] || "",
-    additional_context: STATE[25] || ""
-  };
-
-  const answers = {};
-  for (let id = 1001; id <= 12020; id++) {
-    if (STATE[id]) answers[`Q${id}`] = STATE[id];
-  }
-
-  const metadata = {
-    timestamp: new Date().toISOString(),
-    version: "v6.2",
-    total_questions: QUESTIONS_REF.length,
-    completion_rate: calculateCompletionRate()
-  };
-
-  return { customer, context, answers, metadata };
-}
-
-/* ---------------------- COMPLETION RATE ---------------------- */
-function calculateCompletionRate() {
-  let answered = 0;
-  QUESTIONS_REF.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f =>
-        STATE[f.name] && STATE[f.name].trim() !== ""
-      );
-      if (filled) answered++;
-    } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
-      answered++;
-    }
-  });
-  return Math.round((answered / QUESTIONS_REF.length) * 100);
-}
-
-/* ---------------------- PROGRESS ---------------------- */
-function updateProgress() {
-  let answered = 0;
-  QUESTIONS_REF.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f =>
-        STATE[f.name] && STATE[f.name].trim() !== ""
-      );
-      if (filled) answered++;
-      return;
-    }
-    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
-  });
-
-  const total = QUESTIONS_REF.length;
-  const pct = Math.round((answered / total) * 100);
-  progressCount.textContent = `${answered} / ${total}`;
-  progressPercent.textContent = `${pct}%`;
-  progressBar.style.width = `${pct}%`;
-}
-
-/* ---------------------- CLICKABLE PILLARS  ---------------------- */
+/* ---------------------- CLICKABLE PILLARS ---------------------- */
 leftPillars.forEach(li => {
   li.addEventListener("click", () => {
     const pillarIndex = Number(li.dataset.p);
-
-    // Find first question of that pillar
     const firstIndex = QUESTIONS_REF.findIndex(q => q.pillar === pillarIndex);
     if (firstIndex >= 0) {
       currentIndex = firstIndex;
@@ -426,35 +260,66 @@ leftPillars.forEach(li => {
 function jumpToLast() {
   const keys = Object.keys(STATE)
     .filter(k => !isNaN(Number(k)))
-    .map(k => Number(k));
+    .map(Number);
 
   if (!keys.length) return;
 
   const lastId = Math.max(...keys);
-
-  // find index of question with this ID
   const idx = QUESTIONS_REF.findIndex(q => q.id === lastId);
+
   if (idx >= 0) {
     currentIndex = idx;
     renderQuestion();
   }
 }
 
-if (btnJumpLast) {
-  btnJumpLast.addEventListener("click", jumpToLast);
+if (btnJumpLast) btnJumpLast.addEventListener("click", jumpToLast);
+
+/* ---------------------- JUMP TO FIRST UNANSWERED ---------------------- */
+function jumpToFirstUnanswered() {
+  for (let i = 0; i < QUESTIONS_REF.length; i++) {
+    const q = QUESTIONS_REF[i];
+
+    if (q.type === "group") {
+      const allFilled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (!allFilled) {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    } else {
+      if (!STATE[q.id] || STATE[q.id].trim() === "") {
+        currentIndex = i;
+        renderQuestion();
+        return;
+      }
+    }
+  }
+
+  // If everything is answered
+  alert("All questions are completed.");
 }
 
-/* ---------------------- NAVIGATION HELPERS ---------------------- */
-function updateNav() {
-  btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
+if (btnJumpFirst) btnJumpFirst.addEventListener("click", jumpToFirstUnanswered);
 
-  if (currentIndex === QUESTIONS_REF.length - 1) {
-    btnNext.style.display = "none";
-    btnSubmit.style.display = "inline-block";
-  } else {
-    btnNext.style.display = "inline-block";
-    btnSubmit.style.display = "none";
-  }
+/* ---------------------- PROGRESS ---------------------- */
+function updateProgress() {
+  let answered = 0;
+
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      const full = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      if (full) answered++;
+    } else {
+      if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
+    }
+  });
+
+  const pct = Math.round(answered / QUESTIONS_REF.length * 100);
+
+  progressCount.textContent = `${answered} / ${QUESTIONS_REF.length}`;
+  progressPercent.textContent = `${pct}%`;
+  progressBar.style.width = `${pct}%`;
 }
 
 /* ---------------------- INIT ---------------------- */
