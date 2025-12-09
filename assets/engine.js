@@ -1,70 +1,98 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.1
-   Production Ready • Make.com Integration • Explain Mode
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v7.0
+   MAX VERSTAPPEN EDITION — The GOAT Engine
+   Ultra-fast • Error-proof • Navigation Turbo • Make.com ready
    =========================================================== */
 
-/* ---------------------- STATE ---------------------- */
+/* -----------------------------------------------------------
+   STATE MANAGEMENT
+----------------------------------------------------------- */
 let currentIndex = 0;
 const STORAGE_KEY = "caugia_gtm_report_v1";
 let STATE = loadState();
 
-/* ---------------------- QUESTIONS SOURCE ---------------------- */
-const QUESTIONS_REF = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
-
-if (QUESTIONS_REF.length === 0) {
-  console.error("❌ QUESTIONS.js not loaded or empty.");
-}
-
-/* ---------------------- LOAD / SAVE ---------------------- */
+/* Load saved state */
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
-  } catch {
+  } catch (e) {
     return {};
   }
 }
 
+/* Auto-save every 700ms */
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
 }
 setInterval(saveState, 700);
 
-/* ---------------------- DOM ELEMENTS ---------------------- */
-const qTitle = document.getElementById("gi-question-title");
-const qSub = document.getElementById("gi-question-sub");
-const qBody = document.getElementById("gi-question-body");
-const kicker = document.getElementById("gi-question-kicker");
-const rightName = document.getElementById("gi-pillar-name");
-const rightDesc = document.getElementById("gi-pillar-desc");
-const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
+/* -----------------------------------------------------------
+   QUESTIONS SOURCE
+----------------------------------------------------------- */
+const QUESTIONS = Array.isArray(window.QUESTIONS) ? window.QUESTIONS : [];
+
+if (QUESTIONS.length === 0) {
+  console.error("❌ QUESTIONS.js not loaded or empty.");
+}
+
+/* -----------------------------------------------------------
+   PILLAR START INDEX MAP
+   Pillar 0 = 25 vragen, pillars 1–12 = 20 vragen elk
+----------------------------------------------------------- */
+const PILLAR_START = {
+  0: 0,
+  1: 25,
+  2: 45,
+  3: 65,
+  4: 85,
+  5: 105,
+  6: 125,
+  7: 145,
+  8: 165,
+  9: 185,
+  10: 205,
+  11: 225,
+  12: 245
+};
+
+/* -----------------------------------------------------------
+   DOM SHORTCUTS
+----------------------------------------------------------- */
+const elTitle = document.getElementById("gi-question-title");
+const elSub = document.getElementById("gi-question-sub");
+const elBody = document.getElementById("gi-question-body");
+const elKicker = document.getElementById("gi-question-kicker");
+const elLeftPillars = document.querySelectorAll("#gi-left-pillar-list li");
+const elRightName = document.getElementById("gi-pillar-name");
+const elRightDesc = document.getElementById("gi-pillar-desc");
+
 const btnPrev = document.getElementById("gi-prev-btn");
 const btnNext = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
 const btnClear = document.getElementById("gi-clear-btn");
 const btnSave = document.getElementById("gi-save-btn");
 const btnReset = document.getElementById("gi-reset-btn");
-const progressCount = document.getElementById("gi-progress-count");
-const progressPercent = document.getElementById("gi-progress-percent");
-const progressBar = document.getElementById("gi-progress-bar");
+const btnJumpLast = document.getElementById("gi-jump-last");
 
-/* ---------------------- EXPLAIN MODE ---------------------- */
-let explainEnabled = false;
+const elProgressCount = document.getElementById("gi-progress-count");
+const elProgressPercent = document.getElementById("gi-progress-percent");
+const elProgressBar = document.getElementById("gi-progress-bar");
+
+/* -----------------------------------------------------------
+   EXPLAIN MODE (future AI integration)
+----------------------------------------------------------- */
+let explainMode = false;
 
 function toggleExplain() {
-  explainEnabled = !explainEnabled;
+  explainMode = !explainMode;
   const box = document.getElementById("gi-explain-box");
-  if (box) box.style.display = explainEnabled ? "block" : "none";
+  if (box) box.style.display = explainMode ? "block" : "none";
 }
 
 function setExplainPlaceholder(q) {
   const box = document.getElementById("gi-explain-box");
-  if (!box) return;
-
-  if (!explainEnabled) {
-    box.style.display = "none";
-    return;
-  }
+  if (!box || !explainMode) return;
 
   box.innerHTML = `
     <div class="gi-explain-inner">
@@ -74,32 +102,11 @@ function setExplainPlaceholder(q) {
       <p><em>Question:</em> ${q.title}</p>
     </div>
   `;
-  box.style.display = "block";
 }
 
-/* ---------------------- RENDER QUESTION ---------------------- */
-function renderQuestion() {
-  const q = QUESTIONS_REF[currentIndex];
-  if (!q) return;
-
-  kicker.textContent = PILLAR_META[q.pillar].name;
-  rightName.textContent = PILLAR_META[q.pillar].name;
-  rightDesc.textContent = PILLAR_META[q.pillar].desc;
-  qTitle.textContent = q.title || "";
-  qSub.textContent = q.sub || "";
-
-  leftPillars.forEach(li =>
-    li.classList.toggle("active", Number(li.dataset.p) === q.pillar)
-  );
-
-  qBody.innerHTML = buildInput(q);
-  restoreAnswer(q);
-  setExplainPlaceholder(q);
-  updateNav();
-  updateProgress();
-}
-
-/* ---------------------- BUILD INPUT ---------------------- */
+/* -----------------------------------------------------------
+   BUILD INPUT (ULTRA CLEAN)
+----------------------------------------------------------- */
 function buildInput(q) {
   if (q.type === "text")
     return `<input type="text" name="q" class="gi-input">`;
@@ -121,12 +128,14 @@ function buildInput(q) {
   if (q.type === "radio" || q.type === "scale")
     return `
       <div class="gi-options-grid">
-        ${q.options.map(o => `
-          <label class="gi-option-card">
-            <input type="radio" name="q" value="${o}">
-            <span>${o}</span>
-          </label>`
-        ).join("")}
+        ${q.options
+          .map(o => `
+            <label class="gi-option-card">
+              <input type="radio" name="q" value="${o}">
+              <span>${o}</span>
+            </label>
+          `)
+          .join("")}
       </div>
     `;
 
@@ -134,89 +143,178 @@ function buildInput(q) {
     return `
       <div class="gi-group">
         ${q.fields
-          .map(f => `
+          .map(
+            f => `
             <div class="gi-group-field">
               <label>${f.label}</label>
               <input type="text" name="${f.name}">
             </div>`
-          ).join("")}
+          )
+          .join("")}
       </div>
     `;
 
   return `<p>Unsupported question type</p>`;
 }
 
-/* ---------------------- RESTORE ANSWER ---------------------- */
+/* -----------------------------------------------------------
+   RESTORE ANSWERS
+----------------------------------------------------------- */
 function restoreAnswer(q) {
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = qBody.querySelector(`[name="${f.name}"]`);
+      const el = elBody.querySelector(`[name="${f.name}"]`);
       if (el && STATE[f.name]) el.value = STATE[f.name];
     });
     return;
   }
 
   const saved = STATE[q.id];
-  if (!saved) return;
+  if (saved == null) return;
 
-  const radio = qBody.querySelector(`input[value="${saved}"]`);
-  if (radio) radio.checked = true;
+  const input = elBody.querySelector(`[value="${saved}"]`);
+  if (input) input.checked = true;
 
-  const el = qBody.querySelector("[name='q']");
+  const el = elBody.querySelector("[name='q']");
   if (el) el.value = saved;
 }
 
-/* ---------------------- VALIDATION ---------------------- */
-function validate(q) {
-  if (q.type === "group")
-    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-
-  if (q.type === "radio" || q.type === "scale")
-    return qBody.querySelector("input:checked") !== null;
-
-  const el = qBody.querySelector("[name='q']");
-  return el && el.value.trim() !== "";
-}
-
-/* ---------------------- STORE CURRENT ANSWER ---------------------- */
-function storeCurrentAnswer() {
-  const q = QUESTIONS_REF[currentIndex];
+/* -----------------------------------------------------------
+   STORE CURRENT ANSWER
+----------------------------------------------------------- */
+function storeAnswer() {
+  const q = QUESTIONS[currentIndex];
+  if (!q) return;
 
   if (q.type === "group") {
     q.fields.forEach(f => {
-      const el = qBody.querySelector(`[name="${f.name}"]`);
+      const el = elBody.querySelector(`[name="${f.name}"]`);
       STATE[f.name] = el ? el.value.trim() : "";
     });
     return;
   }
 
   if (q.type === "radio" || q.type === "scale") {
-    const selected = qBody.querySelector("input:checked");
+    const selected = elBody.querySelector("input:checked");
     if (selected) STATE[q.id] = selected.value;
     return;
   }
 
-  const el = qBody.querySelector("[name='q']");
+  const el = elBody.querySelector("[name='q']");
   if (el) STATE[q.id] = el.value.trim();
 }
 
-/* ---------------------- NAVIGATION ---------------------- */
+/* -----------------------------------------------------------
+   VALIDATION
+----------------------------------------------------------- */
+function validate(q) {
+  if (q.type === "group")
+    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+
+  if (q.type === "radio" || q.type === "scale")
+    return elBody.querySelector("input:checked") !== null;
+
+  const el = elBody.querySelector("[name='q']");
+  return el && el.value.trim() !== "";
+}
+
+/* -----------------------------------------------------------
+   RENDER QUESTION (SUPER CLEAN)
+----------------------------------------------------------- */
+function renderQuestion() {
+  const q = QUESTIONS[currentIndex];
+  if (!q) return;
+
+  elKicker.textContent = PILLAR_META[q.pillar].name;
+  elTitle.textContent = q.title;
+  elSub.textContent = q.sub || "";
+
+  elRightName.textContent = PILLAR_META[q.pillar].name;
+  elRightDesc.textContent = PILLAR_META[q.pillar].desc;
+
+  highlightActivePillar();
+
+  elBody.innerHTML = buildInput(q);
+  restoreAnswer(q);
+  setExplainPlaceholder(q);
+
+  updateNav();
+  updateProgress();
+}
+
+/* -----------------------------------------------------------
+   ACTIVE PILLAR HIGHLIGHT
+----------------------------------------------------------- */
+function highlightActivePillar() {
+  let active = 0;
+
+  for (let p = 12; p >= 0; p--) {
+    if (currentIndex >= PILLAR_START[p]) {
+      active = p;
+      break;
+    }
+  }
+
+  elLeftPillars.forEach(li => {
+    li.classList.toggle("active", Number(li.dataset.p) === active);
+  });
+}
+
+/* -----------------------------------------------------------
+   INTERACTIVE: CLICKABLE PILLARS
+----------------------------------------------------------- */
+elLeftPillars.forEach(li => {
+  li.addEventListener("click", () => {
+    const pillar = Number(li.dataset.p);
+    const index = PILLAR_START[pillar];
+
+    storeAnswer();
+    currentIndex = index;
+    renderQuestion();
+  });
+});
+
+/* -----------------------------------------------------------
+   JUMP TO LAST ANSWERED
+----------------------------------------------------------- */
+function jumpToLastAnswered() {
+  let last = 0;
+
+  for (let key in STATE) {
+    const idx = Number(key);
+    if (!isNaN(idx) && idx > last) last = idx;
+  }
+
+  storeAnswer();
+  currentIndex = last - 1; // ID starts at 1, index starts at 0
+  if (currentIndex < 0) currentIndex = 0;
+
+  renderQuestion();
+}
+
+if (btnJumpLast) {
+  btnJumpLast.addEventListener("click", jumpToLastAnswered);
+}
+
+/* -----------------------------------------------------------
+   NAVIGATION BUTTONS
+----------------------------------------------------------- */
 btnNext.addEventListener("click", () => {
-  const q = QUESTIONS_REF[currentIndex];
-  storeCurrentAnswer();
+  const q = QUESTIONS[currentIndex];
+  storeAnswer();
   if (!validate(q)) return;
   currentIndex++;
   renderQuestion();
 });
 
 btnPrev.addEventListener("click", () => {
-  storeCurrentAnswer();
+  storeAnswer();
   if (currentIndex > 0) currentIndex--;
   renderQuestion();
 });
 
 btnClear.addEventListener("click", () => {
-  const q = QUESTIONS_REF[currentIndex];
+  const q = QUESTIONS[currentIndex];
   if (q.type === "group") q.fields.forEach(f => delete STATE[f.name]);
   else delete STATE[q.id];
   renderQuestion();
@@ -225,188 +323,116 @@ btnClear.addEventListener("click", () => {
 btnSave.addEventListener("click", saveState);
 
 btnReset.addEventListener("click", () => {
-  if (!confirm("Reset entire assessment? All progress will be lost.")) return;
-  localStorage.removeItem(STORAGE_KEY);
+  if (!confirm("Reset entire assessment?")) return;
   STATE = {};
+  localStorage.removeItem(STORAGE_KEY);
   currentIndex = 0;
   renderQuestion();
-  updateProgress();
 });
 
-/* ---------------------- SUBMIT TO MAKE.COM ---------------------- */
+/* -----------------------------------------------------------
+   SUBMISSION ENGINE (MAKE.COM)
+----------------------------------------------------------- */
 btnSubmit.addEventListener("click", async () => {
-  storeCurrentAnswer();
+  storeAnswer();
   saveState();
 
-  const allAnswered = QUESTIONS_REF.every(q => {
-    if (q.type === "group") {
-      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-    }
-    return STATE[q.id] && STATE[q.id].trim() !== "";
+  const all = QUESTIONS.every(q => {
+    if (q.type === "group")
+      return q.fields.every(f => STATE[f.name]);
+    return STATE[q.id];
   });
 
-  if (!allAnswered) {
+  if (!all) {
     alert("Please complete all questions before submitting.");
     return;
   }
-
-  const payload = preparePayload();
 
   btnSubmit.textContent = "Submitting...";
   btnSubmit.disabled = true;
 
   try {
-    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+    const payload = buildPayload();
+
+    const res = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) throw new Error("Submission failed");
+    if (!res.ok) throw new Error("Submission failed");
 
-    console.log("✅ Assessment submitted successfully");
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = "/gtm-intelligence-thank-you.html";
 
-  } catch (error) {
-    console.error("❌ Submission error:", error);
-    alert("Submission failed. Please try again or contact hello@caugia.com");
-    btnSubmit.textContent = "Submit";
+  } catch (e) {
+    alert("Submission failed. Please try again.");
     btnSubmit.disabled = false;
+    btnSubmit.textContent = "Submit";
   }
 });
 
-/* ---------------------- PAYLOAD BUILDER ---------------------- */
-function preparePayload() {
-  const customer = {
-    fullname: STATE["fullname"] || "",
-    role: STATE["role"] || "",
-    email: STATE["email"] || "",
-    mobile: STATE["mobile"] || "",
-    company: STATE["company"] || "",
-    website: STATE["website"] || "",
-    sector: STATE["sector"] || "",
-    country: STATE["country"] || "",
-    activity: STATE["activity"] || "",
-    companysize: STATE["companysize"] || ""
-  };
-
-  const context = {
-    arr: STATE["arr"] || "",
-    acv: STATE["acv"] || "",
-    churn: STATE["churn"] || "",
-    cpl: STATE["cpl"] || "",
-    cac: STATE["cac"] || "",
-    nrr: STATE["nrr"] || "",
-    nps: STATE["nps"] || "",
-    expansion: STATE["expansion"] || "",
-    ltv: STATE["ltv"] || "",
-    payback: STATE["payback"] || "",
-    ae: STATE["ae"] || "",
-    sdr: STATE["sdr"] || "",
-    am: STATE["am"] || "",
-    csm: STATE["csm"] || "",
-    se: STATE["se"] || "",
-    partner: STATE["partner"] || "",
-    marketing: STATE["marketing"] || "",
-    enablement: STATE["enablement"] || "",
-    revops: STATE["revops"] || "",
-    leadership: STATE["leadership"] || "",
-    target_fy: STATE["target_fy"] || "",
-    current_perf: STATE["current_perf"] || "",
-    next_fy_target: STATE["next_fy_target"] || "",
-    arr_target: STATE["arr_target"] || "",
-    growth_goal: STATE["growth_goal"] || "",
-    yoy_last_year: STATE["yoy_last_year"] || "",
-    new_vs_expansion: STATE["new_vs_expansion"] || "",
-    forecast_accuracy: STATE["forecast_accuracy"] || "",
-    customer_target: STATE["customer_target"] || "",
-    growth_constraint: STATE["growth_constraint"] || "",
-    pipeline_cov: STATE["pipeline_cov"] || "",
-    sales_cycle: STATE["sales_cycle"] || "",
-    lead_response: STATE["lead_response"] || "",
-    demo_close: STATE["demo_close"] || "",
-    win_rate: STATE["win_rate"] || "",
-    mql_sql: STATE["mql_sql"] || "",
-    sql_cw: STATE["sql_cw"] || "",
-    ramp_time: STATE["ramp_time"] || "",
-    onboarding_time: STATE["onboarding_time"] || "",
-    deal_velocity: STATE["deal_velocity"] || "",
-    gtm_motion: STATE[6] || "",
-    revenue_model: STATE[7] || "",
-    target_segment: STATE[8] || "",
-    buyer_persona: STATE[9] || "",
-    sales_complexity: STATE[10] || "",
-    team_size: STATE[11] || "",
-    funding_stage: STATE[12] || "",
-    geo_markets: STATE[13] || "",
-    product_desc: STATE[14] || "",
-    ideal_customer: STATE[15] || "",
-    top_priority: STATE[16] || "",
-    biggest_challenge: STATE[17] || "",
-    gtm_slowdown: STATE[18] || "",
-    recent_change: STATE[19] || "",
-    business_outcome: STATE[20] || "",
-    product_complexity: STATE[21] || "",
-    market_type: STATE[22] || "",
-    deployment_model: STATE[23] || "",
-    paying_customers: STATE[24] || "",
-    additional_context: STATE[25] || ""
-  };
-
+/* -----------------------------------------------------------
+   PAYLOAD BUILDER
+----------------------------------------------------------- */
+function buildPayload() {
+  const customer = {};
+  const context = {};
   const answers = {};
-  for (let id = 1001; id <= 12020; id++) {
-    if (STATE[id]) answers[`Q${id}`] = STATE[id];
-  }
 
-  const metadata = {
-    timestamp: new Date().toISOString(),
-    version: "v6.1",
-    total_questions: QUESTIONS_REF.length,
-    completion_rate: calculateCompletionRate()
+  QUESTIONS.forEach(q => {
+    if (q.pillar === 0) {
+      if (q.type === "group") {
+        q.fields.forEach(f => (customer[f.name] = STATE[f.name] || ""));
+      } else {
+        context[q.id] = STATE[q.id] || "";
+      }
+    } else {
+      answers[`Q${q.id}`] = STATE[q.id] || "";
+    }
+  });
+
+  return {
+    customer,
+    context,
+    answers,
+    metadata: {
+      version: "v7.0",
+      completed_at: new Date().toISOString(),
+      total_questions: QUESTIONS.length
+    }
   };
-
-  return { customer, context, answers, metadata };
 }
 
-/* ---------------------- COMPLETION RATE ---------------------- */
-function calculateCompletionRate() {
+/* -----------------------------------------------------------
+   PROGRESS BAR
+----------------------------------------------------------- */
+function updateProgress() {
   let answered = 0;
-  QUESTIONS_REF.forEach(q => {
+
+  QUESTIONS.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-      if (filled) answered++;
-    } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
+      const ok = q.fields.every(f => STATE[f.name]);
+      if (ok) answered++;
+    } else if (STATE[q.id]) {
       answered++;
     }
   });
-  return Math.round((answered / QUESTIONS_REF.length) * 100);
+
+  const pct = Math.round((answered / QUESTIONS.length) * 100);
+
+  elProgressCount.textContent = `${answered} / ${QUESTIONS.length}`;
+  elProgressPercent.textContent = `${pct}%`;
+  elProgressBar.style.width = `${pct}%`;
 }
 
-/* ---------------------- PROGRESS ---------------------- */
-function updateProgress() {
-  let answered = 0;
-  QUESTIONS_REF.forEach(q => {
-    if (q.type === "group") {
-      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-      if (filled) answered++;
-      return;
-    }
-    if (STATE[q.id] && STATE[q.id].trim() !== "") answered++;
-  });
-
-  const total = QUESTIONS_REF.length;
-  const pct = Math.round((answered / total) * 100);
-  progressCount.textContent = `${answered} / ${total}`;
-  progressPercent.textContent = `${pct}%`;
-  progressBar.style.width = `${pct}%`;
-}
-
-/* ---------------------- NAVIGATION HELPERS ---------------------- */
+/* -----------------------------------------------------------
+   NAV VISIBILITY
+----------------------------------------------------------- */
 function updateNav() {
   btnPrev.style.display = currentIndex === 0 ? "none" : "inline-block";
 
-  if (currentIndex === QUESTIONS_REF.length - 1) {
+  if (currentIndex === QUESTIONS.length - 1) {
     btnNext.style.display = "none";
     btnSubmit.style.display = "inline-block";
   } else {
@@ -415,7 +441,9 @@ function updateNav() {
   }
 }
 
-/* ---------------------- INIT ---------------------- */
+/* -----------------------------------------------------------
+   INIT
+----------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderQuestion();
 });
