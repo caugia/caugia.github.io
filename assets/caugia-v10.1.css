@@ -898,3 +898,26 @@ body.dark .gi-jump-row .gi-btn:hover {
   padding-top: 18px;
   border-top: 1px solid var(--border);
 }
+
+/* =======================================================
+   FIX: Consistent button alignment on long group questions
+   Makes the top part scroll instead of pushing buttons down
+========================================================= */
+
+.gi-question-body {
+  overflow-y: auto;
+  max-height: calc(100% - 20px); /* preserves spacing */
+  padding-right: 12px;
+}
+
+/* Smooth scrolling inside the group fields */
+.gi-group {
+  padding-bottom: 12px;
+}
+
+/* Prevent group fields from forcing nav downward */
+.gi-question-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
