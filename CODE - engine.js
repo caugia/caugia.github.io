@@ -1,7 +1,6 @@
-
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.1
-   Production Ready • Make.com Integration • Explain Mode
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.2
+   Stable • Production Ready • Jump-to-Last • Clickable Pillars
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -39,15 +38,20 @@ const kicker = document.getElementById("gi-question-kicker");
 const rightName = document.getElementById("gi-pillar-name");
 const rightDesc = document.getElementById("gi-pillar-desc");
 const leftPillars = document.querySelectorAll("#gi-left-pillar-list li");
+
 const btnPrev = document.getElementById("gi-prev-btn");
 const btnNext = document.getElementById("gi-next-btn");
 const btnSubmit = document.getElementById("gi-submit-btn");
 const btnClear = document.getElementById("gi-clear-btn");
 const btnSave = document.getElementById("gi-save-btn");
 const btnReset = document.getElementById("gi-reset-btn");
+
 const progressCount = document.getElementById("gi-progress-count");
 const progressPercent = document.getElementById("gi-progress-percent");
 const progressBar = document.getElementById("gi-progress-bar");
+
+/* NEW BUTTON (optional) */
+const btnJumpLast = document.getElementById("gi-jump-last");
 
 /* ---------------------- EXPLAIN MODE ---------------------- */
 let explainEnabled = false;
@@ -86,6 +90,7 @@ function renderQuestion() {
   kicker.textContent = PILLAR_META[q.pillar].name;
   rightName.textContent = PILLAR_META[q.pillar].name;
   rightDesc.textContent = PILLAR_META[q.pillar].desc;
+
   qTitle.textContent = q.title || "";
   qSub.textContent = q.sub || "";
 
@@ -96,20 +101,18 @@ function renderQuestion() {
   qBody.innerHTML = buildInput(q);
   restoreAnswer(q);
   setExplainPlaceholder(q);
+
   updateNav();
   updateProgress();
 }
 
 /* ---------------------- BUILD INPUT ---------------------- */
 function buildInput(q) {
-  if (q.type === "text")
-    return `<input type="text" name="q" class="gi-input">`;
+  if (q.type === "text") return `<input type="text" name="q" class="gi-input">`;
 
-  if (q.type === "number")
-    return `<input type="number" name="q" class="gi-input">`;
+  if (q.type === "number") return `<input type="number" name="q" class="gi-input">`;
 
-  if (q.type === "textarea")
-    return `<textarea name="q" class="gi-textarea"></textarea>`;
+  if (q.type === "textarea") return `<textarea name="q" class="gi-textarea"></textarea>`;
 
   if (q.type === "select")
     return `
@@ -126,21 +129,20 @@ function buildInput(q) {
           <label class="gi-option-card">
             <input type="radio" name="q" value="${o}">
             <span>${o}</span>
-          </label>`
-        ).join("")}
+          </label>
+        `).join("")}
       </div>
     `;
 
   if (q.type === "group")
     return `
       <div class="gi-group">
-        ${q.fields
-          .map(f => `
-            <div class="gi-group-field">
-              <label>${f.label}</label>
-              <input type="text" name="${f.name}">
-            </div>`
-          ).join("")}
+        ${q.fields.map(f => `
+          <div class="gi-group-field">
+            <label>${f.label}</label>
+            <input type="text" name="${f.name}">
+          </div>
+        `).join("")}
       </div>
     `;
 
@@ -265,13 +267,11 @@ btnSubmit.addEventListener("click", async () => {
 
     if (!response.ok) throw new Error("Submission failed");
 
-    console.log("✅ Assessment submitted successfully");
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = "/gtm-intelligence-thank-you.html";
 
   } catch (error) {
-    console.error("❌ Submission error:", error);
-    alert("Submission failed. Please try again or contact hello@caugia.com");
+    alert("Submission failed.");
     btnSubmit.textContent = "Submit";
     btnSubmit.disabled = false;
   }
@@ -362,7 +362,7 @@ function preparePayload() {
 
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v6.1",
+    version: "v6.2",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
@@ -375,7 +375,9 @@ function calculateCompletionRate() {
   let answered = 0;
   QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      const filled = q.fields.every(f =>
+        STATE[f.name] && STATE[f.name].trim() !== ""
+      );
       if (filled) answered++;
     } else if (STATE[q.id] && STATE[q.id].trim() !== "") {
       answered++;
@@ -389,7 +391,9 @@ function updateProgress() {
   let answered = 0;
   QUESTIONS_REF.forEach(q => {
     if (q.type === "group") {
-      const filled = q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+      const filled = q.fields.every(f =>
+        STATE[f.name] && STATE[f.name].trim() !== ""
+      );
       if (filled) answered++;
       return;
     }
@@ -401,6 +405,42 @@ function updateProgress() {
   progressCount.textContent = `${answered} / ${total}`;
   progressPercent.textContent = `${pct}%`;
   progressBar.style.width = `${pct}%`;
+}
+
+/* ---------------------- CLICKABLE PILLARS  ---------------------- */
+leftPillars.forEach(li => {
+  li.addEventListener("click", () => {
+    const pillarIndex = Number(li.dataset.p);
+
+    // Find first question of that pillar
+    const firstIndex = QUESTIONS_REF.findIndex(q => q.pillar === pillarIndex);
+    if (firstIndex >= 0) {
+      currentIndex = firstIndex;
+      renderQuestion();
+    }
+  });
+});
+
+/* ---------------------- JUMP TO LAST ANSWERED ---------------------- */
+function jumpToLast() {
+  const keys = Object.keys(STATE)
+    .filter(k => !isNaN(Number(k)))
+    .map(k => Number(k));
+
+  if (!keys.length) return;
+
+  const lastId = Math.max(...keys);
+
+  // find index of question with this ID
+  const idx = QUESTIONS_REF.findIndex(q => q.id === lastId);
+  if (idx >= 0) {
+    currentIndex = idx;
+    renderQuestion();
+  }
+}
+
+if (btnJumpLast) {
+  btnJumpLast.addEventListener("click", jumpToLast);
 }
 
 /* ---------------------- NAVIGATION HELPERS ---------------------- */
