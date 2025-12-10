@@ -281,17 +281,21 @@ btnSubmit.addEventListener("click", async () => {
 /* ---------------------- PAYLOAD BUILDER ---------------------- */
 function preparePayload() {
   const customer = {
-    fullname: STATE["fullname"] || "",
-    role: STATE["role"] || "",
-    email: STATE["email"] || "",
-    mobile: STATE["mobile"] || "",
-    company: STATE["company"] || "",
-    website: STATE["website"] || "",
-    sector: STATE["sector"] || "",
-    country: STATE["country"] || "",
-    activity: STATE["activity"] || "",
-    companysize: STATE["companysize"] || ""
-  };
+  fullname: STATE["fullname"] || "",
+  role: STATE["role"] || "",
+  email: STATE["email"] || "",
+  mobile: STATE["mobile"] || "",
+  company: STATE["company"] || "",
+  website: STATE["website"] || "",
+  sector: STATE["sector"] || "",
+  country: STATE["country"] || "",
+  activity: STATE["activity"] || "",
+  companysize: STATE["companysize"] || "",
+  
+  // ⭐ BELANGRIJK VOOR GOOGLE SHEETS MODULE
+  payment_id: STATE["payment_id"] || ""
+};
+
 
   const context = {
     arr: STATE["arr"] || "",
