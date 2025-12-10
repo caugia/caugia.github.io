@@ -947,6 +947,49 @@
       </div>
     </section>
 
+    <!-- =========================================
+     STRIPE CHECKOUT SECTION (TEST MODE)
+========================================= -->
+<section id="checkout" class="gi-cta-section" style="margin-top:80px;">
+  <h2>Secure Checkout</h2>
+  <p>
+    Your GTM Intelligence Report is delivered within five working days.
+    Payment is processed securely via Stripe. No account required.
+  </p>
+
+  <button id="stripeCheckoutBtn" class="cta" style="margin-top: 16px;">
+    Proceed to Secure Payment (€949)
+  </button>
+
+  <p class="gi-cta-secondary" style="margin-top: 12px;">
+    You will be redirected to Stripe's secure checkout page.
+  </p>
+</section>
+
+<!-- =========================================
+     STRIPE CHECKOUT SCRIPT (TEST MODE)
+========================================= -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
+
+  document.getElementById("stripeCheckoutBtn").addEventListener("click", function () {
+    stripe.redirectToCheckout({
+      lineItems: [
+        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
+      ],
+      mode: "payment",
+      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
+      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
+    })
+    .then(function (result) {
+      if (result.error) {
+        alert(result.error.message);
+      }
+    });
+  });
+</script>
+    
   </div>
 </main>
 
