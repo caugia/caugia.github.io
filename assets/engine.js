@@ -257,6 +257,9 @@ btnSubmit.addEventListener("click", async () => {
 
   const payload = preparePayload();
 
+  // ⭐ DEBUG - LOG PAYLOAD
+  console.log("📦 Sending payload:", JSON.stringify(payload, null, 2));
+
   btnSubmit.textContent = "Submitting...";
   btnSubmit.disabled = true;
 
@@ -267,12 +270,18 @@ btnSubmit.addEventListener("click", async () => {
       body: JSON.stringify(payload)
     });
 
+    // ⭐ DEBUG - LOG RESPONSE
+    console.log("✅ Response status:", response.status);
+    const responseText = await response.text();
+    console.log("📥 Response body:", responseText);
+
     if (!response.ok) throw new Error("Submission failed");
 
     localStorage.removeItem(STORAGE_KEY);
     window.location.href = "/gtm-intelligence-thank-you.html";
 
   } catch (error) {
+    console.error("❌ Error:", error);
     alert("Submission failed.");
     btnSubmit.textContent = "Submit";
     btnSubmit.disabled = false;
