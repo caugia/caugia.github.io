@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.3
-   Stable • Production Ready • Jump-to-Last • Jump-to-First
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v6.4
+   Stable • Production Ready • TEST SUBMIT toegevoegd
    =========================================================== */
 
 /* ---------------------- STATE ---------------------- */
@@ -242,20 +242,18 @@ btnSubmit.addEventListener("click", async () => {
   storeCurrentAnswer();
   saveState();
 
-// ⭐ TIJDELIJK UITGESCHAKELD VOOR TESTING
-/*
-const allAnswered = QUESTIONS_REF.every(q => {
-  if (q.type === "group") {
-    return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-  }
-  return STATE[q.id] && STATE[q.id].trim() !== "";
-});
+  // ⭐ RE-ENABLE VALIDATION
+  const allAnswered = QUESTIONS_REF.every(q => {
+    if (q.type === "group") {
+      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+    }
+    return STATE[q.id] && STATE[q.id].trim() !== "";
+  });
 
-if (!allAnswered) {
-  alert("Please complete all questions before submitting.");
-  return;
-}
-*/
+  if (!allAnswered) {
+    alert("Please complete all questions before submitting.");
+    return;
+  }
 
   const payload = preparePayload();
 
@@ -290,24 +288,69 @@ if (!allAnswered) {
   }
 });
 
+/* ---------------------- TEST SUBMIT (NO VALIDATION) ---------------------- */
+// Create test button dynamically
+document.addEventListener("DOMContentLoaded", () => {
+  const navRow = document.querySelector(".gi-nav-row");
+  if (navRow) {
+    const testBtn = document.createElement("button");
+    testBtn.id = "gi-test-submit";
+    testBtn.className = "gi-btn";
+    testBtn.textContent = "TEST SUBMIT";
+    testBtn.style.background = "red";
+    testBtn.style.color = "white";
+    navRow.appendChild(testBtn);
+
+    testBtn.addEventListener("click", async () => {
+      storeCurrentAnswer();
+      saveState();
+
+      const payload = preparePayload();
+      console.log("📦 TEST - Sending payload:", JSON.stringify(payload, null, 2));
+
+      testBtn.textContent = "Testing...";
+      testBtn.disabled = true;
+
+      try {
+        const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        console.log("✅ Response status:", response.status);
+        const responseText = await response.text();
+        console.log("📥 Response body:", responseText);
+
+        alert("Test complete - check console (F12)");
+        testBtn.textContent = "TEST SUBMIT";
+        testBtn.disabled = false;
+
+      } catch (error) {
+        console.error("❌ Error:", error);
+        alert("Test failed - check console (F12)");
+        testBtn.textContent = "TEST SUBMIT";
+        testBtn.disabled = false;
+      }
+    });
+  }
+});
+
 /* ---------------------- PAYLOAD BUILDER ---------------------- */
 function preparePayload() {
   const customer = {
-  fullname: STATE["fullname"] || "",
-  role: STATE["role"] || "",
-  email: STATE["email"] || "",
-  mobile: STATE["mobile"] || "",
-  company: STATE["company"] || "",
-  website: STATE["website"] || "",
-  sector: STATE["sector"] || "",
-  country: STATE["country"] || "",
-  activity: STATE["activity"] || "",
-  companysize: STATE["companysize"] || "",
-  
-  // ⭐ BELANGRIJK VOOR GOOGLE SHEETS MODULE
-  payment_id: STATE["payment_id"] || ""
-};
-
+    fullname: STATE["fullname"] || "",
+    role: STATE["role"] || "",
+    email: STATE["email"] || "",
+    mobile: STATE["mobile"] || "",
+    company: STATE["company"] || "",
+    website: STATE["website"] || "",
+    sector: STATE["sector"] || "",
+    country: STATE["country"] || "",
+    activity: STATE["activity"] || "",
+    companysize: STATE["companysize"] || "",
+    payment_id: STATE["payment_id"] || ""
+  };
 
   const context = {
     arr: STATE["arr"] || "",
@@ -335,7 +378,7 @@ function preparePayload() {
     next_fy_target: STATE["next_fy_target"] || "",
     arr_target: STATE["arr_target"] || "",
     growth_goal: STATE["growth_goal"] || "",
-    yoy_last_year: STATE["yoy_last_last_year"] || "", 
+    yoy_last_year: STATE["yoy_last_last_year"] || "",
     new_vs_expansion: STATE["new_vs_expansion"] || "",
     forecast_accuracy: STATE["forecast_accuracy"] || "",
     customer_target: STATE["customer_target"] || "",
@@ -379,7 +422,7 @@ function preparePayload() {
 
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v6.3",
+    version: "v6.4",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
