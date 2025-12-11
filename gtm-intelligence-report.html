@@ -567,23 +567,6 @@
   <a href="gtm-assessment.html" class="cta cta--ghost">Start with free GTM Score</a>
 </div>
 
-<script>
-  document.getElementById("stripeCheckoutBtnTop").addEventListener("click", function () {
-    stripe.redirectToCheckout({
-      lineItems: [
-        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
-      ],
-      mode: "payment",
-      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
-    })
-    .then(function (result) {
-      if (result.error) alert(result.error.message);
-    });
-  });
-</script>
-
-
       <p class="gi-landing-note">
         A structured assessment and AI-assisted analysis. No calls or meetings required.
       </p>
@@ -642,40 +625,6 @@
     Get Your Intelligence Report (€949)
   </button>
 </div>
-
-<script>
-  document.getElementById("stripeCheckoutBtnMid").addEventListener("click", function () {
-    stripe.redirectToCheckout({
-      lineItems: [
-        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
-      ],
-      mode: "payment",
-      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
-    })
-    .then(function (result) {
-      if (result.error) alert(result.error.message);
-    });
-  });
-</script>
-
-
-<script>
-  document.getElementById("stripeCheckoutBtnMid").addEventListener("click", function () {
-    stripe.redirectToCheckout({
-      lineItems: [
-        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
-      ],
-      mode: "payment",
-      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
-    })
-    .then(function (result) {
-      if (result.error) alert(result.error.message);
-    });
-  });
-</script>
-
 
     </section>
 
@@ -1003,30 +952,6 @@
     You will be redirected to Stripe's secure checkout page.
   </p>
 </section>
-
-<!-- =========================================
-     STRIPE CHECKOUT SCRIPT (TEST MODE)
-========================================= -->
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-  const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
-
-  document.getElementById("stripeCheckoutBtn").addEventListener("click", function () {
-    stripe.redirectToCheckout({
-      lineItems: [
-        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
-      ],
-      mode: "payment",
-      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
-    })
-    .then(function (result) {
-      if (result.error) {
-        alert(result.error.message);
-      }
-    });
-  });
-</script>
     
   </div>
 </main>
@@ -1068,33 +993,30 @@
   });
 </script>
 
-  <script>
+<script>
   const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
 
   function startCheckout() {
     stripe.redirectToCheckout({
-      lineItems: [
-        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
-      ],
+      lineItems: [{ price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }],
       mode: "payment",
       successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
-    })
-    .then(function (result) {
-      if (result.error) alert(result.error.message);
+      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html"
     });
   }
 
-  // Koppel ALLE CTA’s
-  const topBtn = document.getElementById("stripeCheckoutBtnTop");
-  const midBtn = document.getElementById("stripeCheckoutBtnMid");
-  const finalBtn = document.getElementById("stripeCheckoutBtn");
+  // Alle CTA’s koppelen aan Stripe checkout
+  const ctas = [
+    "stripeCheckoutBtnTop",
+    "stripeCheckoutBtnMid",
+    "stripeCheckoutBtn"
+  ];
 
-  if (topBtn) topBtn.addEventListener("click", startCheckout);
-  if (midBtn) midBtn.addEventListener("click", startCheckout);
-  if (finalBtn) finalBtn.addEventListener("click", startCheckout);
+  ctas.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", startCheckout);
+  });
 </script>
-
 
 </body>
 </html>
