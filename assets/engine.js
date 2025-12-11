@@ -242,18 +242,18 @@ btnSubmit.addEventListener("click", async () => {
   storeCurrentAnswer();
   saveState();
 
-  // ⭐ VALIDATION DISABLED FOR TESTING
-  // const allAnswered = QUESTIONS_REF.every(q => {
-  //   if (q.type === "group") {
-  //     return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
-  //   }
-  //   return STATE[q.id] && STATE[q.id].trim() !== "";
-  // });
-  //
-  // if (!allAnswered) {
-  //   alert("Please complete all questions before submitting.");
-  //   return;
-  // }
+  // ⭐ RE-ENABLE VALIDATION
+  const allAnswered = QUESTIONS_REF.every(q => {
+    if (q.type === "group") {
+      return q.fields.every(f => STATE[f.name] && STATE[f.name].trim() !== "");
+    }
+    return STATE[q.id] && STATE[q.id].trim() !== "";
+  });
+
+  if (!allAnswered) {
+    alert("Please complete all questions before submitting.");
+    return;
+  }
 
   const payload = preparePayload();
 
