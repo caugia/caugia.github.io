@@ -551,7 +551,7 @@
         </div>
         <div class="gi-landing-meta-item">
           <div class="gi-landing-meta-label">Time to complete</div>
-          <div class="gi-landing-meta-value">45 minutes</div>
+          <div class="gi-landing-meta-value">50 minutes</div>
         </div>
         <div class="gi-landing-meta-item">
           <div class="gi-landing-meta-label">Report delivered</div>
@@ -559,10 +559,30 @@
         </div>
       </div>
 
-      <div class="gi-landing-cta-row">
-        <a href="#checkout" class="cta">Get Your Intelligence Report (€949)</a>
-        <a href="gtm-assessment.html" class="cta cta--ghost">Start with free GTM Score</a>
-      </div>
+     <div class="gi-landing-cta-row">
+  <button id="stripeCheckoutBtnTop" class="cta">
+    Get Your Intelligence Report (€949)
+  </button>
+
+  <a href="gtm-assessment.html" class="cta cta--ghost">Start with free GTM Score</a>
+</div>
+
+<script>
+  document.getElementById("stripeCheckoutBtnTop").addEventListener("click", function () {
+    stripe.redirectToCheckout({
+      lineItems: [
+        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
+      ],
+      mode: "payment",
+      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
+      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
+    })
+    .then(function (result) {
+      if (result.error) alert(result.error.message);
+    });
+  });
+</script>
+
 
       <p class="gi-landing-note">
         A structured assessment and AI-assisted analysis. No calls or meetings required.
@@ -617,9 +637,45 @@
       </div>
 
       <!-- MID-PAGE CTA -->
-      <div class="gi-mid-cta">
-        <a href="#checkout" class="cta">Get Your Intelligence Report (€949)</a>
-      </div>
+   <div class="gi-mid-cta">
+  <button id="stripeCheckoutBtnMid" class="cta">
+    Get Your Intelligence Report (€949)
+  </button>
+</div>
+
+<script>
+  document.getElementById("stripeCheckoutBtnMid").addEventListener("click", function () {
+    stripe.redirectToCheckout({
+      lineItems: [
+        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
+      ],
+      mode: "payment",
+      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
+      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
+    })
+    .then(function (result) {
+      if (result.error) alert(result.error.message);
+    });
+  });
+</script>
+
+
+<script>
+  document.getElementById("stripeCheckoutBtnMid").addEventListener("click", function () {
+    stripe.redirectToCheckout({
+      lineItems: [
+        { price: "price_1ScoeHDZAazoTP0sGDgEKXP4", quantity: 1 }
+      ],
+      mode: "payment",
+      successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
+      cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html",
+    })
+    .then(function (result) {
+      if (result.error) alert(result.error.message);
+    });
+  });
+</script>
+
 
     </section>
 
@@ -926,24 +982,6 @@
           </p>
         </details>
 
-      </div>
-    </section>
-
-    <!-- =========================================
-         FINAL CTA
-    ========================================== -->
-    <section class="gi-cta-section">
-      <h2>Ready for complete GTM clarity</h2>
-      <p>
-        The GTM Intelligence Report transforms 265 questions into a structured diagnostic that 
-        reveals your real constraints, prioritises what matters most and gives your leadership 
-        team a clear path forward.
-      </p>
-
-      <a href="#checkout" class="cta">Get Your Intelligence Report (€949)</a>
-
-      <div class="gi-cta-secondary">
-        Or start with the free <a href="gtm-assessment.html">GTM Score</a>
       </div>
     </section>
 
