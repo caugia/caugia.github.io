@@ -264,7 +264,7 @@ btnSubmit.addEventListener("click", async () => {
   btnSubmit.disabled = true;
 
   try {
-    const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+    const response = await fetch("https://hook.eu1.make.com/hwjdscswmegf9jaiv9mvif59vejukbiv", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       testBtn.disabled = true;
 
       try {
-        const response = await fetch("https://hook.eu1.make.com/8o2bnhmywydljby2rsxrfhsynp4rzrx8", {
+        const response = await fetch("https://hook.eu1.make.com/hwjdscswmegf9jaiv9mvif59vejukbiv", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
