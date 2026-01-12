@@ -83,7 +83,6 @@
     }
     .btn-outline:hover{ background:#fff; border-color:var(--primary); transform:translateY(-1px); }
 
-    /* Header */
     header{
       position:sticky;
       top:0;
@@ -150,7 +149,6 @@
       padding:10px 10px 0;
     }
 
-    /* Hero */
     .hero{
       padding:64px 0 94px;
       display:grid;
@@ -191,7 +189,6 @@
       max-width:620px;
     }
 
-    /* Pillars */
     .pillars-card{
       margin-top:30px;
       background:#fff;
@@ -218,7 +215,6 @@
     .pillar-item{ display:flex; align-items:baseline; gap:10px; }
     .pillar-num{ width:22px; text-align:right; font-weight:900; color:#cbd5e1; font-size:0.84rem; }
 
-    /* Widget */
     .widget{
       background:#fff;
       border:1px solid var(--line);
@@ -264,7 +260,7 @@
     }
     .controls{ flex:1; }
     .chart-wrap{ flex:1; display:flex; justify-content:center; }
-    .chart-box{ width:220px; height:220px; }
+    .chart-box{ width:320px; height:320px; }
 
     .control{ margin-bottom:14px; }
     .control:last-child{ margin-bottom:0; }
@@ -310,7 +306,6 @@
       font-weight:800;
     }
 
-    /* Sections */
     .section-white{ background:#fff; }
     .section-dark{ background:#0f172a; color:#fff; }
     .section-dark h2{ color:#fff; }
@@ -436,6 +431,11 @@
       section{ padding:72px 0; }
       .hero h1{ font-size:2.55rem; }
       .pillar-grid{ grid-template-columns:1fr; }
+      .chart-box{ width:320px; height:320px; }
+    }
+
+    @media(max-width: 420px){
+      .chart-box{ width:280px; height:280px; }
     }
   </style>
 </head>
@@ -480,9 +480,11 @@
       <div>
         <span class="eyebrow">One GTM system for B2B SaaS</span>
         <h1>Stop revenue leakage with a clear operating system for revenue.</h1>
+
         <p class="hero-lead">
           Most GTM teams do not have a problem of effort. They have a problem of system. Work is happening everywhere, but it is not compounding.
         </p>
+
         <p class="hero-lead">
           Caugia Consulting helps founders and GTM leaders map the system, identify the primary constraint, and set a practical priority order that leadership can execute.
         </p>
@@ -499,7 +501,6 @@
         <div class="pillars-card">
           <h3>The 12 System Pillars</h3>
 
-          <!-- Pillars must remain EXACTLY these 12 items in this order. Do not rename. Do not reorder. -->
           <div class="pillar-grid">
             <div class="pillar-item"><span class="pillar-num">1</span> GTM Strategy & Leadership</div>
             <div class="pillar-item"><span class="pillar-num">2</span> Market Intelligence</div>
@@ -637,7 +638,6 @@
   </footer>
 
   <script>
-    // Mobile menu
     (function () {
       const btn = document.getElementById("menuBtn");
       const nav = document.getElementById("mobileNav");
@@ -649,7 +649,6 @@
         btn.setAttribute("aria-expanded", String(!open));
       });
 
-      // Close on click (mobile)
       nav.querySelectorAll("a").forEach(a => {
         a.addEventListener("click", () => {
           nav.style.display = "none";
@@ -658,68 +657,85 @@
       });
     })();
 
-    // Chart + sliders
     (function () {
-      function getEl(id){ return document.getElementById(id); }
+      function el(id){ return document.getElementById(id); }
 
-      const canvas = getEl("radarChart");
-      if (!canvas || typeof Chart === "undefined") return;
+      const canvas = el("radarChart");
+      if (!canvas) return;
 
-      const ctx = canvas.getContext("2d");
-
-      const myChart = new Chart(ctx, {
-        type: "radar",
-        data: {
-          labels: ["Guidance", "Resources", "Implementation", "Performance"],
-          datasets: [{
-            data: [45, 60, 85, 43],
-            backgroundColor: "rgba(0, 86, 179, 0.15)",
-            borderColor: "#0056b3",
-            pointBackgroundColor: "#0056b3",
-            borderWidth: 2,
-            pointRadius: 3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            r: {
-              angleLines: { color: "#e2e8f0" },
-              grid: { color: "#e2e8f0" },
-              pointLabels: { font: { size: 10, weight: "700" }, color: "#475569" },
-              suggestedMin: 0,
-              suggestedMax: 100,
-              ticks: { display: false }
-            }
-          },
-          plugins: { legend: { display: false } }
-        }
-      });
-
-      function updateChart() {
-        const g = parseInt(getEl("input-g").value, 10);
-        const r = parseInt(getEl("input-r").value, 10);
-        const i = parseInt(getEl("input-i").value, 10);
-        const p = parseInt(getEl("input-p").value, 10);
-
-        getEl("val-g").textContent = g;
-        getEl("val-r").textContent = r;
-        getEl("val-i").textContent = i;
-        getEl("val-p").textContent = p;
-
-        getEl("totalScore").textContent = Math.round((g + r + i + p) / 4);
-
-        myChart.data.datasets[0].data = [g, r, i, p];
-        myChart.update();
+      function waitForChartJs(cb){
+        if (typeof Chart !== "undefined") return cb();
+        let tries = 0;
+        const t = setInterval(() => {
+          tries += 1;
+          if (typeof Chart !== "undefined") {
+            clearInterval(t);
+            cb();
+          }
+          if (tries > 40) clearInterval(t);
+        }, 50);
       }
 
-      ["input-g","input-r","input-i","input-p"].forEach(id => {
-        const el = getEl(id);
-        if (el) el.addEventListener("input", updateChart);
-      });
+      waitForChartJs(() => {
+        const ctx = canvas.getContext("2d");
 
-      updateChart();
+        const chart = new Chart(ctx, {
+          type: "radar",
+          data: {
+            labels: ["G", "R", "I", "P"],
+            datasets: [{
+              data: [45, 60, 85, 43],
+              backgroundColor: "rgba(0, 86, 179, 0.15)",
+              borderColor: "#0056b3",
+              pointBackgroundColor: "#0056b3",
+              borderWidth: 2,
+              pointRadius: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              r: {
+                suggestedMin: 0,
+                suggestedMax: 100,
+                ticks: { display: false },
+                grid: { color: "#e2e8f0" },
+                angleLines: { color: "#e2e8f0" },
+                pointLabels: {
+                  font: { size: 16, weight: "900" },
+                  color: "#334155"
+                }
+              }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+
+        function update() {
+          const g = parseInt(el("input-g").value, 10);
+          const r = parseInt(el("input-r").value, 10);
+          const i = parseInt(el("input-i").value, 10);
+          const p = parseInt(el("input-p").value, 10);
+
+          el("val-g").textContent = g;
+          el("val-r").textContent = r;
+          el("val-i").textContent = i;
+          el("val-p").textContent = p;
+
+          el("totalScore").textContent = Math.round((g + r + i + p) / 4);
+
+          chart.data.datasets[0].data = [g, r, i, p];
+          chart.update();
+        }
+
+        ["input-g","input-r","input-i","input-p"].forEach(id => {
+          const node = el(id);
+          if (node) node.addEventListener("input", update);
+        });
+
+        update();
+      });
     })();
   </script>
 </body>
