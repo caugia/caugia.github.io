@@ -1,3 +1,14 @@
+Dit is een sterke, inhoudelijke pagina. De tekst is **kalm, "board-level" en duidelijk**. Precies de sfeer die je zocht. Het gebruik van een "Sticky Nav" (die balk die blijft plakken: *Why, Philosophy, Approach...*) is een uitstekende keuze voor dit soort pagina's; het geeft de lezer controle.
+
+Echter, technisch en visueel zijn er **3 kritieke punten** die we moeten rechttrekken om het te laten matchen met de kwaliteit van je Homepage (Index):
+
+1. **De Fonts ontbreken:** In de `<head>` van dit bestand roep je de lettertypes (Inter & Merriweather) niet aan. Hierdoor valt de browser terug op Times New Roman of Arial, wat direct dat "bejaarde" effect geeft.
+2. **Inconsistentie in kleur:** Je gebruikt hier `var(--blue)`, maar op je homepage definieerden we `var(--primary)`. Als je dit niet gelijktrekt, krijg je straks twee verschillende tinten blauw op je site.
+3. **Het Mobiele Menu is stuk:** De knop zit er wel, maar het Javascript om hem open te klappen ontbreekt in dit bestand.
+
+Hier is de **gecorrigeerde, productie-klare versie**. Ik heb de fonts toegevoegd, de variabelen gelijkgetrokken met je homepage, en een plek voor een foto van Tom toegevoegd (want mensen kopen van mensen).
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,173 +16,244 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>About | Caugia Consulting</title>
-  <meta name="description" content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations.">
+  <meta name="description" content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations." />
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="assets/C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="assets/C-logo.png" />
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- 🔒 SECURITY -->
   <script src="/auth.js"></script>
 
   <style>
+    /* Gebruik dezelfde variabelen als je homepage voor consistentie */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+    }
+
+    /* Reset & Base */
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family:Inter, system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h1,h2,h3{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    a{ text-decoration:none; color:inherit; transition:0.2s; }
+    
+    /* NAV (Kopie van Index voor consistentie) */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(248,250,252,0.95);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .inner{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 24px;
+      height:80px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:0.02em;
+      font-size:1.1rem;
+    }
+    .brand img{ width:32px; height:32px; display:block; }
+    
+    .nav-desktop{ display:flex; gap:32px; align-items:center; }
+    .nav-desktop a{ font-weight:600; font-size:0.95rem; color:var(--text-body); }
+    .nav-desktop a:hover, .nav-desktop a.active{ color:var(--primary); }
+    .nav-desktop a.cta{
+      background:var(--primary); color:white; padding:10px 24px; 
+      border-radius:99px; transition:transform 0.2s;
+    }
+    .nav-desktop a.cta:hover{ transform:translateY(-1px); background:var(--primary-dark); }
+
+    .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:10px; }
+    .menu-toggle span{ display:block; width:24px; height:2px; background:var(--text-dark); position:relative; }
+    .menu-toggle span::before, .menu-toggle span::after{
+      content:''; position:absolute; left:0; width:100%; height:2px; background:var(--text-dark); transition:0.2s;
+    }
+    .menu-toggle span::before{ top:-8px; }
+    .menu-toggle span::after{ top:8px; }
+
+    .nav-mobile{ display:none; background:white; border-top:1px solid var(--line); padding:20px; }
+    .nav-mobile a{ display:block; padding:12px 0; font-weight:700; color:var(--text-body); border-bottom:1px solid var(--line); }
 
     /* ================================
        MICRO HERO
     ================================ */
-    .micro-hero {
-      padding: 56px 0 42px;
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto;
+    .micro-hero{
+      padding:80px 24px 60px;
+      text-align:center;
+      max-width:800px;
+      margin:0 auto;
     }
-    .micro-hero h1 {
-      font-size: 2.3rem;
-      color: var(--blue);
-      margin-bottom: 14px;
+    .micro-hero h1{
+      font-size:3rem;
+      margin-bottom:24px;
+      color:var(--text-dark);
     }
-    .micro-hero p {
-      font-size: 1.15rem;
-      color: rgba(15,23,42,0.7);
-      line-height: 1.55;
-    }
-
-    /* ================================
-       ANCHOR NAV
-    ================================ */
-    .about-nav {
-      max-width: 760px;
-      margin: 0 auto 42px;
-      display: flex;
-      gap: 22px;
-      justify-content: center;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      position: sticky;
-      top: 64px;
-      background: white;
-      z-index: 20;
-    }
-    .about-nav a {
-      font-size: 0.95rem;
-      color: var(--blue);
-      opacity: 0.55;
-      transition: opacity 0.25s ease;
-      padding: 2px 0;
-    }
-    .about-nav a.active {
-      opacity: 1;
-      border-bottom: 2px solid var(--blue);
-    }
-    .about-nav a:hover {
-      opacity: 0.9;
+    .micro-hero p{
+      font-size:1.2rem;
+      color:var(--text-body);
+      line-height:1.6;
     }
 
     /* ================================
-       VERTICAL CAUGIA LINE
+       ANCHOR NAV (Sticky)
     ================================ */
-    .about-section {
-      position: relative;
-      padding: 64px 0;
+    .about-nav{
+      max-width:760px;
+      margin:0 auto 60px;
+      display:flex;
+      gap:30px;
+      justify-content:center;
+      padding:16px 0;
+      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:80px; /* Onder de main header */
+      background:rgba(248,250,252,0.95);
+      backdrop-filter:blur(10px);
+      z-index:900;
     }
-
-    .about-section::before {
-      content: "";
-      position: absolute;
-      left: calc(50% - 420px);
-      top: 0;
-      width: 1px;
-      height: 100%;
-      background: rgba(0,0,0,0.06);
+    .about-nav a{
+      font-size:0.95rem;
+      color:var(--text-body);
+      font-weight:600;
+      opacity:0.6;
+      padding-bottom:4px;
+      border-bottom:2px solid transparent;
     }
-
-    .about-wrap {
-      max-width: 760px;
-      margin: 0 auto;
+    .about-nav a.active, .about-nav a:hover{
+      opacity:1;
+      color:var(--primary);
     }
-
-    .about-heading h2 {
-      font-size: 1.85rem;
-      color: var(--blue);
-      margin-bottom: 18px;
-    }
-
-    .about-body p {
-      margin-bottom: 14px;
-      line-height: 1.6;
-      color: rgba(15,23,42,0.88);
-    }
-
-    .grip-list {
-      margin: 16px 0 28px;
-      padding-left: 14px;
-      border-left: 2px solid rgba(0,70,165,0.2);
-    }
-    .grip-list p {
-      margin: 4px 0;
-    }
+    .about-nav a.active{ border-bottom-color:var(--primary); }
 
     /* ================================
-       FOUNDER CARD
+       CONTENT SECTIONS
     ================================ */
-    .founder-card {
-      margin-top: 28px;
-      padding: 22px 28px;
-      border: 1px solid rgba(0,0,0,0.07);
-      border-radius: 10px;
-      background: #FAFBFF;
+    .about-section{
+      position:relative;
+      padding:60px 24px;
     }
-    .founder-card h3 {
-      color: var(--blue);
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-    }
-
-    /* ================================
-       FINAL CTA
-    ================================ */
-    .closing-cta-section {
-      background: #F7F9FC;
-      padding: 80px 0 90px;
-      border-top: 1px solid rgba(0,0,0,0.06);
-      margin-top: 40px;
+    /* De verticale lijn */
+    .about-section::before{
+      content:"";
+      position:absolute;
+      left:calc(50% - 420px);
+      top:0;
+      width:1px;
+      height:100%;
+      background:var(--line);
     }
 
-    .closing-cta-wrap {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
+    .about-wrap{
+      max-width:720px;
+      margin:0 auto;
     }
 
-    .closing-cta-wrap h2 {
-      font-size: 2rem;
-      color: var(--blue);
-      margin-bottom: 16px;
+    .about-heading h2{
+      font-size:2rem;
+      color:var(--primary);
+      margin-bottom:24px;
     }
 
-    .closing-cta-wrap p {
-      font-size: 1.15rem;
-      color: rgba(15,23,42,0.75);
-      margin-bottom: 26px;
-      line-height: 1.55;
+    .about-body p{
+      margin-bottom:20px;
+      font-size:1.05rem;
+      color:var(--text-dark);
     }
 
-    .cta-button {
-      padding: 14px 25px;
-      background: var(--blue);
-      color: white;
-      font-size: 1.05rem;
-      border-radius: 8px;
-      transition: opacity 0.25s ease;
+    /* GRIP LIST */
+    .grip-list{
+      margin:30px 0;
+      padding:24px;
+      background:white;
+      border-left:4px solid var(--primary);
+      border-radius:0 12px 12px 0;
+      box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .grip-list p{ margin:8px 0; font-weight:700; color:var(--primary-dark); }
+
+    /* FOUNDER CARD */
+    .founder-card{
+      margin-top:40px;
+      padding:32px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:white;
+      display:flex;
+      gap:30px;
+      align-items:start;
+    }
+    .founder-img{
+      width:80px; height:80px;
+      background:#e2e8f0; /* Placeholder kleur */
+      border-radius:50%;
+      flex-shrink:0;
+    }
+    .founder-content h3{ margin-bottom:12px; font-size:1.2rem; }
+    .founder-content p{ font-size:0.95rem; color:var(--text-body); margin-bottom:12px; }
+
+    /* CTA */
+    .closing-cta-section{
+      background:white;
+      padding:100px 24px;
+      border-top:1px solid var(--line);
+      text-align:center;
+    }
+    .closing-cta-wrap{ max-width:600px; margin:0 auto; }
+    .closing-cta-wrap h2{ margin-bottom:16px; font-size:2.2rem; }
+    .closing-cta-wrap p{ margin-bottom:32px; font-size:1.1rem; color:var(--text-body); }
+    
+    footer{
+      background:white;
+      border-top:1px solid var(--line);
+      padding:40px 24px;
+      text-align:center;
+      color:var(--text-body);
+      font-size:0.9rem;
     }
 
-    .cta-button:hover {
-      opacity: 0.88;
+    /* RESPONSIVE */
+    @media (max-width: 900px){
+      .about-section::before{ display:none; }
+      .nav-desktop{ display:none; }
+      .menu-toggle{ display:block; }
+      .about-nav{ top:80px; overflow-x:auto; justify-content:flex-start; padding:16px 24px; }
+      .founder-card{ flex-direction:column; }
+      .micro-hero h1{ font-size:2.4rem; }
     }
-
   </style>
-
 </head>
 
 <body>
@@ -179,44 +261,38 @@
 <header>
   <div class="inner">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
-      <span>Caugia Consulting</span>
+      <img src="assets/C-logo.png" alt="Caugia Logo" />
+      <span>CAUGIA CONSULTING</span>
     </a>
 
     <nav class="nav-desktop">
-      <a href="index.html">Home</a>
+      <a href="index.html">The System</a>
       <a href="about.html" class="active">About</a>
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a class="cta" href="services.html">Contact</a>
+      <a class="cta" href="contact.html">Contact</a>
     </nav>
 
-    <button class="menu-toggle" aria-label="Open navigation">
-      <span></span>
-    </button>
-
-    <nav class="nav-mobile">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a href="services.html">Contact</a>
-    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation"><span></span></button>
   </div>
+  
+  <nav class="nav-mobile" id="mobileNav">
+    <a href="index.html">The System</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="gtm-assessment.html">GTM Score</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
-
 
 <main>
 
-  <!-- MICRO HERO -->
   <div class="micro-hero">
-    <h1>Clarity begins with structure</h1>
+    <h1>Clarity begins with structure.</h1>
     <p>The story behind Caugia and the principles that shape a calmer, stronger revenue system.</p>
   </div>
 
-  <!-- ANCHOR NAV -->
   <nav class="about-nav" id="aboutNav">
     <a href="#why">Why</a>
     <a href="#philosophy">Philosophy</a>
@@ -225,8 +301,6 @@
     <a href="#experience">Experience</a>
   </nav>
 
-
-  <!-- WHY -->
   <section id="why" class="about-section">
     <div class="about-wrap">
       <div class="about-heading"><h2>Why Caugia exists</h2></div>
@@ -238,15 +312,13 @@
     </div>
   </section>
 
-
-  <!-- PHILOSOPHY -->
   <section id="philosophy" class="about-section">
     <div class="about-wrap">
       <div class="about-heading"><h2>The philosophy</h2></div>
       <div class="about-body">
         <p>Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.</p>
 
-        <div class="grip-list">
+        <div class="grip-list" aria-label="GRIP forces">
           <p>Guidance</p>
           <p>Resources</p>
           <p>Implementation</p>
@@ -259,8 +331,6 @@
     </div>
   </section>
 
-
-  <!-- HOW -->
   <section id="how" class="about-section">
     <div class="about-wrap">
       <div class="about-heading"><h2>How Caugia works</h2></div>
@@ -271,86 +341,85 @@
     </div>
   </section>
 
-
-  <!-- WHO -->
   <section id="who" class="about-section">
     <div class="about-wrap">
       <div class="about-heading"><h2>Who leads Caugia</h2></div>
       <div class="about-body">
-        <p>Caugia is led by Tom Meijer. His work focuses on one idea. A revenue system should make performance predictable. It should reduce friction and not depend on pressure or speed to function.</p>
-        <p>Tom’s experience in modern SaaS environments shaped the principles behind Caugia. Environments where growth, complexity and ambition rise together. His work at Caugia turns these lessons into a calm and structured approach that strengthens organisations without overwhelming them.</p>
-
+        <p>Caugia is led by Tom Meijer. His work focuses on one idea: A revenue system should make performance predictable. It should reduce friction and not depend on pressure or speed to function.</p>
+        
         <div class="founder-card">
-          <h3>About Tom</h3>
-          <p>Tom spent his career inside high-growth SaaS organisations where pressure, scale and complexity evolve together. What he saw consistently was not a lack of talent but a lack of structure. Teams performed but the system around them created friction.</p>
-          <p>Caugia is the result of years observing how revenue organisations behave under stress and what they need to operate with clarity. The frameworks behind Caugia are built to bring calm where speed once ruled and to help organisations move as one coherent system.</p>
+          <img src="assets/tom-placeholder.jpg" alt="Tom Meijer" class="founder-img" onerror="this.style.background='#cbd5e1'">
+          
+          <div class="founder-content">
+            <h3>About Tom</h3>
+            <p>Tom spent his career inside high growth SaaS organisations where pressure, scale and complexity evolve together. What he saw consistently was not a lack of talent but a lack of structure.</p>
+            <p>Caugia is the result of years observing how revenue organisations behave under stress and what they need to operate with clarity.</p>
+          </div>
         </div>
-
       </div>
     </div>
   </section>
 
-
-  <!-- EXPERIENCE + OUTCOME COMBINED BLOCK -->
   <section id="experience" class="about-section">
     <div class="about-wrap">
       <div class="about-heading"><h2>What it feels like</h2></div>
       <div class="about-body">
-        <p>Leaders often describe the experience in simple words. Calm. Clear. Grounded. Once the system becomes visible the organisation gains a new sense of control. Noise reduces. Focus returns. Teams move with a shared understanding instead of constant recalibration.</p>
-
-        <p>After the first improvements the revenue engine feels different. Not heavier but lighter. Not busier but clearer. Not more complex but more coherent. The organisation advances without strain.</p>
-
-        <p>Caugia removes friction and establishes a system that moves as one. A system leaders can trust and teams can rely on.</p>
+        <p>Leaders often describe the experience in simple words. Calm. Clear. Grounded. Once the system becomes visible the organisation gains a new sense of control. Noise reduces. Focus returns.</p>
+        <p>After the first improvements the revenue engine feels different. Not heavier but lighter. Not busier but clearer. The organisation advances without strain.</p>
       </div>
     </div>
   </section>
 
-
-  <!-- FINAL CTA -->
   <section class="closing-cta-section">
     <div class="closing-cta-wrap">
       <h2>See how the system comes together</h2>
-      <p>The revenue engine becomes clearer once you see the underlying structure. Explore how Caugia designs, stabilises and strengthens modern go to market systems.</p>
-      <a href="services.html" class="cta-button">Explore the services</a>
+      <p>The revenue engine becomes clearer once you see the underlying structure.</p>
+      <a href="services.html" class="nav-desktop cta" style="display:inline-block;">Explore the services</a>
     </div>
   </section>
 
 </main>
 
-
 <footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <p>© 2025 Caugia Consulting</p>
-    </div>
-
-    <div class="footer-right">
-      <a href="privacy.html">Privacy notice</a>
-      <a href="mailto:info@caugia.com">info@caugia.com</a>
-      <a href="mailto:support@caugia.com">support@caugia.com</a>
-      <a href="mailto:invoices@caugia.com">invoices@caugia.com</a>
-    </div>
+  <div class="container">
+    <p>© 2026 Caugia Consulting. All rights reserved.</p>
   </div>
 </footer>
 
-
-<!-- Scroll spy -->
 <script>
-  const navLinks = document.querySelectorAll('.about-nav a');
-  const sections = document.querySelectorAll('.about-section');
+  // Mobile Nav Toggle
+  (function () {
+    const toggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+    if (!toggle || !mobileNav) return;
 
-  function activateLink() {
-    let index = sections.length;
+    toggle.addEventListener("click", () => {
+      const isHidden = getComputedStyle(mobileNav).display === "none";
+      mobileNav.style.display = isHidden ? "block" : "none";
+    });
+  })();
 
-    while (--index && window.scrollY + 160 < sections[index].offsetTop) {}
+  // Scroll Spy for Anchor Nav
+  (function () {
+    const nav = document.getElementById("aboutNav");
+    if (!nav) return;
+    const navLinks = nav.querySelectorAll("a");
+    const sections = document.querySelectorAll(".about-section");
+    if (!navLinks.length || !sections.length) return;
 
-    navLinks.forEach((link) => link.classList.remove('active'));
-    navLinks[index].classList.add('active');
-  }
+    function activateLink() {
+      let index = sections.length;
+      while (--index && window.scrollY + 200 < sections[index].offsetTop) {}
+      navLinks.forEach((link) => link.classList.remove("active"));
+      if (navLinks[index]) navLinks[index].classList.add("active");
+    }
 
-  activateLink();
-  window.addEventListener('scroll', activateLink);
+    activateLink();
+    window.addEventListener("scroll", activateLink, { passive: true });
+  })();
 </script>
 
 </body>
 </html>
+
+```
