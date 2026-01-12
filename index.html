@@ -14,371 +14,242 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
+
+  <script src="/auth.js"></script>
+
   <style>
     /* =========================================
-       1. CORE VARIABLES & RESET
+       CRITICAL PAGE OVERRIDES (THE "SUPER" LAYOUT)
        ========================================= */
+    
     :root {
       --ink: #0b132b;        
       --ink-soft: #334155;   
       --blue: #0046A5;       
       --accent: #F36C21;     
-      --line: #e2e8f0;       
-      --bg: #ffffff;
       --bg-soft: #f8fafc;
-      
       --header-h: 80px;      
-      --max-w: 1200px;       
+      --max-w: 1240px;       
       --radius: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.6;
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* TYPOGRAPHY UNITY - GEEN WARBOEL MEER */
-    h1, h2, h3, h4 {
-      font-family: 'Merriweather', serif;
-      font-weight: 700;
-      color: var(--ink);
+    /* 1. TYPOGRAFIE: MERRIWEATHER VOOR AUTORITEIT */
+    h1, h2, h3, h4, .service-title-main, .gtm-v2-title {
+      font-family: 'Merriweather', serif !important;
       letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 16px; /* Standaard afstand */
-    }
-
-    h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 24px; }
-    h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
-    h3 { font-size: 1.25rem; margin-bottom: 12px; }
-    p  { margin-bottom: 24px; color: var(--ink-soft); font-size: 1.05rem; }
-    
-    a { text-decoration: none; color: inherit; transition: 0.2s; }
-    ul { list-style: none; }
-
-    /* BUTTONS */
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1rem;
-      background: var(--blue);
-      color: white;
-      border: 1px solid var(--blue);
-      white-space: nowrap;
-    }
-    .cta:hover { background: #003680; border-color: #003680; transform: translateY(-1px); }
-    
-    .cta--ghost {
-      background: transparent;
       color: var(--ink);
-      border-color: #cbd5e1;
+      line-height: 1.2;
     }
-    .cta--ghost:hover { border-color: var(--blue); color: var(--blue); background: white; }
+    
+    body, p, a, li, input, label {
+      font-family: 'Inter', sans-serif;
+    }
 
-    /* LAYOUT UTILS */
-    .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-    .section { padding: 96px 0; } 
-
-    /* =========================================
-       2. HEADER
-       ========================================= */
+    /* 2. HEADER FIX (Altijd bovenop, strak) */
     header {
-      height: var(--header-h);
-      border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
+      z-index: 999; /* Wint van alles */
       background: rgba(255,255,255,0.98);
       backdrop-filter: blur(12px);
-      z-index: 100;
+      border-bottom: 1px solid #e2e8f0;
+      height: 80px;
       display: flex;
       align-items: center;
     }
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
+    
+    /* Contact knop in Header - Blauw & Opvallend */
+    nav.nav-desktop a.cta {
+      background-color: var(--blue) !important;
+      color: white !important;
+      border: 1px solid var(--blue);
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.1rem; }
-    .brand img { height: 32px; width: auto; }
-    
-    .nav-desktop { display: flex; gap: 32px; align-items: center; }
-    .nav-desktop a { font-size: 0.95rem; font-weight: 500; color: var(--ink-soft); }
-    .nav-desktop a:hover, .nav-desktop a.active { color: var(--blue); }
-    
-    /* Contact knop in header - Blauw! */
-    .nav-desktop a.cta { 
-        padding: 10px 20px; 
-        font-size: 0.9rem; 
-        color: white !important; 
-        background: var(--blue);
+    nav.nav-desktop a.cta:hover {
+      background-color: #003680 !important;
+      transform: translateY(-1px);
     }
 
-    .menu-toggle { display: none; cursor: pointer; font-weight: 600; } 
-
-    /* =========================================
-       3. HERO SECTION (DEBIEL-PROOF LAYOUT)
-       ========================================= */
+    /* 3. HERO: ABOVE THE FOLD OPTIMIZATION */
+    /* We verwijderen excessieve padding van de global CSS */
     .home-hero {
-      padding-top: 80px;
-      padding-bottom: 80px;
-      overflow: visible; 
+      padding-top: 48px !important; /* Dichter op de header */
+      padding-bottom: 64px !important;
+      overflow: visible;
     }
 
-    .hero-grid {
+    .home-hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(420px, 1fr); 
-      gap: 64px;
+      /* 45% Tekst / 55% Visual voor perfecte balans op laptop */
+      grid-template-columns: 0.9fr 1.1fr; 
+      gap: 40px;
       align-items: center;
     }
 
-    /* Text Side */
-    .hero-copy {
-      z-index: 2; 
-      min-width: 0; 
+    /* Tekst Kolom */
+    .home-hero-copy {
+      z-index: 2;
+      min-width: 0;
     }
     
-    .kicker {
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--blue);
-      margin-bottom: 16px;
-      display: block;
+    .home-hero-copy h1 {
+        font-size: clamp(2.4rem, 4vw, 3.4rem); /* Iets compacter zodat het past */
+        line-height: 1.15;
+        font-weight: 900;
+        margin-bottom: 24px;
     }
 
     .hero-lead {
-      font-size: 1.15rem;
-      color: var(--ink-soft);
-      margin-bottom: 32px;
-      max-width: 540px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 32px;
+        color: var(--ink-soft);
     }
 
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-    .hero-note { font-size: 0.9rem; color: #94a3b8; }
-
-    /* Visual Side */
-    .hero-visual {
+    /* Visual Kolom: De "Layered" Look */
+    .home-hero-visual {
       position: relative;
-      display: flex; 
-      align-items: center;
-    }
-
-    /* HEALTH CARD */
-    .hero-health-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 32px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
-      position: relative;
-      z-index: 10;
-    }
-
-    .health-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 16px;
-    }
-    .health-score-big { font-size: 2.5rem; font-weight: 800; color: var(--blue); line-height: 1; }
-    .health-score-label { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
-
-    /* SLIDERS (RONDE BALK + GECENTREERDE KNOP) */
-    .health-rows { display: flex; flex-direction: column; gap: 20px; }
-    .health-row { display: grid; gap: 8px; }
-    
-    .slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; }
-    
-    input[type=range] {
-      -webkit-appearance: none;
+      justify-content: flex-end; /* Duw naar rechts */
+      height: 500px; /* Reserveer ruimte */
       width: 100%;
-      background: transparent;
-      margin: 0; 
-    }
-    input[type=range]:focus { outline: none; }
-
-    /* Webkit */
-    input[type=range]::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 6px; 
-      cursor: pointer;
-      background: #e2e8f0;
-      border-radius: 100px; /* Rond */
-    }
-    
-    input[type=range]::-webkit-slider-thumb {
-      height: 20px;
-      width: 20px;
-      border-radius: 50%;
-      background: var(--blue);
-      border: 4px solid white; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      cursor: pointer;
-      -webkit-appearance: none;
-      margin-top: -7px; /* EXACT MIDDEN */
     }
 
-    /* Firefox */
-    input[type=range]::-moz-range-track {
-      width: 100%;
-      height: 6px;
-      cursor: pointer;
-      background: #e2e8f0;
-      border-radius: 100px;
-    }
-    
-    input[type=range]::-moz-range-thumb {
-      height: 20px;
-      width: 20px;
-      border: 4px solid white;
-      border-radius: 50%;
-      background: var(--blue);
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    /* DIAMOND CARD (Floating behind) */
-    .hero-diamond-card {
+    /* HEALTH CARD (Links bovenop) */
+    .hero-health-card {
       position: absolute;
-      right: -60px; 
+      left: 0;
       top: 50%;
       transform: translateY(-50%);
       background: white;
-      border: 1px solid var(--line);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 28px;
+      width: 380px;
+      box-shadow: 0 20px 50px -10px rgba(0,0,0,0.12);
+      z-index: 10;
+    }
+
+    /* DIAMOND CARD (Rechts erachter) */
+    .hero-diamond-card {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(20px); /* Iets uit het midden */
+      background: white;
+      border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       padding: 24px;
-      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
-      width: 320px;
-      height: 380px; /* Vaste hoogte voor stabiliteit */
-      z-index: 1; 
+      width: 340px;
+      height: 420px;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+      z-index: 1; /* Achter de health card */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .diamond-canvas {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* 4. SLIDER STYLING (Rond & Gecentreerd) */
+    .health-rows { display: flex; flex-direction: column; gap: 18px; }
+    .slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+    
+    input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 0; }
+    input[type=range]:focus { outline: none; }
+
+    /* Track (Balk) */
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 8px; /* Dikker/Ronder */
+      border-radius: 100px;
+      background: #E2E8F0;
+      cursor: pointer;
+    }
+    input[type=range]::-moz-range-track {
+      height: 8px;
+      border-radius: 100px;
+      background: #E2E8F0;
+      cursor: pointer;
+    }
+    
+    /* Thumb (Knop) */
+    input[type=range]::-webkit-slider-thumb {
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 4px solid white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -7px; /* (8px track - 22px thumb) / 2 = -7px. EXACT MIDDEN. */
+    }
+    input[type=range]::-moz-range-thumb {
+      height: 22px;
+      width: 22px;
+      border: 4px solid white;
+      border-radius: 50%;
+      background: var(--blue);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* SVG ViewBox Fix */
-    .diamond-canvas svg {
-        width: 260px;
-        height: 260px;
-        overflow: visible; /* BELANGRIJK: Laat labels buiten de box toe */
-    }
+    /* 5. DIAMOND SVG & LABELS */
+    .diamond-canvas { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+    .diamond-canvas svg { width: 280px; height: 280px; overflow: visible; }
 
     .diamond-label {
       position: absolute;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--ink);
       background: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      padding: 6px 12px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--ink);
       white-space: nowrap;
       pointer-events: none;
+      z-index: 20;
     }
 
-    /* SLIMME POSITIONERING (GEEN DEBIEL GEDRAG) */
-    /* We positioneren relatief aan het center (50% 50%) en duwen dan weg */
-    
-    .lbl-top    { top: 10%; left: 50%; transform: translate(-50%, -100%); }
-    .lbl-bottom { bottom: 10%; left: 50%; transform: translate(-50%, 100%); }
-    
-    /* Implementation en Resources nu veilig */
-    .lbl-right  { right: 0; top: 50%; transform: translate(30%, -50%); } 
-    .lbl-left   { left: 0; top: 50%; transform: translate(-30%, -50%); }
+    /* Labels staan nu RUIM buiten de diamant */
+    .lbl-top    { top: 0; left: 50%; transform: translate(-50%, -10px); }
+    .lbl-bottom { bottom: 0; left: 50%; transform: translate(-50%, 10px); }
+    .lbl-left   { left: 0; top: 50%; transform: translate(-15px, -50%); }
+    .lbl-right  { right: 0; top: 50%; transform: translate(15px, -50%); }
 
-    /* =========================================
-       4. STORY SECTION (STRAKKE LAYOUT)
-       ========================================= */
-    .story-grid {
+    /* MODULES GRID (12 PILLARS) */
+    .home-modules-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .story-img img {
-      width: 100%;
-      border-radius: var(--radius);
-      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
-    }
-
-    .story-forces {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
       margin-top: 32px;
-      border-top: 1px solid var(--line);
-      padding-top: 24px;
     }
-
-    .force-item {
-      display: grid;
-      grid-template-columns: 140px 1fr; /* Strakke uitlijning */
-      margin-bottom: 16px;
-      align-items: baseline;
+    .home-module {
+      padding: 24px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      transition: 0.2s;
+      background: white;
+      display: block;
+      text-decoration: none;
     }
-    .force-label {
-      font-weight: 700;
-      color: var(--blue);
-      font-size: 0.95rem;
-    }
-    .force-desc {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-    }
-
-    /* 5. SERVICES & MODULES GRID */
-    .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
-    }
+    .home-module:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); }
     
-    .card {
-        background: white;
-        padding: 32px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        transition: 0.2s;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .card:hover { border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
-    
-    .card h3 { margin-bottom: 16px; font-size: 1.4rem; color: var(--blue); }
-    .card-footer { margin-top: auto; padding-top: 24px; }
+    .module-label { font-size: 0.8rem; text-transform: uppercase; color: #64748b; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.05em; }
+    .home-module h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--blue); font-family: 'Inter', sans-serif !important; font-weight: 700; }
+    .home-module p { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0; }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      .hero-grid, .story-grid, .grid-3 { grid-template-columns: 1fr; gap: 48px; }
-      .hero-diamond-card { position: relative; right: auto; top: auto; transform: none; margin-top: 32px; width: 100%; max-width: 420px; }
-      .diamond-canvas svg { width: 100%; height: auto; }
-      h1 { font-size: 2.5rem; }
-      .nav-desktop { display: none; }
+      .home-hero-grid { grid-template-columns: 1fr; gap: 64px; }
+      .home-hero-visual { height: auto; display: block; }
+      .hero-health-card { position: relative; width: 100%; max-width: 100%; transform: none; left: auto; top: auto; margin-bottom: 24px; }
+      .hero-diamond-card { position: relative; width: 100%; max-width: 100%; transform: none; right: auto; top: auto; height: 360px; }
+      .home-modules-grid { grid-template-columns: 1fr; }
+      nav.nav-desktop { display: none; }
       .menu-toggle { display: block; }
     }
   </style>
@@ -386,7 +257,7 @@
 <body>
 
 <header>
-  <div class="wrap header-inner">
+  <div class="wrap header-inner" style="display:flex; justify-content:space-between; width:100%; height:100%;">
     <a href="/" class="brand">
       <img src="assets/C-logo.png" alt="Logo">
       <span>Caugia Consulting</span>
@@ -408,30 +279,27 @@
 <main>
 
   <section class="home-hero">
-    <div class="wrap hero-grid">
+    <div class="wrap home-hero-grid">
       
-      <div class="hero-copy">
-        <span class="kicker">One GTM system for B2B SaaS</span>
-        <h1>Stop revenue leakage.<br>Build a predictable GTM system.</h1>
+      <div class="home-hero-copy">
+        <span class="kicker" style="color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:16px;">One GTM system for B2B SaaS</span>
+        <h1>Stop revenue leakage. Build a predictable GTM system.</h1>
         <p class="hero-lead">
           Misaligned teams leak value at every handoff. Caugia helps leaders identify structural constraints and build one calm operating system for predictable revenue.
         </p>
-        <p class="hero-lead">
-          Using the GTM Framework and GRIP Diamond, we turn scattered activity into a coherent model that leadership can trust.
-        </p>
-        <div class="hero-actions">
+        <div class="hero-actions" style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
           <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
           <a href="#diamond-section" class="cta cta--ghost">See how it works</a>
         </div>
-        <p class="hero-note">A structured self-assessment. No calls. No meetings.</p>
+        <p class="hero-note" style="font-size:0.9rem; color:#94a3b8;">A structured self-assessment. No calls. No meetings.</p>
       </div>
 
-      <div class="hero-visual">
+      <div class="home-hero-visual">
         
         <div class="hero-health-card">
           <div class="health-header">
             <div>
-              <h3>Your GRIP Health</h3>
+              <h3 style="margin:0; font-family:'Inter', sans-serif !important;">Your GRIP Health</h3>
               <span class="health-score-label">Current Maturity</span>
             </div>
             <div class="health-score-big" id="total-score">58</div>
@@ -473,17 +341,17 @@
         </div>
 
         <div class="hero-diamond-card" id="diamond-section">
-          <h3>The System Shape</h3>
+          <h3 style="margin-bottom:24px; font-family:'Inter', sans-serif !important; font-size:1.1rem; color:#64748b;">The System Shape</h3>
           <div class="diamond-canvas">
-            <svg viewBox="0 0 300 300">
-              <g fill="none" stroke="#e2e8f0" stroke-width="1">
-                <polygon points="150,50 250,150 150,250 50,150" /> <polygon points="150,83 217,150 150,217 83,150" /> <polygon points="150,117 183,150 150,183 117,150" /> </g>
+            <svg viewBox="0 0 400 400">
+              <g fill="none" stroke="#e2e8f0" stroke-width="1.5">
+                <polygon points="200,50 350,200 200,350 50,200" /> <polygon points="200,100 300,200 200,300 100,200" /> <polygon points="200,150 250,200 200,250 150,200" /> </g>
               <polygon id="diamond-poly" 
                        points="" 
                        fill="rgba(0, 70, 165, 0.15)" 
                        stroke="#0046A5" 
-                       stroke-width="2.5" />
-              <circle cx="150" cy="150" r="4" fill="#0046A5" />
+                       stroke-width="3" />
+              <circle cx="200" cy="200" r="5" fill="#0046A5" />
             </svg>
 
             <div class="diamond-label lbl-top">Guidance</div>
@@ -498,7 +366,7 @@
   </section>
 
   <section class="section" style="background: var(--bg-soft);">
-    <div class="wrap story-grid">
+    <div class="wrap" style="display:grid; grid-template-columns:1.2fr 1fr; gap:80px; align-items:center;">
       <div class="story-text">
         <h2>Clarity before speed.</h2>
         <p>
@@ -509,96 +377,187 @@
           The GRIP model shows your GTM motion through four forces. When these align, revenue becomes predictable.
         </p>
 
-        <div class="story-forces">
-          <div class="force-item">
-            <span class="force-label">Guidance</span>
-            <span class="force-desc">Clarity of strategy, narrative, and who you serve.</span>
+        <div class="story-forces" style="margin-top:32px; padding-top:24px; border-top:1px solid #e2e8f0;">
+          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:16px;">
+            <span style="font-weight:700; color:var(--blue);">Guidance</span>
+            <span style="color:var(--ink-soft);">Clarity of strategy, narrative, and who you serve.</span>
           </div>
-          <div class="force-item">
-            <span class="force-label">Resources</span>
-            <span class="force-desc">Product, pricing, tools, and the talent capacity.</span>
+          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:16px;">
+            <span style="font-weight:700; color:var(--blue);">Resources</span>
+            <span style="color:var(--ink-soft);">Product, pricing, tools, and the talent capacity.</span>
           </div>
-          <div class="force-item">
-            <span class="force-label">Implementation</span>
-            <span class="force-desc">How consistently work runs across pipeline and sales.</span>
+          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:16px;">
+            <span style="font-weight:700; color:var(--blue);">Implementation</span>
+            <span style="color:var(--ink-soft);">How consistently work runs across pipeline and sales.</span>
           </div>
-          <div class="force-item">
-            <span class="force-label">Performance</span>
-            <span class="force-desc">Signals and forecasting that leadership can trust.</span>
+          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:16px;">
+            <span style="font-weight:700; color:var(--blue);">Performance</span>
+            <span style="color:var(--ink-soft);">Signals and forecasting that leadership can trust.</span>
           </div>
         </div>
       </div>
 
       <div class="story-img">
-        <img src="assets/clarity-before-speed.webp" alt="GTM System Alignment">
+        <img src="assets/clarity-before-speed.webp" alt="GTM Alignment" style="width:100%; border-radius:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.1);">
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-        <h2 style="text-align: center; margin-bottom: 64px;">The GTM Clarity Path</h2>
-        <div class="grid-3">
-            <article class="card">
-                <h3>GTM Score</h3>
-                <p>A fast, structured self-assessment to establish a baseline.</p>
-                <div class="card-footer">
-                    <a href="gtm-assessment.html" class="cta">Start Free</a>
-                </div>
-            </article>
-            <article class="card">
-                <h3>Intelligence Report</h3>
-                <p>Deep diagnostic revealing your primary constraints and priorities.</p>
-                <div class="card-footer">
-                    <a href="gtm-intelligence-report.html" class="cta cta--ghost">See Example</a>
-                </div>
-            </article>
-            <article class="card">
-                <h3>GTM Partnership</h3>
-                <p>Ongoing quarterly reviews to keep your system aligned and healthy.</p>
-                <div class="card-footer">
-                    <a href="services.html" class="cta cta--ghost">Learn More</a>
-                </div>
-            </article>
-        </div>
+      <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
+        <h2>The GTM clarity path.</h2>
+        <p>Whether you need a quick diagnostic or a full reset, the path stays simple and repeatable. Start with the Score, deepen with the Report.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+        <article class="card" style="padding:32px; border:1px solid #e2e8f0; border-radius:16px; display:flex; flex-direction:column;">
+          <p style="text-transform:uppercase; font-size:0.8rem; font-weight:700; color:#64748b; margin-bottom:8px;">Step 1</p>
+          <h3 style="font-family:'Inter',sans-serif !important; color:var(--blue);">GTM Score</h3>
+          <p>A fast, structured self-assessment to establish a baseline in 10 minutes.</p>
+          <div style="margin-top:auto; padding-top:24px;">
+            <a href="gtm-assessment.html" class="cta">Start Free</a>
+          </div>
+        </article>
+
+        <article class="card" style="padding:32px; border:1px solid #e2e8f0; border-radius:16px; display:flex; flex-direction:column;">
+          <p style="text-transform:uppercase; font-size:0.8rem; font-weight:700; color:#64748b; margin-bottom:8px;">Step 2</p>
+          <h3 style="font-family:'Inter',sans-serif !important; color:var(--blue);">Intelligence Report</h3>
+          <p>Deep diagnostic revealing your primary constraints and priorities.</p>
+          <div style="margin-top:auto; padding-top:24px;">
+            <a href="gtm-intelligence-report.html" class="cta cta--ghost">See Example</a>
+          </div>
+        </article>
+
+        <article class="card" style="padding:32px; border:1px solid #e2e8f0; border-radius:16px; display:flex; flex-direction:column;">
+          <p style="text-transform:uppercase; font-size:0.8rem; font-weight:700; color:#64748b; margin-bottom:8px;">Step 3</p>
+          <h3 style="font-family:'Inter',sans-serif !important; color:var(--blue);">GTM Partnership</h3>
+          <p>Ongoing quarterly reviews to keep your system aligned and healthy.</p>
+          <div style="margin-top:auto; padding-top:24px;">
+            <a href="services.html" class="cta cta--ghost">Learn More</a>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
-  <footer style="border-top: 1px solid var(--line); padding: 48px 0;">
-      <div class="wrap" style="display:flex; justify-content: space-between; color: var(--ink-soft); font-size: 0.9rem;">
-          <div>© 2026 Caugia Consulting</div>
-          <div style="display:flex; gap: 24px;">
-              <a href="privacy.html">Privacy</a>
-              <a href="mailto:tom@caugia.com">Contact</a>
-          </div>
+  <section class="section" style="background: var(--bg-soft);">
+    <div class="wrap">
+      <div style="text-align:center; max-width:800px; margin:0 auto 48px;">
+        <h2>The 12 Structural Modules</h2>
+        <p>The GTM Intelligence Report diagnoses these 12 pillars. Each module is a structured deep dive available to support specific constraints.</p>
       </div>
-  </footer>
+
+      <div class="home-modules-grid">
+        
+        <a href="module-strategy.html" class="home-module">
+          <p class="module-label">Pillar 1 · Guidance</p>
+          <h3>GTM Strategy & Leadership</h3>
+          <p>Direction, alignment, and decision discipline.</p>
+        </a>
+        <a href="module-market.html" class="home-module">
+          <p class="module-label">Pillar 2 · Guidance</p>
+          <h3>Market Intelligence</h3>
+          <p>Segments, buyer reality, and positioning.</p>
+        </a>
+        <a href="module-product-marketing.html" class="home-module">
+          <p class="module-label">Pillar 3 · Guidance</p>
+          <h3>Product Marketing</h3>
+          <p>Messaging, value props, and launch cadence.</p>
+        </a>
+
+        <a href="module-demand.html" class="home-module">
+          <p class="module-label">Pillar 4 · Implementation</p>
+          <h3>Demand Generation</h3>
+          <p>Programs that create qualified pipeline.</p>
+        </a>
+        <a href="module-sdr.html" class="home-module">
+          <p class="module-label">Pillar 5 · Implementation</p>
+          <h3>Sales Development (SDR)</h3>
+          <p>Outbound motion and lead qualification.</p>
+        </a>
+        <a href="module-sales.html" class="home-module">
+          <p class="module-label">Pillar 6 · Implementation</p>
+          <h3>Sales Execution</h3>
+          <p>Deal management and closing consistency.</p>
+        </a>
+
+        <a href="module-success.html" class="home-module">
+          <p class="module-label">Pillar 7 · Performance</p>
+          <h3>Customer Success & Retention</h3>
+          <p>Onboarding and value realization.</p>
+        </a>
+        <a href="module-expansion.html" class="home-module">
+          <p class="module-label">Pillar 8 · Performance</p>
+          <h3>Account Management & Expansion</h3>
+          <p>Cross-sell, up-sell, and renewal health.</p>
+        </a>
+        <a href="module-revops.html" class="home-module">
+          <p class="module-label">Pillar 9 · Performance</p>
+          <h3>Revenue Operations</h3>
+          <p>Infrastructure, data, and process flow.</p>
+        </a>
+
+        <a href="module-enablement.html" class="home-module">
+          <p class="module-label">Pillar 10 · Resources</p>
+          <h3>Enablement</h3>
+          <p>Training, content, and sales readiness.</p>
+        </a>
+        <a href="module-performance.html" class="home-module">
+          <p class="module-label">Pillar 11 · Resources</p>
+          <h3>Performance Management</h3>
+          <p>KPIs, goals, and feedback loops.</p>
+        </a>
+        <a href="module-pricing.html" class="home-module">
+          <p class="module-label">Pillar 12 · Resources</p>
+          <h3>Pricing & Packaging</h3>
+          <p>Monetization logic and model fit.</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
 </main>
 
+<footer style="border-top: 1px solid var(--line); padding: 48px 0; background: white;">
+  <div class="wrap" style="display:flex; justify-content: space-between; color: var(--ink-soft); font-size: 0.9rem;">
+      <div>© 2026 Caugia Consulting</div>
+      <div style="display:flex; gap: 24px;">
+          <a href="privacy.html">Privacy</a>
+          <a href="mailto:tom@caugia.com">Contact</a>
+      </div>
+  </div>
+</footer>
+
 <script>
   function updateDiamond() {
+    // Haal waarden op van de juiste IDs (input-*)
     const g = parseInt(document.getElementById('input-guidance').value);
     const r = parseInt(document.getElementById('input-resources').value);
     const i = parseInt(document.getElementById('input-implementation').value);
     const p = parseInt(document.getElementById('input-performance').value);
 
-    // Update numbers
+    // Update de tekst getallen (val-*)
     document.getElementById('val-guidance').innerText = g;
     document.getElementById('val-resources').innerText = r;
     document.getElementById('val-implementation').innerText = i;
     document.getElementById('val-performance').innerText = p;
     document.getElementById('total-score').innerText = Math.round((g+r+i+p)/4);
 
-    // Calculate Polygon Points
-    // Center 150,150. Max Radius 100.
+    // SVG Berekening
+    // Center is nu 200,200 (vanwege viewBox 0 0 400 400)
+    // Max radius (100%) = 150px
     
-    const py_g = 150 - g;
-    const px_i = 150 + i;
-    const py_p = 150 + p;
-    const px_r = 150 - r;
+    const center = 200;
+    const maxR = 150;
 
-    const points = `150,${py_g} ${px_i},150 150,${py_p} ${px_r},150`;
+    const py_g = center - (g / 100 * maxR); // Top
+    const px_i = center + (i / 100 * maxR); // Right
+    const py_p = center + (p / 100 * maxR); // Bottom
+    const px_r = center - (r / 100 * maxR); // Left
+
+    const points = `200,${py_g} ${px_i},200 200,${py_p} ${px_r},200`;
     document.getElementById('diamond-poly').setAttribute('points', points);
   }
 
