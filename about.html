@@ -7,17 +7,17 @@
   <title>About | Caugia Consulting</title>
   <meta name="description" content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations." />
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512" />
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/C-logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
+  <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="/auth.js"></script>
 
   <style>
-    /* Gebruik dezelfde variabelen als je homepage voor consistentie */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,387 +26,528 @@
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 6px 14px rgba(15,23,42,0.06);
+      --shadow-lg:0 22px 40px rgba(15,23,42,0.12);
+      --max:1200px;
     }
 
-    /* Reset & Base */
     *{ box-sizing:border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; }
     body{
-      font-family:Inter, system-ui, -apple-system, sans-serif;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       background:var(--bg);
       color:var(--text-dark);
       line-height:1.6;
       -webkit-font-smoothing:antialiased;
     }
 
-    h1,h2,h3{
+    h1,h2,h3,h4{
       font-family:Merriweather, serif;
       color:var(--text-dark);
       font-weight:900;
       letter-spacing:-0.02em;
     }
 
-    a{ text-decoration:none; color:inherit; transition:0.2s; }
-    
-    /* NAV (Kopie van Index voor consistentie) */
+    p{ color:var(--text-body); }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:84px 0; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:13px 30px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:0.98rem;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition:transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      white-space:nowrap;
+    }
+    .btn-primary{
+      background:var(--primary-dark);
+      color:var(--white);
+      box-shadow:0 10px 22px rgba(0,86,179,0.20);
+    }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{
+      background:transparent;
+      color:var(--primary);
+      border-color:var(--line);
+    }
+    .btn-outline:hover{
+      background:var(--white);
+      border-color:var(--primary);
+      transform:translateY(-1px);
+    }
+
     header{
       position:sticky;
       top:0;
       z-index:1000;
-      background:rgba(248,250,252,0.95);
+      background:rgba(248,250,252,0.92);
       backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
+      border-bottom:1px solid rgba(15,23,42,0.06);
     }
-    .inner{
-      max-width:1200px;
-      margin:0 auto;
-      padding:0 24px;
-      height:80px;
+
+    .nav{
+      height:84px;
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:18px;
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
       font-weight:900;
       letter-spacing:0.02em;
-      font-size:1.1rem;
     }
-    .brand img{ width:32px; height:32px; display:block; }
-    
-    .nav-desktop{ display:flex; gap:32px; align-items:center; }
-    .nav-desktop a{ font-weight:600; font-size:0.95rem; color:var(--text-body); }
-    .nav-desktop a:hover, .nav-desktop a.active{ color:var(--primary); }
-    .nav-desktop a.cta{
-      background:var(--primary); color:white; padding:10px 24px; 
-      border-radius:99px; transition:transform 0.2s;
-    }
-    .nav-desktop a.cta:hover{ transform:translateY(-1px); background:var(--primary-dark); }
+    .brand img{ width:34px; height:34px; display:block; }
 
-    .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:10px; }
-    .menu-toggle span{ display:block; width:24px; height:2px; background:var(--text-dark); position:relative; }
-    .menu-toggle span::before, .menu-toggle span::after{
-      content:''; position:absolute; left:0; width:100%; height:2px; background:var(--text-dark); transition:0.2s;
-    }
-    .menu-toggle span::before{ top:-8px; }
-    .menu-toggle span::after{ top:8px; }
-
-    .nav-mobile{ display:none; background:white; border-top:1px solid var(--line); padding:20px; }
-    .nav-mobile a{ display:block; padding:12px 0; font-weight:700; color:var(--text-body); border-bottom:1px solid var(--line); }
-
-    /* ================================
-       MICRO HERO
-    ================================ */
-    .micro-hero{
-      padding:80px 24px 60px;
-      text-align:center;
-      max-width:800px;
-      margin:0 auto;
-    }
-    .micro-hero h1{
-      font-size:3rem;
-      margin-bottom:24px;
-      color:var(--text-dark);
-    }
-    .micro-hero p{
-      font-size:1.2rem;
-      color:var(--text-body);
-      line-height:1.6;
-    }
-
-    /* ================================
-       ANCHOR NAV (Sticky)
-    ================================ */
-    .about-nav{
-      max-width:760px;
-      margin:0 auto 60px;
+    .nav-links{
       display:flex;
-      gap:30px;
-      justify-content:center;
-      padding:16px 0;
-      border-bottom:1px solid var(--line);
-      position:sticky;
-      top:80px; /* Onder de main header */
-      background:rgba(248,250,252,0.95);
-      backdrop-filter:blur(10px);
-      z-index:900;
+      gap:28px;
+      align-items:center;
     }
-    .about-nav a{
+    .nav-links a{
+      color:var(--text-body);
+      font-weight:800;
       font-size:0.95rem;
-      color:var(--text-body);
-      font-weight:600;
-      opacity:0.6;
-      padding-bottom:4px;
-      border-bottom:2px solid transparent;
+      padding:10px 10px;
+      border-radius:12px;
+      transition:background 0.15s ease, color 0.15s ease;
     }
-    .about-nav a.active, .about-nav a:hover{
-      opacity:1;
+    .nav-links a:hover{
+      background:rgba(255,255,255,0.70);
       color:var(--primary);
     }
-    .about-nav a.active{ border-bottom-color:var(--primary); }
-
-    /* ================================
-       CONTENT SECTIONS
-    ================================ */
-    .about-section{
-      position:relative;
-      padding:60px 24px;
-    }
-    /* De verticale lijn */
-    .about-section::before{
-      content:"";
-      position:absolute;
-      left:calc(50% - 420px);
-      top:0;
-      width:1px;
-      height:100%;
-      background:var(--line);
-    }
-
-    .about-wrap{
-      max-width:720px;
-      margin:0 auto;
-    }
-
-    .about-heading h2{
-      font-size:2rem;
+    .nav-links a.active{
       color:var(--primary);
-      margin-bottom:24px;
+      background:rgba(255,255,255,0.70);
     }
 
-    .about-body p{
-      margin-bottom:20px;
-      font-size:1.05rem;
-      color:var(--text-dark);
-    }
-
-    /* GRIP LIST */
-    .grip-list{
-      margin:30px 0;
-      padding:24px;
-      background:white;
-      border-left:4px solid var(--primary);
-      border-radius:0 12px 12px 0;
-      box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);
-    }
-    .grip-list p{ margin:8px 0; font-weight:700; color:var(--primary-dark); }
-
-    /* FOUNDER CARD */
-    .founder-card{
-      margin-top:40px;
-      padding:32px;
+    .menu-toggle{
+      display:none;
       border:1px solid var(--line);
-      border-radius:16px;
-      background:white;
-      display:flex;
-      gap:30px;
-      align-items:start;
+      background:var(--white);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      cursor:pointer;
     }
-    .founder-img{
-      width:80px; height:80px;
-      background:#e2e8f0; /* Placeholder kleur */
-      border-radius:50%;
-      flex-shrink:0;
-    }
-    .founder-content h3{ margin-bottom:12px; font-size:1.2rem; }
-    .founder-content p{ font-size:0.95rem; color:var(--text-body); margin-bottom:12px; }
 
-    /* CTA */
-    .closing-cta-section{
-      background:white;
-      padding:100px 24px;
-      border-top:1px solid var(--line);
+    .mobile-nav{
+      display:none;
+      border-top:1px solid rgba(15,23,42,0.06);
+      padding:14px 0 18px;
+    }
+    .mobile-nav a{
+      display:block;
+      padding:12px 10px;
+      border-radius:12px;
+      font-weight:900;
+      color:var(--text-body);
+    }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:10px 10px 0;
+    }
+
+    /* About page layout */
+    .hero{
+      padding:78px 0 64px;
+    }
+
+    .eyebrow{
+      display:block;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      font-size:0.85rem;
+      color:var(--primary);
+      font-weight:900;
+      margin-bottom:14px;
       text-align:center;
     }
-    .closing-cta-wrap{ max-width:600px; margin:0 auto; }
-    .closing-cta-wrap h2{ margin-bottom:16px; font-size:2.2rem; }
-    .closing-cta-wrap p{ margin-bottom:32px; font-size:1.1rem; color:var(--text-body); }
-    
-    footer{
-      background:white;
-      border-top:1px solid var(--line);
-      padding:40px 24px;
+
+    .hero h1{
+      font-size:3.0rem;
+      line-height:1.12;
+      margin-bottom:18px;
+      text-align:center;
+    }
+
+    .hero p{
+      max-width:860px;
+      margin:0 auto;
+      font-size:1.16rem;
       text-align:center;
       color:var(--text-body);
-      font-size:0.9rem;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px){
-      .about-section::before{ display:none; }
-      .nav-desktop{ display:none; }
-      .menu-toggle{ display:block; }
-      .about-nav{ top:80px; overflow-x:auto; justify-content:flex-start; padding:16px 24px; }
-      .founder-card{ flex-direction:column; }
-      .micro-hero h1{ font-size:2.4rem; }
+    .hero-actions{
+      margin-top:26px;
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+    }
+
+    .card{
+      background:var(--white);
+      border:1px solid rgba(15,23,42,0.06);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-sm);
+      padding:30px;
+      min-width:0;
+    }
+
+    .card h2{
+      font-size:1.75rem;
+      margin-bottom:12px;
+    }
+
+    .card .lead{
+      font-size:1.05rem;
+      color:rgba(15,23,42,0.82);
+      margin-bottom:0;
+    }
+
+    .subtle{
+      margin-top:14px;
+      color:var(--text-body);
+    }
+
+    .grip-block{
+      margin-top:18px;
+      border:1px solid rgba(15,23,42,0.06);
+      background:#fbfcff;
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .grip-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .grip-item{
+      background:var(--white);
+      border:1px solid rgba(15,23,42,0.06);
+      border-radius:14px;
+      padding:14px 14px;
+      box-shadow:0 6px 14px rgba(15,23,42,0.04);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      color:#334155;
+    }
+
+    .grip-item span{
+      color:#94a3b8;
+      font-weight:900;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .founder{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:22px;
+      align-items:start;
+      margin-top:18px;
+    }
+
+    .avatar{
+      width:120px;
+      height:120px;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(0,86,179,0.10), rgba(0,86,179,0.02));
+      border:1px solid rgba(15,23,42,0.08);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#94a3b8;
+      font-weight:900;
+      letter-spacing:0.02em;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .founder h3{
+      font-family:Inter, sans-serif;
+      letter-spacing:0;
+      font-weight:900;
+      font-size:1.15rem;
+      margin-bottom:8px;
+    }
+
+    .founder p{
+      margin-bottom:12px;
+      color:var(--text-body);
+      font-size:1.02rem;
+    }
+
+    .cta-band{
+      background:#0f172a;
+      color:var(--white);
+    }
+    .cta-band h2{ color:var(--white); }
+    .cta-band p{ color:#a7b4c6; }
+
+    .cta-inner{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:34px;
+      align-items:center;
+    }
+
+    footer{
+      background:var(--white);
+      border-top:1px solid var(--line);
+      padding:44px 0;
+      text-align:center;
+      color:#94a3b8;
+      font-size:0.95rem;
+    }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .menu-toggle{ display:inline-flex; }
+      .about-grid{ grid-template-columns:1fr; }
+      .cta-inner{ grid-template-columns:1fr; }
+      .founder{ grid-template-columns:1fr; }
+      .avatar{ width:100%; height:220px; border-radius:18px; }
+      section{ padding:74px 0; }
+      .hero h1{ font-size:2.55rem; }
+    }
+
+    @media (max-width: 520px){
+      .hero{ padding:64px 0 54px; }
+      .card{ padding:26px; }
+      .grip-grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
 
 <body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Caugia Consulting Home">
+        <img src="assets/C-logo.png" alt="Caugia logo" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
 
-<header>
-  <div class="inner">
-    <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Logo" />
-      <span>CAUGIA CONSULTING</span>
-    </a>
+      <ul class="nav-links" aria-label="Primary navigation">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
 
-    <nav class="nav-desktop">
-      <a href="index.html">The System</a>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+      </div>
+    </div>
+
+    <div class="container mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
       <a href="about.html" class="active">About</a>
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a class="cta" href="contact.html">Contact</a>
-    </nav>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation"><span></span></button>
-  </div>
-  
-  <nav class="nav-mobile" id="mobileNav">
-    <a href="index.html">The System</a>
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="gtm-assessment.html">GTM Score</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
-
-<main>
-
-  <div class="micro-hero">
-    <h1>Clarity begins with structure.</h1>
-    <p>The story behind Caugia and the principles that shape a calmer, stronger revenue system.</p>
-  </div>
-
-  <nav class="about-nav" id="aboutNav">
-    <a href="#why">Why</a>
-    <a href="#philosophy">Philosophy</a>
-    <a href="#how">Approach</a>
-    <a href="#who">Founder</a>
-    <a href="#experience">Experience</a>
-  </nav>
-
-  <section id="why" class="about-section">
-    <div class="about-wrap">
-      <div class="about-heading"><h2>Why Caugia exists</h2></div>
-      <div class="about-body">
-        <p>Many revenue organisations work hard but operate in systems that were never intentionally designed. Processes grow organically. Tools accumulate. Teams specialise. Each part functions yet the overall engine becomes heavier each quarter.</p>
-        <p>In these environments effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Results depend on individual heroics instead of a system that carries the organisation forward.</p>
-        <p>Caugia was created to offer a calmer alternative. A way to read the entire revenue engine as one structure and replace scattered motion with a coherent operating model that restores clarity, alignment and control.</p>
+      <div class="mobile-cta">
+        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+        <a href="contact.html" class="btn btn-outline">Contact</a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section id="philosophy" class="about-section">
-    <div class="about-wrap">
-      <div class="about-heading"><h2>The philosophy</h2></div>
-      <div class="about-body">
-        <p>Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.</p>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">About Caugia</span>
+        <h1>Clarity begins with structure.</h1>
+        <p>
+          Caugia exists to bring calm, structure and clarity to modern revenue organisations.
+          The goal is simple. Make the system visible, align leadership decisions, and reduce the friction that turns growth into strain.
+        </p>
 
-        <div class="grip-list" aria-label="GRIP forces">
-          <p>Guidance</p>
-          <p>Resources</p>
-          <p>Implementation</p>
-          <p>Performance</p>
+        <div class="hero-actions">
+          <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+          <a href="services.html" class="btn btn-outline">Explore the services</a>
         </div>
-
-        <p>When these forces align teams move with intention. When they drift apart the organisation compensates with effort. Meetings expand. Priorities shift. Progress slows under the weight of good intentions.</p>
-        <p>The GRIP Diamond makes this balance visible. It reveals where tension accumulates and why the system feels heavy, giving leaders a clear view of what to strengthen now and what to protect for later.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="how" class="about-section">
-    <div class="about-wrap">
-      <div class="about-heading"><h2>How Caugia works</h2></div>
-      <div class="about-body">
-        <p>Caugia removes noise rather than adding more of it. The work begins by creating one shared model of the revenue engine. This model becomes the reference point for decisions, priorities and execution across all teams.</p>
-        <p>Once the system is visible leaders gain space to think clearly again. Decisions quieten. Priorities stabilise. The organisation moves with less urgency and more coordination. Energy shifts from reacting to designing.</p>
-      </div>
-    </div>
-  </section>
+    <section>
+      <div class="container about-grid" aria-label="About sections">
+        <article class="card" id="why">
+          <h2>Why Caugia exists</h2>
+          <p class="lead">
+            Many revenue organisations work hard inside systems that were never intentionally designed.
+            Processes grow organically, tools accumulate, teams specialise, and the engine gets heavier each quarter.
+          </p>
+          <p class="subtle">
+            In that environment, effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction.
+            Results depend on heroics instead of a system that carries the organisation forward.
+          </p>
+          <p class="subtle">
+            Caugia offers a calmer alternative. One coherent operating model that restores clarity, alignment and control.
+          </p>
+        </article>
 
-  <section id="who" class="about-section">
-    <div class="about-wrap">
-      <div class="about-heading"><h2>Who leads Caugia</h2></div>
-      <div class="about-body">
-        <p>Caugia is led by Tom Meijer. His work focuses on one idea: A revenue system should make performance predictable. It should reduce friction and not depend on pressure or speed to function.</p>
-        
-        <div class="founder-card">
-          <img src="assets/tom-placeholder.jpg" alt="Tom Meijer" class="founder-img" onerror="this.style.background='#cbd5e1'">
-          
-          <div class="founder-content">
-            <h3>About Tom</h3>
-            <p>Tom spent his career inside high growth SaaS organisations where pressure, scale and complexity evolve together. What he saw consistently was not a lack of talent but a lack of structure.</p>
-            <p>Caugia is the result of years observing how revenue organisations behave under stress and what they need to operate with clarity.</p>
+        <article class="card" id="philosophy">
+          <h2>The philosophy</h2>
+          <p class="lead">
+            Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.
+          </p>
+
+          <div class="grip-block" aria-label="GRIP forces">
+            <div style="font-family:Inter, sans-serif; font-weight:900; color:#334155;">The GRIP model</div>
+            <div class="grip-grid">
+              <div class="grip-item">Guidance <span>G</span></div>
+              <div class="grip-item">Resources <span>R</span></div>
+              <div class="grip-item">Implementation <span>I</span></div>
+              <div class="grip-item">Performance <span>P</span></div>
+            </div>
           </div>
+
+          <p class="subtle">
+            When these forces align, teams move with intention. When they drift, the organisation compensates with effort.
+            Meetings expand, priorities shift, and progress slows under the weight of good intentions.
+          </p>
+        </article>
+
+        <article class="card" id="approach">
+          <h2>How Caugia works</h2>
+          <p class="lead">
+            Caugia removes noise rather than adding more of it.
+            The work begins by creating one shared model of the revenue engine that becomes the reference point for decisions and priorities.
+          </p>
+          <p class="subtle">
+            Once the system is visible, leaders regain space to think clearly.
+            Decisions quieten, priorities stabilise, and execution becomes coordinated without constant recalibration.
+          </p>
+        </article>
+
+        <article class="card" id="founder">
+          <h2>Who leads Caugia</h2>
+          <p class="lead">
+            Caugia is led by Tom Meijer. The focus is one idea.
+            A revenue system should make performance predictable. It should reduce friction and not depend on pressure to function.
+          </p>
+
+          <div class="founder">
+            <div class="avatar" aria-label="Founder image">
+              <img src="assets/tom.jpg" alt="Tom Meijer" onerror="this.remove(); this.parentNode.textContent='TM';" />
+            </div>
+            <div>
+              <h3>About Tom</h3>
+              <p>
+                Tom spent his career inside high growth SaaS organisations where pressure, scale and complexity evolve together.
+                What he saw consistently was not a lack of talent but a lack of structure.
+              </p>
+              <p>
+                Caugia is the result of years observing how revenue organisations behave under stress and what they need to operate with clarity.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" id="experience">
+          <h2>What it feels like</h2>
+          <p class="lead">
+            Leaders often describe the experience in simple words. Calm. Clear. Grounded.
+            Once the system becomes visible, the organisation gains a new sense of control.
+          </p>
+          <p class="subtle">
+            Noise reduces, focus returns, and teams move with shared understanding.
+            The engine feels lighter, not busier. Clearer, not more complex.
+          </p>
+        </article>
+
+        <article class="card" aria-label="Next step">
+          <h2>Start with visibility</h2>
+          <p class="lead">
+            If you want a quick, structured view of where the system is strong and where it leaks, start with the GTM Score.
+          </p>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:18px;">
+            <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+            <a href="contact.html" class="btn btn-outline">Contact</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <div>
+          <span class="eyebrow" style="color:#60a5fa;">Next</span>
+          <h2>See how the system comes together</h2>
+          <p>
+            The revenue engine becomes clearer once you see the underlying structure.
+            Explore how Caugia designs, stabilises and strengthens modern go to market systems.
+          </p>
+        </div>
+        <div style="display:flex; gap:14px; justify-content:flex-start; flex-wrap:wrap;">
+          <a href="services.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the services</a>
+          <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#ffffff;">Free GTM Score</a>
         </div>
       </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
     </div>
-  </section>
+  </footer>
 
-  <section id="experience" class="about-section">
-    <div class="about-wrap">
-      <div class="about-heading"><h2>What it feels like</h2></div>
-      <div class="about-body">
-        <p>Leaders often describe the experience in simple words. Calm. Clear. Grounded. Once the system becomes visible the organisation gains a new sense of control. Noise reduces. Focus returns.</p>
-        <p>After the first improvements the revenue engine feels different. Not heavier but lighter. Not busier but clearer. The organisation advances without strain.</p>
-      </div>
-    </div>
-  </section>
+  <script>
+    (function () {
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (!toggle || !mobileNav) return;
 
-  <section class="closing-cta-section">
-    <div class="closing-cta-wrap">
-      <h2>See how the system comes together</h2>
-      <p>The revenue engine becomes clearer once you see the underlying structure.</p>
-      <a href="services.html" class="nav-desktop cta" style="display:inline-block;">Explore the services</a>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
-  </div>
-</footer>
-
-<script>
-  // Mobile Nav Toggle
-  (function () {
-    const toggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-    if (!toggle || !mobileNav) return;
-
-    toggle.addEventListener("click", () => {
-      const isHidden = getComputedStyle(mobileNav).display === "none";
-      mobileNav.style.display = isHidden ? "block" : "none";
-    });
-  })();
-
-  // Scroll Spy for Anchor Nav
-  (function () {
-    const nav = document.getElementById("aboutNav");
-    if (!nav) return;
-    const navLinks = nav.querySelectorAll("a");
-    const sections = document.querySelectorAll(".about-section");
-    if (!navLinks.length || !sections.length) return;
-
-    function activateLink() {
-      let index = sections.length;
-      while (--index && window.scrollY + 200 < sections[index].offsetTop) {}
-      navLinks.forEach((link) => link.classList.remove("active"));
-      if (navLinks[index]) navLinks[index].classList.add("active");
-    }
-
-    activateLink();
-    window.addEventListener("scroll", activateLink, { passive: true });
-  })();
-</script>
-
+      toggle.addEventListener("click", () => {
+        const open = mobileNav.style.display === "block";
+        mobileNav.style.display = open ? "none" : "block";
+        toggle.setAttribute("aria-expanded", String(!open));
+      });
+    })();
+  </script>
 </body>
 </html>
