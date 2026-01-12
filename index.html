@@ -20,7 +20,7 @@
 
   <style>
     /* =========================================
-       CRITICAL PAGE OVERRIDES
+       CRITICAL PAGE OVERRIDES (THE "GOLDEN" LAYOUT)
        ========================================= */
     
     :root {
@@ -30,7 +30,7 @@
       --accent: #F36C21;     
       --bg-soft: #f8fafc;
       --header-h: 80px;      
-      --max-w: 1240px;       
+      --max-w: 1280px; /* Iets breder voor corporate feel */      
       --radius: 16px;
     }
 
@@ -39,8 +39,8 @@
       font-family: 'Merriweather', serif !important;
       letter-spacing: -0.02em;
       color: var(--ink);
-      line-height: 1.2;
-      margin-bottom: 12px;
+      line-height: 1.25;
+      margin-bottom: 16px;
     }
     
     body, p, a, li, input, label {
@@ -48,15 +48,22 @@
     }
 
     p {
-      margin-bottom: 16px; 
+      margin-bottom: 20px; 
       font-size: 1.05rem;
       color: var(--ink-soft);
-      line-height: 1.6;
+      line-height: 1.65; /* Meer leesruimte */
     }
 
-    /* Sectie spacing */
+    /* Meer ademruimte tussen secties */
     .home-section, section {
-        margin-bottom: 96px;
+        margin-bottom: 120px;
+    }
+
+    /* LAYOUT UTILS: ROYALE MARGES */
+    .wrap { 
+        max-width: var(--max-w); 
+        margin: 0 auto; 
+        padding: 0 48px; /* Corporate margin (was 24px) */
     }
 
     /* 2. HEADER */
@@ -75,7 +82,7 @@
     .header-inner {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 48px; /* Match wrap padding */
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -86,7 +93,7 @@
       background-color: var(--blue) !important;
       color: white !important;
       border: 1px solid var(--blue);
-      padding: 10px 22px;
+      padding: 10px 24px;
       border-radius: 50px;
       font-weight: 600;
     }
@@ -95,10 +102,10 @@
       transform: translateY(-1px);
     }
 
-    /* 3. HERO */
+    /* 3. HERO: BALANS & SPACE */
     .home-hero {
-      padding-top: 48px !important; 
-      padding-bottom: 64px !important;
+      padding-top: 64px !important; 
+      padding-bottom: 80px !important;
       overflow: visible;
       margin-bottom: 64px;
     }
@@ -106,24 +113,32 @@
     .home-hero-grid {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr; 
-      gap: 40px;
+      gap: 64px; /* Meer ruimte tussen tekst en visual */
       align-items: center;
     }
 
     .home-hero-copy { z-index: 2; min-width: 0; }
     
     .home-hero-copy h1 {
-        font-size: clamp(2.4rem, 4vw, 3.4rem);
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
         font-weight: 900;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
     }
 
-    /* Visual Kolom */
+    .hero-lead {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 32px;
+        color: var(--ink-soft);
+        max-width: 540px;
+    }
+
+    /* VISUAL KOLOM: PERFECTE UITLIJNING */
     .home-hero-visual {
       position: relative;
       display: flex;
       justify-content: flex-end;
-      height: 480px;
+      height: 480px; /* Hoogte gefixeerd voor alignment */
       width: 100%;
       transform: none !important;
       background: transparent !important;
@@ -132,7 +147,7 @@
       padding: 0 !important;
     }
 
-    /* HEALTH CARD */
+    /* HEALTH CARD (Links bovenop) */
     .hero-health-card {
       position: absolute;
       left: 0;
@@ -141,24 +156,28 @@
       background: white;
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
-      padding: 28px;
-      width: 360px;
+      padding: 32px;
+      width: 380px;
+      height: 420px; /* Match Diamond height */
       box-shadow: 0 20px 50px -10px rgba(0,0,0,0.12);
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .health-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 12px;
+      padding-bottom: 16px;
     }
-    .health-score-big { font-size: 2.2rem; font-weight: 800; color: var(--blue); line-height: 1; }
+    .health-score-big { font-size: 2.5rem; font-weight: 800; color: var(--blue); line-height: 1; }
     
     /* SLIDERS */
-    .health-rows { display: flex; flex-direction: column; gap: 16px; }
+    .health-rows { display: flex; flex-direction: column; gap: 18px; }
     .slider-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
     
     input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 0; }
@@ -168,15 +187,15 @@
     input[type=range]::-moz-range-track { height: 6px; border-radius: 100px; background: #E2E8F0; cursor: pointer; }
     
     input[type=range]::-webkit-slider-thumb {
-      height: 18px; width: 18px; border-radius: 50%; background: var(--blue); border: 3px solid white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; -webkit-appearance: none; margin-top: -6px; 
+      height: 20px; width: 20px; border-radius: 50%; background: var(--blue); border: 4px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; -webkit-appearance: none; margin-top: -7px; 
     }
     input[type=range]::-moz-range-thumb {
-      height: 18px; width: 18px; border: 3px solid white; border-radius: 50%; background: var(--blue);
+      height: 20px; width: 20px; border: 4px solid white; border-radius: 50%; background: var(--blue);
       cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    /* DIAMOND CARD */
+    /* DIAMOND CARD (Rechts erachter) - BREDER GEMAAKT */
     .hero-diamond-card {
       position: absolute;
       right: 0;
@@ -186,8 +205,8 @@
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       padding: 24px;
-      width: 320px;
-      height: 400px;
+      width: 380px; /* BREDER gemaakt voor Implementation label */
+      height: 420px; /* Match Health height */
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
       z-index: 1; 
       display: flex;
@@ -197,30 +216,31 @@
     }
 
     .diamond-canvas { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-    .diamond-canvas svg { width: 280px; height: 280px; overflow: visible; }
+    .diamond-canvas svg { width: 300px; height: 300px; overflow: visible; } /* Grotere SVG */
 
     /* LABELS (Gefixed) */
     .diamond-label {
       position: absolute;
       background: white;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       font-weight: 700;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--ink);
       white-space: nowrap;
       pointer-events: none;
       z-index: 20;
     }
     
-    .lbl-top    { top: 5%; left: 50%; transform: translate(-50%, 0); }
-    .lbl-bottom { bottom: 5%; left: 50%; transform: translate(-50%, 0); }
-    .lbl-left   { left: 0; top: 50%; transform: translate(-20%, -50%); } 
-    .lbl-right  { right: 0; top: 50%; transform: translate(20%, -50%); }
+    .lbl-top    { top: 5%; left: 50%; transform: translate(-50%, -10px); }
+    .lbl-bottom { bottom: 5%; left: 50%; transform: translate(-50%, 10px); }
+    /* Implementation en Resources nu veilig binnen de kaart */
+    .lbl-left   { left: 2%; top: 50%; transform: translate(0, -50%); } 
+    .lbl-right  { right: 2%; top: 50%; transform: translate(0, -50%); }
 
     /* 4. STORY SECTION */
-    .story-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+    .story-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
     .story-img img { width: 100%; border-radius: var(--radius); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
     
     .story-forces {
@@ -231,7 +251,7 @@
     .force-item {
       display: grid;
       grid-template-columns: 140px 1fr; 
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       align-items: baseline;
     }
     .force-label { font-weight: 700; color: var(--blue); font-size: 0.95rem; }
@@ -241,11 +261,11 @@
     .home-modules-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 32px;
+      gap: 32px; /* Meer ruimte */
+      margin-top: 40px;
     }
     .home-module, .marketplace-card, .card {
-      padding: 24px;
+      padding: 32px; /* Royale padding */
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       transition: 0.2s;
@@ -254,15 +274,16 @@
       text-decoration: none; color: inherit;
     }
     .home-module:hover, .marketplace-card:hover, .card:hover { 
-        border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); 
+        border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.08); 
     }
-    .home-module h3 { font-family: 'Inter', sans-serif !important; font-size: 1.1rem; color: var(--blue); margin-bottom: 8px; }
+    .home-module h3 { font-family: 'Inter', sans-serif !important; font-size: 1.15rem; color: var(--blue); margin-bottom: 8px; }
     .module-label { font-size: 0.75rem; text-transform: uppercase; color: #64748b; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.05em; }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
+      .wrap, .header-inner { padding: 0 24px; }
       .home-hero-grid, .story-grid, .home-modules-grid, .marketplace-grid { grid-template-columns: 1fr; gap: 48px; }
-      .home-hero-visual { height: auto; display: block; margin-top: 24px; }
+      .home-hero-visual { height: auto; display: block; margin-top: 40px; }
       .hero-health-card { position: relative; width: 100%; transform: none; top: auto; left: auto; margin-bottom: 24px; }
       .hero-diamond-card { position: relative; width: 100%; transform: none; right: auto; top: auto; height: 360px; }
       nav.nav-desktop { display: none; }
@@ -285,7 +306,7 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a class="cta" href="contact.html">Contact</a>
+      <a href="contact.html" class="cta">Contact</a>
     </nav>
 
     <div class="menu-toggle">Menu</div>
@@ -307,7 +328,7 @@
         </p>
         <div class="hero-actions" style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
           <a href="gtm-assessment.html" class="cta">Free GTM Score</a>
-          <a href="#diamond-section" class="cta cta--ghost">See how the GRIP Diamond works</a>
+          <a href="#diamond-section" class="cta cta--ghost">See how the Diamond works</a>
         </div>
         <p class="hero-note" style="font-size:0.9rem; color:#94a3b8;">
           A structured self-assessment and a clear narrative in under ten minutes. Without calls or meetings.
@@ -383,7 +404,7 @@
       </div>
     </div>
     
-    <div class="wrap story-grid" style="margin-top:80px;">
+    <div class="wrap story-grid" style="margin-top:120px;">
       <div class="story-img">
         <img src="assets/caugia-gtm-diamond-team.webp" alt="GRIP Diamond" style="width:100%; border-radius:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.1);">
       </div>
@@ -397,17 +418,17 @@
 
   <section class="section">
     <div class="wrap">
-      <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
+      <div style="text-align:center; max-width:840px; margin:0 auto 64px;">
         <span style="color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:12px;">The Flagship Diagnostic</span>
         <h2>The GTM Intelligence Report.</h2>
-        <p>This is not just a PDF. It is a forensic analysis of your revenue engine. We scan the 12 structural pillars below to identify exactly where your system leaks value.</p>
-        <div style="margin-top:24px;">
+        <p>This is the core of our work. A forensic, twelve-pillar analysis of your revenue engine. It is not an automated summary, but a strategic document that identifies exactly where your system leaks value and how to fix it.</p>
+        <p>We use the 12 pillars below to scan your organization.</p>
+        <div style="margin-top:32px;">
             <a href="gtm-intelligence-report.html" class="cta">Explore the Report</a>
         </div>
       </div>
 
       <div class="home-modules-grid">
-        
         <a href="module-strategy.html" class="home-module">
           <p class="module-label">Pillar 1 · Guidance</p>
           <h3>GTM Strategy & Leadership</h3>
@@ -436,51 +457,50 @@
         </a>
         <a href="module-sdr.html" class="home-module">
           <p class="module-label">Pillar 6 · Implementation</p>
-          <h3>Customer Success & Expansion</h3>
-          <p>Onboarding, value realization, and growth.</p>
+          <h3>Sales Development (SDR)</h3>
+          <p>Outbound motion and lead qualification.</p>
         </a>
 
         <a href="module-success.html" class="home-module">
           <p class="module-label">Pillar 7 · Performance</p>
-          <h3>Revenue Operations & Systems</h3>
-          <p>Infrastructure, data, and process flow.</p>
+          <h3>Customer Success & Retention</h3>
+          <p>Onboarding and value realization.</p>
         </a>
         <a href="module-expansion.html" class="home-module">
           <p class="module-label">Pillar 8 · Performance</p>
-          <h3>Pricing & Packaging</h3>
-          <p>Monetization logic and commercial models.</p>
+          <h3>Account Management & Expansion</h3>
+          <p>Cross-sell, up-sell, and renewal health.</p>
         </a>
         <a href="module-revops.html" class="home-module">
           <p class="module-label">Pillar 9 · Performance</p>
-          <h3>Brand & Communications</h3>
-          <p>Narrative consistency and market presence.</p>
+          <h3>Revenue Operations</h3>
+          <p>Infrastructure, data, and process flow.</p>
         </a>
 
         <a href="module-enablement.html" class="home-module">
           <p class="module-label">Pillar 10 · Resources</p>
-          <h3>Data & Insights</h3>
-          <p>Signals that leadership can trust.</p>
-        </a>
-        <a href="module-performance.html" class="home-module">
-          <p class="module-label">Pillar 11 · Resources</p>
           <h3>Enablement</h3>
           <p>Training, content, and sales readiness.</p>
         </a>
+        <a href="module-performance.html" class="home-module">
+          <p class="module-label">Pillar 11 · Resources</p>
+          <h3>Performance Management</h3>
+          <p>KPIs, goals, and feedback loops.</p>
+        </a>
         <a href="module-pricing.html" class="home-module">
           <p class="module-label">Pillar 12 · Resources</p>
-          <h3>Leadership & Alignment</h3>
-          <p>Decision cadence and cross-functional rhythm.</p>
+          <h3>Pricing & Packaging</h3>
+          <p>Monetization logic and model fit.</p>
         </a>
-
       </div>
     </div>
   </section>
 
   <section class="section" style="background: var(--bg-soft);">
     <div class="wrap">
-      <div style="text-align:center; max-width:800px; margin:0 auto 48px;">
+      <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
         <h2>Intelligence Marketplace.</h2>
-        <p>Already have the report or know your problem? Fix specific broken pillars with targeted modules.</p>
+        <p>Already have the report? Use targeted modules to surgically repair specific broken pillars. These are exclusive add-ons for report holders.</p>
       </div>
 
       <div class="marketplace-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;">
@@ -548,17 +568,51 @@
     </div>
   </section>
 
-  <footer style="border-top: 1px solid var(--line); padding: 48px 0; background: white;">
-    <div class="wrap" style="display:flex; justify-content: space-between; color: var(--ink-soft); font-size: 0.9rem;">
-        <div>© 2026 Caugia Consulting</div>
-        <div style="display:flex; gap: 24px;">
-            <a href="privacy.html">Privacy</a>
-            <a href="mailto:tom@caugia.com">Contact</a>
+  <section class="section" style="background: var(--bg-soft);">
+    <div class="wrap">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+        <div>
+          <h2>Founder Level Consulting.</h2>
+          <p>Caugia is not a team of juniors. It is led by Tom Meijer, bringing a decade of GTM design experience in high-growth SaaS.</p>
+          <p>Consulting is reserved for moments where clarity alone is not enough. Together we define a practical roadmap and operating rhythm to fix the engine while you fly it.</p>
+          <div style="margin-top:24px;">
+            <a href="services.html" style="color:var(--blue); font-weight:700; font-size:1.1rem;">See consulting services &rarr;</a>
+          </div>
         </div>
+        <div>
+          <h2 style="font-size:1.8rem;">Resources.</h2>
+          <p>For teams that want to go deeper, the resource library collects frameworks, use cases and practical tools built on the GRIP Framework.</p>
+          <a href="resources.html" style="color:var(--blue); font-weight:700; font-size:1.1rem;">Open framework resources &rarr;</a>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="section">
+    <div class="wrap" style="max-width:800px;">
+      <h2 style="text-align:center;">Common Questions</h2>
+      <div class="faq" style="margin-top:32px;">
+        <details><summary>What is the difference between the Score and Report?</summary>
+          <p>The Score is a free snapshot. The Intelligence Report is a deep 12-pillar forensic analysis revealing root causes and a prioritized roadmap.</p></details>
+        <details><summary>Who is this designed for?</summary>
+          <p>CEOs, CROs, and Founders of B2B SaaS companies ($1M - $500M ARR) who need to professionalize their revenue engine.</p></details>
+        <details><summary>Can I buy modules separately?</summary>
+          <p>No. Modules are add-ons to the Intelligence Report. We do not fix parts without understanding the whole system first.</p></details>
+      </div>
+    </div>
+  </section>
 
 </main>
+
+<footer style="border-top: 1px solid var(--line); padding: 48px 0; background: white;">
+  <div class="wrap" style="display:flex; justify-content: space-between; color: var(--ink-soft); font-size: 0.9rem;">
+      <div>© 2026 Caugia Consulting</div>
+      <div style="display:flex; gap: 24px;">
+          <a href="privacy.html">Privacy</a>
+          <a href="mailto:tom@caugia.com">Contact</a>
+      </div>
+  </div>
+</footer>
 
 <script>
   function updateDiamond() {
