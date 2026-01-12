@@ -3,180 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caugia Consulting - GTM System</title>
+    <title>Caugia Consulting | GTM Systems for B2B SaaS</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%230056b3%22/><path d=%22M70 30 A30 30 0 1 0 70 70%22 fill=%22none%22 stroke=%22white%22 stroke-width=%2210%22/></svg>">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* --- RESET & BASIC STYLES --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #1a1a1a;
-            line-height: 1.6;
+        /* --- 1. CORE VARIABLES & RESET --- */
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #004494;
+            --text-dark: #0f172a;
+            --text-body: #475569;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        /* Typography */
-        h1, h2, h3 { font-family: 'Playfair Display', serif; color: #0f172a; font-weight: 700; }
-        p { color: #475569; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
 
-        /* --- LAYOUT UTILITIES --- */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif; /* Aanname voor de "Consulting" look */
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        /* --- 2. LAYOUT UTILITIES --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
-        /* --- NAVBAR --- */
+        section { padding: 80px 0; }
+        
+        .text-center { text-align: center; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+        }
+        .btn-primary:hover { background-color: #003370; transform: translateY(-1px); }
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* --- 3. NAVBAR --- */
         nav {
-            padding: 20px 0;
+            padding: 24px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-        .logo-circle { width: 24px; height: 24px; background: #0056b3; border-radius: 50%; }
-        .nav-links { display: flex; gap: 24px; list-style: none; }
-        .nav-links a { text-decoration: none; color: #475569; font-size: 0.95rem; font-weight: 500; }
-        .btn-primary {
-            background-color: #004494;
-            color: white;
-            padding: 10px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s;
+        
+        /* Het Logo - SVG in CSS */
+        .logo { font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; color: var(--text-dark); text-decoration: none; }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: relative;
         }
-        .btn-primary:hover { background-color: #003370; }
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px; height: 14px;
+            border: 3px solid white;
+            border-right-color: transparent; /* Maakt de 'C' */
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
 
-        /* --- HERO SECTION --- */
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-body); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        @media(max-width: 768px) {
+            .nav-links { display: none; } /* Simpele mobiele hide voor nu */
+        }
+
+        /* --- 4. HERO SECTION (The System) --- */
         .hero {
-            padding: 60px 0 100px 0;
+            padding: 60px 0 80px 0;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: start;
         }
 
-        /* LEFT COLUMN: Content & The 12 Pillars */
-        .hero-content {
-            padding-right: 20px;
-        }
         .eyebrow {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-            color: #0056b3;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: block;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            font-size: 0.8rem; color: var(--primary); font-weight: 700;
+            margin-bottom: 16px; display: block;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 24px;
-        }
-        .hero-desc {
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            max-width: 500px;
-        }
+        .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
+        .hero p { font-size: 1.15rem; color: var(--text-body); margin-bottom: 40px; max-width: 540px; }
 
-        /* The 12 Pillars List - Clean Layout */
-        .pillars-breakdown {
-            margin-top: 40px;
-            background: #fff;
+        /* Pillars List */
+        .pillars-card {
+            background: var(--white);
             padding: 30px;
-            border-radius: 12px;
-            border-left: 4px solid #0056b3;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-sm);
         }
-        .pillars-breakdown h3 { font-size: 1.2rem; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
+        .pillars-card h3 { font-size: 1.1rem; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
         .pillar-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px 30px;
-            font-size: 0.9rem;
-            color: #334155;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px;
+            font-size: 0.9rem; color: #334155;
         }
-        .pillar-item { display: flex; align-items: center; gap: 8px; }
+        .pillar-item { display: flex; align-items: center; gap: 10px; }
         .pillar-num { 
-            font-weight: 700; color: #94a3b8; font-size: 0.8rem; width: 20px; 
+            font-weight: 700; color: #cbd5e1; font-size: 0.85rem; width: 20px; 
         }
 
-        /* RIGHT COLUMN: The System Shape Widget */
+        /* Widget Card */
         .widget-card {
-            background: white;
-            border-radius: 20px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
             padding: 40px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            display: flex;
-            flex-direction: column; /* Stacks header, sliders, chart */
-            gap: 30px;
+            box-shadow: var(--shadow-lg);
+            display: flex; flex-direction: column; gap: 30px;
+            position: sticky; top: 100px;
         }
-
-        /* Layout for Sliders vs Chart inside the card */
-        .widget-layout {
-            display: flex;
-            gap: 40px;
-        }
-        .controls-col { flex: 1; }
-        .chart-col { 
-            flex: 1; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            position: relative;
-        }
-
-        /* Health Score Header */
         .health-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 20px;
-            margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            border-bottom: 1px solid #e2e8f0; padding-bottom: 20px;
         }
-        .health-score { font-size: 3.5rem; font-weight: 700; color: #004494; line-height: 1; }
-        .health-label { font-size: 1.2rem; font-weight: 700; }
-        .health-sub { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .health-score { font-size: 4rem; font-weight: 800; color: var(--primary); line-height: 1; }
+        .widget-layout { display: flex; gap: 30px; align-items: center; }
+        .controls-col { flex: 1; }
+        .chart-col { flex: 1; display: flex; justify-content: center; }
 
         /* Sliders */
-        .control-group { margin-bottom: 20px; }
-        .control-label { 
-            display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; 
-        }
+        .control-group { margin-bottom: 15px; }
+        .control-label { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; }
         input[type=range] {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 5px;
-            outline: none;
+            width: 100%; -webkit-appearance: none; height: 4px;
+            background: #e2e8f0; border-radius: 5px; outline: none;
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #0056b3;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-appearance: none; width: 16px; height: 16px;
+            background: var(--primary); border-radius: 50%; cursor: pointer;
+            border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Chart Canvas Size Fix */
-        #radarChart {
-            max-width: 300px;
-            max-height: 300px;
+        /* --- 5. CONTENT SECTIONS --- */
+        
+        /* "Why GTM feels heavy" */
+        .section-problem { background: #fff; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 40px; }
+        .problem-card h4 { font-size: 1.25rem; margin-bottom: 12px; }
+        .problem-card p { font-size: 0.95rem; color: var(--text-body); }
+        .icon-box { font-size: 2rem; margin-bottom: 16px; color: var(--primary); }
+
+        /* "Intelligence Report" */
+        .section-report { background: #0f172a; color: white; }
+        .report-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .report-content h2 { color: white; margin-bottom: 20px; font-size: 2.5rem; }
+        .report-content p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
+        .check-list { list-style: none; margin-bottom: 40px; }
+        .check-list li { margin-bottom: 12px; display: flex; gap: 12px; align-items: center; font-size: 1.05rem; }
+        .check-list li::before { content: '✓'; color: #4ade80; font-weight: bold; }
+        
+        .report-visual {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            height: 400px;
+            display: flex; align-items: center; justify-content: center;
         }
+
+        /* "Targeted Fixes" */
+        .section-modules h2 { font-size: 2.5rem; margin-bottom: 60px; text-align: center; }
+        .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .module-card {
+            background: white; padding: 40px; border-radius: 12px;
+            border: 1px solid #e2e8f0; transition: transform 0.2s;
+        }
+        .module-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .module-card h3 { margin-bottom: 10px; font-size: 1.5rem; }
+        .tag { 
+            display: inline-block; background: #e0f2fe; color: #0284c7; 
+            padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; 
+            font-weight: 700; margin-bottom: 16px;
+        }
+
+        /* "Founder Consulting" */
+        .section-cta { background: var(--bg-light); text-align: center; padding: 100px 0; }
+        .section-cta h2 { font-size: 3rem; margin-bottom: 24px; }
+        .section-cta p { font-size: 1.25rem; max-width: 600px; margin: 0 auto 40px auto; }
+
+        /* Footer */
+        footer { background: white; padding: 40px 0; border-top: 1px solid #e2e8f0; text-align: center; font-size: 0.9rem; color: #94a3b8; }
 
         /* Responsive */
         @media (max-width: 900px) {
-            .hero { grid-template-columns: 1fr; }
+            .hero, .report-layout, .grid-3, .module-grid { grid-template-columns: 1fr; }
             .widget-layout { flex-direction: column-reverse; }
-            .chart-col { height: 300px; }
+            .hero h1 { font-size: 2.5rem; }
+            .pillars-card { margin-bottom: 40px; }
         }
     </style>
 </head>
@@ -184,38 +244,41 @@
 
     <div class="container">
         <nav>
-            <div class="logo"><div class="logo-circle"></div> CAUGIA CONSULTING</div>
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                CAUGIA CONSULTING
+            </a>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">GTM Score</a></li>
-                <li><a href="#">Resources</a></li>
+                <li><a href="#system">The System</a></li>
+                <li><a href="#report">Intelligence Report</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#consulting">Consulting</a></li>
             </ul>
-            <a href="#" class="btn-primary">Contact</a>
+            <a href="#contact" class="btn btn-primary">Get in touch</a>
         </nav>
     </div>
 
-    <div class="container hero">
+    <section id="system" class="hero container">
         
-        <div class="hero-content">
+        <div>
             <span class="eyebrow">One GTM System for B2B SaaS</span>
             <h1>Stop revenue leakage by aligning your GTM system.</h1>
-            <p class="hero-desc">
-                Caugia helps B2B SaaS leaders see where revenue leaks, why it happens, and what to fix first. We turn scattered GTM activity into one coherent operating system.
+            <p>
+                Caugia helps B2B SaaS leaders see where revenue leaks, why it happens, and what to fix first. 
+                We turn scattered GTM activity into one coherent operating system for predictable growth.
             </p>
 
-            <div class="pillars-breakdown">
+            <div class="pillars-card">
                 <h3>The 12 System Pillars</h3>
                 <div class="pillar-grid">
                     <div class="pillar-item"><span class="pillar-num">1</span> GTM Strategy & Leadership</div>
-                    <div class="pillar-item"><span class="pillar-num">7</span> Revenue Operations & Systems</div>
+                    <div class="pillar-item"><span class="pillar-num">7</span> RevOps & Systems</div>
                     
                     <div class="pillar-item"><span class="pillar-num">2</span> Market Intelligence</div>
                     <div class="pillar-item"><span class="pillar-num">8</span> Pricing & Packaging</div>
                     
                     <div class="pillar-item"><span class="pillar-num">3</span> Product Marketing</div>
-                    <div class="pillar-item"><span class="pillar-num">9</span> Brand & Communications</div>
+                    <div class="pillar-item"><span class="pillar-num">9</span> Brand & Comms</div>
                     
                     <div class="pillar-item"><span class="pillar-num">4</span> Demand Generation</div>
                     <div class="pillar-item"><span class="pillar-num">10</span> Data & Insights</div>
@@ -223,73 +286,173 @@
                     <div class="pillar-item"><span class="pillar-num">5</span> Sales Execution</div>
                     <div class="pillar-item"><span class="pillar-num">11</span> Enablement</div>
                     
-                    <div class="pillar-item"><span class="pillar-num">6</span> Customer Success & Expansion</div>
+                    <div class="pillar-item"><span class="pillar-num">6</span> Customer Success</div>
                     <div class="pillar-item"><span class="pillar-num">12</span> Leadership & Alignment</div>
                 </div>
             </div>
         </div>
 
         <div class="widget-card">
-            
             <div class="health-header">
                 <div>
-                    <div class="health-label">Your GRIP Health</div>
-                    <div class="health-sub">Current Maturity</div>
+                    <h3 style="margin:0; font-size:1.2rem;">Your GRIP Health</h3>
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Current Maturity</span>
                 </div>
                 <div class="health-score" id="totalScore">58</div>
             </div>
 
             <div class="widget-layout">
                 <div class="controls-col">
-                    
                     <div class="control-group">
                         <div class="control-label"><span>Guidance</span> <span id="val-g">45</span></div>
                         <input type="range" id="input-g" min="0" max="100" value="45" oninput="updateChart()">
                     </div>
-
                     <div class="control-group">
                         <div class="control-label"><span>Resources</span> <span id="val-r">60</span></div>
                         <input type="range" id="input-r" min="0" max="100" value="60" oninput="updateChart()">
                     </div>
-
                     <div class="control-group">
                         <div class="control-label"><span>Implementation</span> <span id="val-i">85</span></div>
                         <input type="range" id="input-i" min="0" max="100" value="85" oninput="updateChart()">
                     </div>
-
                     <div class="control-group">
                         <div class="control-label"><span>Performance</span> <span id="val-p">43</span></div>
                         <input type="range" id="input-p" min="0" max="100" value="43" oninput="updateChart()">
                     </div>
-
                 </div>
 
                 <div class="chart-col">
-                    <canvas id="radarChart"></canvas>
+                    <div style="width: 200px; height: 200px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
                 </div>
             </div>
+            <p class="text-center" style="font-size: 0.8rem; color: #94a3b8; margin:0;">
+                Visualize your GTM maturity across 4 axes.
+            </p>
+        </div>
+    </section>
+
+    <section class="section-problem">
+        <div class="container">
+            <div class="text-center" style="max-width: 700px; margin: 0 auto;">
+                <h2>Why GTM feels heavy</h2>
+                <p>Most B2B companies treat GTM as a series of isolated departments. This creates friction, slows down velocity, and leads to revenue leakage.</p>
+            </div>
             
-            <div style="text-align: center; margin-top: 10px;">
-                <p style="font-size: 0.85rem; color: #94a3b8;">The System Shape</p>
+            <div class="grid-3">
+                <div class="problem-card">
+                    <div class="icon-box">⚡</div>
+                    <h4>Misaligned KPIs</h4>
+                    <p>Marketing chases MQLs while Sales chases revenue. The result? A "leaky bucket" where leads don't convert.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon-box">📉</div>
+                    <h4>No Source of Truth</h4>
+                    <p>Data lives in silos. RevOps is fighting fires instead of forecasting accurately. You're flying blind.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon-box">🐢</div>
+                    <h4>Slow Execution</h4>
+                    <p>Great strategy, poor execution. Without a connected system, even the best playbooks fail to launch.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="report" class="section-report">
+        <div class="container report-layout">
+            <div class="report-content">
+                <span class="eyebrow" style="color: #60a5fa;">New Research</span>
+                <h2>The GTM Intelligence Report</h2>
+                <p>We analyzed 50+ SaaS companies to understand what separates high-growth engines from stagnant ones. The findings might surprise you.</p>
+                
+                <ul class="check-list">
+                    <li>Why "More Leads" is rarely the answer.</li>
+                    <li>The 3 hidden levers of Net Revenue Retention (NRR).</li>
+                    <li>How to structure RevOps for scale, not support.</li>
+                </ul>
+
+                <a href="#" class="btn btn-primary" style="background: white; color: #0f172a;">Download Free Report</a>
+            </div>
+            <div class="report-visual">
+                <div style="text-align: center; color: rgba(255,255,255,0.3);">
+                    [Report Cover Image Placeholder]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>Targeted fixes after the full diagnostic.</h2>
+            
+            <div class="module-grid">
+                <div class="module-card">
+                    <span class="tag">Module 01</span>
+                    <h3>GTM Audit & Roadmap</h3>
+                    <p>A 4-week deep dive into your 12 pillars. We identify the bottlenecks and build a quarter-by-quarter execution plan.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 10px; display: inline-block;">Learn more &rarr;</a>
+                </div>
+
+                <div class="module-card">
+                    <span class="tag">Module 02</span>
+                    <h3>Pricing & Packaging Overhaul</h3>
+                    <p>Stop leaving money on the table. We align your pricing with value metrics to increase ACV and reduce churn.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 10px; display: inline-block;">Learn more &rarr;</a>
+                </div>
+
+                <div class="module-card">
+                    <span class="tag">Module 03</span>
+                    <h3>RevOps Infrastructure</h3>
+                    <p>We implement the "Single Source of Truth". Clean CRM data, accurate forecasting, and automated handoffs.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 10px; display: inline-block;">Learn more &rarr;</a>
+                </div>
+
+                <div class="module-card">
+                    <span class="tag">Module 04</span>
+                    <h3>Sales & CS Alignment</h3>
+                    <p>Bridge the gap. Unified playbooks, shared KPIs, and a seamless customer journey from 'Signed' to 'Renewed'.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 10px; display: inline-block;">Learn more &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="consulting" class="section-cta">
+        <div class="container">
+            <span class="eyebrow">For Series A+ Founders</span>
+            <h2>Founder Level Consulting</h2>
+            <p>
+                Sometimes you don't need a project. You need a partner. 
+                Work directly with Caugia leadership to navigate critical GTM transitions.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: center;">
+                <a href="#contact" class="btn btn-primary">Book a Discovery Call</a>
+                <a href="#" class="btn btn-outline">Read Case Studies</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Caugia Consulting. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         const ctx = document.getElementById('radarChart').getContext('2d');
         
-        // Initial Data
         let dataValues = [45, 60, 85, 43]; // G, R, I, P
 
-        // Chart Configuration
         const myChart = new Chart(ctx, {
             type: 'radar',
             data: {
                 labels: ['Guidance', 'Resources', 'Implementation', 'Performance'],
                 datasets: [{
-                    label: 'System Shape',
+                    label: 'Score',
                     data: dataValues,
-                    backgroundColor: 'rgba(0, 86, 179, 0.2)',
+                    backgroundColor: 'rgba(0, 86, 179, 0.15)',
                     borderColor: '#0056b3',
                     pointBackgroundColor: '#0056b3',
                     borderWidth: 2,
@@ -304,38 +467,32 @@
                         angleLines: { color: '#e2e8f0' },
                         grid: { color: '#e2e8f0' },
                         pointLabels: {
-                            font: { size: 11, weight: '600' },
-                            color: '#334155'
+                            font: { size: 10, weight: '600' },
+                            color: '#475569'
                         },
                         suggestedMin: 0,
                         suggestedMax: 100,
-                        ticks: { display: false } // Hide numbers on axis for cleaner look
+                        ticks: { display: false } 
                     }
                 },
-                plugins: {
-                    legend: { display: false }
-                }
+                plugins: { legend: { display: false } }
             }
         });
 
-        // Function to update chart when sliders move
         function updateChart() {
             const g = parseInt(document.getElementById('input-g').value);
             const r = parseInt(document.getElementById('input-r').value);
             const i = parseInt(document.getElementById('input-i').value);
             const p = parseInt(document.getElementById('input-p').value);
 
-            // Update Labels
             document.getElementById('val-g').innerText = g;
             document.getElementById('val-r').innerText = r;
             document.getElementById('val-i').innerText = i;
             document.getElementById('val-p').innerText = p;
 
-            // Update Total Score (Average)
             const avg = Math.round((g + r + i + p) / 4);
             document.getElementById('totalScore').innerText = avg;
 
-            // Update Chart Data
             myChart.data.datasets[0].data = [g, r, i, p];
             myChart.update();
         }
