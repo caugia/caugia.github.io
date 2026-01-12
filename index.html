@@ -4,759 +4,523 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Caugia Consulting | Stop Revenue Leakage with GTM Clarity</title>
-  <meta name="description" content="Caugia Consulting helps executives identify revenue leakage and turn scattered efforts into one predictable GTM system using the GRIP Framework." />
+  <title>Caugia Consulting | Stop Revenue Leakage</title>
+  <meta name="description" content="Turn scattered GTM activity into one predictable revenue system. The GRIP Framework helps leaders identify constraints and stop leakage." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
-
-  <script src="/auth.js"></script>
-
   <style>
-    /* Forceer de 'Boardroom Look' op alle koppen */
-    h1, h2, h3, .service-title, .service-title-main {
-      font-family: 'Merriweather', serif !important;
-      letter-spacing: -0.02em;
+    /* =========================================
+       1. CORE VARIABLES & RESET
+       ========================================= */
+    :root {
+      --ink: #0f172a;        /* Diep donkerblauw/zwart */
+      --ink-soft: #334155;   /* Zachter voor body tekst */
+      --blue: #0046A5;       /* Caugia Primary */
+      --accent: #F36C21;     /* Caugia Accent */
+      --line: #e2e8f0;       /* Subtiele lijnen */
+      --bg: #ffffff;
+      --bg-soft: #f8fafc;
+      
+      --header-h: 80px;      /* Iets hoger voor premium gevoel */
+      --max-w: 1200px;       /* Strakke container */
+      --radius: 16px;
     }
-    
-    /* Hero specifiek iets strakker zetten voor de serif */
-    .home-hero-copy h1 {
-      font-weight: 900;
-      color: var(--ink); /* Iets donkerder dan blauw voor maximale autoriteit */
-    }
-    
-    /* Subtiele aanpassing voor leesbaarheid body */
-    body, p, a, .cta, input, label {
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
       font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TYPOGRAPHY UNITY */
+    h1, h2, h3, h4 {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    h1 { margin-bottom: 24px; font-size: clamp(2.5rem, 5vw, 3.5rem); }
+    h2 { margin-bottom: 16px; font-size: clamp(2rem, 4vw, 2.5rem); }
+    h3 { margin-bottom: 12px; font-size: 1.25rem; }
+    p  { margin-bottom: 24px; color: var(--ink-soft); font-size: 1.05rem; }
+    
+    a { text-decoration: none; color: inherit; transition: 0.2s; }
+    ul { list-style: none; }
+
+    /* BUTTONS */
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: var(--blue);
+      color: white;
+      border: 1px solid var(--blue);
+    }
+    .cta:hover { background: #003680; border-color: #003680; transform: translateY(-1px); }
+    
+    .cta--ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: #cbd5e1;
+    }
+    .cta--ghost:hover { border-color: var(--blue); color: var(--blue); background: white; }
+
+    /* LAYOUT UTILS */
+    .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; } /* Consistente verticale witruimte */
+
+    /* =========================================
+       2. HEADER
+       ========================================= */
+    header {
+      height: var(--header-h);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.1rem; }
+    .brand img { height: 32px; width: auto; }
+    
+    .nav-desktop { display: flex; gap: 32px; align-items: center; }
+    .nav-desktop a { font-size: 0.95rem; font-weight: 500; color: var(--ink-soft); }
+    .nav-desktop a:hover, .nav-desktop a.active { color: var(--blue); }
+    .nav-desktop .cta { padding: 10px 20px; font-size: 0.9rem; }
+
+    .menu-toggle { display: none; } /* Mobile logic later */
+
+    /* =========================================
+       3. HERO SECTION (THE FIX)
+       ========================================= */
+    .home-hero {
+      padding-top: 80px;
+      padding-bottom: 80px;
+      overflow: visible; /* Voorkomt afkappen van shadows */
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 50/50 split */
+      gap: 64px;
+      align-items: center;
+    }
+
+    /* Text Side */
+    .hero-copy {
+      z-index: 2; /* Zorg dat tekst boven eventuele overlaps ligt */
+      min-width: 0; /* Voorkomt grid blowout */
+    }
+    
+    .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .hero-lead {
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .hero-note { font-size: 0.9rem; color: #94a3b8; }
+
+    /* Visual Side (The Cards) */
+    .hero-visual {
+      position: relative;
+      display: flex; /* Flex container voor overlap */
+      align-items: center;
+    }
+
+    /* HEALTH CARD */
+    .hero-health-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    .health-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .health-score-big { font-size: 2.5rem; font-weight: 800; color: var(--blue); line-height: 1; }
+    .health-score-label { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* SLIDERS (THE PERFECT ROUNDED BAR) */
+    .health-rows { display: flex; flex-direction: column; gap: 20px; }
+    .health-row { display: grid; gap: 8px; }
+    
+    .slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; }
+    
+    /* INPUT RANGE RESET & STYLING */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+      margin: 0; /* Remove default margin */
+    }
+    
+    input[type=range]:focus { outline: none; }
+
+    /* Webkit (Chrome/Safari) */
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px; /* Dunne balk */
+      cursor: pointer;
+      background: #e2e8f0;
+      border-radius: 100px; /* Volledig rond */
+    }
+    
+    input[type=range]::-webkit-slider-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 4px solid white; /* Witte ring voor contrast */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -7px; /* (Track 6px - Thumb 20px) / 2 = -7px. PERFECT CENTER */
+    }
+
+    /* Firefox */
+    input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #e2e8f0;
+      border-radius: 100px;
+    }
+    
+    input[type=range]::-moz-range-thumb {
+      height: 20px;
+      width: 20px;
+      border: 4px solid white;
+      border-radius: 50%;
+      background: var(--blue);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* DIAMOND CARD (Floating behind) */
+    .hero-diamond-card {
+      position: absolute;
+      right: -60px; /* Deels erachter */
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
+      width: 320px;
+      z-index: 1; /* Achter de health card */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .diamond-canvas {
+      width: 260px;
+      height: 260px;
+      position: relative;
+      margin: 10px 0;
+    }
+
+    .diamond-label {
+      position: absolute;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      white-space: nowrap;
+    }
+
+    /* Positioning Labels - SMART SOLUTION */
+    .lbl-top    { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .lbl-bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .lbl-left   { left: 0; top: 50%; transform: translate(-50%, -50%); }
+    .lbl-right  { right: 0; top: 50%; transform: translate(50%, -50%); } 
+    /* Met translate(50%, ...) duw je hem naar buiten, niet naar binnen */
+
+    /* =========================================
+       4. STORY SECTION (BALANCE FIX)
+       ========================================= */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr; /* Tekst iets breder voor balans */
+      gap: 80px;
+      align-items: center;
+    }
+
+    .story-img img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+    }
+
+    .story-forces {
+      margin-top: 24px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    .force-item {
+      display: flex;
+      margin-bottom: 16px;
+      align-items: baseline;
+    }
+    .force-label {
+      min-width: 140px;
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 0.95rem;
+    }
+    .force-desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-grid, .story-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-diamond-card { position: relative; right: auto; top: auto; transform: none; margin-top: 24px; width: 100%; max-width: 420px; }
+      h1 { font-size: 2.5rem; }
+      .nav-desktop { display: none; }
+      .menu-toggle { display: block; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="inner">
-    <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
+  <div class="wrap header-inner">
+    <a href="/" class="brand">
+      <img src="assets/C-logo.png" alt="Logo">
       <span>Caugia Consulting</span>
     </a>
-
+    
     <nav class="nav-desktop">
       <a href="index.html" class="active">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a class="cta" href="mailto:hello@caugia.com">Contact</a>
+      <a href="contact.html" class="cta">Contact</a>
     </nav>
 
-    <button class="menu-toggle" aria-label="Open navigation">
-      <span></span>
-    </button>
-
-    <nav class="nav-mobile">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a href="mailto:hello@caugia.com">Contact</a>
-    </nav>
+    <div class="menu-toggle">Menu</div>
   </div>
 </header>
 
-
 <main>
-  <div class="wrap">
 
-    <section class="home-hero">
-      <div class="home-hero-grid">
+  <section class="home-hero">
+    <div class="wrap hero-grid">
+      
+      <div class="hero-copy">
+        <span class="kicker">One GTM system for B2B SaaS</span>
+        <h1>Stop revenue leakage. Build a predictable GTM system.</h1>
+        <p class="hero-lead">
+          Misaligned teams leak value at every handoff. Caugia helps leaders identify structural constraints and build one calm operating system for predictable revenue.
+        </p>
+        <div class="hero-actions">
+          <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
+          <a href="#diamond" class="cta cta--ghost">See how it works</a>
+        </div>
+        <p class="hero-note">A structured self-assessment. No calls. No meetings.</p>
+      </div>
 
-        <div class="home-hero-copy">
-          <p class="kicker">One GTM system for B2B SaaS</p>
-
-          <h1>
-            Stop revenue leakage.<br>
-            Build a predictable GTM system.
-          </h1>
-
-          <p class="hero-lead">
-            Misaligned teams leak value at every handoff. Caugia helps leaders identify structural constraints and build one calm operating system for predictable revenue.
-          </p>
-
-          <p class="hero-lead">
-            Using the GTM Framework and GRIP Diamond, we turn scattered activity into a coherent model that leadership can trust.
-          </p>
-
-          <div class="hero-cta-row">
-            <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
-            <a href="#diamond-section" class="cta cta--ghost">See how the GRIP Diamond works</a>
+      <div class="hero-visual">
+        
+        <div class="hero-health-card">
+          <div class="health-header">
+            <div>
+              <h3>Your GRIP Health</h3>
+              <span class="health-score-label">Current Maturity</span>
+            </div>
+            <div class="health-score-big" id="total-score">58</div>
           </div>
 
-          <p class="hero-footnote">
-            A structured self-assessment and a clear narrative in under ten minutes.<br>
-            No calls. No meetings. Just clarity.
-          </p>
+          <div class="health-rows">
+            <div class="health-row">
+              <div class="slider-header">
+                <span>Guidance</span>
+                <span id="val-guidance">45</span>
+              </div>
+              <input type="range" id="input-guidance" min="0" max="100" value="45" oninput="updateDiamond()">
+            </div>
+
+            <div class="health-row">
+              <div class="slider-header">
+                <span>Resources</span>
+                <span id="val-resources">60</span>
+              </div>
+              <input type="range" id="input-resources" min="0" max="100" value="60" oninput="updateDiamond()">
+            </div>
+
+            <div class="health-row">
+              <div class="slider-header">
+                <span>Implementation</span>
+                <span id="val-implementation">85</span>
+              </div>
+              <input type="range" id="input-implementation" min="0" max="100" value="85" oninput="updateDiamond()">
+            </div>
+
+            <div class="health-row">
+              <div class="slider-header">
+                <span>Performance</span>
+                <span id="val-performance">43</span>
+              </div>
+              <input type="range" id="input-performance" min="0" max="100" value="43" oninput="updateDiamond()">
+            </div>
+          </div>
         </div>
 
-        <div class="home-hero-visual" id="hero-diamond">
-          <div class="hero-visual-grid">
+        <div class="hero-diamond-card" id="diamond">
+          <h3>The System Shape</h3>
+          <div class="diamond-canvas">
+            <svg viewBox="0 0 260 260" style="width:100%; height:100%;">
+              <g fill="none" stroke="#e2e8f0" stroke-width="1">
+                <polygon points="130,30 230,130 130,230 30,130" /> <polygon points="130,63 197,130 130,197 63,130" /> <polygon points="130,97 163,130 130,163 97,130" /> </g>
+              <polygon id="diamond-poly" 
+                       points="" 
+                       fill="rgba(0, 70, 165, 0.15)" 
+                       stroke="#0046A5" 
+                       stroke-width="2.5" />
+              <circle cx="130" cy="130" r="4" fill="#0046A5" />
+            </svg>
 
-            <div class="hero-health">
-
-              <div class="hero-health-header">
-                <p class="hero-health-label">Your GRIP health</p>
-                <p class="hero-health-score">
-                  <span id="hero-total-score">58</span><span>/100</span>
-                </p>
-              </div>
-
-              <div class="hero-health-rows">
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Guidance</span>
-                  <div class="hero-health-bar"><span id="bar-guidance"></span></div>
-                  <span class="hero-health-value" id="value-guidance">45</span>
-                </div>
-
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Resources</span>
-                  <div class="hero-health-bar"><span id="bar-resources"></span></div>
-                  <span class="hero-health-value" id="value-resources">60</span>
-                </div>
-
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Implementation</span>
-                  <div class="hero-health-bar"><span id="bar-implementation"></span></div>
-                  <span class="hero-health-value" id="value-implementation">85</span>
-                </div>
-
-                <div class="hero-health-row">
-                  <span class="hero-health-name">Performance</span>
-                  <div class="hero-health-bar"><span id="bar-performance"></span></div>
-                  <span class="hero-health-value" id="value-performance">43</span>
-                </div>
-              </div>
-
-              <div class="hero-health-sliders">
-                <div class="hero-health-slider">
-                  <label for="slider-guidance">Guidance</label>
-                  <input id="slider-guidance" type="range" min="0" max="100" value="45">
-                </div>
-
-                <div class="hero-health-slider">
-                  <label for="slider-resources">Resources</label>
-                  <input id="slider-resources" type="range" min="0" max="100" value="60">
-                </div>
-
-                <div class="hero-health-slider">
-                  <label for="slider-implementation">Implementation</label>
-                  <input id="slider-implementation" type="range" min="0" max="100" value="85">
-                </div>
-
-                <div class="hero-health-slider">
-                  <label for="slider-performance">Performance</label>
-                  <input id="slider-performance" type="range" min="0" max="100" value="43">
-                </div>
-              </div>
-
-              <div id="hero-archetype" class="hero-archetype">
-                <div class="archetype-title"></div>
-                <div class="archetype-desc"></div>
-              </div>
-
-            </div>
-
-            <div class="diamond-card" id="diamond-section">
-              <div class="diamond-title">Your GRIP Diamond</div>
-
-              <div class="diamond-canvas">
-                <svg class="diamond-svg" viewBox="40 40 200 200">
-                  <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
-                    <polygon points="140,40 240,140 140,240 40,140"></polygon>
-                    <polygon points="140,70 210,140 140,210 70,140"></polygon>
-                    <polygon points="140,100 180,140 140,180 100,140"></polygon>
-                  </g>
-
-                  <polygon id="hero-diamond-polygon"
-                    fill="rgba(243,108,33,0.10)"
-                    stroke="#0046A5"
-                    stroke-width="2"
-                  ></polygon>
-
-                  <circle cx="140" cy="140" r="7" fill="#0046A5" stroke="#fff" stroke-width="2"></circle>
-                </svg>
-
-                <div class="diamond-label diamond-label-top">Guidance</div>
-                <div class="diamond-label diamond-label-right">Implementation</div>
-                <div class="diamond-label diamond-label-bottom">Performance</div>
-                <div class="diamond-label diamond-label-left">Resources</div>
-              </div>
-            </div>
-
+            <div class="diamond-label lbl-top">Guidance</div>
+            <div class="diamond-label lbl-right">Implementation</div>
+            <div class="diamond-label lbl-bottom">Performance</div>
+            <div class="diamond-label lbl-left">Resources</div>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-
-  <section class="story-section">
-  <div class="wrap">
-
-    <div class="story-row">
-      <div class="story-column text">
+  <section class="section" style="background: var(--bg-soft);">
+    <div class="wrap story-grid">
+      <div class="story-text">
         <h2>Clarity before speed.</h2>
-
         <p>
-          Most GTM teams are not held back by effort. They are held back by uncoordinated effort.
-          Teams work in silos, tools multiply and ownership blurs. Everyone is busy, yet the system
-          feels heavier every quarter.
+          Most GTM teams are not held back by effort. They are held back by uncoordinated effort. 
+          Teams work in silos, tools multiply, and ownership blurs. Everyone is busy, yet the system feels heavier every quarter.
+        </p>
+        <p>
+          The GRIP model shows your GTM motion through four forces. When these align, revenue becomes predictable.
         </p>
 
-        <p>
-          Caugia gives you one structured way to look at the entire GTM system. Instead of fixing
-          symptoms inside individual teams, you start with the forces that shape the whole system.
-        </p>
-
-        <p>
-          The GRIP model shows your GTM motion through four forces and twelve pillars. This structure
-          is the foundation for the GTM Score, the GRIP Health Score and every service that Caugia delivers.
-        </p>
+        <div class="story-forces">
+          <div class="force-item">
+            <span class="force-label">Guidance</span>
+            <span class="force-desc">Clarity of strategy, narrative, and who you serve.</span>
+          </div>
+          <div class="force-item">
+            <span class="force-label">Resources</span>
+            <span class="force-desc">Product, pricing, tools, and the talent capacity.</span>
+          </div>
+          <div class="force-item">
+            <span class="force-label">Implementation</span>
+            <span class="force-desc">How consistently work runs across pipeline and sales.</span>
+          </div>
+          <div class="force-item">
+            <span class="force-label">Performance</span>
+            <span class="force-desc">Signals and forecasting that leadership can trust.</span>
+          </div>
+        </div>
       </div>
 
-      <div class="story-column visual">
-        <img src="assets/clarity-before-speed.webp" alt="Leaders reviewing a structured view of their go to market system">
+      <div class="story-img">
+        <img src="assets/caugia-gtm-diamond-team.webp" alt="GTM System Alignment">
       </div>
     </div>
+  </section>
 
-
-    <div class="story-row reverse">
-      <div class="story-column visual">
-        <img src="assets/caugia-gtm-diamond-team.webp" alt="The GRIP Diamond showing the four GTM forces and twelve pillars">
-      </div>
-
-      <div class="story-column text">
-        <h2>The GRIP Diamond.</h2>
-
-        <p>
-          The GRIP Diamond is a simple way to see the real shape of your go-to-market system. It maps 
-          twelve GTM pillars into four forces that explain why your motion feels smooth, heavy, fast 
-          or unpredictable.
-        </p>
-
-        <h4>Four forces that shape every GTM system</h4>
-        <ul class="story-forces">
-          <li><strong>Guidance</strong> — clarity of strategy, narrative and who you serve.</li>
-          <li><strong>Resources</strong> — product, pricing, tools and the talent that carries the motion.</li>
-          <li><strong>Implementation</strong> — how consistently work runs across pipeline, sales and customers.</li>
-          <li><strong>Performance</strong> — the signals, forecasting and review rhythm that leadership can trust.</li>
-        </ul>
-
-        <p>
-          Together they reveal the real system dynamic. The GTM Score shows where you are strong. 
-          The GRIP Health Score shows where imbalance creates risk. The Diamond shows you why.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-
-    <section class="home-section home-section-line">
-      <div class="section-heading">
-        <h2>The GTM clarity path.</h2>
-      </div>
-
-      <div class="section-body">
-        <p>
-          Whether you need a quick diagnostic or a full reset, the path stays simple and repeatable. You start with your GTM Score, deepen the analysis with the Intelligence Report and keep the system healthy through a regular review rhythm.
-        </p>
-        <p>
-          Designed for B2B SaaS companies between €1M and €500M ARR that need clarity, structure and predictable revenue.
-        </p>
-      </div>
-
-      <div class="home-grid-3">
-
-        <article class="card home-product">
-          <p class="service-label">Step 1</p>
-          <h3 class="service-title">GTM Score.</h3>
-          <p class="service-body">
-            A fast GRIP based self assessment across twelve pillars that gives you a clear, shared baseline.
-          </p>
-          <ul class="service-features">
-            <li>Twelve pillar maturity score</li>
-            <li>Clear narrative of your current GTM shape</li>
-            <li>Questions to align at leadership level</li>
-          </ul>
-          <div class="service-cta">
-            <a href="gtm-assessment.html" class="cta">Free GTM Score</a>
-          </div>
-        </article>
-
-        <article class="card home-product">
-          <p class="service-label">Step 2</p>
-          <h3 class="service-title">GTM Intelligence Report.</h3>
-          <p class="service-body">
-            A structured diagnostic that explains your GTM shape, highlights structural weaknesses and shows what to improve first.
-          </p>
-          <ul class="service-features">
-            <li>Reading across all twelve pillars</li>
-            <li>Risks and constraints made explicit</li>
-            <li>Three focus areas with suggested actions</li>
-          </ul>
-          <div class="service-cta">
-            <a href="gtm-intelligence-report.html" class="cta cta--ghost">See example report</a>
-          </div>
-        </article>
-
-        <article class="card home-product">
-          <p class="service-label">Step 3</p>
-          <h3 class="service-title">GTM Intelligence partnership.</h3>
-          <p class="service-body">
-            Ongoing access to GRIP tools, updated scores and a review rhythm that keeps your system healthy and aligned.
-          </p>
-          <ul class="service-features">
-            <li>Quarterly GRIP reviews</li>
-            <li>Updated intelligence and dashboards</li>
-            <li>Light advisory support for leadership</li>
-          </ul>
-          <div class="service-cta">
-            <a href="services.html" class="cta cta--ghost">View services overview</a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-
-
-    <section class="home-section">
-      <div class="section-heading">
-        <h2>Twelve intelligence modules.</h2>
-      </div>
-
-      <div class="section-body">
-        <p>
-          The GRIP Diamond shows the overall shape of your GTM system. The twelve intelligence modules explain the mechanics inside that shape and let you go deeper where it matters most.
-        </p>
-        <p>
-          Each module is a structured deep dive built on The GTM Framework and the GTM Score. You get calm, focused intelligence without calls or consulting overhead.
-        </p>
-      </div>
-
-      <div class="home-modules-grid">
-
-        <a href="module-market-clarity.html" class="card home-module">
-          <p class="module-label">Pillar 1</p>
-          <h3>Market Clarity</h3>
-          <p>Segments, buyers and demand patterns.</p>
-        </a>
-
-        <a href="module-demand-operations.html" class="card home-module">
-          <p class="module-label">Pillar 2</p>
-          <h3>Demand Operations</h3>
-          <p>From first signal to qualified opportunity.</p>
-        </a>
-
-        <a href="module-sales-operations.html" class="card home-module">
-          <p class="module-label">Pillar 3</p>
-          <h3>Sales Operations</h3>
-          <p>Pipeline structure, process and deal health.</p>
-        </a>
-
-        <a href="module-customer-operations.html" class="card home-module">
-          <p class="module-label">Pillar 4</p>
-          <h3>Customer Operations</h3>
-          <p>Onboarding, value realisation and expansion.</p>
-        </a>
-
-        <a href="module-metrics-measurement.html" class="card home-module">
-          <p class="module-label">Pillar 5</p>
-          <h3>Metrics and Measurement</h3>
-          <p>Signals that leadership can trust.</p>
-        </a>
-
-        <a href="module-forecasting-revenue.html" class="card home-module">
-          <p class="module-label">Pillar 6</p>
-          <h3>Forecasting and Revenue Planning</h3>
-          <p>Confident and committed forecasting.</p>
-        </a>
-
-        <a href="modules.html" class="card home-module">
-          <p class="module-label">Pillars 7–12</p>
-          <h3>Explore all modules</h3>
-          <p>The full GRIP based architecture for modern GTM teams.</p>
-        </a>
-
-      </div>
-
-      <div class="home-modules-cta">
-        <a href="modules.html" class="cta cta--ghost">Open the full module overview</a>
-      </div>
-    </section>
-
-
-
-    <section class="home-section home-section-line">
-      <div class="section-heading">
-        <h2>Founder level consulting.</h2>
-      </div>
-
-      <div class="section-body">
-        <p>
-          Caugia Consulting was founded by Tom Meijer. Tom spent nearly a decade designing GTM systems in fast growing SaaS companies and working with leadership teams under pressure.
-        </p>
-
-        <p>
-          Consulting is reserved for moments where clarity alone is not enough. Together we define a practical roadmap, an operating rhythm and the minimum set of structural changes that will hold under pressure.
-        </p>
-
-        <a href="services.html" class="readmore">See consulting services</a>
-      </div>
-    </section>
-
-
-
-    <section class="home-section">
-      <div class="section-heading">
-        <h2>Resources.</h2>
-      </div>
-
-      <div class="section-body">
-        <p>
-          For teams that want to go deeper, the resource library collects frameworks, use cases and practical tools built on The GTM Framework.
-        </p>
-      </div>
-
-      <div class="home-grid-3">
-
-        <article class="card home-resource">
-          <h3>The GTM Framework.</h3>
-          <p>A clear reference architecture for modern revenue teams and how the twelve pillars work together.</p>
-          <a href="resources.html" class="readmore">Open framework resources</a>
-        </article>
-
-        <article class="card home-resource">
-          <h3>Use cases and examples.</h3>
-          <p>Practical applications of the GRIP Diamond and how to use it to align teams and improve performance.</p>
-          <a href="resources.html" class="readmore">Explore use cases</a>
-        </article>
-
-        <article class="card home-resource">
-          <h3>GTM Intelligence material.</h3>
-          <p>Guidance and templates to support the GTM Score, the Intelligence Report and the ongoing review rhythm.</p>
-          <a href="resources.html" class="readmore">Browse all resources</a>
-        </article>
-
-      </div>
-    </section>
-
-
-
-  </div>
 </main>
 
-
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <p>© 2025 Caugia Consulting. All rights reserved.</p>
-    </div>
-
-    <div class="footer-right">
-      <a href="privacy.html">Privacy notice</a>
-      <a href="mailto:info@caugia.com">info@caugia.com</a>
-      <a href="mailto:support@caugia.com">support@caugia.com</a>
-      <a href="mailto:invoices@caugia.com">invoices@caugia.com</a>
-    </div>
-  </div>
-</footer>
-
-
-
 <script>
-  const toggle = document.querySelector(".menu-toggle");
-  const mobileNav = document.querySelector(".nav-mobile");
+  function updateDiamond() {
+    const g = parseInt(document.getElementById('input-guidance').value);
+    const r = parseInt(document.getElementById('input-resources').value);
+    const i = parseInt(document.getElementById('input-implementation').value);
+    const p = parseInt(document.getElementById('input-performance').value);
 
-  if (toggle && mobileNav) {
-    toggle.addEventListener("click", () => {
-      toggle.classList.toggle("active");
-      mobileNav.classList.toggle("open");
-    });
+    // Update numbers text
+    document.getElementById('val-guidance').innerText = g;
+    document.getElementById('val-resources').innerText = r;
+    document.getElementById('val-implementation').innerText = i;
+    document.getElementById('val-performance').innerText = p;
+    document.getElementById('total-score').innerText = Math.round((g+r+i+p)/4);
 
-    document.querySelectorAll(".nav-mobile a").forEach(link => {
-      link.addEventListener("click", () => {
-        toggle.classList.remove("active");
-        mobileNav.classList.remove("open");
-      });
-    });
+    // Calculate Polygon Points
+    // Center 130,130. Max Radius 100.
+    // Guidance (Top): (130, 130 - val)
+    // Imp (Right): (130 + val, 130)
+    // Perf (Bottom): (130, 130 + val)
+    // Res (Left): (130 - val, 130)
+    
+    const py_g = 130 - g;
+    const px_i = 130 + i;
+    const py_p = 130 + p;
+    const px_r = 130 - r;
+
+    const points = `130,${py_g} ${px_i},130 130,${py_p} ${px_r},130`;
+    document.getElementById('diamond-poly').setAttribute('points', points);
   }
 
-  window.addEventListener("scroll", () => {
-    const headerEl = document.querySelector("header");
-    if (window.scrollY > 10) headerEl.classList.add("scrolled");
-    else headerEl.classList.remove("scrolled");
-  });
-</script>
-
-<script>
-  const gripState = {
-    guidance: 45,
-    resources: 60,
-    implementation: 85,
-    performance: 43
-  };
-
-  const clamp = v => Math.max(0, Math.min(100, v));
-
-  // ------------------------------------------------------------
-  // CAUGIA ARCHETYPE ENGINE v2.0 — 30 archetypes, 6 tiers
-  // ------------------------------------------------------------
-  function evaluateArchetype(G, R, I, P) {
-    const arr = [G, R, I, P];
-    const overall = Math.round((G + R + I + P) / 4);
-
-    const low = arr.filter(v => v < 50).length;
-    const high = arr.filter(v => v >= 80).length;
-
-    const all85Plus = arr.every(v => v >= 85);
-
-    const weakG = G < 50;
-    const weakR = R < 50;
-    const weakI = I < 50;
-    const weakP = P < 50;
-
-    const strongG = G >= 80;
-    const strongR = R >= 80;
-    const strongI = I >= 80;
-    const strongP = P >= 80;
-
-    const make = (tier, key, name) => ({
-      tier,
-      key,
-      name,
-      overall,
-      G,
-      R,
-      I,
-      P
-    });
-
-    // ----------------------
-    // TIER 1 — COLLAPSE STATES
-    // ----------------------
-    if (overall <= 30 || low >= 3) {
-      return make(1, "collapse_spiral", "The Collapse Spiral");
-    }
-
-    if (weakG && weakR && weakI) return make(1, "overwhelmed", "The Overwhelmed");
-    if (weakG && weakR && weakP) return make(1, "firefighter", "The Firefighter");
-    if (weakR && weakI && weakP) return make(1, "tool_hoarder", "The Tool Hoarder");
-    if (weakG && weakI && weakP) return make(1, "wishful_thinker", "The Wishful Thinker");
-
-    // ----------------------
-    // TIER 2 — DUAL CONSTRAINT STATES
-    // ----------------------
-    if (low === 2) {
-      if (weakG && weakR) return make(2, "executing_blind", "The Executing Blind");
-      if (weakR && weakI) return make(2, "undermanned_mess", "The Undermanned Mess");
-      if (weakG && weakI) return make(2, "random_walk", "The Random Walk");
-      if (weakI && weakP) return make(2, "inconsistent_closer", "The Inconsistent Closer");
-      if (weakR && weakP) return make(2, "strained_system", "The Strained System");
-    }
-
-    // ----------------------
-    // TIER 3 — SINGLE CONSTRAINT STATES
-    // ----------------------
-    if (low === 1) {
-      if (weakG) return make(3, "directionless_engine", "The Directionless Engine");
-      if (weakR) return make(3, "capacity_crunch", "The Capacity Crunch");
-      if (weakI) return make(3, "heroic_chaos", "The Heroic Chaos");
-      if (weakP) return make(3, "leaky_bucket", "The Leaky Bucket");
-
-      return make(3, "constraint_trap", "The Constraint Trap");
-    }
-
-    // ----------------------
-    // TIER 6 — ELITE SYSTEMS (synergy based)
-    // ----------------------
-    if (all85Plus) {
-      return make(6, "elite_operator", "The Elite Operator");
-    }
-
-    if (strongG && strongP && R >= 65 && I >= 65) {
-      return make(6, "insight_leader", "The Insight Leader");
-    }
-
-    if (strongI && strongP && G >= 65 && R >= 65) {
-      return make(6, "revenue_machine", "The Revenue Machine");
-    }
-
-    if (strongG && strongI && R >= 65 && P >= 65) {
-      return make(6, "strategic_executor", "The Strategic Executor");
-    }
-
-    if (strongR && strongI && G >= 65 && P >= 65) {
-      return make(6, "resourceful_operator", "The Resourceful Operator");
-    }
-
-    // ----------------------
-    // TIER 4 — ASYMMETRIC STRENGTH
-    // ----------------------
-    if (strongG && overall >= 65) return make(4, "strategist", "The Strategist");
-    if (strongR && overall >= 65) return make(4, "collector", "The Collector");
-    if (strongI && overall >= 65) return make(4, "executor", "The Executor");
-    if (strongP && overall >= 65) return make(4, "analyst", "The Analyst");
-
-    if (high === 1) {
-      return make(4, "unbalanced_power", "The Unbalanced Power");
-    }
-
-    // ----------------------
-    // TIER 5 — BALANCED SYSTEMS
-    // ----------------------
-    if (overall < 60) return make(5, "foundation_builder", "The Foundation Builder");
-    if (overall < 70) return make(5, "stable_operator", "The Stable Operator");
-    if (overall < 75) return make(5, "systematic_performer", "The Systematic Performer");
-    if (overall < 80) return make(5, "forecast_engine", "The Forecast Engine");
-
-    return make(5, "steady_state", "The Steady State");
-  }
-
-  // ------------------------------------------------------------
-  // Archetype descriptions (short, UI friendly)
-  // ------------------------------------------------------------
-  const archetypeDescriptions = {
-    // Tier 1
-    collapse_spiral: "The system is breaking down across the board and cannot support growth.",
-    overwhelmed: "All four dimensions are weak; everything feels noisy and unstable.",
-    firefighter: "Progress depends on constant heroics; nothing feels calm or repeatable.",
-    tool_hoarder: "Many tools and assets, but little structure that turns them into results.",
-    wishful_thinker: "Strategy sounds good, yet behaviour and results do not follow.",
-    // Tier 2
-    executing_blind: "Teams work hard with thin strategy and poor enablement behind them.",
-    undermanned_mess: "Too little capacity and weak operations make basic work feel heavy.",
-    random_walk: "Motions keep changing and learnings do not stick in the system.",
-    inconsistent_closer: "Deals close in pockets but success is not yet repeatable.",
-    strained_system: "Commercial load is high while infrastructure and support run hot.",
-    // Tier 3
-    directionless_engine: "Resources and execution exist, but direction and choices stay fuzzy.",
-    capacity_crunch: "Good intent and effort, but infrastructure cannot keep up.",
-    heroic_chaos: "Individual talent masks the absence of real GTM discipline.",
-    leaky_bucket: "The system creates demand, but value leaks in conversion or retention.",
-    constraint_trap: "One constraint dominates and keeps pulling the whole system back.",
-    // Tier 4
-    strategist: "Guidance is strong; the system behind it still needs to catch up.",
-    collector: "You own many GTM assets, but standards and usage are inconsistent.",
-    executor: "Execution is strong, yet often pointed at the wrong priorities.",
-    analyst: "You see the truth in the data, but system change lags behind insight.",
-    unbalanced_power: "One dimension dominates so much that it distorts the rest.",
-    // Tier 5
-    foundation_builder: "You have moved past collapse; structure is emerging but still fragile.",
-    stable_operator: "The engine is predictable and calm, though not yet fast.",
-    systematic_performer: "Most fundamentals are in place; you now push for sharper performance.",
-    forecast_engine: "Planning and rhythm are strong; the focus shifts to quality of bets.",
-    steady_state: "A mature, steady pattern that holds its shape over time.",
-    // Tier 6
-    elite_operator: "All four dimensions are strong and mutually reinforcing.",
-    insight_leader: "Sharp guidance validated by performance and trusted by leadership.",
-    revenue_machine: "Implementation and performance combine into a strong commercial engine.",
-    strategic_executor: "Clear choices and strong follow through live in the same system.",
-    resourceful_operator: "People, tools and operations work together with very little waste."
-  };
-
-  // ------------------------------------------------------------
-  // Diamond + health card rendering
-  // ------------------------------------------------------------
-  function updateGripDiamond() {
-    const g = clamp(gripState.guidance);
-    const r = clamp(gripState.resources);
-    const i = clamp(gripState.implementation);
-    const p = clamp(gripState.performance);
-
-    // 1) Archetype
-    const result = evaluateArchetype(g, r, i, p);
-    const archetypeEl = document.getElementById("hero-archetype");
-    if (archetypeEl) {
-      const titleEl = archetypeEl.querySelector(".archetype-title");
-      const descEl = archetypeEl.querySelector(".archetype-desc");
-
-      if (titleEl) {
-        titleEl.textContent = result.name;
-      }
-      if (descEl) {
-        const key = result.key;
-        descEl.textContent = archetypeDescriptions[key] || "";
-      }
-    }
-
-    // 2) Diamond shape
-    const point = (deg, val) => {
-      const cx = 140;
-      const cy = 140;
-      const maxR = 100;
-      const rad = (deg * Math.PI) / 180;
-      const radius = (val / 100) * maxR;
-      return cx + radius * Math.cos(rad) + "," + (cy - radius * Math.sin(rad));
-    };
-
-    const polygon = document.getElementById("hero-diamond-polygon");
-    if (polygon) {
-      polygon.setAttribute(
-        "points",
-        [
-          point(90, g),   // top  = Guidance
-          point(0, i),    // right = Implementation
-          point(270, p),  // bottom = Performance
-          point(180, r)   // left = Resources
-        ].join(" ")
-      );
-    }
-
-    // 3) Total score + bars
-    const totalEl = document.getElementById("hero-total-score");
-    if (totalEl) {
-      totalEl.textContent = Math.round((g + r + i + p) / 4);
-    }
-
-    const map = [
-      ["guidance", g],
-      ["resources", r],
-      ["implementation", i],
-      ["performance", p]
-    ];
-
-    map.forEach(([key, value]) => {
-      const bar = document.getElementById("bar-" + key);
-      const label = document.getElementById("value-" + key);
-      if (bar) bar.style.width = value + "%";
-      if (label) label.textContent = value;
-    });
-  }
-
-  // Slider listeners
-  ["guidance", "resources", "implementation", "performance"].forEach(key => {
-    const slider = document.getElementById("slider-" + key);
-    if (slider) {
-      slider.addEventListener("input", e => {
-        gripState[key] = parseInt(e.target.value, 10);
-        updateGripDiamond();
-      });
-    }
-  });
-
-  // Initial render
-  updateGripDiamond();
+  // Init
+  updateDiamond();
 </script>
 
 </body>
