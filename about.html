@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>About | Caugia Consulting</title>
-  <meta name="description" content="The story behind Caugia and the principles that shape a calmer, stronger revenue system for B2B SaaS leaders." />
+  <meta name="description" content="Caugia Consulting brings calm, structure and clarity to modern revenue organisations. A system view of GTM for predictable growth." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512" />
   <link rel="apple-touch-icon" href="assets/C-logo.png" />
@@ -14,7 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- 🔒 SECURITY: Protect this entire page --> <script src="/auth.js"></script>
+  <!-- 🔒 SECURITY: Protect this entire page -->
+  <script src="/auth.js"></script>
 
   <style>
     :root{
@@ -93,7 +94,7 @@
       transform:translateY(-1px);
     }
 
-    /* HEADER (match Index exactly) */
+    /* HEADER identical to Index */
     header{
       position:sticky;
       top:0;
@@ -172,11 +173,8 @@
       padding:10px 10px 0;
     }
 
-    /* ABOUT HERO (aligned like Index text block) */
-    .about-hero{
-      padding:68px 0 64px;
-    }
-
+    /* ABOUT HERO */
+    .about-hero{ padding:68px 0 54px; }
     .eyebrow{
       display:block;
       text-transform:uppercase;
@@ -187,168 +185,311 @@
       margin-bottom:14px;
     }
 
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap:54px;
+      align-items:start;
+    }
+
     .about-hero h1{
       font-size:3.25rem;
       line-height:1.08;
-      margin-bottom:22px;
-      max-width:980px;
+      margin-bottom:18px;
     }
 
-    .about-hero p{
+    .hero-lead{
       font-size:1.14rem;
-      max-width:860px;
-      margin-bottom:16px;
+      max-width:680px;
+      margin-bottom:18px;
     }
 
     .hero-actions{
       display:flex;
       gap:14px;
       flex-wrap:wrap;
-      margin-top:22px;
+      margin-top:18px;
     }
 
-    /* PLAYFUL, BUT STILL CALM */
-    .about-grid{
+    .hero-aside{
+      background:var(--white);
+      border:1px solid rgba(15,23,42,0.06);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-sm);
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-aside::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      height:100%;
+      width:6px;
+      background:var(--primary);
+      opacity:0.9;
+    }
+
+    .aside-title{
+      font-family:Inter, sans-serif;
+      font-weight:900;
+      font-size:1.06rem;
+      margin-bottom:10px;
+      color:#1e293b;
+      letter-spacing:0;
+      padding-left:10px;
+    }
+
+    .aside-text{
+      padding-left:10px;
+      color:var(--text-body);
+      font-size:1.02rem;
+      margin-bottom:14px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--line);
+      background:rgba(248,250,252,0.8);
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:900;
+      color:#334155;
+      margin:10px 10px 0 10px;
+      font-size:0.92rem;
+      white-space:nowrap;
+    }
+    .pill span{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      background:rgba(0,86,179,0.10);
+      color:var(--primary-dark);
+      font-weight:900;
+      font-variant-numeric:tabular-nums;
+    }
+
+    /* Sections */
+    .section-head{
+      max-width:860px;
+      margin-bottom:22px;
+    }
+    .section-head h2{
+      font-size:2.15rem;
+      line-height:1.15;
+      margin-bottom:10px;
+    }
+    .section-head p{
+      font-size:1.08rem;
+      color:var(--text-body);
+    }
+
+    .split{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:28px;
-      margin-top:10px;
+      align-items:start;
     }
 
     .card{
       background:var(--white);
       border:1px solid rgba(15,23,42,0.06);
-      border-radius:var(--radius-md);
+      border-radius:18px;
       box-shadow:var(--shadow-sm);
-      padding:28px 28px 26px;
-      position:relative;
-      overflow:hidden;
+      padding:26px;
     }
 
-    .card.accent::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:0;
-      width:5px;
-      height:100%;
-      background:var(--primary);
-    }
-
-    .card h2{
-      font-size:1.7rem;
-      margin-bottom:12px;
+    .card h3{
+      font-family:Inter, sans-serif;
+      font-weight:900;
+      letter-spacing:0;
+      font-size:1.18rem;
+      margin-bottom:10px;
+      color:#0f172a;
     }
 
     .card p{
-      font-size:1.05rem;
-      color:rgba(15,23,42,0.78);
+      margin:0;
+      color:var(--text-body);
+      font-size:1.03rem;
+      line-height:1.6;
     }
 
-    .mini-kicker{
+    .micro-list{
+      margin-top:14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .micro-list li{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      color:#334155;
+      font-weight:700;
+      font-size:1.02rem;
+    }
+    .micro-list li::before{
+      content:"✓";
+      font-weight:900;
+      color:#22c55e;
+      margin-top:1px;
+    }
+
+    /* GRIP panel */
+    .grip-panel{
+      background:linear-gradient(180deg, rgba(0,86,179,0.06), rgba(255,255,255,0));
+      border:1px solid rgba(15,23,42,0.06);
+      border-radius:18px;
+      padding:26px;
+    }
+    .grip-panel h3{
       font-family:Inter, sans-serif;
       font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      font-size:0.78rem;
-      color:#94a3b8;
-      margin-bottom:10px;
+      letter-spacing:0;
+      font-size:1.18rem;
+      margin-bottom:12px;
+      color:#0f172a;
     }
 
-    .grip-box{
-      margin-top:16px;
-      padding:18px 18px 16px;
-      border:1px solid rgba(15,23,42,0.08);
-      border-radius:16px;
-      background:#fbfcff;
-    }
-
-    .grip-row{
+    .grip-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
-      margin-top:10px;
+      margin-top:16px;
     }
 
-    .grip-pill{
+    .grip-item{
+      background:var(--white);
+      border:1px solid rgba(15,23,42,0.06);
+      border-radius:14px;
+      padding:14px 14px 12px;
+      box-shadow:0 10px 22px rgba(15,23,42,0.05);
+    }
+
+    .grip-item .k{
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(15,23,42,0.08);
-      background:var(--white);
       font-weight:900;
-      color:#334155;
+      color:#0f172a;
+      margin-bottom:6px;
     }
 
-    .dot{
-      width:10px;
-      height:10px;
+    .grip-item .k b{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:30px;
+      height:30px;
       border-radius:999px;
-      background:rgba(0,86,179,0.18);
-      border:2px solid rgba(0,86,179,0.35);
-      flex:0 0 auto;
+      background:rgba(0,86,179,0.10);
+      color:var(--primary-dark);
+      font-weight:900;
     }
 
+    .grip-item p{
+      margin:0;
+      color:var(--text-body);
+      font-size:0.98rem;
+      line-height:1.55;
+    }
+
+    /* Founder */
     .founder{
       display:grid;
-      grid-template-columns:0.9fr 1.1fr;
+      grid-template-columns: 0.9fr 1.1fr;
       gap:28px;
-      align-items:stretch;
-      margin-top:28px;
+      align-items:start;
     }
 
     .founder-card{
       background:var(--white);
       border:1px solid rgba(15,23,42,0.06);
-      border-radius:var(--radius-md);
+      border-radius:18px;
       box-shadow:var(--shadow-sm);
-      padding:28px;
+      padding:26px;
+      overflow:hidden;
+      position:relative;
     }
 
-    .founder-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
+    .founder-card::after{
+      content:"";
+      position:absolute;
+      right:-120px;
+      top:-120px;
+      width:240px;
+      height:240px;
       border-radius:999px;
-      background:#fbfcff;
+      background:rgba(0,86,179,0.06);
+    }
+
+    .avatar{
+      width:54px;
+      height:54px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.08);
       border:1px solid rgba(15,23,42,0.08);
-      font-weight:900;
-      color:#334155;
-      margin-bottom:16px;
+      margin-bottom:14px;
     }
 
     .founder-card h3{
       font-family:Inter, sans-serif;
       font-weight:900;
       letter-spacing:0;
-      font-size:1.15rem;
+      font-size:1.18rem;
+      margin-bottom:8px;
+    }
+
+    .founder-card p{
+      margin:0 0 12px 0;
+      color:var(--text-body);
+      font-size:1.02rem;
+    }
+
+    .quote{
+      background:rgba(248,250,252,0.9);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:26px;
+    }
+    .quote h3{
+      font-family:Inter, sans-serif;
+      font-weight:900;
+      letter-spacing:0;
+      font-size:1.18rem;
       margin-bottom:10px;
     }
-
-    .closing{
-      padding:84px 0 94px;
-      background:var(--white);
-      border-top:1px solid var(--line);
+    .quote p{
+      margin:0;
+      font-size:1.05rem;
+      color:#334155;
+      line-height:1.7;
+    }
+    .quote .sig{
+      margin-top:14px;
+      font-weight:900;
+      color:#0f172a;
+      font-size:0.98rem;
     }
 
-    .closing .wrap{
-      max-width:860px;
-      margin:0 auto;
-      text-align:center;
+    /* CTA strip */
+    .cta-strip{
+      background:#0f172a;
+      color:var(--white);
+      border-top:1px solid rgba(15,23,42,0.06);
+      padding:86px 0;
     }
-
-    .closing h2{
-      font-size:2.25rem;
-      margin-bottom:14px;
-    }
-
-    .closing p{
-      font-size:1.12rem;
-      margin-bottom:22px;
-    }
+    .cta-strip h2{ color:var(--white); font-size:2.2rem; margin-bottom:12px; }
+    .cta-strip p{ color:#a7b4c6; font-size:1.12rem; max-width:760px; }
 
     footer{
       background:var(--white);
@@ -362,16 +503,18 @@
     @media (max-width: 980px){
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
-      .about-grid{ grid-template-columns:1fr; }
+      .hero-grid{ grid-template-columns:1fr; gap:28px; }
+      section{ padding:74px 0; }
+      .split{ grid-template-columns:1fr; }
       .founder{ grid-template-columns:1fr; }
       .about-hero h1{ font-size:2.65rem; }
-      section{ padding:74px 0; }
     }
 
     @media (max-width: 520px){
-      .about-hero h1{ font-size:2.45rem; }
-      .card h2{ font-size:1.55rem; }
-      .grip-row{ grid-template-columns:1fr; }
+      .about-hero h1{ font-size:2.35rem; }
+      .hero-aside{ padding:22px; }
+      .card{ padding:22px; }
+      .grip-panel{ padding:22px; }
     }
   </style>
 </head>
@@ -386,7 +529,7 @@
 
       <ul class="nav-links" aria-label="Primary navigation">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active">About</a></li>
+        <li><a class="active" href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gtm-assessment.html">GTM Score</a></li>
         <li><a href="resources.html">Resources</a></li>
@@ -413,133 +556,182 @@
 
   <main>
     <section class="container about-hero" aria-label="About hero">
-      <span class="eyebrow">About Caugia</span>
-      <h1>Clarity begins with structure.</h1>
-      <p>
-        Caugia helps B2B SaaS leaders see the revenue system as one coherent engine.
-        When the system becomes visible, alignment gets easier, priorities stabilise, and execution starts to compound.
-      </p>
-      <p style="margin-bottom:0;">
-        The work is calm by design.
-        Less noise, fewer debates about symptoms, and a clearer path to predictable growth.
-      </p>
-
-      <div class="hero-actions" aria-label="Primary actions">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-        <a href="services.html" class="btn btn-outline">Explore the services</a>
-      </div>
-    </section>
-
-    <section aria-label="About content">
-      <div class="container">
-        <div class="about-grid">
-          <article class="card accent" aria-label="Why Caugia exists">
-            <div class="mini-kicker">Why</div>
-            <h2>Why Caugia exists</h2>
-            <p>
-              Many revenue organisations work hard inside systems that were never intentionally designed.
-              Processes grow organically, tools accumulate, teams specialise, and the engine gets heavier each quarter.
-            </p>
-            <p>
-              When clarity drops, effort rises.
-              Leadership ends up managing complexity instead of shaping direction.
-              Results become dependent on heroics, not on a system that carries the organisation forward.
-            </p>
-          </article>
-
-          <article class="card" aria-label="The philosophy">
-            <div class="mini-kicker">Philosophy</div>
-            <h2>Balance is the real advantage</h2>
-            <p>
-              Strong revenue engines are built on balance.
-              Clarity emerges when four forces work together without friction.
-            </p>
-
-            <div class="grip-box" aria-label="The GRIP model">
-              <div class="mini-kicker" style="margin-bottom:6px;">The GRIP model</div>
-              <div class="grip-row">
-                <div class="grip-pill"><span class="dot"></span>Guidance</div>
-                <div class="grip-pill"><span class="dot"></span>Resources</div>
-                <div class="grip-pill"><span class="dot"></span>Implementation</div>
-                <div class="grip-pill"><span class="dot"></span>Performance</div>
-              </div>
-            </div>
-
-            <p style="margin-top:16px;">
-              When these forces drift apart, the organisation compensates with effort.
-              Meetings expand, priorities shift, and progress slows under the weight of good intentions.
-            </p>
-          </article>
-
-          <article class="card" aria-label="Approach">
-            <div class="mini-kicker">Approach</div>
-            <h2>Make the system visible</h2>
-            <p>
-              Caugia removes noise rather than adding more of it.
-              The work starts by creating one shared model of the revenue engine.
-              That model becomes the reference point for decisions, priorities, and execution.
-            </p>
-            <p>
-              Once the system is visible, leadership gains space to think clearly again.
-              Decisions become calmer, execution becomes steadier, and improvements start to compound.
-            </p>
-          </article>
-
-          <article class="card accent" aria-label="Experience">
-            <div class="mini-kicker">What it feels like</div>
-            <h2>Calm, clear, grounded</h2>
-            <p>
-              Leaders often describe the change in simple words.
-              Less urgency, more coordination.
-              Less debate, more direction.
-              Less reactive motion, more intentional progress.
-            </p>
-            <p>
-              The goal is not to run faster.
-              The goal is to build a system that performs without strain.
-            </p>
-          </article>
-        </div>
-
-        <div class="founder" aria-label="Founder section">
-          <div class="founder-card">
-            <div class="founder-badge"><span class="dot"></span>Founder</div>
-            <h2 style="margin-bottom:10px;">Who leads Caugia</h2>
-            <p style="font-size:1.05rem; color:rgba(15,23,42,0.78);">
-              Caugia is led by Tom Meijer.
-              The focus is simple: a revenue system should make performance predictable.
-              It should reduce friction and not depend on pressure or speed to function.
-            </p>
-          </div>
-
-          <div class="founder-card">
-            <h3>About Tom</h3>
-            <p>
-              Tom built his career inside high growth SaaS organisations where pressure, scale, and complexity evolve together.
-              What he saw consistently was not a lack of talent, but a lack of structure.
-            </p>
-            <p style="margin-bottom:0;">
-              Caugia turns those lessons into a calm, structured approach that helps revenue teams move as one coherent system.
-              Clear priorities, fewer surprises, and a path that leadership can defend.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="closing" aria-label="Closing CTA">
-      <div class="container">
-        <div class="wrap">
-          <span class="eyebrow">Next step</span>
-          <h2>Start with the GTM Score</h2>
-          <p>
-            A structured self assessment that gives you an executive narrative and clear priorities in minutes.
-            No calls unless you ask.
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">ABOUT CAUGIA</span>
+          <h1>Clarity begins with structure.</h1>
+          <p class="hero-lead">
+            Caugia helps B2B SaaS leaders see the revenue system as one coherent engine. When the system becomes visible, alignment gets easier, priorities stabilise, and execution starts to compound.
           </p>
-          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:18px;">
+          <p class="hero-lead" style="margin-bottom:0; font-size:1.02rem; color:#64748b;">
+            This is work for leadership teams who want a shared model, not a longer list of initiatives.
+          </p>
+
+          <div class="hero-actions" aria-label="Hero actions">
             <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
             <a href="services.html" class="btn btn-outline">Explore the services</a>
           </div>
+        </div>
+
+        <aside class="hero-aside" aria-label="About summary">
+          <div class="aside-title">What Caugia optimises</div>
+          <div class="aside-text">
+            Not effort. Not activity. The system itself, so results rely less on pressure and more on structure.
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap;">
+            <div class="pill"><span>1</span> System visibility</div>
+            <div class="pill"><span>2</span> Leadership alignment</div>
+            <div class="pill"><span>3</span> Sequence and focus</div>
+            <div class="pill"><span>4</span> Predictable outcomes</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container" aria-label="Why Caugia exists">
+      <div class="section-head">
+        <h2>Why Caugia exists</h2>
+        <p>
+          Most revenue organisations work hard inside systems that were never intentionally designed. Tools accumulate, teams specialise, processes grow organically, and the engine gets heavier each quarter.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h3>When clarity drops, effort rises</h3>
+          <p>
+            Leadership starts managing complexity instead of shaping direction. Meetings expand. Priorities shift. Teams compensate with urgency, and progress stops compounding.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>A calmer alternative</h3>
+          <p>
+            Caugia was built to restore coherence. One shared model of the revenue engine, one language across functions, and one practical order of improvement that leadership can defend.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" aria-label="The philosophy">
+      <div class="split">
+        <div>
+          <div class="section-head" style="margin-bottom:16px;">
+            <h2>The philosophy</h2>
+            <p>
+              Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>What leaders need most</h3>
+            <p>
+              A point of view that makes the system visible. Not a stream of recommendations, but a model that guides decisions, trade offs, and sequencing.
+            </p>
+
+            <ul class="micro-list" aria-label="Leadership outcomes">
+              <li>A shared view of the full revenue system</li>
+              <li>Clear prioritisation without noise</li>
+              <li>Decisions that stay stable across quarters</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grip-panel" aria-label="The GRIP model">
+          <h3>The GRIP model</h3>
+          <p style="margin:0; color:var(--text-body); font-size:1.03rem;">
+            Four forces shape how the system behaves. When one force outruns the others, friction accumulates and performance becomes volatile.
+          </p>
+
+          <div class="grip-grid">
+            <div class="grip-item">
+              <div class="k"><b>G</b> Guidance</div>
+              <p>Strategy, leadership clarity, and an operating model people can follow.</p>
+            </div>
+            <div class="grip-item">
+              <div class="k"><b>R</b> Resources</div>
+              <p>Capacity, skills, and systems that match the ambition of the plan.</p>
+            </div>
+            <div class="grip-item">
+              <div class="k"><b>I</b> Implementation</div>
+              <p>Execution quality, sequencing, and the ability to ship consistently.</p>
+            </div>
+            <div class="grip-item">
+              <div class="k"><b>P</b> Performance</div>
+              <p>Outcomes, learning loops, and signal over noise in measurement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" aria-label="How Caugia works">
+      <div class="section-head">
+        <h2>How Caugia works</h2>
+        <p>
+          Caugia removes noise rather than adding more of it. The work begins by creating one shared model of the revenue engine and making the constraint visible.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h3>From initiatives to system design</h3>
+          <p>
+            Many teams optimise parts of the machine. Caugia works at the level where strategy, operating cadence, and execution quality meet, so improvements compound instead of reset.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Designed for executive decisions</h3>
+          <p>
+            The output is board ready. Clear logic. Clear sequencing. Clear trade offs. A model leadership can use to align teams and allocate focus with confidence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" aria-label="Founder section">
+      <div class="section-head">
+        <h2>Who leads Caugia</h2>
+        <p>
+          Caugia is led by Tom Meijer. His work is guided by one principle: a revenue system should make performance more predictable and require less pressure to function.
+        </p>
+      </div>
+
+      <div class="founder">
+        <div class="founder-card" aria-label="Founder card">
+          <div class="avatar" aria-hidden="true"></div>
+          <h3>About Tom</h3>
+          <p>
+            Tom spent his career inside high growth SaaS organisations where scale, urgency, and complexity rise together. The pattern was consistent: talent was rarely the issue. Structure was.
+          </p>
+          <p style="margin:0;">
+            Caugia turns those lessons into a calm, systems first approach that helps leadership teams move as one coherent engine.
+          </p>
+        </div>
+
+        <div class="quote" aria-label="What it feels like">
+          <h3>What it feels like</h3>
+          <p>
+            The shift is surprisingly simple. Noise reduces. Priorities stabilise. Teams stop recalibrating every week and start executing with shared intent. The engine feels lighter, not busier.
+          </p>
+          <div class="sig">Calm. Clear. Grounded.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-strip" aria-label="Final call to action">
+      <div class="container" style="text-align:left;">
+        <span class="eyebrow" style="color:#60a5fa;">NEXT STEP</span>
+        <h2>Start with the GTM Score</h2>
+        <p>
+          A structured self assessment that gives you a clear narrative, a visible system shape, and practical priorities in minutes.
+        </p>
+
+        <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:20px;">
+          <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+          <a href="services.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.24); color:#ffffff;">Explore the services</a>
         </div>
       </div>
     </section>
