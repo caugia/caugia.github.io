@@ -1,1 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caugia Consulting - GTM System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        /* Typography */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: #0f172a; font-weight: 700; }
+        p { color: #475569; }
 
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+        .logo-circle { width: 24px; height: 24px; background: #0056b3; border-radius: 50%; }
+        .nav-links { display: flex; gap: 24px; list-style: none; }
+        .nav-links a { text-decoration: none; color: #475569; font-size: 0.95rem; font-weight: 500; }
+        .btn-primary {
+            background-color: #004494;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background-color: #003370; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 60px 0 100px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* LEFT COLUMN: Content & The 12 Pillars */
+        .hero-content {
+            padding-right: 20px;
+        }
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            color: #0056b3;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        /* The 12 Pillars List - Clean Layout */
+        .pillars-breakdown {
+            margin-top: 40px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #0056b3;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .pillars-breakdown h3 { font-size: 1.2rem; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 30px;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+        .pillar-item { display: flex; align-items: center; gap: 8px; }
+        .pillar-num { 
+            font-weight: 700; color: #94a3b8; font-size: 0.8rem; width: 20px; 
+        }
+
+        /* RIGHT COLUMN: The System Shape Widget */
+        .widget-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column; /* Stacks header, sliders, chart */
+            gap: 30px;
+        }
+
+        /* Layout for Sliders vs Chart inside the card */
+        .widget-layout {
+            display: flex;
+            gap: 40px;
+        }
+        .controls-col { flex: 1; }
+        .chart-col { 
+            flex: 1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative;
+        }
+
+        /* Health Score Header */
+        .health-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+        }
+        .health-score { font-size: 3.5rem; font-weight: 700; color: #004494; line-height: 1; }
+        .health-label { font-size: 1.2rem; font-weight: 700; }
+        .health-sub { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Sliders */
+        .control-group { margin-bottom: 20px; }
+        .control-label { 
+            display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; 
+        }
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0056b3;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Chart Canvas Size Fix */
+        #radarChart {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .widget-layout { flex-direction: column-reverse; }
+            .chart-col { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <div class="logo"><div class="logo-circle"></div> CAUGIA CONSULTING</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">GTM Score</a></li>
+                <li><a href="#">Resources</a></li>
+            </ul>
+            <a href="#" class="btn-primary">Contact</a>
+        </nav>
+    </div>
+
+    <div class="container hero">
+        
+        <div class="hero-content">
+            <span class="eyebrow">One GTM System for B2B SaaS</span>
+            <h1>Stop revenue leakage by aligning your GTM system.</h1>
+            <p class="hero-desc">
+                Caugia helps B2B SaaS leaders see where revenue leaks, why it happens, and what to fix first. We turn scattered GTM activity into one coherent operating system.
+            </p>
+
+            <div class="pillars-breakdown">
+                <h3>The 12 System Pillars</h3>
+                <div class="pillar-grid">
+                    <div class="pillar-item"><span class="pillar-num">1</span> GTM Strategy & Leadership</div>
+                    <div class="pillar-item"><span class="pillar-num">7</span> Revenue Operations & Systems</div>
+                    
+                    <div class="pillar-item"><span class="pillar-num">2</span> Market Intelligence</div>
+                    <div class="pillar-item"><span class="pillar-num">8</span> Pricing & Packaging</div>
+                    
+                    <div class="pillar-item"><span class="pillar-num">3</span> Product Marketing</div>
+                    <div class="pillar-item"><span class="pillar-num">9</span> Brand & Communications</div>
+                    
+                    <div class="pillar-item"><span class="pillar-num">4</span> Demand Generation</div>
+                    <div class="pillar-item"><span class="pillar-num">10</span> Data & Insights</div>
+                    
+                    <div class="pillar-item"><span class="pillar-num">5</span> Sales Execution</div>
+                    <div class="pillar-item"><span class="pillar-num">11</span> Enablement</div>
+                    
+                    <div class="pillar-item"><span class="pillar-num">6</span> Customer Success & Expansion</div>
+                    <div class="pillar-item"><span class="pillar-num">12</span> Leadership & Alignment</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-card">
+            
+            <div class="health-header">
+                <div>
+                    <div class="health-label">Your GRIP Health</div>
+                    <div class="health-sub">Current Maturity</div>
+                </div>
+                <div class="health-score" id="totalScore">58</div>
+            </div>
+
+            <div class="widget-layout">
+                <div class="controls-col">
+                    
+                    <div class="control-group">
+                        <div class="control-label"><span>Guidance</span> <span id="val-g">45</span></div>
+                        <input type="range" id="input-g" min="0" max="100" value="45" oninput="updateChart()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label"><span>Resources</span> <span id="val-r">60</span></div>
+                        <input type="range" id="input-r" min="0" max="100" value="60" oninput="updateChart()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label"><span>Implementation</span> <span id="val-i">85</span></div>
+                        <input type="range" id="input-i" min="0" max="100" value="85" oninput="updateChart()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label"><span>Performance</span> <span id="val-p">43</span></div>
+                        <input type="range" id="input-p" min="0" max="100" value="43" oninput="updateChart()">
+                    </div>
+
+                </div>
+
+                <div class="chart-col">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <p style="font-size: 0.85rem; color: #94a3b8;">The System Shape</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        
+        // Initial Data
+        let dataValues = [45, 60, 85, 43]; // G, R, I, P
+
+        // Chart Configuration
+        const myChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Guidance', 'Resources', 'Implementation', 'Performance'],
+                datasets: [{
+                    label: 'System Shape',
+                    data: dataValues,
+                    backgroundColor: 'rgba(0, 86, 179, 0.2)',
+                    borderColor: '#0056b3',
+                    pointBackgroundColor: '#0056b3',
+                    borderWidth: 2,
+                    pointRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#e2e8f0' },
+                        grid: { color: '#e2e8f0' },
+                        pointLabels: {
+                            font: { size: 11, weight: '600' },
+                            color: '#334155'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { display: false } // Hide numbers on axis for cleaner look
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Function to update chart when sliders move
+        function updateChart() {
+            const g = parseInt(document.getElementById('input-g').value);
+            const r = parseInt(document.getElementById('input-r').value);
+            const i = parseInt(document.getElementById('input-i').value);
+            const p = parseInt(document.getElementById('input-p').value);
+
+            // Update Labels
+            document.getElementById('val-g').innerText = g;
+            document.getElementById('val-r').innerText = r;
+            document.getElementById('val-i').innerText = i;
+            document.getElementById('val-p').innerText = p;
+
+            // Update Total Score (Average)
+            const avg = Math.round((g + r + i + p) / 4);
+            document.getElementById('totalScore').innerText = avg;
+
+            // Update Chart Data
+            myChart.data.datasets[0].data = [g, r, i, p];
+            myChart.update();
+        }
+    </script>
+</body>
+</html>
