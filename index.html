@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -297,10 +298,11 @@
       font-variant-numeric:tabular-nums;
     }
 
+    /* UPDATED: more space for sliders, smaller chart */
     .widget-layout{
       display:grid;
-      grid-template-columns:1.22fr 0.78fr;
-      gap:36px;
+      grid-template-columns: 1.45fr 0.55fr;
+      gap:44px;
       align-items:center;
       min-width:0;
     }
@@ -310,9 +312,10 @@
     .control-group{ margin-bottom:22px; }
     .control-group:last-child{ margin-bottom:0; }
 
+    /* UPDATED: fixed value column, label can wrap */
     .control-label{
       display:grid;
-      grid-template-columns: minmax(0,1fr) auto;
+      grid-template-columns: minmax(0,1fr) 56px;
       gap:18px;
       align-items:center;
       font-family:Inter, sans-serif;
@@ -324,12 +327,12 @@
 
     .control-label .name{
       font-size:1.06rem;
-      white-space:nowrap;
+      white-space:normal;
     }
 
     .control-label .value{
       font-size:1.06rem;
-      min-width:36px;
+      width:56px;
       text-align:right;
       font-variant-numeric:tabular-nums;
     }
@@ -373,9 +376,10 @@
       min-width:0;
     }
 
+    /* UPDATED: smaller chart so it balances with sliders */
     .chart-box{
-      width:260px;
-      height:260px;
+      width:230px;
+      height:230px;
     }
 
     .widget-caption{
@@ -486,7 +490,7 @@
       .widget-card{ position:relative; top:auto; }
       .report-layout{ grid-template-columns:1fr; gap:44px; }
       .grid-3{ grid-template-columns:1fr; }
-      .chart-box{ width:240px; height:240px; }
+      .chart-box{ width:220px; height:220px; }
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
       section{ padding:74px 0; }
@@ -495,10 +499,11 @@
     @media (max-width: 520px){
       .hero h1{ font-size:2.55rem; }
       .pillar-grid{ grid-template-columns:1fr; gap:18px; }
-      .chart-box{ width:220px; height:220px; }
+      .chart-box{ width:210px; height:210px; }
       .widget-card{ padding:28px; }
       .control-label .name{ font-size:1.02rem; }
       .control-label .value{ font-size:1.02rem; }
+      .widget-layout{ gap:28px; }
     }
   </style>
 </head>
@@ -553,7 +558,7 @@
 
         <div class="hero-actions" aria-label="Primary actions">
           <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-          <a href="#report" class="btn btn-outline">Explore the report</a>
+          <a href="https://www.caugia.com/gtm-intelligence-report.html" class="btn btn-outline">Explore the report</a>
         </div>
 
         <div class="pillars-card" aria-label="The 12 System Pillars">
@@ -779,9 +784,7 @@
               }
             }
           },
-          elements: {
-            line: { tension: 0 }
-          }
+          elements: { line: { tension: 0 } }
         }
       });
 
@@ -812,3 +815,4 @@
   </script>
 </body>
 </html>
+```
