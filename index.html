@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,21 +18,21 @@
   <!-- 🔒 SECURITY: Protect this entire page -->
   <script src="auth.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
-      --ink:#0f172a;
-      --body:#475569;
+      --text-dark:#0f172a;
+      --text-body:#475569;
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 10px rgba(2,6,23,0.06);
-      --shadow-lg:0 24px 44px rgba(2,6,23,0.14);
+      --shadow-lg:0 22px 44px rgba(2,6,23,0.12);
       --max:1200px;
     }
 
@@ -40,22 +41,30 @@
     body{
       font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       background:var(--bg);
-      color:var(--ink);
+      color:var(--text-dark);
       line-height:1.6;
       -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
+
     h1,h2,h3,h4{
       font-family:Merriweather, serif;
-      color:var(--ink);
+      color:var(--text-dark);
       font-weight:900;
       letter-spacing:-0.02em;
     }
-    p{ color:var(--body); }
+
+    p{ color:var(--text-body); }
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
-    .container{ max-width:var(--max); margin:0 auto; padding:0 24px; }
-    section{ padding:84px 0; }
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:80px 0; }
 
     .btn{
       display:inline-flex;
@@ -67,22 +76,23 @@
       font-size:0.95rem;
       border:1px solid transparent;
       cursor:pointer;
-      transition:transform .15s ease, background .15s ease, border-color .15s ease;
+      transition:transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       white-space:nowrap;
     }
     .btn-primary{
       background:var(--primary-dark);
-      color:#fff;
-      box-shadow:0 10px 20px rgba(0,86,179,0.18);
+      color:var(--white);
+      box-shadow:0 8px 18px rgba(0,86,179,0.18);
     }
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
     .btn-outline{
       background:transparent;
-      border-color:var(--line);
       color:var(--primary);
+      border-color:var(--line);
     }
     .btn-outline:hover{ background:#fff; border-color:var(--primary); transform:translateY(-1px); }
 
+    /* Header */
     header{
       position:sticky;
       top:0;
@@ -94,8 +104,8 @@
     .nav{
       height:80px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:16px;
     }
     .brand{
@@ -106,29 +116,34 @@
       letter-spacing:0.02em;
     }
     .brand img{ width:34px; height:34px; display:block; }
+
     .nav-links{
       display:flex;
-      gap:26px;
+      gap:28px;
       align-items:center;
     }
     .nav-links a{
-      color:var(--body);
+      color:var(--text-body);
       font-weight:800;
       font-size:0.95rem;
       padding:10px 10px;
       border-radius:12px;
     }
-    .nav-links a:hover{ color:var(--primary); background:rgba(255,255,255,0.7); }
+    .nav-links a:hover{
+      background:rgba(255,255,255,0.7);
+      color:var(--primary);
+    }
 
-    .menu-btn{
+    .menu-toggle{
       display:none;
       border:1px solid var(--line);
       background:#fff;
-      border-radius:14px;
+      border-radius:12px;
       padding:10px 12px;
       font-weight:900;
       cursor:pointer;
     }
+
     .mobile-nav{
       display:none;
       border-top:1px solid rgba(2,6,23,0.06);
@@ -138,279 +153,286 @@
       display:block;
       padding:12px 10px;
       border-radius:12px;
-      color:var(--body);
       font-weight:900;
+      color:var(--text-body);
     }
     .mobile-nav a:hover{ background:#fff; color:var(--primary); }
-    .mobile-actions{
+    .mobile-cta{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
       padding:10px 10px 0;
     }
 
+    /* Hero layout */
     .hero{
-      padding:64px 0 94px;
+      padding:64px 0 90px;
       display:grid;
-      grid-template-columns:1.05fr 0.95fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap:64px;
       align-items:start;
     }
+
     .eyebrow{
-      display:block;
       text-transform:uppercase;
       letter-spacing:0.12em;
       font-size:0.82rem;
       color:var(--primary);
       font-weight:900;
-      margin-bottom:16px;
+      margin-bottom:14px;
+      display:block;
     }
+
     .hero h1{
-      font-size:3.2rem;
+      font-size:3.25rem;
       line-height:1.08;
-      margin-bottom:18px;
+      margin-bottom:20px;
     }
-    .hero-lead{
+
+    .hero .lead{
       font-size:1.12rem;
       margin-bottom:18px;
       max-width:620px;
-      color:var(--body);
     }
+
     .hero-actions{
       display:flex;
       gap:14px;
       flex-wrap:wrap;
       margin-top:18px;
     }
-    .trust-line{
-      margin-top:18px;
-      font-size:0.92rem;
-      color:#64748b;
-      max-width:620px;
-    }
 
+    /* Pillars card */
     .pillars-card{
-      margin-top:30px;
-      background:#fff;
-      border:1px solid var(--line);
+      margin-top:28px;
+      background:var(--white);
+      padding:30px;
       border-radius:var(--radius-md);
-      padding:26px;
+      border:1px solid var(--line);
       box-shadow:var(--shadow-sm);
     }
-    .pillars-card h3{
-      font-family:Inter, sans-serif;
-      font-weight:900;
-      letter-spacing:0;
-      font-size:1.02rem;
-      margin-bottom:14px;
-      color:var(--ink);
+    .pillars-card h2{
+      font-size:1.35rem;
+      margin-bottom:18px;
     }
+
     .pillar-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:10px 22px;
-      font-size:0.92rem;
-      color:#334155;
+      grid-template-rows:repeat(6, auto);
+      column-gap:56px;
+      row-gap:14px;
     }
-    .pillar-item{ display:flex; align-items:baseline; gap:10px; }
-    .pillar-num{ width:22px; text-align:right; font-weight:900; color:#cbd5e1; font-size:0.84rem; }
 
-    .widget{
-      background:#fff;
+    .pillar-item{
+      display:flex;
+      align-items:baseline;
+      gap:14px;
+      color:#334155;
+      font-weight:700;
+      font-size:1.02rem;
+    }
+
+    .pillar-num{
+      width:22px;
+      text-align:right;
+      font-weight:900;
+      color:#cbd5e1;
+      font-size:0.95rem;
+    }
+
+    /* Force left column 1-6 and right column 7-12 */
+    .pillar-item:nth-child(-n+6){ grid-column:1; }
+    .pillar-item:nth-child(n+7){ grid-column:2; }
+
+    /* Widget */
+    .widget-card{
+      background:var(--white);
+      border-radius:28px;
+      padding:44px 44px 34px;
       border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      padding:34px;
       box-shadow:var(--shadow-lg);
       position:sticky;
-      top:118px;
+      top:120px;
     }
-    .widget-header{
+
+    .health-header{
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
+      padding-bottom:22px;
       border-bottom:1px solid var(--line);
-      padding-bottom:18px;
-      margin-bottom:20px;
+      margin-bottom:26px;
     }
-    .widget-title{
+
+    .health-title{
       font-family:Inter, sans-serif;
       font-weight:900;
-      letter-spacing:0;
-      font-size:1.06rem;
+      font-size:2.05rem;
+      letter-spacing:-0.02em;
       margin:0;
     }
-    .widget-sub{
-      font-size:0.78rem;
-      color:#94a3b8;
+
+    .health-sub{
+      margin-top:8px;
+      font-size:1.05rem;
+      color:#9aa4b2;
       text-transform:uppercase;
-      letter-spacing:0.12em;
+      letter-spacing:0.14em;
       font-weight:900;
-      margin-top:6px;
     }
-    .score{
-      font-size:3.3rem;
+
+    .health-score{
+      font-size:6rem;
       font-weight:900;
-      color:var(--primary);
-      line-height:1;
+      color:#1f4fb2;
+      line-height:0.9;
+      letter-spacing:-0.04em;
     }
-    .widget-body{
+
+    .widget-layout{
       display:flex;
-      gap:22px;
+      gap:40px;               /* more space between sliders and chart */
       align-items:center;
     }
-    .controls{ flex:1; }
-    .chart-wrap{ flex:1; display:flex; justify-content:center; }
-    .chart-box{ width:320px; height:320px; }
 
-    .control{ margin-bottom:14px; }
-    .control:last-child{ margin-bottom:0; }
-    .control-label{
+    .controls-col{ flex: 1.35; } /* give sliders more room */
+    .chart-col{
+      flex: 0.85;             /* keep chart present but not dominant */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .chart-box{
+      width: 300px;           /* canvas container */
+      height: 300px;
+      max-width: 100%;
+    }
+
+    .control-group{ margin-bottom:26px; }
+    .control-row{
       display:flex;
       justify-content:space-between;
+      align-items:baseline;
+      margin-bottom:10px;
       font-family:Inter, sans-serif;
-      font-weight:900;
-      font-size:0.86rem;
-      color:#334155;
-      margin-bottom:6px;
     }
+    .control-name{
+      font-weight:900;
+      color:#334155;
+      font-size:1.28rem;
+      letter-spacing:-0.01em;
+    }
+    .control-val{
+      font-weight:900;
+      color:#334155;
+      font-size:1.28rem;
+      min-width:34px;
+      text-align:right;
+    }
+
     input[type=range]{
       width:100%;
-      appearance:none;
       -webkit-appearance:none;
-      height:6px;
-      background:var(--line);
+      appearance:none;
+      height:10px;
+      background:#e2e8f0;
       border-radius:999px;
       outline:none;
     }
+    input[type=range]::-webkit-slider-runnable-track{
+      height:10px;
+      border-radius:999px;
+      background:#e2e8f0;
+    }
     input[type=range]::-webkit-slider-thumb{
       -webkit-appearance:none;
-      width:18px;
-      height:18px;
+      width:26px;
+      height:26px;
       border-radius:50%;
-      background:var(--primary);
-      border:4px solid #fff;
-      box-shadow:0 2px 6px rgba(2,6,23,0.18);
+      background:#1f4fb2;
+      border:6px solid #ffffff;
+      box-shadow:0 10px 18px rgba(2,6,23,0.14);
+      margin-top:-8px;
       cursor:pointer;
-      margin-top:-6px;
-    }
-    input[type=range]::-webkit-slider-runnable-track{
-      height:6px;
-      border-radius:999px;
-      background:var(--line);
-    }
-    .widget-caption{
-      margin-top:14px;
-      text-align:center;
-      font-size:0.86rem;
-      color:#94a3b8;
-      font-weight:800;
     }
 
+    .caption{
+      text-align:center;
+      margin-top:26px;
+      color:#9aa4b2;
+      font-weight:800;
+      font-size:1.25rem;
+      letter-spacing:-0.01em;
+    }
+
+    /* Problem section */
     .section-white{ background:#fff; }
-    .section-dark{ background:#0f172a; color:#fff; }
+    .section-dark{
+      background:#0f172a;
+      color:#fff;
+    }
     .section-dark h2{ color:#fff; }
     .section-dark p{ color:#94a3b8; }
 
-    .intro{
-      max-width:780px;
-    }
-    .intro h2{
-      font-size:2.2rem;
-      margin-bottom:12px;
-    }
-    .intro p{
-      font-size:1.05rem;
-      margin-bottom:0;
-    }
-
-    .cards-3{
-      margin-top:36px;
+    .grid-3{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(3, 1fr);
       gap:28px;
+      margin-top:34px;
     }
-    .card{
+    .mini-card{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:22px;
+      border-radius:18px;
+      padding:26px;
       box-shadow:var(--shadow-sm);
     }
-    .card h3{
+    .mini-card h3{
       font-family:Inter, sans-serif;
       font-weight:900;
-      letter-spacing:0;
-      font-size:1.05rem;
+      font-size:1.1rem;
       margin-bottom:10px;
+      letter-spacing:0;
     }
-    .card p{
-      margin:0;
-      font-size:0.98rem;
-      color:var(--body);
-    }
+    .mini-card p{ margin:0; font-size:0.98rem; }
 
-    .report{
+    /* Report */
+    .report-layout{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:70px;
       align-items:center;
     }
-    .report h2{
-      font-size:2.4rem;
-      margin-bottom:14px;
-    }
-    .check{
-      list-style:none;
-      margin:18px 0 26px;
-      padding:0;
-    }
-    .check li{
+    .check-list{ margin:18px 0 26px; }
+    .check-list li{
       display:flex;
       gap:12px;
-      margin-bottom:10px;
-      font-size:1.05rem;
+      align-items:flex-start;
+      margin-bottom:12px;
       color:#e2e8f0;
+      font-weight:700;
+      font-size:1.05rem;
     }
-    .check li::before{
+    .check-list li::before{
       content:"✓";
-      font-weight:900;
       color:#4ade80;
+      font-weight:900;
       margin-top:1px;
     }
     .report-visual{
-      height:380px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.12);
       background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:18px;
+      height:380px;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:18px;
       text-align:center;
+      padding:18px;
       color:rgba(255,255,255,0.35);
       font-weight:900;
-    }
-
-    .cta{
-      text-align:center;
-      max-width:860px;
-      margin:0 auto;
-    }
-    .cta h2{
-      font-size:2.3rem;
-      margin-bottom:12px;
-    }
-    .cta p{
-      font-size:1.1rem;
-      margin:0;
-      color:var(--body);
-    }
-    .cta-actions{
-      margin-top:18px;
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      flex-wrap:wrap;
     }
 
     footer{
@@ -420,22 +442,38 @@
       text-align:center;
       color:#94a3b8;
       font-size:0.9rem;
+      font-weight:600;
     }
 
-    @media(max-width: 960px){
-      .hero, .report, .cards-3{ grid-template-columns:1fr; }
-      .widget-body{ flex-direction:column-reverse; }
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; gap:42px; }
+      .widget-card{ position:relative; top:auto; padding:38px 28px 30px; }
+      .widget-layout{ flex-direction:column-reverse; gap:26px; }
+      .chart-box{ width: 280px; height: 280px; }
+      .health-score{ font-size:5rem; }
       .nav-links{ display:none; }
-      .menu-btn{ display:inline-flex; }
-      .widget{ position:relative; top:auto; }
-      section{ padding:72px 0; }
-      .hero h1{ font-size:2.55rem; }
-      .pillar-grid{ grid-template-columns:1fr; }
-      .chart-box{ width:320px; height:320px; }
+      .menu-toggle{ display:inline-flex; }
+      .mobile-nav{ display:none; }
+      .pillar-grid{
+        grid-template-columns:1fr;
+        grid-template-rows:none;
+        row-gap:12px;
+        column-gap:0;
+      }
+      .pillar-item:nth-child(-n+6),
+      .pillar-item:nth-child(n+7){ grid-column:auto; }
+      .grid-3, .report-layout{ grid-template-columns:1fr; }
+      section{ padding:70px 0; }
     }
 
-    @media(max-width: 420px){
-      .chart-box{ width:280px; height:280px; }
+    @media (max-width: 520px){
+      .hero h1{ font-size:2.55rem; }
+      .health-title{ font-size:1.75rem; }
+      .health-sub{ font-size:0.95rem; }
+      .health-score{ font-size:4.6rem; }
+      .control-name, .control-val{ font-size:1.15rem; }
+      .caption{ font-size:1.05rem; }
     }
   </style>
 </head>
@@ -448,59 +486,55 @@
         <span>CAUGIA CONSULTING</span>
       </a>
 
-      <nav aria-label="Primary navigation">
-        <ul class="nav-links">
-          <li><a href="#system">The System</a></li>
-          <li><a href="#score">GTM Score</a></li>
-          <li><a href="#report">Intelligence Report</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="resources.html">Resources</a></li>
-        </ul>
-      </nav>
+      <ul class="nav-links" aria-label="Primary navigation">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
 
-      <a href="contact.html" class="btn btn-primary">Contact</a>
-      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a class="btn btn-primary" href="contact.html">Contact</a>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+      </div>
     </div>
 
     <div class="container mobile-nav" id="mobileNav">
-      <a href="#system">The System</a>
-      <a href="#score">GTM Score</a>
-      <a href="#report">Intelligence Report</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
       <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-actions">
+      <div class="mobile-cta">
         <a href="contact.html" class="btn btn-primary">Contact</a>
-        <a href="#score" class="btn btn-outline">Get your GTM Score</a>
+        <a href="gtm-assessment.html" class="btn btn-outline">Free GTM Score</a>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="system" class="container hero">
+    <section class="container hero">
       <div>
         <span class="eyebrow">One GTM system for B2B SaaS</span>
-        <h1>Stop revenue leakage with a clear operating system for revenue.</h1>
+        <h1>Stop revenue leakage by aligning your GTM system.</h1>
 
-        <p class="hero-lead">
-          Most GTM teams do not have a problem of effort. They have a problem of system. Work is happening everywhere, but it is not compounding.
+        <p class="lead">
+          Caugia helps B2B SaaS leaders see where revenue leaks, why it happens, and what to fix first.
+          We turn scattered GTM activity into one coherent operating system for predictable growth.
         </p>
 
-        <p class="hero-lead">
-          Caugia Consulting helps founders and GTM leaders map the system, identify the primary constraint, and set a practical priority order that leadership can execute.
+        <p class="lead">
+          The GRIP Framework, the GTM Score, and the GRIP Diamond give leadership a shared model to understand the system, align decisions, and improve performance in the right order.
         </p>
 
         <div class="hero-actions">
-          <a href="#score" class="btn btn-primary">Get your GTM Score</a>
-          <a href="#report" class="btn btn-outline">See the Intelligence Report</a>
-        </div>
-
-        <div class="trust-line">
-          A structured self assessment and an executive narrative in under ten minutes. No calls unless you ask.
+          <a class="btn btn-primary" href="gtm-assessment.html">Free GTM Score</a>
+          <a class="btn btn-outline" href="#report">Explore the report</a>
         </div>
 
         <div class="pillars-card">
-          <h3>The 12 System Pillars</h3>
-
+          <h2>The 12 System Pillars</h2>
           <div class="pillar-grid">
             <div class="pillar-item"><span class="pillar-num">1</span> GTM Strategy & Leadership</div>
             <div class="pillar-item"><span class="pillar-num">2</span> Market Intelligence</div>
@@ -518,92 +552,101 @@
         </div>
       </div>
 
-      <aside class="widget" id="score" aria-label="GRIP Health widget">
-        <div class="widget-header">
+      <aside class="widget-card" aria-label="GRIP Health widget" id="score">
+        <div class="health-header">
           <div>
-            <div class="widget-title">Your GRIP Health</div>
-            <div class="widget-sub">Current maturity</div>
+            <div class="health-title">Your GRIP Health</div>
+            <div class="health-sub">Current maturity</div>
           </div>
-          <div class="score" id="totalScore">58</div>
+          <div class="health-score" id="totalScore">58</div>
         </div>
 
-        <div class="widget-body">
-          <div class="controls">
-            <div class="control">
-              <div class="control-label"><span>Guidance</span><span id="val-g">45</span></div>
-              <input type="range" id="input-g" aria-label="Guidance" min="0" max="100" value="45" />
+        <div class="widget-layout">
+          <div class="controls-col">
+            <div class="control-group">
+              <div class="control-row">
+                <div class="control-name">Guidance</div>
+                <div class="control-val" id="val-g">45</div>
+              </div>
+              <input type="range" id="input-g" min="0" max="100" value="45" />
             </div>
-            <div class="control">
-              <div class="control-label"><span>Resources</span><span id="val-r">60</span></div>
-              <input type="range" id="input-r" aria-label="Resources" min="0" max="100" value="60" />
+
+            <div class="control-group">
+              <div class="control-row">
+                <div class="control-name">Resources</div>
+                <div class="control-val" id="val-r">60</div>
+              </div>
+              <input type="range" id="input-r" min="0" max="100" value="60" />
             </div>
-            <div class="control">
-              <div class="control-label"><span>Implementation</span><span id="val-i">85</span></div>
-              <input type="range" id="input-i" aria-label="Implementation" min="0" max="100" value="85" />
+
+            <div class="control-group">
+              <div class="control-row">
+                <div class="control-name">Implementation</div>
+                <div class="control-val" id="val-i">85</div>
+              </div>
+              <input type="range" id="input-i" min="0" max="100" value="85" />
             </div>
-            <div class="control">
-              <div class="control-label"><span>Performance</span><span id="val-p">43</span></div>
-              <input type="range" id="input-p" aria-label="Performance" min="0" max="100" value="43" />
+
+            <div class="control-group" style="margin-bottom:0;">
+              <div class="control-row">
+                <div class="control-name">Performance</div>
+                <div class="control-val" id="val-p">43</div>
+              </div>
+              <input type="range" id="input-p" min="0" max="100" value="43" />
             </div>
           </div>
 
-          <div class="chart-wrap" aria-hidden="true">
+          <div class="chart-col">
             <div class="chart-box">
-              <canvas id="radarChart"></canvas>
+              <canvas id="radarChart" aria-label="GRIP radar chart" role="img"></canvas>
             </div>
           </div>
         </div>
 
-        <p class="widget-caption">The system shape across four forces</p>
+        <div class="caption">The system shape across four forces</div>
       </aside>
     </section>
 
     <section class="section-white">
       <div class="container">
-        <div class="intro">
+        <div style="max-width:760px;">
           <h2>Why GTM feels heavy even when everyone works hard</h2>
-          <p>
-            Leakage rarely comes from one broken thing. It comes from a system where strategy, execution and measurement drift apart.
-            When leadership lacks a shared model, the organization keeps shipping initiatives while the constraint stays untouched.
-          </p>
+          <p>Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift. The system becomes heavier each quarter, even when the team is strong.</p>
         </div>
 
-        <div class="cards-3">
-          <div class="card">
-            <h3>Local optimisation</h3>
-            <p>Teams optimise their own metrics. The customer journey suffers and revenue becomes harder to predict.</p>
+        <div class="grid-3">
+          <div class="mini-card">
+            <h3>Misaligned priorities</h3>
+            <p>Teams optimise local metrics instead of the full revenue system. Pipeline grows, conversion does not.</p>
           </div>
-          <div class="card">
-            <h3>Debating symptoms</h3>
-            <p>Leadership debates what is visible. Without a system view, decisions become reactive and slow.</p>
+          <div class="mini-card">
+            <h3>No shared model</h3>
+            <p>Leadership debates symptoms because the system is not visible. Decisions become slow and reactive.</p>
           </div>
-          <div class="card">
-            <h3>Wrong sequence</h3>
-            <p>Good initiatives arrive in the wrong order. Effort increases, but it does not compound.</p>
+          <div class="mini-card">
+            <h3>Execution without sequence</h3>
+            <p>Great initiatives arrive in the wrong order. The real constraint stays untouched, so effort does not compound.</p>
           </div>
         </div>
       </div>
     </section>
 
     <section id="report" class="section-dark">
-      <div class="container report">
+      <div class="container report-layout">
         <div>
           <span class="eyebrow" style="color:#60a5fa;">The flagship diagnostic</span>
           <h2>The GTM Intelligence Report</h2>
-          <p>
-            A board level diagnostic of your revenue engine. Built to support executive decisions, align leadership, and create a practical
-            quarter by quarter plan that the team can execute.
-          </p>
+          <p>A board level diagnostic of your revenue engine. Built to support executive decisions, alignment, and a practical priority order.</p>
 
-          <ul class="check">
-            <li>Twelve pillar scoring with clear logic and evidence</li>
-            <li>The primary constraint, the leakage pattern, and what to fix first</li>
-            <li>A roadmap that turns priorities into an operating rhythm</li>
+          <ul class="check-list">
+            <li>Twelve pillar scoring with clear logic</li>
+            <li>The primary constraint and what to fix first</li>
+            <li>A practical roadmap leadership can execute quarter by quarter</li>
           </ul>
 
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
             <a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#fff; color:#0f172a;">Explore the report</a>
-            <a href="#score" class="btn btn-outline" style="border-color:rgba(255,255,255,0.22); color:#fff;">Start with the Score</a>
+            <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#fff;">Start with the Score</a>
           </div>
         </div>
 
@@ -615,15 +658,11 @@
     </section>
 
     <section>
-      <div class="container cta">
+      <div class="container" style="text-align:center; max-width:860px;">
         <span class="eyebrow">Next step</span>
         <h2>Start with the GTM Score</h2>
-        <p>
-          A structured self assessment that gives you an executive narrative and a clear priority order in under ten minutes.
-          No calls unless you ask.
-        </p>
-
-        <div class="cta-actions">
+        <p>A structured self assessment that gives you an executive narrative and clear priorities in under ten minutes. No calls unless you ask.</p>
+        <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
           <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
           <a href="contact.html" class="btn btn-outline">Contact</a>
         </div>
@@ -633,111 +672,98 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2026 Caugia Consulting. All rights reserved.</p>
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
+    // Mobile nav toggle
     (function () {
-      const btn = document.getElementById("menuBtn");
-      const nav = document.getElementById("mobileNav");
-      if (!btn || !nav) return;
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (!toggle || !mobileNav) return;
 
-      btn.addEventListener("click", () => {
-        const open = nav.style.display === "block";
-        nav.style.display = open ? "none" : "block";
-        btn.setAttribute("aria-expanded", String(!open));
-      });
-
-      nav.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => {
-          nav.style.display = "none";
-          btn.setAttribute("aria-expanded", "false");
-        });
+      toggle.addEventListener("click", () => {
+        const isOpen = mobileNav.style.display === "block";
+        mobileNav.style.display = isOpen ? "none" : "block";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
       });
     })();
 
+    // Chart + sliders
     (function () {
-      function el(id){ return document.getElementById(id); }
-
-      const canvas = el("radarChart");
+      const canvas = document.getElementById("radarChart");
       if (!canvas) return;
 
-      function waitForChartJs(cb){
-        if (typeof Chart !== "undefined") return cb();
-        let tries = 0;
-        const t = setInterval(() => {
-          tries += 1;
-          if (typeof Chart !== "undefined") {
-            clearInterval(t);
-            cb();
+      const ctx = canvas.getContext("2d");
+
+      const chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["G", "R", "I", "P"],
+          datasets: [{
+            data: [45, 60, 85, 43],
+            backgroundColor: "rgba(31, 79, 178, 0.14)",
+            borderColor: "#1f4fb2",
+            pointBackgroundColor: "#1f4fb2",
+            borderWidth: 3,
+            pointRadius: 4,
+            pointHoverRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 160 },
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+          },
+          scales: {
+            r: {
+              suggestedMin: 0,
+              suggestedMax: 90,                 // slightly smaller grid for better balance
+              ticks: { display: false },
+              angleLines: { color: "#e2e8f0" },
+              grid: { color: "#e2e8f0" },
+              pointLabels: {
+                color: "#334155",
+                font: { size: 18, weight: "900" },
+                padding: 10
+              }
+            }
+          },
+          elements: {
+            line: { tension: 0 }
           }
-          if (tries > 40) clearInterval(t);
-        }, 50);
+        }
+      });
+
+      function update() {
+        const g = parseInt(document.getElementById("input-g").value, 10);
+        const r = parseInt(document.getElementById("input-r").value, 10);
+        const i = parseInt(document.getElementById("input-i").value, 10);
+        const p = parseInt(document.getElementById("input-p").value, 10);
+
+        document.getElementById("val-g").textContent = g;
+        document.getElementById("val-r").textContent = r;
+        document.getElementById("val-i").textContent = i;
+        document.getElementById("val-p").textContent = p;
+
+        document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
+
+        chart.data.datasets[0].data = [g, r, i, p];
+        chart.update();
       }
 
-      waitForChartJs(() => {
-        const ctx = canvas.getContext("2d");
-
-        const chart = new Chart(ctx, {
-          type: "radar",
-          data: {
-            labels: ["G", "R", "I", "P"],
-            datasets: [{
-              data: [45, 60, 85, 43],
-              backgroundColor: "rgba(0, 86, 179, 0.15)",
-              borderColor: "#0056b3",
-              pointBackgroundColor: "#0056b3",
-              borderWidth: 2,
-              pointRadius: 3
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              r: {
-  suggestedMin: 0,
-  suggestedMax: 90,   // 👈 net iets compacter raster
-  ticks: { display: false },
-  grid: { color: "#e2e8f0" },
-  angleLines: { color: "#e2e8f0" },
-  pointLabels: {
-    font: { size: 16, weight: "900" },
-    color: "#334155",
-    padding: 8        // 👈 labels iets dichter naar het centrum
-  }
-}
-            },
-            plugins: { legend: { display: false } }
-          }
-        });
-
-        function update() {
-          const g = parseInt(el("input-g").value, 10);
-          const r = parseInt(el("input-r").value, 10);
-          const i = parseInt(el("input-i").value, 10);
-          const p = parseInt(el("input-p").value, 10);
-
-          el("val-g").textContent = g;
-          el("val-r").textContent = r;
-          el("val-i").textContent = i;
-          el("val-p").textContent = p;
-
-          el("totalScore").textContent = Math.round((g + r + i + p) / 4);
-
-          chart.data.datasets[0].data = [g, r, i, p];
-          chart.update();
-        }
-
-        ["input-g","input-r","input-i","input-p"].forEach(id => {
-          const node = el(id);
-          if (node) node.addEventListener("input", update);
-        });
-
-        update();
+      ["input-g","input-r","input-i","input-p"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", update);
       });
+
+      update();
     })();
   </script>
 </body>
 </html>
+```
