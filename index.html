@@ -20,45 +20,57 @@
 
   <style>
     /* =========================================
-       FIXES & OVERRIDES (OM TE ZORGEN DAT HET PERFECT IS)
+       CRITICAL OVERRIDES (THE "GOLDEN MASTER" FIXES)
        ========================================= */
     
-    /* 1. TYPOGRAFIE UPDATE */
-    h1, h2, h3, .service-title-main, .gtm-v2-title {
+    /* 1. TYPOGRAFIE: DWING DE "MCKINSEY LOOK" AF */
+    h1, h2, h3, h4, .service-title, .service-title-main, .gtm-v2-title {
       font-family: 'Merriweather', serif !important;
       letter-spacing: -0.02em;
+      color: var(--ink);
     }
     
-    body {
+    /* Body blijft Inter voor leesbaarheid */
+    body, p, a, li, input, label {
       font-family: 'Inter', sans-serif;
     }
 
-    /* 2. HERO GRID FIX (GEEN OVERLAP MEER) */
+    /* 2. HERO GRID: GEEN OVERLAP MEER (SAFE ZONES) */
     .home-hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(420px, 1fr); /* Tekst krijgt ruimte, Kaart heeft vaste breedte */
+      /* Tekst krijgt voorrang, Kaart heeft vaste breedte, geen clash */
+      grid-template-columns: minmax(0, 1.2fr) minmax(420px, 1fr); 
       gap: 64px;
       align-items: center;
     }
 
     .home-hero-copy {
-      min-width: 0; /* Voorkomt dat tekst de container opblaast */
-      z-index: 2;
+      min-width: 0; 
+      z-index: 2; /* Tekst ligt altijd bovenop */
+    }
+    
+    .home-hero-copy h1 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        line-height: 1.15;
+        font-weight: 900;
     }
 
-    /* 3. SLIDER PERFECTIE (EXACT IN HET MIDDEN) */
+    /* 3. SLIDER PERFECTIE (EXACT GECENTREERD + ROND) */
     /* Webkit (Chrome/Safari) */
     input[type=range]::-webkit-slider-runnable-track {
-      height: 6px;
+      height: 6px; /* Iets dikker voor luxe gevoel */
       border-radius: 100px;
-      background: #E5E7EB;
+      background: #E2E8F0;
     }
     
     input[type=range]::-webkit-slider-thumb {
-      margin-top: -7px; /* (Track 6px - Thumb 20px) / 2 = -7px exact */
+      /* WISKUNDE: (Track 6px - Thumb 20px) / 2 = -7px */
+      margin-top: -7px; 
       height: 20px;
       width: 20px;
       border: 4px solid white;
+      border-radius: 50%;
+      background: var(--blue);
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
@@ -66,46 +78,55 @@
     input[type=range]::-moz-range-track {
       height: 6px;
       border-radius: 100px;
-      background: #E5E7EB;
+      background: #E2E8F0;
     }
     
     input[type=range]::-moz-range-thumb {
       height: 20px;
       width: 20px;
       border: 4px solid white;
-      background: #0046A5;
+      border-radius: 50%;
+      background: var(--blue);
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     /* 4. DIAMOND LABELS (BINNEN DE LIJNTJES) */
     .diamond-label {
       background: white;
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 5px 10px;
+      border-radius: 6px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       font-weight: 700;
       font-size: 0.75rem;
       z-index: 5;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      white-space: nowrap; /* Voorkomt afbreken */
     }
-    /* Positie correcties */
-    .diamond-label-top    { top: 0; left: 50%; transform: translate(-50%, -50%); }
-    .diamond-label-bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
-    .diamond-label-left   { left: -10px; top: 50%; transform: translate(-100%, -50%); }
-    .diamond-label-right  { right: -10px; top: 50%; transform: translate(100%, -50%); }
+    
+    /* We duwen ze VANUIT het midden naar buiten, maar niet te ver */
+    .diamond-label-top    { top: 10px; left: 50%; transform: translate(-50%, 0); }
+    .diamond-label-bottom { bottom: 10px; left: 50%; transform: translate(-50%, 0); }
+    /* Implementation en Resources strakker tegen de diamant aan */
+    .diamond-label-left   { left: 10px; top: 50%; transform: translate(0, -50%); }
+    .diamond-label-right  { right: 10px; top: 50%; transform: translate(0, -50%); }
 
-    /* 5. CONTACT BUTTON HERSTEL (JOUW ORIGINELE STIJL) */
+    /* 5. CONTACT BUTTON (BLAUW, ZOALS HET HOORT) */
     nav.nav-desktop a.cta {
       color: #fff !important;
       background-color: var(--blue);
       border: 1px solid var(--blue);
-      padding: 9px 18px;
+      padding: 10px 20px;
       border-radius: 50px;
+      font-weight: 600;
     }
     nav.nav-desktop a.cta:hover {
       background-color: #003680;
+      border-color: #003680;
+      transform: translateY(-1px);
     }
 
-    /* Responsive fix voor Hero */
+    /* RESPONSIVE FIXES */
     @media (max-width: 1024px) {
       .home-hero-grid {
         grid-template-columns: 1fr;
@@ -113,14 +134,15 @@
       }
       .home-hero-visual {
         width: 100%;
-        transform: none;
+        /* Reset transformaties uit caugia.css die dingen scheef trekken */
+        transform: none !important; 
         padding: 0;
         background: transparent;
         box-shadow: none;
         border: none;
       }
-      .diamond-label-left { left: 0; transform: translate(0, -50%); }
-      .diamond-label-right { right: 0; transform: translate(0, -50%); }
+      /* Op mobiel de labels iets kleiner */
+      .diamond-label { font-size: 0.7rem; padding: 4px 8px; }
     }
   </style>
 </head>
@@ -177,12 +199,12 @@
           </p>
 
           <p class="hero-lead">
-            The GTM Framework and GRIP Diamond turn scattered activity into a coherent model that leadership can trust.
+            Using the GTM Framework and GRIP Diamond, we turn scattered activity into a coherent model that leadership can trust.
           </p>
 
           <div class="hero-cta-row">
             <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
-            <a href="#diamond-section" class="cta cta--ghost">See how the GRIP Diamond works</a>
+            <a href="#diamond-section" class="cta cta--ghost">See how the Diamond works</a>
           </div>
 
           <p class="hero-footnote">
@@ -262,12 +284,9 @@
               <div class="diamond-title">Your GRIP Diamond</div>
 
               <div class="diamond-canvas">
-                <svg class="diamond-svg" viewBox="40 40 200 200">
+                <svg class="diamond-svg" viewBox="0 0 260 260">
                   <g fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="1">
-                    <polygon points="140,40 240,140 140,240 40,140"></polygon>
-                    <polygon points="140,70 210,140 140,210 70,140"></polygon>
-                    <polygon points="140,100 180,140 140,180 100,140"></polygon>
-                  </g>
+                    <polygon points="130,30 230,130 130,230 30,130"></polygon> <polygon points="130,63 197,130 130,197 63,130"></polygon> <polygon points="130,97 163,130 130,163 97,130"></polygon> </g>
 
                   <polygon id="hero-diamond-polygon"
                     fill="rgba(243,108,33,0.10)"
@@ -275,7 +294,7 @@
                     stroke-width="2"
                   ></polygon>
 
-                  <circle cx="140" cy="140" r="7" fill="#0046A5" stroke="#fff" stroke-width="2"></circle>
+                  <circle cx="130" cy="130" r="7" fill="#0046A5" stroke="#fff" stroke-width="2"></circle>
                 </svg>
 
                 <div class="diamond-label diamond-label-top">Guidance</div>
@@ -788,8 +807,8 @@
 
     // 2) Diamond shape
     const point = (deg, val) => {
-      const cx = 140;
-      const cy = 140;
+      const cx = 130;
+      const cy = 130;
       const maxR = 100;
       const rad = (deg * Math.PI) / 180;
       const radius = (val / 100) * maxR;
