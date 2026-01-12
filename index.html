@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Caugia Consulting | Stop Revenue Leakage</title>
-  <meta name="description" content="Turn scattered GTM activity into one predictable revenue system. The GRIP Framework helps leaders identify constraints and stop leakage." />
+  <title>Caugia Consulting | GTM Clarity for B2B SaaS</title>
+  <meta name="description" content="Caugia Consulting helps executives turn scattered efforts into one GTM system. The GRIP Framework gives you a calm, structured way to understand your revenue engine." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
@@ -20,7 +20,7 @@
 
   <style>
     /* =========================================
-       CRITICAL PAGE OVERRIDES (THE "SUPER" LAYOUT)
+       CRITICAL PAGE OVERRIDES (THE "PREMIUM" LAYOUT)
        ========================================= */
     
     :root {
@@ -40,7 +40,7 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       line-height: 1.2;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     
     body, p, a, li, input, label {
@@ -153,23 +153,47 @@
     }
     .health-score-big { font-size: 2.2rem; font-weight: 800; color: var(--blue); line-height: 1; }
     
-    /* SLIDERS (Gefixed: Rond & Gecentreerd) */
+    /* SLIDERS (De "Mooie" versie: Rond & Gecentreerd) */
     .health-rows { display: flex; flex-direction: column; gap: 16px; }
     .slider-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
     
     input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 0; }
     input[type=range]:focus { outline: none; }
 
-    input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 100px; background: #E2E8F0; cursor: pointer; }
-    input[type=range]::-moz-range-track { height: 6px; border-radius: 100px; background: #E2E8F0; cursor: pointer; }
+    /* Track */
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 100px;
+      background: #E2E8F0;
+      cursor: pointer;
+    }
+    input[type=range]::-moz-range-track {
+      height: 6px;
+      border-radius: 100px;
+      background: #E2E8F0;
+      cursor: pointer;
+    }
     
+    /* Thumb (Center Fix) */
     input[type=range]::-webkit-slider-thumb {
-      height: 18px; width: 18px; border-radius: 50%; background: var(--blue); border: 3px solid white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; -webkit-appearance: none; margin-top: -6px; 
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -6px; /* (6px track - 18px thumb) / 2 = -6px */
     }
     input[type=range]::-moz-range-thumb {
-      height: 18px; width: 18px; border: 3px solid white; border-radius: 50%; background: var(--blue);
-      cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      height: 18px;
+      width: 18px;
+      border: 3px solid white;
+      border-radius: 50%;
+      background: var(--blue);
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     /* DIAMOND CARD */
@@ -195,47 +219,45 @@
     .diamond-canvas { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
     .diamond-canvas svg { width: 260px; height: 260px; overflow: visible; }
 
+    /* LABELS (Gefixed: Binnen de lijntjes) */
     .diamond-label {
-      position: absolute; background: white; padding: 4px 8px; border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08); font-weight: 700; font-size: 0.7rem; color: var(--ink);
-      white-space: nowrap; pointer-events: none; z-index: 20;
+      position: absolute;
+      background: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: var(--ink);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
     }
     
-    .lbl-top { top: 15px; left: 50%; transform: translate(-50%, 0); }
+    /* Positionering: Strakker tegen de diamant */
+    .lbl-top    { top: 15px; left: 50%; transform: translate(-50%, 0); }
     .lbl-bottom { bottom: 15px; left: 50%; transform: translate(-50%, 0); }
-    .lbl-left { left: 15px; top: 50%; transform: translate(0, -50%); }
-    .lbl-right { right: 15px; top: 50%; transform: translate(0, -50%); }
+    .lbl-left   { left: 15px; top: 50%; transform: translate(0, -50%); }
+    .lbl-right  { right: 15px; top: 50%; transform: translate(0, -50%); }
 
-    /* 4. CONTENT FIXES (Restoring the layout) */
-    .story-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
-    .story-img img { width: 100%; border-radius: var(--radius); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
-    
-    .home-modules-grid, .marketplace-grid { 
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; 
+    /* MODULES GRID */
+    .home-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
     }
-    
-    /* Marketplace specifiek 4 koloms zoals gevraagd in oude code */
-    .marketplace-grid { grid-template-columns: repeat(4, 1fr); }
-
-    .home-module, .marketplace-card, .card {
+    .home-module {
       padding: 24px;
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       transition: 0.2s;
       background: white;
-      display: flex; flex-direction: column;
-      text-decoration: none; color: inherit;
+      display: block;
+      text-decoration: none;
     }
-    .home-module:hover, .marketplace-card:hover, .card:hover { 
-        border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); 
-    }
-
-    .module-label, .mp-label { font-size: 0.75rem; text-transform: uppercase; color: #64748b; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.05em; }
-    
-    /* FAQ Styling */
-    .faq details { border-bottom: 1px solid #e2e8f0; padding: 16px 0; }
-    .faq summary { font-weight: 600; cursor: pointer; color: var(--ink); list-style: none; }
-    .faq p { margin-top: 12px; font-size: 0.95rem; color: var(--ink-soft); max-width: 700px; }
+    .home-module:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); }
+    .home-module h3 { font-family: 'Inter', sans-serif !important; font-size: 1.1rem; color: var(--blue); margin-bottom: 8px; }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
@@ -276,21 +298,26 @@
     <div class="wrap home-hero-grid">
       
       <div class="home-hero-copy">
-        <span class="kicker" style="color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:16px;">One GTM system for B2B SaaS</span>
+        <span class="kicker" style="color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:12px;">One GTM system for B2B SaaS</span>
         
-        <h1>Stop revenue leakage. Build a predictable GTM system.</h1>
+        <h1>From scattered activity to one GTM system.</h1>
         
         <p class="hero-lead">
-          Misaligned teams leak value at every handoff. Caugia helps leaders identify structural constraints and build one calm operating system for predictable revenue.
+          Caugia Consulting helps go to market leaders turn tools, data and teams into one calm operating system for predictable revenue.
         </p>
         
+        <p class="hero-lead">
+          The GTM Framework, the GRIP Diamond and the GTM Score give you one coherent model to understand your system, align leadership and improve performance in the right order.
+        </p>
+
         <div class="hero-actions" style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
-          <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
-          <a href="#diamond-section" class="cta cta--ghost">See how it works</a>
+          <a href="gtm-assessment.html" class="cta">Free GTM Score</a>
+          <a href="#diamond-section" class="cta cta--ghost">See how the GRIP Diamond works</a>
         </div>
         
         <p class="hero-note" style="font-size:0.9rem; color:#94a3b8;">
-          A structured self-assessment. No calls. No meetings.
+          A structured self-assessment and a clear narrative in under ten minutes.<br>
+          Without calls or meetings.
         </p>
       </div>
 
@@ -307,19 +334,34 @@
 
           <div class="health-rows">
             <div class="health-row">
-              <div class="slider-header"><span>Guidance</span><span id="val-guidance">45</span></div>
+              <div class="slider-header">
+                <span>Guidance</span>
+                <span id="val-guidance">45</span>
+              </div>
               <input type="range" id="slider-guidance" min="0" max="100" value="45" oninput="updateDiamond()">
             </div>
+
             <div class="health-row">
-              <div class="slider-header"><span>Resources</span><span id="val-resources">60</span></div>
+              <div class="slider-header">
+                <span>Resources</span>
+                <span id="val-resources">60</span>
+              </div>
               <input type="range" id="slider-resources" min="0" max="100" value="60" oninput="updateDiamond()">
             </div>
+
             <div class="health-row">
-              <div class="slider-header"><span>Implementation</span><span id="val-implementation">85</span></div>
+              <div class="slider-header">
+                <span>Implementation</span>
+                <span id="val-implementation">85</span>
+              </div>
               <input type="range" id="slider-implementation" min="0" max="100" value="85" oninput="updateDiamond()">
             </div>
+
             <div class="health-row">
-              <div class="slider-header"><span>Performance</span><span id="val-performance">43</span></div>
+              <div class="slider-header">
+                <span>Performance</span>
+                <span id="val-performance">43</span>
+              </div>
               <input type="range" id="slider-performance" min="0" max="100" value="43" oninput="updateDiamond()">
             </div>
           </div>
@@ -334,9 +376,14 @@
                 <polygon points="200,100 300,200 200,300 100,200" />
                 <polygon points="200,150 250,200 200,250 150,200" />
               </g>
-              <polygon id="diamond-poly" points="" fill="rgba(0, 70, 165, 0.15)" stroke="#0046A5" stroke-width="3" />
+              <polygon id="diamond-poly" 
+                       points="" 
+                       fill="rgba(0, 70, 165, 0.15)" 
+                       stroke="#0046A5" 
+                       stroke-width="3" />
               <circle cx="200" cy="200" r="5" fill="#0046A5" />
             </svg>
+
             <div class="diamond-label lbl-top">Guidance</div>
             <div class="diamond-label lbl-right">Implementation</div>
             <div class="diamond-label lbl-bottom">Performance</div>
@@ -349,74 +396,108 @@
   </section>
 
   <section class="section" style="background: var(--bg-soft);">
-    <div class="wrap story-grid">
+    <div class="wrap" style="display:grid; grid-template-columns:1.2fr 1fr; gap:80px; align-items:center;">
       <div class="story-text">
         <h2>Clarity before speed.</h2>
-        <p>Most GTM teams are not held back by effort. They are held back by uncoordinated effort. Teams work in silos, tools multiply, and ownership blurs.</p>
-        <p>The GRIP model shows your GTM motion through four forces. When these align, revenue becomes predictable.</p>
-        
-        <div class="story-forces" style="margin-top:24px; padding-top:24px; border-top:1px solid #e2e8f0;">
-          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:12px;">
-            <strong style="color:var(--blue);">Guidance</strong><span>Strategy, narrative, ICP.</span>
-          </div>
-          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:12px;">
-            <strong style="color:var(--blue);">Resources</strong><span>Product, tools, talent.</span>
-          </div>
-          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:12px;">
-            <strong style="color:var(--blue);">Implementation</strong><span>Consistency in execution.</span>
-          </div>
-          <div style="display:grid; grid-template-columns:140px 1fr; margin-bottom:12px;">
-            <strong style="color:var(--blue);">Performance</strong><span>Signals leadership can trust.</span>
-          </div>
-        </div>
+        <p>
+          Most GTM teams are not held back by effort. They are held back by uncoordinated effort. 
+          Teams work in silos, tools multiply, and ownership blurs. Everyone is busy, yet the system feels heavier every quarter.
+        </p>
+        <p>
+          Caugia gives you one structured way to look at the entire GTM system. Instead of fixing symptoms inside individual teams, you start with the forces that shape the whole system.
+        </p>
+        <p>
+          The GRIP model shows your GTM motion through four forces and twelve pillars. This structure is the foundation for the GTM Score, the GRIP Health Score and every service that Caugia delivers.
+        </p>
       </div>
+
       <div class="story-img">
-        <img src="assets/clarity-before-speed.webp" alt="Clarity" style="width:100%; border-radius:16px;">
+        <img src="assets/clarity-before-speed.webp" alt="GTM Alignment" style="width:100%; border-radius:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.1);">
       </div>
     </div>
-
-    <div class="wrap story-grid" style="margin-top:96px;">
-        <div class="story-img">
-            <img src="assets/caugia-gtm-diamond-team.webp" alt="Diamond" style="width:100%; border-radius:16px;">
-        </div>
-        <div class="story-text">
-            <h2>The GRIP Diamond.</h2>
-            <p>The Diamond is a simple way to see the real shape of your GTM system. It maps twelve pillars into four forces, showing where tension accumulates.</p>
-            <p>Together they reveal the system dynamic. The GTM Score shows strength. The Diamond shows why.</p>
-        </div>
+    
+    <div class="wrap" style="display:grid; grid-template-columns:1fr 1.2fr; gap:80px; align-items:center; margin-top:80px;">
+      <div class="story-img">
+        <img src="assets/caugia-gtm-diamond-team.webp" alt="GRIP Diamond" style="width:100%; border-radius:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.1);">
+      </div>
+      
+      <div class="story-text">
+        <h2>The GRIP Diamond.</h2>
+        <p>
+          The GRIP Diamond is a simple way to see the real shape of your go-to-market system. It maps twelve GTM pillars into four forces that explain why your motion feels smooth, heavy, fast or unpredictable.
+        </p>
+        
+        <h4 style="margin-top:24px; font-size:1.1rem;">Four forces that shape every GTM system</h4>
+        <ul class="story-forces" style="margin-top:16px; border-top:1px solid #e2e8f0; padding-top:16px;">
+          <li style="margin-bottom:12px; display:grid; grid-template-columns:140px 1fr;">
+            <strong style="color:var(--blue);">Guidance</strong>
+            <span>Clarity of strategy, narrative and who you serve.</span>
+          </li>
+          <li style="margin-bottom:12px; display:grid; grid-template-columns:140px 1fr;">
+            <strong style="color:var(--blue);">Resources</strong>
+            <span>Product, pricing, tools and the talent that carries the motion.</span>
+          </li>
+          <li style="margin-bottom:12px; display:grid; grid-template-columns:140px 1fr;">
+            <strong style="color:var(--blue);">Implementation</strong>
+            <span>How consistently work runs across pipeline, sales and customers.</span>
+          </li>
+          <li style="margin-bottom:12px; display:grid; grid-template-columns:140px 1fr;">
+            <strong style="color:var(--blue);">Performance</strong>
+            <span>The signals, forecasting and review rhythm that leadership can trust.</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
       <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
-        <h2>The GTM Clarity Path</h2>
-        <p>Whether you need a quick diagnostic or a full reset, the path stays simple and repeatable.</p>
+        <h2>The GTM clarity path.</h2>
+        <p>Whether you need a quick diagnostic or a full reset, the path stays simple and repeatable. Start with the Score, deepen with the Report.</p>
+        <p style="margin-top:12px; font-size:0.95rem;">Designed for B2B SaaS companies between €1M and €500M ARR that need clarity, structure and predictable revenue.</p>
       </div>
 
       <div class="home-modules-grid">
         <article class="card">
           <p class="module-label">Step 1</p>
           <h3>GTM Score</h3>
-          <p>A fast, structured self-assessment to establish a baseline in 10 minutes.</p>
-          <div style="margin-top:auto; padding-top:24px;">
-            <a href="gtm-assessment.html" class="cta">Start Free</a>
+          <p>A fast, structured self-assessment to establish a baseline.</p>
+          <ul class="service-features" style="margin-top:16px; font-size:0.9rem; color:#475569;">
+            <li>Twelve pillar maturity score</li>
+            <li>Clear narrative of your current GTM shape</li>
+            <li>Questions to align at leadership level</li>
+          </ul>
+          <div class="card-footer">
+            <a href="gtm-assessment.html" class="cta">Free GTM Score</a>
           </div>
         </article>
+
         <article class="card">
           <p class="module-label">Step 2</p>
           <h3>Intelligence Report</h3>
           <p>Deep diagnostic revealing your primary constraints and priorities.</p>
-          <div style="margin-top:auto; padding-top:24px;">
+          <ul class="service-features" style="margin-top:16px; font-size:0.9rem; color:#475569;">
+            <li>Reading across all twelve pillars</li>
+            <li>Risks and constraints made explicit</li>
+            <li>Three focus areas with suggested actions</li>
+          </ul>
+          <div class="card-footer">
             <a href="gtm-intelligence-report.html" class="cta cta--ghost">See Example</a>
           </div>
         </article>
+
         <article class="card">
           <p class="module-label">Step 3</p>
           <h3>GTM Partnership</h3>
           <p>Ongoing quarterly reviews to keep your system aligned and healthy.</p>
-          <div style="margin-top:auto; padding-top:24px;">
-            <a href="services.html" class="cta cta--ghost">Learn More</a>
+          <ul class="service-features" style="margin-top:16px; font-size:0.9rem; color:#475569;">
+            <li>Quarterly GRIP reviews</li>
+            <li>Updated intelligence and dashboards</li>
+            <li>Light advisory support for leadership</li>
+          </ul>
+          <div class="card-footer">
+            <a href="services.html" class="cta cta--ghost">View Services</a>
           </div>
         </article>
       </div>
@@ -431,6 +512,7 @@
       </div>
 
       <div class="home-modules-grid">
+        
         <a href="module-strategy.html" class="home-module">
           <p class="module-label">Pillar 1 · Guidance</p>
           <h3>GTM Strategy & Leadership</h3>
@@ -494,6 +576,7 @@
           <h3>Pricing & Packaging</h3>
           <p>Monetization logic and model fit.</p>
         </a>
+
       </div>
     </div>
   </section>
@@ -505,7 +588,7 @@
         <p>Specific add-ons for when you need to fix one part of the engine.</p>
       </div>
 
-      <div class="marketplace-grid">
+      <div class="marketplace-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;">
         <div class="marketplace-card">
           <div class="mp-label">Guidance</div>
           <h3>Market Clarity</h3>
