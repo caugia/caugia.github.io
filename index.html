@@ -6,6 +6,11 @@
 
   <title>Caugia Consulting | Stop Revenue Leakage</title>
   <meta name="description" content="Turn scattered GTM activity into one predictable revenue system. The GRIP Framework helps leaders identify constraints and stop leakage." />
+  
+  <meta property="og:title" content="Caugia Consulting | Stop Revenue Leakage">
+  <meta property="og:description" content="Turn scattered GTM activity into one predictable revenue system.">
+  <meta property="og:image" content="assets/og-cover.png">
+  <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="assets/C-logo.png">
@@ -16,11 +21,11 @@
 
   <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
 
-  <script src="/auth.js"></script>
+  <script src="auth.js"></script>
 
   <style>
     /* =========================================
-       CRITICAL PAGE OVERRIDES (THE "GOLDEN" LAYOUT)
+       CRITICAL PAGE OVERRIDES (THE GOLD STANDARD)
        ========================================= */
     
     :root {
@@ -30,11 +35,11 @@
       --accent: #F36C21;     
       --bg-soft: #f8fafc;
       --header-h: 80px;      
-      --max-w: 1280px; /* Iets breder voor corporate feel */      
+      --max-w: 1280px;       
       --radius: 16px;
     }
 
-    /* 1. TYPOGRAFIE */
+    /* 1. TYPOGRAFIE: MERRIWEATHER VOOR AUTORITEIT */
     h1, h2, h3, h4, .service-title-main, .gtm-v2-title, .card h3 {
       font-family: 'Merriweather', serif !important;
       letter-spacing: -0.02em;
@@ -51,19 +56,19 @@
       margin-bottom: 20px; 
       font-size: 1.05rem;
       color: var(--ink-soft);
-      line-height: 1.65; /* Meer leesruimte */
+      line-height: 1.65;
     }
 
-    /* Meer ademruimte tussen secties */
+    /* Meer ademruimte tussen secties (Corporate Feel) */
     .home-section, section {
         margin-bottom: 120px;
     }
 
-    /* LAYOUT UTILS: ROYALE MARGES */
+    /* LAYOUT UTILS */
     .wrap { 
         max-width: var(--max-w); 
         margin: 0 auto; 
-        padding: 0 48px; /* Corporate margin (was 24px) */
+        padding: 0 48px;
     }
 
     /* 2. HEADER */
@@ -82,7 +87,7 @@
     .header-inner {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 48px; /* Match wrap padding */
+      padding: 0 48px;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -102,6 +107,24 @@
       transform: translateY(-1px);
     }
 
+    /* MOBILE MENU STYLES */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 24px;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      z-index: 998;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: 1.1rem; padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: var(--ink); text-decoration: none; }
+
     /* 3. HERO: BALANS & SPACE */
     .home-hero {
       padding-top: 64px !important; 
@@ -113,7 +136,7 @@
     .home-hero-grid {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr; 
-      gap: 64px; /* Meer ruimte tussen tekst en visual */
+      gap: 64px;
       align-items: center;
     }
 
@@ -133,12 +156,12 @@
         max-width: 540px;
     }
 
-    /* VISUAL KOLOM: PERFECTE UITLIJNING */
+    /* VISUAL KOLOM */
     .home-hero-visual {
       position: relative;
       display: flex;
       justify-content: flex-end;
-      height: 480px; /* Hoogte gefixeerd voor alignment */
+      height: 480px; 
       width: 100%;
       transform: none !important;
       background: transparent !important;
@@ -147,7 +170,7 @@
       padding: 0 !important;
     }
 
-    /* HEALTH CARD (Links bovenop) */
+    /* HEALTH CARD */
     .hero-health-card {
       position: absolute;
       left: 0;
@@ -158,7 +181,7 @@
       border-radius: var(--radius);
       padding: 32px;
       width: 380px;
-      height: 420px; /* Match Diamond height */
+      height: 440px;
       box-shadow: 0 20px 50px -10px rgba(0,0,0,0.12);
       z-index: 10;
       display: flex;
@@ -195,7 +218,7 @@
       cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    /* DIAMOND CARD (Rechts erachter) - BREDER GEMAAKT */
+    /* DIAMOND CARD */
     .hero-diamond-card {
       position: absolute;
       right: 0;
@@ -205,8 +228,8 @@
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       padding: 24px;
-      width: 380px; /* BREDER gemaakt voor Implementation label */
-      height: 420px; /* Match Health height */
+      width: 380px; 
+      height: 440px; 
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
       z-index: 1; 
       display: flex;
@@ -216,9 +239,9 @@
     }
 
     .diamond-canvas { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-    .diamond-canvas svg { width: 300px; height: 300px; overflow: visible; } /* Grotere SVG */
+    .diamond-canvas svg { width: 300px; height: 300px; overflow: visible; } 
 
-    /* LABELS (Gefixed) */
+    /* LABELS */
     .diamond-label {
       position: absolute;
       background: white;
@@ -230,12 +253,12 @@
       color: var(--ink);
       white-space: nowrap;
       pointer-events: none;
+      user-select: none;
       z-index: 20;
     }
     
     .lbl-top    { top: 5%; left: 50%; transform: translate(-50%, -10px); }
     .lbl-bottom { bottom: 5%; left: 50%; transform: translate(-50%, 10px); }
-    /* Implementation en Resources nu veilig binnen de kaart */
     .lbl-left   { left: 2%; top: 50%; transform: translate(0, -50%); } 
     .lbl-right  { right: 2%; top: 50%; transform: translate(0, -50%); }
 
@@ -261,11 +284,11 @@
     .home-modules-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px; /* Meer ruimte */
+      gap: 32px; 
       margin-top: 40px;
     }
     .home-module, .marketplace-card, .card {
-      padding: 32px; /* Royale padding */
+      padding: 32px; 
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       transition: 0.2s;
@@ -287,7 +310,7 @@
       .hero-health-card { position: relative; width: 100%; transform: none; top: auto; left: auto; margin-bottom: 24px; }
       .hero-diamond-card { position: relative; width: 100%; transform: none; right: auto; top: auto; height: 360px; }
       nav.nav-desktop { display: none; }
-      .menu-toggle { display: block; cursor:pointer; font-weight:600; }
+      .menu-toggle { display: block; cursor:pointer; font-weight:600; padding:10px; }
     }
   </style>
 </head>
@@ -306,12 +329,21 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a href="contact.html" class="cta">Contact</a>
+      <a class="cta" href="contact.html">Contact</a>
     </nav>
 
     <div class="menu-toggle">Menu</div>
   </div>
 </header>
+
+<nav class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="gtm-assessment.html">GTM Score</a>
+  <a href="resources.html">Resources</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
 <main>
 
@@ -319,19 +351,21 @@
     <div class="wrap home-hero-grid">
       <div class="home-hero-copy">
         <span class="kicker" style="color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:12px;">One GTM system for B2B SaaS</span>
-        <h1>From scattered activity to one GTM system.</h1>
+        
+        <h1>Stop revenue leakage. Build a predictable GTM system.</h1>
+        
         <p class="hero-lead">
-          Caugia Consulting helps go to market leaders turn tools, data and teams into one calm operating system for predictable revenue.
+          Caugia helps B2B SaaS leaders identify where revenue leaks, why it happens, and what to fix first. 
+          You get one model, one score, and one roadmap your leadership team can align on.
         </p>
-        <p class="hero-lead">
-          The GTM Framework, the GRIP Diamond and the GTM Score give you one coherent model to understand your system, align leadership and improve performance in the right order.
-        </p>
+        
         <div class="hero-actions" style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
-          <a href="gtm-assessment.html" class="cta">Free GTM Score</a>
-          <a href="#diamond-section" class="cta cta--ghost">See how the Diamond works</a>
+          <a href="gtm-assessment.html" class="cta">Get your Free GTM Score</a>
+          <a href="#diamond-section" class="cta cta--ghost">See how it works</a>
         </div>
+        
         <p class="hero-note" style="font-size:0.9rem; color:#94a3b8;">
-          A structured self-assessment and a clear narrative in under ten minutes. Without calls or meetings.
+          A structured self-assessment. Executive narrative in 10 mins. No calls.
         </p>
       </div>
 
@@ -389,9 +423,10 @@
   <section class="section" style="background: var(--bg-soft);">
     <div class="wrap story-grid">
       <div class="story-text">
-        <h2>Clarity before speed.</h2>
-        <p>Most GTM teams are not held back by effort. They are held back by uncoordinated effort. Teams work in silos, tools multiply, and ownership blurs. Everyone is busy, yet the system feels heavier every quarter.</p>
-        <p>The GRIP model shows your GTM motion through four forces. When these align, revenue becomes predictable.</p>
+        <h2>Why your GTM feels heavy.</h2>
+        <p>Most teams do not suffer from a lack of activity. They suffer from misalignment. The strategy sounds right, but the pipeline behaves differently. Tools multiply, ownership blurs, and every quarter adds more process.</p>
+        <p>GRIP makes the system visible so leadership can fix the constraint instead of pushing harder everywhere.</p>
+        
         <div class="story-forces">
           <div class="force-item"><span class="force-label">Guidance</span><span class="force-desc">Clarity of strategy, narrative, and who you serve.</span></div>
           <div class="force-item"><span class="force-label">Resources</span><span class="force-desc">Product, pricing, tools, and the talent capacity.</span></div>
@@ -409,9 +444,9 @@
         <img src="assets/caugia-gtm-diamond-team.webp" alt="GRIP Diamond" style="width:100%; border-radius:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.1);">
       </div>
       <div class="story-text">
-        <h2>The GRIP Diamond.</h2>
-        <p>The Diamond is a simple way to see the real shape of your GTM system. It maps twelve pillars into four forces, showing where tension accumulates.</p>
-        <p>Together they reveal the system dynamic. The GTM Score shows strength. The Diamond shows why.</p>
+        <h2>See the shape, not just symptoms.</h2>
+        <p>The GTM Score tells you how strong each area is. The Diamond shows why results look the way they do.</p>
+        <p>An unbalanced shape is not a motivation problem. It is a system constraint. That is where you start.</p>
       </div>
     </div>
   </section>
@@ -421,9 +456,13 @@
       <div style="text-align:center; max-width:840px; margin:0 auto 64px;">
         <span style="color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:12px;">The Flagship Diagnostic</span>
         <h2>The GTM Intelligence Report.</h2>
-        <p>This is the core of our work. A forensic, twelve-pillar analysis of your revenue engine. It is not an automated summary, but a strategic document that identifies exactly where your system leaks value and how to fix it.</p>
-        <p>We use the 12 pillars below to scan your organization.</p>
-        <div style="margin-top:32px;">
+        <p>This is the core of our work. A forensic, twelve-pillar analysis of your revenue engine. You receive a board-level document that includes:</p>
+        <ul style="text-align:left; display:inline-block; margin-top:12px; margin-bottom:24px; color:var(--ink-soft);">
+            <li style="margin-bottom:8px;">✓ A 12 pillar diagnostic with evidence and scoring logic</li>
+            <li style="margin-bottom:8px;">✓ The primary constraint and the priority order to fix it</li>
+            <li>✓ A practical roadmap that leadership can execute quarterly</li>
+        </ul>
+        <div>
             <a href="gtm-intelligence-report.html" class="cta">Explore the Report</a>
         </div>
       </div>
@@ -457,40 +496,40 @@
         </a>
         <a href="module-sdr.html" class="home-module">
           <p class="module-label">Pillar 6 · Implementation</p>
-          <h3>Sales Development (SDR)</h3>
+          <h3>Customer Success & Expansion</h3>
           <p>Outbound motion and lead qualification.</p>
         </a>
 
         <a href="module-success.html" class="home-module">
           <p class="module-label">Pillar 7 · Performance</p>
-          <h3>Customer Success & Retention</h3>
-          <p>Onboarding and value realization.</p>
+          <h3>Revenue Operations & Systems</h3>
+          <p>Infrastructure, data, and process flow.</p>
         </a>
         <a href="module-expansion.html" class="home-module">
           <p class="module-label">Pillar 8 · Performance</p>
-          <h3>Account Management & Expansion</h3>
-          <p>Cross-sell, up-sell, and renewal health.</p>
+          <h3>Pricing & Packaging</h3>
+          <p>Monetization logic and commercial models.</p>
         </a>
         <a href="module-revops.html" class="home-module">
           <p class="module-label">Pillar 9 · Performance</p>
-          <h3>Revenue Operations</h3>
-          <p>Infrastructure, data, and process flow.</p>
+          <h3>Brand & Communications</h3>
+          <p>Narrative consistency and market presence.</p>
         </a>
 
         <a href="module-enablement.html" class="home-module">
           <p class="module-label">Pillar 10 · Resources</p>
-          <h3>Enablement</h3>
-          <p>Training, content, and sales readiness.</p>
+          <h3>Data & Insights</h3>
+          <p>Signals that leadership can trust.</p>
         </a>
         <a href="module-performance.html" class="home-module">
           <p class="module-label">Pillar 11 · Resources</p>
-          <h3>Performance Management</h3>
-          <p>KPIs, goals, and feedback loops.</p>
+          <h3>Enablement</h3>
+          <p>Training, content, and sales readiness.</p>
         </a>
         <a href="module-pricing.html" class="home-module">
           <p class="module-label">Pillar 12 · Resources</p>
-          <h3>Pricing & Packaging</h3>
-          <p>Monetization logic and model fit.</p>
+          <h3>Leadership & Alignment</h3>
+          <p>Decision cadence and cross-functional rhythm.</p>
         </a>
       </div>
     </div>
@@ -499,8 +538,8 @@
   <section class="section" style="background: var(--bg-soft);">
     <div class="wrap">
       <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
-        <h2>Intelligence Marketplace.</h2>
-        <p>Already have the report? Use targeted modules to surgically repair specific broken pillars. These are exclusive add-ons for report holders.</p>
+        <h2>Targeted fixes after diagnosis.</h2>
+        <p>After the Intelligence Report, you can add focused modules to repair a specific pillar. We do not treat symptoms without understanding the full system first.</p>
       </div>
 
       <div class="marketplace-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;">
@@ -508,25 +547,25 @@
           <div class="mp-label">Guidance</div>
           <h3>Market Clarity</h3>
           <ul class="mp-list"><li>Market clarity</li><li>Positioning</li><li>ICP definition</li></ul>
-          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Get Started</a>
+          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Coming Soon</a>
         </div>
         <div class="marketplace-card">
           <div class="mp-label">Resources</div>
           <h3>Resource Strength</h3>
           <ul class="mp-list"><li>Product readiness</li><li>Pricing model</li><li>GTM talent</li></ul>
-          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Get Started</a>
+          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Coming Soon</a>
         </div>
         <div class="marketplace-card">
           <div class="mp-label">Implementation</div>
           <h3>Execution Modules</h3>
           <ul class="mp-list"><li>Demand engine</li><li>Sales operations</li><li>Customer operations</li></ul>
-          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Get Started</a>
+          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Coming Soon</a>
         </div>
         <div class="marketplace-card">
           <div class="mp-label">Performance</div>
           <h3>Performance</h3>
           <ul class="mp-list"><li>Metrics & measurement</li><li>Forecasting</li><li>Governance rhythm</li></ul>
-          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Get Started</a>
+          <a href="#" class="cta cta--ghost" style="margin-top:auto; font-size:0.8rem; padding:8px 16px;">Coming Soon</a>
         </div>
       </div>
     </div>
@@ -535,13 +574,12 @@
   <section class="section">
     <div class="wrap">
       <div style="text-align:center; max-width:800px; margin:0 auto 64px;">
-        <h2>The GTM Clarity Path.</h2>
-        <p>A simple engagement model. Start with a baseline, deepen the diagnostic, or partner for the long term.</p>
+        <h2>How it works.</h2>
       </div>
 
       <div class="home-modules-grid">
         <article class="card">
-          <p class="module-label">Step 1</p>
+          <p class="module-label">Measure</p>
           <h3>GTM Score</h3>
           <p>A fast, structured self-assessment to establish a baseline in 10 minutes.</p>
           <div style="margin-top:auto; padding-top:24px;">
@@ -549,15 +587,15 @@
           </div>
         </article>
         <article class="card">
-          <p class="module-label">Step 2</p>
+          <p class="module-label">Diagnose</p>
           <h3>Intelligence Report</h3>
-          <p>Deep diagnostic revealing your primary constraints and priorities.</p>
+          <p>Deep forensic diagnostic revealing your primary constraints and priorities.</p>
           <div style="margin-top:auto; padding-top:24px;">
             <a href="gtm-intelligence-report.html" class="cta cta--ghost">See Example</a>
           </div>
         </article>
         <article class="card">
-          <p class="module-label">Step 3</p>
+          <p class="module-label">Fix</p>
           <h3>GTM Partnership</h3>
           <p>Ongoing quarterly reviews to keep your system aligned and healthy.</p>
           <div style="margin-top:auto; padding-top:24px;">
@@ -573,8 +611,8 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
         <div>
           <h2>Founder Level Consulting.</h2>
-          <p>Caugia is not a team of juniors. It is led by Tom Meijer, bringing a decade of GTM design experience in high-growth SaaS.</p>
-          <p>Consulting is reserved for moments where clarity alone is not enough. Together we define a practical roadmap and operating rhythm to fix the engine while you fly it.</p>
+          <p>Caugia is led by Tom Meijer. This is senior operator level work, designed for executive decisions.</p>
+          <p>We step in when your team needs clarity, sequencing, and an operating rhythm that sticks.</p>
           <div style="margin-top:24px;">
             <a href="services.html" style="color:var(--blue); font-weight:700; font-size:1.1rem;">See consulting services &rarr;</a>
           </div>
@@ -593,7 +631,7 @@
       <h2 style="text-align:center;">Common Questions</h2>
       <div class="faq" style="margin-top:32px;">
         <details><summary>What is the difference between the Score and Report?</summary>
-          <p>The Score is a free snapshot. The Intelligence Report is a deep 12-pillar forensic analysis revealing root causes and a prioritized roadmap.</p></details>
+          <p>The Score is a free snapshot. The Report is a deep 12-pillar forensic analysis revealing root causes and a prioritized roadmap.</p></details>
         <details><summary>Who is this designed for?</summary>
           <p>CEOs, CROs, and Founders of B2B SaaS companies ($1M - $500M ARR) who need to professionalize their revenue engine.</p></details>
         <details><summary>Can I buy modules separately?</summary>
@@ -615,6 +653,16 @@
 </footer>
 
 <script>
+  // Mobile Menu Logic
+  const toggle = document.querySelector(".menu-toggle");
+  const mobileNav = document.querySelector(".nav-mobile");
+  if (toggle && mobileNav) {
+    toggle.addEventListener("click", () => {
+      mobileNav.classList.toggle("open");
+    });
+  }
+
+  // Diamond Logic
   function updateDiamond() {
     const g = parseInt(document.getElementById('slider-guidance').value);
     const r = parseInt(document.getElementById('slider-resources').value);
