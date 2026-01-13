@@ -16,12 +16,11 @@
 
   <style>
     /* ===========================================================
-       CAUGIA CONSULTING — APP CSS (V3 SAAS MODE)
-       Strict layout: No global scrollbars.
+       CAUGIA APP V3 - VIEWPORT LOCK SYSTEM
        =========================================================== */
 
     :root {
-      /* V3 Brand Colors */
+      /* Colors */
       --primary: #0056b3;
       --primary-dark: #004494;
       --text-dark: #0f172a;
@@ -30,460 +29,340 @@
       --white: #ffffff;
       --line: #e2e8f0;
       
-      /* App Specific Dimensions */
-      --header-height: 72px;
+      /* Layout Dimensions */
+      --header-h: 72px;
       
-      /* V3 Styling */
-      --radius-card: 20px;
+      /* Styling */
+      --radius-lg: 20px;
+      --radius-md: 12px;
       --radius-btn: 999px;
-      --radius-input: 12px;
-      --shadow-app: 0 10px 30px -5px rgba(0,0,0,0.06);
-      
-      --transition: .2s cubic-bezier(0.25, 1, 0.5, 1);
+      --shadow-card: 0 10px 40px -10px rgba(0,0,0,0.08);
     }
 
-    /* DARK MODE */
-    body.dark {
-      --primary: #3b82f6;
-      --primary-dark: #60a5fa;
-      --text-dark: #f8fafc;
-      --text-body: #94a3b8;
-      --bg: #0f172a;
-      --white: #1e293b;
-      --line: #334155;
-    }
-
-    /* ------------------------------ 
-       LAYOUT ENGINE (THE "SAAS LOCK")
-       ------------------------------ */
     * { box-sizing: border-box; }
 
+    /* HARD LOCK ON BODY - NO GLOBAL SCROLL */
     html, body {
       margin: 0; padding: 0;
-      height: 100vh; width: 100vw;
-      overflow: hidden; /* CRITICAL: Kills global scroll */
+      width: 100vw; height: 100vh;
+      overflow: hidden; 
       background: var(--bg);
       font-family: Inter, sans-serif;
       color: var(--text-dark);
-      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
     }
 
-    h1, h2, h3, h4 {
-      font-family: Merriweather, serif;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: var(--text-dark);
-    }
-
-    /* ===========================================================
-       HEADER
-       =========================================================== */
+    /* ================= HEADER (FIXED HEIGHT) ================= */
     .gi-header {
-      width: 100%;
-      height: var(--header-height);
-      background: rgba(255,255,255,0.95);
+      flex: 0 0 var(--header-h); /* Never shrinks/grows */
+      background: rgba(255,255,255,0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
-      position: absolute; /* Fixed relative to body */
-      top: 0; left: 0; z-index: 100;
+      z-index: 50;
     }
-
-    body.dark .gi-header { background: var(--white); }
 
     .gi-header-inner {
-      max-width: 1800px;
-      margin: 0 auto;
-      height: 100%;
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      height: 100%; max-width: 1600px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    .gi-header-left { display: flex; align-items: center; gap: 12px; }
-    .gi-logo { width: 32px; height: 32px; }
-    .gi-header-brand { font-size: 1.1rem; font-weight: 900; letter-spacing: 0.02em; color: var(--text-dark); font-family: Inter, sans-serif; }
+    .gi-brand { display: flex; align-items: center; gap: 12px; font-family: Merriweather, serif; font-weight: 900; font-size: 1.1rem; }
+    .gi-brand img { width: 32px; height: 32px; }
 
-    .gi-header-right { display: flex; align-items: center; gap: 12px; }
-
-    /* Header Buttons */
-    .gi-contact-link, .gi-dark-toggle {
-      font-size: 0.85rem; font-weight: 700;
-      padding: 8px 16px; border-radius: var(--radius-btn);
-      transition: var(--transition); cursor: pointer;
-      text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
-      background: transparent; border: 1px solid var(--line); color: var(--text-body);
+    .gi-nav-right { display: flex; gap: 12px; }
+    .gi-head-btn {
+      background: transparent; border: 1px solid var(--line); padding: 8px 16px; 
+      border-radius: var(--radius-btn); font-size: 0.85rem; font-weight: 700; 
+      color: var(--text-body); text-decoration: none; transition: 0.2s; cursor: pointer;
     }
-    .gi-contact-link:hover, .gi-dark-toggle:hover { 
-      background: var(--white); color: var(--primary); border-color: var(--primary); 
-    }
+    .gi-head-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--white); }
 
-    /* ===========================================================
-       MAIN APP GRID
-       =========================================================== */
+    /* ================= MAIN LAYOUT (FILLS REST) ================= */
     .gi-main {
-      height: 100%;
-      padding-top: var(--header-height); /* Clear header */
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .gi-shell {
+      flex: 1; /* Fills remaining height */
       width: 100%;
       max-width: 1600px;
-      height: 100%;
+      margin: 0 auto;
+      padding: 24px; /* Gap around the grid */
       display: grid;
-      /* Fixed Width Left | Flexible Center | Fixed Width Right */
-      grid-template-columns: 320px 1fr 300px; 
+      /* Left (300px) | Center (Flexible) | Right (280px) */
+      grid-template-columns: 300px 1fr 280px; 
       gap: 32px;
-      padding: 32px;
-      overflow: hidden; /* Prevents grid breakout */
+      overflow: hidden; /* Ensures grid doesn't spill */
     }
 
-    /* ===========================================================
-       LEFT PANEL: INFO & CONTEXT
-       =========================================================== */
-    .gi-left-info {
+    /* --- COMMON SCROLLBAR STYLING --- */
+    .scroll-panel {
+      overflow-y: auto;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto; /* Allow scroll inside if screen is short */
       padding-right: 8px; /* Room for scrollbar */
     }
+    .scroll-panel::-webkit-scrollbar { width: 6px; }
+    .scroll-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .scroll-panel::-webkit-scrollbar-track { background: transparent; }
+
+    /* ================= LEFT PANEL ================= */
+    .gi-left {
+      display: flex; flex-direction: column;
+    }
+
+    .gi-info-eyebrow { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .gi-info-h1 { font-family: Merriweather, serif; font-weight: 900; font-size: 1.6rem; line-height: 1.2; margin: 0 0 16px 0; }
+    .gi-info-desc { font-size: 0.95rem; line-height: 1.6; color: var(--text-body); margin-bottom: 24px; }
     
-    /* V3 Scrollbars */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    body.dark ::-webkit-scrollbar-thumb { background: #475569; }
-
-    .gi-info-title {
-      font-size: 0.7rem; font-weight: 800; color: var(--primary);
-      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
-      font-family: Inter, sans-serif;
+    .gi-meta { 
+      font-size: 0.85rem; font-weight: 600; color: var(--text-body); opacity: 0.8; 
+      padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 20px;
     }
 
-    .gi-info-h1 { font-size: 1.75rem; margin-bottom: 16px; line-height: 1.2; }
-    .gi-info-desc { font-size: 0.95rem; color: var(--text-body); margin-bottom: 24px; line-height: 1.6; }
-    .gi-info-meta { font-size: 0.8rem; color: var(--text-body); font-weight: 600; opacity: 0.8; margin-bottom: 24px; }
-
-    /* Progress Bar */
-    .gi-progress-box {
-      background: var(--white); border: 1px solid var(--line);
-      padding: 20px; border-radius: 12px; margin-bottom: 24px;
-      box-shadow: var(--shadow-soft);
+    /* Progress */
+    .gi-progress-card {
+      background: var(--white); padding: 16px; border-radius: var(--radius-md);
+      border: 1px solid var(--line); margin-bottom: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
-    .gi-progress-top { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
-    .gi-progress-track { height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; }
-    .gi-progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width .4s cubic-bezier(0.22, 1, 0.36, 1); }
+    .gi-prog-labels { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+    .gi-prog-track { height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; }
+    .gi-prog-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s; }
 
-    /* Reset Button */
-    .gi-btn.gi-reset { 
-      width: 100%; background: transparent; font-size: 0.8rem; padding: 10px;
-      color: var(--text-body); border: 1px solid transparent; 
-      transition: var(--transition);
+    /* Context Box (Pushed to bottom naturally via flex, but scrolls if needed) */
+    .gi-context-box {
+      margin-top: auto; /* Pushes to bottom */
+      background: #eff6ff; border: 1px solid #dbeafe; border-radius: var(--radius-md);
+      padding: 20px;
     }
-    .gi-btn.gi-reset:hover { color: var(--text-dark); background: rgba(0,0,0,0.03); border-radius: 8px; }
+    .gi-context-box h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; color: #1e3a8a; margin: 0 0 8px 0; }
+    .gi-context-box p { font-size: 0.9rem; line-height: 1.5; color: #1e40af; margin: 0; }
 
-    /* Dynamic Pillar Context Box */
-    .gi-pillar-desc-box {
-      background: #eff6ff; /* V3 Light Blue Tint */
-      border: 1px solid #dbeafe;
-      color: #1e3a8a;
-      padding: 24px; border-radius: 12px; margin-top: auto; /* Push to bottom if space permits */
-      margin-bottom: 20px;
-    }
-    .gi-pillar-desc-box h3 { font-size: 1rem; margin-bottom: 8px; font-family: Inter, sans-serif; font-weight: 800; color: #172554; }
-    .gi-pillar-desc-box p { font-size: 0.9rem; line-height: 1.5; color: #1e40af; margin: 0; }
-    body.dark .gi-pillar-desc-box { background: #1e293b; border-color: #334155; color: #94a3b8; }
-    body.dark .gi-pillar-desc-box h3 { color: #f8fafc; }
-    body.dark .gi-pillar-desc-box p { color: #cbd5e1; }
-
-    /* ===========================================================
-       CENTER ENGINE: THE QUESTION CARD
-       =========================================================== */
-    .gi-center {
-      height: 100%;
-      display: flex; 
-      flex-direction: column;
-      overflow: hidden; /* Lock layout */
-    }
-
-    .gi-question-card {
+    /* ================= CENTER ENGINE (CARD) ================= */
+    .gi-center-card {
       background: var(--white);
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(15,23,42,0.04);
-      box-shadow: var(--shadow-app);
-      padding: 40px 48px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
       height: 100%;
       display: flex;
       flex-direction: column;
+      overflow: hidden; /* Contains the internal scroll */
       position: relative;
     }
 
-    /* Utility Buttons (Top Right inside card) */
-    .gi-utility-row {
-      position: absolute; top: 32px; right: 32px; display: flex; gap: 8px;
-    }
-    .gi-utility-btn {
-      background: transparent; border: 1px solid var(--line); border-radius: 6px;
-      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: var(--text-body); 
-      cursor: pointer; transition: var(--transition);
-    }
-    .gi-utility-btn:hover { background: var(--bg); color: var(--primary); border-color: var(--primary); }
-
-    /* Question Header */
-    .gi-question-header { 
-      flex-shrink: 0; /* Don't squash */
-      margin-bottom: 32px; 
-      padding-bottom: 24px; 
+    /* Engine Header */
+    .gi-card-header {
+      padding: 40px 48px 24px;
       border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+      position: relative;
     }
-    .gi-question-kicker { 
-      font-size: 0.8rem; font-weight: 800; color: var(--primary); 
-      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; 
-    }
-    .gi-question-title { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.2; }
-    .gi-question-sub { font-size: 1.05rem; color: var(--text-body); line-height: 1.5; }
+    .gi-kicker { font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; display: block; }
+    .gi-q-title { font-family: Merriweather, serif; font-weight: 900; font-size: 1.8rem; margin: 0 0 8px 0; color: var(--text-dark); }
+    .gi-q-sub { font-size: 1.05rem; color: var(--text-body); margin: 0; }
 
-    /* Question Body (SCROLLABLE AREA) */
-    .gi-question-body {
-      flex: 1; /* Take remaining space */
-      overflow-y: auto; /* Scroll ONLY here */
-      padding-right: 16px; /* Avoid scrollbar overlap */
-      margin-bottom: 24px;
+    /* Utility Buttons (Absolute top right) */
+    .gi-utils { position: absolute; top: 40px; right: 40px; display: flex; gap: 8px; }
+    .gi-util-btn {
+      background: transparent; border: 1px solid var(--line); border-radius: 6px;
+      padding: 6px 12px; font-size: 0.75rem; font-weight: 700; color: var(--text-body); cursor: pointer;
     }
+    .gi-util-btn:hover { background: var(--bg); color: var(--primary); }
 
-    /* Form Elements - V3 Style */
-    input[type="text"], input[type="number"], textarea, select {
-      width: 100%; padding: 14px 16px; border-radius: 12px;
-      border: 1px solid var(--line); background: var(--bg);
-      font-family: Inter, sans-serif; font-size: 1rem; color: var(--text-dark);
-      transition: var(--transition); margin-bottom: 24px; outline: none;
+    /* Scrollable Content Area */
+    .gi-card-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 48px;
+    }
+    
+    /* Input Styling */
+    input[type="text"], input[type="number"], input[type="email"], select, textarea {
+      width: 100%; padding: 14px 16px; font-size: 1rem; border: 1px solid var(--line);
+      border-radius: var(--radius-md); background: var(--bg); outline: none; transition: 0.2s;
+      font-family: Inter, sans-serif; color: var(--text-dark); margin-top: 8px;
     }
     input:focus, textarea:focus, select:focus {
-      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); background: var(--white);
+      background: var(--white); border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1);
     }
+    label { font-weight: 600; font-size: 0.95rem; color: var(--text-dark); display: block; margin-top: 24px; }
 
-    /* Option Cards (Radios) */
-    .gi-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .gi-option-card {
-      display: flex; align-items: center; gap: 12px; padding: 16px;
-      border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
-      cursor: pointer; transition: var(--transition);
-    }
-    .gi-option-card:hover { border-color: var(--primary); background: #f0f9ff; }
-    .gi-option-card:has(input:checked) { 
-      border-color: var(--primary); background: #eff6ff; box-shadow: 0 0 0 1px var(--primary); 
-    }
-    .gi-option-card span { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); }
-
-    /* Bottom Navigation Row (Fixed at bottom of card) */
-    .gi-nav-row {
-      flex-shrink: 0; 
-      display: flex; gap: 12px; 
-      padding-top: 24px; 
+    /* Footer Navigation */
+    .gi-card-footer {
+      padding: 24px 48px;
       border-top: 1px solid var(--line);
+      background: var(--white);
+      display: flex; gap: 16px;
+      flex-shrink: 0;
     }
-    
-    /* V3 Pill Buttons */
-    .gi-btn {
-      padding: 12px 28px; border-radius: var(--radius-btn);
-      font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition);
-      border: 1px solid var(--line); background: var(--white); color: var(--text-body);
-      display: inline-flex; align-items: center; justify-content: center;
+
+    .gi-btn-nav {
+      padding: 12px 28px; border-radius: var(--radius-btn); font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; border: 1px solid var(--line); background: var(--white); color: var(--text-body);
+      transition: 0.2s;
     }
-    .gi-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+    .gi-btn-nav:hover { border-color: var(--primary); color: var(--primary); }
     
-    .gi-btn.gi-primary {
-      background: var(--primary-dark); color: #ffffff; border-color: transparent;
+    .gi-btn-primary {
+      background: var(--primary-dark); color: #fff; border-color: transparent;
       box-shadow: 0 4px 12px rgba(0,86,179,0.15);
     }
-    .gi-btn.gi-primary:hover { background: #003370; }
+    .gi-btn-primary:hover { background: #003370; transform: translateY(-1px); }
 
-
-    /* ===========================================================
-       RIGHT PANEL: PILLAR NAVIGATION
-       =========================================================== */
-    .gi-right-pillars {
-      height: 100%;
-      overflow-y: auto;
-      padding-left: 12px;
-      border-left: 1px solid transparent; /* Optical balance */
+    /* ================= RIGHT PANEL ================= */
+    .gi-right-title { 
+      font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-body); 
+      margin-bottom: 16px; letter-spacing: 0.05em; 
     }
-
-    .gi-pillars-title {
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
-      color: var(--text-body); margin-bottom: 16px; letter-spacing: 0.1em;
-    }
-
-    .gi-pillar-nav { list-style: none; padding: 0; margin: 0; }
-    .gi-pillar-nav li {
-      padding: 12px 16px; margin-bottom: 6px; border-radius: 8px;
-      font-size: 0.9rem; font-weight: 600; color: var(--text-body);
-      cursor: pointer; transition: var(--transition); border: 1px solid transparent;
-    }
-    .gi-pillar-nav li:hover { background: var(--white); color: var(--primary); }
     
-    .gi-pillar-nav li.active {
-      background: var(--primary); color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,86,179,0.2);
+    .gi-nav-list { list-style: none; padding: 0; margin: 0; }
+    .gi-nav-item {
+      padding: 10px 14px; margin-bottom: 4px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 500; color: var(--text-body); cursor: pointer; transition: 0.2s;
     }
+    .gi-nav-item:hover { background: var(--white); color: var(--primary); }
+    .gi-nav-item.active { background: var(--primary); color: #fff; font-weight: 700; }
 
-    /* Floating Support Button */
-    .gi-faq-button {
-      position: fixed; bottom: 32px; right: 32px;
-      width: 48px; height: 48px; border-radius: 50%;
-      background: var(--white); color: var(--text-dark);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; box-shadow: var(--shadow-card);
-      text-decoration: none; border: 1px solid var(--line);
-      z-index: 200; transition: var(--transition); font-size: 1.2rem;
-    }
-    .gi-faq-button:hover { transform: scale(1.1); border-color: var(--primary); color: var(--primary); }
-
-    /* Responsive (Break lock on smaller screens) */
-    @media (max-width: 1200px) {
-      body, html { height: auto; overflow-y: auto; } /* Unlock body scroll */
-      .gi-main { height: auto; display: block; padding-bottom: 60px; }
-      .gi-shell { display: flex; flex-direction: column; height: auto; overflow: visible; gap: 40px; }
-      .gi-question-card { height: auto; min-height: 600px; }
-      .gi-left-info, .gi-right-pillars { height: auto; overflow: visible; order: 2; }
-      .gi-center { height: auto; overflow: visible; order: 1; }
-      .gi-question-body { overflow: visible; }
+    /* ================= MOBILE ================= */
+    @media (max-width: 1100px) {
+      body, html { height: auto; overflow-y: auto; } /* Unlock on mobile */
+      .gi-main { display: block; padding: 20px; height: auto; }
+      .gi-shell { display: flex; flex-direction: column; height: auto; padding: 0; gap: 40px; }
+      .gi-center-card { height: auto; min-height: 600px; }
+      .gi-left, .gi-right { height: auto; overflow: visible; }
+      .gi-left { order: 2; } .gi-right { order: 3; } .gi-center { order: 1; }
     }
   </style>
 </head>
 
 <body>
 
-<header class="gi-header">
-  <div class="gi-header-inner">
-    <div class="gi-header-left">
-      <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
-      <span class="gi-header-brand">Caugia Consulting</span>
-    </div>
-    <div class="gi-header-right">
-      <button id="darkToggle" class="gi-dark-toggle">Dark</button>
-      <a href="contact.html" class="gi-contact-link">Contact</a>
-    </div>
-  </div>
-</header>
-
-<main class="gi-main">
-  <div class="gi-shell">
-
-    <aside class="gi-left-info">
-      <div class="gi-info-title">Assessment</div>
-      <h1 class="gi-info-h1">GTM Intelligence Report</h1>
-      <p class="gi-info-desc">
-        A structured diagnostic evaluating your entire revenue engine.
-        Answers define your roadmap.
-      </p>
-
-      <div class="gi-info-meta">12 pillars • 265 questions</div>
-
-      <div class="gi-progress-box">
-        <div class="gi-progress-top">
-          <span id="gi-progress-count">0 / 265</span>
-          <span id="gi-progress-percent">0%</span>
-        </div>
-        <div class="gi-progress-track">
-          <div id="gi-progress-bar" class="gi-progress-fill"></div>
-        </div>
+  <header class="gi-header">
+    <div class="gi-header-inner">
+      <div class="gi-brand">
+        <img src="assets/C-logo.png" alt="Caugia Logo">
+        <span>Caugia Consulting</span>
       </div>
-
-      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset Progress</button>
-
-      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
-        <h3 id="gi-pillar-name">Context</h3>
-        <p id="gi-pillar-desc">
-          Context provides the foundation. By capturing details about your company, 
-          the system adjusts risks and priorities.
-        </p>
+      <div class="gi-nav-right">
+        <button class="gi-head-btn" id="darkToggle">Dark</button>
+        <a href="contact.html" class="gi-head-btn">Contact</a>
       </div>
-    </aside>
+    </div>
+  </header>
 
-    <section class="gi-center">
-      <div class="gi-question-card" id="gi-question-card">
+  <main class="gi-main">
+    <div class="gi-shell">
 
-        <div class="gi-question-header">
-          <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
-          <h2 class="gi-question-title" id="gi-question-title"></h2>
-          <p class="gi-question-sub" id="gi-question-sub"></p>
-        </div>
+      <aside class="gi-left scroll-panel">
+        <div style="min-height: min-content;"> <div class="gi-info-eyebrow">Premium GTM Assessment</div>
+          <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+          <p class="gi-info-desc">
+            A structured, 12-pillar diagnostic that evaluates your entire 
+            go-to-market system and reveals strengths, risks and hidden 
+            dependencies across the full revenue engine.
+          </p>
+          <div class="gi-meta">12 pillars • 265 questions • ~50 minutes</div>
 
-        <div class="gi-question-body" id="gi-question-body">
+          <div class="gi-progress-card">
+            <div class="gi-prog-labels">
+              <span id="gi-progress-count">0 / 265</span>
+              <span id="gi-progress-percent">0%</span>
+            </div>
+            <div class="gi-prog-track">
+              <div id="gi-progress-bar" class="gi-prog-fill"></div>
+            </div>
+          </div>
+          
+          <button class="gi-head-btn" id="gi-reset-btn" style="width:100%; text-align:center; border:none; background:rgba(0,0,0,0.03);">Reset Progress</button>
+          
+          <div style="height: 32px;"></div> <div class="gi-context-box" id="gi-left-pillar-desc-box">
+            <h3 id="gi-pillar-name">Context</h3>
+            <p id="gi-pillar-desc">
+              Context provides the foundation for interpreting the rest of the assessment. 
+              By capturing essential details about your company, the system adjusts 
+              recommendations, highlights risks and identifies the right priorities.
+            </p>
+          </div>
+          <div style="height: 20px;"></div> </div>
+      </aside>
+
+      <section class="gi-center">
+        <div class="gi-center-card">
+          
+          <div class="gi-card-header">
+            <span class="gi-kicker" id="gi-question-kicker">Context</span>
+            <h2 class="gi-q-title" id="gi-question-title">Loading...</h2>
+            <p class="gi-q-sub" id="gi-question-sub"></p>
+
+            <div class="gi-utils">
+              <button class="gi-util-btn" id="gi-save-btn">Save</button>
+              <button class="gi-utility-btn" id="gi-jump-first">Jump to Unanswered</button>
+            </div>
           </div>
 
-        <div class="gi-utility-row">
-          <button class="gi-utility-btn" id="gi-save-btn">Save</button>
-          <button class="gi-utility-btn" id="gi-jump-first">Jump to Next</button>
+          <div class="gi-card-body" id="gi-question-body">
+            </div>
+
+          <div class="gi-card-footer">
+            <button class="gi-btn-nav" id="gi-prev-btn">Back</button>
+            <button class="gi-btn-nav gi-btn-primary" id="gi-next-btn">Next</button>
+            <button class="gi-btn-nav gi-btn-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+          </div>
+
         </div>
+      </section>
 
-        <div class="gi-nav-row">
-          <button class="gi-btn" id="gi-prev-btn">Back</button>
-          <button class="gi-btn gi-primary" id="gi-next-btn">Next Question</button>
-          <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
-          <button class="gi-btn" id="gi-clear-btn" style="display:none;">Clear</button>
-        </div>
+      <aside class="gi-right scroll-panel">
+        <div class="gi-right-title">Navigation</div>
+        <ul class="gi-nav-list" id="gi-left-pillar-list">
+          <li class="gi-nav-item active" data-p="0">0 — Context</li>
+          <li class="gi-nav-item" data-p="1">1 — GTM Strategy & Leadership</li>
+          <li class="gi-nav-item" data-p="2">2 — Market Intelligence</li>
+          <li class="gi-nav-item" data-p="3">3 — Product Marketing</li>
+          <li class="gi-nav-item" data-p="4">4 — Demand Generation</li>
+          <li class="gi-nav-item" data-p="5">5 — Sales Execution</li>
+          <li class="gi-nav-item" data-p="6">6 — Customer Success</li>
+          <li class="gi-nav-item" data-p="7">7 — Revenue Operations</li>
+          <li class="gi-nav-item" data-p="8">8 — Pricing & Packaging</li>
+          <li class="gi-nav-item" data-p="9">9 — Brand & Comms</li>
+          <li class="gi-nav-item" data-p="10">10 — Data & Insights</li>
+          <li class="gi-nav-item" data-p="11">11 — Enablement</li>
+          <li class="gi-nav-item" data-p="12">12 — Leadership</li>
+        </ul>
+      </aside>
 
-      </div>
-    </section>
+    </div>
+  </main>
 
-    <aside class="gi-right-pillars">
-      <div class="gi-pillars-title">Navigation</div>
-      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
-        <li data-p="0" class="active">0 — Context</li>
-        <li data-p="1">1 — GTM Strategy & Leadership</li>
-        <li data-p="2">2 — Market Intelligence</li>
-        <li data-p="3">3 — Product Marketing</li>
-        <li data-p="4">4 — Demand Generation</li>
-        <li data-p="5">5 — Sales Execution</li>
-        <li data-p="6">6 — Customer Success & Expansion</li>
-        <li data-p="7">7 — Revenue Operations & Systems</li>
-        <li data-p="8">8 — Pricing & Packaging</li>
-        <li data-p="9">9 — Brand & Communications</li>
-        <li data-p="10">10 — Data & Insights</li>
-        <li data-p="11">11 — Enablement</li>
-        <li data-p="12">12 — Leadership & Alignment</li>
-      </ul>
-    </aside>
+  <script src="assets/QUESTIONS.js?v=1"></script>
+  
+  <script>
+    // Pillar Meta Data for Context Box
+    const PILLAR_META = {
+      0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
+      1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined."},
+      2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors."},
+      3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value."},
+      4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated."},
+      5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality."},
+      6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion."},
+      7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations."},
+      8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation."},
+      9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency."},
+     10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
+     11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
+     12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction."}
+    };
+  </script>
 
-  </div>
-</main>
+  <script src="assets/engine.js?v=5000"></script>
 
-<a href="faq.html" class="gi-faq-button" aria-label="Help">?</a>
-
-<script src="assets/QUESTIONS.js?v=1"></script>
-
-<script>
-// PILLAR DESCRIPTIONS (Keep logic intact)
-const PILLAR_META = {
-  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment."},
-  1:{name:"GTM Strategy & Leadership", desc:"Measures how clearly direction and priorities are defined."},
-  2:{name:"Market Intelligence", desc:"Reflects how well you understand your market, customers and competitors."},
-  3:{name:"Product Marketing", desc:"Connects customer understanding with product value."},
-  4:{name:"Demand Generation", desc:"Measures how predictably pipeline is generated."},
-  5:{name:"Sales Execution", desc:"Evaluates funnel consistency and deal quality."},
-  6:{name:"Customer Success & Expansion", desc:"Measures onboarding, retention and expansion."},
-  7:{name:"Revenue Operations & Systems", desc:"Evaluates process, tooling and data foundations."},
-  8:{name:"Pricing & Packaging", desc:"Evaluates clarity of value and monetisation."},
-  9:{name:"Brand & Communications", desc:"Evaluates narrative clarity and consistency."},
- 10:{name:"Data & Insights", desc:"Measures reliability and usability of information."},
- 11:{name:"Enablement", desc:"Evaluates training, materials and coaching quality."},
- 12:{name:"Leadership & Alignment", desc:"Reflects collaboration and unified direction."}
-};
-</script>
-
-<script src="assets/engine.js?v=5000"></script>
-
-<script>
-const toggle = document.getElementById("darkToggle");
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-</script>
+  <script>
+    // Simple Dark Mode Toggle
+    const toggle = document.getElementById("darkToggle");
+    if(toggle){
+      toggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+      });
+    }
+  </script>
 
 </body>
 </html>
