@@ -14,6 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
+  <script src="/auth.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -264,7 +266,7 @@
       gap:18px;
       padding-bottom:20px;
       border-bottom:1px solid var(--line);
-      margin-bottom:20px;
+      margin-bottom:24px;
     }
 
     .health-title{
@@ -292,7 +294,7 @@
       letter-spacing:-0.03em;
     }
 
-    /* NEW: Dynamic Insight Box */
+    /* --- NEW DYNAMIC INSIGHT STYLES --- */
     .insight-box {
       background: #f0f9ff;
       border: 1px solid #bae6fd;
@@ -309,8 +311,8 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #0284c7;
-      margin-bottom: 4px;
       display: block;
+      margin-bottom: 4px;
     }
 
     .insight-title {
@@ -320,7 +322,7 @@
       margin-bottom: 4px;
       font-family: Inter, sans-serif;
     }
-    
+
     .insight-text {
       font-size: 0.85rem;
       color: #334155;
@@ -597,8 +599,8 @@
           </div>
           <div class="health-score" id="totalScore">58</div>
         </div>
-
-        <div class="insight-box">
+        
+        <div class="insight-box" id="archetypeBox">
           <span class="insight-label">System Pattern</span>
           <div class="insight-title" id="archetypeTitle">Analyzing...</div>
           <div class="insight-text" id="archetypeBody">Adjust sliders to see impact.</div>
@@ -793,7 +795,8 @@
           elements: { line: { tension: 0.2 } } 
         }
       });
-
+      
+      // Archetype Logic
       function updateArchetype(g, r, i, p) {
         const titleEl = document.getElementById("archetypeTitle");
         const bodyEl = document.getElementById("archetypeBody");
