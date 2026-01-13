@@ -1,324 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Caugia Consulting | Calm, Structured GTM Clarity</title>
-  <meta name="description" content="Caugia Consulting helps leaders design calm, structured go-to-market systems using the GRIP Diamond and The GTM Framework.">
+  <title>GTM Intelligence Modules | Caugia Consulting</title>
+  <meta name="description" content="Structured deep dives into the 12 pillars of GTM. Fix specific constraints without redesigning the whole machine." />
 
-  <!-- Favicon -->
-<link rel="icon" href="C-logo.png" type="image/png" sizes="512x512">
-<link rel="apple-touch-icon" href="C-logo.png">
-<meta name="msapplication-TileImage" content="C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0">
+  <style>
+    /* --- V3 CORE SYSTEM --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px;
+    }
 
-  <!-- 🔒 SECURITY: Protect this entire page -->
-  <script src="/auth.js"></script>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    p:last-child{ margin-bottom:0; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:84px 0; }
+
+    /* BUTTONS */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* HERO */
+    .modules-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
+    .modules-hero h1{ font-size:3rem; margin-bottom:24px; line-height:1.1; }
+    .modules-hero p{ font-size:1.2rem; color:var(--text-body); line-height:1.6; }
+
+    /* MODULES GRID */
+    .section-title { 
+      font-family: Inter, sans-serif; font-weight: 800; font-size: 1.5rem; 
+      margin-bottom: 32px; color: var(--text-dark); border-bottom: 2px solid var(--line);
+      padding-bottom: 12px; display: inline-block;
+    }
+
+    .modules-grid{
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; margin-bottom: 60px;
+    }
+    
+    .module-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .module-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color: var(--primary); }
+
+    .module-pill {
+      display:inline-block; padding:4px 10px; background:#e0f2fe; color:#004494;
+      font-weight:700; font-size:0.75rem; border-radius:50px; margin-bottom:16px;
+      align-self:flex-start; text-transform:uppercase; letter-spacing:0.05em;
+    }
+
+    .module-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; margin-bottom: 12px; color: var(--text-dark); }
+    .module-card p { font-size: 0.95rem; color: var(--text-body); margin-bottom: 24px; flex-grow: 1; }
+    
+    .module-link { font-weight: 700; color: var(--primary); display: inline-flex; align-items: center; gap: 6px; font-size: 0.95rem; }
+    .module-link:hover { text-decoration: underline; }
+
+    /* CTA Section */
+    .section-dark{ background:#0f172a; color:var(--white); text-align: center; padding: 100px 0; }
+    .section-dark h2{ color:var(--white); margin-bottom: 24px; }
+    .section-dark p{ color:#94a3b8; max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem; }
+
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
+
+    @media (max-width: 980px){
+      .modules-grid{ grid-template-columns: 1fr; gap: 24px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+    }
+  </style>
 </head>
 
 <body>
   <header>
-  <div class="container">
-    <a href="/" class="brand">
-      <img src="/C-logo.png" alt="Caugia Consulting logo">
-      <span>Caugia Consulting</span>
-    </a>
-
-    <!-- Desktop navigation -->
-    <nav class="nav-desktop" aria-label="Main navigation">
-      <a href="/" class="active">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/services.html">Services</a>
-      <a href="/grip-diamond.html">GRIP Diamond</a>
-      <a href="/gtm-assessment.html">GTM Score</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/contact.html" class="cta">Contact</a>
-    </nav>
-
-    <!-- Mobile menu toggle -->
-    <button class="menu-toggle" type="button" aria-label="Toggle navigation">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-
-  <!-- Mobile navigation -->
-  <nav class="nav-mobile" aria-label="Mobile navigation">
-    <a href="/">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/services.html">Services</a>
-    <a href="/grip-diamond.html">GRIP Diamond</a>
-    <a href="/gtm-assessment.html">GTM Score</a>
-    <a href="/resources.html">Resources</a>
-    <a href="/contact.html">Contact</a>
-  </nav>
-</header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
+      </div>
+    </div>
+    
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
 
   <main>
-    <div class="wrap">
-      <!-- 1. HERO -->
-      <section id="hero">
-        <div class="container">
-          <h1>GTM Intelligence Modules</h1>
-          <p>
-            The 12 GTM Intelligence Modules each focus on one structural pillar of the GTM engine.
-            They are built on the diagnostic backbone of the GTM Intelligence Report and framed by the GRIP Diamond.
-          </p>
-          <p>
-            Use modules to work deeply on a specific constraint or to support a broader GTM reset.
-          </p>
-        </div>
-      </section>
+    <section class="container modules-hero">
+      <h1>GTM Intelligence Modules</h1>
+      <p>
+        The 12 structural pillars of the GTM engine. 
+        Each module is a focused diagnostic and prescriptive package designed to fix specific constraints.
+      </p>
+    </section>
 
-      <!-- 2. PRICING EXPLANATION -->
-      <section id="pricing">
-        <div class="container">
-          <div class="card">
-            <h2>How modules work</h2>
-            <p>
-              Each module is a focused, diagnostic and prescriptive package for one pillar.
-            </p>
-            <ul>
-              <li>Price per module: €149 (one time)</li>
-              <li>Based on your diagnostic data and GRIP Health</li>
-              <li>Includes a structured view of risks, patterns and recommended actions</li>
-            </ul>
-            <p>
-              Subscribers to the GTM Intelligence Subscription can see all module dashboards in read only mode
-              and decide when to unlock deeper analysis.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div class="container">
+      
+      <h2 class="section-title">Guidance</h2>
+      <div class="modules-grid">
+        <article class="module-card">
+          <span class="module-pill">Pillar 1</span>
+          <h3>Market Clarity</h3>
+          <p>Clarity on ICP, segmentation and target selection. Ensures the GTM engine points at the right market.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-      <!-- 3. MODULES GRID -->
-      <section id="modules-grid">
-        <div class="container">
-          <h2>The 12 structural modules</h2>
-          <p>
-            Modules are grouped by the GRIP dimension they support. Guidance, Resources, Implementation and Performance.
-          </p>
+        <article class="module-card">
+          <span class="module-pill">Pillar 2</span>
+          <h3>Positioning & Messaging</h3>
+          <p>Value proposition and narrative. Helps teams speak about the product in a consistent, clear way.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-          <div class="services-grid modules-grid">
+        <article class="module-card">
+          <span class="module-pill">Pillar 3</span>
+          <h3>Strategy & Alignment</h3>
+          <p>Alignment around GTM priorities and decision rhythm. Reduces friction and conflicting initiatives.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
+      </div>
 
-            <!-- GUIDANCE -->
-            <div class="card">
-              <h3>Market Clarity</h3>
-              <p>Pillar 1 · Guidance</p>
-              <p>
-                Clarity on ICP, segmentation and target selection. Ensures the GTM engine points at the right market.
-              </p>
-              <p>
-                <a href="module-market-clarity.html">Learn More</a>
-              </p>
-            </div>
+      <h2 class="section-title">Resources</h2>
+      <div class="modules-grid">
+        <article class="module-card">
+          <span class="module-pill">Pillar 4</span>
+          <h3>Data & Infrastructure</h3>
+          <p>Data quality, structure and accessibility. Ensures GTM decisions are supported by reliable information.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Positioning and Messaging</h3>
-              <p>Pillar 2 · Guidance</p>
-              <p>
-                Value proposition, narrative and messaging. Helps teams speak about the product in a consistent, clear way.
-              </p>
-              <p>
-                <a href="module-positioning-messaging.html">Learn More</a>
-              </p>
-            </div>
+        <article class="module-card">
+          <span class="module-pill">Pillar 5</span>
+          <h3>Tooling & Automation</h3>
+          <p>CRM, marketing automation and supporting tools. Looks at coverage, integration and effective use.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Strategy and Leadership Alignment</h3>
-              <p>Pillar 3 · Guidance</p>
-              <p>
-                Alignment around GTM priorities and decision rhythm. Reduces friction and conflicting initiatives.
-              </p>
-              <p>
-                <a href="module-strategy-leadership-alignment.html">Learn More</a>
-              </p>
-            </div>
+        <article class="module-card">
+          <span class="module-pill">Pillar 6</span>
+          <h3>Team Capacity</h3>
+          <p>Roles, skills and capacity. Identifies if the GTM engine has the right people structure to deliver.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
+      </div>
 
-            <!-- RESOURCES -->
-            <div class="card">
-              <h3>Data and Infrastructure</h3>
-              <p>Pillar 4 · Resources</p>
-              <p>
-                Data quality, structure and accessibility. Ensures GTM decisions are supported by reliable information.
-              </p>
-              <p>
-                <a href="module-data-infrastructure.html">Learn More</a>
-              </p>
-            </div>
+      <h2 class="section-title">Implementation</h2>
+      <div class="modules-grid">
+        <article class="module-card">
+          <span class="module-pill">Pillar 7</span>
+          <h3>Demand Operations</h3>
+          <p>Demand engine design, lead flow and campaign execution. Looks at how demand is generated and managed.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Tooling and Automation</h3>
-              <p>Pillar 5 · Resources</p>
-              <p>
-                CRM, marketing automation and supporting tools. Looks at coverage, integration and effective use.
-              </p>
-              <p>
-                <a href="module-tooling-automation.html">Learn More</a>
-              </p>
-            </div>
+        <article class="module-card">
+          <span class="module-pill">Pillar 8</span>
+          <h3>Sales Operations</h3>
+          <p>Pipeline structure, process consistency and handoffs. Focuses on moving opportunities from interest to close.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Team Capacity and Competency</h3>
-              <p>Pillar 6 · Resources</p>
-              <p>
-                Roles, skills and capacity. Identifies if the GTM engine has the right people and structure to deliver.
-              </p>
-              <p>
-                <a href="module-team-capacity-competency.html">Learn More</a>
-              </p>
-            </div>
+        <article class="module-card">
+          <span class="module-pill">Pillar 9</span>
+          <h3>Customer Operations</h3>
+          <p>Onboarding, lifecycle management and expansion readiness. Ensures customers adopt, grow and stay.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
+      </div>
 
-            <!-- IMPLEMENTATION -->
-            <div class="card">
-              <h3>Demand Operations</h3>
-              <p>Pillar 7 · Implementation</p>
-              <p>
-                Demand engine design, lead flow and campaign execution. Looks at how demand is generated and managed.
-              </p>
-              <p>
-                <a href="module-demand-operations.html">Learn More</a>
-              </p>
-            </div>
+      <h2 class="section-title">Performance</h2>
+      <div class="modules-grid">
+        <article class="module-card">
+          <span class="module-pill">Pillar 10</span>
+          <h3>Metrics & Measurement</h3>
+          <p>Definition of KPIs and dashboards. Helps leadership see what matters and detect issues early.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Sales Operations</h3>
-              <p>Pillar 8 · Implementation</p>
-              <p>
-                Pipeline structure, process consistency and handoffs. Focuses on how opportunities move from interest to close.
-              </p>
-              <p>
-                <a href="module-sales-operations.html">Learn More</a>
-              </p>
-            </div>
+        <article class="module-card">
+          <span class="module-pill">Pillar 11</span>
+          <h3>Forecasting</h3>
+          <p>Forecasting approach, planning cadence and scenarios. Supports predictable revenue decisions.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
 
-            <div class="card">
-              <h3>Customer Operations</h3>
-              <p>Pillar 9 · Implementation</p>
-              <p>
-                Onboarding, lifecycle management and expansion readiness. Ensures customers can adopt, grow and stay.
-              </p>
-              <p>
-                <a href="module-customer-operations.html">Learn More</a>
-              </p>
-            </div>
-
-            <!-- PERFORMANCE -->
-            <div class="card">
-              <h3>Metrics and Measurement</h3>
-              <p>Pillar 10 · Performance</p>
-              <p>
-                Definition of KPIs and dashboards. Helps leadership see what matters and detect issues early.
-              </p>
-              <p>
-                <a href="module-metrics-measurement.html">Learn More</a>
-              </p>
-            </div>
-
-            <div class="card">
-              <h3>Forecasting and Revenue Planning</h3>
-              <p>Pillar 11 · Performance</p>
-              <p>
-                Forecasting approach, planning cadence and scenarios. Supports predictable revenue decisions.
-              </p>
-              <p>
-                <a href="module-forecasting-revenue-planning.html">Learn More</a>
-              </p>
-            </div>
-
-            <div class="card">
-              <h3>Review and Improvement Rhythm</h3>
-              <p>Pillar 12 · Performance</p>
-              <p>
-                Postmortems, feedback loops and improvement cycles. Ensures the GTM engine learns and adapts over time.
-              </p>
-              <p>
-                <a href="module-review-improvement-rhythm.html">Learn More</a>
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. RELATION TO SCORE AND REPORT -->
-      <section id="relation">
-        <div class="container">
-          <div class="card">
-            <h2>How modules connect to the GTM Score and Report</h2>
-            <p>
-              The Free GTM Score provides a quick maturity snapshot.  
-              The GTM Intelligence Report offers a deep, structured diagnostic across all 12 pillars.
-            </p>
-            <p>
-              Modules are then used to work on the specific pillars that matter most for your current situation.
-              This keeps improvement focused, realistic and linked back to the GRIP Diamond.
-            </p>
-            <p>
-              <a href="gtm-assessment.html" class="cta">Start Your Free GTM Score</a>
-            </p>
-            <p>
-              <a href="gtm-intelligence-report.html" class="cta">Explore the GTM Intelligence Report</a>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. CTA TO CONTACT -->
-      <section id="cta">
-        <div class="container">
-          <div class="card">
-            <h2>Discuss the right module for your GTM engine</h2>
-            <p>
-              If you want to discuss which modules fit your current context best, you can reach out directly.
-            </p>
-            <p>
-              <a href="contact.html" class="cta">Contact Caugia</a>
-            </p>
-          </div>
-        </div>
-      </section>
+        <article class="module-card">
+          <span class="module-pill">Pillar 12</span>
+          <h3>Review Rhythm</h3>
+          <p>Postmortems, feedback loops and improvement cycles. Ensures the GTM engine learns and adapts over time.</p>
+          <a href="#" class="module-link">View Details →</a>
+        </article>
+      </div>
 
     </div>
+
+    <section class="section-dark">
+      <div class="container">
+        <h2>Discuss the right module for you</h2>
+        <p>If you want to discuss which modules fit your current context best, you can reach out directly.</p>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="contact.html" class="btn btn-primary" style="background:white; color:var(--text-dark);">Contact Caugia</a>
+          <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3); color:white;">Start GTM Score</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="container">
-      <p>
-        © <span id="year"></span> Caugia Consulting. All rights reserved.
-        <a href="privacy.html">Privacy Policy</a>
-        ·
-        <a href="contact.html">Contact</a>
-      </p>
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
     (function () {
-      const yearSpan = document.getElementById("year");
-      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (!toggle || !mobileNav) return;
 
-      const header = document.querySelector('header');
-      window.addEventListener('scroll', function () {
-        if (window.scrollY > 10) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
+      toggle.addEventListener("click", () => {
+        const open = mobileNav.style.display === "block";
+        mobileNav.style.display = open ? "none" : "block";
+        toggle.innerText = open ? "Menu" : "Close";
       });
-
-      const toggle = document.querySelector('.menu-toggle');
-      const mobileNav = document.querySelector('.nav-mobile');
-      if (toggle && mobileNav) {
-        toggle.addEventListener('click', function () {
-          const isOpen = mobileNav.classList.toggle('open');
-          toggle.classList.toggle('active', isOpen);
-          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-      }
     })();
   </script>
-
 </body>
 </html>
