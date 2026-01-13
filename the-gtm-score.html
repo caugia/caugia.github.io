@@ -148,7 +148,7 @@
     .diamond-label.left { top: 50%; left: 0; transform: translate(-50%, -50%); }
     .diamond-label.right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
-    /* --- NEW FOCUS AREAS (REPLACES 12 PILLARS) --- */
+    /* --- NEW FOCUS AREAS --- */
     .focus-intro { text-align: center; margin-bottom: 40px; }
     .focus-intro p { max-width: 700px; margin: 0 auto; color: #64748b; }
 
@@ -156,13 +156,13 @@
     
     .focus-card {
         background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 32px;
-        box-shadow: var(--shadow-sm); transition: transform 0.2s;
+        box-shadow: var(--shadow-sm); transition: transform 0.2s; display: flex; flex-direction: column;
     }
     .focus-card:hover { transform: translateY(-3px); }
     
     .focus-tag {
         display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; 
-        text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;
+        text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; width: fit-content;
     }
     .tag-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
     .tag-friction { background: #fffbeb; color: #d97706; border: 1px solid #fcd34d; }
@@ -387,7 +387,7 @@
     descEl.textContent = desc;
   }
 
-  // 3. Pillar Logic (Using 12 Pillars from URL)
+  // 3. Pillar Logic
   function getPillarsFromURL() {
     const params = new URLSearchParams(window.location.search);
     const raw = params.get("pillars");
@@ -397,12 +397,21 @@
 
   const pillarScores = getPillarsFromURL();
 
-  // Helper to color bars
-  function colorClass(val) {
-    if (val >= 80) return "fill-green";
-    if (val >= 50) return "fill-yellow";
-    return "fill-red";
-  }
+  // Define unique insights per pillar
+  const PILLAR_INSIGHTS = {
+    "Strategy & Leadership": "Execution is outpacing strategy. Teams are busy, but direction is unclear.",
+    "Market Intelligence": "You are flying blind. Decisions are based on internal opinion rather than market reality.",
+    "Product Marketing": "The product is strong, but the narrative is weak. Buyers don't understand the value quickly enough.",
+    "Demand Generation": "Pipeline is the bottleneck. You are reliant on outbound heroism rather than systemic demand.",
+    "Sales Development (SDR)": "Top-of-funnel activity is high, but conversion is low. The handoff or quality is broken.",
+    "Sales Execution": "Win rates are too low. You have opportunities, but you are not closing them consistently.",
+    "CS & Retention": "The bucket is leaking. Growth is expensive because you have to replace churned revenue first.",
+    "Account Expansion": "Existing customers are your untapped goldmine. You are leaving expansion revenue on the table.",
+    "Revenue Operations": "You are flying the plane without instruments. Data is siloed and forecasting is guesswork.",
+    "Enablement": "Ramp time is too long. New hires take too long to become productive.",
+    "Performance Mgmt": "Decisions are slow because data is untrusted. Leadership spends time debating numbers, not strategy.",
+    "Pricing & Packaging": "You are leaving money on the table. Your pricing model does not capture the value you deliver."
+  };
 
   if (pillarScores) {
     // Exact mapping to Make.com logic from screenshot
@@ -433,6 +442,7 @@
     const pVal = Math.round((valMap.p7 + valMap.p10 + valMap.p11)/3);
 
     // Update Bars
+    const colorClass = (val) => val >= 80 ? "fill-green" : (val >= 50 ? "fill-yellow" : "fill-red");
     const updateGripBar = (type, val) => {
         const bar = document.getElementById("grip" + type + "Bar");
         const txt = document.getElementById("grip" + type + "Value");
@@ -498,11 +508,13 @@
     focusGrid.innerHTML = lowestThree.map(p => {
         let tagClass = p.score < 50 ? "tag-critical" : "tag-friction";
         let tagName = p.score < 50 ? "Critical Constraint" : "Friction Point";
+        let insight = PILLAR_INSIGHTS[p.name] || "This area requires attention to unlock growth.";
+        
         return `
         <div class="focus-card">
             <span class="focus-tag ${tagClass}">${tagName}</span>
             <div class="focus-title">${p.name}</div>
-            <div class="focus-desc">This capability is scoring below your system average. Addressing this will likely unlock performance in adjacent areas.</div>
+            <div class="focus-desc">${insight}</div>
         </div>
         `;
     }).join("");
