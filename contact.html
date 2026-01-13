@@ -4,173 +4,275 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Contact Caugia | Get in Touch</title>
-  <meta name="description" content="Caugia Consulting helps leaders design calm, structured go-to-market systems using the GRIP Diamond and The GTM Framework.">
+  <title>Contact | Caugia Consulting</title>
+  <meta name="description" content="Get in touch with Caugia Consulting. We help B2B SaaS leaders build predictable revenue systems." />
 
-  <!-- Favicon -->
-  <link rel="icon" href="C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="C-logo.png">
-  <meta name="msapplication-TileImage" content="C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0">
+  <style>
+    /* --- V3 CORE SYSTEM --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px;
+    }
 
-  <!-- Security -->
-  <script src="/auth.js"></script>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    p:last-child{ margin-bottom:0; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:84px 0; }
+
+    /* BUTTONS */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* CONTACT LAYOUT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* LEFT COL */
+    .eyebrow { display: block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--primary); font-weight: 800; margin-bottom: 16px; }
+    .contact-hero h1 { font-size: 3rem; margin-bottom: 24px; line-height: 1.1; }
+    .contact-hero p { font-size: 1.1rem; color: var(--text-body); margin-bottom: 32px; }
+
+    .contact-details { margin-top: 40px; }
+    .contact-item { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+    .contact-icon { 
+      width: 40px; height: 40px; background: #e0f2fe; color: var(--primary); 
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; 
+    }
+    .contact-text h4 { font-family: Inter, sans-serif; font-size: 1rem; margin-bottom: 4px; color: var(--text-dark); }
+    .contact-text p { font-size: 0.95rem; color: var(--text-body); margin: 0; }
+    .contact-text a { color: var(--primary); font-weight: 600; }
+
+    /* RIGHT COL (FORM) */
+    .form-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
+      padding: 40px; box-shadow: var(--shadow-lg);
+    }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    
+    .form-input, .form-textarea {
+      width: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 8px;
+      font-family: Inter, sans-serif; font-size: 1rem; outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
+    
+    /* Footer */
+    .section-dark { background: #0f172a; color: var(--white); padding: 80px 0; margin-top: 80px; text-align: center; }
+    .section-dark h2 { color: var(--white); margin-bottom: 24px; }
+    .section-dark p { color: #94a3b8; max-width: 600px; margin: 0 auto 32px; }
+
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
+
+    @media (max-width: 900px){
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .form-card { padding: 24px; }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <div class="container">
-    <a href="/" class="brand">
-      <img src="C-logo.png" alt="Caugia Consulting logo">
-      <span>Caugia Consulting</span>
-    </a>
-
-    <!-- Desktop navigation -->
-    <nav class="nav-desktop" aria-label="Main navigation">
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/services.html">Services</a>
-      <a href="/grip-diamond.html">GRIP Diamond</a>
-      <a href="/gtm-assessment.html">GTM Score</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/contact.html" class="cta">Contact</a>
-    </nav>
-
-    <!-- Mobile navigation toggle -->
-    <button class="menu-toggle" type="button" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- Mobile navigation -->
-  <nav class="nav-mobile" aria-label="Mobile navigation">
-    <a href="/index.html">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/services.html">Services</a>
-    <a href="/grip-diamond.html">GRIP Diamond</a>
-    <a href="/gtm-assessment.html">GTM Score</a>
-    <a href="/resources.html">Resources</a>
-    <a href="/contact.html" class="cta">Contact</a>
-  </nav>
-</header>
-
-<main>
-  <div class="wrap">
-
-    <!-- Hero -->
-    <section id="hero">
-      <div class="container">
-        <h1>Contact</h1>
-        <p class="hero-sub">
-          If you are exploring how to strengthen your GTM system or want to learn more about our work,
-          we are available for a short introductory conversation.
-        </p>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
-    </section>
+    </div>
+    
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <div class="mobile-cta">
+        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+      </div>
+    </div>
+  </header>
 
-    <!-- Contact Information -->
-    <section>
-      <div class="container">
-        <div class="card">
-          <h2>Get in touch</h2>
+  <main>
+    <section class="container">
+      <div class="contact-grid">
+        
+        <div class="contact-hero">
+          <span class="eyebrow">Get in Touch</span>
+          <h1>Contact us</h1>
           <p>
-            For questions about the GTM Score, the GTM Intelligence Report or any of the modules,
-            you can reach Caugia directly using the details below.
+            If you are exploring how to strengthen your GTM system or want to learn more about our work, 
+            we are available for a short conversation.
           </p>
 
-          <ul>
-            <li>Email: <strong>contact@caugia.com</strong></li>
-            <li>Based in France, working internationally</li>
-          </ul>
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-text">
+                <h4>Email</h4>
+                <p><a href="mailto:contact@caugia.com">contact@caugia.com</a></p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">🌍</div>
+              <div class="contact-text">
+                <h4>Location</h4>
+                <p>Based in France, working internationally.</p>
+              </div>
+            </div>
 
-          <p>
-            If you prefer, you can also share a short message using the form on this page.
-          </p>
+            <div class="contact-item">
+              <div class="contact-icon">💼</div>
+              <div class="contact-text">
+                <h4>Support</h4>
+                <p>For report or assessment questions, please email support directly.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Contact Form -->
-    <section>
-      <div class="container">
-        <div class="card">
-          <h2>Send a message</h2>
-          <p>Please share your details and we will respond shortly.</p>
+        <div class="form-card">
+          <h2 style="font-size:1.5rem; margin-bottom:24px;">Send a message</h2>
+          <form action="https://formspree.io/f/mnqepzjn" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" class="form-input" required>
+            </div>
 
-          <form action="https://formspree.io/f/mnqepzjn" method="POST" class="contact-form" aria-label="Contact form">
-            <label>
-              Name
-              <input type="text" name="name" required>
-            </label>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-input" required>
+            </div>
 
-            <label>
-              Email
-              <input type="email" name="email" required>
-            </label>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" class="form-textarea" required></textarea>
+            </div>
 
-            <label>
-              Message
-              <textarea name="message" rows="5" required></textarea>
-            </label>
-
-            <button type="submit" class="cta">Send message</button>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
           </form>
         </div>
+
       </div>
     </section>
 
-    <!-- CTA -->
-    <section id="cta">
+    <section class="section-dark">
       <div class="container">
-        <div class="card">
-          <h2>Not sure where to start?</h2>
-          <p>
-            Begin with the Free GTM Score for a first view of your GTM system.  
-            It takes a few minutes and gives you an immediate sense of your strengths and areas to explore.
-          </p>
-          <p><a href="gtm-assessment.html" class="cta">Start Your Free GTM Score</a></p>
-          <p><a href="gtm-intelligence-report.html" class="cta">Explore the GTM Intelligence Report</a></p>
+        <h2>Not sure where to start?</h2>
+        <p>
+          Begin with the Free GTM Score for a first view of your system. 
+          It takes a few minutes and gives you an immediate sense of your strengths.
+        </p>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="gtm-assessment.html" class="btn btn-primary" style="background:white; color:var(--text-dark);">Start GTM Score</a>
+          <a href="gtm-intelligence-report.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3); color:white;">View Report Details</a>
         </div>
       </div>
     </section>
+  </main>
 
-  </div>
-</main>
+  <footer>
+    <div class="container">
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    </div>
+  </footer>
 
-<footer>
-  <div class="container">
-    © <span id="year"></span> Caugia Consulting. All rights reserved.
-    <a href="privacy.html">Privacy Policy</a>
-    ·
-    <a href="contact.html">Contact</a>
-  </div>
-</footer>
+  <script>
+    (function () {
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (!toggle || !mobileNav) return;
 
-<script>
-(function () {
-  const yearSpan = document.getElementById("year");
-  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-
-  const header = document.querySelector('header');
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 10) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  const toggle = document.querySelector('.menu-toggle');
-  const mobileNav = document.querySelector('.nav-mobile');
-  if (toggle && mobileNav) {
-    toggle.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.toggle('open');
-      toggle.classList.toggle('active', isOpen);
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  }
-})();
-</script>
-
+      toggle.addEventListener("click", () => {
+        const open = mobileNav.style.display === "block";
+        mobileNav.style.display = open ? "none" : "block";
+        toggle.innerText = open ? "Close" : "Menu";
+      });
+    })();
+  </script>
 </body>
 </html>
-
