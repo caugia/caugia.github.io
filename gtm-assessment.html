@@ -7,7 +7,8 @@
   <title>GTM Score | Caugia Consulting</title>
   <meta name="description" content="A structured assessment of your Go-to-Market maturity. Get your score and identify constraints in under 5 minutes." />
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="assets/C-logo.png" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +17,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- MASTER STYLES (EXACT MATCH TO INDEX/SERVICES) --- */
+    /* --- EXACT COPY OF INDEX CSS START --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -34,11 +35,11 @@
 
     *{ box-sizing:border-box; margin:0; padding:0; }
     
-    /* CRITICAL FIX: Forces scrollbar to prevent header jump */
+    /* CRITICAL FIX: Forces scrollbar to appear always, preventing header jump between long/short pages */
     html{ scroll-behavior:smooth; overflow-y: scroll; }
     
     body{
-      font-family:Inter, sans-serif;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       background:var(--bg);
       color:var(--text-dark);
       line-height:1.6;
@@ -52,7 +53,7 @@
       letter-spacing:-0.02em;
     }
 
-    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    p{ color:var(--text-body); margin-bottom: 1.5rem;}
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
@@ -62,39 +63,127 @@
       padding:0 24px;
     }
 
-    /* HEADER */
-    header{
-      position:sticky; top:0; z-index:1000;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
+    section{ padding:84px 0; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 28px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:0.95rem;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      white-space:nowrap;
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
-    .nav-links{ display:flex; gap:32px; align-items:center; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    
-    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
+
+    .btn-primary{
+      background:var(--primary-dark);
+      color:var(--white);
+      box-shadow:0 4px 12px rgba(0,86,179,0.15);
+    }
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-secondary{ background:transparent; color:var(--text-body); border:1px solid var(--line); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s;}
+
+    .btn-outline{
+      background:transparent;
+      color:var(--primary);
+      border-color:var(--line);
+    }
+    .btn-outline:hover{
+      background:var(--white);
+      border-color:var(--primary);
+      transform:translateY(-1px);
+    }
+    
+    /* Secondary button for "Back" actions */
+    .btn-secondary{
+      background:transparent; color:var(--text-body); border:1px solid var(--line); 
+      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s;
+    }
     .btn-secondary:hover{ background:var(--white); color:var(--text-dark); }
     .btn-secondary:disabled{ opacity:0.5; cursor:not-allowed; }
 
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(248,250,252,0.95);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+
+    .nav{
+      height:80px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:0.02em;
+    }
+    .brand img{ width:32px; height:32px; display:block; }
+
+    .nav-links{
+      display:flex;
+      gap:32px;
+      align-items:center;
+    }
+    .nav-links a{
+      color:var(--text-body);
+      font-weight:600;
+      font-size:0.95rem;
+      transition:color 0.15s ease;
+    }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+
+    .menu-toggle{
+      display:none;
+      border:1px solid var(--line);
+      background:var(--white);
+      border-radius:8px;
+      padding:8px 12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .mobile-nav{
+      display:none;
+      border-top:1px solid rgba(15,23,42,0.06);
+      padding:14px 0 18px;
+    }
+    .mobile-nav a{
+      display:block;
+      padding:12px 10px;
+      border-radius:8px;
+      font-weight:700;
+      color:var(--text-body);
+    }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+    .mobile-cta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:10px 10px 0;
+    }
+    /* --- END OF EXACT INDEX CSS --- */
 
     /* --- PAGE SPECIFIC STYLES --- */
 
-    /* Hero (Using Services Hero Style for consistency) */
-    .services-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
-    .services-hero h1{ font-size:3rem; margin-bottom:24px; line-height:1.1; }
-    .services-hero p{ font-size:1.2rem; color:var(--text-body); line-height:1.6; }
+    /* Hero */
+    .assessment-hero { padding: 60px 0 40px; text-align: center; max-width: 760px; margin: 0 auto; }
+    .assessment-hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
+    .assessment-hero p { font-size: 1.15rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
 
-    /* The Assessment App Container */
+    /* The Main Card */
     .assessment-card {
       background: var(--white);
       border: 1px solid var(--line);
@@ -113,7 +202,7 @@
     .gtm-v2-progress-bar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
     .gtm-v2-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
 
-    /* Questions & Animations */
+    /* Questions */
     .gtm-step { display: none; animation: fadeIn 0.3s ease; }
     .gtm-step.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -218,7 +307,7 @@
       <li><a href="resources.html">Resources</a></li>
     </ul>
     <div style="display:flex; gap:12px; align-items:center;">
-      <a href="contact.html" class="btn-primary">Contact</a>
+      <a href="contact.html" class="btn btn-primary">Contact</a>
       <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
@@ -228,12 +317,16 @@
     <a href="about.html">About</a>
     <a href="services.html">Services</a>
     <a href="gtm-assessment.html" class="active">GTM Score</a>
-    <a href="contact.html">Contact</a>
+    <a href="resources.html">Resources</a>
+    <div class="mobile-cta">
+      <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+      <a href="contact.html" class="btn btn-outline">Contact</a>
+    </div>
   </div>
 </header>
 
 <main>
-  <section class="container services-hero">
+  <section class="assessment-hero">
     <h1>The GTM Score</h1>
     <p>
       A calm and structured assessment. In a few minutes you receive a clear 0–100 score, a maturity band and a pattern across twelve core GTM pillars.
@@ -502,12 +595,12 @@
       <summary>What happens after I complete the assessment?</summary>
       <p>You land on a result page that explains your GTM Score and maturity band in plain language. Behind the scenes, your inputs can feed a GTM Intelligence Report or a more tailored engagement if you choose to move beyond the free assessment.</p>
     </details>
-
+    
     <details>
       <summary>Is my data kept private?</summary>
       <p>Yes. Your inputs are used solely to generate your score and report. We do not share your strategic data with third parties.</p>
     </details>
-
+    
     <details>
       <summary>Can I share the assessment with my leadership team?</summary>
       <p>Absolutely. In fact, having multiple leaders take the assessment often reveals misalignment gaps that are invisible in day-to-day operations.</p>
