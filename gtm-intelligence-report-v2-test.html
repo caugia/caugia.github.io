@@ -6,46 +6,322 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
-
-  <!-- Security -->
   <script src="/auth.js"></script>
+
+  <style>
+    /* ===========================================================
+       CAUGIA CONSULTING — APP CSS (V3 RESKIN)
+       Structure: Unchanged (Safe for Logic)
+       Visuals: Updated to V3 Design System
+       =========================================================== */
+
+    /* ------------------------------ 
+       ROOT VARIABLES (UPDATED TO V3) 
+       ------------------------------ */
+    :root {
+      /* V3 Brand Colors */
+      --primary: #0056b3;       /* Was --blue */
+      --primary-dark: #004494;  /* Was --blue-dark */
+      --text-dark: #0f172a;     /* Was --ink */
+      --text-body: #475569;     /* Was --ink-soft */
+      --bg: #f8fafc;            /* Was --blue-light ish */
+      --white: #ffffff;
+      --line: #e2e8f0;          /* Was --border */
+      
+      /* V3 Spacing & Radius */
+      --radius: 16px;           /* Cards */
+      --radius-sm: 8px;         /* Inputs */
+      --radius-btn: 999px;      /* V3 Pill Buttons */
+      
+      --shadow-soft: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-card: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      
+      --transition: .2s ease;
+    }
+
+    /* DARK MODE OVERRIDES (Kept functionality) */
+    body.dark {
+      --primary: #3b82f6;
+      --primary-dark: #60a5fa;
+      --text-dark: #f8fafc;
+      --text-body: #94a3b8;
+      --bg: #0f172a;
+      --white: #1e293b;
+      --line: #334155;
+    }
+
+    /* ------------------------------ 
+       RESET & BASE
+       ------------------------------ */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: Inter, sans-serif;
+      color: var(--text-dark);
+      overflow: hidden; /* App mode */
+      height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: Merriweather, serif; /* V3 Signature */
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+    }
+
+    /* ===========================================================
+       HEADER (V3 STYLE)
+       =========================================================== */
+    .gi-header {
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: fixed;
+      top: 0; left: 0; z-index: 100;
+    }
+
+    body.dark .gi-header { background: var(--white); }
+
+    .gi-header-inner {
+      max-width: 1600px; /* Wider for app view */
+      margin: 0 auto;
+      height: 70px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gi-header-left { display: flex; align-items: center; gap: 12px; }
+    .gi-logo { width: 32px; height: 32px; }
+    .gi-header-brand { font-size: 1.1rem; font-weight: 900; letter-spacing: 0.02em; color: var(--text-dark); font-family: Inter, sans-serif; }
+
+    .gi-header-right { display: flex; align-items: center; gap: 12px; }
+
+    /* V3 Button Styles used in Header */
+    .gi-contact-link, .gi-dark-toggle {
+      font-size: 0.9rem; font-weight: 700;
+      padding: 8px 16px; border-radius: var(--radius-btn);
+      transition: var(--transition); cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    .gi-contact-link {
+      background: transparent; border: 1px solid var(--line); color: var(--text-body);
+    }
+    .gi-contact-link:hover { background: var(--white); color: var(--primary); border-color: var(--primary); }
+
+    .gi-dark-toggle {
+      background: transparent; border: 1px solid var(--line); color: var(--text-body);
+    }
+    .gi-dark-toggle:hover { background: var(--white); color: var(--text-dark); }
+
+    /* ===========================================================
+       MAIN LAYOUT
+       =========================================================== */
+    .gi-main {
+      height: calc(100vh - 70px);
+      margin-top: 70px;
+      display: flex; justify-content: center; width: 100%; overflow: hidden;
+    }
+
+    .gi-shell {
+      max-width: 1600px; width: 100%; height: 100%;
+      display: grid; grid-template-columns: 320px 1fr 300px; /* Slightly wider left panel */
+      gap: 32px; padding: 32px;
+      position: relative; align-items: start; overflow: hidden;
+    }
+
+    /* ===========================================================
+       LEFT PANEL
+       =========================================================== */
+    .gi-left-info {
+      height: 100%; overflow-y: auto; padding-right: 12px;
+    }
+    /* Scrollbar styling */
+    .gi-left-info::-webkit-scrollbar { width: 6px; }
+    .gi-left-info::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
+
+    .gi-info-title {
+      font-size: 0.75rem; font-weight: 800; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-family: Inter, sans-serif;
+    }
+
+    .gi-info-h1 { font-size: 1.8rem; margin-bottom: 16px; line-height: 1.2; }
+    .gi-info-desc { font-size: 0.95rem; color: var(--text-body); margin-bottom: 24px; line-height: 1.6; }
+    .gi-info-meta { font-size: 0.85rem; color: var(--text-body); font-weight: 600; opacity: 0.8; margin-bottom: 24px; }
+
+    /* Progress Bar */
+    .gi-progress-box {
+      background: var(--white); border: 1px solid var(--line);
+      padding: 20px; border-radius: var(--radius); margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+    .gi-progress-top { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); }
+    .gi-progress-track { height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; }
+    .gi-progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width .3s ease; }
+
+    /* Pillar Description Box */
+    .gi-pillar-desc-box {
+      background: var(--white); border: 1px solid var(--line);
+      padding: 24px; border-radius: var(--radius); margin-top: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+    .gi-pillar-desc-box h3 { font-size: 1.1rem; margin-bottom: 12px; font-family: Inter, sans-serif; font-weight: 800; }
+    .gi-pillar-desc-box p { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); margin: 0; }
+
+    /* V3 Buttons (Generic) */
+    .gi-btn {
+      padding: 12px 24px; border-radius: var(--radius-btn);
+      font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition);
+      border: 1px solid var(--line); background: var(--white); color: var(--text-body);
+    }
+    .gi-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+    
+    .gi-btn.gi-primary {
+      background: var(--primary-dark); color: #ffffff; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(0,86,179,0.15);
+    }
+    .gi-btn.gi-primary:hover { background: #003370; }
+
+    /* Reset Button specifics */
+    .gi-btn.gi-reset { width: 100%; background: transparent; font-size: 0.85rem; padding: 8px; }
+
+    /* ===========================================================
+       CENTER ENGINE (THE QUESTION CARD)
+       =========================================================== */
+    .gi-center { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+
+    .gi-question-card {
+      background: var(--white); border-radius: 20px; /* Slightly rounder V3 card */
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-card);
+      padding: 48px;
+      height: 100%; display: flex; flex-direction: column; overflow: hidden;
+      position: relative;
+    }
+
+    /* Header */
+    .gi-question-header { flex-shrink: 0; margin-bottom: 32px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+    .gi-question-kicker { font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .gi-question-title { font-size: 1.8rem; margin-bottom: 8px; }
+    .gi-question-sub { font-size: 1rem; color: var(--text-body); }
+
+    /* Utility Buttons (Top Right) */
+    .gi-utility-row { position: absolute; top: 48px; right: 48px; display: flex; gap: 8px; }
+    .gi-utility-btn {
+      background: transparent; border: 1px solid var(--line); border-radius: 6px;
+      padding: 6px 12px; font-size: 0.8rem; font-weight: 600; color: var(--text-body); cursor: pointer; transition: var(--transition);
+    }
+    .gi-utility-btn:hover { background: var(--bg); color: var(--text-dark); }
+
+    /* Scrollable Body */
+    .gi-question-body { flex: 1; overflow-y: auto; padding-right: 12px; margin-bottom: 24px; }
+    
+    /* INPUTS - V3 Styling */
+    .gi-question-body input[type="text"],
+    .gi-question-body input[type="number"],
+    .gi-question-body textarea,
+    .gi-question-body select {
+      width: 100%; padding: 16px; border-radius: 12px;
+      border: 1px solid var(--line); background: var(--bg);
+      font-family: Inter, sans-serif; font-size: 1rem; color: var(--text-dark);
+      transition: var(--transition); margin-bottom: 20px; outline: none;
+    }
+    .gi-question-body input:focus, .gi-question-body textarea:focus, .gi-question-body select:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); background: var(--white);
+    }
+
+    /* Grid Layouts */
+    .gi-group { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .gi-group-field label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
+    .gi-group-field input { width: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+
+    /* Option Cards (Radio) */
+    .gi-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .gi-option-card {
+      display: flex; align-items: center; gap: 12px; padding: 16px;
+      border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
+      cursor: pointer; transition: var(--transition);
+    }
+    .gi-option-card:hover { border-color: #cbd5e1; background: #f1f5f9; }
+    /* Active state (handled by JS often via class, but base input check styling:) */
+    .gi-option-card:has(input:checked) { border-color: var(--primary); background: #eff6ff; box-shadow: 0 0 0 1px var(--primary); }
+    .gi-option-card span { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); }
+
+    /* Bottom Nav */
+    .gi-nav-row { flex-shrink: 0; display: flex; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line); }
+
+    /* ===========================================================
+       RIGHT PANEL (PILLARS)
+       =========================================================== */
+    .gi-right-pillars { height: 100%; overflow-y: auto; padding-left: 12px; }
+    
+    .gi-pillars-title { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--text-body); margin-bottom: 12px; letter-spacing: 0.05em; }
+    
+    .gi-pillar-nav { list-style: none; padding: 0; margin: 0; }
+    .gi-pillar-nav li {
+      padding: 12px 16px; margin-bottom: 6px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600; color: var(--text-body);
+      cursor: pointer; transition: var(--transition); border: 1px solid transparent;
+    }
+    .gi-pillar-nav li:hover { background: var(--white); color: var(--primary); border-color: var(--line); }
+    .gi-pillar-nav li.active { background: var(--primary); color: #ffffff; box-shadow: var(--shadow-soft); }
+
+    /* Floating FAQ */
+    .gi-faq-button {
+      position: fixed; bottom: 32px; right: 32px;
+      background: var(--white); color: var(--text-dark);
+      padding: 12px 24px; border-radius: 99px;
+      font-weight: 700; box-shadow: var(--shadow-card);
+      text-decoration: none; border: 1px solid var(--line);
+      z-index: 200; transition: var(--transition);
+    }
+    .gi-faq-button:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
+
+    /* Mobile */
+    @media (max-width: 1100px) {
+      body { overflow-y: auto; height: auto; }
+      .gi-main { height: auto; margin-top: 70px; }
+      .gi-shell { grid-template-columns: 1fr; gap: 40px; padding: 24px; height: auto; overflow: visible; }
+      .gi-left-info, .gi-right-pillars, .gi-center { height: auto; overflow: visible; }
+      .gi-question-card { height: auto; padding: 24px; }
+      .gi-options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
 
 <header class="gi-header">
   <div class="gi-header-inner">
-
     <div class="gi-header-left">
       <img src="assets/C-logo.png" class="gi-logo" alt="Caugia logo">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
-
     <div class="gi-header-right">
       <button id="darkToggle" class="gi-dark-toggle">Dark</button>
       <a href="contact.html" class="gi-contact-link">Contact</a>
     </div>
-
   </div>
 </header>
-
 
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- LEFT INFO PANEL -->
     <aside class="gi-left-info">
-
       <div class="gi-info-title">Premium GTM Assessment</div>
-
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
-
       <p class="gi-info-desc">
         A structured, 12-pillar diagnostic that evaluates your entire
         go-to-market system and reveals strengths, risks and hidden
@@ -74,11 +350,8 @@
           recommendations, highlights risks and identifies the right priorities.
         </p>
       </div>
-
     </aside>
 
-
-    <!-- CENTER ENGINE -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
 
@@ -90,14 +363,12 @@
 
         <div class="gi-question-body" id="gi-question-body"></div>
 
-        <!-- ⭐ UTILITY BUTTONS (TOP RIGHT INSIDE CARD) -->
         <div class="gi-utility-row">
           <button class="gi-utility-btn" id="gi-save-btn">Save</button>
           <button class="gi-utility-btn" id="gi-jump-first">First unanswered</button>
           <button class="gi-utility-btn" id="gi-jump-last">Last answered</button>
         </div>
 
-        <!-- ⭐ PRIMARY NAVIGATION (BOTTOM FIXED INSIDE CARD) -->
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
@@ -108,12 +379,8 @@
       </div>
     </section>
 
-
-    <!-- RIGHT PILLARS -->
     <aside class="gi-right-pillars">
-
       <div class="gi-pillars-title">Pillars</div>
-
       <ul class="gi-pillar-nav" id="gi-left-pillar-list">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
@@ -129,15 +396,12 @@
         <li data-p="11">11 — Enablement</li>
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
-
     </aside>
 
   </div>
 </main>
 
-
-<a href="faq.html" class="gi-faq-button">FAQ</a>
-
+<a href="faq.html" class="gi-faq-button">Support</a>
 
 <script src="assets/QUESTIONS.js?v=1"></script>
 
