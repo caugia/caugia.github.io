@@ -292,6 +292,9 @@
       padding: 16px;
       margin-bottom: 24px;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
@@ -326,7 +329,9 @@
     .insight-text {
       font-size: 0.85rem;
       color: #334155;
-      line-height: 1.4;
+      line-height: 1.5;
+      /* STABILITEIT FIX: Reserveer ruimte voor 3 regels tekst */
+      min-height: 3.2em; 
     }
 
     .widget-layout{
@@ -773,7 +778,7 @@
         if (avg > 75 && lowest.v > 65) return {
           title: "The Balanced Engine",
           body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
-          mode: "mode-good"
+          mode: "mode-good" 
         };
 
         // 2. CONSTRAINT LOGIC (Based on the Single Lowest Score)
