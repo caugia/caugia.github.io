@@ -43,7 +43,7 @@
       --transition: .2s ease;
     }
 
-    /* DARK MODE OVERRIDES (Kept functionality) */
+    /* DARK MODE OVERRIDES */
     body.dark {
       --primary: #3b82f6;
       --primary-dark: #60a5fa;
@@ -55,38 +55,51 @@
     }
 
     /* ------------------------------ 
-       RESET & BASE - NO SCROLL FIX 
+       RESET & BASE - APP LAYOUT FIX 
        ------------------------------ */
     * { box-sizing: border-box; }
 
-    html, body {
+    html {
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* Strict no scroll on html */
+    }
+
+    body {
       margin: 0; padding: 0;
       height: 100vh; width: 100vw;
-      overflow: hidden; /* CRITICAL: Prevents body scroll */
+      overflow: hidden; /* Strict no scroll on body */
       background: var(--bg);
       font-family: Inter, sans-serif;
       color: var(--text-dark);
       -webkit-font-smoothing: antialiased;
+      
+      /* FLEX COLUMN LAYOUT - THE FIX */
+      display: flex;
+      flex-direction: column;
     }
 
     h1, h2, h3 {
-      font-family: Merriweather, serif; /* V3 Signature */
+      font-family: Merriweather, serif;
       font-weight: 900;
       letter-spacing: -0.02em;
       color: var(--text-dark);
     }
 
     /* ===========================================================
-       HEADER (V3 STYLE)
+       HEADER (V3 STYLE - RELATIVE POS FIX)
        =========================================================== */
     .gi-header {
       width: 100%;
-      height: 70px; /* Fixed height */
+      /* Changed from fixed to relative/flex-basis to occupy real space */
+      position: relative; 
+      flex: 0 0 70px; /* Rigid 70px height */
+      
       background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
+      /* blur removed slightly as it sits above bg, but kept for style if needed */
+      backdrop-filter: blur(12px); 
       border-bottom: 1px solid var(--line);
-      position: fixed;
-      top: 0; left: 0; z-index: 100;
+      z-index: 100;
     }
 
     body.dark .gi-header { background: var(--white); }
@@ -126,16 +139,22 @@
     .gi-dark-toggle:hover { background: var(--white); color: var(--text-dark); }
 
     /* ===========================================================
-       MAIN LAYOUT - FLEX COLUMN
+       MAIN LAYOUT - FLEX FILL
        =========================================================== */
     .gi-main {
-      height: 100vh;
-      padding-top: 70px; /* Push content below header */
-      display: flex; justify-content: center; width: 100%;
+      /* Takes remaining space automatically */
+      flex: 1; 
+      width: 100%;
+      height: auto; /* Let flex handle height */
+      overflow: hidden; /* Ensure main container never scrolls */
+      padding-top: 0; /* Removed padding, header is now solid block */
+      display: flex; 
+      justify-content: center;
     }
 
     .gi-shell {
-      max-width: 1600px; width: 100%; height: 100%;
+      max-width: 1600px; width: 100%; 
+      height: 100%; /* Fills the flex parent */
       display: grid; grid-template-columns: 320px 1fr 300px;
       gap: 32px; padding: 32px;
       overflow: hidden; /* Ensure grid doesn't spill */
@@ -269,7 +288,7 @@
       cursor: pointer; transition: var(--transition);
     }
     .gi-option-card:hover { border-color: #cbd5e1; background: #f1f5f9; }
-    /* Active state (handled by JS often via class, but base input check styling:) */
+    /* Active state */
     .gi-option-card:has(input:checked) { border-color: var(--primary); background: #eff6ff; box-shadow: 0 0 0 1px var(--primary); }
     .gi-option-card span { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); }
 
@@ -310,10 +329,12 @@
     .gi-faq-button:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
 
     /* Mobile */
-    @media (max-width: 1100px) {
-      body, html { overflow-y: auto; height: auto; }
-      .gi-main { height: auto; margin-top: 70px; }
-      .gi-shell { grid-template-columns: 1fr; gap: 40px; padding: 24px; height: auto; overflow: visible; }
+    /* UPDATED: Changed from 1100px to 992px to prevent laptops from falling into scroll mode */
+    @media (max-width: 992px) {
+      body, html { overflow-y: auto; height: auto; display: block; }
+      .gi-header { position: sticky; top: 0; flex: none; }
+      .gi-main { height: auto; margin-top: 0; display: block; padding-top: 24px; }
+      .gi-shell { grid-template-columns: 1fr; gap: 40px; padding: 24px; height: auto; overflow: visible; display: flex; flex-direction: column; }
       .gi-left-info, .gi-right-pillars, .gi-center { height: auto; overflow: visible; }
       .gi-question-card { height: auto; padding: 24px; }
       .gi-options-grid { grid-template-columns: 1fr; }
@@ -437,9 +458,9 @@ const PILLAR_META = {
   7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations."},
   8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation."},
   9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
- 11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction."}
+  10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
+  11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
+  12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction."}
 };
 </script>
 
