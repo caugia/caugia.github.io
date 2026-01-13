@@ -14,8 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <script src="/auth.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -266,7 +264,7 @@
       gap:18px;
       padding-bottom:20px;
       border-bottom:1px solid var(--line);
-      margin-bottom:24px;
+      margin-bottom:20px;
     }
 
     .health-title{
@@ -292,6 +290,41 @@
       color:var(--primary);
       line-height:1;
       letter-spacing:-0.03em;
+    }
+
+    /* NEW: Dynamic Insight Box */
+    .insight-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .insight-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #0284c7;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .insight-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0c4a6e;
+      margin-bottom: 4px;
+      font-family: Inter, sans-serif;
+    }
+    
+    .insight-text {
+      font-size: 0.85rem;
+      color: #334155;
+      line-height: 1.4;
     }
 
     .widget-layout{
@@ -565,6 +598,12 @@
           <div class="health-score" id="totalScore">58</div>
         </div>
 
+        <div class="insight-box">
+          <span class="insight-label">System Pattern</span>
+          <div class="insight-title" id="archetypeTitle">Analyzing...</div>
+          <div class="insight-text" id="archetypeBody">Adjust sliders to see impact.</div>
+        </div>
+
         <div class="widget-layout">
           <div class="controls-col" aria-label="GRIP sliders">
             <div class="control-group">
@@ -696,7 +735,7 @@
   </footer>
 
   <script>
-    // Mobile nav
+    // Mobile nav logic
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
@@ -709,7 +748,7 @@
       });
     })();
 
-    // Chart + sliders
+    // Chart + sliders logic
     (function () {
       const canvas = document.getElementById("radarChart");
       if (!canvas) return;
@@ -755,6 +794,42 @@
         }
       });
 
+      function updateArchetype(g, r, i, p) {
+        const titleEl = document.getElementById("archetypeTitle");
+        const bodyEl = document.getElementById("archetypeBody");
+        
+        let name = "The Foundation Builder";
+        let body = "Multiple constraints exist. Build clarity first, then strengthen infrastructure.";
+        
+        const weak = [];
+        if (g < 50) weak.push("Guidance");
+        if (r < 50) weak.push("Resources");
+        if (i < 50) weak.push("Implementation");
+        if (p < 50) weak.push("Performance");
+
+        if (weak.length >= 3) {
+            // Default
+        } else if (weak.includes("Guidance")) {
+            name = "The Direction Gap";
+            body = "Execution exists but direction is weak. Strategy needs definition.";
+        } else if (weak.includes("Resources")) {
+            name = "The Capacity Crunch";
+            body = "Intent is clear but the system lacks capacity. Tooling lags behind.";
+        } else if (weak.includes("Implementation")) {
+            name = "The Heroic System";
+            body = "Performance relies on individuals, not structure. Processes need to be repeatable.";
+        } else if (weak.includes("Performance")) {
+            name = "The Leaky Engine";
+            body = "Inputs look healthy but outcomes lag. Conversion needs inspection.";
+        } else {
+            name = "The Balanced Engine";
+            body = "System performs well across dimensions. Focus on optimization.";
+        }
+        
+        titleEl.textContent = name;
+        bodyEl.textContent = body;
+      }
+
       function updateChart() {
         const g = parseInt(document.getElementById("input-g").value, 10);
         const r = parseInt(document.getElementById("input-r").value, 10);
@@ -770,6 +845,8 @@
 
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
+        
+        updateArchetype(g, r, i, p);
       }
 
       ["input-g","input-r","input-i","input-p"].forEach(id => {
