@@ -284,10 +284,9 @@
           </div>
         </div>
 
-        <div style="margin-top: 24px; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid var(--line);">
-          <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:4px;">GRIP Archetype</div>
-          <div style="font-size:1.1rem; font-weight:700; color:var(--text-dark); margin-bottom:6px;" id="gripArchetypeTitle">Analyzing...</div>
-          <div style="font-size:0.95rem; color:var(--text-body); line-height:1.5;" id="gripArchetypeDesc">Please wait while we determine your system pattern.</div>
+        <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; color: #64748b;">
+          <strong>Archetype:</strong> <span id="gripArchetypeTitle">Analyzing...</span>
+          <div id="gripArchetypeDesc" style="margin-top: 4px;">Please wait while we determine your system pattern.</div>
         </div>
       </div>
 
@@ -452,23 +451,22 @@
     // 0=Strat, 1=Intel, 2=PMM, 3=Demand, 4=SDR, 5=Exec, 
     // 6=Success, 7=Expansion, 8=RevOps, 9=Enable, 10=Perf, 11=Price
     
-    // Mapping URL array index to ID in HTML (p1..p12)
     const valMap = {
         p1: pillarScores[0],
         p2: pillarScores[1],
         p3: pillarScores[2],
         p12: pillarScores[0], // Reuse Strat for Leadership/Align as proxy
         
-        p8: pillarScores[11], // Pricing (Idx 11) -> R
-        p9: pillarScores[7],  // Expansion -> Brand Proxy (Idx 7)
+        p8: pillarScores[11], // Pricing
+        p9: pillarScores[7],  // Expansion -> Brand proxy
         
         p4: pillarScores[3],
-        p5: pillarScores[5], // Sales Exec (Idx 5) - SDR (4) merged or skipped? Using Exec.
-        p6: pillarScores[6], // Success (Idx 6)
+        p5: pillarScores[5], // Sales Exec
+        p6: pillarScores[6], // Success
         
-        p7: pillarScores[8], // RevOps (Idx 8)
-        p10: pillarScores[10], // Perf -> Data Proxy (Idx 10)
-        p11: pillarScores[9]  // Enablement (Idx 9)
+        p7: pillarScores[8], // RevOps
+        p10: pillarScores[10], // Perf -> Data
+        p11: pillarScores[9]  // Enablement
     };
 
     // Update the 12 Bars
@@ -482,7 +480,7 @@
         }
     }
 
-    // GRIP Aggregates (Matches your explicit logic)
+    // GRIP Aggregates (Matches logic in prompt)
     // G = avg(1,2,3,12) -> p1, p2, p3, p12
     const gVal = Math.round((valMap.p1 + valMap.p2 + valMap.p3 + valMap.p12)/4);
     // R = avg(8,9) -> p8, p9
@@ -506,32 +504,51 @@
     updateGripBar("Implementation", iVal);
     updateGripBar("Performance", pVal);
 
-    // Archetype Logic (Used your specific logic)
-    function determineArchetype(g, r, i, p) {
-       const weak = [];
-       if (g < 50) weak.push("Guidance");
-       if (r < 50) weak.push("Resources");
-       if (i < 50) weak.push("Implementation");
-       if (p < 50) weak.push("Performance");
+    // --- ARCHETYPE LOGIC ---
+    function pickArchetype(g, r, i, p) {
+      const weak = [];
+      if (g < 50) weak.push("Guidance");
+      if (r < 50) weak.push("Resources");
+      if (i < 50) weak.push("Implementation");
+      if (p < 50) weak.push("Performance");
 
-       const archetypes = {
-         foundation: { name: "The Foundation Builder", body: "Multiple constraints exist across the system. Build clarity first, then strengthen infrastructure and operating rhythm." },
-         directionless: { name: "The Direction Gap", body: "Execution exists but direction is weak. ICP, positioning and strategic choices need sharper definition." },
-         capacity: { name: "The Capacity Crunch", body: "Intent is clear but the system lacks capacity. Data, tooling and enablement need to catch up with ambition." },
-         chaos: { name: "The Heroic System", body: "Performance depends on individuals rather than structure. Processes and governance need to become repeatable." },
-         leaky: { name: "The Leaky Engine", body: "Inputs look healthy but outcomes lag. Conversion, retention and expansion dynamics need closer inspection." },
-         balanced: { name: "The Balanced Engine", body: "Your system is performing well across all dimensions. Focus on optimization and scaling." }
-       };
+      const archetypes = {
+        foundation: {
+          name: "The Foundation Builder",
+          body: "Multiple constraints exist across the system. Build clarity first, then strengthen infrastructure and operating rhythm."
+        },
+        directionless: {
+          name: "The Direction Gap",
+          body: "Execution exists but direction is weak. ICP, positioning and strategic choices need sharper definition."
+        },
+        capacity: {
+          name: "The Capacity Crunch",
+          body: "Intent is clear but the system lacks capacity. Data, tooling and enablement need to catch up with ambition."
+        },
+        chaos: {
+          name: "The Heroic System",
+          body: "Performance depends on individuals rather than structure. Processes and governance need to become repeatable."
+        },
+        leaky: {
+          name: "The Leaky Engine",
+          body: "Inputs look healthy but outcomes lag. Conversion, retention and expansion dynamics need closer inspection."
+        },
+        balanced: {
+            name: "The Balanced Engine",
+            body: "Your system is performing well across all dimensions. Focus on optimization and scaling."
+        }
+      };
 
-       if (weak.length >= 3) return archetypes.foundation;
-       if (weak.includes("Guidance")) return archetypes.directionless;
-       if (weak.includes("Resources")) return archetypes.capacity;
-       if (weak.includes("Implementation")) return archetypes.chaos;
-       if (weak.includes("Performance")) return archetypes.leaky;
-       return archetypes.balanced;
+      if (weak.length >= 3) return archetypes.foundation;
+      if (weak.includes("Guidance")) return archetypes.directionless;
+      if (weak.includes("Resources")) return archetypes.capacity;
+      if (weak.includes("Implementation")) return archetypes.chaos;
+      if (weak.includes("Performance")) return archetypes.leaky;
+      
+      return archetypes.balanced;
     }
 
-    const arch = determineArchetype(gVal, rVal, iVal, pVal);
+    const arch = pickArchetype(gVal, rVal, iVal, pVal);
     document.getElementById("gripArchetypeTitle").innerText = arch.name;
     document.getElementById("gripArchetypeDesc").innerText = arch.body;
 
