@@ -16,11 +16,11 @@
 
   <style>
     /* ===========================================================
-       CAUGIA APP V3 - VIEWPORT LOCK SYSTEM
+       CAUGIA CONSULTING — APP CSS (V3.1 FIXED LAYOUT)
        =========================================================== */
 
     :root {
-      /* Colors */
+      /* V3 Brand Colors */
       --primary: #0056b3;
       --primary-dark: #004494;
       --text-dark: #0f172a;
@@ -29,26 +29,42 @@
       --white: #ffffff;
       --line: #e2e8f0;
       
-      /* Layout Dimensions */
+      /* App Specific Dimensions */
       --header-h: 72px;
       
-      /* Styling */
-      --radius-lg: 20px;
-      --radius-md: 12px;
+      /* V3 Styling */
+      --radius-card: 20px;
       --radius-btn: 999px;
-      --shadow-card: 0 10px 40px -10px rgba(0,0,0,0.08);
+      --radius-input: 12px;
+      --shadow-app: 0 10px 40px -10px rgba(0,0,0,0.08);
+      
+      --transition: .2s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
+    /* DARK MODE */
+    body.dark {
+      --primary: #3b82f6;
+      --primary-dark: #60a5fa;
+      --text-dark: #f8fafc;
+      --text-body: #94a3b8;
+      --bg: #0f172a;
+      --white: #1e293b;
+      --line: #334155;
+    }
+
+    /* ------------------------------ 
+       LAYOUT ENGINE (THE "SAAS LOCK")
+       ------------------------------ */
     * { box-sizing: border-box; }
 
-    /* HARD LOCK ON BODY - NO GLOBAL SCROLL */
     html, body {
       margin: 0; padding: 0;
       width: 100vw; height: 100vh;
-      overflow: hidden; 
+      overflow: hidden; /* CRITICAL: Kills global scroll */
       background: var(--bg);
       font-family: Inter, sans-serif;
       color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
       display: flex;
       flex-direction: column;
     }
@@ -56,10 +72,11 @@
     /* ================= HEADER (FIXED HEIGHT) ================= */
     .gi-header {
       flex: 0 0 var(--header-h); /* Never shrinks/grows */
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
       z-index: 50;
+      width: 100%;
     }
 
     .gi-header-inner {
@@ -67,16 +84,23 @@
       display: flex; align-items: center; justify-content: space-between;
     }
 
-    .gi-brand { display: flex; align-items: center; gap: 12px; font-family: Merriweather, serif; font-weight: 900; font-size: 1.1rem; }
-    .gi-brand img { width: 32px; height: 32px; }
+    .gi-header-left { display: flex; align-items: center; gap: 12px; }
+    .gi-logo { width: 32px; height: 32px; }
+    .gi-header-brand { font-size: 1.1rem; font-weight: 900; letter-spacing: 0.02em; color: var(--text-dark); font-family: Inter, sans-serif; }
 
-    .gi-nav-right { display: flex; gap: 12px; }
-    .gi-head-btn {
-      background: transparent; border: 1px solid var(--line); padding: 8px 16px; 
-      border-radius: var(--radius-btn); font-size: 0.85rem; font-weight: 700; 
-      color: var(--text-body); text-decoration: none; transition: 0.2s; cursor: pointer;
+    .gi-header-right { display: flex; align-items: center; gap: 12px; }
+
+    /* Header Buttons */
+    .gi-contact-link, .gi-dark-toggle {
+      font-size: 0.85rem; font-weight: 700;
+      padding: 8px 16px; border-radius: var(--radius-btn);
+      transition: var(--transition); cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+      background: transparent; border: 1px solid var(--line); color: var(--text-body);
     }
-    .gi-head-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--white); }
+    .gi-contact-link:hover, .gi-dark-toggle:hover { 
+      background: var(--white); color: var(--primary); border-color: var(--primary); 
+    }
 
     /* ================= MAIN LAYOUT (FILLS REST) ================= */
     .gi-main {
@@ -105,6 +129,7 @@
     /* ================= LEFT PANEL ================= */
     .gi-left {
       display: flex; flex-direction: column;
+      gap: 0; /* Control spacing manually */
     }
 
     .gi-info-eyebrow { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
@@ -125,14 +150,26 @@
     .gi-prog-track { height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; }
     .gi-prog-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s; }
 
-    /* Context Box (Pushed to bottom naturally via flex, but scrolls if needed) */
+    /* Reset Button */
+    .gi-btn.gi-reset { 
+      width: 100%; background: transparent; font-size: 0.8rem; padding: 10px; margin-bottom: 24px;
+      color: var(--text-body); border: 1px solid transparent; 
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .gi-btn.gi-reset:hover { color: var(--text-dark); background: rgba(0,0,0,0.03); border-radius: 8px; }
+
+    /* Context Box (FIXED: No margin-auto, sits naturally) */
     .gi-context-box {
-      margin-top: auto; /* Pushes to bottom */
       background: #eff6ff; border: 1px solid #dbeafe; border-radius: var(--radius-md);
       padding: 20px;
     }
     .gi-context-box h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; color: #1e3a8a; margin: 0 0 8px 0; }
     .gi-context-box p { font-size: 0.9rem; line-height: 1.5; color: #1e40af; margin: 0; }
+    
+    body.dark .gi-context-box { background: #1e293b; border-color: #334155; }
+    body.dark .gi-context-box h3 { color: #f8fafc; }
+    body.dark .gi-context-box p { color: #cbd5e1; }
 
     /* ================= CENTER ENGINE (CARD) ================= */
     .gi-center-card {
@@ -221,13 +258,15 @@
     .gi-nav-item.active { background: var(--primary); color: #fff; font-weight: 700; }
 
     /* ================= MOBILE ================= */
-    @media (max-width: 1100px) {
-      body, html { height: auto; overflow-y: auto; } /* Unlock on mobile */
-      .gi-main { display: block; padding: 20px; height: auto; }
-      .gi-shell { display: flex; flex-direction: column; height: auto; padding: 0; gap: 40px; }
+    @media (max-width: 1200px) {
+      body, html { height: auto; overflow-y: auto; } /* Unlock body scroll */
+      .gi-main { height: auto; display: block; padding-bottom: 60px; }
+      .gi-shell { display: flex; flex-direction: column; height: auto; overflow: visible; gap: 40px; }
       .gi-center-card { height: auto; min-height: 600px; }
       .gi-left, .gi-right { height: auto; overflow: visible; }
       .gi-left { order: 2; } .gi-right { order: 3; } .gi-center { order: 1; }
+      .gi-question-body { overflow: visible; }
+      .gi-header { position: sticky; }
     }
   </style>
 </head>
@@ -270,7 +309,7 @@
             </div>
           </div>
           
-          <button class="gi-head-btn" id="gi-reset-btn" style="width:100%; text-align:center; border:none; background:rgba(0,0,0,0.03);">Reset Progress</button>
+          <button class="gi-btn gi-reset" id="gi-reset-btn">Reset Progress</button>
           
           <div style="height: 32px;"></div> <div class="gi-context-box" id="gi-left-pillar-desc-box">
             <h3 id="gi-pillar-name">Context</h3>
