@@ -33,7 +33,9 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: scroll; } /* FIX JUMP */
+    
+    /* FIX: Force scrollbar to prevent header jump */
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
     
     body{
       font-family:Inter, sans-serif;
@@ -262,28 +264,30 @@
         <div style="margin-top: 30px;">
           <div class="health-row">
             <div class="health-name">Guidance</div>
-            <div class="health-bar-track"><span class="health-bar-fill" id="gripGuidanceBar"></span></div>
+            <div class="health-bar-track"><span class="health-bar-fill" id="gripGuidanceBar" style="width:0%"></span></div>
             <div class="health-value" id="gripGuidanceValue">-</div>
           </div>
           <div class="health-row">
             <div class="health-name">Resources</div>
-            <div class="health-bar-track"><span class="health-bar-fill" id="gripResourcesBar"></span></div>
+            <div class="health-bar-track"><span class="health-bar-fill" id="gripResourcesBar" style="width:0%"></span></div>
             <div class="health-value" id="gripResourcesValue">-</div>
           </div>
           <div class="health-row">
             <div class="health-name">Implementation</div>
-            <div class="health-bar-track"><span class="health-bar-fill" id="gripImplementationBar"></span></div>
+            <div class="health-bar-track"><span class="health-bar-fill" id="gripImplementationBar" style="width:0%"></span></div>
             <div class="health-value" id="gripImplementationValue">-</div>
           </div>
           <div class="health-row">
             <div class="health-name">Performance</div>
-            <div class="health-bar-track"><span class="health-bar-fill" id="gripPerformanceBar"></span></div>
+            <div class="health-bar-track"><span class="health-bar-fill" id="gripPerformanceBar" style="width:0%"></span></div>
             <div class="health-value" id="gripPerformanceValue">-</div>
           </div>
         </div>
 
-        <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; color: #64748b;">
-          <strong>Archetype:</strong> <span id="gripArchetypeTitle">Analyzing pattern...</span>
+        <div style="margin-top: 24px; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid var(--line);">
+          <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:4px;">GRIP Archetype</div>
+          <div style="font-size:1.1rem; font-weight:700; color:var(--text-dark); margin-bottom:6px;" id="gripArchetypeTitle">Analyzing...</div>
+          <div style="font-size:0.95rem; color:var(--text-body); line-height:1.5;" id="gripArchetypeDesc">Please wait while we determine your system pattern.</div>
         </div>
       </div>
 
@@ -448,79 +452,26 @@
     // 0=Strat, 1=Intel, 2=PMM, 3=Demand, 4=SDR, 5=Exec, 
     // 6=Success, 7=Expansion, 8=RevOps, 9=Enable, 10=Perf, 11=Price
     
-    // However, on THIS page we display them in 1-12 order based on screenshot list.
-    // 1. Strat (idx 0)
-    // 2. Intel (idx 1)
-    // 3. PMM (idx 2)
-    // 4. Demand (idx 3)
-    // 5. Sales Exec (idx 5 - Wait! In array list P5 is SDR. In screenshot list P5 is Sales Exec.
-    // Let's stick to the URL array order assuming it matches the questions order)
-    
-    // UPDATE: Array Indices are based on `gtmComputePillarScores` in assessment.html
-    // scores[0] = Strategy (P1)
-    // scores[1] = Intel (P2)
-    // scores[2] = PMM (P3)
-    // scores[3] = Demand (P4)
-    // scores[4] = SDR (P5)
-    // scores[5] = Execution (P6)
-    // scores[6] = Success (P7) -- wait, screenshot says P6 is Success
-    // scores[7] = Expansion (P8) -- wait, screenshot says P7 is RevOps
-    
-    // !!! RE-MAPPING TO MATCH SCREENSHOT LIST !!!
-    // P1: Strat (Array 0)
-    // P2: Intel (Array 1)
-    // P3: PMM (Array 2)
-    // P4: Demand (Array 3)
-    // P5: Sales Exec (Array 5) -- Note skip SDR
-    // P6: Success (Array 6)
-    // P7: RevOps (Array 8)
-    // P8: Pricing (Array 11)
-    // P9: Brand (Not in array? Let's assume Array 7 Expansion is repurposed or missing?)
-    // P10: Data (Array 10 Perf?)
-    // P11: Enablement (Array 9)
-    // P12: Alignment (Array 0 - mixed?)
-    
-    // SIMPLIFICATION: I will map the 12 bars on screen to the 12 values in the array 1-to-1 for now 
-    // to ensure something shows up, but I will label them correctly based on the HTML above.
-    
-    // G (1,2,3,12)
-    // P1 (Strat) <- Arr[0]
-    // P2 (Intel) <- Arr[1]
-    // P3 (PMM) <- Arr[2]
-    // P12 (Align) <- Arr[0] (re-use strat score as proxy for now since alignment isn't separate)
-    
-    // R (8,9)
-    // P8 (Price) <- Arr[11]
-    // P9 (Brand) <- Arr[7] (Using Expansion score as proxy)
-    
-    // I (4,5,6)
-    // P4 (Demand) <- Arr[3]
-    // P5 (Sales Exec) <- Arr[5] 
-    // P6 (Success) <- Arr[6]
-    
-    // P (7,10,11)
-    // P7 (RevOps) <- Arr[8]
-    // P10 (Data) <- Arr[10] (Perf Mgmt)
-    // P11 (Enable) <- Arr[9]
-
+    // Mapping URL array index to ID in HTML (p1..p12)
     const valMap = {
         p1: pillarScores[0],
         p2: pillarScores[1],
         p3: pillarScores[2],
-        p12: pillarScores[0], // Reuse Strat
+        p12: pillarScores[0], // Reuse Strat for Leadership/Align as proxy
         
-        p8: pillarScores[11], // Pricing
-        p9: pillarScores[7],  // Expansion -> Brand proxy
+        p8: pillarScores[11], // Pricing (Idx 11) -> R
+        p9: pillarScores[7],  // Expansion -> Brand Proxy (Idx 7)
         
         p4: pillarScores[3],
-        p5: pillarScores[5], // Sales Exec
-        p6: pillarScores[6], // Success
+        p5: pillarScores[5], // Sales Exec (Idx 5) - SDR (4) merged or skipped? Using Exec.
+        p6: pillarScores[6], // Success (Idx 6)
         
-        p7: pillarScores[8], // RevOps
-        p10: pillarScores[10], // Perf -> Data
-        p11: pillarScores[9]  // Enablement
+        p7: pillarScores[8], // RevOps (Idx 8)
+        p10: pillarScores[10], // Perf -> Data Proxy (Idx 10)
+        p11: pillarScores[9]  // Enablement (Idx 9)
     };
 
+    // Update the 12 Bars
     for (const [id, val] of Object.entries(valMap)) {
         const bar = document.getElementById(id + "-bar");
         const score = document.getElementById(id + "-score");
@@ -531,14 +482,14 @@
         }
     }
 
-    // GRIP Aggregates (Matches logic in prompt)
-    // G = avg(1,2,3,12)
+    // GRIP Aggregates (Matches your explicit logic)
+    // G = avg(1,2,3,12) -> p1, p2, p3, p12
     const gVal = Math.round((valMap.p1 + valMap.p2 + valMap.p3 + valMap.p12)/4);
-    // R = avg(8,9)
+    // R = avg(8,9) -> p8, p9
     const rVal = Math.round((valMap.p8 + valMap.p9)/2);
-    // I = avg(4,5,6)
+    // I = avg(4,5,6) -> p4, p5, p6
     const iVal = Math.round((valMap.p4 + valMap.p5 + valMap.p6)/3);
-    // P = avg(7,10,11)
+    // P = avg(7,10,11) -> p7, p10, p11
     const pVal = Math.round((valMap.p7 + valMap.p10 + valMap.p11)/3);
 
     // Update Bars
@@ -555,18 +506,34 @@
     updateGripBar("Implementation", iVal);
     updateGripBar("Performance", pVal);
 
-    // Archetype Logic
-    let archName = "The Foundation Builder";
-    let archDesc = "Multiple constraints exist. Build clarity first.";
-    
-    // Simple logic: Weakest link determines archetype
-    const min = Math.min(gVal, rVal, iVal, pVal);
-    if(min === gVal) { archName="The Direction Gap"; archDesc="Execution exists but direction is weak."; }
-    else if(min === rVal) { archName="The Capacity Crunch"; archDesc="Intent is clear but the system lacks capacity."; }
-    else if(min === iVal) { archName="The Heroic System"; archDesc="Performance depends on individuals, not structure."; }
-    else if(min === pVal) { archName="The Leaky Engine"; archDesc="Inputs look healthy but outcomes lag."; }
-    
-    document.getElementById("gripArchetypeTitle").innerHTML = `<strong>${archName}:</strong> ${archDesc}`;
+    // Archetype Logic (Used your specific logic)
+    function determineArchetype(g, r, i, p) {
+       const weak = [];
+       if (g < 50) weak.push("Guidance");
+       if (r < 50) weak.push("Resources");
+       if (i < 50) weak.push("Implementation");
+       if (p < 50) weak.push("Performance");
+
+       const archetypes = {
+         foundation: { name: "The Foundation Builder", body: "Multiple constraints exist across the system. Build clarity first, then strengthen infrastructure and operating rhythm." },
+         directionless: { name: "The Direction Gap", body: "Execution exists but direction is weak. ICP, positioning and strategic choices need sharper definition." },
+         capacity: { name: "The Capacity Crunch", body: "Intent is clear but the system lacks capacity. Data, tooling and enablement need to catch up with ambition." },
+         chaos: { name: "The Heroic System", body: "Performance depends on individuals rather than structure. Processes and governance need to become repeatable." },
+         leaky: { name: "The Leaky Engine", body: "Inputs look healthy but outcomes lag. Conversion, retention and expansion dynamics need closer inspection." },
+         balanced: { name: "The Balanced Engine", body: "Your system is performing well across all dimensions. Focus on optimization and scaling." }
+       };
+
+       if (weak.length >= 3) return archetypes.foundation;
+       if (weak.includes("Guidance")) return archetypes.directionless;
+       if (weak.includes("Resources")) return archetypes.capacity;
+       if (weak.includes("Implementation")) return archetypes.chaos;
+       if (weak.includes("Performance")) return archetypes.leaky;
+       return archetypes.balanced;
+    }
+
+    const arch = determineArchetype(gVal, rVal, iVal, pVal);
+    document.getElementById("gripArchetypeTitle").innerText = arch.name;
+    document.getElementById("gripArchetypeDesc").innerText = arch.body;
 
     // Draw Diamond
     drawGripDiamond(gVal, rVal, iVal, pVal);
