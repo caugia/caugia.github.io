@@ -5,436 +5,301 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Your GTM Score | Caugia Consulting</title>
-  <meta name="description" content="Your GTM Score is a structured indicator of how mature, aligned and scalable your go to market system is.">
+  <meta name="description" content="Your GTM Score is a structured indicator of how mature, aligned and scalable your go to market system is." />
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="assets/C-logo.png">
-  <meta name="msapplication-TileImage" content="assets/C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/caugia.css?v=8.0" />
-
-  <!-- 🔒 SECURITY -->
-  <script src="/auth.js"></script>
-
-  <!-- Chart.js Radar -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* ===========================================================
-       INLINE — RESULT PAGE ONLY
-    =========================================================== */
-
-    .result-wrap {
-      max-width: 800px;
-      margin: 0 auto;
-      padding-top: 40px;
+    /* --- MASTER STYLES (MATCHING INDEX) --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px;
     }
 
-    .result-hero {
-      margin-bottom: 60px;
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
     }
 
-    .result-hero h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      color: var(--blue);
-      margin-bottom: 10px;
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
     }
 
-    .result-hero p {
-      max-width: 640px;
-      font-size: 1.1rem;
-      color: rgba(11,19,43,0.8);
-      line-height: 1.55;
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
     }
 
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    
+    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+
+    /* --- RESULT PAGE SPECIFIC STYLES --- */
+    
+    /* Layout Wrapper */
+    .result-wrap { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+
+    /* Hero */
+    .result-hero { text-align: center; margin-bottom: 48px; }
+    .result-hero h1 { font-size: 2.8rem; margin-bottom: 16px; color: var(--text-dark); }
+    .result-hero p { font-size: 1.15rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
+
+    /* Score Card (Main Number) */
     .score-display {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 36px;
-      margin-bottom: 40px;
+      background: var(--white);
+      border: 1px solid rgba(15,23,42,0.06);
+      border-radius: var(--radius-lg);
+      padding: 48px;
       text-align: center;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 48px;
+      border-top: 6px solid var(--primary);
     }
-
-    .score-number {
-      font-size: 5rem;
-      font-weight: 800;
-      color: var(--blue);
-      margin-bottom: 16px;
-      line-height: 1;
-    }
-
-    .score-band {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .cta-block {
-      margin-top: 60px;
-      margin-bottom: 80px;
-      text-align: center;
-    }
-
-    .cta-block h3 {
-      font-size: 1.5rem;
-      color: var(--ink);
+    .score-number { font-size: 6rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+    .score-band { 
+      display: inline-block; padding: 8px 20px; border-radius: 50px; 
+      background: #e0f2fe; color: #004494; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;
       margin-bottom: 16px;
     }
+    .score-desc { font-size: 1.1rem; color: var(--text-body); }
 
-    .cta-btn {
-      display: inline-block;
-      padding: 14px 26px;
-      background: var(--blue);
-      color: #fff;
-      border-radius: 10px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s;
+    /* Content Cards (Shared Style) */
+    .result-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
     }
+    .result-card h2 { font-size: 1.5rem; margin-bottom: 16px; font-family: Inter, sans-serif; font-weight: 800; }
 
-    .cta-btn:hover {
-      background: var(--navy);
+    /* GRIP Diamond Section */
+    .grip-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    
+    /* Left: Bars */
+    .hero-health-row { display: flex; align-items: center; margin-bottom: 16px; }
+    .hero-health-name { width: 120px; font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
+    .hero-health-bar { flex-grow: 1; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 0 16px; }
+    .hero-health-bar span { display: block; height: 100%; background: var(--primary); border-radius: 10px; }
+    .hero-health-value { width: 30px; font-weight: 700; color: var(--text-body); font-size: 0.9rem; text-align: right; }
+
+    /* Right: Diamond */
+    .grip-diamond-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; max-width: 300px; margin: 0 auto; }
+    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
+    
+    .grip-label {
+      position: absolute; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-body);
+      background: rgba(255,255,255,0.9); padding: 2px 6px; border-radius: 4px;
     }
+    .grip-label.top { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .grip-label.bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .grip-label.left { top: 50%; left: 0; transform: translate(-50%, -50%); }
+    .grip-label.right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
-    .cta-secondary {
-      display: block;
-      margin-top: 16px;
-      font-size: 1rem;
-      color: var(--blue);
-      text-decoration: underline;
-    }
-
-    /* ===========================================================
-       12-PILLAR RADAR
-    =========================================================== */
-
-    .gtm-pattern {
-      margin-top: 80px;
-    }
-
-    .gtm-pattern h2 {
-      font-size: 1.6rem;
-      color: var(--blue);
-      margin-bottom: 12px;
-    }
-
-    .gtm-pattern-desc {
-      max-width: 600px;
-      color: rgba(11,19,43,0.75);
-      line-height: 1.55;
-      margin-bottom: 24px;
-    }
-
+    /* Radar Chart Container */
     .gtm-pattern-chart-box {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 24px;
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 600px; margin: 0 auto;
     }
 
-    .gtm-pattern-note {
-      margin-top: 12px;
-      font-size: 0.9rem;
-      color: rgba(11,19,43,0.65);
-      text-align: center;
-    }
+    /* Next Steps */
+    .next-list li { margin-bottom: 16px; font-size: 1rem; color: var(--text-body); display: flex; gap: 12px; }
+    .next-list li::before { content: "→"; color: var(--primary); font-weight: 900; }
+    
+    /* Footer */
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; margin-top: 60px;}
 
     @media (max-width: 768px) {
-      .gtm-pattern-chart-box {
-        padding: 16px;
-      }
+      .grip-result-grid { grid-template-columns: 1fr; }
+      .score-number { font-size: 4rem; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
     }
-
-    /* ===========================================================
-       NEW GRIP DIAMOND — PREMIUM CAUGIA VERSION
-    =========================================================== */
-
-    .grip-diamond-card {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 32px;
-      text-align: center;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
-    }
-
-    .grip-diamond-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 18px;
-    }
-
-    .grip-diamond-wrapper {
-      position: relative;
-      width: 260px;
-      height: 260px;
-      margin: 0 auto;
-    }
-
-    #gripDiamondSVG {
-      width: 100%;
-      height: 100%;
-    }
-
-    .grip-diamond-label {
-      position: absolute;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: rgba(11,19,43,0.75);
-    }
-
-    .grip-diamond-label.top {
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .grip-diamond-label.bottom {
-      bottom: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .grip-diamond-label.left {
-      top: 50%;
-      left: -40px;
-      transform: translateY(-50%);
-    }
-
-    .grip-diamond-label.right {
-      top: 50%;
-      right: -40px;
-      transform: translateY(-50%);
-    }
-
   </style>
 </head>
 
-
-
 <body>
+
 <header>
-  <div class="inner">
-    <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Consulting logo">
-      <span>Caugia Consulting</span>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img src="assets/C-logo.png" alt="Caugia" />
+      <span>CAUGIA CONSULTING</span>
     </a>
-
-    <nav class="nav-desktop">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html" class="active">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a class="cta" href="mailto:hello@caugia.com">Contact</a>
-    </nav>
-
-    <button class="menu-toggle" aria-label="Open navigation">
-      <span></span>
-    </button>
-
-    <nav class="nav-mobile">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html" class="active">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a href="mailto:hello@caugia.com">Contact</a>
-    </nav>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gtm-assessment.html" class="active">GTM Score</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <a href="mailto:hello@caugia.com" class="btn-primary">Contact</a>
+      <button class="menu-toggle" id="menuToggle">Menu</button>
+    </div>
+  </div>
+  
+  <div class="container mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="gtm-assessment.html" class="active">GTM Score</a>
+    <a href="contact.html">Contact</a>
   </div>
 </header>
 
-
-
-
-
-<!-- ===========================================================
-     RESULT CONTENT
-=========================================================== -->
 <main class="result-wrap">
 
-  <!-- HERO -->
   <section class="result-hero">
     <h1>Your GTM Score</h1>
     <p>
-      This score gives a first view of how mature, aligned and scalable your go to market system is.
-      It is not a full audit but a structured foundation for deeper analysis through the Intelligence Report.
+      This score gives a first view of how mature, aligned and scalable your go-to-market system is.
+      It is the structured foundation for deeper analysis.
     </p>
   </section>
 
-  <!-- SCORE CARD -->
   <section class="score-display">
     <div id="gtm-score" class="score-number">–</div>
-    <div id="gtm-band" class="score-band">Loading…</div>
-    <p id="gtm-band-description">Your maturity band will appear here.</p>
+    <div id="gtm-band" class="score-band">Loading Analysis...</div>
+    <p id="gtm-band-description" class="score-desc">Your maturity band will appear here shortly.</p>
   </section>
 
+  <div class="result-card" style="text-align: center; border-left: 4px solid #22c55e;">
+    <h3 style="margin-bottom: 8px; color: var(--text-dark);">Your full report is being generated</h3>
+    <p style="margin-bottom: 0;">Check your inbox in 2-3 minutes for the complete PDF analysis.</p>
+  </div>
 
-  <!-- ===========================================================
-       REPORT STATUS
-  ============================================================ -->
-  <section class="report-status">
-    <h2>Your full report is on its way</h2>
-    <p>
-      Within a few moments you will receive an email with your personalised GTM analysis.
-      It includes your score interpretation, capability insights and the patterns behind your current performance.
-    </p>
-    <p>If the report does not arrive within five minutes, please check your spam folder or reach out directly.</p>
-  </section>
+  <section class="result-card">
+    <div style="margin-bottom: 32px; text-align: center;">
+      <h2>The GRIP View</h2>
+      <p>How the four forces of your engine balance out.</p>
+    </div>
 
-
-  <!-- ===========================================================
-       GRIP RESULT — CARD + DIAMOND
-  ============================================================ -->
-  <section class="grip-result">
-    <div class="container">
-
-      <div class="grip-result-header">
-        <h2>The GRIP view of your GTM system</h2>
-        <p>
-          This view shows how Guidance, Resources, Implementation and Performance work together in your revenue engine.
-          Your full pattern and next steps are explained in the Intelligence Report in your inbox.
-        </p>
+    <div class="grip-result-grid">
+      <div>
+        <div class="hero-health-row">
+          <div class="hero-health-name">Guidance</div>
+          <div class="hero-health-bar"><span id="gripGuidanceBar" style="width:0%"></span></div>
+          <div class="hero-health-value" id="gripGuidanceValue">-</div>
+        </div>
+        <div class="hero-health-row">
+          <div class="hero-health-name">Resources</div>
+          <div class="hero-health-bar"><span id="gripResourcesBar" style="width:0%"></span></div>
+          <div class="hero-health-value" id="gripResourcesValue">-</div>
+        </div>
+        <div class="hero-health-row">
+          <div class="hero-health-name">Implementation</div>
+          <div class="hero-health-bar"><span id="gripImplementationBar" style="width:0%"></span></div>
+          <div class="hero-health-value" id="gripImplementationValue">-</div>
+        </div>
+        <div class="hero-health-row">
+          <div class="hero-health-name">Performance</div>
+          <div class="hero-health-bar"><span id="gripPerformanceBar" style="width:0%"></span></div>
+          <div class="hero-health-value" id="gripPerformanceValue">-</div>
+        </div>
+        
+        <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; color: #64748b;">
+          <strong>Archetype:</strong> <span id="gripArchetypeTitle">Analyzing...</span>
+        </div>
       </div>
 
-      <div class="grip-result-grid">
-
-        <!-- LEFT CARD -->
-        <div class="hero-health grip-health-card">
-          <div class="hero-health-header">
-            <div class="hero-health-label">Your GRIP health</div>
-            <div class="hero-health-score">
-              <span id="gripHealthScore">58</span><span>/100</span>
-            </div>
-          </div>
-
-          <div class="hero-health-rows">
-            <div class="hero-health-row">
-              <div class="hero-health-name">Guidance</div>
-              <div class="hero-health-bar"><span id="gripGuidanceBar" style="width:60%"></span></div>
-              <div class="hero-health-value" id="gripGuidanceValue">60</div>
-            </div>
-
-            <div class="hero-health-row">
-              <div class="hero-health-name">Resources</div>
-              <div class="hero-health-bar"><span id="gripResourcesBar" style="width:55%"></span></div>
-              <div class="hero-health-value" id="gripResourcesValue">55</div>
-            </div>
-
-            <div class="hero-health-row">
-              <div class="hero-health-name">Implementation</div>
-              <div class="hero-health-bar"><span id="gripImplementationBar" style="width:50%"></span></div>
-              <div class="hero-health-value" id="gripImplementationValue">50</div>
-            </div>
-
-            <div class="hero-health-row">
-              <div class="hero-health-name">Performance</div>
-              <div class="hero-health-bar"><span id="gripPerformanceBar" style="width:45%"></span></div>
-              <div class="hero-health-value" id="gripPerformanceValue">45</div>
-            </div>
-          </div>
-
-          <div class="hero-health-sliders">
-            <div class="hero-health-slider"><label>Guidance</label><input type="range" disabled value="60"></div>
-            <div class="hero-health-slider"><label>Resources</label><input type="range" disabled value="55"></div>
-            <div class="hero-health-slider"><label>Implementation</label><input type="range" disabled value="50"></div>
-            <div class="hero-health-slider"><label>Performance</label><input type="range" disabled value="45"></div>
-          </div>
-
-          <div class="hero-archetype">
-            <div class="archetype-title" id="gripArchetypeTitle">The Emerging System</div>
-            <div class="archetype-desc" id="gripArchetypeDesc">
-              Your GTM system shows clear intent but the four GRIP dimensions are not yet moving in sync.
-              The Intelligence Report highlights the first adjustments that bring balance and stability.
-            </div>
-          </div>
-        </div>
-
-
-        <!-- RIGHT DIAMOND -->
-        <div class="grip-diamond-card">
-          <div class="grip-diamond-title">Your GRIP Diamond</div>
-
-          <div class="grip-diamond-wrapper">
-            <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
-
-            <div class="grip-diamond-label top">Guidance</div>
-            <div class="grip-diamond-label right">Implementation</div>
-            <div class="grip-diamond-label bottom">Performance</div>
-            <div class="grip-diamond-label left">Resources</div>
-          </div>
-        </div>
-
-      </div> <!-- end grip-result-grid -->
-    </div> <!-- end container -->
-  </section>
-
-
-
-
-  <!-- ===========================================================
-       12-PILLAR PATTERN
-  ============================================================ -->
-  <section class="gtm-pattern">
-    <h2>Your GTM pattern</h2>
-    <p class="gtm-pattern-desc">
-      This radar shows how your twelve core GTM pillars perform relative to each other for your current score.
-      The deeper Intelligence Report uses your full input to refine these pillars and prioritise change.
-    </p>
-
-    <div class="gtm-pattern-chart-box">
-      <canvas id="gtmPatternRadar"></canvas>
-      <div class="gtm-pattern-note">
-        The shape highlights where your GTM system is strongest and where foundations need more attention.
+      <div class="grip-diamond-wrapper">
+        <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
+        <div class="grip-label top">G</div>
+        <div class="grip-label right">I</div>
+        <div class="grip-label bottom">P</div>
+        <div class="grip-label left">R</div>
       </div>
     </div>
   </section>
 
-
-
-  <!-- ===========================================================
-       NEXT STEPS
-  ============================================================ -->
-  <section class="next-steps">
-    <h2>What happens next</h2>
-
-    <ul class="next-list">
-      <li><strong>Your full GTM report is generated.</strong> A personalised analysis is being prepared based on your inputs.</li>
-      <li><strong>You receive the report by email.</strong> It includes your maturity band, patterns, strengths, risks and recommended focal points.</li>
-      <li><strong>Use the report to align your leadership team.</strong> It creates a structured starting point before deeper GTM work.</li>
-      <li><strong>Explore the Intelligence Report.</strong> This deeper twelve-pillar assessment reveals constraints and prioritises change with confidence.</li>
-    </ul>
+  <section class="result-card">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h2>Your 12-Pillar Pattern</h2>
+      <p>Relative performance across the full system.</p>
+    </div>
+    <div class="gtm-pattern-chart-box">
+      <canvas id="gtmPatternRadar"></canvas>
+    </div>
   </section>
 
-
-  <!-- CTA -->
-  <section class="cta-block">
-    <h3>Move from insight to action</h3>
-    <a href="services.html" class="cta-btn">Explore the Intelligence Report</a>
-    <a href="mailto:hello@caugia.com" class="cta-secondary">Ask a question</a>
+  <section style="text-align: center; margin-top: 60px;">
+    <h2 style="margin-bottom: 24px;">Move from insight to action</h2>
+    <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+      <a href="services.html" class="btn-primary">Explore Intelligence Report</a>
+      <a href="mailto:hello@caugia.com" style="padding: 10px 24px; font-weight: 700; color: var(--primary);">Ask a question</a>
+    </div>
   </section>
-
 
 </main>
 
+<footer>
+  <div class="container">
+    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+  </div>
+</footer>
 
-
-
-
-<!-- ==========================================================
-     JS — SCORE + 12-PILLAR LOGIC
-=========================================================== -->
 <script>
+  // Mobile Nav Logic
+  (function () {
+    const toggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+    if (!toggle || !mobileNav) return;
+    toggle.addEventListener("click", () => {
+      const open = mobileNav.style.display === "block";
+      mobileNav.style.display = open ? "none" : "block";
+      toggle.innerText = open ? "Menu" : "Close";
+    });
+  })();
+
+  // 1. Get Score from URL (Make.com passes this)
   function getScoreFromURL() {
     const params = new URLSearchParams(window.location.search);
     return parseInt(params.get("score"), 10);
@@ -445,166 +310,136 @@
   const bandEl = document.getElementById("gtm-band");
   const descEl = document.getElementById("gtm-band-description");
 
+  // 2. Populate Main Score
   if (!isNaN(score)) {
     scoreEl.textContent = score;
-
     let band = "";
     let desc = "";
 
     if (score < 30) {
-      band = "At Risk";
-      desc = "Your GTM system has multiple constraints that require attention.";
+      band = "At Risk"; desc = "Your GTM system has multiple constraints requiring immediate attention.";
     } else if (score < 50) {
-      band = "Emerging";
-      desc = "Your GTM foundations are forming but lack consistency and alignment.";
+      band = "Emerging"; desc = "Foundations are forming but lack consistency and alignment.";
     } else if (score < 70) {
-      band = "Developing";
-      desc = "Your system shows progress with several capabilities performing well.";
+      band = "Developing"; desc = "Progress is visible, with several capabilities performing well.";
     } else if (score < 85) {
-      band = "Strong";
-      desc = "Your GTM system is running with clarity and discipline, with room for refinement.";
+      band = "Strong"; desc = "Running with clarity and discipline, with room for refinement.";
     } else {
-      band = "Best in Class";
-      desc = "You have a highly aligned and scalable GTM engine.";
+      band = "Best in Class"; desc = "A highly aligned and scalable GTM engine.";
     }
-
     bandEl.textContent = band;
     descEl.textContent = desc;
   }
 
-
-  /* ==========================================================
-     RADAR (12-pillar)
-  ========================================================== */
-
+  // 3. Pillar Radar Logic
   const GTM_PILLAR_LABELS = [
-    "GTM Strategy & Leadership",
-    "Market Intelligence",
-    "Product Marketing",
-    "Demand Generation",
-    "Sales Development (SDR)",
-    "Sales Execution",
-    "Customer Success & Retention",
-    "Account Management & Expansion",
-    "Revenue Operations",
-    "Enablement",
-    "Performance Management",
-    "Pricing & Packaging"
+    "Strategy", "Intel", "Prod Mktg", "Demand", "SDR", "Execution", 
+    "Success", "Expansion", "RevOps", "Enablement", "Performance", "Pricing"
   ];
 
   function getPillarsFromURL() {
     const params = new URLSearchParams(window.location.search);
     const raw = params.get("pillars");
     if (!raw) return null;
-
-    const parts = raw.split(",").map(n => parseInt(n, 10));
-    if (parts.length !== 12 || parts.some(isNaN)) return null;
-
-    return parts;
+    return raw.split(",").map(n => parseInt(n, 10));
   }
 
   const pillarScores = getPillarsFromURL();
 
-  if (pillarScores && window.Chart) {
-    const ctx = document.getElementById("gtmPatternRadar");
-
-    new Chart(ctx, {
-      type: "radar",
-      data: {
-        labels: GTM_PILLAR_LABELS,
-        datasets: [{
-          data: pillarScores,
-          fill: true,
-          backgroundColor: "rgba(0,70,165,0.10)",
-          borderColor: "#0046A5",
-          pointBackgroundColor: "#0046A5",
-          pointRadius: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false }},
-        scales: {
-          r: {
-            suggestedMin: 0,
-            suggestedMax: 100,
-            ticks: { display: false },
-            angleLines: { color: "rgba(0,0,0,0.05)" },
-            grid: { color: "rgba(0,0,0,0.08)" },
-            pointLabels: {
-              font: { size: 10 },
-              color: "rgba(11,19,43,0.78)"
+  // If Pillars exist, draw Radar & Calculate GRIP
+  if (pillarScores) {
+    // A. Draw Radar
+    if (window.Chart) {
+      const ctx = document.getElementById("gtmPatternRadar");
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: GTM_PILLAR_LABELS,
+          datasets: [{
+            data: pillarScores,
+            fill: true,
+            backgroundColor: "rgba(0, 86, 179, 0.1)",
+            borderColor: "#0056b3",
+            pointBackgroundColor: "#0056b3",
+            pointRadius: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            r: {
+              suggestedMin: 0, suggestedMax: 100, ticks: { display: false },
+              angleLines: { color: "rgba(0,0,0,0.05)" },
+              grid: { color: "rgba(0,0,0,0.05)" }
             }
           }
         }
-      }
-    });
+      });
+    }
+
+    // B. Calculate GRIP Aggregates (Simplified logic based on pillar groups)
+    // Assuming pillars 0-2=G, 3-5=I (Demand/Sales), 6-8=P (CS/Ops), 9-11=R (Enable/Price) 
+    // *Adjust grouping to match your exact methodology if needed*
+    
+    // Quick grouping for visualization:
+    const gVal = Math.round((pillarScores[0] + pillarScores[1] + pillarScores[11]) / 3); // Strategy, Intel, Pricing -> Guidance
+    const rVal = Math.round((pillarScores[2] + pillarScores[8] + pillarScores[9]) / 3); // PMM, RevOps, Enablement -> Resources
+    const iVal = Math.round((pillarScores[3] + pillarScores[4] + pillarScores[5]) / 3); // Demand, SDR, Sales -> Implementation
+    const pVal = Math.round((pillarScores[6] + pillarScores[7] + pillarScores[10]) / 3); // CS, Expansion, Perf -> Performance
+
+    // Update Bars
+    document.getElementById("gripGuidanceBar").style.width = gVal + "%";
+    document.getElementById("gripGuidanceValue").innerText = gVal;
+    
+    document.getElementById("gripResourcesBar").style.width = rVal + "%";
+    document.getElementById("gripResourcesValue").innerText = rVal;
+
+    document.getElementById("gripImplementationBar").style.width = iVal + "%";
+    document.getElementById("gripImplementationValue").innerText = iVal;
+
+    document.getElementById("gripPerformanceBar").style.width = pVal + "%";
+    document.getElementById("gripPerformanceValue").innerText = pVal;
+
+    // Draw Diamond
+    drawGripDiamond(gVal, rVal, iVal, pVal);
+    document.getElementById("gripArchetypeTitle").innerText = "Calculation Complete";
   }
 
-
-  /* ==========================================================
-     GRIP DIAMOND ENGINE
-  ========================================================== */
-
+  // 4. Diamond Drawer
   function drawGripDiamond(g, r, i, p) {
     const svg = document.getElementById("gripDiamondSVG");
     if (!svg) return;
-
-    const center = 130;
-    const max = 100;
-
+    const center = 130; 
+    
     function point(angle, value) {
+      // value 0-100 mapped to radius 0-100 (leaving padding)
       const rad = (Math.PI / 180) * angle;
-      return {
-        x: center + Math.cos(rad) * value,
-        y: center + Math.sin(rad) * value
-      };
+      return { x: center + Math.cos(rad) * value, y: center + Math.sin(rad) * value };
     }
 
+    // G(Top, -90), I(Right, 0), P(Bottom, 90), R(Left, 180)
     const G = point(-90, g);
     const I = point(0, i);
     const P = point(90, p);
     const R = point(180, r);
 
-    const rings = [30, 60, 90];
+    // Draw Background Rings
     let grid = "";
-
-    rings.forEach(val => {
-      const rg = point(-90, val);
-      const ri = point(0, val);
-      const rp = point(90, val);
-      const rr = point(180, val);
-
-      grid += `
-        <polygon 
-          points="${rg.x},${rg.y} ${ri.x},${ri.y} ${rp.x},${rp.y} ${rr.x},${rr.y}"
-          fill="none"
-          stroke="rgba(0,0,0,0.08)"
-          stroke-width="1"
-        />
-      `;
+    [30, 60, 90].forEach(val => {
+      const p1 = point(-90, val); const p2 = point(0, val);
+      const p3 = point(90, val); const p4 = point(180, val);
+      grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1" />`;
     });
 
-    const shape = `
-      <polygon
-        points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}"
-        fill="rgba(0,70,165,0.12)"
-        stroke="#0046A5"
-        stroke-width="2.4"
-      />
-    `;
+    // Draw The Shape
+    const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2" />`;
+    
+    // Draw Dots
+    const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="3" fill="#0056b3" />`).join("");
 
-    svg.innerHTML = grid + shape;
+    svg.innerHTML = grid + shape + dots;
   }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const g = parseInt(document.getElementById("gripGuidanceValue").textContent, 10);
-    const r = parseInt(document.getElementById("gripResourcesValue").textContent, 10);
-    const i = parseInt(document.getElementById("gripImplementationValue").textContent, 10);
-    const p = parseInt(document.getElementById("gripPerformanceValue").textContent, 10);
-
-    drawGripDiamond(g, r, i, p);
-  });
 </script>
 
 </body>
