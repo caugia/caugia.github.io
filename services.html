@@ -27,7 +27,21 @@
         "@type": "Question",
         "name": "Who is this designed for?",
         "acceptedAnswer": { "@type": "Answer", "text": "Caugia is built for leaders who want clarity on how their revenue engine works. Typical users include CEOs, CROs, CMOs, Heads of GTM, Revenue Operations and founder-led teams." }
-      }
+      },
+      { "@type": "Question", "name": "Do we need a certain level of GTM maturity?", "acceptedAnswer": { "@type": "Answer", "text": "No. GRIP adapts to your stage and reveals the constraints that matter now." } },
+      { "@type": "Question", "name": "How long does the process take?", "acceptedAnswer": { "@type": "Answer", "text": "The free GTM Score takes a few minutes. The Intelligence Report is delivered on the same day." } },
+      { "@type": "Question", "name": "Can we start with modules without doing the Score or the Report?", "acceptedAnswer": { "@type": "Answer", "text": "It is possible, but not recommended. Context matters." } },
+      { "@type": "Question", "name": "How does GRIP differ from other GTM frameworks?", "acceptedAnswer": { "@type": "Answer", "text": "GRIP is a structured operating system for GTM connecting market reality, execution and alignment." } },
+      { "@type": "Question", "name": "What happens after we receive the results?", "acceptedAnswer": { "@type": "Answer", "text": "You receive clear recommendations and a priority sequence." } },
+      { "@type": "Question", "name": "Is this suitable for companies preparing for fundraising?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. GRIP provides a structured view of your revenue engine for investors." } },
+      { "@type": "Question", "name": "Can this replace a traditional GTM audit?", "acceptedAnswer": { "@type": "Answer", "text": "In most cases, yes. It is faster and removes consulting overhead." } },
+      { "@type": "Question", "name": "Do you support implementation?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Advisory support helps you apply GRIP to daily execution." } },
+      { "@type": "Question", "name": "Do you offer fixed pricing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Score is free. Report and Modules are fixed price." } },
+      { "@type": "Question", "name": "How do payments work?", "acceptedAnswer": { "@type": "Answer", "text": "Upfront for fixed scope, monthly for advisory." } },
+      { "@type": "Question", "name": "Do we need a long-term contract?", "acceptedAnswer": { "@type": "Answer", "text": "No. Start small, extend if valuable." } },
+      { "@type": "Question", "name": "Can we start small?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Start with the Score." } },
+      { "@type": "Question", "name": "Do you work with procurement?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Clear scopes and simple agreements." } },
+      { "@type": "Question", "name": "Is there a refund guarantee?", "acceptedAnswer": { "@type": "Answer", "text": "We correct incomplete deliverables at no cost." } }
     ]
   }
   </script>
@@ -113,53 +127,42 @@
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    
+    /* Updated Menu Button (Consisent with Index) */
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
+    /* Updated Mobile Nav CSS */
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
     /* HERO */
-    .hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
-    .hero h1{ font-size:3rem; margin-bottom:24px; line-height:1.1; }
-    .hero p{ font-size:1.2rem; color:var(--text-body); line-height:1.6; }
+    .services-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
+    .services-hero h1{ font-size:3rem; margin-bottom:24px; line-height:1.1; }
+    .services-hero p{ font-size:1.2rem; color:var(--text-body); line-height:1.6; }
 
-    /* MAIN SERVICES GRID */
+    /* SERVICES GRID (4-UP) */
     .services-grid{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:32px;
-      margin-top:40px;
+      display:grid; grid-template-columns:repeat(2, 1fr); gap:32px; margin-top:40px;
     }
     
-    /* Using the exact card style from About Page */
-    .content-card{
+    .service-card{
       background:var(--white);
       border:1px solid rgba(15,23,42,0.04);
-      border-radius:var(--radius-md);
+      border-radius:var(--radius-lg);
       padding:40px;
       box-shadow:var(--shadow-sm);
       border-left:4px solid var(--primary);
-      display:flex;
-      flex-direction:column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display:flex; flex-direction:column;
+      transition:transform 0.2s, box-shadow 0.2s;
     }
-    .content-card:hover{
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
+    .service-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
 
     .service-pill{
-      display:inline-block;
-      padding:6px 12px;
-      background:#e0f2fe;
-      color:#004494;
-      font-weight:700;
-      font-size:0.75rem;
-      border-radius:50px;
-      margin-bottom:24px;
-      align-self:flex-start;
-      text-transform:uppercase;
-      letter-spacing:0.05em;
+      display:inline-block; padding:6px 12px; background:#e0f2fe; color:#004494;
+      font-weight:700; font-size:0.75rem; border-radius:50px; margin-bottom:24px;
+      align-self:flex-start; text-transform:uppercase; letter-spacing:0.05em;
     }
     .pill-flagship{ background:#fffbeb; color:#92400e; border:1px solid #fcd34d; }
     .pill-structured{ background:#dcfce7; color:#166534; }
@@ -167,76 +170,59 @@
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
     .service-desc{ font-size:1rem; color:var(--text-body); margin-bottom:24px; flex-grow:1; }
-    
     .service-price{ font-size:1.25rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; }
     
     .service-features{ margin-top:24px; padding-top:24px; border-top:1px solid var(--line); }
     .service-features li{ margin-bottom:10px; font-size:0.95rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:#22c55e; font-weight:900; flex-shrink: 0; }
 
-    /* MARKETPLACE SECTION (Revised) */
+    /* MARKETPLACE SECTION (ALIGNMENT FIX) */
     .section-white{ background:var(--white); }
     .mp-grid{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:32px;
-      margin-top:40px;
+      display:grid; grid-template-columns:repeat(2, 1fr); gap:32px; margin-top:40px;
     }
     .mp-card{
-      background:#f8fafc;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:32px;
-      display: flex;
-      flex-direction: column;
+      background:#fbfcff; border:1px solid var(--line); border-radius:16px; padding:32px;
+      display:flex; flex-direction:column;
     }
     .mp-header{
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display:flex; align-items:center; gap:16px; margin-bottom:20px;
+      padding-bottom:20px; border-bottom:1px solid rgba(0,0,0,0.06);
     }
     .mp-letter{
-      width: 48px; height: 48px;
-      background: var(--primary);
-      color: var(--white);
-      font-size: 1.5rem;
-      font-weight: 900;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width:48px; height:48px; background:var(--primary); color:var(--white);
+      font-size:1.5rem; font-weight:900; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
     }
-    .mp-title-block h3{ margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--text-dark); }
-    .mp-title-block p{ margin: 0; font-size: 0.9rem; color: #64748b; margin-top: 4px; }
+    .mp-title-block h3{ margin:0; font-size:1.2rem; font-weight:800; color:var(--text-dark); }
+    .mp-title-block p{ margin:0; font-size:0.9rem; color:#64748b; margin-top:4px; }
 
+    /* THE ALIGNMENT MAGIC: CSS GRID FOR LIST ITEMS */
+    .mp-list{ padding:0; margin:0; }
     .mp-list li{ 
-      font-size:0.95rem; margin-bottom:12px; line-height:1.5; color: var(--text-body);
-      display: flex; gap: 10px;
+      display:grid;
+      grid-template-columns: 20px 160px 1fr; /* Bullet | Title | Description */
+      gap: 12px;
+      align-items: baseline;
+      font-size:0.95rem; 
+      margin-bottom:16px; 
+      line-height:1.5; 
+      color:var(--text-body);
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      padding-bottom:12px;
     }
-    .mp-list li strong{ color: var(--text-dark); font-weight: 700; }
-    .bullet{ color: var(--primary); font-weight: bold; }
+    .mp-list li:last-child{ border-bottom:none; margin-bottom:0; }
+    .mp-term{ color:var(--text-dark); font-weight:700; }
+    .bullet{ color:var(--primary); font-weight:900; }
 
     /* FAQ SECTION */
     .faq-section{ max-width:800px; margin:0 auto; }
-    details{
-      border-bottom:1px solid var(--line);
-      padding:24px 0;
-    }
+    details{ border-bottom:1px solid var(--line); padding:24px 0; }
     summary{
-      font-weight:700;
-      font-size:1.1rem;
-      cursor:pointer;
-      list-style:none;
-      color:var(--text-dark);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      font-weight:700; font-size:1.1rem; cursor:pointer; list-style:none; color:var(--text-dark);
+      display:flex; justify-content:space-between; align-items:center;
     }
-    summary::-webkit-details-marker { display: none; }
+    summary::-webkit-details-marker { display:none; }
     summary::after{ content:"+"; font-weight:400; font-size:1.5rem; color:var(--primary); }
     details[open] summary::after{ content:"−"; }
     details p{ margin-top:16px; font-size:1rem; color:var(--text-body); max-width:90%; line-height:1.6; }
@@ -253,7 +239,10 @@
     @media (max-width: 768px){
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
-      .hero h1{ font-size:2.5rem; }
+      .services-hero h1{ font-size:2.5rem; }
+      /* On mobile, stack the list items instead of grid to prevent squashing */
+      .mp-list li{ grid-template-columns: 20px 1fr; } 
+      .mp-term{ display:block; margin-bottom:2px; }
     }
   </style>
 </head>
@@ -274,21 +263,26 @@
       </ul>
       <div style="display:flex; gap:12px; align-items:center;">
         <a href="contact.html" class="btn btn-primary">Contact</a>
-        <button class="menu-toggle" id="menuToggle">Menu</button>
+        
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
       </div>
     </div>
     
-    <div class="container mobile-nav" id="mobileNav">
+    <div class="container mobile-nav" id="mobileNav" aria-label="Mobile navigation">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="services.html" class="active">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
-      <a href="contact.html">Contact</a>
+      <a href="resources.html">Resources</a>
+      <div class="mobile-cta">
+        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+        <a href="contact.html" class="btn btn-outline">Contact</a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="container hero">
+    <section class="container services-hero">
       <h1>Get GRIP on your revenue.</h1>
       <p>
         A structured GTM system that reveals real constraints, strengthens your operating model, and shows where improvement will create the highest return.
@@ -298,7 +292,7 @@
     <section class="container">
       <div class="services-grid">
         
-        <article class="content-card">
+        <article class="service-card">
           <span class="service-pill">Free</span>
           <h3 class="service-title">The GTM Score</h3>
           <p class="service-desc">A structured ten-minute assessment of your GTM system. Quantifies maturity and highlights friction points instantly.</p>
@@ -312,7 +306,7 @@
           </ul>
         </article>
 
-        <article class="content-card">
+        <article class="service-card">
           <span class="service-pill pill-flagship">Flagship</span>
           <h3 class="service-title">GTM Intelligence Report</h3>
           <p class="service-desc">
@@ -328,11 +322,11 @@
           </ul>
         </article>
 
-        <article class="content-card">
+        <article class="service-card">
           <span class="service-pill pill-structured">GRIP on Intelligence</span>
           <h3 class="service-title">GTM Marketplace</h3>
           <p class="service-desc">Targeted modules mapped to the GRIP structure. Solve specific bottlenecks without redesigning the whole machine.</p>
-          <span class="service-price">From €549</span>
+          <span class="service-price">From €349</span>
           <a href="#marketplace" class="btn btn-primary" style="width:100%;">View Modules</a>
           <ul class="service-features">
             <li>Deep diagnostic per pillar</li>
@@ -342,7 +336,7 @@
           </ul>
         </article>
 
-        <article class="content-card">
+        <article class="service-card">
           <span class="service-pill pill-advisory">Advisory</span>
           <h3 class="service-title">Senior Strategic Support</h3>
           <p class="service-desc">Founder-level sparring when standard tools aren't enough. Custom guidance for critical transitions.</p>
@@ -376,9 +370,9 @@
               </div>
             </div>
             <ul class="mp-list">
-              <li><span class="bullet">&bull;</span> <strong>Market Clarity:</strong> Segments & buyer reality.</li>
-              <li><span class="bullet">&bull;</span> <strong>Positioning:</strong> Narrative that aligns teams.</li>
-              <li><span class="bullet">&bull;</span> <strong>ICP Definition:</strong> Practical targeting profiles.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Market Clarity</strong> Segments & buyer reality.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Positioning</strong> Narrative that aligns teams.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">ICP Definition</strong> Practical targeting profiles.</li>
             </ul>
           </article>
 
@@ -391,9 +385,9 @@
               </div>
             </div>
             <ul class="mp-list">
-              <li><span class="bullet">&bull;</span> <strong>Product Readiness:</strong> Fit between offer & motion.</li>
-              <li><span class="bullet">&bull;</span> <strong>Pricing Model:</strong> Aligned with value delivery.</li>
-              <li><span class="bullet">&bull;</span> <strong>GTM Talent:</strong> Roles aligned to stage.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Product Readiness</strong> Fit between offer & motion.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Pricing Model</strong> Aligned with value delivery.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">GTM Talent</strong> Roles aligned to stage.</li>
             </ul>
           </article>
 
@@ -406,9 +400,9 @@
               </div>
             </div>
             <ul class="mp-list">
-              <li><span class="bullet">&bull;</span> <strong>Demand Engine:</strong> Signal to qualified opp.</li>
-              <li><span class="bullet">&bull;</span> <strong>Sales Ops:</strong> Deal progression rhythm.</li>
-              <li><span class="bullet">&bull;</span> <strong>Customer Ops:</strong> Value realisation & expansion.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Demand Engine</strong> Signal to qualified opp.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Sales Ops</strong> Deal progression rhythm.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Customer Ops</strong> Value realisation & expansion.</li>
             </ul>
           </article>
 
@@ -421,9 +415,9 @@
               </div>
             </div>
             <ul class="mp-list">
-              <li><span class="bullet">&bull;</span> <strong>Metrics:</strong> Signals leadership can trust.</li>
-              <li><span class="bullet">&bull;</span> <strong>Forecasting:</strong> Aligned with goals & runway.</li>
-              <li><span class="bullet">&bull;</span> <strong>Governance:</strong> Calm decision forums.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Metrics</strong> Signals leadership can trust.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Forecasting</strong> Aligned with goals & runway.</li>
+              <li><span class="bullet">&bull;</span> <strong class="mp-term">Governance</strong> Calm decision forums.</li>
             </ul>
           </article>
         </div>
@@ -440,12 +434,12 @@
 
       <details>
         <summary>Who is this designed for?</summary>
-        <p>Caugia is built for CEOs, CROs, and GTM leaders who want clarity. It adapts to different stages, from early scale-up to enterprise complexity.</p>
+        <p>Caugia is built for leaders who want clarity on how their revenue engine works. Typical users include CEOs, CROs, CMOs, Heads of GTM, Revenue Operations and founder-led teams. The framework adapts to different stages, from early scale to enterprise.</p>
       </details>
 
       <details>
         <summary>Do we need a certain level of GTM maturity?</summary>
-        <p>No. GRIP adapts to your stage. Early-stage companies use it to create structure from chaos. Larger organizations use it to align silos and remove guesswork.</p>
+        <p>No. GRIP adapts to your stage and reveals the constraints that matter now. Early stage companies use it to create structure. Larger organizations use it to align teams, strengthen operations and remove guesswork.</p>
       </details>
 
       <details>
@@ -475,7 +469,7 @@
 
       <details>
         <summary>Can this replace a traditional GTM audit?</summary>
-        <p>In most cases, yes. The combination of the GTM Score and Intelligence Report delivers the clarity leaders seek from an audit, but faster and without the heavy consulting overhead.</p>
+        <p>In most cases, yes. The combination of the GTM Score, the Intelligence Report and the modular deep-dives delivers the clarity leaders usually seek from an audit, but without meetings, interviews or consulting overhead.</p>
       </details>
 
       <details>
@@ -490,17 +484,17 @@
 
       <details>
         <summary>How do payments work?</summary>
-        <p>For fixed-scope work, payment is made at the start of the engagement. For advisory support, billing follows a straightforward monthly structure. Everything is designed to be clear for your finance team.</p>
+        <p>For fixed-scope work, payment is made at the start of the engagement. For advisory support, billing follows a straightforward monthly structure with no long-term lock-in unless agreed. Everything is designed to be clear, predictable and easy for your finance team.</p>
       </details>
 
       <details>
         <summary>Do we need a long-term contract?</summary>
-        <p>No. You can start with a single diagnostic or module. Advisory support is offered month-to-month. You extend only if the work continues to deliver value.</p>
+        <p>No. You can start with a single diagnostic or module. Advisory support is offered month-to-month with clear deliverables and a structured cadence. You extend only if the work continues to deliver value.</p>
       </details>
 
       <details>
         <summary>Can we start small and expand later?</summary>
-        <p>Yes. Most companies begin with the GTM Score and the Intelligence Report. Modules and advisory support are added only where GRIP shows the highest leverage.</p>
+        <p>Yes. Most companies begin with the GTM Score and the Intelligence Report. Modules and advisory support are added only where GRIP shows the highest leverage, ensuring every investment creates meaningful movement.</p>
       </details>
 
       <details>
@@ -510,7 +504,7 @@
 
       <details>
         <summary>Is there a refund or satisfaction guarantee?</summary>
-        <p>Caugia provides fixed-scope work with clearly defined outputs. If a deliverable is incomplete, it is corrected immediately at no cost. Disagreement with insights is not a basis for a refund, as per standard consulting practice.</p>
+        <p>Caugia provides fixed-scope work with clearly defined outputs. If something is not delivered as agreed or a deliverable is incomplete, it is corrected immediately at no additional cost. If a team disagrees with the insights or recommendations, that is not a basis for a refund, which is standard practice in consulting.</p>
       </details>
     </section>
 
@@ -534,7 +528,6 @@
   </footer>
 
   <script>
-    // Mobile Nav Logic (Standard across all pages)
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
@@ -543,7 +536,7 @@
       toggle.addEventListener("click", () => {
         const open = mobileNav.style.display === "block";
         mobileNav.style.display = open ? "none" : "block";
-        toggle.innerText = open ? "Menu" : "Close";
+        toggle.setAttribute("aria-expanded", String(!open));
       });
     })();
   </script>
