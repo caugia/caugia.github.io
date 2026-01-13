@@ -4,124 +4,206 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Page Not Found | Caugia</title>
-  <meta name="description" content="Caugia Consulting helps leaders design calm, structured go-to-market systems using the GRIP Diamond and The GTM Framework.">
+  <title>Page Not Found | Caugia Consulting</title>
+  <meta name="description" content="The page you are looking for does not exist. Return to Caugia Consulting to explore GTM strategies." />
 
-  <!-- Favicon -->
-  <link rel="icon" href="C-logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="C-logo.png">
-  <meta name="msapplication-TileImage" content="C-logo.png">
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/caugia.css?v=3.0">
+  <style>
+    /* --- V3 CORE SYSTEM --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px;
+    }
 
-  <!-- Security -->
-  <script src="/auth.js"></script>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    p:last-child{ margin-bottom:0; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:84px 0; }
+
+    /* BUTTONS */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* 404 SPECIFIC */
+    main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    
+    .error-hero { text-align: center; max-width: 600px; margin: 0 auto; padding-bottom: 60px; }
+    .error-code { font-size: 1rem; font-weight: 800; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 16px; display: block; }
+    .error-hero h1 { font-size: 3rem; margin-bottom: 24px; line-height: 1.1; }
+    .error-hero p { font-size: 1.15rem; color: var(--text-body); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    
+    .mini-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+      padding: 24px; box-shadow: var(--shadow-sm); text-align: left;
+      transition: transform 0.2s ease; display: block;
+    }
+    .mini-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+    
+    .mini-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 8px; color: var(--text-dark); }
+    .mini-card p { font-size: 0.9rem; color: var(--text-body); margin: 0; }
+
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; margin-top: auto; }
+
+    @media (max-width: 900px){
+      .grid-3 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <div class="container">
-    <a href="/" class="brand">
-      <img src="C-logo.png" alt="Caugia Consulting logo">
-      <span>Caugia Consulting</span>
-    </a>
-
-    <!-- Desktop navigation -->
-    <nav class="nav-desktop" aria-label="Main navigation">
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/services.html">Services</a>
-      <a href="/grip-diamond.html">GRIP Diamond</a>
-      <a href="/gtm-assessment.html">GTM Score</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/contact.html" class="cta">Contact</a>
-    </nav>
-
-    <!-- Mobile navigation toggle -->
-    <button class="menu-toggle" type="button" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- Mobile navigation -->
-  <nav class="nav-mobile" aria-label="Mobile navigation">
-    <a href="/index.html">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/services.html">Services</a>
-    <a href="/grip-diamond.html">GRIP Diamond</a>
-    <a href="/gtm-assessment.html">GTM Score</a>
-    <a href="/resources.html">Resources</a>
-    <a href="/contact.html" class="cta">Contact</a>
-  </nav>
-</header>
-
-  
-<main>
-  <div class="wrap">
-
-    <!-- HERO -->
-    <section>
-      <div class="container">
-        <h1>Page not found</h1>
-        <p class="hero-sub">
-          The page you are looking for does not exist or has been moved.  
-          You can return to the homepage or explore one of our resources below.
-        </p>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
-    </section>
+    </div>
+    
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
 
-    <!-- OPTIONS -->
-    <section>
-      <div class="container">
-        <div class="card">
-          <h2>What would you like to do?</h2>
-          <ul>
-            <li><a href="index.html"><strong>Go to the homepage</strong></a></li>
-            <li><a href="gtm-assessment.html"><strong>Start the Free GTM Score</strong></a></li>
-            <li><a href="gtm-intelligence-report.html"><strong>Explore the GTM Intelligence Report</strong></a></li>
-            <li><a href="modules.html"><strong>View the 12 GTM Modules</strong></a></li>
-            <li><a href="contact.html"><strong>Contact Caugia</strong></a></li>
-          </ul>
+  <main>
+    <section class="container">
+      <div class="error-hero">
+        <span class="error-code">404 Error</span>
+        <h1>Page not found</h1>
+        <p>
+          The page you are looking for does not exist or has been moved. 
+          Use the navigation above or explore our core resources below.
+        </p>
+        <div style="margin-top: 32px;">
+          <a href="index.html" class="btn btn-primary">Go Home</a>
+        </div>
+      </div>
+
+      <div class="container" style="max-width: 900px;">
+        <div class="grid-3">
+          <a href="gtm-assessment.html" class="mini-card">
+            <h3>Free GTM Score</h3>
+            <p>Diagnose your revenue engine in 5 minutes.</p>
+          </a>
+          <a href="gtm-intelligence-report.html" class="mini-card">
+            <h3>Intelligence Report</h3>
+            <p>Deep-dive forensic analysis for leadership.</p>
+          </a>
+          <a href="resources.html" class="mini-card">
+            <h3>Resources</h3>
+            <p>Tools, frameworks and guides.</p>
+          </a>
         </div>
       </div>
     </section>
+  </main>
 
-  </div>
-</main>
+  <footer>
+    <div class="container">
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    </div>
+  </footer>
 
-<footer>
-  <div class="container">
-    © <span id="year"></span> Caugia Consulting. All rights reserved.
-    <a href="privacy.html">Privacy Policy</a>
-    ·
-    <a href="contact.html">Contact</a>
-  </div>
-</footer>
+  <script>
+    (function () {
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (!toggle || !mobileNav) return;
 
-<script>
-(function () {
-  const yearSpan = document.getElementById("year");
-  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-
-  const header = document.querySelector('header');
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 10) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  const toggle = document.querySelector('.menu-toggle');
-  const mobileNav = document.querySelector('.nav-mobile');
-
-  if (toggle && mobileNav) {
-    toggle.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.toggle('open');
-      toggle.classList.toggle('active', isOpen);
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  }
-})();
-</script>
-
+      toggle.addEventListener("click", () => {
+        const open = mobileNav.style.display === "block";
+        mobileNav.style.display = open ? "none" : "block";
+        toggle.innerText = open ? "Close" : "Menu";
+      });
+    })();
+  </script>
 </body>
 </html>
