@@ -13,8 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <style>
     /* --- MASTER STYLES (EXACT MATCH TO INDEX) --- */
     :root{
@@ -33,7 +31,9 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; }
+    
+    /* FIX: Force scrollbar */
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
     
     body{
       font-family:Inter, sans-serif;
@@ -127,7 +127,7 @@
     }
     .result-content-card h2 { font-size: 1.5rem; margin-bottom: 24px; font-family: Inter, sans-serif; font-weight: 800; }
 
-    /* Health Bars */
+    /* Health Bars (GRIP) */
     .health-row { display: flex; align-items: center; margin-bottom: 20px; }
     .health-name { width: 130px; font-weight: 700; color: var(--text-dark); font-size: 0.95rem; }
     .health-bar-track { flex-grow: 1; height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 0 20px; }
@@ -146,13 +146,45 @@
     .diamond-label.left { top: 50%; left: 0; transform: translate(-50%, -50%); }
     .diamond-label.right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
-    /* Radar Chart Box */
-    .radar-box { max-width: 600px; margin: 0 auto; }
+    /* --- NEW 12-PILLAR STYLES (SEXY BARS) --- */
+    .pillar-intro { text-align: center; margin-bottom: 40px; }
+    .pillar-intro p { max-width: 700px; margin: 0 auto; color: #64748b; }
+    
+    .grip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    
+    .grip-group { margin-bottom: 30px; }
+    .grip-group h3 {
+        font-size: 1rem; color: var(--primary); margin-bottom: 16px;
+        text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e0f2fe;
+        padding-bottom: 8px; display: inline-block;
+    }
+
+    .pillar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .pillar-name {
+        font-weight: 600; font-size: 0.9rem; color: #334155; flex-basis: 40%;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pillar-visual { flex-basis: 55%; display: flex; align-items: center; gap: 12px; }
+    
+    .pillar-bar-track {
+        flex-grow: 1; height: 8px; background-color: #f1f5f9; border-radius: 10px; overflow: hidden;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .pillar-bar-fill { height: 100%; border-radius: 10px; transition: width 1s ease-in-out; }
+    
+    /* Gradients based on score (applied via JS logic or CSS classes) */
+    .fill-green { background: linear-gradient(90deg, #22c55e, #15803d); } 
+    .fill-yellow { background: linear-gradient(90deg, #facc15, #ca8a04); }
+    .fill-red { background: linear-gradient(90deg, #f87171, #dc2626); }
+    .fill-blue { background: linear-gradient(90deg, #60a5fa, #0056b3); } /* Default Caugia Blue */
+
+    .pillar-score-num { font-weight: 800; font-size: 0.9rem; color: #0f172a; min-width: 35px; text-align: right; }
 
     /* Footer / Dark Section */
     .section-dark { background: #0f172a; color: var(--white); padding: 80px 0; margin-top: 80px; }
-    .section-dark h2 { color: var(--white); text-align: center; margin-bottom: 40px; }
-    .next-steps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; margin: 0 auto; }
+    .section-dark h2 { color: var(--white); text-align: center; margin-bottom: 24px; }
+    
+    .next-steps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; margin: 40px auto 0; }
     .next-step-item h3 { font-family: Inter, sans-serif; font-size: 1.2rem; color: var(--white); margin-bottom: 12px; display: flex; gap: 12px; align-items: center; }
     .next-step-item h3::before { content: "→"; color: #60a5fa; }
     .next-step-item p { color: #94a3b8; font-size: 1rem; }
@@ -160,9 +192,8 @@
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
     @media (max-width: 900px) {
-      .result-grid { grid-template-columns: 1fr; }
+      .result-grid, .grip-grid, .next-steps-grid { grid-template-columns: 1fr; }
       .score-number { font-size: 4rem; }
-      .next-steps-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
     }
@@ -267,14 +298,44 @@
       </div>
     </div>
 
-    <div class="result-content-card" style="text-align:center;">
-      <h2>Your 12-Pillar Pattern</h2>
-      <p style="max-width:600px; margin:0 auto 30px;">
-        This radar shows how your twelve core GTM pillars perform relative to each other. 
-        The Intelligence Report uses this input to prioritize change.
-      </p>
-      <div class="radar-box">
-        <canvas id="gtmPatternRadar"></canvas>
+    <div class="result-content-card">
+      <div class="pillar-intro">
+        <h2>Your 12-Pillar Pattern</h2>
+        <p>
+          The pattern below reveals specific constraints. High-performing engines are balanced; a low score in one critical pillar often bottlenecks the entire system.
+        </p>
+      </div>
+
+      <div class="grip-grid">
+        <div>
+           <div class="grip-group">
+             <h3>G — Guidance</h3>
+             <div class="pillar-row"><div class="pillar-name">Strategy & Leadership</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p1-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p1-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Market Intelligence</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p2-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p2-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Product Marketing</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p3-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p3-score">-</div></div></div>
+           </div>
+           <div class="grip-group">
+             <h3>R — Resources</h3>
+             <div class="pillar-row"><div class="pillar-name">Demand Generation</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p4-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p4-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Sales Development</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p5-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p5-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Sales Execution</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p6-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p6-score">-</div></div></div>
+           </div>
+        </div>
+
+        <div>
+           <div class="grip-group">
+             <h3>I — Implementation</h3>
+             <div class="pillar-row"><div class="pillar-name">CS & Retention</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p7-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p7-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Account Expansion</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p8-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p8-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Revenue Operations</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p9-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p9-score">-</div></div></div>
+           </div>
+           <div class="grip-group">
+             <h3>P — Performance</h3>
+             <div class="pillar-row"><div class="pillar-name">Enablement</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p10-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p10-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Performance Mgmt</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p11-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p11-score">-</div></div></div>
+             <div class="pillar-row"><div class="pillar-name">Pricing & Packaging</div><div class="pillar-visual"><div class="pillar-bar-track"><div class="pillar-bar-fill fill-blue" id="p12-bar" style="width:0%"></div></div><div class="pillar-score-num" id="p12-score">-</div></div></div>
+           </div>
+        </div>
       </div>
     </div>
 
@@ -363,12 +424,7 @@
     descEl.textContent = desc;
   }
 
-  // 3. Pillar Radar Logic
-  const GTM_PILLAR_LABELS = [
-    "Strategy", "Intel", "Prod Mktg", "Demand", "SDR", "Execution", 
-    "Success", "Expansion", "RevOps", "Enablement", "Performance", "Pricing"
-  ];
-
+  // 3. Pillar Logic (Using 12 Pillars)
   function getPillarsFromURL() {
     const params = new URLSearchParams(window.location.search);
     const raw = params.get("pillars");
@@ -379,39 +435,38 @@
   const pillarScores = getPillarsFromURL();
 
   if (pillarScores) {
-    // Render Chart
-    if (window.Chart) {
-      const ctx = document.getElementById("gtmPatternRadar");
-      new Chart(ctx, {
-        type: "radar",
-        data: {
-          labels: GTM_PILLAR_LABELS,
-          datasets: [{
-            data: pillarScores,
-            fill: true,
-            backgroundColor: "rgba(0, 86, 179, 0.15)",
-            borderColor: "#0056b3",
-            pointBackgroundColor: "#0056b3",
-            pointRadius: 3
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: {
-            r: {
-              suggestedMin: 0, suggestedMax: 100, ticks: { display: false },
-              angleLines: { color: "rgba(0,0,0,0.05)" },
-              grid: { color: "rgba(0,0,0,0.05)" },
-              pointLabels: { font: { size: 11 }, color: "#64748b" }
-            }
-          }
+    // A. Update New 12-Pillar Bars
+    // IDs correspond to p1-bar, p2-bar... and p1-score, p2-score...
+    for(let i=0; i<12; i++) {
+        let val = pillarScores[i];
+        let barId = "p" + (i+1) + "-bar";
+        let scoreId = "p" + (i+1) + "-score";
+        
+        let barEl = document.getElementById(barId);
+        let scoreEl = document.getElementById(scoreId);
+        
+        if(barEl && scoreEl) {
+            barEl.style.width = val + "%";
+            // Convert 0-100 to 0-10 scale for cleaner look
+            scoreEl.innerText = (val / 10).toFixed(1);
+
+            // Optional: Dynamic colors
+            barEl.className = "pillar-bar-fill"; // reset
+            if(val >= 80) barEl.classList.add("fill-green");
+            else if(val >= 50) barEl.classList.add("fill-yellow");
+            else barEl.classList.add("fill-red");
         }
-      });
     }
 
-    // Calculate GRIP
-    // Mapping: G(0,1,11), R(2,8,9), I(3,4,5), P(6,7,10)
+    // B. Calculate GRIP Aggregates for Diamond
+    // Mapping: G(0,1,11), R(2,8,9), I(3,4,5), P(6,7,10) - Indices 0-based
+    // P1=0, P2=1, P3=2, P4=3, P5=4, P6=5, P7=6, P8=7, P9=8, P10=9, P11=10, P12=11
+    
+    // G: P1, P2, P12 ? (Old logic: Strat, Intel, Price) -> Indices 0, 1, 11
+    // R: P3, P9, P10 ? (Old logic: Prod Mktg, RevOps, Enablement) -> Indices 2, 8, 9
+    // I: P4, P5, P6 ? (Old logic: Demand, SDR, Exec) -> Indices 3, 4, 5
+    // P: P7, P8, P11 ? (Old logic: CS, Expansion, Perf) -> Indices 6, 7, 10
+    
     const gVal = Math.round((pillarScores[0] + pillarScores[1] + pillarScores[11]) / 3);
     const rVal = Math.round((pillarScores[2] + pillarScores[8] + pillarScores[9]) / 3);
     const iVal = Math.round((pillarScores[3] + pillarScores[4] + pillarScores[5]) / 3);
@@ -434,7 +489,7 @@
     drawGripDiamond(gVal, rVal, iVal, pVal);
   }
 
-  // 4. Diamond Engine
+  // 4. Diamond Engine (SVG)
   function drawGripDiamond(g, r, i, p) {
     const svg = document.getElementById("gripDiamondSVG");
     if (!svg) return;
@@ -442,6 +497,7 @@
     
     function point(angle, value) {
       const rad = (Math.PI / 180) * angle;
+      // map 0-100 to approx radius
       return { x: center + Math.cos(rad) * value, y: center + Math.sin(rad) * value };
     }
 
