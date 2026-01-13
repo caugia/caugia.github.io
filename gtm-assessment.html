@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- MASTER STYLES (EXACT MATCH TO INDEX/SERVICES) --- */
+    /* --- MASTER STYLES (EXACT MATCH TO INDEX) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -33,7 +33,9 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; }
+    
+    /* FIX: Force scrollbar to prevent header jump */
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
     
     body{
       font-family:Inter, sans-serif;
@@ -60,7 +62,7 @@
       padding:0 24px;
     }
 
-    /* HEADER (Pixel Perfect Match) */
+    /* HEADER - PIXEL PERFECT MATCH */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
@@ -84,13 +86,13 @@
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
 
-    /* --- PAGE SPECIFIC STYLES --- */
+    /* --- ASSESSMENT SPECIFIC STYLES --- */
 
     .assessment-hero { padding: 60px 0 40px; text-align: center; max-width: 760px; margin: 0 auto; }
     .assessment-hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
     .assessment-hero p { font-size: 1.15rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
 
-    /* The Assessment App Container */
+    /* The Main Card */
     .assessment-card {
       background: var(--white);
       border: 1px solid var(--line);
@@ -100,7 +102,6 @@
       max-width: 800px;
       margin: 0 auto 80px;
       position: relative;
-      /* Subtle blue top border for branding */
       border-top: 6px solid var(--primary);
     }
 
@@ -110,7 +111,7 @@
     .gtm-v2-progress-bar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
     .gtm-v2-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
 
-    /* Questions & Animations */
+    /* Questions */
     .gtm-step { display: none; animation: fadeIn 0.3s ease; }
     .gtm-step.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -118,7 +119,7 @@
     .gtm-question-label { font-family: Merriweather, serif; font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; line-height: 1.3; }
     .gtm-question-help { font-size: 1rem; color: #64748b; margin-bottom: 32px; }
 
-    /* Interactive Options */
+    /* Options (Tiles) */
     .gtm-options { display: flex; flex-direction: column; gap: 12px; }
     .gtm-option {
       display: flex; align-items: center; gap: 16px; padding: 16px 20px;
@@ -128,7 +129,9 @@
     .gtm-option:hover { background: #f1f5f9; border-color: #cbd5e1; }
     .gtm-option input[type="radio"] { appearance: none; margin: 0; width: 0; height: 0; opacity: 0; }
     
-    .gtm-option.selected { background: #eff6ff; border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+    .gtm-option.selected {
+      background: #eff6ff; border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary);
+    }
     .gtm-option-code {
       display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;
       background: var(--white); border: 1px solid #cbd5e1; border-radius: 6px;
@@ -144,11 +147,25 @@
     .two-cols { grid-template-columns: 1fr 1fr; }
     .gtm-text, .gtm-email { width: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 10px; font-family: Inter, sans-serif; font-size: 1rem; outline: none; }
 
-    /* Navigation */
+    /* Nav Buttons */
     .gtm-v2-nav { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 24px; }
     .gtm-step-hint { margin-top: 24px; font-size: 0.9rem; color: #64748b; text-align: center; }
     .gtm-error { color: #dc2626; font-size: 0.85rem; margin-top: 6px; display: none; font-weight: 600;}
     .gtm-error.visible { display: block; }
+
+    /* --- RIGHT WIDGET FOR HERO --- */
+    .widget-card{
+      background:var(--white); border-radius:var(--radius-lg); border:1px solid rgba(15,23,42,0.05);
+      box-shadow:var(--shadow-lg); padding:36px; height: fit-content;
+    }
+    .widget-list li{
+      display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:0.95rem; color:var(--text-dark);
+    }
+    .widget-list li::before{ content:"✓"; color:#22c55e; font-weight:900; flex-shrink: 0; }
+    .widget-meta{
+      margin-top:24px; padding-top:20px; border-top:1px solid var(--line);
+      font-size:0.85rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; text-align:center;
+    }
 
     /* --- NEW DARK SECTION (How it works) --- */
     .section-dark { background: #0f172a; color: var(--white); padding: 100px 0; }
@@ -162,33 +179,15 @@
       margin: 0 auto;
     }
     
-    .step-item {
-      text-align: left;
-      position: relative;
-    }
-    
+    .step-item { text-align: left; }
     .step-num {
-      font-size: 3rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.1);
-      line-height: 1;
-      margin-bottom: 16px;
-      display: block;
+      font-size: 3rem; font-weight: 900; color: rgba(255,255,255,0.1);
+      line-height: 1; margin-bottom: 16px; display: block;
     }
-    
     .step-item h3 {
-      font-family: Inter, sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--white);
+      font-family: Inter, sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: var(--white);
     }
-    
-    .step-item p {
-      color: #94a3b8;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
+    .step-item p { color: #94a3b8; font-size: 1rem; line-height: 1.6; }
 
     /* FAQ SECTION */
     .faq-section { max-width: 800px; margin: 80px auto; }
@@ -206,6 +205,7 @@
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
     @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
       .two-cols, .steps-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
@@ -231,7 +231,7 @@
       <li><a href="resources.html">Resources</a></li>
     </ul>
     <div style="display:flex; gap:12px; align-items:center;">
-      <a href="contact.html" class="btn-primary">Contact</a>
+      <a href="contact.html" class="btn-primary desktop-only">Contact</a>
       <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
@@ -495,12 +495,12 @@
       <summary>What happens after I complete the assessment?</summary>
       <p>You land on a result page that explains your GTM Score and maturity band in plain language. Behind the scenes, your inputs can feed a GTM Intelligence Report or a more tailored engagement if you choose to move beyond the free assessment.</p>
     </details>
-
+    
     <details>
       <summary>Is my data kept private?</summary>
       <p>Yes. Your inputs are used solely to generate your score and report. We do not share your strategic data with third parties.</p>
     </details>
-
+    
     <details>
       <summary>Can I share the assessment with my leadership team?</summary>
       <p>Absolutely. In fact, having multiple leaders take the assessment often reveals misalignment gaps that are invisible in day-to-day operations.</p>
@@ -521,6 +521,7 @@
     const toggle = document.getElementById("menuToggle");
     const mobileNav = document.getElementById("mobileNav");
     if (!toggle || !mobileNav) return;
+
     toggle.addEventListener("click", () => {
       const open = mobileNav.style.display === "block";
       mobileNav.style.display = open ? "none" : "block";
