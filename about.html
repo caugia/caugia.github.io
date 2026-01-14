@@ -105,27 +105,39 @@
     .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
     .mission-content p { font-size: 1.05rem; }
+    /* Premium abstract background instead of confusing icon */
+    .abstract-visual {
+      background: radial-gradient(circle at top right, #f1f5f9, #e2e8f0);
+      border-radius: 24px; height: 320px; border: 1px solid var(--line);
+      position: relative; overflow: hidden;
+    }
+    .abstract-visual::after {
+      content: ''; position: absolute; top: 50%; left: 50%; width: 60%; height: 60%;
+      background: var(--primary); opacity: 0.03; filter: blur(60px); transform: translate(-50%, -50%);
+    }
 
-    /* --- GRIP CARDS (The Fix) --- */
+
+    /* --- GRIP CARDS (Centered Fix) --- */
     .section-grip { background: #f8fafc; padding: 100px 0; }
     .grip-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
     .grip-intro h2 { font-size: 2.2rem; margin-bottom: 16px; }
     
     .grip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     
-    /* High-End Cards */
     .grip-card {
       background: var(--white); padding: 32px 24px; border-radius: 16px;
       border: 1px solid var(--line); box-shadow: var(--shadow-sm);
       transition: transform 0.2s, box-shadow 0.2s;
-      text-align: left;
+      text-align: center; /* Center text */
     }
     .grip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: #bfdbfe; }
     
+    /* FIX: Centered letters */
     .grip-letter { 
       font-size: 2.5rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 16px; 
-      display: inline-block; background: #eff6ff; width: 60px; height: 60px; 
-      display: flex; align-items: center; justify-content: center; border-radius: 12px;
+      display: inline-flex; align-items: center; justify-content: center; /* Centers the letter inside the box */
+      background: #eff6ff; width: 72px; height: 72px; border-radius: 16px;
+      margin-left: auto; margin-right: auto; /* Centers the box inside the card */
     }
     .grip-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 8px; color: var(--text-dark); }
     .grip-card p { font-size: 0.95rem; color: #64748b; line-height: 1.5; margin: 0; }
@@ -133,7 +145,6 @@
     /* --- LEADERSHIP (Trust Card) --- */
     .section-lead { background: var(--white); padding: 100px 0; border-top: 1px solid var(--line); }
     
-    /* The Trust Container */
     .lead-card {
       background: #fff; border: 1px solid var(--line); border-radius: 24px;
       box-shadow: var(--shadow-card); overflow: hidden;
@@ -153,7 +164,6 @@
     .lead-name { font-size: 2.5rem; margin-bottom: 24px; line-height: 1.1; }
     .lead-bio { font-size: 1.05rem; color: var(--text-body); margin-bottom: 32px; }
 
-    /* Stats Grid inside the card */
     .lead-stats {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
       padding-top: 32px; border-top: 1px solid var(--line);
@@ -170,6 +180,7 @@
     @media (max-width: 900px){
       .about-hero h1 { font-size: 2.5rem; }
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+      .abstract-visual { height: 200px; }
       .grip-grid { grid-template-columns: 1fr 1fr; }
       .lead-card { grid-template-columns: 1fr; }
       .lead-img-col { height: 300px; }
@@ -232,15 +243,7 @@
             In that environment, effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Caugia was built to restore coherence.
           </p>
         </div>
-        <div style="background:#f1f5f9; border-radius:16px; height:320px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line);">
-           <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
-             <rect x="2" y="2" width="9" height="9" rx="2"></rect>
-             <rect x="13" y="2" width="9" height="9" rx="2"></rect>
-             <rect x="2" y="13" width="9" height="9" rx="2"></rect>
-             <rect x="13" y="13" width="9" height="9" rx="2"></rect>
-             <path d="M6.5 11v2"></path><path d="M17.5 11v2"></path><path d="M11 6.5h2"></path><path d="M11 17.5h2"></path>
-           </svg>
-        </div>
+        <div class="abstract-visual"></div>
       </div>
     </section>
 
@@ -280,7 +283,7 @@
       <div class="container">
         <div class="lead-card">
           <div class="lead-img-col">
-            <img src="assets/linkedIn.jpeg" alt="Tom Meijer" class="lead-img" onerror="this.src='https://via.placeholder.com/400x500/e2e8f0/94a3b8?text=Tom+Meijer';">
+            <img src="assets/linkedIn.jpeg" alt="Tom Meijer" class="lead-img" onerror="this.src='https://via.placeholder.com/400x600/e2e8f0/94a3b8?text=Tom+Meijer';">
           </div>
           <div class="lead-content">
             <span class="lead-role">Founder & Principal</span>
