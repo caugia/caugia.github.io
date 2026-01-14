@@ -26,7 +26,7 @@
       --radius-lg:20px;
       --radius-md:12px;
       --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
-      --max:1400px;
+      --max:1400px; /* Wider for dashboard feel */
 
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
@@ -80,7 +80,7 @@
       align-items: start;
     }
 
-    /* PANELS */
+    /* LEFT: CONTROLS PANEL */
     .panel {
       background: var(--white);
       border-radius: var(--radius-lg);
@@ -94,14 +94,13 @@
     .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
     .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
 
-    /* CONTROLS (Left) */
     .control-group { margin-bottom: 24px; }
     .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
 
     input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
     input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
-
+    
     /* RIGHT: VISUAL & INSIGHTS */
     .visual-grid {
       display: grid;
@@ -139,45 +138,14 @@
     /* INSIGHTS COLUMN */
     .insights-col { display: flex; flex-direction: column; gap: 20px; }
 
-    /* HEALTH METRICS - GRID FIX (Strict Alignment) */
-    .health-table {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .health-row {
-      display: grid;
-      /* Name (Flex) | Score (Fixed) | Badge (Fixed) */
-      grid-template-columns: 1fr 70px 100px; 
-      gap: 12px;
-      align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-    }
-    .health-row:last-child { border-bottom: none; }
-
-    .h-label { font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
-    .h-score { font-weight: 700; color: var(--text-body); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
-    
-    .status-badge { 
-      padding: 4px 0; /* Center vertically */
-      border-radius: 6px; 
-      font-size: 0.7rem; 
-      font-weight: 800; 
-      text-transform: uppercase; 
-      letter-spacing: 0.05em;
-      text-align: center;
-      display: block;
-    }
-    .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
-    .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
-    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
-
-    /* Archetype & Summary */
     .insight-card {
-      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
     }
+    
+    /* Modes */
     .mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
     .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
@@ -187,7 +155,11 @@
     .insight-h { font-size: 1.1rem; font-weight: 800; font-family: Inter, sans-serif; margin-bottom: 8px; color: var(--text-dark); }
     .insight-p { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
 
-    .summary-box { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; flex-grow: 1; }
+    /* Summary Box */
+    .summary-box {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px;
+      flex-grow: 1;
+    }
     .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
     .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
 
@@ -264,32 +236,6 @@
 
     <div class="insights-col">
       
-      <div class="panel" style="padding: 20px;">
-        <h2 style="font-size:1.1rem; margin-bottom:16px;">Health Check</h2>
-        <div class="health-table">
-          <div class="health-row">
-            <span class="h-label">Guidance</span>
-            <span class="h-score" id="score-g">45/100</span>
-            <span class="status-badge badge-bad" id="badge-g">Critical</span>
-          </div>
-          <div class="health-row">
-            <span class="h-label">Resources</span>
-            <span class="h-score" id="score-r">48/100</span>
-            <span class="status-badge badge-bad" id="badge-r">Critical</span>
-          </div>
-          <div class="health-row">
-            <span class="h-label">Implementation</span>
-            <span class="h-score" id="score-i">85/100</span>
-            <span class="status-badge badge-good" id="badge-i">Strong</span>
-          </div>
-          <div class="health-row">
-            <span class="h-label">Performance</span>
-            <span class="h-score" id="score-p">43/100</span>
-            <span class="status-badge badge-bad" id="badge-p">Critical</span>
-          </div>
-        </div>
-      </div>
-
       <div class="insight-card mode-warn" id="archetypeBox">
         <span class="label-xs">System Pattern</span>
         <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
@@ -312,22 +258,20 @@
 
 <script>
   (function() {
-    function getStatus(val) {
-      if (val < 50) return { label: "Critical", class: "badge-bad" };
-      if (val < 70) return { label: "Developing", class: "badge-warn" };
-      return { label: "Strong", class: "badge-good" };
-    }
-
+    // 1. ARCHETYPE LOGIC (30 Variants)
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
       const avg = (g+r+i+p)/4;
       const lowest = scores[0];
+      const second = scores[1];
       const highest = scores[3];
 
+      // Extremes
       if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required.", mode: "mode-bad" };
       if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization.", mode: "mode-good" };
       
+      // Constraints
       if (lowest.k === 'g') {
          if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution, low direction. Teams are running fast in the wrong direction.", mode: "mode-warn" };
          return { title: "The Direction Gap", body: "Execution exists, but strategy is weak. Teams are misaligned.", mode: "mode-warn" };
@@ -346,15 +290,19 @@
       return { title: "The Developing Engine", body: "System shows potential but lacks coherence.", mode: "mode-mid" };
     }
 
+    // 2. SUMMARY GENERATOR
     function generateSummary(g, r, i, p) {
       const map = { g: "Guidance", r: "Resources", i: "Implementation", p: "Performance" };
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
+      
       const constraint = map[scores[0].k];
       const strength = map[scores[3].k];
+
       return `${constraint} is the primary constraint holding the system back. Conversely, ${strength} acts as the relative strength to build upon. Focus on lifting ${constraint} to unlock the next level of growth.`;
     }
 
+    // 3. DRAW DIAMOND (SVG)
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
@@ -364,12 +312,14 @@
         return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
       }
       
+      // Grid
       let grid = "";
       [30, 60, 90].forEach(v => {
         const p1 = pt(90, v); const p2 = pt(0, v); const p3 = pt(270, v); const p4 = pt(180, v);
         grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
       });
 
+      // Shape
       const G = pt(90, g); const I = pt(0, i); const P = pt(270, p); const R = pt(180, r);
       const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
       const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`).join("");
@@ -377,6 +327,7 @@
       svg.innerHTML = grid + shape + dots;
     }
 
+    // 4. MAIN UPDATE LOOP
     function update() {
       const g = parseInt(document.getElementById("input-g").value);
       const r = parseInt(document.getElementById("input-r").value);
@@ -388,23 +339,17 @@
       document.getElementById("val-i").textContent = i;
       document.getElementById("val-p").textContent = p;
 
-      function setHealth(key, val) {
-        const s = getStatus(val);
-        const b = document.getElementById("badge-"+key);
-        const v = document.getElementById("score-"+key);
-        b.className = "status-badge " + s.class;
-        b.textContent = s.label;
-        v.textContent = val + "/100";
-      }
-      setHealth("g", g); setHealth("r", r); setHealth("i", i); setHealth("p", p);
-
+      // Archetype
       const arch = getArchetype(g, r, i, p);
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
       box.className = "insight-card " + arch.mode;
 
+      // Summary
       document.getElementById("execSummary").textContent = generateSummary(g, r, i, p);
+
+      // Draw
       drawDiamond(g, r, i, p);
     }
 
