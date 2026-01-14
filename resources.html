@@ -17,16 +17,17 @@
     /* --- CORE STYLES (V3 SYSTEM) --- */
     :root{
       --primary:#0056b3;
+      --primary-light:#e0f2fe; /* New playful tint */
       --primary-dark:#004494;
       --text-dark:#0f172a;
       --text-body:#475569;
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
-      --radius-md:14px;
-      --radius-lg:22px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --radius-md:16px; /* Slightly rounder for playful feel */
+      --radius-lg:24px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.03);
+      --shadow-hover:0 20px 40px -5px rgba(0,50,150,0.1); /* Blue-tinted shadow */
       --max:1200px;
     }
 
@@ -68,9 +69,9 @@
       border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,86,179,0.25); }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-2px); }
 
     /* HEADER */
     header{
@@ -92,11 +93,19 @@
 
     /* HERO */
     .resource-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
-    .resource-hero h1{ font-size:3rem; margin-bottom:24px; line-height:1.1; }
-    .resource-hero p{ font-size:1.2rem; color:var(--text-body); line-height:1.6; }
+    .resource-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; background: -webkit-linear-gradient(45deg, var(--text-dark), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .resource-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
     /* RESOURCE SECTIONS */
-    .section-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 12px; color: var(--text-dark); }
+    .section-title { 
+      font-family: Inter, sans-serif; font-weight: 800; font-size: 1.5rem; 
+      margin-bottom: 16px; color: var(--text-dark); display: flex; align-items: center; gap: 12px;
+    }
+    .section-title::before {
+      content: ""; display: block; width: 6px; height: 24px; 
+      background: var(--primary); border-radius: 4px;
+    }
+    
     .section-intro { font-size: 1.05rem; color: var(--text-body); max-width: 700px; margin-bottom: 40px; }
 
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 60px; }
@@ -107,26 +116,54 @@
       border-radius: var(--radius-md);
       padding: 32px;
       display: flex; flex-direction: column;
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
     }
-    .resource-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+    
+    /* Playful Hover Effect */
+    .resource-card:hover { 
+      transform: translateY(-8px); 
+      box-shadow: var(--shadow-hover); 
+      border-color: var(--primary-light);
+    }
 
     .resource-tag { 
-      font-size: 0.75rem; font-weight: 700; color: var(--primary); 
-      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; 
+      font-size: 0.7rem; font-weight: 800; color: var(--primary); 
+      background: var(--primary-light); padding: 4px 10px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; align-self: flex-start;
     }
     
-    .resource-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; margin-bottom: 12px; color: var(--text-dark); }
+    .resource-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); transition: color 0.2s; }
+    .resource-card:hover h3 { color: var(--primary); }
+
     .resource-card p { font-size: 0.95rem; color: var(--text-body); flex-grow: 1; margin-bottom: 24px; }
     
-    .card-link { font-weight: 700; color: var(--primary); display: inline-flex; align-items: center; gap: 6px; font-size: 0.95rem; }
-    .card-link:hover { text-decoration: underline; }
+    .card-link { 
+      font-weight: 700; color: var(--text-dark); display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; 
+      transition: gap 0.2s, color 0.2s;
+    }
+    .card-link span { font-size: 1.2rem; line-height: 1; color: var(--primary); transition: transform 0.2s; }
+    .resource-card:hover .card-link { color: var(--primary); gap: 12px; }
+    .resource-card:hover .card-link span { transform: translateX(2px); }
+
+    /* Divider */
+    .divider { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); margin: 0 0 80px 0; }
 
     /* Dark CTA Section */
-    .section-dark{ background:#0f172a; color:var(--white); text-align: center; padding: 100px 0; }
-    .section-dark h2{ color:var(--white); margin-bottom: 24px; }
-    .section-dark p{ color:#94a3b8; max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem; }
+    .section-dark{ background:#0f172a; color:var(--white); text-align: center; padding: 100px 0; position: relative; overflow: hidden; }
+    
+    /* Subtle background pattern for playfulness */
+    .section-dark::before {
+      content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    
+    .section-dark h2{ color:var(--white); margin-bottom: 24px; position: relative; z-index: 1; }
+    .section-dark p{ color:#94a3b8; max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem; position: relative; z-index: 1; }
+    .section-dark .btn { position: relative; z-index: 1; }
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
@@ -135,6 +172,7 @@
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
       section { padding: 60px 0; }
+      .resource-hero h1 { font-size: 2.5rem; }
     }
   </style>
 </head>
@@ -174,10 +212,10 @@
 
   <main>
     <section class="container resource-hero">
-      <h1>Resources.</h1>
+      <h1>Library & Tools.</h1>
       <p>
-        A structured library of tools, templates and frameworks built on the GRIP system. 
-        Designed to help leadership teams replace guesswork with structure.
+        A structured collection of frameworks, models, and intelligence built on the GRIP system. 
+        Designed to replace guesswork with engineering.
       </p>
     </section>
 
@@ -185,81 +223,75 @@
       
       <section style="padding-top: 0;">
         <h2 class="section-title">Free Tools</h2>
-        <p class="section-intro">Simple, high-leverage tools that give you immediate structure and insight into your current GTM system.</p>
+        <p class="section-intro">High-leverage diagnostics that give you immediate structure and insight.</p>
         
         <div class="grid-3">
           <article class="resource-card">
-            <span class="resource-tag">Interactive</span>
+            <span class="resource-tag">Diagnostic</span>
             <h3>The GTM Score</h3>
-            <p>A concise maturity snapshot across twelve pillars. Clear, structured and ready in minutes.</p>
-            <a href="gtm-assessment.html" class="card-link">Start your GTM Score →</a>
+            <p>A concise maturity snapshot across twelve pillars. Clear, structured and ready in 5 minutes.</p>
+            <a href="gtm-assessment.html" class="card-link">Start Assessment <span>→</span></a>
           </article>
 
           <article class="resource-card">
-            <span class="resource-tag">Visual Model</span>
+            <span class="resource-tag">Interactive Model</span>
             <h3>The GRIP Diamond</h3>
-            <p>A visual model for understanding system stability, bottlenecks and balance across GTM.</p>
-            <a href="index.html#score" class="card-link">See it in action →</a>
+            <p>Visualise your system stability. Adjust the four dimensions to see how balance affects growth.</p>
+            <a href="grip-diamond.html" class="card-link">Open Diamond <span>→</span></a>
           </article>
         </div>
       </section>
 
-      <hr style="border: 0; border-top: 1px solid var(--line); margin: 0 0 60px 0;">
+      <hr class="divider">
 
       <section style="padding: 0;">
         <h2 class="section-title">Strategic Intelligence</h2>
-        <p class="section-intro">Deeper structured analysis for leadership teams that want a more complete, context-aware understanding.</p>
+        <p class="section-intro">Deep structured analysis for leadership teams that want complete clarity.</p>
         
         <div class="grid-3">
           <article class="resource-card">
-            <span class="resource-tag">Flagship</span>
+            <span class="resource-tag">Flagship Product</span>
             <h3>GTM Intelligence Report</h3>
-            <p>A context aware, personalised diagnostic across all twelve pillars. The standard for board-level clarity.</p>
-            <a href="services.html" class="card-link">Learn more →</a>
+            <p>A context-aware, forensic diagnostic across all twelve pillars. The standard for board-level clarity.</p>
+            <a href="gtm-intelligence-report.html" class="card-link">Explore Report <span>→</span></a>
           </article>
 
           <article class="resource-card">
-            <span class="resource-tag">Deep Dive</span>
+            <span class="resource-tag">Modular Deep Dives</span>
             <h3>The 12 GTM Modules</h3>
-            <p>Structured deep dives that reveal the mechanics inside your GTM system. From pricing to enablement.</p>
-            <a href="services.html#marketplace" class="card-link">View modules →</a>
+            <p>Structured fix-it packages for specific constraints. From pricing strategy to sales enablement.</p>
+            <a href="modules.html" class="card-link">View Modules <span>→</span></a>
           </article>
         </div>
       </section>
 
-      <hr style="border: 0; border-top: 1px solid var(--line); margin: 60px 0;">
+      <hr class="divider">
 
       <section style="padding: 0;">
         <h2 class="section-title">Frameworks & Guides</h2>
-        <p class="section-intro">Clear structures that support strategic decisions, alignment and system-wide clarity.</p>
+        <p class="section-intro">The core logic behind modern, predictable revenue engines.</p>
         
         <div class="grid-3">
           <article class="resource-card">
-            <span class="resource-tag">Reference</span>
+            <span class="resource-tag">Reference Architecture</span>
             <h3>The GTM Framework</h3>
-            <p>A reference architecture for modern revenue teams. Moving from silos to a unified engine.</p>
+            <p>A visual map of the modern revenue engine. Moving from silos to a unified system.</p>
           </article>
 
           <article class="resource-card">
-            <span class="resource-tag">Concept</span>
+            <span class="resource-tag">Core Concept</span>
             <h3>The GRIP Model</h3>
             <p>Understanding the four structural forces (Guidance, Resources, Implementation, Performance) that drive balance.</p>
           </article>
 
           <article class="resource-card">
-            <span class="resource-tag">Visual</span>
-            <h3>The Health Diamond</h3>
-            <p>A simple, visual way to assess stability and execution discipline across the organization.</p>
-          </article>
-
-          <article class="resource-card">
-            <span class="resource-tag">Template</span>
+            <span class="resource-tag">Operating Rhythm</span>
             <h3>Planning Templates</h3>
             <p>Clear structures to translate goals into execution without the usual spreadsheet chaos.</p>
           </article>
 
           <article class="resource-card">
-            <span class="resource-tag">Workshop</span>
+            <span class="resource-tag">Team Alignment</span>
             <h3>Alignment Workshops</h3>
             <p>Structured sessions designed to replace opinions with clarity and shared definitions.</p>
           </article>
@@ -276,8 +308,8 @@
 
     <section class="section-dark">
       <div class="container">
-        <h2>Start with your GTM Score</h2>
-        <p>A calm, structured first step to understand your GTM system and decide what matters most.</p>
+        <h2>Ready to diagnose your engine?</h2>
+        <p>Start with the free GTM Score. It takes 5 minutes and gives you instant clarity on where to focus.</p>
         <a href="gtm-assessment.html" class="btn btn-primary" style="background: white; color: var(--text-dark);">Start Free Assessment</a>
       </div>
     </section>
