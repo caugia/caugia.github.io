@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v7.0 (Golden Master)
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v7.0.3 (Golden Master)
    Logic: Position-Based Auto-Scoring + Direct Make.com Payload
    Status: PRODUCTION READY
    =========================================================== */
