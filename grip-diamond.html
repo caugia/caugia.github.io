@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The GRIP Diamond | Caugia Consulting</title>
-  <meta name="description" content="Adjust the four GRIP dimensions and see how your GTM health, archetype and priorities respond in real-time." />
+  <meta name="description" content="Interactive GTM model. Adjust the four dimensions to see how system balance affects growth." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
@@ -23,28 +23,27 @@
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
-      --radius-md:14px;
-      --radius-lg:22px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-      --max:1200px;
+      --radius-lg:20px;
+      --radius-md:12px;
+      --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
+      --max:1400px; /* Wider for dashboard feel */
 
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
-      --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    html{ scroll-behavior:smooth; overflow-y: auto; }
     
     body{
       font-family:Inter, sans-serif;
       background:var(--bg);
       color:var(--text-dark);
-      line-height:1.6;
+      line-height:1.5;
       -webkit-font-smoothing:antialiased;
+      display: flex; flex-direction: column; min-height: 100vh;
     }
 
     h1,h2,h3,h4{
@@ -54,123 +53,121 @@
       letter-spacing:-0.02em;
     }
 
-    p{ color:var(--text-body); margin-bottom:1.5rem; }
-    a{ color:inherit; text-decoration:none; }
-    ul{ list-style:none; }
-
-    .container{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 24px;
-    }
-
-    section{ padding:60px 0; }
-
     /* HEADER */
     header{
-      position:sticky; top:0; z-index:1000;
+      position:sticky; top:0; z-index:100;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
-    .nav-links{ display:flex; gap:32px; align-items:center; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
+    .brand img{ width:28px; height:28px; display:block; }
+    .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.9rem; text-decoration:none; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
+    .btn-sm:hover{ background:var(--primary-dark); }
+
+    /* DASHBOARD LAYOUT */
+    .dashboard-wrap {
+      flex: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* LEFT: CONTROLS PANEL */
+    .panel {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      height: 100%;
+    }
+
+    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
+    .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
+
+    .control-group { margin-bottom: 24px; }
+    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
+    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
+
+    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
     
-    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-outline{ background:transparent; color:var(--primary); border:1px solid var(--line); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s; }
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
-
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
-    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-
-    /* PAGE LAYOUT */
-    .playground-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; align-items: stretch;
+    /* RIGHT: VISUAL & INSIGHTS */
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      height: 100%;
     }
 
-    .tool-card {
-      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-      padding: 40px; box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column;
+    .visual-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 400px;
     }
-    .tool-card h2 { font-size: 1.5rem; margin-bottom: 12px; }
-    .tool-card h3 { font-size: 1.1rem; margin-bottom: 12px; font-family: Inter, sans-serif; font-weight: 800; }
 
-    /* DIAMOND VISUAL */
-    .diamond-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 40px 0; }
-    .diamond-wrapper { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; }
+    /* Diamond SVG */
+    .diamond-wrapper { width: 100%; max-width: 380px; aspect-ratio: 1/1; position: relative; }
+    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
     .diamond-label {
-      position: absolute; width: 36px; height: 36px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
-      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.08); z-index: 10;
+      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
+      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-    .diamond-label.top { top: 0; left: 50%; transform: translate(-50%, -50%); }
-    .diamond-label.bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
-    .diamond-label.left { top: 50%; left: 0; transform: translate(-50%, -50%); }
-    .diamond-label.right { top: 50%; right: 0; transform: translate(50%, -50%); }
+    .top { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .left { top: 50%; left: 0; transform: translate(-50%, -50%); }
+    .right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
-    /* CONTROLS (Sliders) */
-    .control-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; color: var(--text-body); }
-    .control-row .val { color: var(--text-dark); font-variant-numeric: tabular-nums; }
+    /* INSIGHTS COLUMN */
+    .insights-col { display: flex; flex-direction: column; gap: 20px; }
+
+    .insight-card {
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
     
-    .slider-wrap { margin-bottom: 24px; }
-    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; cursor:pointer; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
-    input.range-warn::-webkit-slider-thumb { background: #d97706; }
-    input.range-bad::-webkit-slider-thumb { background: #dc2626; }
+    /* Modes */
+    .mode-good { background: var(--good-bg); border-color: var(--good-border); }
+    .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
+    .mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
 
-    /* HEALTH METRICS */
-    .health-stat-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-    .health-stat-row:last-child { border-bottom: none; }
-    .stat-label { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; }
-    .stat-val-group { display: flex; gap: 12px; align-items: center; }
-    .stat-score { font-weight: 800; color: var(--text-body); font-size: 0.9rem; }
-    
-    .status-badge { 
-      padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; 
+    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; opacity: 0.8; }
+    .insight-h { font-size: 1.1rem; font-weight: 800; font-family: Inter, sans-serif; margin-bottom: 8px; color: var(--text-dark); }
+    .insight-p { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
+
+    /* Summary Box */
+    .summary-box {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px;
+      flex-grow: 1;
     }
-    .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
-    .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
-    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
+    .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
 
-    /* ARCHETYPE BOX (V3 Style) */
-    .insight-box {
-      border: 1px solid transparent; border-radius: 12px; padding: 20px; margin-top: 20px; transition: all 0.3s ease;
-    }
-    .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
-    .insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
-    .insight-box.mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
-    .insight-box.mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
-
-    .insight-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
-    .mode-good .insight-label { color: var(--good-text); }
-    .mode-warn .insight-label { color: var(--warn-text); }
-    .mode-bad .insight-label  { color: var(--bad-text); }
-    .mode-mid .insight-label  { color: var(--mid-text); }
-
-    .insight-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; font-family: Inter, sans-serif; }
-    .mode-good .insight-title { color: #14532d; }
-    .mode-warn .insight-title { color: #78350f; }
-    .mode-bad .insight-title  { color: #7f1d1d; }
-    .mode-mid .insight-title  { color: #0c4a6e; }
-
-    .insight-text { font-size: 0.9rem; color: #334155; line-height: 1.5; min-height: 4.5em; }
-
-    /* BOTTOM TEXT */
-    .exec-summary { font-size: 1rem; color: var(--text-body); line-height: 1.7; max-width: 800px; margin: 0 auto; text-align: center; }
-
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
-
-    @media (max-width: 900px) {
-      .playground-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .menu-toggle { display: inline-flex; }
+    /* Mobile */
+    @media (max-width: 1000px) {
+      .dashboard-wrap { grid-template-columns: 1fr; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .visual-card { min-height: 300px; }
     }
   </style>
 </head>
@@ -178,249 +175,151 @@
 <body>
 
 <header>
-  <div class="container nav">
-    <a class="brand" href="index.html">
-      <img src="assets/C-logo.png" alt="Caugia" />
+  <div class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/C-logo.png" alt="Caugia">
       <span>CAUGIA CONSULTING</span>
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="gtm-assessment.html">GTM Score</a></li>
       <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="gtm-assessment.html" class="btn-sm">Start GTM Score</a></li>
     </ul>
-    <div style="display:flex; gap:12px; align-items:center;">
-      <a href="contact.html" class="btn btn-primary">Contact</a>
-      <button class="menu-toggle" id="menuToggle">Menu</button>
-    </div>
-  </div>
-  
-  <div class="container mobile-nav" id="mobileNav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="gtm-assessment.html">GTM Score</a>
-    <a href="resources.html" class="active">Resources</a>
-    <a href="contact.html">Contact</a>
   </div>
 </header>
 
-<main>
-  <section class="container" style="text-align:center; padding-bottom:40px;">
-    <span class="eyebrow" style="color:var(--primary); font-weight:800; text-transform:uppercase; letter-spacing:0.1em; font-size:0.8rem; display:block; margin-bottom:12px;">Interactive Model</span>
-    <h1 style="font-size:2.8rem; margin-bottom:16px;">The GRIP Diamond</h1>
-    <p style="font-size:1.1rem; max-width:680px; margin:0 auto; color:var(--text-body);">
-      Adjust the four dimensions below to see how the system behaves. 
-      The model reveals how constraints in one area affect the stability of the whole.
-    </p>
-  </section>
+<main class="dashboard-wrap">
+  
+  <aside class="panel">
+    <div class="panel-header">
+      <h2>Dimensions</h2>
+      <p>Adjust the sliders to simulate your current GTM state.</p>
+    </div>
 
-  <div class="container">
+    <div class="control-group">
+      <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
+      <input type="range" id="input-g" min="0" max="100" value="45">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
+      <input type="range" id="input-r" min="0" max="100" value="48">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
+      <input type="range" id="input-i" min="0" max="100" value="85">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
+      <input type="range" id="input-p" min="0" max="100" value="43">
+    </div>
+
+    <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line);">
+      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:12px;">Want to know your real numbers?</p>
+      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Take the Free Assessment</a>
+    </div>
+  </aside>
+
+  <div class="visual-grid">
     
-    <div class="playground-grid">
-      <div class="tool-card">
-        <h2>Adjust Dimensions</h2>
-        <p style="font-size:0.9rem; margin-bottom:32px;">Drag the sliders to reflect a theoretical or real scenario.</p>
-
-        <div class="control-row"><span class="name">Guidance</span><span class="val" id="val-g">45</span></div>
-        <div class="slider-wrap"><input type="range" id="input-g" min="0" max="100" value="45"></div>
-
-        <div class="control-row"><span class="name">Resources</span><span class="val" id="val-r">48</span></div>
-        <div class="slider-wrap"><input type="range" id="input-r" min="0" max="100" value="48"></div>
-
-        <div class="control-row"><span class="name">Implementation</span><span class="val" id="val-i">85</span></div>
-        <div class="slider-wrap"><input type="range" id="input-i" min="0" max="100" value="85"></div>
-
-        <div class="control-row"><span class="name">Performance</span><span class="val" id="val-p">43</span></div>
-        <div class="slider-wrap"><input type="range" id="input-p" min="0" max="100" value="43"></div>
-      </div>
-
-      <div class="tool-card">
-        <h2>System Shape</h2>
-        <div class="diamond-container">
-          <div class="diamond-wrapper">
-            <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
-            <div class="diamond-label top">G</div>
-            <div class="diamond-label right">I</div>
-            <div class="diamond-label bottom">P</div>
-            <div class="diamond-label left">R</div>
-          </div>
-        </div>
+    <div class="visual-card">
+      <div class="diamond-wrapper">
+        <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
+        <div class="diamond-label top">G</div>
+        <div class="diamond-label right">I</div>
+        <div class="diamond-label bottom">P</div>
+        <div class="diamond-label left">R</div>
       </div>
     </div>
 
-    <div class="playground-grid">
+    <div class="insights-col">
       
-      <div class="tool-card">
-        <h2>Health Check</h2>
-        <div style="margin-top:20px;">
-          <div class="health-stat-row">
-            <span class="stat-label">Guidance</span>
-            <div class="stat-val-group"><span class="stat-score" id="score-g">45/100</span><span class="status-badge badge-bad" id="badge-g">Critical</span></div>
-          </div>
-          <div class="health-stat-row">
-            <span class="stat-label">Resources</span>
-            <div class="stat-val-group"><span class="stat-score" id="score-r">48/100</span><span class="status-badge badge-bad" id="badge-r">Critical</span></div>
-          </div>
-          <div class="health-stat-row">
-            <span class="stat-label">Implementation</span>
-            <div class="stat-val-group"><span class="stat-score" id="score-i">85/100</span><span class="status-badge badge-good" id="badge-i">Strong</span></div>
-          </div>
-          <div class="health-stat-row">
-            <span class="stat-label">Performance</span>
-            <div class="stat-val-group"><span class="stat-score" id="score-p">43/100</span><span class="status-badge badge-bad" id="badge-p">Critical</span></div>
-          </div>
+      <div class="insight-card mode-warn" id="archetypeBox">
+        <span class="label-xs">System Pattern</span>
+        <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
+        <div class="insight-p" id="archetypeBody">
+          Execution capability exists, but the strategic compass is broken. Teams are misaligned.
         </div>
       </div>
 
-      <div class="tool-card">
-        <h2>System Pattern</h2>
-        <div class="insight-box mode-warn" id="archetypeBox">
-          <span class="insight-label">Detected Archetype</span>
-          <div class="insight-title" id="archetypeTitle">The Direction Gap</div>
-          <div class="insight-text" id="archetypeBody">Execution capability exists, but the strategic compass is broken. Teams are misaligned and efforts do not compound.</div>
+      <div class="summary-box">
+        <div class="summary-title">Executive Summary</div>
+        <div class="summary-text" id="execSummary">
+          Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough.
         </div>
       </div>
 
     </div>
-
-    <div class="tool-card" style="text-align:center; max-width:800px; margin:0 auto;">
-      <h3 style="color:var(--text-body); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; font-size:0.85rem; margin-bottom:12px;">Generated Executive Summary</h3>
-      <p id="execSummary" class="execSummary">
-        Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough which makes every choice slower. 
-        Performance acts as the hidden drag. Wins happen but are hard to explain in a simple pattern that others can repeat. 
-        Implementation is the relative strength. When direction and focus catch up, execution can scale quickly.
-      </p>
-    </div>
-
   </div>
-
-  <section style="text-align:center; margin-top:40px;">
-    <div class="container">
-      <h2 style="font-family:Merriweather, serif; font-size:1.8rem; margin-bottom:20px; color:var(--text-dark);">Ready to see your real data?</h2>
-      <a href="gtm-assessment.html" class="btn btn-primary">Start your GTM Score</a>
-    </div>
-  </section>
 
 </main>
 
-<footer>
-  <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
-  </div>
-</footer>
-
 <script>
-  // Mobile Nav Logic
-  (function () {
-    const toggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-    if (!toggle || !mobileNav) return;
-    toggle.addEventListener("click", () => {
-      const open = mobileNav.style.display === "block";
-      mobileNav.style.display = open ? "none" : "block";
-      toggle.innerText = open ? "Menu" : "Close";
-    });
-  })();
-
-  // LOGIC ENGINE (30 Archetypes + Exec Summary Generator)
   (function() {
-    
-    function getStatus(val) {
-      if (val < 50) return { label: "Critical", class: "badge-bad", rangeClass: "range-bad" };
-      if (val < 70) return { label: "Developing", class: "badge-warn", rangeClass: "range-warn" };
-      return { label: "Strong", class: "badge-good", rangeClass: "" };
-    }
-
+    // 1. ARCHETYPE LOGIC (30 Variants)
     function getArchetype(g, r, i, p) {
-        const scores = [
-          { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
-        ];
-        scores.sort((a, b) => a.v - b.v);
-        
-        const avg = (g+r+i+p)/4;
-        const lowest = scores[0];
-        const secondLowest = scores[1];
-        const highest = scores[3];
+      const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
+      scores.sort((a, b) => a.v - b.v);
+      const avg = (g+r+i+p)/4;
+      const lowest = scores[0];
+      const second = scores[1];
+      const highest = scores[3];
 
-        if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
-        if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
-        if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
-        if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
-
-        if (lowest.k === 'g') {
-           if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn" };
-           if (highest.k === 'r' && highest.v > 65) return { title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn" };
-           if (secondLowest.k === 'p') return { title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad" };
-           return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
-        }
-        if (lowest.k === 'r') {
-           if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn" };
-           if (highest.k === 'i' && highest.v > 70) return { title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad" };
-           if (secondLowest.k === 'p') return { title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad" };
-           return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
-        }
-        if (lowest.k === 'i') {
-           if (highest.k === 'g' && highest.v > 70) return { title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad" };
-           if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn" };
-           if (secondLowest.k === 'r') return { title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad" };
-           return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
-        }
-        if (lowest.k === 'p') {
-           if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
-           if (highest.k === 'g' && highest.v > 70) return { title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn" };
-           if (highest.k === 'r' && highest.v > 70) return { title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad" };
-           return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
-        }
-        return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
+      // Extremes
+      if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required.", mode: "mode-bad" };
+      if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization.", mode: "mode-good" };
+      
+      // Constraints
+      if (lowest.k === 'g') {
+         if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution, low direction. Teams are running fast in the wrong direction.", mode: "mode-warn" };
+         return { title: "The Direction Gap", body: "Execution exists, but strategy is weak. Teams are misaligned.", mode: "mode-warn" };
+      }
+      if (lowest.k === 'r') {
+         if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy, no capacity. A roadmap to nowhere.", mode: "mode-warn" };
+         return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized.", mode: "mode-warn" };
+      }
+      if (lowest.k === 'i') {
+         if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results happen despite process, not because of it.", mode: "mode-warn" };
+         return { title: "The Broken Handoff", body: "Friction in the motion. Leads dropping between silos.", mode: "mode-warn" };
+      }
+      if (lowest.k === 'p') {
+         return { title: "The Leaky Bucket", body: "High effort, low outcome. Conversion or retention is draining value.", mode: "mode-bad" };
+      }
+      return { title: "The Developing Engine", body: "System shows potential but lacks coherence.", mode: "mode-mid" };
     }
 
+    // 2. SUMMARY GENERATOR
     function generateSummary(g, r, i, p) {
       const map = { g: "Guidance", r: "Resources", i: "Implementation", p: "Performance" };
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
       
-      const pKey = map[scores[0].k];
-      const hKey = map[scores[1].k];
-      const sKey = map[scores[3].k];
+      const constraint = map[scores[0].k];
+      const strength = map[scores[3].k];
 
-      let t1 = "";
-      if(pKey === "Guidance") t1 = "Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough which makes every choice slower.";
-      else if(pKey === "Resources") t1 = "Resources are the primary constraint. Ambition and pipeline grow faster than the capacity that supports them.";
-      else if(pKey === "Implementation") t1 = "Implementation is the primary constraint. Plans exist but they are not delivered with the same discipline across channels.";
-      else t1 = "Performance is the primary constraint. The commercial output does not yet match the volume of effort and activity.";
-
-      let t2 = "";
-      if(hKey === "Guidance") t2 = "Guidance acts as the hidden drag which introduces noise and rework.";
-      else if(hKey === "Resources") t2 = "Resources quietly slow the system through stretched teams and manual work.";
-      else if(hKey === "Implementation") t2 = "Implementation acts as the hidden drag. Work starts but doesn't land in a repeatable way.";
-      else t2 = "Performance acts as the hidden drag. Wins happen but are hard to repeat systematically.";
-
-      let t3 = "";
-      if(sKey === "Guidance") t3 = "Guidance is the relative strength which you can use as a spine for future changes.";
-      else if(sKey === "Resources") t3 = "Resources are the relative strength. The organisation can support more if focused.";
-      else if(sKey === "Implementation") t3 = "Implementation is the relative strength. When direction catches up, execution can scale quickly.";
-      else t3 = "Performance is the relative strength. Use this as proof that the system can work.";
-
-      return `${t1} ${t2} ${t3}`;
+      return `${constraint} is the primary constraint holding the system back. Conversely, ${strength} acts as the relative strength to build upon. Focus on lifting ${constraint} to unlock the next level of growth.`;
     }
 
+    // 3. DRAW DIAMOND (SVG)
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
-      function pt(angle, value) {
-        const rad = (Math.PI / 180) * angle;
-        const radius = (value / 100) * maxR;
-        return { x: cx + radius * Math.cos(rad), y: cy - radius * Math.sin(rad) };
+      function pt(deg, val) {
+        const rad = (deg * Math.PI) / 180;
+        const r = (val / 100) * maxR;
+        return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
       }
       
+      // Grid
       let grid = "";
-      [30, 60, 90].forEach(val => {
-        const p1 = pt(90, val); const p2 = pt(0, val); const p3 = pt(270, val); const p4 = pt(180, val);
+      [30, 60, 90].forEach(v => {
+        const p1 = pt(90, v); const p2 = pt(0, v); const p3 = pt(270, v); const p4 = pt(180, v);
         grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
       });
 
+      // Shape
       const G = pt(90, g); const I = pt(0, i); const P = pt(270, p); const R = pt(180, r);
       const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
       const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`).join("");
@@ -428,7 +327,8 @@
       svg.innerHTML = grid + shape + dots;
     }
 
-    function updateUI() {
+    // 4. MAIN UPDATE LOOP
+    function update() {
       const g = parseInt(document.getElementById("input-g").value);
       const r = parseInt(document.getElementById("input-r").value);
       const i = parseInt(document.getElementById("input-i").value);
@@ -439,38 +339,25 @@
       document.getElementById("val-i").textContent = i;
       document.getElementById("val-p").textContent = p;
 
-      // Update Health
-      function setHealth(key, val) {
-        const s = getStatus(val);
-        const b = document.getElementById("badge-"+key);
-        const v = document.getElementById("score-"+key);
-        const inp = document.getElementById("input-"+key);
-        b.className = "status-badge " + s.class;
-        b.textContent = s.label;
-        v.textContent = val + "/100";
-        inp.className = s.rangeClass;
-      }
-      setHealth("g", g); setHealth("r", r); setHealth("i", i); setHealth("p", p);
-
       // Archetype
       const arch = getArchetype(g, r, i, p);
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      box.className = "insight-box " + arch.mode;
+      box.className = "insight-card " + arch.mode;
 
       // Summary
       document.getElementById("execSummary").textContent = generateSummary(g, r, i, p);
 
-      // Visual
+      // Draw
       drawDiamond(g, r, i, p);
     }
 
     ["input-g", "input-r", "input-i", "input-p"].forEach(id => {
-      document.getElementById(id).addEventListener("input", updateUI);
+      document.getElementById(id).addEventListener("input", update);
     });
 
-    updateUI(); // Init
+    update(); // Init
   })();
 </script>
 
