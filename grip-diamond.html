@@ -17,7 +17,7 @@
     /* ================= CAUGIA CORE V3 ================= */
     :root{
       --primary:#0056b3;
-      --primary-dark:#003370;
+      --primary-dark:#004494;
       --text-dark:#0f172a;
       --text-body:#475569;
       --bg:#f8fafc;
@@ -26,7 +26,8 @@
       
       --radius-lg:20px;
       --radius-md:12px;
-      --shadow-soft:0 10px 40px -10px rgba(0,0,0,0.08);
+      --radius-btn:999px;
+      --shadow-soft:0 10px 40px -10px rgba(0,0,0,0.06);
       
       --header-h: 80px;
       --footer-h: 60px;
@@ -40,7 +41,7 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
-    /* SAAS LOCK: NO GLOBAL SCROLL */
+    /* SAAS LOCK: NO SCROLL ON DESKTOP */
     html, body {
       height: 100vh; width: 100vw;
       margin: 0; padding: 0;
@@ -56,37 +57,46 @@
       font-family: Merriweather, serif; color: var(--text-dark); font-weight: 900; letter-spacing: -0.02em;
     }
 
-    /* ================= HEADER (INDEX MATCH) ================= */
+    /* ================= HEADER (EXACT INDEX MATCH) ================= */
     header {
       flex: 0 0 var(--header-h);
-      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(15,23,42,0.05);
-      z-index: 100; width: 100%;
+      background: rgba(248,250,252,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(15,23,42,0.04);
+      z-index: 1000; width: 100%;
     }
-    .nav-container {
-      height: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px;
-      display: flex; align-items: center; justify-content: space-between;
+    .nav {
+      height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      max-width: var(--max); margin: 0 auto; padding: 0 24px;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: 0.02em; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; }
-    .brand img { width: 32px; height: 32px; }
+    .brand {
+      display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: 0.02em; 
+      text-decoration: none; color: var(--text-dark);
+    }
+    .brand img { width: 32px; height: 32px; display: block; }
+    
+    .nav-links { display: flex; gap: 32px; align-items: center; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { 
+      color: var(--text-body); font-weight: 600; font-size: 0.95rem; 
+      text-decoration: none; transition: color 0.15s ease; 
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-    .nav-center { display: flex; gap: 32px; align-items: center; list-style: none; margin: 0; padding: 0; }
-    .nav-center a { color: var(--text-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: color 0.2s ease; }
-    .nav-center a:hover, .nav-center a.active { color: var(--primary); }
-
-    .btn-contact {
-      background: var(--primary-dark); color: var(--white); padding: 10px 28px;
-      border-radius: 99px; font-weight: 700; font-size: 0.95rem;
-      text-decoration: none; transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 51, 112, 0.15);
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 28px; border-radius: 999px; font-weight: 700; font-size: 0.95rem;
+      border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
+      background: var(--primary-dark); color: var(--white); box-shadow: 0 4px 12px rgba(0,86,179,0.15);
+      text-decoration: none;
     }
-    .btn-contact:hover { background: #002655; transform: translateY(-1px); }
+    .btn-primary:hover { background: #003370; transform: translateY(-1px); }
+
+    .menu-toggle { display: none; } /* Simplified for desktop priority as requested */
 
     /* ================= DASHBOARD LAYOUT ================= */
     .dashboard-wrap {
       flex: 1; /* Fills remaining height */
       width: 100%; max-width: var(--max);
-      margin: 0 auto; padding: 32px;
+      margin: 0 auto; padding: 32px 24px;
       display: grid;
       /* Left (Controls) | Right (Content) */
       grid-template-columns: 340px 1fr; 
@@ -94,6 +104,7 @@
       overflow: hidden; 
     }
 
+    /* --- COMMON CARD --- */
     .glass-card {
       background: var(--white); border-radius: var(--radius-lg);
       border: 1px solid var(--line); box-shadow: var(--shadow-soft);
@@ -101,15 +112,17 @@
     }
 
     /* ================= LEFT: CONTROLS ================= */
-    .controls-panel { height: 100%; justify-content: space-between; overflow-y: auto; }
+    .controls-panel { height: 100%; justify-content: space-between; overflow-y: auto; padding-right: 4px; }
+    .controls-panel::-webkit-scrollbar { width: 4px; }
+    .controls-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     
     .panel-header { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 32px; }
-    .panel-header h2 { font-size: 1.5rem; margin-bottom: 8px; }
+    .panel-header h2 { font-size: 1.4rem; margin-bottom: 8px; }
     .panel-header p { font-size: 0.95rem; color: var(--text-body); margin: 0; line-height: 1.5; }
 
     .sliders-wrapper { display: flex; flex-direction: column; gap: 32px; }
     
-    .control-label { display: flex; justify-content: space-between; align-items:center; font-weight: 700; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-dark); }
+    .control-label { display: flex; justify-content: space-between; align-items:center; font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; color: var(--text-dark); }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); font-size: 1.1rem; }
 
     /* PERFECT SLIDERS */
@@ -117,7 +130,7 @@
       width:100%; -webkit-appearance:none; height:6px; 
       background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; display: block;
     }
-    /* Thumb centering: (Track 6px - Thumb 22px) / 2 = -8px */
+    /* Centered Thumb: Track(6px) - Thumb(22px) = -16px / 2 = -8px offset */
     input[type=range]::-webkit-slider-thumb{ 
       -webkit-appearance:none; width:22px; height:22px; 
       background:var(--white); border-radius:50%; border:3px solid var(--primary); 
@@ -125,13 +138,17 @@
     }
     input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
 
-    .controls-cta { margin-top: auto; padding-top: 32px; border-top: 1px solid var(--line); text-align: center; }
+    /* CTA Bottom Left */
+    .controls-cta {
+      margin-top: auto; padding-top: 32px; border-top: 1px solid var(--line); text-align: center;
+    }
     .btn-outline {
       display: block; width: 100%; padding: 12px; border-radius: 99px;
       border: 2px solid var(--line); color: var(--primary); font-weight: 700;
-      text-decoration: none; transition: 0.2s; font-size: 0.9rem;
+      text-decoration: none; transition: 0.2s; font-size: 0.95rem;
     }
-    .btn-outline:hover { border-color: var(--primary); background: var(--bg); }
+    .btn-outline:hover { background: var(--white); border-color: var(--primary); color: var(--primary); }
+
 
     /* ================= RIGHT: CONTENT GRID ================= */
     .content-grid {
@@ -165,7 +182,7 @@
     }
     #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 20px 40px rgba(0,86,179,0.15)); }
 
-    /* Labels */
+    /* Anchors */
     .diamond-node {
       position: absolute; width: 44px; height: 44px; 
       background: #fff; border: 2px solid #e2e8f0; border-radius: 50%;
@@ -173,13 +190,14 @@
       display: flex; align-items: center; justify-content: center; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 10;
     }
-    /* Positioned relative to center, pushed OUT */
+    /* Pushed OUT slightly to breathe */
     .pos-n { top: -30px; left: 50%; transform: translate(-50%, 0); }
     .pos-e { top: 50%; right: -30px; transform: translate(0, -50%); }
     .pos-s { bottom: -30px; left: 50%; transform: translate(-50%, 0); }
     .pos-w { top: 50%; left: -30px; transform: translate(0, -50%); }
 
-    /* --- 2. INSIGHTS STACK --- */
+
+    /* --- 2. INSIGHTS STACK (STABLE FLEX) --- */
     .insights-col {
       display: flex; flex-direction: column; gap: 24px; height: 100%;
       overflow: hidden; /* No scroll on container */
@@ -189,20 +207,21 @@
     .health-card { flex: 0 0 auto; }
     .health-card h3 { font-size: 1.1rem; margin-bottom: 20px; font-family: Merriweather, serif; font-weight:900; }
     
+    .health-table { display: flex; flex-direction: column; gap: 14px; }
     .health-row {
-      display: grid; 
-      /* Name | Score | Badge (Fixed widths to prevent jumping) */
+      display: grid;
+      /* Name | Score | Badge (Wide Gap Spacing) */
       grid-template-columns: 1fr 80px 110px; 
-      gap: 24px; /* Fix for too close numbers */
-      align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 12px;
+      gap: 24px; 
+      align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line);
     }
-    .health-row:last-child { border: none; padding: 0; margin: 0; }
+    .health-row:last-child { border: none; padding: 0; }
     
-    .h-name { font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
-    .h-score { font-weight: 600; color: var(--text-body); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
+    .h-name { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; }
+    .h-score { font-weight: 600; color: var(--text-body); font-size: 0.95rem; text-align: right; font-variant-numeric: tabular-nums; }
     .status-badge { 
       font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; 
-      padding: 6px 0; border-radius: 6px; text-align: center; display: block;
+      padding: 5px 0; border-radius: 6px; text-align: center; display: block;
     }
     .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
@@ -219,11 +238,11 @@
     .insight-h { font-size: 1.2rem; font-weight: 900; font-family: Merriweather, serif; margin-bottom: 8px; color: var(--text-dark); }
     .insight-p { font-size: 0.95rem; color: var(--text-body); line-height: 1.5; margin: 0; }
 
-    /* SUMMARY (Fills Remaining Space - ANTI JUMP) */
+    /* SUMMARY (THE ANTI-JUMP FIX) */
     .summary-card {
-      flex: 1; /* This card grows to fill all empty space */
+      flex: 1; /* This forces the card to take ALL remaining vertical space */
       display: flex; flex-direction: column;
-      min-height: 150px; 
+      min-height: 180px; /* Minimum height safety */
       overflow: hidden; 
     }
     .summary-title { 
@@ -231,25 +250,31 @@
       margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; 
       flex-shrink: 0;
     }
+    /* Content wrapper scrolls internally if text is too long */
     .summary-content-wrap {
-      flex: 1; /* Fills card body */
-      overflow-y: auto; /* Scroll ONLY text if needed */
+      flex: 1; 
+      overflow-y: auto; 
       padding-right: 6px;
     }
     .summary-content-wrap::-webkit-scrollbar { width: 4px; }
     .summary-content-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .summary-text { font-size: 1rem; line-height: 1.6; color: var(--text-body); }
+    
+    .summary-text { font-size: 1rem; line-height: 1.7; color: var(--text-body); }
+
 
     /* FOOTER */
     footer{ flex: 0 0 var(--footer-h); background:var(--white); border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.9rem; z-index: 50; }
 
     /* MOBILE */
     @media (max-width: 1200px) {
-      html, body { height: auto; overflow-y: auto; }
-      .dashboard-wrap { display: flex; flex-direction: column; padding: 24px; gap: 40px; }
+      html, body { height: auto; overflow-y: auto; } /* Unlock */
+      .dashboard-wrap { display: flex; flex-direction: column; padding: 24px; gap: 48px; }
       .content-grid { display: flex; flex-direction: column; height: auto; }
       .diamond-card { min-height: 450px; }
-      .nav-center { display: none; }
+      .nav-links { display: none; }
+      .menu-toggle { display: block; position: relative; width: 30px; height: 20px; background: none; border: none; cursor: pointer; }
+      .menu-toggle span { display: block; height: 2px; width: 100%; background: var(--text-dark); margin-bottom: 5px; border-radius: 2px; }
+      .summary-card { flex: 0 0 auto; height: auto; }
     }
   </style>
 </head>
@@ -257,13 +282,13 @@
 <body>
 
 <header>
-  <div class="nav-container">
+  <div class="nav">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Logo">
+      <img src="assets/C-logo.png" alt="Caugia">
       <span>CAUGIA CONSULTING</span>
     </a>
     
-    <ul class="nav-center">
+    <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="services.html">Services</a></li>
@@ -271,7 +296,10 @@
       <li><a href="resources.html" class="active">Resources</a></li>
     </ul>
 
-    <a href="contact.html" class="btn-contact">Contact</a>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <a href="contact.html" class="btn-primary">Contact</a>
+      <button class="menu-toggle"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
@@ -281,7 +309,7 @@
     <div>
       <div class="panel-header">
         <h2>Dimensions</h2>
-        <p>Adjust sliders to simulate your current GTM state.</p>
+        <p>Adjust the sliders to simulate your current GTM state.</p>
       </div>
 
       <div class="sliders-wrapper">
@@ -309,7 +337,7 @@
 
     <div class="controls-cta">
       <p style="font-size:0.85rem; color:#64748b; margin-bottom:12px;">Want to know your real numbers?</p>
-      <a href="gtm-assessment.html" class="btn-outline">Take Free Assessment</a>
+      <a href="gtm-assessment.html" class="btn-outline" style="text-align:center;">Take Free Assessment</a>
     </div>
   </aside>
 
@@ -326,23 +354,19 @@
         <svg style="position: absolute; width:0; height:0;" aria-hidden="true">
           <defs>
             <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:rgba(0, 86, 179, 0.5)" />
-              <stop offset="100%" style="stop-color:rgba(0, 86, 179, 0.1)" />
+              <stop offset="0%" style="stop-color:rgba(0, 86, 179, 0.45)" />
+              <stop offset="100%" style="stop-color:rgba(0, 86, 179, 0.05)" />
             </linearGradient>
-            <filter id="glow">
-               <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-               <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
         </svg>
 
         <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
         
-        <div class="diamond-node pos-n">G</div>
-        <div class="diamond-node pos-e">R</div>
-        <div class="diamond-node pos-s">I</div>
-        <div class="diamond-node pos-w">P</div>
-      </div>
+        <div class="diamond-node pos-n">G</div> <div class="diamond-node pos-e">R</div> <div class="diamond-node pos-s">I</div> <div class="diamond-node pos-w">P</div> </div>
     </div>
 
     <div class="insights-col">
@@ -385,7 +409,7 @@
         <div class="summary-title">Executive Summary</div>
         <div class="summary-content-wrap">
           <div class="summary-text" id="execSummary">
-            Loading summary...
+            Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough.
           </div>
         </div>
       </div>
@@ -409,14 +433,14 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // --- 30 ARCHETYPES & SUMMARIES ---
+    // THE 30 ARCHETYPES LOGIC
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
       const avg = Math.round((g+r+i+p)/4);
       const lowest = scores[0];
-      const highest = scores[3];
       const second = scores[1];
+      const highest = scores[3];
 
       // 1. EXTREMES
       if (avg < 35) return { 
@@ -484,13 +508,13 @@
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
       
-      // G=Top(-90/270), R=Right(0), I=Bottom(90), P=Left(180)
-      const pG = { x: cx, y: cy - (g/100)*maxR }; // Top
-      const pR = { x: cx + (r/100)*maxR, y: cy }; // Right
-      const pI = { x: cx, y: cy + (i/100)*maxR }; // Bottom
-      const pP = { x: cx - (p/100)*maxR, y: cy }; // Left
+      // G=Top, R=Right, I=Bottom, P=Left
+      const pG = { x: cx, y: cy - (g/100)*maxR }; 
+      const pR = { x: cx + (r/100)*maxR, y: cy }; 
+      const pI = { x: cx, y: cy + (i/100)*maxR }; 
+      const pP = { x: cx - (p/100)*maxR, y: cy }; 
       
-      // Radar Grid
+      // Grid
       let grid = `
         <circle cx="${cx}" cy="${cy}" r="${maxR*0.33}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3" />
         <circle cx="${cx}" cy="${cy}" r="${maxR*0.66}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3" />
@@ -499,7 +523,6 @@
         <line x1="${cx-maxR}" y1="${cy}" x2="${cx+maxR}" y2="${cy}" stroke="#e2e8f0" stroke-width="1" />
       `;
 
-      // Sexy Shape
       const shape = `<polygon points="${pG.x},${pG.y} ${pR.x},${pR.y} ${pI.x},${pI.y} ${pP.x},${pP.y}" fill="url(#diamondGrad)" stroke="#0056b3" stroke-width="3" stroke-linejoin="round" style="filter:url(#glow);" />`;
 
       svg.innerHTML = grid + shape;
@@ -515,6 +538,7 @@
       document.getElementById("val-r").textContent = r;
       document.getElementById("val-i").textContent = i;
       document.getElementById("val-p").textContent = p;
+      
       document.getElementById("totalScore").textContent = Math.round((g+r+i+p)/4);
 
       function setHealth(key, val) {
