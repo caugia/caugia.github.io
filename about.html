@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM (Standardized) --- */
+    /* --- V3 CORE SYSTEM (Strict Consistency) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,6 +26,7 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
       --max:1200px;
     }
 
@@ -51,15 +52,14 @@
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
-    /* UNIFIED CONTAINER LOGIC */
+    /* UNIFIED CONTAINER */
     .container{
       max-width:var(--max);
       margin:0 auto;
       padding:0 24px;
     }
 
-    /* Standard Section Padding */
-    section{ padding:100px 0; }
+    section{ padding:80px 0; }
 
     /* BUTTONS */
     .btn{
@@ -72,7 +72,7 @@
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
 
-    /* HEADER (Identical to Services) */
+    /* HEADER */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
@@ -91,80 +91,92 @@
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
 
     /* --- HERO --- */
-    .about-hero { text-align: center; max-width: 860px; margin: 0 auto; padding-top: 80px; padding-bottom: 80px; }
+    .about-hero { text-align: center; max-width: 860px; margin: 0 auto; padding-top: 80px; padding-bottom: 60px; }
+    .eyebrow { 
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
+    }
     .about-hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
-    .about-hero p { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); max-width: 720px; margin: 0 auto; }
+    .about-hero p { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); }
 
-    /* --- "THE SYSTEM" SECTION (Replaces "Philosophy") --- */
-    .section-system { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    
-    /* A cleaner, "System" layout */
-    .system-layout {
-      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
-    }
-    
-    .system-text h2 { font-size: 2.2rem; margin-bottom: 24px; }
-    .system-text p { font-size: 1.05rem; }
+    /* --- THE MISSION --- */
+    .section-white { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
+    .mission-content p { font-size: 1.05rem; }
 
-    /* The Matrix Visual */
-    .grip-matrix {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-      background: var(--line); border: 1px solid var(--line);
-      border-radius: 16px; overflow: hidden;
-    }
-    .grip-cell {
-      background: #fff; padding: 40px 32px; display: flex; flex-direction: column;
-      transition: background 0.2s;
-    }
-    .grip-cell:hover { background: #f8fafc; }
+    /* --- GRIP CARDS (The Fix) --- */
+    .section-grip { background: #f8fafc; padding: 100px 0; }
+    .grip-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+    .grip-intro h2 { font-size: 2.2rem; margin-bottom: 16px; }
     
-    .cell-letter { font-size: 2rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 12px; }
-    .cell-title { font-family: Inter, sans-serif; font-weight: 700; font-size: 1rem; color: var(--text-dark); margin-bottom: 6px; }
-    .cell-desc { font-size: 0.85rem; color: #64748b; line-height: 1.4; margin: 0; }
+    .grip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    
+    /* High-End Cards */
+    .grip-card {
+      background: var(--white); padding: 32px 24px; border-radius: 16px;
+      border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: left;
+    }
+    .grip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: #bfdbfe; }
+    
+    .grip-letter { 
+      font-size: 2.5rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 16px; 
+      display: inline-block; background: #eff6ff; width: 60px; height: 60px; 
+      display: flex; align-items: center; justify-content: center; border-radius: 12px;
+    }
+    .grip-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 8px; color: var(--text-dark); }
+    .grip-card p { font-size: 0.95rem; color: #64748b; line-height: 1.5; margin: 0; }
 
-    /* --- LEADERSHIP (Editorial Style) --- */
-    .section-lead { background: #f8fafc; padding: 120px 0; }
+    /* --- LEADERSHIP (Trust Card) --- */
+    .section-lead { background: var(--white); padding: 100px 0; border-top: 1px solid var(--line); }
     
-    .lead-profile {
-      display: grid; grid-template-columns: 400px 1fr; gap: 80px; align-items: start;
+    /* The Trust Container */
+    .lead-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 24px;
+      box-shadow: var(--shadow-card); overflow: hidden;
+      display: grid; grid-template-columns: 360px 1fr;
     }
     
-    .lead-image-col { position: relative; }
+    .lead-img-col { height: 100%; min-height: 400px; position: relative; }
     .lead-img {
-      width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 4px;
-      filter: grayscale(100%); transition: filter 0.3s ease;
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    .lead-img:hover { filter: grayscale(0%); } /* Subtle interactive element */
     
-    .lead-content { padding-top: 20px; }
-    .lead-eyebrow { 
+    .lead-content { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+    .lead-role { 
       font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; 
-      color: #94a3b8; margin-bottom: 16px; display: block;
+      color: var(--primary); margin-bottom: 12px; display: block;
     }
-    .lead-name { font-size: 3rem; margin-bottom: 32px; line-height: 1; }
-    .lead-bio { font-size: 1.1rem; color: var(--text-dark); margin-bottom: 24px; max-width: 600px; }
-    .lead-bio-secondary { font-size: 1rem; color: var(--text-body); max-width: 600px; margin-bottom: 40px; }
+    .lead-name { font-size: 2.5rem; margin-bottom: 24px; line-height: 1.1; }
+    .lead-bio { font-size: 1.05rem; color: var(--text-body); margin-bottom: 32px; }
 
-    /* Minimalist Stats (No bubbles) */
+    /* Stats Grid inside the card */
     .lead-stats {
-      display: flex; gap: 40px; padding-top: 32px; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      padding-top: 32px; border-top: 1px solid var(--line);
     }
-    .stat-item strong { display: block; font-size: 1.5rem; font-weight: 800; color: var(--text-dark); line-height: 1.2; }
-    .stat-item span { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); display: block; margin-bottom: 4px; }
+    .stat-label { font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 
     /* CTA */
-    .section-cta { text-align: center; border-top: 1px solid var(--line); background: var(--white); }
+    .section-cta { text-align: center; background: #f8fafc; border-top: 1px solid var(--line); padding: 100px 0; }
     .section-cta h2 { font-size: 2.5rem; margin-bottom: 24px; }
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
     @media (max-width: 900px){
-      .system-layout { grid-template-columns: 1fr; gap: 40px; }
-      .grip-matrix { max-width: 500px; margin: 0 auto; }
-      .lead-profile { grid-template-columns: 1fr; gap: 40px; }
-      .lead-img { width: 100%; aspect-ratio: 1/1; }
       .about-hero h1 { font-size: 2.5rem; }
-      .lead-stats { flex-wrap: wrap; gap: 24px; }
+      .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+      .grip-grid { grid-template-columns: 1fr 1fr; }
+      .lead-card { grid-template-columns: 1fr; }
+      .lead-img-col { height: 300px; }
+      .lead-content { padding: 40px 24px; }
+      .lead-stats { grid-template-columns: 1fr; gap: 20px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
     }
   </style>
 </head>
@@ -201,86 +213,103 @@
 
   <main>
     <section class="container about-hero">
+      <span class="eyebrow">The Caugia Mission</span>
       <h1>Clarity begins with structure.</h1>
       <p>
         We help B2B SaaS leadership teams see the revenue system as one coherent engine. 
-        When the system becomes visible, alignment gets easier, priorities stabilise, and execution starts to compound.
+        When the system becomes visible, alignment gets easier, and execution starts to compound.
       </p>
     </section>
 
-    <section class="section-system">
-      <div class="container system-layout">
-        
-        <div class="system-text">
-          <h2>The GRIP Model</h2>
+    <section class="section-white">
+      <div class="container mission-grid">
+        <div class="mission-content">
+          <h2>Why Caugia exists</h2>
           <p>
-            Most revenue organisations work hard inside systems that were never intentionally designed. Processes grow organically, tools accumulate, and the engine gets heavier.
+            Most revenue organisations work hard inside systems that were never intentionally designed. Processes grow organically, tools accumulate, teams specialise, and the engine gets heavier each quarter.
           </p>
-          <p style="margin-top:24px;">
-            We build clarity by balancing four structural forces. When these align, growth becomes a consequence of design, not just effort.
+          <p style="margin-top:16px;">
+            In that environment, effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Caugia was built to restore coherence.
           </p>
         </div>
+        <div style="background:#f1f5f9; border-radius:16px; height:320px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line);">
+           <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
+             <rect x="2" y="2" width="9" height="9" rx="2"></rect>
+             <rect x="13" y="2" width="9" height="9" rx="2"></rect>
+             <rect x="2" y="13" width="9" height="9" rx="2"></rect>
+             <rect x="13" y="13" width="9" height="9" rx="2"></rect>
+             <path d="M6.5 11v2"></path><path d="M17.5 11v2"></path><path d="M11 6.5h2"></path><path d="M11 17.5h2"></path>
+           </svg>
+        </div>
+      </div>
+    </section>
 
-        <div class="grip-matrix">
-          <div class="grip-cell">
-            <span class="cell-letter">G</span>
-            <span class="cell-title">Guidance</span>
-            <p class="cell-desc">Do teams know exactly what to do?</p>
+    <section class="section-grip">
+      <div class="container">
+        <div class="grip-intro">
+          <h2>The GRIP Philosophy</h2>
+          <p>Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.</p>
+        </div>
+        
+        <div class="grip-grid">
+          <div class="grip-card">
+            <span class="grip-letter">G</span>
+            <h3>Guidance</h3>
+            <p>Do teams know exactly what to do? Strategy, targeting, and market clarity.</p>
           </div>
-          <div class="grip-cell">
-            <span class="cell-letter">R</span>
-            <span class="cell-title">Resources</span>
-            <p class="cell-desc">Do teams have what they need?</p>
+          <div class="grip-card">
+            <span class="grip-letter">R</span>
+            <h3>Resources</h3>
+            <p>Do teams have what they need? Product fit, pricing, and talent.</p>
           </div>
-          <div class="grip-cell">
-            <span class="cell-letter">I</span>
-            <span class="cell-title">Implementation</span>
-            <p class="cell-desc">Do teams execute the same way?</p>
+          <div class="grip-card">
+            <span class="grip-letter">I</span>
+            <h3>Implementation</h3>
+            <p>Do teams execute the same way? Process, handoffs, and revenue ops.</p>
           </div>
-          <div class="grip-cell">
-            <span class="cell-letter">P</span>
-            <span class="cell-title">Performance</span>
-            <p class="cell-desc">Does it deliver predictable results?</p>
+          <div class="grip-card">
+            <span class="grip-letter">P</span>
+            <h3>Performance</h3>
+            <p>Does it deliver predictable results? Metrics, forecasting, and governance.</p>
           </div>
         </div>
-
       </div>
     </section>
 
     <section class="section-lead">
-      <div class="container lead-profile">
-        
-        <div class="lead-image-col">
-          <img src="assets/linkedIn.jpeg" alt="Tom Meijer" class="lead-img" onerror="this.src='https://via.placeholder.com/400x500/e2e8f0/94a3b8?text=Tom+Meijer';">
-        </div>
-
-        <div class="lead-content">
-          <span class="lead-eyebrow">Founder & Principal</span>
-          <h2 class="lead-name">Tom Meijer</h2>
-          
-          <p class="lead-bio">
-            Tom spent his career inside high-growth SaaS organisations, leading global revenue teams across NAMER, EMEA, and APAC.
-          </p>
-          <p class="lead-bio-secondary">
-            He saw that as scale and urgency rise, complexity follows. Often, talent isn't the issue—structure is. Caugia turns those lessons into a calm, systems-first approach to revenue architecture.
-          </p>
-
-          <div class="lead-stats">
-            <div class="stat-item">
-              <strong>6</strong>
-              <span>Acquisitions</span>
+      <div class="container">
+        <div class="lead-card">
+          <div class="lead-img-col">
+            <img src="assets/linkedIn.jpeg" alt="Tom Meijer" class="lead-img" onerror="this.src='https://via.placeholder.com/400x500/e2e8f0/94a3b8?text=Tom+Meijer';">
+          </div>
+          <div class="lead-content">
+            <span class="lead-role">Founder & Principal</span>
+            <h2 class="lead-name">Tom Meijer</h2>
+            <div class="lead-bio">
+              <p>
+                Tom spent his career inside high-growth SaaS organisations, leading global revenue teams across NAMER, EMEA, and APAC.
+              </p>
+              <p style="margin-top:16px;">
+                He saw that as scale and urgency rise, complexity follows. Often, talent isn't the issue—structure is. Caugia turns those lessons into a calm, systems-first approach to revenue architecture.
+              </p>
             </div>
-            <div class="stat-item">
-              <strong>+$1.2B</strong>
-              <span>Funding Raised</span>
-            </div>
-            <div class="stat-item">
-              <strong>$5.6B</strong>
-              <span>Valuation (Contentsquare)</span>
+            
+            <div class="lead-stats">
+              <div>
+                <span class="stat-val">6</span>
+                <span class="stat-label">Acquisitions</span>
+              </div>
+              <div>
+                <span class="stat-val">+$1.2B</span>
+                <span class="stat-label">Funding Raised</span>
+              </div>
+              <div>
+                <span class="stat-val">$5.6B</span>
+                <span class="stat-label">Valuation</span>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
