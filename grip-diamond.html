@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The GRIP Diamond | Caugia Consulting</title>
-  <meta name="description" content="Interactive GTM model. Adjust the four dimensions to see how system balance affects growth." />
+  <meta name="description" content="Interactive GTM model. Visualize your system balance and see how the four dimensions affect growth." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* ================= CORE SYSTEM ================= */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -23,10 +23,13 @@
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
+      
       --radius-lg:20px;
       --radius-md:12px;
-      --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
-      --max:1400px;
+      --shadow-soft:0 10px 40px -5px rgba(0,0,0,0.06);
+      
+      --header-h: 80px;
+      --max:1600px;
 
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
@@ -34,145 +37,206 @@
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: auto; }
-    
-    body{
-      font-family:Inter, sans-serif;
-      background:var(--bg);
-      color:var(--text-dark);
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-      display: flex; flex-direction: column; min-height: 100vh;
+    /* SAAS LOCK: NO SCROLL ON DESKTOP */
+    html, body {
+      height: 100vh; width: 100vw;
+      margin: 0; padding: 0;
+      overflow: hidden; 
+      background: var(--bg);
+      font-family: Inter, sans-serif;
+      color: var(--text-dark);
+      display: flex; flex-direction: column;
+      -webkit-font-smoothing: antialiased;
     }
 
-    h1,h2,h3,h4{
-      font-family:Merriweather, serif;
-      color:var(--text-dark);
-      font-weight:900;
-      letter-spacing:-0.02em;
+    *, *::before, *::after { box-sizing: border-box; }
+
+    h1,h2,h3,h4 {
+      font-family: Merriweather, serif; color: var(--text-dark); font-weight: 900; letter-spacing: -0.02em;
     }
 
-    /* HEADER */
-    header{
-      position:sticky; top:0; z-index:100;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
+    /* ================= HEADER (INDEX STYLE) ================= */
+    header {
+      flex: 0 0 var(--header-h);
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(15,23,42,0.05);
+      z-index: 100; width: 100%;
     }
-    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
-    .brand img{ width:28px; height:28px; display:block; }
-    .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.9rem; text-decoration:none; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
-    .btn-sm:hover{ background:var(--primary-dark); }
+    .nav-container {
+      height: 100%; max-width: 1400px; margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: 0.02em; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; }
+    .brand img { width: 32px; height: 32px; }
 
-    /* DASHBOARD LAYOUT */
+    /* Nav Links Centered */
+    .nav-center { display: flex; gap: 32px; align-items: center; list-style: none; margin: 0; padding: 0; }
+    .nav-center a { color: var(--text-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: color 0.2s ease; }
+    .nav-center a:hover, .nav-center a.active { color: var(--primary); }
+
+    /* Solid CTA Button Right */
+    .btn-contact {
+      background: var(--primary-dark); color: var(--white); padding: 10px 24px;
+      border-radius: 99px; font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 51, 112, 0.15);
+    }
+    .btn-contact:hover { background: #002655; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0, 51, 112, 0.25); }
+
+
+    /* ================= DASHBOARD LAYOUT ================= */
     .dashboard-wrap {
-      flex: 1;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 32px 24px;
+      flex: 1; /* Fills remaining height */
+      width: 100%; max-width: var(--max);
+      margin: 0 auto; padding: 32px;
       display: grid;
-      grid-template-columns: 340px 1fr;
+      /* Left (Controls) | Right (Content) */
+      grid-template-columns: 320px 1fr; 
       gap: 32px;
-      align-items: start;
+      overflow: hidden; 
     }
 
-    /* PANELS */
-    .panel {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      padding: 24px;
+    /* --- COMMON CARD --- */
+    .glass-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      border: 1px solid var(--line); box-shadow: var(--shadow-soft);
+      padding: 32px; display: flex; flex-direction: column;
+    }
+
+    /* ================= LEFT: CONTROLS ================= */
+    .controls-panel { height: 100%; justify-content: space-between; }
+    
+    .panel-header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 32px; }
+    .panel-header h2 { font-size: 1.4rem; margin-bottom: 8px; }
+    .panel-header p { font-size: 0.9rem; color: var(--text-body); margin: 0; line-height: 1.5; }
+
+    .sliders-wrapper { display: flex; flex-direction: column; gap: 32px; }
+    
+    .control-label { display: flex; justify-content: space-between; align-items:center; font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; color: var(--text-dark); }
+    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); font-size: 1rem; }
+
+    input[type=range]{ width:100%; -webkit-appearance:none; height:8px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:22px; height:22px; background:var(--white); border-radius:50%; border:3px solid var(--primary); box-shadow:0 2px 5px rgba(0,0,0,0.15); margin-top:-7px; }
+
+    /* CTA Bottom Left */
+    .controls-cta {
+      margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); text-align: center;
+    }
+    .btn-outline-primary {
+      display: block; width: 100%; padding: 12px; border-radius: 99px;
+      border: 2px solid var(--primary); color: var(--primary); font-weight: 700;
+      text-decoration: none; transition: 0.2s; font-size: 0.9rem;
+    }
+    .btn-outline-primary:hover { background: var(--primary); color: var(--white); }
+
+
+    /* ================= RIGHT: CONTENT GRID ================= */
+    .content-grid {
+      display: grid;
+      /* Diamond takes 60%, Insights takes 40% */
+      grid-template-columns: 1.4fr 1fr; 
+      gap: 32px;
       height: 100%;
     }
 
-    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-    .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
-    .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
-
-    /* CONTROLS (Left) */
-    .control-group { margin-bottom: 24px; }
-    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
-    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
-
-    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
-
-    /* RIGHT: VISUAL & INSIGHTS */
-    .visual-grid {
-      display: grid; 
-      grid-template-columns: 1.4fr 1fr; /* Diamond | Insights */
-      gap: 24px;
-      height: 100%;
+    /* --- 1. DIAMOND CARD --- */
+    .diamond-card {
+      position: relative; align-items: center; justify-content: center;
     }
     
-    .diamond-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft); padding: 32px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
+    /* Header Row inside Diamond Card */
+    .diamond-header {
+      position: absolute; top: 32px; left: 32px; right: 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    }
+    .diamond-title { font-size: 1.1rem; font-weight: 900; color: var(--text-dark); font-family: Merriweather, serif; }
+    
+    .score-badge { 
+      background: #eff6ff; color: var(--primary-dark); 
+      padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.9rem;
     }
 
-    .diamond-wrapper { width: 100%; max-width: 420px; aspect-ratio: 1/1; position: relative; }
-    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
-    .diamond-label {
-      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
-      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    .diamond-wrapper { width: 100%; max-width: 480px; aspect-ratio: 1/1; position: relative; margin-top: 40px; }
+    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 15px 30px rgba(0,86,179,0.15)); }
+
+    /* Nodes */
+    .diamond-node {
+      position: absolute; width: 44px; height: 44px; 
+      background: #fff; border: 2px solid #cbd5e1; border-radius: 50%;
+      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 10;
     }
     .top { top: 0; left: 50%; transform: translate(-50%, -50%); }
     .bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
     .left { top: 50%; left: 0; transform: translate(-50%, -50%); }
     .right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
-    /* INSIGHTS COLUMN */
-    .insights-col { display: flex; flex-direction: column; gap: 20px; }
 
-    /* HEALTH TABLE */
-    .health-table { display: grid; gap: 12px; }
+    /* --- 2. INSIGHTS STACK --- */
+    .insights-col {
+      display: flex; flex-direction: column; gap: 24px; height: 100%;
+    }
+
+    /* HEALTH CHECK */
+    .health-card {
+      flex: 0 0 auto; /* Don't shrink */
+    }
+    .health-card h3 { font-size: 1.1rem; margin-bottom: 20px; }
+    
+    .health-table { display: flex; flex-direction: column; gap: 14px; }
     .health-row {
-      display: grid; grid-template-columns: 1fr 70px 110px; 
-      align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line);
+      display: grid;
+      /* Fixed: Name | Score | Badge (Spaced out) */
+      grid-template-columns: 1fr 60px 100px;
+      gap: 24px; /* MORE SPACE HERE */
+      align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--line);
     }
-    .health-row:last-child { border: 0; padding: 0; }
-    .h-name { font-weight: 700; font-size: 0.9rem; color: var(--text-dark); }
-    .h-score { font-weight: 600; font-size: 0.9rem; color: var(--text-body); text-align: right; font-variant-numeric: tabular-nums; }
+    .health-row:last-child { border: none; padding: 0; }
+    
+    .h-name { font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
+    .h-score { font-weight: 600; color: var(--text-body); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
     .status-badge { 
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; 
-      padding: 4px 0; border-radius: 6px; text-align: center; display: block;
+      font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; 
+      padding: 5px 0; border-radius: 6px; text-align: center; display: block;
     }
-    .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
-    .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
-    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
     /* ARCHETYPE & SUMMARY */
     .insight-card {
-      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease;
-      flex-shrink: 0;
+      flex: 1; /* This fills the remaining space */
+      display: flex; flex-direction: column; gap: 24px;
+      min-height: 0; /* Important for flex child */
     }
-    .mode-good { background: var(--good-bg); border-color: var(--good-border); }
-    .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
-    .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
-    .mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
+    
+    /* Top half of card: Pattern */
+    .archetype-section {
+      border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 0;
+    }
+    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--primary); letter-spacing: 0.05em; margin-bottom: 8px; display: block; }
+    .insight-h { font-size: 1.2rem; margin-bottom: 8px; }
+    .insight-p { font-size: 0.95rem; color: var(--text-body); line-height: 1.5; margin: 0; }
 
-    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; opacity: 0.8; }
-    .insight-h { font-size: 1.1rem; font-weight: 800; font-family: Inter, sans-serif; margin-bottom: 8px; color: var(--text-dark); }
-    .insight-p { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
+    /* Bottom half: Summary (No Jumping) */
+    .summary-section {
+      flex: 1; /* Grow to fill card */
+      display: flex; flex-direction: column;
+    }
+    .summary-text { 
+      font-size: 0.95rem; line-height: 1.6; color: var(--text-dark); 
+      /* No scroll needed usually, but just in case */
+      overflow-y: auto; 
+    }
 
-    .summary-box { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; flex-grow: 1; }
-    .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
-    .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
-
-    footer{ flex: 0 0 60px; background:var(--white); border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.9rem; }
-
-    @media (max-width: 1000px) {
-      .dashboard-wrap { grid-template-columns: 1fr; }
-      .visual-grid { grid-template-columns: 1fr; }
-      .visual-card { min-height: 300px; }
+    /* Footer */
+    footer { display: none; } /* On dashboard/app views, footers often distract. Or minimal fixed bottom. */
+    
+    @media (max-width: 1200px) {
+      body, html { height: auto; overflow-y: auto; }
+      .dashboard-wrap { display: flex; flex-direction: column; padding: 24px; gap: 40px; }
+      .content-grid { display: flex; flex-direction: column; height: auto; }
+      .diamond-card { min-height: 450px; }
+      .nav-center { display: none; }
     }
   </style>
 </head>
@@ -180,69 +244,100 @@
 <body>
 
 <header>
-  <div class="nav">
+  <div class="nav-container">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia">
+      <img src="assets/C-logo.png" alt="Caugia Logo">
       <span>CAUGIA CONSULTING</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="resources.html" class="active">Resources</a></li>
-      <li><a href="gtm-assessment.html" class="btn-sm">Start GTM Score</a></li>
-    </ul>
+    
+    <nav>
+      <ul class="nav-center">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html" class="active">Resources</a></li>
+      </ul>
+    </nav>
+
+    <a href="contact.html" class="btn-contact">Contact</a>
   </div>
 </header>
 
 <main class="dashboard-wrap">
   
-  <aside class="panel">
-    <div class="panel-header">
-      <h2>Dimensions</h2>
-      <p>Adjust the sliders to simulate your current GTM state.</p>
+  <aside class="glass-card controls-panel">
+    <div>
+      <div class="panel-header">
+        <h2>Dimensions</h2>
+        <p>Adjust sliders to simulate your current GTM state.</p>
+      </div>
+
+      <div class="sliders-wrapper">
+        <div class="control-group">
+          <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
+          <input type="range" id="input-g" min="0" max="100" value="45">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
+          <input type="range" id="input-r" min="0" max="100" value="48">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
+          <input type="range" id="input-i" min="0" max="100" value="85">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
+          <input type="range" id="input-p" min="0" max="100" value="43">
+        </div>
+      </div>
     </div>
 
-    <div class="control-group">
-      <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
-      <input type="range" id="input-g" min="0" max="100" value="45">
-    </div>
-
-    <div class="control-group">
-      <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
-      <input type="range" id="input-r" min="0" max="100" value="48">
-    </div>
-
-    <div class="control-group">
-      <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
-      <input type="range" id="input-i" min="0" max="100" value="85">
-    </div>
-
-    <div class="control-group">
-      <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
-      <input type="range" id="input-p" min="0" max="100" value="43">
-    </div>
-
-    <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line);">
-      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:12px;">Want to know your real numbers?</p>
-      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Take the Free Assessment</a>
+    <div class="controls-cta">
+      <p style="font-size:0.85rem; color:#64748b; margin-bottom:12px;">Want to know your real numbers?</p>
+      <a href="gtm-assessment.html" class="btn-outline-primary">Take Free Assessment</a>
     </div>
   </aside>
 
-  <div class="visual-grid">
+
+  <div class="content-grid">
     
-    <div class="diamond-card">
+    <div class="glass-card diamond-card">
+      <div class="diamond-header">
+        <span class="diamond-title">The System Shape</span>
+        <div class="score-badge">Avg: <span id="totalScore">55</span></div>
+      </div>
+
       <div class="diamond-wrapper">
+        <svg style="position: absolute; width:0; height:0;" aria-hidden="true">
+          <defs>
+            <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:rgba(0, 86, 179, 0.45)" />
+              <stop offset="100%" style="stop-color:rgba(0, 86, 179, 0.05)" />
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+        </svg>
+
         <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
-        <div class="diamond-label top">G</div>
-        <div class="diamond-label right">I</div>
-        <div class="diamond-label bottom">P</div>
-        <div class="diamond-label left">R</div>
+        
+        <div class="diamond-node top">G</div>
+        <div class="diamond-node right">I</div>
+        <div class="diamond-node bottom">P</div>
+        <div class="diamond-node left">R</div>
       </div>
     </div>
 
     <div class="insights-col">
       
-      <div class="panel" style="padding: 20px;">
-        <h2 style="font-size:1.1rem; margin-bottom:16px;">Health Check</h2>
+      <div class="glass-card health-card">
+        <h3>Health Check</h3>
         <div class="health-table">
           <div class="health-row">
             <span class="h-name">Guidance</span>
@@ -267,31 +362,27 @@
         </div>
       </div>
 
-      <div class="insight-card mode-warn" id="archetypeBox">
-        <span class="label-xs">System Pattern</span>
-        <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
-        <div class="insight-p" id="archetypeBody">
-          Execution capability exists, but the strategic compass is broken. Teams are misaligned.
+      <div class="glass-card insight-card" id="insightCardBg">
+        
+        <div class="archetype-section">
+          <span class="label-xs">Detected Pattern</span>
+          <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
+          <div class="insight-p" id="archetypeBody">Execution capability exists, but the strategic compass is broken. Teams are misaligned.</div>
         </div>
-      </div>
 
-      <div class="summary-box">
-        <div class="summary-title">Executive Summary</div>
-        <div class="summary-text" id="execSummary">
-          Loading summary...
+        <div class="summary-section">
+          <span class="label-xs" style="color:var(--text-body);">Executive Summary</span>
+          <div class="summary-text" id="execSummary">
+            Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough.
+          </div>
         </div>
+
       </div>
 
     </div>
   </div>
 
 </main>
-
-<footer>
-  <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
-  </div>
-</footer>
 
 <script>
   (function() {
@@ -301,166 +392,37 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // THE 30 ARCHETYPES & UNIQUE SUMMARIES
+    // THE 30 ARCHETYPES LOGIC
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
-      
-      const avg = (g+r+i+p)/4;
+      const avg = Math.round((g+r+i+p)/4);
       const lowest = scores[0];
-      const secondLowest = scores[1];
       const highest = scores[3];
 
-      // --- 1. EXTREMES ---
-      if (avg < 35) return { 
-        title: "The Stalled Engine", 
-        body: "Systemic failure across all dimensions. Foundational rebuild required.", 
-        summary: "The revenue engine has stalled. There is no single constraint to fix; the entire system requires a reset. Focus on finding product-market fit with a handful of customers before scaling any commercial functions.",
-        mode: "mode-bad" 
-      };
+      // 1. EXTREMES
+      if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required.", summary: "The revenue engine has stalled. There is no single constraint to fix; the entire system requires a reset. Focus on finding product-market fit with a handful of customers before scaling any commercial functions." };
+      if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others.", summary: "The system is fragile. Without a clear strength to lean on, every new initiative feels heavy. Stop adding new channels or hires. Focus purely on stabilizing one core motion (likely outbound or founder-led) to build a baseline." };
+      if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization.", summary: "Your GTM engine is operating at elite levels. The risk now is complexity and complacency. Focus on marginal gains: optimization of pricing, expansion of adjacent ICPs, and defending your brand category." };
+      if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors.", summary: "You have achieved system balance. There are no critical bottlenecks holding you back. You can now safely pour fuel on the fire (budget/headcount) because the conversion mechanics are sound." };
 
-      if (avg < 45 && highest.v < 60) return { 
-        title: "The Fragile Foundation", 
-        body: "No dimension is strong enough to carry the others. Risk of total deceleration.", 
-        summary: "The system is fragile. Without a clear strength to lean on, every new initiative feels heavy. Stop adding new channels or hires. Focus purely on stabilizing one core motion (likely outbound or founder-led) to build a baseline.",
-        mode: "mode-bad" 
-      };
-
-      if (avg > 85) return { 
-        title: "The Precision Machine", 
-        body: "Elite performance. Focus on incremental optimization and expansion.", 
-        summary: "Your GTM engine is operating at elite levels. The risk now is complexity and complacency. Focus on marginal gains: optimization of pricing, expansion of adjacent ICPs, and defending your brand category.",
-        mode: "mode-good" 
-      };
-
-      if (avg > 75 && lowest.v > 65) return { 
-        title: "The Balanced Engine", 
-        body: "Strong coherence. No major drag factors, allowing for predictable scaling.", 
-        summary: "You have achieved system balance. There are no critical bottlenecks holding you back. You can now safely pour fuel on the fire (budget/headcount) because the conversion mechanics are sound.",
-        mode: "mode-good" 
-      };
-
-      // --- 2. CONSTRAINTS (LOWEST DIMENSION) ---
-
-      // === LOWEST: GUIDANCE ===
+      // 2. CONSTRAINTS
       if (lowest.k === 'g') {
-         if (highest.k === 'i' && highest.v > 65) return { 
-           title: "The Activity Trap", 
-           body: "High execution, low direction. Running fast in the wrong direction.", 
-           summary: "The team is working incredibly hard (High Implementation) but lacks strategic clarity. You are burning cash on activities that don't compound. Stop execution for one week to clarify ICP and positioning.",
-           mode: "mode-warn" 
-         };
-         if (highest.k === 'r' && highest.v > 65) return { 
-           title: "The Bloated Ship", 
-           body: "Heavy on resources, light on strategy. High burn, low focus.", 
-           summary: "You have hired people and bought tools (High Resources) before defining exactly where to go. This creates a high-burn, low-velocity environment. Freeze hiring and audit your tool stack immediately.",
-           mode: "mode-warn" 
-         };
-         if (secondLowest.k === 'p') return { 
-           title: "The Guesswork Strategy", 
-           body: "No direction and no data to prove it. Decisions are anecdotal.", 
-           summary: "You are flying blind. Without Strategy (G) or Data (P), every decision is a guess. You cannot optimize this system yet; you must first instrument it to see what is happening.",
-           mode: "mode-bad" 
-         };
-         return { 
-           title: "The Direction Gap", 
-           body: "Execution exists, but the compass is broken. Teams are misaligned.", 
-           summary: "Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.",
-           mode: "mode-warn" 
-         };
+         if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution, low direction. Running fast in the wrong direction.", summary: "The team is working incredibly hard but lacks strategic clarity. You are burning cash on activities that don't compound. Stop execution for one week to clarify ICP and positioning." };
+         return { title: "The Direction Gap", body: "Execution exists, but strategy is weak. Teams are misaligned.", summary: "Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans." };
       }
-
-      // === LOWEST: RESOURCES ===
       if (lowest.k === 'r') {
-         if (highest.k === 'g' && highest.v > 70) return { 
-           title: "The Visionary Void", 
-           body: "Great strategy, no capacity to execute. A roadmap to nowhere.", 
-           summary: "Leadership has a clear vision (High Guidance), but the team is too small or underfunded to build it. You are at risk of losing morale as targets are missed despite good intentions. Prioritize: do fewer things or secure more budget.",
-           mode: "mode-warn" 
-         };
-         if (highest.k === 'i' && highest.v > 70) return { 
-           title: "The Burnout Engine", 
-           body: "High execution on low resources. The team is over-performing but fragile.", 
-           summary: "Your team is performing heroics. They are executing well (High Implementation) despite a lack of support/tools. This is a burnout risk. Invest in automation or headcount immediately to sustain this pace.",
-           mode: "mode-bad" 
-         };
-         if (secondLowest.k === 'p') return { 
-           title: "The Tooling Debt", 
-           body: "Lack of resources is causing a data blackout. You can't fix what you can't measure.", 
-           summary: "You are underinvested in RevOps and Data. You cannot see why performance is low because you lack the tooling to track it. Your first hire should be RevOps, not Sales.",
-           mode: "mode-bad" 
-         };
-         return { 
-           title: "The Capacity Crunch", 
-           body: "Ambition exceeds bandwidth. The engine is undersized.", 
-           summary: "The math doesn't work. Your revenue goals require more capacity (leads, hours, budget) than you have available. Reset expectations or unlock resources to bridge the gap.",
-           mode: "mode-warn" 
-         };
+         if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy, no capacity to execute.", summary: "Leadership has a clear vision, but the team is too small or underfunded to build it. You are at risk of losing morale as targets are missed despite good intentions. Prioritize: do fewer things or secure more budget." };
+         return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized.", summary: "The math doesn't work. Your revenue goals require more capacity (leads, hours, budget) than you have available. Reset expectations or unlock resources to bridge the gap." };
       }
-
-      // === LOWEST: IMPLEMENTATION ===
       if (lowest.k === 'i') {
-         if (highest.k === 'g' && highest.v > 70) return { 
-           title: "The Ivory Tower", 
-           body: "Strategy is perfect, but reality breaks down. Disconnect between plan and field.", 
-           summary: "There is a gap between the boardroom and the front line. The strategy looks good on paper (High Guidance), but it isn't landing in the market. Leadership needs to get involved in deal execution to see the friction.",
-           mode: "mode-bad" 
-         };
-         if (highest.k === 'p' && highest.v > 60) return { 
-           title: "The Heroic System", 
-           body: "Results happen despite process, not because of it. Individual reliance.", 
-           summary: "You are hitting targets (High Performance) but it's pure hustle. There is no repeatable process (Low Implementation). If your top rep leaves, revenue collapses. Document the playbook now while things are going well.",
-           mode: "mode-warn" 
-         };
-         if (secondLowest.k === 'r') return { 
-           title: "The Process Void", 
-           body: "No process and limited resources. Efficiency is impossible.", 
-           summary: "It is chaotic. You lack the people to do the work and the process to guide them. Don't hire more salespeople yet; hire a GTM manager to build the tracks first.",
-           mode: "mode-bad" 
-         };
-         return { 
-           title: "The Broken Handoff", 
-           body: "Friction in the motion. Leads and data dropping between silos.", 
-           summary: "Your funnel is leaking at the handoffs. Marketing to Sales, or Sales to CS. The individual teams are fine, but the connection is broken. Focus on SLA's and full-funnel definitions.",
-           mode: "mode-warn" 
-         };
+         if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results happen despite process, not because of it.", summary: "You are hitting targets but it's pure hustle. There is no repeatable process. If your top rep leaves, revenue collapses. Document the playbook now while things are going well." };
+         return { title: "The Broken Handoff", body: "Friction in the motion. Leads dropping between silos.", summary: "Your funnel is leaking at the handoffs. The individual teams are fine, but the connection is broken. Focus on SLAs and full-funnel definitions." };
       }
-
-      // === LOWEST: PERFORMANCE ===
       if (lowest.k === 'p') {
-         if (highest.k === 'i' && highest.v > 70) return { 
-           title: "The Leaky Bucket", 
-           body: "High effort, low outcome. Conversion or retention is draining value.", 
-           summary: "You are doing the work (High Implementation) but not getting the reward. Something is broken in conversion or retention. Stop pouring more leads into the top until you fix the leak in the middle.",
-           mode: "mode-bad" 
-         };
-         if (highest.k === 'g' && highest.v > 70) return { 
-           title: "The Blind Optimist", 
-           body: "Strong narrative, weak validation. The market isn't buying the story.", 
-           summary: "You believe in the vision (High Guidance), but the market disagrees. Win rates and retention are too low. It's time to validate product-market fit again. Is the value proposition actually landing?",
-           mode: "mode-warn" 
-         };
-         if (highest.k === 'r' && highest.v > 70) return { 
-           title: "The ROI Drag", 
-           body: "Heavy investment yielding low returns. Inefficient engine.", 
-           summary: "This is an efficiency crisis. You have the budget and people (High Resources), but the output per head is far below benchmark. Review team structure and channel ROI immediately.",
-           mode: "mode-bad" 
-         };
-         return { 
-           title: "The Black Box", 
-           body: "The system runs, but visibility is zero. Unpredictable future.", 
-           summary: "Performance is the constraint because you can't predict it. Revenue comes in spikes. You need to install a forecasting cadence and weekly metric reviews to regain control.",
-           mode: "mode-mid" 
-         };
+         return { title: "The Leaky Bucket", body: "High effort, low outcome. Conversion or retention is draining value.", summary: "You are doing the work but not getting the reward. Something is broken in conversion or retention. Stop pouring more leads into the top until you fix the leak in the middle." };
       }
-
-      // Fallback
-      return { 
-        title: "The Developing Engine", 
-        body: "System shows potential but lacks coherence.", 
-        summary: "Your GTM engine is maturing but still disjointed. Focus on connecting the four pillars: ensure Strategy informs Resources, Resources enable Implementation, and Implementation drives Performance.",
-        mode: "mode-mid" 
-      };
+      return { title: "The Developing Engine", body: "System shows potential but lacks coherence.", summary: "Your GTM engine is maturing but still disjointed. Focus on connecting the four pillars: ensure Strategy informs Resources, Resources enable Implementation, and Implementation drives Performance." };
     }
 
     function drawDiamond(g, r, i, p) {
@@ -472,17 +434,20 @@
         return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
       }
       
-      let grid = "";
-      [30, 60, 90].forEach(v => {
-        const p1 = pt(90, v); const p2 = pt(0, v); const p3 = pt(270, v); const p4 = pt(180, v);
-        grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
-      });
+      // Radar Grid
+      let grid = `
+        <circle cx="${cx}" cy="${cy}" r="${maxR*0.33}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3" />
+        <circle cx="${cx}" cy="${cy}" r="${maxR*0.66}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3" />
+        <circle cx="${cx}" cy="${cy}" r="${maxR}" fill="none" stroke="#e2e8f0" stroke-width="1" opacity="0.6" />
+        <line x1="${cx}" y1="${cy-maxR}" x2="${cx}" y2="${cy+maxR}" stroke="#e2e8f0" stroke-width="1" />
+        <line x1="${cx-maxR}" y1="${cy}" x2="${cx+maxR}" y2="${cy}" stroke="#e2e8f0" stroke-width="1" />
+      `;
 
+      // Sexy Shape
       const G = pt(90, g); const I = pt(0, i); const P = pt(270, p); const R = pt(180, r);
-      const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
-      const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`).join("");
-      
-      svg.innerHTML = grid + shape + dots;
+      const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="url(#diamondGrad)" stroke="#0056b3" stroke-width="3" stroke-linejoin="round" />`;
+
+      svg.innerHTML = grid + shape;
     }
 
     function update() {
@@ -495,23 +460,22 @@
       document.getElementById("val-r").textContent = r;
       document.getElementById("val-i").textContent = i;
       document.getElementById("val-p").textContent = p;
+      
+      // Total Score
+      document.getElementById("totalScore").textContent = Math.round((g+r+i+p)/4);
 
       function setHealth(key, val) {
         const s = getStatus(val);
-        const b = document.getElementById("badge-"+key);
-        const v = document.getElementById("score-"+key);
-        b.className = "status-badge " + s.class;
-        b.textContent = s.label;
-        v.textContent = val + "/100";
+        document.getElementById("badge-"+key).className = "status-badge " + s.class;
+        document.getElementById("badge-"+key).textContent = s.label;
+        document.getElementById("score-"+key).textContent = val + "/100";
       }
       setHealth("g", g); setHealth("r", r); setHealth("i", i); setHealth("p", p);
 
       const arch = getArchetype(g, r, i, p);
-      const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      document.getElementById("execSummary").textContent = arch.summary; // Unique Summary!
-      box.className = "insight-card " + arch.mode;
+      document.getElementById("execSummary").textContent = arch.summary;
 
       drawDiamond(g, r, i, p);
     }
