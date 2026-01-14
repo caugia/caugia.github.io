@@ -17,17 +17,17 @@
     /* --- CORE STYLES (V3 SYSTEM) --- */
     :root{
       --primary:#0056b3;
-      --primary-light:#e0f2fe; /* New playful tint */
+      --primary-light:#e0f2fe;
       --primary-dark:#004494;
       --text-dark:#0f172a;
       --text-body:#475569;
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
-      --radius-md:16px; /* Slightly rounder for playful feel */
+      --radius-md:16px;
       --radius-lg:24px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.03);
-      --shadow-hover:0 20px 40px -5px rgba(0,50,150,0.1); /* Blue-tinted shadow */
+      --shadow-hover:0 20px 40px -5px rgba(0,50,150,0.1);
       --max:1200px;
     }
 
@@ -122,7 +122,6 @@
       overflow: hidden;
     }
     
-    /* Playful Hover Effect */
     .resource-card:hover { 
       transform: translateY(-8px); 
       box-shadow: var(--shadow-hover); 
@@ -148,19 +147,26 @@
     .resource-card:hover .card-link { color: var(--primary); gap: 12px; }
     .resource-card:hover .card-link span { transform: translateX(2px); }
 
+    /* COMING SOON VARIANT */
+    .card-locked {
+      background: #f8fafc; border-style: dashed; border-color: #cbd5e1;
+      pointer-events: none; opacity: 1;
+    }
+    .card-locked:hover { transform: none; box-shadow: none; border-color: #cbd5e1; }
+    
+    .tag-coming { background: #e2e8f0; color: #64748b; border: 1px solid #cbd5e1; }
+    .muted-text { color: #94a3b8 !important; }
+    
+    .locked-footer {
+      font-size: 0.85rem; font-weight: 700; color: #94a3b8;
+      display: flex; align-items: center; gap: 8px; margin-top: auto;
+    }
+
     /* Divider */
     .divider { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); margin: 0 0 80px 0; }
 
     /* Dark CTA Section */
     .section-dark{ background:#0f172a; color:var(--white); text-align: center; padding: 100px 0; position: relative; overflow: hidden; }
-    
-    /* Subtle background pattern for playfulness */
-    .section-dark::before {
-      content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    
     .section-dark h2{ color:var(--white); margin-bottom: 24px; position: relative; z-index: 1; }
     .section-dark p{ color:#94a3b8; max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem; position: relative; z-index: 1; }
     .section-dark .btn { position: relative; z-index: 1; }
@@ -230,7 +236,7 @@
             <span class="resource-tag">Diagnostic</span>
             <h3>The GTM Score</h3>
             <p>A concise maturity snapshot across twelve pillars. Clear, structured and ready in 5 minutes.</p>
-            <a href="gtm-assessment.html" class="card-link">Start Assessment <span>→</span></a>
+            <a href="gtm-assessment.html" class="card-link">Start your GTM Score <span>→</span></a>
           </article>
 
           <article class="resource-card">
@@ -238,6 +244,17 @@
             <h3>The GRIP Diamond</h3>
             <p>Visualise your system stability. Adjust the four dimensions to see how balance affects growth.</p>
             <a href="grip-diamond.html" class="card-link">Open Diamond <span>→</span></a>
+          </article>
+
+          <article class="resource-card card-locked">
+            <span class="resource-tag tag-coming">Coming Q3</span>
+            <h3 class="muted-text">SaaS GTM Benchmarks</h3>
+            <p class="muted-text">
+              Compare your conversion rates, sales velocity and expansion metrics against 500+ B2B SaaS peers aligned to your stage.
+            </p>
+            <div class="locked-footer">
+              <span>🔒 Available Soon</span>
+            </div>
           </article>
         </div>
       </section>
@@ -261,6 +278,17 @@
             <h3>The 12 GTM Modules</h3>
             <p>Structured fix-it packages for specific constraints. From pricing strategy to sales enablement.</p>
             <a href="modules.html" class="card-link">View Modules <span>→</span></a>
+          </article>
+
+          <article class="resource-card card-locked">
+            <span class="resource-tag tag-coming">Coming Q4</span>
+            <h3 class="muted-text">GTM Scenario Simulator</h3>
+            <p class="muted-text">
+              Model the impact of headcount, pricing, and conversion changes on your 24-month revenue trajectory.
+            </p>
+            <div class="locked-footer">
+              <span>🔒 In Development</span>
+            </div>
           </article>
         </div>
       </section>
