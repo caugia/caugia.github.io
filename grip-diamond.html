@@ -35,17 +35,15 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: auto; }
     
-    /* --- SAAS LOCK (No Window Scroll) --- */
-    html, body {
-      height: 100vh; width: 100vw;
-      margin: 0; padding: 0;
-      overflow: hidden; 
-      background: var(--bg);
-      font-family: Inter, sans-serif;
-      color: var(--text-dark);
-      display: flex; flex-direction: column;
-      -webkit-font-smoothing: antialiased;
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      display: flex; flex-direction: column; min-height: 100vh;
     }
 
     h1,h2,h3,h4{
@@ -57,12 +55,11 @@
 
     /* HEADER */
     header{
-      flex: 0 0 70px; 
+      position:sticky; top:0; z-index:100;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
-      z-index: 100; width: 100%;
     }
-    .nav{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
     .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
     .brand img{ width:28px; height:28px; display:block; }
     .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
@@ -71,45 +68,44 @@
     .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
     .btn-sm:hover{ background:var(--primary-dark); }
 
-    /* MAIN DASHBOARD */
+    /* DASHBOARD LAYOUT */
     .dashboard-wrap {
-      flex: 1; 
-      width: 100%; max-width: var(--max);
-      margin: 0 auto; padding: 24px;
+      flex: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 24px;
       display: grid;
-      grid-template-columns: 320px 1fr; 
-      gap: 24px;
-      overflow: hidden; 
+      grid-template-columns: 340px 1fr;
+      gap: 32px;
+      align-items: start;
     }
 
     /* PANELS */
-    .panel-col {
-      display: flex; flex-direction: column; gap: 24px;
-      height: 100%; overflow-y: auto; 
-      padding-right: 8px; 
+    .panel {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      height: 100%;
     }
-    .panel-col::-webkit-scrollbar { width: 6px; }
-    .panel-col::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .panel-col::-webkit-scrollbar-track { background: transparent; }
 
-    .tool-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft); padding: 24px; flex-shrink: 0;
-    }
-    .tool-card h2 { font-size: 1.1rem; margin-bottom: 8px; }
-    .tool-card p { font-size: 0.85rem; color: var(--text-body); margin: 0 0 20px 0; }
+    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
+    .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
 
-    /* CONTROLS */
+    /* CONTROLS (Left) */
     .control-group { margin-bottom: 24px; }
-    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-dark); }
+    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
-    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; background:var(--primary); border-radius:50%; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
 
-    /* RIGHT GRID */
+    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+
+    /* RIGHT: VISUAL & INSIGHTS */
     .visual-grid {
       display: grid; 
-      grid-template-columns: 1.4fr 1fr; 
+      grid-template-columns: 1.4fr 1fr; /* Diamond | Insights */
       gap: 24px;
       height: 100%;
     }
@@ -134,12 +130,7 @@
     .right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
     /* INSIGHTS COLUMN */
-    .insights-wrapper {
-      display: flex; flex-direction: column; gap: 24px;
-      height: 100%; overflow-y: auto; padding-right: 4px;
-    }
-    .insights-wrapper::-webkit-scrollbar { width: 4px; }
-    .insights-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .insights-col { display: flex; flex-direction: column; gap: 20px; }
 
     /* HEALTH TABLE */
     .health-table { display: grid; gap: 12px; }
@@ -160,7 +151,8 @@
 
     /* ARCHETYPE & SUMMARY */
     .insight-card {
-      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease; flex-shrink: 0;
+      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease;
+      flex-shrink: 0;
     }
     .mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
@@ -177,13 +169,10 @@
 
     footer{ flex: 0 0 60px; background:var(--white); border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.9rem; }
 
-    @media (max-width: 1100px) {
-      body, html { height: auto; overflow-y: auto; }
-      .dashboard-wrap { display: flex; flex-direction: column; height: auto; overflow: visible; padding: 24px; gap: 40px; }
-      .visual-grid { grid-template-columns: 1fr; height: auto; }
-      .diamond-card { min-height: 350px; }
-      .nav-links { display: none; }
-      .menu-toggle { display: inline-flex; }
+    @media (max-width: 1000px) {
+      .dashboard-wrap { grid-template-columns: 1fr; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .visual-card { min-height: 300px; }
     }
   </style>
 </head>
@@ -206,37 +195,35 @@
 
 <main class="dashboard-wrap">
   
-  <aside class="panel-col">
-    <div class="tool-card">
-      <div class="panel-header">
-        <h2>Dimensions</h2>
-        <p>Adjust sliders to simulate your current GTM state.</p>
-      </div>
-
-      <div class="control-group">
-        <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
-        <input type="range" id="input-g" min="0" max="100" value="45">
-      </div>
-
-      <div class="control-group">
-        <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
-        <input type="range" id="input-r" min="0" max="100" value="48">
-      </div>
-
-      <div class="control-group">
-        <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
-        <input type="range" id="input-i" min="0" max="100" value="85">
-      </div>
-
-      <div class="control-group">
-        <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
-        <input type="range" id="input-p" min="0" max="100" value="43">
-      </div>
+  <aside class="panel">
+    <div class="panel-header">
+      <h2>Dimensions</h2>
+      <p>Adjust the sliders to simulate your current GTM state.</p>
     </div>
 
-    <div class="tool-card" style="margin-top:auto;">
-      <p style="font-size:0.85rem; margin-bottom:12px;">Want real data?</p>
-      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Start Free Assessment</a>
+    <div class="control-group">
+      <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
+      <input type="range" id="input-g" min="0" max="100" value="45">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
+      <input type="range" id="input-r" min="0" max="100" value="48">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
+      <input type="range" id="input-i" min="0" max="100" value="85">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
+      <input type="range" id="input-p" min="0" max="100" value="43">
+    </div>
+
+    <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line);">
+      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:12px;">Want to know your real numbers?</p>
+      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Take the Free Assessment</a>
     </div>
   </aside>
 
@@ -252,9 +239,9 @@
       </div>
     </div>
 
-    <div class="insights-wrapper">
+    <div class="insights-col">
       
-      <div class="tool-card">
+      <div class="panel" style="padding: 20px;">
         <h2 style="font-size:1.1rem; margin-bottom:16px;">Health Check</h2>
         <div class="health-table">
           <div class="health-row">
@@ -314,7 +301,7 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // --- 30 ARCHETYPES & UNIQUE SUMMARIES ---
+    // THE 30 ARCHETYPES & UNIQUE SUMMARIES
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
@@ -324,7 +311,7 @@
       const secondLowest = scores[1];
       const highest = scores[3];
 
-      // 1. EXTREMES
+      // --- 1. EXTREMES ---
       if (avg < 35) return { 
         title: "The Stalled Engine", 
         body: "Systemic failure across all dimensions. Foundational rebuild required.", 
@@ -353,9 +340,9 @@
         mode: "mode-good" 
       };
 
-      // 2. CONSTRAINTS (LOWEST DIMENSION)
+      // --- 2. CONSTRAINTS (LOWEST DIMENSION) ---
 
-      // === LOWEST: GUIDANCE (Strategy Gap) ===
+      // === LOWEST: GUIDANCE ===
       if (lowest.k === 'g') {
          if (highest.k === 'i' && highest.v > 65) return { 
            title: "The Activity Trap", 
@@ -383,7 +370,7 @@
          };
       }
 
-      // === LOWEST: RESOURCES (Capacity Gap) ===
+      // === LOWEST: RESOURCES ===
       if (lowest.k === 'r') {
          if (highest.k === 'g' && highest.v > 70) return { 
            title: "The Visionary Void", 
@@ -411,7 +398,7 @@
          };
       }
 
-      // === LOWEST: IMPLEMENTATION (Execution Gap) ===
+      // === LOWEST: IMPLEMENTATION ===
       if (lowest.k === 'i') {
          if (highest.k === 'g' && highest.v > 70) return { 
            title: "The Ivory Tower", 
@@ -439,7 +426,7 @@
          };
       }
 
-      // === LOWEST: PERFORMANCE (Outcome Gap) ===
+      // === LOWEST: PERFORMANCE ===
       if (lowest.k === 'p') {
          if (highest.k === 'i' && highest.v > 70) return { 
            title: "The Leaky Bucket", 
@@ -523,7 +510,7 @@
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      document.getElementById("execSummary").textContent = arch.summary;
+      document.getElementById("execSummary").textContent = arch.summary; // Unique Summary!
       box.className = "insight-card " + arch.mode;
 
       drawDiamond(g, r, i, p);
