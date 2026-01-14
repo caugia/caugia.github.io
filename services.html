@@ -118,9 +118,11 @@
     .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; letter-spacing:-0.03em; }
     .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
-    /* SERVICES GRID - ASCENSION MODEL */
+    /* SERVICES GRID - ALIGNMENT FIXES */
     .services-grid{
-      display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; align-items: start;
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
+      /* Ensures cells stretch to full height */
+      align-items: stretch; 
     }
     
     .service-card{
@@ -132,7 +134,7 @@
       display:flex; flex-direction:column;
       transition:transform 0.2s, box-shadow 0.2s;
       position: relative;
-      height: 100%;
+      height: 100%; /* Fill grid cell */
     }
     .service-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
 
@@ -154,7 +156,14 @@
     .pill-advisory{ background:#fdf4ff; color:#86198f; border:1px solid #fae8ff; }
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; letter-spacing: -0.01em; }
-    .service-desc{ font-size:0.95rem; color:var(--text-body); margin-bottom:24px; flex-grow:1; line-height: 1.5; }
+    
+    /* ALIGNMENT MAGIC: flex-grow pushes bottom content down evenly */
+    .service-desc{ 
+      font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
+      flex-grow: 1; /* This ensures height equality across cards */
+      min-height: 80px; /* Added breathing room based on feedback */
+    }
+    
     .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; letter-spacing: -0.02em; }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; margin-left: 4px; }
     
@@ -162,7 +171,7 @@
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
 
-    /* MARKETPLACE UPGRADE (THE MODULE GRID) */
+    /* MARKETPLACE UPGRADE (Engineered Icons) */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -181,10 +190,8 @@
     .mp-title-block h3 { margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-dark); }
     .mp-title-block p { margin: 0; font-size: 0.9rem; color: #64748b; margin-top: 4px; }
 
-    /* The Module Grid Logic */
-    .module-grid {
-      display: grid; grid-template-columns: 1fr; gap: 16px;
-    }
+    /* Module Grid Logic */
+    .module-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .module-item {
       display: flex; align-items: center; gap: 16px; padding: 16px;
       border: 1px solid #f1f5f9; border-radius: 8px; background: #fff;
@@ -193,7 +200,11 @@
     .module-item:hover {
       border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); transform: translateX(4px);
     }
-    .module-icon { font-size: 1.2rem; color: var(--primary); opacity: 0.8; }
+    
+    /* SVG Icon Styling */
+    .module-icon { 
+      width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0;
+    }
     .module-content strong { display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 2px; }
     .module-content span { font-size: 0.85rem; color: #64748b; line-height: 1.3; display: block; }
 
@@ -323,7 +334,7 @@
         <div style="text-align:center; max-width:700px; margin:0 auto 60px;">
           <h2>The Intelligence Marketplace</h2>
           <p style="color:var(--text-body); font-size:1.1rem;">
-            Targeted modules to fix specific leaks. Available as add-ons to the Intelligence Report or standalone deep-dives.
+            Targeted modules to fix specific leaks. Available as add-ons to the Intelligence Report.
           </p>
         </div>
 
@@ -339,15 +350,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <div class="module-icon">❖</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                   <div class="module-content"><strong>Market Clarity</strong><span>Segments, buyer reality & TAM.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">✦</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
                   <div class="module-content"><strong>Positioning</strong><span>Narrative that aligns teams.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">🎯</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                   <div class="module-content"><strong>ICP Definition</strong><span>Practical targeting profiles.</span></div>
                 </div>
               </div>
@@ -363,15 +374,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <div class="module-icon">⚙️</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                   <div class="module-content"><strong>Product Readiness</strong><span>Fit between offer & motion.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">💶</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                   <div class="module-content"><strong>Pricing Model</strong><span>Aligned with value delivery.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">👥</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                   <div class="module-content"><strong>GTM Talent</strong><span>Roles aligned to stage.</span></div>
                 </div>
               </div>
@@ -389,15 +400,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <div class="module-icon">🔥</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                   <div class="module-content"><strong>Demand Engine</strong><span>From signal to qualified opp.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">⚡</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                   <div class="module-content"><strong>Sales Ops</strong><span>Deal progression rhythm.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">🤝</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                   <div class="module-content"><strong>Customer Ops</strong><span>Value realisation & expansion.</span></div>
                 </div>
               </div>
@@ -413,15 +424,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <div class="module-icon">📊</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                   <div class="module-content"><strong>Metrics Architecture</strong><span>Signals leadership can trust.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">🔮</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"></path><path d="M17 6h6v6"></path></svg>
                   <div class="module-content"><strong>Forecasting</strong><span>Aligned with goals & runway.</span></div>
                 </div>
                 <div class="module-item">
-                  <div class="module-icon">⚖️</div>
+                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                   <div class="module-content"><strong>Governance</strong><span>Calm decision forums.</span></div>
                 </div>
               </div>
