@@ -295,7 +295,7 @@
       <div class="summary-box">
         <div class="summary-title">Executive Summary</div>
         <div class="summary-text" id="execSummary">
-          Guidance is the primary constraint. Teams work hard but the story and ICP are not yet sharp enough.
+          Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.
         </div>
       </div>
 
@@ -312,43 +312,170 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
+    // THE 30 ARCHETYPES & SUMMARIES
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
+      
       const avg = (g+r+i+p)/4;
       const lowest = scores[0];
+      const secondLowest = scores[1];
       const highest = scores[3];
 
-      if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required.", mode: "mode-bad" };
-      if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization.", mode: "mode-good" };
+      // --- 1. EXTREMES (SYSTEMIC STATE) ---
       
+      if (avg < 35) return { 
+        title: "The Stalled Engine", 
+        body: "Systemic failure across all dimensions. Foundational rebuild required.", 
+        summary: "The revenue engine has stalled. There is no single constraint to fix; the entire system requires a reset. Focus on finding product-market fit with a handful of customers before scaling any commercial functions.",
+        mode: "mode-bad" 
+      };
+
+      if (avg < 45 && highest.v < 60) return { 
+        title: "The Fragile Foundation", 
+        body: "No dimension is strong enough to carry the others. Risk of total deceleration.", 
+        summary: "The system is fragile. Without a clear strength to lean on, every new initiative feels heavy. Stop adding new channels or hires. Focus purely on stabilizing one core motion (likely outbound or founder-led) to build a baseline.",
+        mode: "mode-bad" 
+      };
+
+      if (avg > 85) return { 
+        title: "The Precision Machine", 
+        body: "Elite performance. Focus on incremental optimization and expansion.", 
+        summary: "Your GTM engine is operating at elite levels. The risk now is complexity and complacency. Focus on marginal gains: optimization of pricing, expansion of adjacent ICPs, and defending your brand category.",
+        mode: "mode-good" 
+      };
+
+      if (avg > 75 && lowest.v > 65) return { 
+        title: "The Balanced Engine", 
+        body: "Strong coherence. No major drag factors, allowing for predictable scaling.", 
+        summary: "You have achieved system balance. There are no critical bottlenecks holding you back. You can now safely pour fuel on the fire (budget/headcount) because the conversion mechanics are sound.",
+        mode: "mode-good" 
+      };
+
+      // --- 2. CONSTRAINT LOGIC (Based on Lowest) ---
+
+      // === LOWEST: GUIDANCE (Strategy Gap) ===
       if (lowest.k === 'g') {
-         if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution, low direction. Teams are running fast in the wrong direction.", mode: "mode-warn" };
-         return { title: "The Direction Gap", body: "Execution exists, but strategy is weak. Teams are misaligned.", mode: "mode-warn" };
+         if (highest.k === 'i' && highest.v > 65) return { 
+           title: "The Activity Trap", 
+           body: "High execution, low direction. Running fast in the wrong direction.", 
+           summary: "The team is working incredibly hard (High Implementation) but lacks strategic clarity. You are burning cash on activities that don't compound. Stop execution for one week to clarify ICP and positioning.",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'r' && highest.v > 65) return { 
+           title: "The Bloated Ship", 
+           body: "Heavy on resources, light on strategy. High burn, low focus.", 
+           summary: "You have hired people and bought tools (High Resources) before defining exactly where to go. This creates a high-burn, low-velocity environment. Freeze hiring and audit your tool stack immediately.",
+           mode: "mode-warn" 
+         };
+         if (secondLowest.k === 'p') return { 
+           title: "The Guesswork Strategy", 
+           body: "No direction and no data to prove it. Decisions are anecdotal.", 
+           summary: "You are flying blind. Without Strategy (G) or Data (P), every decision is a guess. You cannot optimize this system yet; you must first instrument it to see what is happening.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Direction Gap", 
+           body: "Execution exists, but the compass is broken. Teams are misaligned.", 
+           summary: "Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.",
+           mode: "mode-warn" 
+         };
       }
+
+      // === LOWEST: RESOURCES (Capacity Gap) ===
       if (lowest.k === 'r') {
-         if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy, no capacity. A roadmap to nowhere.", mode: "mode-warn" };
-         return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized.", mode: "mode-warn" };
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Visionary Void", 
+           body: "Great strategy, no capacity to execute. A roadmap to nowhere.", 
+           summary: "Leadership has a clear vision (High Guidance), but the team is too small or underfunded to build it. You are at risk of losing morale as targets are missed despite good intentions. Prioritize: do fewer things or secure more budget.",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'i' && highest.v > 70) return { 
+           title: "The Burnout Engine", 
+           body: "High execution on low resources. The team is over-performing but fragile.", 
+           summary: "Your team is performing heroics. They are executing well (High Implementation) despite a lack of support/tools. This is a burnout risk. Invest in automation or headcount immediately to sustain this pace.",
+           mode: "mode-bad" 
+         };
+         if (secondLowest.k === 'p') return { 
+           title: "The Tooling Debt", 
+           body: "Lack of resources is causing a data blackout. You can't fix what you can't measure.", 
+           summary: "You are underinvested in RevOps and Data. You cannot see why performance is low because you lack the tooling to track it. Your first hire should be RevOps, not Sales.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Capacity Crunch", 
+           body: "Ambition exceeds bandwidth. The engine is undersized.", 
+           summary: "The math doesn't work. Your revenue goals require more capacity (leads, hours, budget) than you have available. Reset expectations or unlock resources to bridge the gap.",
+           mode: "mode-warn" 
+         };
       }
+
+      // === LOWEST: IMPLEMENTATION (Execution Gap) ===
       if (lowest.k === 'i') {
-         if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results happen despite process, not because of it.", mode: "mode-warn" };
-         return { title: "The Broken Handoff", body: "Friction in the motion. Leads dropping between silos.", mode: "mode-warn" };
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Ivory Tower", 
+           body: "Strategy is perfect, but reality breaks down. Disconnect between plan and field.", 
+           summary: "There is a gap between the boardroom and the front line. The strategy looks good on paper (High Guidance), but it isn't landing in the market. Leadership needs to get involved in deal execution to see the friction.",
+           mode: "mode-bad" 
+         };
+         if (highest.k === 'p' && highest.v > 60) return { 
+           title: "The Heroic System", 
+           body: "Results happen despite process, not because of it. Individual reliance.", 
+           summary: "You are hitting targets (High Performance) but it's pure hustle. There is no repeatable process (Low Implementation). If your top rep leaves, revenue collapses. Document the playbook now while things are going well.",
+           mode: "mode-warn" 
+         };
+         if (secondLowest.k === 'r') return { 
+           title: "The Process Void", 
+           body: "No process and limited resources. Efficiency is impossible.", 
+           summary: "It is chaotic. You lack the people to do the work and the process to guide them. Don't hire more salespeople yet; hire a GTM manager to build the tracks first.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Broken Handoff", 
+           body: "Friction in the motion. Leads and data dropping between silos.", 
+           summary: "Your funnel is leaking at the handoffs. Marketing to Sales, or Sales to CS. The individual teams are fine, but the connection is broken. Focus on SLA's and full-funnel definitions.",
+           mode: "mode-warn" 
+         };
       }
+
+      // === LOWEST: PERFORMANCE (Outcome Gap) ===
       if (lowest.k === 'p') {
-         return { title: "The Leaky Bucket", body: "High effort, low outcome. Conversion or retention is draining value.", mode: "mode-bad" };
+         if (highest.k === 'i' && highest.v > 70) return { 
+           title: "The Leaky Bucket", 
+           body: "High effort, low outcome. Conversion or retention is draining value.", 
+           summary: "You are doing the work (High Implementation) but not getting the reward. Something is broken in conversion or retention. Stop pouring more leads into the top until you fix the leak in the middle.",
+           mode: "mode-bad" 
+         };
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Blind Optimist", 
+           body: "Strong narrative, weak validation. The market isn't buying the story.", 
+           summary: "You believe in the vision (High Guidance), but the market disagrees. Win rates and retention are too low. It's time to validate product-market fit again. Is the value proposition actually landing?",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'r' && highest.v > 70) return { 
+           title: "The ROI Drag", 
+           body: "Heavy investment yielding low returns. Inefficient engine.", 
+           summary: "This is an efficiency crisis. You have the budget and people (High Resources), but the output per head is far below benchmark. Review team structure and channel ROI immediately.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Black Box", 
+           body: "The system runs, but visibility is zero. Unpredictable future.", 
+           summary: "Performance is the constraint because you can't predict it. Revenue comes in spikes. You need to install a forecasting cadence and weekly metric reviews to regain control.",
+           mode: "mode-mid" 
+         };
       }
-      return { title: "The Developing Engine", body: "System shows potential but lacks coherence.", mode: "mode-mid" };
+
+      // Fallback
+      return { 
+        title: "The Developing Engine", 
+        body: "System shows potential but lacks coherence.", 
+        summary: "Your GTM engine is maturing but still disjointed. Focus on connecting the four pillars: ensure Strategy informs Resources, Resources enable Implementation, and Implementation drives Performance.",
+        mode: "mode-mid" 
+      };
     }
 
-    function generateSummary(g, r, i, p) {
-      const map = { g: "Guidance", r: "Resources", i: "Implementation", p: "Performance" };
-      const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
-      scores.sort((a, b) => a.v - b.v);
-      const constraint = map[scores[0].k];
-      const strength = map[scores[3].k];
-      return `${constraint} is the primary constraint holding the system back. Conversely, ${strength} acts as the relative strength to build upon. Focus on lifting ${constraint} to unlock the next level of growth.`;
-    }
-
+    // 3. DRAW DIAMOND (SVG)
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
@@ -367,9 +494,11 @@
       const G = pt(90, g); const I = pt(0, i); const P = pt(270, p); const R = pt(180, r);
       const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
       const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`).join("");
+      
       svg.innerHTML = grid + shape + dots;
     }
 
+    // 4. MAIN UPDATE LOOP
     function update() {
       const g = parseInt(document.getElementById("input-g").value);
       const r = parseInt(document.getElementById("input-r").value);
@@ -382,9 +511,9 @@
       document.getElementById("val-p").textContent = p;
 
       function setHealth(key, val) {
-        const s = getStatus(val);
         const b = document.getElementById("badge-"+key);
         const v = document.getElementById("score-"+key);
+        const s = getStatus(val);
         b.className = "status-badge " + s.class;
         b.textContent = s.label;
         v.textContent = val + "/100";
@@ -395,9 +524,9 @@
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
+      document.getElementById("execSummary").textContent = arch.summary; // Unique Summary
       box.className = "insight-card " + arch.mode;
 
-      document.getElementById("execSummary").textContent = generateSummary(g, r, i, p);
       drawDiamond(g, r, i, p);
     }
 
