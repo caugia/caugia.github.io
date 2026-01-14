@@ -1,3 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The GRIP Diamond | Caugia Consulting</title>
+  <meta name="description" content="Interactive GTM model. Adjust the four dimensions to see how system balance affects growth." />
+
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* --- V3 CORE SYSTEM --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-lg:20px;
+      --radius-md:12px;
+      --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
+      --max:1400px;
+
+      /* Status Colors */
+      --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
+      --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
+      --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: auto; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:100;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
+    .brand img{ width:28px; height:28px; display:block; }
+    .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.9rem; text-decoration:none; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
+    .btn-sm:hover{ background:var(--primary-dark); }
+
+    /* DASHBOARD LAYOUT */
+    .dashboard-wrap {
+      flex: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* PANELS */
+    .panel {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      height: 100%;
+    }
+
+    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
+    .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
+
+    /* CONTROLS (Left) */
+    .control-group { margin-bottom: 24px; }
+    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
+    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
+
+    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+
+    /* RIGHT: VISUAL & INSIGHTS */
+    .visual-grid {
+      display: grid; 
+      grid-template-columns: 1.4fr 1fr; /* Diamond | Insights */
+      gap: 24px;
+      height: 100%;
+    }
+    
+    .diamond-card {
+      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft); padding: 32px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .diamond-wrapper { width: 100%; max-width: 420px; aspect-ratio: 1/1; position: relative; }
+    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
+    .diamond-label {
+      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
+      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .top { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .left { top: 50%; left: 0; transform: translate(-50%, -50%); }
+    .right { top: 50%; right: 0; transform: translate(50%, -50%); }
+
+    /* INSIGHTS COLUMN */
+    .insights-col { display: flex; flex-direction: column; gap: 20px; }
+
+    /* HEALTH METRICS - GRID FIX (Strict Alignment) */
+    .health-table {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .health-row {
+      display: grid;
+      /* Name (Flex) | Score (Fixed) | Badge (Fixed) */
+      grid-template-columns: 1fr 70px 100px; 
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .health-row:last-child { border-bottom: none; }
+
+    .h-label { font-weight: 700; color: var(--text-dark); font-size: 0.9rem; }
+    .h-score { font-weight: 700; color: var(--text-body); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
+    
+    .status-badge { 
+      padding: 4px 0; /* Center vertically */
+      border-radius: 6px; 
+      font-size: 0.7rem; 
+      font-weight: 800; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em;
+      text-align: center;
+      display: block;
+    }
+    .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
+    .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
+    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
+
+    /* Archetype & Summary */
+    .insight-card {
+      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .mode-good { background: var(--good-bg); border-color: var(--good-border); }
+    .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
+    .mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
+
+    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; opacity: 0.8; }
+    .insight-h { font-size: 1.1rem; font-weight: 800; font-family: Inter, sans-serif; margin-bottom: 8px; color: var(--text-dark); }
+    .insight-p { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
+
+    .summary-box { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; flex-grow: 1; }
+    .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
+
+    /* Mobile */
+    @media (max-width: 1000px) {
+      .dashboard-wrap { grid-template-columns: 1fr; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .visual-card { min-height: 300px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/C-logo.png" alt="Caugia">
+      <span>CAUGIA CONSULTING</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="gtm-assessment.html" class="btn-sm">Start GTM Score</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="dashboard-wrap">
+  
+  <aside class="panel">
+    <div class="panel-header">
+      <h2>Dimensions</h2>
+      <p>Adjust the sliders to simulate your current GTM state.</p>
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Guidance</span><span class="val" id="val-g">45</span></div>
+      <input type="range" id="input-g" min="0" max="100" value="45">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Resources</span><span class="val" id="val-r">48</span></div>
+      <input type="range" id="input-r" min="0" max="100" value="48">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Implementation</span><span class="val" id="val-i">85</span></div>
+      <input type="range" id="input-i" min="0" max="100" value="85">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"><span>Performance</span><span class="val" id="val-p">43</span></div>
+      <input type="range" id="input-p" min="0" max="100" value="43">
+    </div>
+
+    <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line);">
+      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:12px;">Want to know your real numbers?</p>
+      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Take the Free Assessment</a>
+    </div>
+  </aside>
+
+  <div class="visual-grid">
+    
+    <div class="diamond-card">
+      <div class="diamond-wrapper">
+        <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
+        <div class="diamond-label top">G</div>
+        <div class="diamond-label right">I</div>
+        <div class="diamond-label bottom">P</div>
+        <div class="diamond-label left">R</div>
+      </div>
+    </div>
+
+    <div class="insights-col">
+      
+      <div class="panel" style="padding: 20px;">
+        <h2 style="font-size:1.1rem; margin-bottom:16px;">Health Check</h2>
+        <div class="health-table">
+          <div class="health-row">
+            <span class="h-label">Guidance</span>
+            <span class="h-score" id="score-g">45/100</span>
+            <span class="status-badge badge-bad" id="badge-g">CRITICAL</span>
+          </div>
+          <div class="health-row">
+            <span class="h-label">Resources</span>
+            <span class="h-score" id="score-r">48/100</span>
+            <span class="status-badge badge-bad" id="badge-r">CRITICAL</span>
+          </div>
+          <div class="health-row">
+            <span class="h-label">Implementation</span>
+            <span class="h-score" id="score-i">85/100</span>
+            <span class="status-badge badge-good" id="badge-i">STRONG</span>
+          </div>
+          <div class="health-row">
+            <span class="h-label">Performance</span>
+            <span class="h-score" id="score-p">43/100</span>
+            <span class="status-badge badge-bad" id="badge-p">CRITICAL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card mode-warn" id="archetypeBox">
+        <span class="label-xs">System Pattern</span>
+        <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
+        <div class="insight-p" id="archetypeBody">
+          Execution capability exists, but the strategic compass is broken. Teams are misaligned.
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-title">Executive Summary</div>
+        <div class="summary-text" id="execSummary">
+          Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
 <script>
   (function() {
     function getStatus(val) {
@@ -218,7 +524,7 @@
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      document.getElementById("execSummary").textContent = arch.summary; // Use the unique summary!
+      document.getElementById("execSummary").textContent = arch.summary; // Unique Summary
       box.className = "insight-card " + arch.mode;
 
       drawDiamond(g, r, i, p);
@@ -231,3 +537,6 @@
     update(); // Init
   })();
 </script>
+
+</body>
+</html>
