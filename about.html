@@ -106,17 +106,23 @@
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
     .mission-content p { font-size: 1.05rem; }
     
-    /* THE GRIP RASTER VISUAL */
-    .raster-visual {
+    /* THE DIAMOND VISUAL CONTAINER */
+    .diamond-visual {
       background: #f8fafc;
-      border-radius: 24px; height: 360px; border: 1px solid var(--line);
+      border-radius: 24px; height: 380px; border: 1px solid var(--line);
       display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
     }
-    /* Simple, clean grid SVG */
-    .raster-svg { width: 180px; height: 180px; }
-    .raster-rect { fill: none; stroke: var(--primary); stroke-width: 2.5; rx: 8; }
-    .raster-line { stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; }
-    .raster-dot { fill: var(--primary); }
+    
+    /* SVG Styles for the Diamond */
+    .grip-diamond-svg { width: 220px; height: 220px; }
+    .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1.5; opacity: 0.15; }
+    .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
+    .grip-text {
+      fill: var(--primary); font-family: 'Inter', sans-serif; font-weight: 900; font-size: 32px;
+      text-anchor: middle; dominant-baseline: middle;
+    }
+    .grip-center-icon { fill: var(--primary); }
 
 
     /* --- GRIP CARDS --- */
@@ -184,7 +190,7 @@
     @media (max-width: 900px){
       .about-hero h1 { font-size: 2.5rem; }
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
-      .raster-visual { height: 240px; }
+      .diamond-visual { height: 280px; }
       .grip-grid { grid-template-columns: 1fr 1fr; }
       .lead-card { grid-template-columns: 1fr; }
       .lead-img-col { height: 300px; }
@@ -248,14 +254,17 @@
           </p>
         </div>
         
-        <div class="raster-visual">
-           <svg class="raster-svg" viewBox="0 0 100 100">
-             <rect class="raster-rect" x="5" y="5" width="90" height="90" rx="12"></rect>
-             <line class="raster-line" x1="50" y1="5" x2="50" y2="95"></line>
-             <line class="raster-line" x1="5" y1="50" x2="95" y2="50"></line>
-             <circle class="raster-dot" cx="5" cy="50" r="2.5"></circle>
-             <circle class="raster-dot" cx="95" cy="50" r="2.5"></circle>
-             <circle class="raster-dot" cx="50" cy="50" r="2.5"></circle>
+        <div class="diamond-visual">
+           <svg class="grip-diamond-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(100,100) rotate(45) translate(-100,-100)">
+                <line class="grip-lines" x1="100" y1="20" x2="100" y2="180" />
+                <line class="grip-lines" x1="20" y1="100" x2="180" y2="100" />
+                <rect class="grip-border" x="20" y="20" width="160" height="160" rx="4" />
+              </g>
+
+              <text class="grip-text" x="100" y="55">G</text> <text class="grip-text" x="145" y="100">R</text> <text class="grip-text" x="100" y="145">P</text> <text class="grip-text" x="55" y="100">I</text> <g transform="translate(88, 88) scale(0.05)">
+                <path class="grip-center-icon" d="M240.1 112.2c10.7-2.7 21.6-4.2 32.9-4.2c72.8 0 131.9 59.1 131.9 131.9s-59.1 131.9-131.9 131.9c-50.5 0-94.5-28.6-117.7-70.2l-126 51.1C72.9 439.6 165.8 496 273 496c141.4 0 256-114.6 256-256S414.4-16 273-16c-15.5 0-30.7 1.5-45.6 4.3L240.1 112.2zM256 192v96H143.4l93.6 123.9L256 435.8V336h112v-96H256l0 0H256z"/>
+              </g>
            </svg>
         </div>
       </div>
