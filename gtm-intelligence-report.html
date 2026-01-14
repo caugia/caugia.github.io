@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>GTM Intelligence Report - The Executive Diagnostic | Caugia Consulting</title>
-  <meta name="description" content="Board-level forensic audit of your revenue engine. 265 data points, AI-assisted analysis, and a 90-day priority roadmap. No consultants, just answers." />
+  <title>GTM Intelligence Report | Caugia Consulting</title>
+  <meta name="description" content="Board-level forensic audit of your revenue engine. 265 data points, AI-assisted analysis, and a 90-day priority roadmap." />
 
   <meta property="og:type" content="product" />
   <meta property="og:url" content="https://caugia.com/gtm-intelligence-report.html" />
   <meta property="og:title" content="GTM Intelligence Report - The Executive Diagnostic" />
-  <meta property="og:description" content="Stop guessing why growth is expensive. Get a forensic audit of your revenue engine." />
   <meta property="og:image" content="https://caugia.com/assets/og-intelligence-report.png" />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
@@ -20,7 +19,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="/auth.js"></script>
-
   <script src="https://js.stripe.com/v3/"></script>
 
   <script type="application/ld+json">
@@ -29,22 +27,19 @@
     "@type": "Product",
     "name": "GTM Intelligence Report",
     "image": "https://caugia.com/assets/og-intelligence-report.png",
-    "description": "A forensic GTM diagnostic for B2B SaaS leadership. 265 questions, analyst-reviewed architecture analysis.",
+    "description": "A forensic GTM diagnostic for B2B SaaS leadership.",
     "brand": { "@type": "Brand", "name": "Caugia Consulting" },
     "offers": {
       "@type": "Offer",
-      "url": "https://caugia.com/gtm-intelligence-report.html",
       "priceCurrency": "EUR",
       "price": "949.00",
-      "availability": "https://schema.org/InStock",
-      "category": "Consulting Services"
-    },
-    "audience": { "@type": "BusinessAudience", "audienceType": "B2B SaaS Founders and CROs" }
+      "availability": "https://schema.org/InStock"
+    }
   }
   </script>
 
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* --- SYSTEM CORE (Synced with Index) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -56,7 +51,7 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
       --max:1200px;
     }
 
@@ -79,10 +74,10 @@
     }
 
     p{ color:var(--text-body); margin-bottom:1.5rem; }
-    p:last-child{ margin-bottom:0; }
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
+    /* LAYOUT CONTAINERS (Strict Alignment) */
     .container{
       max-width:var(--max);
       margin:0 auto;
@@ -94,11 +89,11 @@
     /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 32px; border-radius:999px; font-weight:700; font-size:1rem;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
       border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,86,179,0.2); }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
 
@@ -115,116 +110,129 @@
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover{ color:var(--primary); }
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
-    /* --- LANDING PAGE SPECIFIC --- */
+    /* --- "GOD MODE" HERO SECTION --- */
+    /* This uses a Split Layout for maximum cognitive authority */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      padding-top: 80px;
+      padding-bottom: 80px;
+      align-items: center;
+    }
 
+    /* LEFT: The Pitch */
     .eyebrow {
-      display: block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.85rem; color: var(--primary); font-weight: 800; margin-bottom: 16px;
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
     }
-
-    /* Hero */
-    .lp-hero { text-align: left; max-width: 820px; margin: 0 auto; padding-top: 60px; padding-bottom: 60px; }
-    .lp-hero h1 { font-size: 3rem; line-height: 1.15; margin-bottom: 24px; color: var(--text-dark); }
-    .lp-intro { font-size: 1.2rem; color: var(--text-body); margin-bottom: 24px; line-height: 1.6; }
+    .hero-h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; color: var(--text-dark); letter-spacing: -0.03em; }
+    .hero-lead { font-size: 1.15rem; color: var(--text-body); margin-bottom: 32px; line-height: 1.6; max-width: 540px; }
     
-    /* Updated Credibility Box */
-    .credibility-box {
-      background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px 20px;
-      font-size: 0.95rem; color: #1e3a8a; margin-bottom: 32px; border-radius: 12px; 
-      display: flex; align-items: center; gap: 14px;
+    .pricing-lockup {
+      display: flex; align-items: center; gap: 24px; margin-bottom: 32px;
+      padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      max-width: 500px;
     }
-    .cred-badge {
-      background: var(--primary); color: white; font-weight: 800; padding: 4px 8px; 
-      border-radius: 6px; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+    .price-main { font-size: 1.75rem; font-weight: 900; color: var(--text-dark); letter-spacing: -0.02em; }
+    .price-sub { font-size: 0.85rem; color: #94a3b8; line-height: 1.3; }
+    .price-sub strong { color: #64748b; font-weight: 700; }
+
+    /* RIGHT: The Visual "Engine" (CSS Only) */
+    /* This creates a floating "Report Card" effect */
+    .hero-visual-wrapper { position: relative; }
+    
+    .report-card-ui {
+      background: var(--white);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(-2deg); /* Subtle 3D effect */
+      transition: transform 0.3s ease;
+    }
+    .report-card-ui:hover { transform: perspective(1000px) rotateY(0deg); }
+
+    .ui-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; border-bottom: 2px solid #f1f5f9; padding-bottom: 24px; }
+    .ui-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px; }
+    .ui-big-num { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--text-dark); font-family: Inter, sans-serif; letter-spacing: -0.03em; }
+    .ui-status { display: flex; gap: 8px; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--primary); background: #eff6ff; padding: 6px 12px; border-radius: 20px; }
+    .ui-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,86,179,0.2); }
+
+    .ui-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .ui-stat h4 { font-family: Inter, sans-serif; font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 4px; }
+    .ui-stat div { font-weight: 800; font-size: 1.1rem; color: var(--text-dark); }
+    
+    .ui-bar-wrap { margin-top: 8px; background: #f1f5f9; height: 6px; border-radius: 4px; overflow: hidden; }
+    .ui-bar-fill { height: 100%; background: var(--text-dark); width: 65%; }
+    .ui-bar-fill.warn { background: #f59e0b; width: 42%; }
+
+    .ui-insight { 
+      background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 16px; 
+      font-size: 0.9rem; color: var(--text-body); margin-top: 24px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .ui-icon { color: var(--primary); font-weight: 800; font-size: 1.1rem; line-height: 1; }
+
+    /* FLOATING BADGE */
+    .float-badge {
+      position: absolute; top: -20px; right: -20px;
+      background: var(--text-dark); color: white;
+      padding: 12px 20px; border-radius: 12px;
+      font-weight: 700; font-size: 0.9rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
-    .feature-list { list-style: none; margin: 32px 0; display: grid; gap: 12px; }
-    .feature-list li { padding-left: 28px; position: relative; font-size: 1.05rem; font-weight: 500; color: var(--text-dark); }
-    .feature-list li::before { 
-      content: "→"; position: absolute; left: 0; color: var(--primary); font-weight: 800; 
-    }
-    .feature-list strong { color: var(--primary); font-weight: 800; }
 
-    .meta-grid {
-      display: flex; gap: 40px; margin: 40px 0; padding: 24px 0;
-      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-      flex-wrap: wrap;
-    }
-    .meta-item label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700; display: block; margin-bottom: 4px; }
-    .meta-item span { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); font-family: Inter, sans-serif; }
-    .meta-sub { font-size: 0.8rem; color: #94a3b8; display: block; margin-top: 2px; }
-
-    /* Content Cards */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+    /* --- CONTENT SECTIONS --- */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+    
     .content-card {
       background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
-      padding: 32px; box-shadow: var(--shadow-sm);
+      padding: 40px; box-shadow: var(--shadow-sm); height: 100%;
     }
-    .content-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; margin-bottom: 16px; }
-    .check-list li { margin-bottom: 10px; font-size: 0.95rem; color: var(--text-body); padding-left: 24px; position: relative; }
-    .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 800; }
+    .content-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.25rem; margin-bottom: 20px; }
+    
+    .check-list li { margin-bottom: 12px; font-size: 1rem; color: var(--text-body); padding-left: 28px; position: relative; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 800; top: 1px; }
 
-    /* Concept Cards (CSS Visualizations) */
-    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
-    .screen-card {
-      border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm);
-      background: #fff; transition: transform 0.2s; display: flex; flex-direction: column;
+    /* Concept Visualization (Middle Section) */
+    .concept-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .concept-img { 
+      background: #f1f5f9; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); 
+      display: flex; flex-direction: column;
     }
-    .screen-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-    .screen-visual { padding: 40px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; background: #f8fafc; }
-    .screen-caption { padding: 16px; font-size: 0.9rem; color: var(--text-body); background: #fff; border-top: 1px solid var(--line); font-weight: 500; }
-
-    /* Process Steps */
-    .step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
-    .step-card { text-align: left; }
-    .step-num { 
-      width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; 
-      display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 16px; 
+    .concept-ui { padding: 32px; flex-grow: 1; display: flex; align-items: center; justify-content: center; background: #f8fafc; }
+    .concept-caption { 
+      padding: 16px 20px; background: #fff; font-size: 0.85rem; font-weight: 600; color: #64748b; 
+      border-top: 1px solid var(--line); 
     }
-    .step-card h3 { font-size: 1.05rem; margin-bottom: 8px; font-family: Inter, sans-serif; }
-    .step-card p { font-size: 0.9rem; color: var(--text-body); }
 
-    /* Differentiators */
-    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
-    .diff-card { 
-      background: #fff; border-radius: 14px; border: 1px solid var(--line); padding: 24px; 
-      box-shadow: var(--shadow-sm); 
-    }
-    .diff-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
-    .diff-sub { font-size: 0.8rem; color: #94a3b8; font-style: italic; margin-bottom: 12px; display: block; }
-    .diff-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-    .diff-card p { font-size: 0.9rem; margin: 0; }
-
-    /* FAQ */
+    /* FAQ Details */
     .faq-section { max-width: 800px; margin: 0 auto; }
     details { border-bottom: 1px solid var(--line); padding: 24px 0; }
-    summary { font-weight: 700; font-size: 1.05rem; cursor: pointer; list-style: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
+    summary { font-weight: 700; font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
     summary::-webkit-details-marker { display: none; }
     summary::after { content: "+"; font-weight: 400; font-size: 1.5rem; color: var(--primary); }
     details[open] summary::after { content: "−"; }
-    details p { margin-top: 12px; font-size: 0.95rem; color: var(--text-body); line-height: 1.6; max-width: 90%; }
+    details p { margin-top: 16px; font-size: 1rem; color: var(--text-body); line-height: 1.6; max-width: 90%; }
 
-    /* CTA Section */
-    .cta-box {
-      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-      padding: 60px 24px; text-align: center; margin-top: 80px; box-shadow: var(--shadow-lg);
-    }
-    .cta-box h2 { font-size: 2rem; margin-bottom: 16px; }
-    .cta-box p { font-size: 1.1rem; color: var(--text-body); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
-
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
-
+    /* Sticky Bottom Mobile CTA (Optional but good for conversion) */
     @media (max-width: 900px){
-      .lp-hero h1 { font-size: 2.4rem; }
-      .meta-grid { gap: 24px; }
-      .grid-2, .screen-grid, .step-grid, .diff-grid { grid-template-columns: 1fr; }
+      .hero-split { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
+      .hero-visual-wrapper { display: none; /* Hide visual on mobile to save scroll */ }
+      .hero-h1 { font-size: 2.5rem; }
+      .grid-2, .concept-wrapper { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
+      .pricing-lockup { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
 </head>
@@ -260,62 +268,82 @@
   </header>
 
   <main>
-    <section class="container lp-hero">
-      <span class="eyebrow">The Executive Diagnostic</span>
-      <h1>GTM Intelligence Report</h1>
-      <p class="lp-intro">
-        Stop guessing why growth is expensive. Get a board-level forensic audit of your revenue engine, identifying the exact constraint holding back scale.
-      </p>
-      
-      <div class="credibility-box">
-        <span class="cred-badge">System Origin</span>
-        <span>Calibrated on <strong>€500M+ in cumulative ARR</strong> data across B2B SaaS.</span>
+    <section class="container hero-split">
+      <div class="hero-content">
+        <span class="eyebrow">The Executive Diagnostic</span>
+        <h1 class="hero-h1">Stop guessing why growth is expensive.</h1>
+        <p class="hero-lead">
+          Get a board-level forensic audit of your revenue engine. 
+          265 data points. AI-assisted constraint analysis. One clear roadmap.
+        </p>
+
+        <div class="pricing-lockup">
+          <div class="price-main">€949</div>
+          <div class="price-sub">
+            One-time fee.<br>
+            <strong>Equivalent to €5k+ Advisory.</strong>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <button id="stripeCheckoutBtnTop" class="btn btn-primary" style="padding:16px 36px; font-size:1.05rem;">
+            Begin Diagnostic
+          </button>
+          <a href="assets/sample-report-locked.pdf" target="_blank" class="btn btn-outline" style="display:flex; gap:10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Sample Report
+          </a>
+        </div>
+        
+        <p style="font-size:0.85rem; color:#94a3b8; display:flex; align-items:center; gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Secure Stripe Payment. Invoice generated automatically.
+        </p>
       </div>
 
-      <ul class="feature-list">
-        <li><strong>265 Data Points:</strong> A forensic scan across 12 GTM pillars.</li>
-        <li><strong>Constraint Analysis:</strong> Pinpoints the <em>one</em> bottleneck slowing you down.</li>
-        <li><strong>Archetype Profiling:</strong> See exactly which GTM pattern you fit into.</li>
-        <li><strong>90-Day Roadmap:</strong> Specific, sequenced actions to fix the drag.</li>
-      </ul>
+      <div class="hero-visual-wrapper">
+        <div class="float-badge">System Status: Active</div>
+        <div class="report-card-ui">
+          
+          <div class="ui-header">
+            <div>
+              <span class="ui-label">GTM Health Score</span>
+              <div class="ui-big-num">58<span style="font-size:1.5rem; color:#cbd5e1;">/100</span></div>
+            </div>
+            <div class="ui-status">
+              <div class="ui-dot"></div>
+              Processing
+            </div>
+          </div>
 
-      <div class="meta-grid">
-        <div class="meta-item">
-          <label>Access Fee</label>
-          <span>€949</span>
-          <span class="meta-sub">One-time assessment</span>
-        </div>
-        <div class="meta-item">
-          <label>Diagnostic Depth</label>
-          <span>45-50 Mins</span>
-          <span class="meta-sub">Save & Resume enabled</span>
-        </div>
-        <div class="meta-item">
-          <label>Turnaround</label>
-          <span>5 Days</span>
-          <span class="meta-sub">Analyst reviewed</span>
+          <div class="ui-row">
+            <div class="ui-stat">
+              <h4>Guidance</h4>
+              <div>72%</div>
+              <div class="ui-bar-wrap"><div class="ui-bar-fill"></div></div>
+            </div>
+            <div class="ui-stat">
+              <h4>Implementation</h4>
+              <div>43%</div>
+              <div class="ui-bar-wrap"><div class="ui-bar-fill warn"></div></div>
+            </div>
+          </div>
+
+          <div class="ui-insight">
+            <div class="ui-icon">!</div>
+            <div><strong>Primary Constraint:</strong> Leadership Alignment. Misalignment here is creating downstream drag in sales velocity.</div>
+          </div>
+
         </div>
       </div>
-
-      <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <button id="stripeCheckoutBtnTop" class="btn btn-primary">Begin Diagnostic (€949)</button>
-        <a href="assets/sample-report-locked.pdf" target="_blank" class="btn btn-outline" style="display:flex; gap:8px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-          View Sample Report
-        </a>
-      </div>
-      <p style="font-size:0.85rem; margin-top:16px; color:#94a3b8;">
-        Secure Stripe Payment. Invoice generated automatically for expensing.
-      </p>
     </section>
 
     <section style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="container">
-        <div style="text-align:center; max-width:700px; margin:0 auto 40px;">
-          <h2>What the report reveals</h2>
+        <div style="text-align:center; max-width:700px; margin:0 auto 50px;">
+          <h2>This is not a survey. It is an audit.</h2>
           <p>
-            Combines 265 questions, the GRIP Framework, and AI-assisted analysis into one clear narrative. 
-            It doesn't just measure your GTM system—it explains why it performs the way it does and what to fix first.
+            Most consultants guess. Caugia measures. We combine 265 questions with the GRIP Framework to visualize your system's exact shape.
           </p>
         </div>
 
@@ -328,158 +356,40 @@
               <li>Your GRIP Health Diamond analysis</li>
               <li>GTM Archetype classification (1 of 30)</li>
               <li>Primary constraint and hidden drag identified</li>
-              <li>Compounding risks made visible</li>
             </ul>
           </div>
           <div class="content-card">
             <h3>Priority Roadmap</h3>
             <ul class="check-list">
               <li>Context-driven priority sequence for next 90 days</li>
-              <li>Recommendations based on your motion and constraints</li>
+              <li>Recommendations based on your motion</li>
               <li>High-priority tools aligned to your stage</li>
               <li>Quick wins vs. structural improvements separated</li>
               <li>Implementation guidance with clear ownership</li>
-              <li>Benchmarks vs. companies at your stage</li>
             </ul>
           </div>
         </div>
 
-        <div style="text-align:center; margin-top:40px;">
-          <button id="stripeCheckoutBtnMid" class="btn btn-primary">Get Your Intelligence Report (€949)</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div style="text-align:center; max-width:700px; margin:0 auto 40px;">
-        <h2>Inside the report</h2>
-        <p>
-          These insights translate your 265 answers into a complete GTM diagnostic. 
-          Every section is built on the GRIP Framework and designed to create clarity, alignment, and a structured path forward.
-        </p>
-      </div>
-
-      <div class="screen-grid">
-        <div class="screen-card">
-          <div class="screen-visual">
-            <div style="text-align:center;">
-              <div style="font-size:3.5rem; font-weight:900; color:var(--primary); line-height:1;">63<span style="font-size:1.5rem; color:#cbd5e1;">/100</span></div>
-              <div style="text-transform:uppercase; letter-spacing:0.1em; font-weight:800; color:var(--text-dark); margin-top:8px;">Developing Engine</div>
-              <div style="margin-top:24px; display:inline-flex; gap:8px;">
-                <div style="width:8px; height:8px; background:var(--primary); border-radius:50%;"></div>
-                <div style="width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></div>
-                <div style="width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></div>
+        <div class="concept-wrapper" style="margin-top:40px;">
+          <div class="concept-img">
+            <div class="concept-ui">
+              <div style="width:140px; height:140px; border:2px solid var(--primary); transform:rotate(45deg); display:flex; align-items:center; justify-content:center;">
+                <span style="transform:rotate(-45deg); font-weight:900; color:var(--primary); font-size:1.5rem;">GRIP</span>
               </div>
             </div>
+            <div class="concept-caption">Visualizing the 4 forces of your engine.</div>
           </div>
-          <div class="screen-caption"><strong>System Diagnosis:</strong> Your overall health score and maturity band based on the GRIP framework.</div>
-        </div>
-
-        <div class="screen-card">
-          <div class="screen-visual" style="align-items:flex-start; padding:32px;">
-             <div style="display:flex; gap:10px; margin-bottom:12px; align-items:center;">
-                <span style="background:#fecaca; color:#b91c1c; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:800; letter-spacing:0.05em;">CRITICAL</span>
-                <span style="font-weight:700; font-size:0.95rem; color:var(--text-dark);">Strategy / Execution Gap</span>
-              </div>
-              <div style="width:100%; height:8px; background:#e2e8f0; border-radius:4px; margin-bottom:20px; overflow:hidden;">
-                <div style="width:40%; height:100%; background:#b91c1c;"></div>
-              </div>
-              <p style="font-size:0.9rem; color:var(--text-body); margin:0;">
-                Primary constraint identified in <strong>Leadership Alignment</strong>. Misalignment here is creating downstream drag in sales velocity.
-              </p>
-          </div>
-          <div class="screen-caption"><strong>Constraint Analysis:</strong> We pinpoint exactly where the revenue leak is happening.</div>
-        </div>
-
-        <div class="screen-card">
-           <div class="screen-visual" style="padding:0;">
-             <div style="background:#f8fafc; padding:32px; border-bottom:1px solid var(--line);">
-               <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:#64748b; margin-bottom:4px;">GTM Archetype</div>
-               <div style="font-size:1.25rem; font-weight:900; color:var(--text-dark);">The Foundation Builder</div>
-             </div>
-             <div style="padding:32px;">
-                <div style="display:flex; gap:12px; margin-bottom:12px; align-items:center;">
-                   <div style="width:24px; height:24px; background:#dbeafe; border-radius:4px; color:var(--primary); display:flex; align-items:center; justify-content:center; font-weight:700;">1</div>
-                   <div style="font-size:0.9rem; font-weight:600;">Clarify ICP Definition</div>
-                </div>
-                <div style="display:flex; gap:12px; align-items:center;">
-                   <div style="width:24px; height:24px; background:#f1f5f9; border-radius:4px; color:#64748b; display:flex; align-items:center; justify-content:center; font-weight:700;">2</div>
-                   <div style="font-size:0.9rem; font-weight:600; color:#64748b;">Standardize Handoffs</div>
-                </div>
-             </div>
-           </div>
-           <div class="screen-caption"><strong>Priority Roadmap:</strong> Sequenced actions based on your specific archetype profile.</div>
-        </div>
-        
-         <div class="screen-card">
-          <div class="screen-visual" style="display:flex; align-items:center; justify-content:center;">
-            <div style="width:120px; height:120px; border:2px solid var(--primary); transform:rotate(45deg); display:flex; align-items:center; justify-content:center;">
-               <div style="transform:rotate(-45deg); font-weight:900; font-size:1.2rem; color:var(--primary);">GRIP</div>
+          <div class="concept-img">
+            <div class="concept-ui">
+               <div style="text-align:center;">
+                 <div style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:#94a3b8;">Detected Archetype</div>
+                 <div style="font-size:1.5rem; font-weight:900; color:var(--text-dark);">The Stalled Engine</div>
+               </div>
             </div>
+            <div class="concept-caption">Pattern matching against 30+ GTM archetypes.</div>
           </div>
-          <div class="screen-caption"><strong>GRIP Analysis:</strong> Visualizing the balance between Guidance, Resources, Implementation, and Performance.</div>
         </div>
 
-      </div>
-    </section>
-
-    <section style="background:#f8fafc; border-top:1px solid var(--line);">
-      <div class="container">
-        <h2 style="text-align:center; margin-bottom:40px;">How it works</h2>
-        <p style="text-align:center; max-width:600px; margin:0 auto 40px; color:#475569;">
-          The assessment is designed to be completed in one sitting, but you can save progress and return later. 
-          Your answers feed a structured analysis that combines scoring logic, the GRIP Framework, and AI-assisted insights.
-        </p>
-        
-        <div class="step-grid">
-          <div class="step-card">
-            <div class="step-num">1</div>
-            <h3>Purchase</h3>
-            <p>Secure payment via Stripe. You receive immediate access to the assessment platform and can start within minutes.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">2</div>
-            <h3>Assessment</h3>
-            <p>265 questions across 12 GTM pillars. Takes approximately 45 minutes. Progress is saved automatically.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">3</div>
-            <h3>AI-assisted analysis</h3>
-            <p>We analyze your responses using the GRIP Framework and generate your personalized report with context-aware recommendations.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">4</div>
-            <h3>Delivery</h3>
-            <p>Your complete Intelligence Report is delivered via email within five working days as a structured PDF.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div style="text-align:center; max-width:700px; margin:0 auto 40px;">
-        <h2>Why this diagnostic is different</h2>
-      </div>
-
-      <div class="diff-grid">
-        <div class="diff-card">
-          <span class="diff-label">Context-Aware</span>
-          <span class="diff-sub">Based on your motion</span>
-          <h3>Adapts to your GTM motion</h3>
-          <p>Your GTM motion (PLG, sales-led, hybrid) determines which pillars are critical vs. secondary. Priorities adapt to your reality.</p>
-        </div>
-        <div class="diff-card">
-          <span class="diff-label">Constraint-Based</span>
-          <span class="diff-sub">Based on your constraints</span>
-          <h3>Respects your constraints</h3>
-          <p>Recommendations account for runway, team size, competition, and budget. High-impact moves that fit your constraints.</p>
-        </div>
-        <div class="diff-card">
-          <span class="diff-label">AI-Assisted</span>
-          <span class="diff-sub">Based on system dynamics</span>
-          <h3>GRIP Framework powered</h3>
-          <p>AI-assisted analysis using the GRIP Framework generates tailored insights that connect your scores to real system dynamics.</p>
-        </div>
       </div>
     </section>
 
@@ -489,51 +399,34 @@
       <details>
         <summary>Who is this report NOT for?</summary>
         <p>
-          This diagnostic is <strong>not</strong> for pre-revenue startups who are still searching for their first 10 customers. 
-          It is engineered for companies with <strong>established revenue (€1M - €100M+)</strong> who are feeling the friction of scale. 
-          If you are still experimenting with your product, the <a href="gtm-assessment.html" style="color:var(--primary); text-decoration:underline;">free GTM Score</a> is a better starting point.
+          This diagnostic is <strong>not</strong> for pre-revenue startups searching for their first 10 customers. 
+          It is engineered for companies with <strong>established revenue (€1M - €100M+)</strong> feeling the friction of scale. 
+          If you are still experimenting, start with the <a href="gtm-assessment.html" style="color:var(--primary);">free GTM Score</a>.
         </p>
       </details>
 
       <details>
-        <summary>What is the difference between the GTM Score and the Intelligence Report?</summary>
-        <p>The GTM Score is a free and lightweight diagnostic. It quantifies your GTM system and shows where friction sits. The Intelligence Report is a deeper GRIP analysis. It reveals the constraints behind the score, explains why they exist and prioritises where improvement will have the highest return.</p>
+        <summary>What is the difference between the GTM Score and this Report?</summary>
+        <p>The GTM Score is a pulse check. The Intelligence Report is a deep-dive MRI. It reveals the root causes behind the score, explains the "why," and provides a detailed 90-day execution plan.</p>
       </details>
       <details>
         <summary>How long does the assessment take?</summary>
-        <p>The assessment contains 265 questions and takes approximately 45 minutes to complete. Progress is saved automatically, so you can pause and resume. Most leadership teams complete it in one sitting.</p>
+        <p>Approximately 45-50 minutes. It covers 265 specific data points. You can save your progress and finish later.</p>
       </details>
       <details>
-        <summary>When do I receive my report?</summary>
-        <p>Your complete Intelligence Report is delivered within five working days after you complete the assessment. The report is generated using AI-assisted analysis and reviewed for quality before delivery.</p>
-      </details>
-      <details>
-        <summary>What format is the report delivered in?</summary>
-        <p>The report is delivered as a structured PDF document (typically 40+ pages). It includes your scores, GRIP Diamond analysis, archetype classification, priority roadmap and implementation guidance.</p>
-      </details>
-      <details>
-        <summary>Is this suitable for early-stage companies?</summary>
-        <p>Yes. GRIP adapts to your context and stage. Early-stage companies use the Intelligence Report to create structure and avoid common GTM mistakes. Later-stage companies use it to align teams, remove bottlenecks and scale with confidence.</p>
-      </details>
-      <details>
-        <summary>Does this replace hiring a GTM consultant?</summary>
-        <p>The Intelligence Report delivers diagnostic depth comparable to a traditional GTM audit, but without interviews, meetings or consulting overhead. Most companies use it as a foundation for strategic decisions and find it replaces the need for an audit.</p>
-      </details>
-      <details>
-        <summary>What if I am not satisfied?</summary>
-        <p>We provide fixed-scope work with clearly defined outputs. If a deliverable is incomplete, we fix it. Strategic disagreement is not a basis for a refund, ensuring a professional engagement.</p>
+        <summary>When do I receive the PDF?</summary>
+        <p>Within 5 working days. Every report is reviewed by an analyst to ensure the recommendations match your context perfectly.</p>
       </details>
     </section>
 
-    <section class="container">
+    <section class="container" style="margin-top:40px;">
       <div class="cta-box">
-        <h2>Secure Checkout</h2>
+        <h2>Clarify your revenue engine.</h2>
         <p>
-          Your GTM Intelligence Report is delivered within five working days. 
-          Payment is processed securely via Stripe. No account required.
+          Secure payment via Stripe. No login required.
         </p>
-        <button id="stripeCheckoutBtn" class="btn btn-primary" style="font-size:1.1rem; padding:16px 40px;">
-          Proceed to Secure Payment (€949)
+        <button id="stripeCheckoutBtn" class="btn btn-primary" style="font-size:1.1rem; padding:18px 48px;">
+          Proceed to Checkout (€949)
         </button>
         <p style="font-size:0.85rem; margin-top:16px; color:#94a3b8;">Redirects to Stripe Secure Checkout</p>
       </div>
@@ -573,7 +466,7 @@
       });
     }
 
-    ["stripeCheckoutBtnTop", "stripeCheckoutBtnMid", "stripeCheckoutBtn"].forEach(id => {
+    ["stripeCheckoutBtnTop", "stripeCheckoutBtn"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener("click", startCheckout);
     });
