@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The GRIP Diamond | Caugia Consulting</title>
-  <meta name="description" content="Interactive GTM model. Visualize your system balance and see how the four dimensions affect growth." />
+  <meta name="description" content="Interactive GTM model. Adjust the four dimensions to see how system balance affects growth." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
@@ -14,20 +14,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* ================= CAUGIA CORE V3 ================= */
+    /* --- V3 CORE SYSTEM --- */
     :root{
       --primary:#0056b3;
-      --primary-dark:#003370; /* Darker for hover states */
+      --primary-dark:#004494;
       --text-dark:#0f172a;
       --text-body:#475569;
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
-      
-      --radius-lg:24px; /* Slightly rounder for modern feel */
-      --radius-md:16px;
-      --shadow-soft:0 12px 36px -8px rgba(0,0,0,0.05), 0 4px 12px -4px rgba(0,0,0,0.03);
-      --max:1500px; /* Wider canvas */
+      --radius-lg:20px;
+      --radius-md:12px;
+      --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
+      --max:1400px;
 
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
@@ -35,196 +34,145 @@
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
     }
 
-    /* --- SAAS LOCK: Prevent Global Scroll on Desktop --- */
-    html, body {
-      height: 100vh; width: 100vw;
-      margin: 0; padding: 0;
-      overflow: hidden; /* The "Lock" */
-      background: var(--bg);
-      font-family: Inter, sans-serif;
-      color: var(--text-dark);
-      display: flex; flex-direction: column;
-      -webkit-font-smoothing: antialiased;
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: auto; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      display: flex; flex-direction: column; min-height: 100vh;
     }
 
-    *, *::before, *::after { box-sizing: border-box; }
-
-    h1,h2,h3,h4 {
-      font-family: Merriweather, serif; color: var(--text-dark); font-weight: 900; letter-spacing: -0.02em;
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
     }
 
-    /* ================= HEADER (Index Style) ================= */
-    header {
-      flex: 0 0 80px; /* Fixed height */
-      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(15,23,42,0.05);
-      z-index: 100; width: 100%;
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:100;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav-container {
-      height: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: 0.02em; text-decoration: none; color: var(--text-dark); font-size: 1.05rem; }
-    .brand img { width: 32px; height: 32px; }
+    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
+    .brand img{ width:28px; height:28px; display:block; }
+    .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.9rem; text-decoration:none; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
+    .btn-sm:hover{ background:var(--primary-dark); }
 
-    .nav-links { display: flex; gap: 32px; align-items: center; list-style: none; margin: 0; padding: 0; }
-    .nav-links a { color: var(--text-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: color 0.2s ease; }
-    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-
-    .btn-contact {
-      background: var(--primary-dark); color: var(--white); padding: 12px 28px;
-      border-radius: 99px; font-weight: 700; font-size: 0.95rem;
-      text-decoration: none; transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 51, 112, 0.15);
-    }
-    .btn-contact:hover { background: #002655; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 51, 112, 0.25); }
-
-
-    /* ================= MAIN DASHBOARD LAYOUT ================= */
+    /* DASHBOARD LAYOUT */
     .dashboard-wrap {
-      flex: 1; /* Fills remaining space */
-      width: 100%; max-width: var(--max);
-      margin: 0 auto; padding: 32px;
+      flex: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 24px;
       display: grid;
-      grid-template-columns: 340px 1fr; /* Left Controls | Right Visuals */
+      grid-template-columns: 340px 1fr;
       gap: 32px;
-      overflow: hidden; /* Contains internal scrolls */
+      align-items: start;
     }
 
-    /* --- COMMON CARD STYLES --- */
-    .glass-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      border: 1px solid var(--line); box-shadow: var(--shadow-soft);
-      padding: 32px;
+    /* PANELS */
+    .panel {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      height: 100%;
     }
 
-    /* ================= LEFT PANEL: CONTROLS ================= */
-    .controls-panel {
-      display: flex; flex-direction: column; height: 100%;
-      overflow-y: auto; /* Internal scroll if needed */
-      padding-right: 4px;
-    }
-    /* Subtle Scrollbar */
-    .controls-panel::-webkit-scrollbar { width: 4px; }
-    .controls-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .panel-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
+    .panel-header p { font-size: 0.85rem; color: var(--text-body); margin: 0; }
 
-    .panel-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
-    .panel-header h2 { font-size: 1.4rem; margin-bottom: 8px; }
-    .panel-header p { font-size: 0.9rem; color: var(--text-body); margin: 0; line-height: 1.5; }
+    /* CONTROLS (Left) */
+    .control-group { margin-bottom: 24px; }
+    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-dark); }
+    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
 
-    .control-group { margin-bottom: 32px; }
-    .control-label { display: flex; justify-content: space-between; align-items:center; font-weight: 700; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-dark); }
-    .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); font-size: 1.1rem; }
+    input[type=range]{ width:100%; -webkit-appearance:none; height:6px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:4px solid var(--white); box-shadow:0 2px 6px rgba(0,0,0,0.15); transition: background 0.2s ease; }
 
-    /* Slider Styling */
-    input[type=range]{ width:100%; -webkit-appearance:none; height:8px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:24px; height:24px; background:var(--white); border-radius:50%; border:4px solid var(--primary); box-shadow:0 4px 10px rgba(0,0,0,0.1); transition: transform 0.1s ease; margin-top:-8px; }
-    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
-    input[type=range]::-webkit-slider-runnable-track { height:8px; border-radius:10px; background: linear-gradient(to right, var(--primary) 0%, var(--line) 0%); /* JS updates gradient */ }
-
-
-    /* ================= RIGHT PANEL: VISUALS (THE STABLE GRID) ================= */
+    /* RIGHT: VISUAL & INSIGHTS */
     .visual-grid {
       display: grid; 
-      grid-template-columns: 1.3fr 1fr; /* Diamond Col | Insights Col */
-      gap: 32px;
-      height: 100%; overflow: hidden;
-    }
-
-    /* --- THE ICONIC DIAMOND --- */
-    .diamond-container {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      position: relative; height: 100%;
+      grid-template-columns: 1.4fr 1fr; /* Diamond | Insights */
+      gap: 24px;
+      height: 100%;
     }
     
-    .diamond-header-row {
-      position: absolute; top: 32px; left: 32px; right: 32px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    .diamond-card {
+      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft); padding: 32px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
     }
-    .diamond-title { font-size: 1.1rem; font-weight: 900; color: var(--text-dark); font-family: Merriweather, serif; }
-    .total-score-box { font-weight: 800; color: var(--primary-dark); font-size: 1.1rem; }
-    .total-score-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-body); margin-right: 8px; }
 
-    .diamond-wrapper { 
-      width: 100%; max-width: 480px; aspect-ratio: 1/1; position: relative; margin-top: 40px;
-    }
+    .diamond-wrapper { width: 100%; max-width: 420px; aspect-ratio: 1/1; position: relative; }
     #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
-
-    /* Diamond Nodes (Anchors) */
-    .diamond-node {
-      position: absolute; width: 48px; height: 48px; 
-      background: #fff; border: 3px solid var(--primary); border-radius: 50%;
-      color: var(--primary-dark); font-family: Merriweather, serif; font-weight: 900; font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center; 
-      box-shadow: 0 8px 24px rgba(0, 86, 179, 0.2); z-index: 10;
+    .diamond-label {
+      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
+      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-    .top { top: -4%; left: 50%; transform: translate(-50%, -50%); }
-    .bottom { bottom: -4%; left: 50%; transform: translate(-50%, 50%); }
-    .left { top: 50%; left: -4%; transform: translate(-50%, -50%); }
-    .right { top: 50%; right: -4%; transform: translate(50%, -50%); }
+    .top { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .bottom { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .left { top: 50%; left: 0; transform: translate(-50%, -50%); }
+    .right { top: 50%; right: 0; transform: translate(50%, -50%); }
 
+    /* INSIGHTS COLUMN */
+    .insights-col { display: flex; flex-direction: column; gap: 20px; }
 
-    /* --- INSIGHTS COLUMN (The Stable Stack) --- */
-    .insights-stack {
-      display: flex; flex-direction: column; gap: 24px;
-      height: 100%; /* Occupy full height */
-      overflow-y: auto; padding-right: 4px; /* Internal scroll if really needed on short screens */
-    }
-    .insights-stack::-webkit-scrollbar { width: 4px; }
-
-    /* 1. Health Check (Fixed height content) */
-    .health-card { flex: 0 0 auto; /* Don't shrink or grow */ }
-    .health-table { display: grid; gap: 14px; margin-top: 16px; }
-    
-    /* HEALTH GRID FIX: WIDER COLUMNS */
+    /* HEALTH TABLE */
+    .health-table { display: grid; gap: 12px; }
     .health-row {
-      display: grid; 
-      /* Label (Flex) | Score (Wider fixed) | Badge (Fixed centered) */
-      grid-template-columns: 1fr 85px 110px; 
-      gap: 16px; /* More gap */
-      align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+      display: grid; grid-template-columns: 1fr 70px 110px; 
+      align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line);
     }
     .health-row:last-child { border: 0; padding: 0; }
-
-    .h-label { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; }
-    .h-score { font-weight: 700; color: var(--text-body); font-size: 0.95rem; text-align: right; font-variant-numeric: tabular-nums; }
+    .h-name { font-weight: 700; font-size: 0.9rem; color: var(--text-dark); }
+    .h-score { font-weight: 600; font-size: 0.9rem; color: var(--text-body); text-align: right; font-variant-numeric: tabular-nums; }
     .status-badge { 
       font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; 
-      padding: 6px 0; border-radius: 8px; text-align: center; display: block;
+      padding: 4px 0; border-radius: 6px; text-align: center; display: block;
     }
+    .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
+    .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
+    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
-    /* 2. Archetype (Fixed height content) */
-    .archetype-card { 
-      flex: 0 0 auto; /* Don't shrink or grow */
-      padding: 24px; border: 2px solid transparent; transition: all 0.3s ease; 
+    /* ARCHETYPE & SUMMARY */
+    .insight-card {
+      border-radius: var(--radius-md); padding: 20px; border: 1px solid transparent; transition: all 0.3s ease;
+      flex-shrink: 0;
     }
-    .label-xs { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 8px; opacity: 0.7; }
-    .insight-h { font-size: 1.2rem; font-weight: 900; font-family: Merriweather, serif; margin-bottom: 8px; color: var(--text-dark); }
-    .insight-p { font-size: 0.95rem; color: var(--text-body); line-height: 1.5; margin: 0; }
+    .mode-good { background: var(--good-bg); border-color: var(--good-border); }
+    .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
+    .mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
 
-    /* 3. Summary (The FILLER) */
-    .summary-card {
-      flex: 1 1 auto; /* Grow to fill space, but allow shrinking if absolutely necessary */
-      display: flex; flex-direction: column;
-      min-height: 200px; /* Ensure it never collapses too small */
-    }
-    .summary-title { font-size: 0.95rem; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid var(--line); padding-bottom: 12px; margin-bottom: 16px; display: inline-block; }
-    /* Ensure text doesn't overflow the flex container */
-    .summary-content-wrap { flex: 1; overflow-y: auto; /* Scroll text *inside* the box if needed */ }
-    .summary-text { font-size: 1rem; line-height: 1.7; color: var(--text-body); }
+    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; opacity: 0.8; }
+    .insight-h { font-size: 1.1rem; font-weight: 800; font-family: Inter, sans-serif; margin-bottom: 8px; color: var(--text-dark); }
+    .insight-p { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
 
-    /* --- MOBILE RESPONSIVENESS --- */
-    @media (max-width: 1100px) {
-      html, body { height: auto; overflow-y: auto; } /* Unlock window scroll */
-      .dashboard-wrap { display: flex; flex-direction: column; padding: 24px; gap: 48px; }
-      .controls-panel { height: auto; overflow: visible; }
-      .visual-grid { grid-template-columns: 1fr; height: auto; gap: 48px; }
-      .diamond-container { min-height: 500px; padding: 60px 24px 40px; }
-      .diamond-wrapper { max-width: 400px; margin-top: 20px; }
-      .insights-stack { height: auto; overflow: visible; }
-      .summary-card { min-height: auto; flex: 0 0 auto; } /* Don't need to fill height on mobile */
-      .nav-links { display: none; } /* Simplify header for now */
+    .summary-box { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; flex-grow: 1; }
+    .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
+
+    footer{ flex: 0 0 60px; background:var(--white); border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.9rem; }
+
+    @media (max-width: 1000px) {
+      .dashboard-wrap { grid-template-columns: 1fr; }
+      .visual-grid { grid-template-columns: 1fr; }
+      .visual-card { min-height: 300px; }
     }
   </style>
 </head>
@@ -232,30 +180,25 @@
 <body>
 
 <header>
-  <div class="nav-container">
+  <div class="nav">
     <a href="index.html" class="brand">
-      <img src="assets/C-logo.png" alt="Caugia Logo">
+      <img src="assets/C-logo.png" alt="Caugia">
       <span>CAUGIA CONSULTING</span>
     </a>
-    
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="gtm-assessment.html">GTM Score</a></li>
       <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="gtm-assessment.html" class="btn-sm">Start GTM Score</a></li>
     </ul>
-
-    <a href="contact.html" class="btn-contact">Contact</a>
   </div>
 </header>
 
 <main class="dashboard-wrap">
   
-  <aside class="glass-card controls-panel">
+  <aside class="panel">
     <div class="panel-header">
       <h2>Dimensions</h2>
-      <p>Adjust the sliders to simulate your current GTM state and see the system impact.</p>
+      <p>Adjust the sliders to simulate your current GTM state.</p>
     </div>
 
     <div class="control-group">
@@ -278,73 +221,53 @@
       <input type="range" id="input-p" min="0" max="100" value="43">
     </div>
 
-    <div style="margin-top: auto; padding-top: 32px; border-top: 1px solid var(--line);">
-      <p style="font-weight: 700; color:var(--text-dark); margin-bottom:16px;">Want to know your real numbers?</p>
-      <a href="gtm-assessment.html" style="display:block; text-align:center; padding:14px; border-radius:12px; background:var(--primary); color:white; font-weight:700; text-decoration:none; transition:0.2s; box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);">Take the Free Assessment</a>
+    <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line);">
+      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:12px;">Want to know your real numbers?</p>
+      <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center; background:var(--white); color:var(--primary); border:1px solid var(--line);">Take the Free Assessment</a>
     </div>
   </aside>
 
   <div class="visual-grid">
     
-    <div class="glass-card diamond-container">
-      <div class="diamond-header-row">
-        <span class="diamond-title">The System Shape</span>
-        <div><span class="total-score-label">Total Score:</span><span id="totalScore" class="total-score-box">55</span></div>
-      </div>
-
+    <div class="diamond-card">
       <div class="diamond-wrapper">
-        <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
-          <defs>
-            <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:rgba(0, 86, 179, 0.4)" />
-              <stop offset="100%" style="stop-color:rgba(0, 86, 179, 0.05)" />
-            </linearGradient>
-            <filter id="subtleGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-              <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-              <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-            </filter>
-          </defs>
-        </svg>
-
         <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
-        
-        <div class="diamond-node top">G</div>
-        <div class="diamond-node right">I</div>
-        <div class="diamond-node bottom">P</div>
-        <div class="diamond-node left">R</div>
+        <div class="diamond-label top">G</div>
+        <div class="diamond-label right">I</div>
+        <div class="diamond-label bottom">P</div>
+        <div class="diamond-label left">R</div>
       </div>
     </div>
 
-    <div class="insights-stack">
+    <div class="insights-col">
       
-      <div class="glass-card health-card">
-        <h2 style="font-size:1.2rem; margin:0 0 20px 0;">Health Check</h2>
+      <div class="panel" style="padding: 20px;">
+        <h2 style="font-size:1.1rem; margin-bottom:16px;">Health Check</h2>
         <div class="health-table">
           <div class="health-row">
-            <span class="h-label">Guidance</span>
+            <span class="h-name">Guidance</span>
             <span class="h-score" id="score-g">45/100</span>
             <span class="status-badge badge-bad" id="badge-g">CRITICAL</span>
           </div>
           <div class="health-row">
-            <span class="h-label">Resources</span>
+            <span class="h-name">Resources</span>
             <span class="h-score" id="score-r">48/100</span>
             <span class="status-badge badge-bad" id="badge-r">CRITICAL</span>
           </div>
           <div class="health-row">
-            <span class="h-label">Implementation</span>
+            <span class="h-name">Implementation</span>
             <span class="h-score" id="score-i">85/100</span>
             <span class="status-badge badge-good" id="badge-i">STRONG</span>
           </div>
           <div class="health-row">
-            <span class="h-label">Performance</span>
+            <span class="h-name">Performance</span>
             <span class="h-score" id="score-p">43/100</span>
             <span class="status-badge badge-bad" id="badge-p">CRITICAL</span>
           </div>
         </div>
       </div>
 
-      <div class="glass-card archetype-card mode-warn" id="archetypeBox">
+      <div class="insight-card mode-warn" id="archetypeBox">
         <span class="label-xs">System Pattern</span>
         <div class="insight-h" id="archetypeTitle">The Direction Gap</div>
         <div class="insight-p" id="archetypeBody">
@@ -352,12 +275,10 @@
         </div>
       </div>
 
-      <div class="glass-card summary-card">
+      <div class="summary-box">
         <div class="summary-title">Executive Summary</div>
-        <div class="summary-content-wrap">
-            <div class="summary-text" id="execSummary">
-            Loading summary...
-            </div>
+        <div class="summary-text" id="execSummary">
+          Loading summary...
         </div>
       </div>
 
@@ -366,34 +287,31 @@
 
 </main>
 
+<footer>
+  <div class="container">
+    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+  </div>
+</footer>
 
 <script>
   (function() {
-    // Helper: Status & Color
     function getStatus(val) {
-      if (val < 50) return { label: "CRITICAL", class: "badge-bad", color: "#b91c1c" };
-      if (val < 70) return { label: "DEVELOPING", class: "badge-warn", color: "#b45309" };
-      return { label: "STRONG", class: "badge-good", color: "#15803d" };
+      if (val < 50) return { label: "CRITICAL", class: "badge-bad" };
+      if (val < 70) return { label: "DEVELOPING", class: "badge-warn" };
+      return { label: "STRONG", class: "badge-good" };
     }
 
-    // Helper: Update Slider Track Gradient
-    function updateSliderTrack(sliderId, val) {
-      const slider = document.getElementById(sliderId);
-      const percent = ((val - slider.min) / (slider.max - slider.min)) * 100;
-      slider.style.background = `linear-gradient(to right, var(--primary) ${percent}%, var(--line) ${percent}%)`;
-    }
-
-    // --- 30 ARCHETYPES & SUMMARIES LOGIC ---
+    // THE 30 ARCHETYPES & UNIQUE SUMMARIES
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
       
-      const avg = Math.round((g+r+i+p)/4);
+      const avg = (g+r+i+p)/4;
       const lowest = scores[0];
       const secondLowest = scores[1];
       const highest = scores[3];
 
-      // 1. EXTREMES
+      // --- 1. EXTREMES ---
       if (avg < 35) return { 
         title: "The Stalled Engine", 
         body: "Systemic failure across all dimensions. Foundational rebuild required.", 
@@ -422,8 +340,9 @@
         mode: "mode-good" 
       };
 
-      // 2. CONSTRAINTS (LOWEST DIMENSION)
-      // === LOWEST: GUIDANCE (Strategy Gap) ===
+      // --- 2. CONSTRAINTS (LOWEST DIMENSION) ---
+
+      // === LOWEST: GUIDANCE ===
       if (lowest.k === 'g') {
          if (highest.k === 'i' && highest.v > 65) return { 
            title: "The Activity Trap", 
@@ -451,7 +370,7 @@
          };
       }
 
-      // === LOWEST: RESOURCES (Capacity Gap) ===
+      // === LOWEST: RESOURCES ===
       if (lowest.k === 'r') {
          if (highest.k === 'g' && highest.v > 70) return { 
            title: "The Visionary Void", 
@@ -479,7 +398,7 @@
          };
       }
 
-      // === LOWEST: IMPLEMENTATION (Execution Gap) ===
+      // === LOWEST: IMPLEMENTATION ===
       if (lowest.k === 'i') {
          if (highest.k === 'g' && highest.v > 70) return { 
            title: "The Ivory Tower", 
@@ -507,7 +426,7 @@
          };
       }
 
-      // === LOWEST: PERFORMANCE (Outcome Gap) ===
+      // === LOWEST: PERFORMANCE ===
       if (lowest.k === 'p') {
          if (highest.k === 'i' && highest.v > 70) return { 
            title: "The Leaky Bucket", 
@@ -544,81 +463,64 @@
       };
     }
 
-    // --- DRAW THE ICONIC DIAMOND ---
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
-      
       function pt(deg, val) {
         const rad = (deg * Math.PI) / 180;
         const r = (val / 100) * maxR;
         return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
       }
       
-      // 1. The Radar Grid (Subtle background)
-      let grid = `
-        <circle cx="${cx}" cy="${cy}" r="${maxR*0.33}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4" />
-        <circle cx="${cx}" cy="${cy}" r="${maxR*0.66}" fill="none" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4" />
-        <circle cx="${cx}" cy="${cy}" r="${maxR}" fill="none" stroke="#e2e8f0" stroke-width="1" opacity="0.5" />
-        <line x1="${cx}" y1="${cy-maxR}" x2="${cx}" y2="${cy+maxR}" stroke="#e2e8f0" stroke-width="1" />
-        <line x1="${cx-maxR}" y1="${cy}" x2="${cx+maxR}" y2="${cy}" stroke="#e2e8f0" stroke-width="1" />
-      `;
+      let grid = "";
+      [30, 60, 90].forEach(v => {
+        const p1 = pt(90, v); const p2 = pt(0, v); const p3 = pt(270, v); const p4 = pt(180, v);
+        grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
+      });
 
-      // 2. The Sexy Shape (Polygon with gradient fill)
       const G = pt(90, g); const I = pt(0, i); const P = pt(270, p); const R = pt(180, r);
-      const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="url(#diamondGrad)" stroke="#0056b3" stroke-width="3" stroke-linejoin="round" style="filter: url(#subtleGlow);" />`;
+      const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
+      const dots = [G, I, P, R].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`).join("");
       
-      // 3. The Connecting Lines to Center (optional, adds structure)
-      const connectors = [G,I,P,R].map(p => `<line x1="${cx}" y1="${cy}" x2="${p.x}" y2="${p.y}" stroke="#0056b3" stroke-width="1" opacity="0.3" />`).join("");
-
-      svg.innerHTML = grid + connectors + shape;
+      svg.innerHTML = grid + shape + dots;
     }
 
-    // --- MAIN UPDATE LOOP ---
     function update() {
       const g = parseInt(document.getElementById("input-g").value);
       const r = parseInt(document.getElementById("input-r").value);
       const i = parseInt(document.getElementById("input-i").value);
       const p = parseInt(document.getElementById("input-p").value);
 
-      // Update Values & Slider Tracks
-      document.getElementById("val-g").textContent = g; updateSliderTrack("input-g", g);
-      document.getElementById("val-r").textContent = r; updateSliderTrack("input-r", r);
-      document.getElementById("val-i").textContent = i; updateSliderTrack("input-i", i);
-      document.getElementById("val-p").textContent = p; updateSliderTrack("input-p", p);
-      
-      // Update Total Score
-      document.getElementById("totalScore").textContent = Math.round((g+r+i+p)/4);
+      document.getElementById("val-g").textContent = g;
+      document.getElementById("val-r").textContent = r;
+      document.getElementById("val-i").textContent = i;
+      document.getElementById("val-p").textContent = p;
 
-      // Update Health Check
       function setHealth(key, val) {
         const s = getStatus(val);
-        document.getElementById("badge-"+key).className = "status-badge " + s.class;
-        document.getElementById("badge-"+key).textContent = s.label;
-        document.getElementById("score-"+key).textContent = val + "/100";
+        const b = document.getElementById("badge-"+key);
+        const v = document.getElementById("score-"+key);
+        b.className = "status-badge " + s.class;
+        b.textContent = s.label;
+        v.textContent = val + "/100";
       }
       setHealth("g", g); setHealth("r", r); setHealth("i", i); setHealth("p", p);
 
-      // Update Archetype & Summary
       const arch = getArchetype(g, r, i, p);
-      const archBox = document.getElementById("archetypeBox");
+      const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      document.getElementById("execSummary").textContent = arch.summary;
-      
-      // Apply color mode to archetype box
-      archBox.className = "glass-card archetype-card " + arch.mode;
+      document.getElementById("execSummary").textContent = arch.summary; // Unique Summary!
+      box.className = "insight-card " + arch.mode;
 
-      // Draw Diamond
       drawDiamond(g, r, i, p);
     }
 
-    // Event Listeners
     ["input-g", "input-r", "input-i", "input-p"].forEach(id => {
       document.getElementById(id).addEventListener("input", update);
     });
 
-    update(); // Init on load
+    update(); // Init
   })();
 </script>
 
