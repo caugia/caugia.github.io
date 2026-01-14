@@ -6,7 +6,7 @@
 
 /* ---------------------- CONFIGURATION ---------------------- */
 // De Webhook URL uit jouw Make.com Module 1
-const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/hwjdscswmegf9jaiv9mvif59vejukbiv"; 
+const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj"; 
 
 /* ---------------------- STATE ---------------------- */
 let currentIndex = 0;
