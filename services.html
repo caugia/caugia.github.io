@@ -118,11 +118,10 @@
     .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; letter-spacing:-0.03em; }
     .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
-    /* SERVICES GRID - ALIGNMENT FIXES */
+    /* SERVICES GRID - THE SYMMETRY FIX */
     .services-grid{
       display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
-      /* Ensures cells stretch to full height */
-      align-items: stretch; 
+      align-items: stretch; /* Cards stretch to same total height */
     }
     
     .service-card{
@@ -134,18 +133,16 @@
       display:flex; flex-direction:column;
       transition:transform 0.2s, box-shadow 0.2s;
       position: relative;
-      height: 100%; /* Fill grid cell */
+      height: 100%;
     }
     .service-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
 
-    /* Flagship Styling (Middle Card) */
+    /* Flagship Styling */
     .card-flagship {
       border: 2px solid var(--primary);
       box-shadow: 0 10px 30px -5px rgba(0,86,179,0.15);
       z-index: 1;
-      transform: scale(1.02);
     }
-    .card-flagship:hover { transform: scale(1.02) translateY(-4px); }
 
     .service-pill{
       display:inline-block; padding:6px 12px; background:#f1f5f9; color:#475569;
@@ -157,13 +154,15 @@
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; letter-spacing: -0.01em; }
     
-    /* ALIGNMENT MAGIC: flex-grow pushes bottom content down evenly */
+    /* THE ALIGNMENT KEY: Min-height forces the price block to start at the same pixel */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
-      flex-grow: 1; /* This ensures height equality across cards */
-      min-height: 80px; /* Added breathing room based on feedback */
+      min-height: 5.5em; /* Reserves space for 4 lines of text */
     }
     
+    /* Pushes content to bottom if needed, though min-height handles the alignment */
+    .service-actions { margin-top: auto; }
+
     .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; letter-spacing: -0.02em; }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; margin-left: 4px; }
     
@@ -171,7 +170,7 @@
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
 
-    /* MARKETPLACE UPGRADE (Engineered Icons) */
+    /* MARKETPLACE UPGRADE (Architectural Icons) */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -190,7 +189,6 @@
     .mp-title-block h3 { margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-dark); }
     .mp-title-block p { margin: 0; font-size: 0.9rem; color: #64748b; margin-top: 4px; }
 
-    /* Module Grid Logic */
     .module-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .module-item {
       display: flex; align-items: center; gap: 16px; padding: 16px;
@@ -201,9 +199,9 @@
       border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); transform: translateX(4px);
     }
     
-    /* SVG Icon Styling */
+    /* ENGINEERING STYLE ICONS */
     .module-icon { 
-      width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0;
+      width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0; stroke-width: 1.5px;
     }
     .module-content strong { display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 2px; }
     .module-content span { font-size: 0.85rem; color: #64748b; line-height: 1.3; display: block; }
@@ -285,14 +283,17 @@
           <span class="service-pill">Self-Diagnostic</span>
           <h3 class="service-title">The GTM Score</h3>
           <p class="service-desc">A structured ten-minute assessment of your GTM system. Quantifies maturity and highlights friction points instantly.</p>
-          <span class="service-price">Free</span>
-          <a href="gtm-assessment.html" class="btn btn-outline" style="width:100%;">Start Assessment</a>
-          <ul class="service-features">
-            <li>12-pillar maturity score</li>
-            <li>Instant strengths & risks analysis</li>
-            <li>Pattern identification</li>
-            <li>Immediate results</li>
-          </ul>
+          
+          <div class="service-actions">
+            <span class="service-price">Free</span>
+            <a href="gtm-assessment.html" class="btn btn-outline" style="width:100%;">Start Assessment</a>
+            <ul class="service-features">
+              <li>12-pillar maturity score</li>
+              <li>Instant strengths & risks analysis</li>
+              <li>Pattern identification</li>
+              <li>Immediate results</li>
+            </ul>
+          </div>
         </article>
 
         <article class="service-card card-flagship">
@@ -301,29 +302,35 @@
           <p class="service-desc">
             A forensic, board-level diagnostic of your entire revenue engine. 265 data points analyzed to find the exact constraint holding you back.
           </p>
-          <span class="service-price">€1249 <span class="price-sub">One-time</span></span>
-          <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get the Report</a>
-          <ul class="service-features">
-            <li><strong>Full 265-point System Audit</strong></li>
-            <li>Identify the Primary Constraint</li>
-            <li>Context-aware Priority Roadmap</li>
-            <li>Analyst-reviewed Recommendations</li>
-            <li>Benchmark comparisons</li>
-          </ul>
+          
+          <div class="service-actions">
+            <span class="service-price">€1249 <span class="price-sub">One-time</span></span>
+            <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get the Report</a>
+            <ul class="service-features">
+              <li><strong>Full 265-point System Audit</strong></li>
+              <li>Identify the Primary Constraint</li>
+              <li>Context-aware Priority Roadmap</li>
+              <li>Analyst-reviewed Recommendations</li>
+              <li>Benchmark comparisons</li>
+            </ul>
+          </div>
         </article>
 
         <article class="service-card">
           <span class="service-pill pill-advisory">Advisory</span>
           <h3 class="service-title">Strategic Support</h3>
           <p class="service-desc">Founder-level sparring and architectural guidance. We help you implement the GRIP system and execute the roadmap.</p>
-          <span class="service-price">Custom <span class="price-sub">Retainer</span></span>
-          <a href="contact.html" class="btn btn-outline" style="width:100%;">Contact Caugia</a>
-          <ul class="service-features">
-            <li>Bi-weekly Strategic Sprints</li>
-            <li>Board & Investor Preparation</li>
-            <li>GTM Org Design & Hiring Support</li>
-            <li>Direct access to Senior Partners</li>
-          </ul>
+          
+          <div class="service-actions">
+            <span class="service-price">Custom <span class="price-sub">Retainer</span></span>
+            <a href="contact.html" class="btn btn-outline" style="width:100%;">Contact Caugia</a>
+            <ul class="service-features">
+              <li>Bi-weekly Strategic Sprints</li>
+              <li>Board & Investor Preparation</li>
+              <li>GTM Org Design & Hiring Support</li>
+              <li>Direct access to Senior Partners</li>
+            </ul>
+          </div>
         </article>
 
       </div>
@@ -350,15 +357,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.4-6.4 2 2-6.4z"/></svg>
                   <div class="module-content"><strong>Market Clarity</strong><span>Segments, buyer reality & TAM.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                   <div class="module-content"><strong>Positioning</strong><span>Narrative that aligns teams.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                   <div class="module-content"><strong>ICP Definition</strong><span>Practical targeting profiles.</span></div>
                 </div>
               </div>
@@ -374,15 +381,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                   <div class="module-content"><strong>Product Readiness</strong><span>Fit between offer & motion.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
                   <div class="module-content"><strong>Pricing Model</strong><span>Aligned with value delivery.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   <div class="module-content"><strong>GTM Talent</strong><span>Roles aligned to stage.</span></div>
                 </div>
               </div>
@@ -400,15 +407,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                   <div class="module-content"><strong>Demand Engine</strong><span>From signal to qualified opp.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                   <div class="module-content"><strong>Sales Ops</strong><span>Deal progression rhythm.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
                   <div class="module-content"><strong>Customer Ops</strong><span>Value realisation & expansion.</span></div>
                 </div>
               </div>
@@ -424,15 +431,15 @@
               </div>
               <div class="module-grid">
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                   <div class="module-content"><strong>Metrics Architecture</strong><span>Signals leadership can trust.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"></path><path d="M17 6h6v6"></path></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                   <div class="module-content"><strong>Forecasting</strong><span>Aligned with goals & runway.</span></div>
                 </div>
                 <div class="module-item">
-                  <svg class="module-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                  <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 8h4"/><path d="M12 8v8"/></svg>
                   <div class="module-content"><strong>Governance</strong><span>Calm decision forums.</span></div>
                 </div>
               </div>
