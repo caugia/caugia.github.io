@@ -106,15 +106,17 @@
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
     .mission-content p { font-size: 1.05rem; }
     
-    /* Architectural Schematic Visual */
-    .schematic-visual {
+    /* THE GRIP RASTER VISUAL */
+    .raster-visual {
       background: #f8fafc;
       border-radius: 24px; height: 360px; border: 1px solid var(--line);
-      position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
-    .schematic-svg { width: 100%; height: 100%; opacity: 0.8; }
-    .chaos-lines { stroke: #cbd5e1; stroke-width: 1.5; fill: none; stroke-dasharray: 4 4; }
-    .order-lines { stroke: var(--primary); stroke-width: 2; fill: none; }
+    /* Simple, clean grid SVG */
+    .raster-svg { width: 180px; height: 180px; }
+    .raster-rect { fill: none; stroke: var(--primary); stroke-width: 2.5; rx: 8; }
+    .raster-line { stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; }
+    .raster-dot { fill: var(--primary); }
 
 
     /* --- GRIP CARDS --- */
@@ -165,7 +167,7 @@
     .lead-name { font-size: 2.5rem; margin-bottom: 24px; line-height: 1.1; }
     .lead-bio { font-size: 1.05rem; color: var(--text-body); margin-bottom: 32px; }
 
-    /* Updated Stats Grid: 4 Columns */
+    /* Stats Grid: 4 Columns */
     .lead-stats {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
       padding-top: 32px; border-top: 1px solid var(--line);
@@ -182,12 +184,11 @@
     @media (max-width: 900px){
       .about-hero h1 { font-size: 2.5rem; }
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
-      .schematic-visual { height: 240px; }
+      .raster-visual { height: 240px; }
       .grip-grid { grid-template-columns: 1fr 1fr; }
       .lead-card { grid-template-columns: 1fr; }
       .lead-img-col { height: 300px; }
       .lead-content { padding: 40px 24px; }
-      /* Mobile Stats: 2x2 grid */
       .lead-stats { grid-template-columns: 1fr 1fr; gap: 24px; }
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
@@ -247,20 +248,14 @@
           </p>
         </div>
         
-        <div class="schematic-visual">
-           <svg class="schematic-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path class="chaos-lines" d="M50,150 C70,100 90,200 110,150 S150,50 170,150" />
-             <path class="chaos-lines" d="M50,180 C80,220 100,120 130,180 S180,250 200,180" />
-             <path class="chaos-lines" d="M60,120 C90,80 120,180 150,120" />
-             
-             <rect class="order-lines" x="220" y="75" width="130" height="150" rx="8" />
-             <line class="order-lines" x1="220" y1="125" x2="350" y2="125" />
-             <line class="order-lines" x1="220" y1="175" x2="350" y2="175" />
-             <line class="order-lines" x1="285" y1="75" x2="285" y2="225" />
-             
-             <circle cx="220" cy="125" r="4" fill="var(--primary)"/>
-             <circle cx="285" cy="175" r="4" fill="var(--primary)"/>
-             <circle cx="350" cy="125" r="4" fill="var(--primary)"/>
+        <div class="raster-visual">
+           <svg class="raster-svg" viewBox="0 0 100 100">
+             <rect class="raster-rect" x="5" y="5" width="90" height="90" rx="12"></rect>
+             <line class="raster-line" x1="50" y1="5" x2="50" y2="95"></line>
+             <line class="raster-line" x1="5" y1="50" x2="95" y2="50"></line>
+             <circle class="raster-dot" cx="5" cy="50" r="2.5"></circle>
+             <circle class="raster-dot" cx="95" cy="50" r="2.5"></circle>
+             <circle class="raster-dot" cx="50" cy="50" r="2.5"></circle>
            </svg>
         </div>
       </div>
@@ -278,25 +273,25 @@
             <span class="grip-letter">G</span>
             <h3>Guidance</h3>
             <span class="grip-question">Do teams know exactly what to do?</span>
-            <p class="grip-context">Without clear strategy and market definition, effort fragments across too many directions.</p>
+            <p class="grip-context">Strategy, targeting, and market clarity.</p>
           </div>
           <div class="grip-card">
             <span class="grip-letter">R</span>
             <h3>Resources</h3>
             <span class="grip-question">Do teams have what they need?</span>
-            <p class="grip-context">Pricing, packaging, talent and tools must align precisely with the go-to-market motion.</p>
+            <p class="grip-context">Product fit, pricing, talent, and tools.</p>
           </div>
           <div class="grip-card">
             <span class="grip-letter">I</span>
             <h3>Implementation</h3>
             <span class="grip-question">Do teams execute the same way?</span>
-            <p class="grip-context">Revenue operations must create a standardized, repeatable rhythm from first contact to expansion.</p>
+            <p class="grip-context">Process, handoffs, and revenue ops.</p>
           </div>
           <div class="grip-card">
             <span class="grip-letter">P</span>
             <h3>Performance</h3>
             <span class="grip-question">Does it deliver predictable results?</span>
-            <p class="grip-context">Governance and forecasting should rely on leading indicators, not just trailing revenue lag.</p>
+            <p class="grip-context">Metrics, forecasting, and governance.</p>
           </div>
         </div>
       </div>
@@ -322,7 +317,7 @@
             
             <div class="lead-stats">
               <div>
-                <span class="stat-val">6</span>
+                <span class="stat-val">9</span>
                 <span class="stat-label">Acquisitions</span>
               </div>
               <div>
