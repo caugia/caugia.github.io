@@ -424,9 +424,9 @@ function calculatePillarScores() {
   return finalScores;
 }
 
-/* ---------------------- PAYLOAD BUILDER ---------------------- */
+/* ---------------------- PAYLOAD BUILDER (FIXED) ---------------------- */
 function preparePayload() {
-  // 1. Customer & Context
+  // 1. Customer Object (Harde mapping voor Module 1 herkenbaarheid)
   const customer = {
     fullname: STATE["fullname"] || "",
     role: STATE["role"] || "",
@@ -441,41 +441,52 @@ function preparePayload() {
     payment_id: STATE["payment_id"] || ""
   };
 
-  const context = {
-    arr: STATE["arr"] || "",
-    acv: STATE["acv"] || "",
-    churn: STATE["churn"] || "",
-    // Map all other context fields...
-    additional_context: STATE[25] || "" // Example
-  };
+  // 2. Context Object (Dynamisch alle Pillar 0 vragen verzamelen)
+  const context = {};
   
-  // Add all other dynamic state keys to context if needed, 
-  // or keep it simple. For now we follow the v6 structure.
+  // Loop door alle vragen om Context data te vinden (Pillar 0)
+  QUESTIONS_REF.forEach(q => {
+    if (q.pillar === 0) {
+      if (q.type === "group") {
+        // Voor groepen (zoals Q2, Q3, Q4, Q5) pakken we de veldnamen (bijv. 'win_rate', 'target_fy')
+        q.fields.forEach(field => {
+          // Sla over als het al in customer zit om dubbelingen te voorkomen
+          if (!customer.hasOwnProperty(field.name)) {
+            context[field.name] = STATE[field.name] || "";
+          }
+        });
+      } else {
+        // Voor losse vragen (zoals Q6, Q14, etc.) gebruiken we Q + ID (bijv. Q6, Q25)
+        // Dit zorgt dat ook de radio buttons en textareas netjes meekomen
+        context[`Q${q.id}`] = STATE[q.id] || "";
+      }
+    }
+  });
 
-  // 2. Answers
+  // 3. Answers (Pillar 1-12)
   const answers = {};
   for (let id = 1001; id <= 12020; id++) {
     if (STATE[id]) answers[`Q${id}`] = STATE[id];
   }
 
-  // 3. Scores (The new magic)
+  // 4. Scores
   const scores = calculatePillarScores();
 
-  // 4. Metadata
+  // 5. Metadata
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v7.0",
+    version: "v7.0.4", // Versie opgehoogd voor tracking
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
 
-  // 5. Flattened Return
+  // 6. Return complete payload
   return {
     customer,
-    context,
+    context, // Hier zit nu ALLES in (win_rate, growth_goal, etc.)
     answers,
     metadata,
-    ...scores // This injects score_01, score_02 etc at the root level
+    ...scores
   };
 }
 
