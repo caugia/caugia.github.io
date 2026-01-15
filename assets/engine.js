@@ -1,6 +1,6 @@
 /* ===========================================================
-   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v7.0.3 (Golden Master)
-   Logic: Position-Based Auto-Scoring + Direct Make.com Payload
+   CAUGIA CONSULTING — GTM INTELLIGENCE ENGINE v7.1.0
+   Logic: Position-Based Auto-Scoring + Direct Make.com Payload + Question Mapping
    Status: PRODUCTION READY
    =========================================================== */
 
@@ -279,7 +279,7 @@ if (btnSubmit) {
       return;
     }
 
-    // 2. Prepare Payload (Calculates Scores)
+    // 2. Prepare Payload (Calculates Scores + Question Map)
     const payload = preparePayload();
 
     console.log("📦 Sending Production Payload:", JSON.stringify(payload, null, 2));
@@ -385,15 +385,8 @@ function calculatePillarScores() {
     if (index === -1) return;
 
     /* SCORING LOGIC:
-       Assumes options are sorted Best to Worst (or Strong to Weak).
        Index 0 (Top) = 100 points
        Index Last (Bottom) = 0 points
-       
-       Example (4 options):
-       0: 100
-       1: 67
-       2: 33
-       3: 0
     */
     const maxIndex = q.options.length - 1;
     let points = 0;
@@ -413,7 +406,6 @@ function calculatePillarScores() {
   for (let i = 1; i <= 12; i++) {
     const total = pillarTotals[i];
     const count = pillarCounts[i];
-    // If no questions answered in pillar, default to 0 (or 50 if you prefer neutral)
     const average = count > 0 ? Math.round(total / count) : 0;
     
     // Create key "score_01", "score_02", etc.
@@ -424,9 +416,30 @@ function calculatePillarScores() {
   return finalScores;
 }
 
-/* ---------------------- PAYLOAD BUILDER (FIXED) ---------------------- */
+/* ---------------------- HELPER: QUESTION MAP BUILDER ---------------------- */
+function buildQuestionMap() {
+  const map = {};
+  
+  QUESTIONS_REF.forEach(q => {
+    if (q.type === "group") {
+      // Voor groepsvragen (zoals de metrics in Pillar 0)
+      // Key = veldnaam (bijv. 'win_rate'), Value = het label (bijv. 'Win rate (%)')
+      q.fields.forEach(f => {
+        map[f.name] = f.label;
+      });
+    } else {
+      // Voor standaard vragen (Scale/Radio/Text)
+      // Key = Q + ID (bijv. 'Q1001'), Value = de vraag titel
+      map[`Q${q.id}`] = q.title;
+    }
+  });
+  
+  return map;
+}
+
+/* ---------------------- PAYLOAD BUILDER (FIXED & MAPPED) ---------------------- */
 function preparePayload() {
-  // 1. Customer Object (Harde mapping voor Module 1 herkenbaarheid)
+  // 1. Customer Object
   const customer = {
     fullname: STATE["fullname"] || "",
     role: STATE["role"] || "",
@@ -443,21 +456,15 @@ function preparePayload() {
 
   // 2. Context Object (Dynamisch alle Pillar 0 vragen verzamelen)
   const context = {};
-  
-  // Loop door alle vragen om Context data te vinden (Pillar 0)
   QUESTIONS_REF.forEach(q => {
     if (q.pillar === 0) {
       if (q.type === "group") {
-        // Voor groepen (zoals Q2, Q3, Q4, Q5) pakken we de veldnamen (bijv. 'win_rate', 'target_fy')
         q.fields.forEach(field => {
-          // Sla over als het al in customer zit om dubbelingen te voorkomen
           if (!customer.hasOwnProperty(field.name)) {
             context[field.name] = STATE[field.name] || "";
           }
         });
       } else {
-        // Voor losse vragen (zoals Q6, Q14, etc.) gebruiken we Q + ID (bijv. Q6, Q25)
-        // Dit zorgt dat ook de radio buttons en textareas netjes meekomen
         context[`Q${q.id}`] = STATE[q.id] || "";
       }
     }
@@ -475,18 +482,22 @@ function preparePayload() {
   // 5. Metadata
   const metadata = {
     timestamp: new Date().toISOString(),
-    version: "v7.0.4", // Versie opgehoogd voor tracking
+    version: "v7.1.0",
     total_questions: QUESTIONS_REF.length,
     completion_rate: calculateCompletionRate()
   };
 
-  // 6. Return complete payload
+  // 6. Question Map (NIEUW: De Legenda voor Claude)
+  const question_map = buildQuestionMap();
+
+  // 7. Return complete payload
   return {
     customer,
-    context, // Hier zit nu ALLES in (win_rate, growth_goal, etc.)
+    context,
     answers,
+    ...scores,   // score_01, score_02 etc
     metadata,
-    ...scores
+    question_map // Hier zit nu de vertaling in
   };
 }
 
