@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>About Caugia | The Anti-Consulting Firm</title>
-  <meta name="description" content="We are building the GTM operation system for B2B SaaS. Replacing opinion-based consulting with algorithmic strategy." />
+  <title>About | Caugia Consulting</title>
+  <meta name="description" content="Bringing calm, structure, and clarity to modern revenue organizations. Led by Tom Meijer." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
+    /* --- V3 CORE SYSTEM (Strict Consistency) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,7 +26,7 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
       --max:1200px;
     }
 
@@ -52,6 +52,7 @@
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
+    /* UNIFIED CONTAINER */
     .container{
       max-width:var(--max);
       margin:0 auto;
@@ -60,19 +61,16 @@
 
     section{ padding:80px 0; }
 
-    /* BUTTONS (STATIC) */
+    /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; 
-      transition:background 0.2s ease, border-color 0.2s ease; 
-      white-space:nowrap;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; }
-
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
 
     /* HEADER */
     header{
@@ -91,60 +89,114 @@
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
-    /* --- PAGE SPECIFIC --- */
-    .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding-top: 60px; padding-bottom: 100px; }
-    .eyebrow { display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 16px; background: #eff6ff; padding: 6px 12px; border-radius: 4px; }
-    .hero-h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
-    .hero-lead { font-size: 1.15rem; line-height: 1.6; color: var(--text-body); margin-bottom: 32px; }
-    .hero-img-wrap { position: relative; }
-    .hero-img { width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+    /* --- HERO --- */
+    .about-hero { text-align: center; max-width: 860px; margin: 0 auto; padding-top: 80px; padding-bottom: 60px; }
+    .eyebrow { 
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
+    }
+    .about-hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
+    .about-hero p { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 60px; }
-    .belief-card { background: var(--white); padding: 40px; border-radius: var(--radius-md); border: 1px solid var(--line); }
-    .belief-card h3 { font-size: 1.25rem; margin-bottom: 16px; }
+    /* --- THE MISSION & VISUAL --- */
+    .section-white { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
+    .mission-content p { font-size: 1.05rem; }
+    
+    /* THE DIAMOND VISUAL CONTAINER */
+    .diamond-visual {
+      background: #f8fafc;
+      border-radius: 24px; height: 380px; border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+    }
+    
+    /* SVG Styles for the Diamond */
+    .grip-diamond-svg { width: 220px; height: 220px; }
+    .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1.5; opacity: 0.15; }
+    .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
+    .grip-text {
+      fill: var(--primary); font-family: 'Inter', sans-serif; font-weight: 900; font-size: 32px;
+      text-anchor: middle; dominant-baseline: middle;
+    }
 
-    .story-section { max-width: 800px; margin: 0 auto; }
-    .story-section h2 { font-size: 2.5rem; margin-bottom: 32px; text-align: center; }
-    .story-section p { font-size: 1.05rem; margin-bottom: 24px; }
+
+    /* --- GRIP CARDS --- */
+    .section-grip { background: #f8fafc; padding: 100px 0; }
+    .grip-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+    .grip-intro h2 { font-size: 2.2rem; margin-bottom: 16px; }
+    
+    .grip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: stretch; }
+    
+    .grip-card {
+      background: var(--white); padding: 32px 24px; border-radius: 16px;
+      border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center; height: 100%; display: flex; flex-direction: column;
+    }
+    .grip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: #bfdbfe; }
+    
+    .grip-letter { 
+      font-size: 2.5rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 20px; 
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #eff6ff; width: 72px; height: 72px; border-radius: 16px;
+      margin-left: auto; margin-right: auto;
+    }
+    .grip-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; color: var(--text-dark); }
+    
+    .grip-question { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; display: block; line-height: 1.4; }
+    .grip-context { font-size: 0.9rem; color: #64748b; line-height: 1.5; margin: 0; flex-grow: 1; }
+
+    /* --- LEADERSHIP --- */
+    .section-lead { background: var(--white); padding: 100px 0; border-top: 1px solid var(--line); }
+    
+    .lead-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 24px;
+      box-shadow: var(--shadow-card); overflow: hidden;
+      display: grid; grid-template-columns: 360px 1fr;
+    }
+    
+    .lead-img-col { height: 100%; min-height: 400px; position: relative; }
+    .lead-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    
+    .lead-content { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+    .lead-role { 
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; 
+      color: var(--primary); margin-bottom: 12px; display: block;
+    }
+    .lead-name { font-size: 2.5rem; margin-bottom: 24px; line-height: 1.1; }
+    .lead-bio { font-size: 1.05rem; color: var(--text-body); margin-bottom: 32px; }
+
+    /* Stats Grid: 4 Columns */
+    .lead-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      padding-top: 32px; border-top: 1px solid var(--line);
+    }
+    .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); display: block; margin-bottom: 4px; }
+    .stat-label { font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* CTA */
+    .section-cta { text-align: center; background: #f8fafc; border-top: 1px solid var(--line); padding: 100px 0; }
+    .section-cta h2 { font-size: 2.5rem; margin-bottom: 24px; }
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    /* --- MOBILE RESPONSIVENESS (GOD MODE FIX) --- */
-    @media (max-width: 980px){
-      /* 1. HEADER CLEANUP */
-      .nav-links{ display:none; }
-      .menu-toggle{ display:inline-flex; }
-      /* Hide desktop button */
-      .nav .btn-primary { display: none; }
-      
-      /* ADJUST BRAND SIZE */
-      .brand { font-size: 0.9rem; gap: 8px; }
-      .brand img { width: 26px; height: 26px; }
-
-      /* 2. TYPOGRAPHY & LAYOUT */
-      /* Reduce H1 size */
-      h1, .hero-h1, .story-section h2 {
-        font-size: 2.25rem !important;
-        line-height: 1.2 !important;
-      }
-
-      /* Standardize section padding */
-      section { padding: 60px 0 !important; }
-      .hero-split { padding-top: 40px !important; padding-bottom: 60px !important; }
-
-      /* 3. MOBILE MENU CTA FIX */
-      .mobile-nav { padding: 24px 0 32px !important; }
-      .mobile-cta {
-          padding: 24px 10px 0 !important;
-          flex-direction: column; /* Stack buttons */
-          gap: 16px;
-      }
-      .mobile-cta .btn { width: 100%; }
-
-      /* --- LAYOUT SPECIFIC FIXES --- */
-      .hero-split, .grid-2 { grid-template-columns: 1fr !important; gap: 40px !important; }
+    @media (max-width: 900px){
+      .about-hero h1 { font-size: 2.5rem; }
+      .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+      .diamond-visual { height: 280px; }
+      .grip-grid { grid-template-columns: 1fr 1fr; }
+      .lead-card { grid-template-columns: 1fr; }
+      .lead-img-col { height: 300px; }
+      .lead-content { padding: 40px 24px; }
+      .lead-stats { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
     }
   </style>
 </head>
@@ -175,71 +227,142 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-cta">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-        <a href="contact.html" class="btn btn-outline">Contact</a>
-      </div>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
 
   <main>
-    <section class="container hero-split">
-      <div>
-        <span class="eyebrow">The Caugia Mission</span>
-        <h1 class="hero-h1">From intuition to algorithm.</h1>
-        <p class="hero-lead">
-          We help B2B SaaS leadership teams replace "opinion-based" strategy with a coherent, engineered system for growth.
+    <section class="container about-hero">
+      <span class="eyebrow">The Caugia Mission</span>
+      <h1>Clarity begins with structure.</h1>
+      <p>
+        We help B2B SaaS leadership teams see the revenue system as one coherent engine. 
+        When the system becomes visible, alignment gets easier, and execution starts to compound.
+      </p>
+    </section>
+
+    <section class="section-white">
+      <div class="container mission-grid">
+        <div class="mission-content">
+          <h2>Why Caugia exists</h2>
+          <p>
+            Most revenue organisations work hard inside systems that were never intentionally designed. Processes grow organically, tools accumulate, teams specialise, and the engine gets heavier each quarter.
+          </p>
+          <p style="margin-top:16px;">
+            In that environment, effort rises faster than clarity. Leadership spends more time managing complexity than shaping direction. Caugia was built to restore coherence.
+          </p>
+        </div>
+        
+        <div class="diamond-visual">
+           <svg class="grip-diamond-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(100,100) rotate(45) translate(-100,-100)">
+                <line class="grip-lines" x1="100" y1="20" x2="100" y2="180" />
+                <line class="grip-lines" x1="20" y1="100" x2="180" y2="100" />
+                <rect class="grip-border" x="20" y="20" width="160" height="160" rx="4" />
+              </g>
+
+              <text class="grip-text" x="100" y="55">G</text> 
+              
+              <text class="grip-text" x="145" y="100">R</text> 
+              
+              <text class="grip-text" x="100" y="145">I</text> 
+              
+              <text class="grip-text" x="55" y="100">P</text> 
+           </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grip">
+      <div class="container">
+        <div class="grip-intro">
+          <h2>The GRIP Philosophy</h2>
+          <p>Strong revenue engines are built on balance. Clarity emerges when four forces work together without friction.</p>
+        </div>
+        
+        <div class="grip-grid">
+          <div class="grip-card">
+            <span class="grip-letter">G</span>
+            <h3>Guidance</h3>
+            <span class="grip-question">Do teams know exactly what to do?</span>
+            <p class="grip-context">Strategy, targeting, and market clarity.</p>
+          </div>
+          <div class="grip-card">
+            <span class="grip-letter">R</span>
+            <h3>Resources</h3>
+            <span class="grip-question">Do teams have what they need?</span>
+            <p class="grip-context">Product fit, pricing, talent, and tools.</p>
+          </div>
+          <div class="grip-card">
+            <span class="grip-letter">I</span>
+            <h3>Implementation</h3>
+            <span class="grip-question">Do teams execute the same way?</span>
+            <p class="grip-context">Process, handoffs, and revenue ops.</p>
+          </div>
+          <div class="grip-card">
+            <span class="grip-letter">P</span>
+            <h3>Performance</h3>
+            <span class="grip-question">Does it deliver predictable results?</span>
+            <p class="grip-context">Metrics, forecasting, and governance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-lead">
+      <div class="container">
+        <div class="lead-card">
+          <div class="lead-img-col">
+            <img src="assets/linkedIn.jpeg" alt="Tom Meijer" class="lead-img" onerror="this.src='https://via.placeholder.com/400x600/e2e8f0/94a3b8?text=Tom+Meijer';">
+          </div>
+          <div class="lead-content">
+            <span class="lead-role">Founder & Principal</span>
+            <h2 class="lead-name">Tom Meijer</h2>
+            <div class="lead-bio">
+              <p>
+                Tom spent his career inside high-growth SaaS organisations, leading global revenue teams across NAMER, EMEA, and APAC.
+              </p>
+              <p style="margin-top:16px;">
+                He saw that as scale and urgency rise, complexity follows. Often, talent isn't the issue—structure is. Caugia turns those lessons into a calm, systems-first approach to revenue architecture.
+              </p>
+            </div>
+            
+            <div class="lead-stats">
+              <div>
+                <span class="stat-val">9</span>
+                <span class="stat-label">Acquisitions</span>
+              </div>
+              <div>
+                <span class="stat-val">+$1.4B</span>
+                <span class="stat-label">Funding Raised</span>
+              </div>
+              <div>
+                <span class="stat-val">$5.6B</span>
+                <span class="stat-label">Valuation</span>
+              </div>
+              <div>
+                <span class="stat-val">150+</span>
+                <span class="stat-label">Promotions Led</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-cta">
+      <div class="container">
+        <h2>Start with a shared model</h2>
+        <p style="max-width:600px; margin:0 auto 32px; color:#475569;">
+          Begin with the Free GTM Score. In minutes you get a clearer view of the system and a practical direction for what to strengthen first.
         </p>
-        <a href="services.html" class="btn btn-primary">See How It Works</a>
-      </div>
-      <div class="hero-img-wrap">
-        <img src="assets/og-image.png" alt="GTM System Engineering" class="hero-img" style="background:#e2e8f0; min-height:300px; object-fit:cover;">
-      </div>
-    </section>
-
-    <section class="section-white" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-      <div class="container">
-        <div style="text-align:center; max-width:700px; margin:0 auto 50px;">
-          <span class="eyebrow">Core Beliefs</span>
-          <h2>Why traditional consulting fails SaaS</h2>
-        </div>
-        <div class="grid-2">
-          <div class="belief-card">
-            <h3>The Problem is Exponential, not Linear</h3>
-            <p>Traditional consulting sells hours. But revenue problems in SaaS are exponential—complexity compounds faster than you can hire consultants to fix it manually.</p>
-          </div>
-          <div class="belief-card">
-            <h3>Slides Don't Solve Constraints</h3>
-            <p>You don't need another 100-page deck debating strategy. You need to identify the single bottleneck choking your growth right now and fix it.</p>
-          </div>
-          <div class="belief-card">
-            <h3>Systems Beat Heroes</h3>
-            <p>Reliance on rockstar sales reps or marketing gurus isn't scalable. Predictable revenue requires an engineered system, not individual heroism.</p>
-          </div>
-          <div class="belief-card">
-            <h3>Speed is Strategy</h3>
-            <p>Waiting 8 weeks for a diagnostic is too long. In SaaS, the market shifts quarterly. You need answers today, not next season.</p>
-          </div>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+          <a href="services.html" class="btn btn-outline">Explore Services</a>
         </div>
       </div>
     </section>
 
-    <section class="story-section">
-      <div class="container">
-        <h2>Why Caugia exists</h2>
-        <p>We realized that to solve GTM problems at scale, we couldn't just be better consultants. We had to stop being consultants altogether.</p>
-        <p>We spent years codifying the intuition of seasoned CROs and mapping the patterns of over 200 SaaS companies. We turned that knowledge into the <strong>GRIP Framework</strong> and the <strong>Intelligence Engine</strong>.</p>
-        <p>Today, Caugia is not a firm you hire for hours. It's an intelligence layer you plug into your business to find and fix revenue leaks instantly.</p>
-      </div>
-    </section>
-
-    <section class="section-dark" style="background:#0f172a; color:white; text-align:center;">
-      <div class="container">
-        <h2 style="color:white; margin-bottom:24px;">Ready to engineer your growth?</h2>
-        <p style="color:#94a3b8; max-width:600px; margin:0 auto 32px;">Start with our free diagnostic to see the system in action.</p>
-        <a href="gtm-assessment.html" class="btn btn-primary" style="background:white; color:#0f172a;">Get Your GTM Score</a>
-      </div>
-    </section>
   </main>
 
   <footer>
