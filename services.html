@@ -15,30 +15,9 @@
 
   <script src="assets/currency.js"></script>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "GTM Consulting",
-    "provider": {
-      "@type": "ConsultingFirm",
-      "name": "Caugia Consulting"
-    },
-    "areaServed": "Global",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "GTM Intelligence Services",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Score" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Intelligence Report" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "System Modules" } }
-      ]
-    }
-  }
-  </script>
-
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* --- V3 CORE SYSTEM (MASTER CSS) --- */
+    /* Dit is exact dezelfde CSS basis als de Index voor consistentie */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -50,7 +29,7 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
       --max:1200px;
     }
 
@@ -76,13 +55,14 @@
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
+    /* UNIFIED CONTAINER */
     .container{
       max-width:var(--max);
       margin:0 auto;
       padding:0 24px;
     }
 
-    section{ padding:84px 0; }
+    section{ padding:80px 0; }
 
     /* BUTTONS */
     .btn{
@@ -91,12 +71,11 @@
       border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,86,179,0.2); }
+    .btn-primary:hover{ background:#003370; /* GEEN transform hier meer */ }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
-    .btn-disabled{ background:#f1f5f9; color:#94a3b8; border-color:transparent; cursor:not-allowed; }
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
-    /* HEADER */
+    /* HEADER (IDENTIEK AAN INDEX) */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
@@ -113,18 +92,17 @@
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
     /* --- PAGE SPECIFIC --- */
 
     .services-hero{ padding:80px 0 60px; text-align:center; max-width:860px; margin:0 auto; }
-    .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; letter-spacing:-0.03em; }
+    .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
     .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
-    /* SERVICES GRID - THE SYMMETRY FIX */
+    /* SERVICES GRID - STATIC & ALIGNED */
     .services-grid{
       display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
-      align-items: stretch; /* Cards stretch to same total height */
+      align-items: stretch; /* Zorgt dat kaarten even hoog zijn */
     }
     
     .service-card{
@@ -134,18 +112,18 @@
       padding:40px 32px;
       box-shadow:var(--shadow-sm);
       display:flex; flex-direction:column;
-      transition:transform 0.2s, box-shadow 0.2s;
-      position: relative;
+      /* GEEN TRANSITIONS OP TRANSFORM MEER */
       height: 100%;
     }
-    .service-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+    /* Geen beweging bij hover, alleen schaduw */
+    .service-card:hover{ box-shadow:var(--shadow-card); border-color:#cbd5e1; }
 
-    /* Flagship Styling */
+    /* Flagship Styling (Middelste kaart) */
     .card-flagship {
-      border: 2px solid var(--primary);
-      box-shadow: 0 10px 30px -5px rgba(0,86,179,0.15);
+      border: 2px solid var(--primary); /* Alleen de rand maakt het verschil */
+      /* GEEN SCALE MEER */
+      background: #fff;
       z-index: 1;
-      transform: scale(1.02); /* Slight prominence */
     }
 
     /* Gated Styling */
@@ -153,7 +131,7 @@
       background: #f8fafc;
       border-style: dashed;
     }
-    .card-gated .service-title, .card-gated .service-price { opacity: 0.7; }
+    .card-gated .service-title, .card-gated .service-price { opacity: 0.8; }
 
     .service-pill{
       display:inline-block; padding:6px 12px; background:#f1f5f9; color:#475569;
@@ -163,25 +141,24 @@
     .pill-flagship{ background:#eff6ff; color:var(--primary); border:1px solid #bfdbfe; }
     .pill-advisory{ background:#fdf4ff; color:#86198f; border:1px solid #fae8ff; }
 
-    .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; letter-spacing: -0.01em; }
+    .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
     
-    /* ALIGNMENT FIX: Min-height zorgt dat beschrijvingen evenveel ruimte pakken */
+    /* ALIGNMENT FIX: Vaste hoogte voor tekstblokken */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
-      min-height: 120px; /* DIT IS DE FIX VOOR DE UITLIJNING */
+      min-height: 140px; /* Dwingt uitlijning af voor de prijzen */
     }
     
     /* ALIGNMENT FIX: Duwt de actions (prijs+knop) naar beneden */
     .service-actions { margin-top: auto; }
 
-    .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; letter-spacing: -0.02em; }
+    .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; min-height: 32px; }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; margin-left: 4px; }
     
-    .service-features{ margin-top:24px; padding-top:24px; border-top:1px solid var(--line); }
+    .service-features{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line); }
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
     
-    /* Gated Feature List */
     .card-gated .service-features li::before { color: #cbd5e1; }
 
     /* MARKETPLACE UPGRADE */
@@ -207,10 +184,10 @@
     .module-item {
       display: flex; align-items: center; gap: 16px; padding: 16px;
       border: 1px solid #f1f5f9; border-radius: 8px; background: #fff;
-      transition: all 0.2s ease;
+      /* GEEN TRANSITIONS */
     }
     .module-item:hover {
-      border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); transform: translateX(4px);
+      border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); 
     }
     
     .module-icon { 
@@ -232,15 +209,14 @@
     details[open] summary::after{ content:"−"; }
     details p{ margin-top:16px; font-size:1rem; color:var(--text-body); max-width:90%; line-height:1.6; }
 
-    /* FOOTER & CTA */
-    .cta-section { margin-top: 80px; text-align: center; padding: 80px 0; border-top: 1px solid var(--line); background: var(--white); }
+    /* CTA */
+    .cta-section { text-align: center; padding: 100px 0; border-top: 1px solid var(--line); background: #fff; }
     .cta-section h2 { font-size: 2.5rem; margin-bottom: 24px; }
+
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
     @media (max-width: 1024px){
       .services-grid{ grid-template-columns:1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
-      .card-flagship { transform: none; border-width: 1px; }
-      .card-flagship:hover { transform: translateY(-4px); }
       .mp-container { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px){
@@ -306,6 +282,7 @@
               <li>Instant strengths & risks analysis</li>
               <li>Pattern identification</li>
               <li>Immediate results</li>
+              <li><strong>First step to total GRIP</strong></li>
             </ul>
           </div>
         </article>
@@ -325,7 +302,7 @@
             
             <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get the Report</a>
             <ul class="service-features">
-              <li><strong>Full 265-point System Audit</strong></li>
+              <li>Full 265-point System Audit</li>
               <li>Identify the Primary Constraint</li>
               <li>Context-aware Priority Roadmap</li>
               <li>Analyst-reviewed Recommendations</li>
@@ -349,6 +326,7 @@
               <li>Board & Investor Preparation</li>
               <li>GTM Org Design & Hiring Support</li>
               <li><strong>Invitation Only</strong></li>
+              <li style="visibility:hidden;"> spacer</li>
             </ul>
           </div>
         </article>
