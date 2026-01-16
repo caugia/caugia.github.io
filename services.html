@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Services | Caugia Consulting</title>
-  <meta name="description" content="Structured GTM interventions. From instant diagnostics to deep-dive architecture and executive advisory." />
+  <title>Interventions | Caugia Consulting</title>
+  <meta name="description" content="Structured GTM interventions. From instant diagnostics to deep-dive architecture. No hourly billing. Just outcomes." />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
@@ -29,7 +29,7 @@
       "itemListElement": [
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Score" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Intelligence Report" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Advisory" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "System Modules" } }
       ]
     }
   }
@@ -92,6 +92,7 @@
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,86,179,0.2); }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+    .btn-disabled{ background:#f1f5f9; color:#94a3b8; border-color:transparent; cursor:not-allowed; }
 
     /* HEADER */
     header{
@@ -142,7 +143,15 @@
       border: 2px solid var(--primary);
       box-shadow: 0 10px 30px -5px rgba(0,86,179,0.15);
       z-index: 1;
+      transform: scale(1.02); /* Slight prominence */
     }
+
+    /* Gated Styling */
+    .card-gated {
+      background: #f8fafc;
+      border-style: dashed;
+    }
+    .card-gated .service-title, .card-gated .service-price { opacity: 0.7; }
 
     .service-pill{
       display:inline-block; padding:6px 12px; background:#f1f5f9; color:#475569;
@@ -154,13 +163,11 @@
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; letter-spacing: -0.01em; }
     
-    /* THE ALIGNMENT KEY: Min-height forces the price block to start at the same pixel */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
       min-height: 5.5em; /* Reserves space for 4 lines of text */
     }
     
-    /* Pushes content to bottom if needed, though min-height handles the alignment */
     .service-actions { margin-top: auto; }
 
     .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; letter-spacing: -0.02em; }
@@ -169,8 +176,11 @@
     .service-features{ margin-top:24px; padding-top:24px; border-top:1px solid var(--line); }
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
+    
+    /* Gated Feature List */
+    .card-gated .service-features li::before { color: #cbd5e1; }
 
-    /* MARKETPLACE UPGRADE (Architectural Icons) */
+    /* MARKETPLACE UPGRADE */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -199,7 +209,6 @@
       border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); transform: translateX(4px);
     }
     
-    /* ENGINEERING STYLE ICONS */
     .module-icon { 
       width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0; stroke-width: 1.5px;
     }
@@ -270,9 +279,10 @@
 
   <main>
     <section class="container services-hero">
-      <h1>Get GRIP on your revenue.</h1>
+      <h1>Structured GTM Interventions.</h1>
       <p>
-        A structured GTM system that reveals real constraints, strengthens your operating model, and shows where improvement will create the highest return.
+        We do not sell hours. We sell architectural clarity. 
+        Choose the level of intervention your revenue system requires.
       </p>
     </section>
 
@@ -280,7 +290,7 @@
       <div class="services-grid">
         
         <article class="service-card">
-          <span class="service-pill">Self-Diagnostic</span>
+          <span class="service-pill">Level 1</span>
           <h3 class="service-title">The GTM Score</h3>
           <p class="service-desc">A structured ten-minute assessment of your GTM system. Quantifies maturity and highlights friction points instantly.</p>
           
@@ -297,7 +307,7 @@
         </article>
 
         <article class="service-card card-flagship">
-          <span class="service-pill pill-flagship">Most Popular</span>
+          <span class="service-pill pill-flagship">Level 2: The Core Product</span>
           <h3 class="service-title">Intelligence Report</h3>
           <p class="service-desc">
             A forensic, board-level diagnostic of your entire revenue engine. 265 data points analyzed to find the exact constraint holding you back.
@@ -311,24 +321,26 @@
               <li>Identify the Primary Constraint</li>
               <li>Context-aware Priority Roadmap</li>
               <li>Analyst-reviewed Recommendations</li>
-              <li>Benchmark comparisons</li>
+              <li>Quarter-by-quarter Execution Plan</li>
             </ul>
           </div>
         </article>
 
-        <article class="service-card">
-          <span class="service-pill pill-advisory">Advisory</span>
-          <h3 class="service-title">Strategic Support</h3>
-          <p class="service-desc">Founder-level sparring and architectural guidance. We help you implement the GRIP system and execute the roadmap.</p>
+        <article class="service-card card-gated">
+          <span class="service-pill pill-advisory">Level 3: Partnership</span>
+          <h3 class="service-title">Execution Partner</h3>
+          <p class="service-desc">Founder-level sparring and architectural guidance to implement the Report's roadmap. Available only to Report customers.</p>
           
           <div class="service-actions">
             <span class="service-price">Custom <span class="price-sub">Retainer</span></span>
-            <a href="contact.html" class="btn btn-outline" style="width:100%;">Contact Caugia</a>
+            <a href="contact.html?type=partner" class="btn btn-outline" style="width:100%; border-style:dashed;">Apply for Partnership</a>
+            <div style="text-align:center; font-size:0.75rem; color:#94a3b8; margin-top:8px; font-weight:600;">* Requires Intelligence Report</div>
+            
             <ul class="service-features">
               <li>Bi-weekly Strategic Sprints</li>
               <li>Board & Investor Preparation</li>
               <li>GTM Org Design & Hiring Support</li>
-              <li>Direct access to Senior Partners</li>
+              <li><strong>Invitation Only</strong></li>
             </ul>
           </div>
         </article>
@@ -339,9 +351,10 @@
     <section id="marketplace" class="section-gray">
       <div class="container">
         <div style="text-align:center; max-width:700px; margin:0 auto 60px;">
-          <h2>The Intelligence Marketplace</h2>
+          <h2>System Modules</h2>
           <p style="color:var(--text-body); font-size:1.1rem;">
-            Targeted modules to fix specific leaks. Available as add-ons to the Intelligence Report.
+            Targeted upgrades to fix specific leaks identified in your Report. 
+            Deploy these modules to solve the constraints without hiring full-time leadership.
           </p>
         </div>
 
@@ -351,8 +364,8 @@
               <div class="mp-header">
                 <div class="mp-letter">G</div>
                 <div class="mp-title-block">
-                  <h3>Guidance</h3>
-                  <p>Do teams know what to do?</p>
+                  <h3>Guidance Modules</h3>
+                  <p>Fixing Strategic Alignment</p>
                 </div>
               </div>
               <div class="module-grid">
@@ -375,8 +388,8 @@
               <div class="mp-header">
                 <div class="mp-letter">R</div>
                 <div class="mp-title-block">
-                  <h3>Resources</h3>
-                  <p>Do teams have what they need?</p>
+                  <h3>Resource Modules</h3>
+                  <p>Optimizing Capacity & Product</p>
                 </div>
               </div>
               <div class="module-grid">
@@ -401,8 +414,8 @@
               <div class="mp-header">
                 <div class="mp-letter">I</div>
                 <div class="mp-title-block">
-                  <h3>Implementation</h3>
-                  <p>Do teams execute the same way?</p>
+                  <h3>Implementation Modules</h3>
+                  <p>Process & Execution Rhythm</p>
                 </div>
               </div>
               <div class="module-grid">
@@ -425,8 +438,8 @@
               <div class="mp-header">
                 <div class="mp-letter">P</div>
                 <div class="mp-title-block">
-                  <h3>Performance</h3>
-                  <p>Does it deliver results?</p>
+                  <h3>Performance Modules</h3>
+                  <p>Governance & Data</p>
                 </div>
               </div>
               <div class="module-grid">
@@ -453,34 +466,29 @@
       <h2>Frequently Asked Questions</h2>
       
       <details>
+        <summary>Why is the Execution Partnership "Gated"?</summary>
+        <p>We do not believe in ad-hoc consulting. To support a team effectively, we must first agree on the diagnosis. The Intelligence Report provides that shared model. Without it, advisory becomes reactive and inefficient.</p>
+      </details>
+
+      <details>
         <summary>What is the difference between the GTM Score and the Intelligence Report?</summary>
         <p>The GTM Score is a free "pulse check" to see where you stand. The Intelligence Report (€1249) is a deep-dive, board-level diagnostic. It reveals the root causes, explains the constraints, and prioritises where improvement will have the highest return.</p>
       </details>
 
       <details>
-        <summary>Can we start with modules without the Report?</summary>
-        <p>It is possible, but not recommended. The Intelligence Report provides the context that makes each module precise. Without the diagnostic, teams often work on symptoms (e.g., "we need more leads") rather than root causes (e.g., "our positioning is unclear").</p>
-      </details>
-
-      <details>
-        <summary>How does Advisory support work?</summary>
-        <p>Advisory is for leaders who want an ongoing strategic partner. We work on a retainer basis to help you implement the GRIP system, make high-stakes decisions, and prepare for board meetings or fundraising events.</p>
+        <summary>Can we deploy System Modules without the Report?</summary>
+        <p>Technically yes, but it is not recommended. The Intelligence Report provides the context that makes each module precise. Without the diagnostic, teams often work on symptoms (e.g., "we need more leads") rather than root causes (e.g., "our positioning is unclear").</p>
       </details>
 
       <details>
         <summary>Do you offer fixed pricing?</summary>
-        <p>Yes. The GTM Score is free. The Intelligence Report and Modules have fixed prices. We believe in pricing for outcomes and clarity, not for hours spent.</p>
-      </details>
-
-      <details>
-        <summary>Is this suitable for early-stage startups?</summary>
-        <p>Yes. GRIP adapts to your stage. For early-stage companies, it creates the initial structure to avoid chaos. For scaling companies, it aligns teams and removes bottlenecks.</p>
+        <p>Yes. The GTM Score is free. The Intelligence Report and System Modules have fixed prices. We believe in pricing for outcomes and clarity, not for hours spent.</p>
       </details>
     </section>
 
     <section class="cta-section">
       <div class="container">
-        <h2>Start with a shared model.</h2>
+        <h2>Stop guessing. Start building.</h2>
         <p style="max-width:600px; margin:0 auto 30px;">
           Begin with the Free GTM Score to see where you stand, or purchase the Intelligence Report for a complete diagnosis.
         </p>
