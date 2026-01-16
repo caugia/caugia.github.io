@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,7 +26,7 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
       --max:1200px;
     }
 
@@ -59,18 +59,21 @@
       padding:0 24px;
     }
 
-    section{ padding:84px 0; }
+    section{ padding:80px 0; }
 
-    /* BUTTONS */
+    /* BUTTONS (STATIC) */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; 
+      white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+    .btn-primary:hover{ background:#003370; }
+
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
     /* HEADER */
     header{
@@ -85,10 +88,13 @@
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
     .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* --- PAGE SPECIFIC --- */
 
     /* CONTACT LAYOUT */
     .contact-grid {
@@ -128,7 +134,7 @@
     }
     .form-input:focus, .form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
     
-    /* Footer */
+    /* Footer CTA */
     .section-dark { background: #0f172a; color: var(--white); padding: 80px 0; margin-top: 80px; text-align: center; }
     .section-dark h2 { color: var(--white); margin-bottom: 24px; }
     .section-dark p { color: #94a3b8; max-width: 600px; margin: 0 auto 32px; }
@@ -140,6 +146,7 @@
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
       .form-card { padding: 24px; }
+      .contact-hero h1 { font-size: 2.5rem; }
     }
   </style>
 </head>
@@ -209,7 +216,7 @@
               <div class="contact-icon">💼</div>
               <div class="contact-text">
                 <h4>Support</h4>
-                <p>For report or assessment questions, please email support directly.</p>
+                <p>For report or assessment questions, please email <a href="support.html">support</a> directly.</p>
               </div>
             </div>
           </div>
@@ -265,13 +272,13 @@
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
-      if (!toggle || !mobileNav) return;
-
-      toggle.addEventListener("click", () => {
-        const open = mobileNav.style.display === "block";
-        mobileNav.style.display = open ? "none" : "block";
-        toggle.innerText = open ? "Close" : "Menu";
-      });
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
     })();
   </script>
 </body>
