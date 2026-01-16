@@ -17,7 +17,6 @@
 
   <style>
     /* --- V3 CORE SYSTEM (MASTER CSS) --- */
-    /* Dit is exact dezelfde CSS basis als de Index voor consistentie */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -71,11 +70,11 @@
       border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; /* GEEN transform hier meer */ }
+    .btn-primary:hover{ background:#003370; }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
-    /* HEADER (IDENTIEK AAN INDEX) */
+    /* HEADER */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
@@ -102,7 +101,7 @@
     /* SERVICES GRID - STATIC & ALIGNED */
     .services-grid{
       display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
-      align-items: stretch; /* Zorgt dat kaarten even hoog zijn */
+      align-items: stretch; /* Cards stretch to same total height */
     }
     
     .service-card{
@@ -112,16 +111,13 @@
       padding:40px 32px;
       box-shadow:var(--shadow-sm);
       display:flex; flex-direction:column;
-      /* GEEN TRANSITIONS OP TRANSFORM MEER */
       height: 100%;
     }
-    /* Geen beweging bij hover, alleen schaduw */
     .service-card:hover{ box-shadow:var(--shadow-card); border-color:#cbd5e1; }
 
-    /* Flagship Styling (Middelste kaart) */
+    /* Flagship Styling */
     .card-flagship {
-      border: 2px solid var(--primary); /* Alleen de rand maakt het verschil */
-      /* GEEN SCALE MEER */
+      border: 2px solid var(--primary);
       background: #fff;
       z-index: 1;
     }
@@ -146,14 +142,18 @@
     /* ALIGNMENT FIX: Vaste hoogte voor tekstblokken */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
-      min-height: 140px; /* Dwingt uitlijning af voor de prijzen */
+      min-height: 140px; 
     }
     
-    /* ALIGNMENT FIX: Duwt de actions (prijs+knop) naar beneden */
     .service-actions { margin-top: auto; }
 
-    .service-price{ font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; display:block; min-height: 32px; }
-    .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; margin-left: 4px; }
+    /* Prijs Styling: Flexbox voor alignment */
+    .service-price{ 
+        font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
+        display:flex; align-items: baseline; gap: 6px; 
+        min-height: 32px;
+    }
+    .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; }
     
     .service-features{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line); }
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
@@ -161,7 +161,7 @@
     
     .card-gated .service-features li::before { color: #cbd5e1; }
 
-    /* MARKETPLACE UPGRADE */
+    /* MARKETPLACE */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -184,7 +184,6 @@
     .module-item {
       display: flex; align-items: center; gap: 16px; padding: 16px;
       border: 1px solid #f1f5f9; border-radius: 8px; background: #fff;
-      /* GEEN TRANSITIONS */
     }
     .module-item:hover {
       border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); 
@@ -275,7 +274,10 @@
           <p class="service-desc">A structured five-minute assessment of your GTM system. Quantifies maturity and highlights friction points instantly.</p>
           
           <div class="service-actions">
-            <span class="service-price">Free</span>
+            <span class="service-price">
+              Free 
+              <span class="price-sub" style="opacity:0;">Spacer</span>
+            </span>
             <a href="gtm-assessment.html" class="btn btn-outline" style="width:100%;">Start Assessment</a>
             <ul class="service-features">
               <li>12-pillar maturity score</li>
@@ -319,13 +321,18 @@
           </p>
           
           <div class="service-actions">
-            <span class="service-price">Custom <span class="price-sub">Fractional Retainer</span></span>
+            <span class="service-price">
+              Custom 
+              <span class="price-sub">Fractional Retainer</span>
+            </span>
+            
             <a href="contact.html?type=partner" class="btn btn-outline" style="width:100%; border-style:dashed;">Apply for Partnership</a>
             <div style="text-align:center; font-size:0.75rem; color:#94a3b8; margin-top:8px; font-weight:600;">* Requires Intelligence Report</div>
             
             <ul class="service-features">
               <li>Bi-weekly Strategic Sprints</li>
-              <li><strong>Board & Investor Alignment</strong></li> <li>GTM Org Design & Hiring Support</li>
+              <li>Board & Investor Alignment</li>
+              <li>GTM Org Design & Hiring Support</li>
               <li>Invitation Only</li>
               <li style="visibility:hidden;"> spacer</li>
             </ul>
