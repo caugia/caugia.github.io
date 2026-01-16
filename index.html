@@ -17,7 +17,7 @@
   <script src="assets/currency.js"></script>
 
   <style>
-    /* --- V3 CORE SYSTEM (EXACT COPY FROM SERVICES.HTML) --- */
+    /* --- V3 CORE SYSTEM (NO MOVEMENT EDITION) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -69,19 +69,26 @@
 
     section{ padding:80px 0; }
 
-    /* BUTTONS (UPDATED TO V3 SIZE) */
+    /* BUTTONS - 100% STATIC */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 32px; /* Aangepast naar 14/32 voor consistentie */
+      padding:14px 32px; 
       border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; /* Alleen kleur transition */
+      white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    
+    /* FIX: Geen transform meer */
+    .btn-primary:hover{ background:#003370; } 
+    
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+    
+    /* FIX: Geen transform meer */
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
-    /* HEADER (V3 STANDAARD) */
+    /* HEADER */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
@@ -100,7 +107,7 @@
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
     .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
-    /* --- HOME SPECIFIC --- */
+    /* --- PAGE CONTENT --- */
 
     /* Hero */
     .hero{
@@ -115,7 +122,6 @@
     .hero h1{ font-size:3.5rem; line-height:1.1; margin-bottom:24px; }
     .hero-desc{ font-size:1.25rem; line-height:1.6; color:var(--text-body); margin-bottom:32px; }
     
-    /* Pillars Card */
     .pillars-card{
       background:var(--white); border:1px solid rgba(15,23,42,0.04);
       border-radius:var(--radius-md); padding:30px; box-shadow:var(--shadow-sm);
@@ -126,7 +132,7 @@
     .pillar-item{ display:grid; grid-template-columns:24px 1fr; gap:10px; align-items:baseline; }
     .pillar-num{ font-weight:800; color:#cbd5e1; text-align:right; font-size:0.8rem; }
 
-    /* --- WIDGET STYLING --- */
+    /* Widget */
     .widget-card{
       background:var(--white); border-radius:var(--radius-lg); border:1px solid rgba(15,23,42,0.05);
       box-shadow:var(--shadow-lg); padding:36px;
@@ -137,7 +143,6 @@
     .health-sub{ font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-top:4px; }
     .health-score{ font-size:3.5rem; font-weight:800; color:var(--primary); line-height:1; }
 
-    /* Insight Box */
     .insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.3s ease; }
     .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
@@ -157,7 +162,6 @@
     .mode-mid .insight-title  { color: #0c4a6e; }
     .insight-text { font-size: 0.85rem; color: #334155; line-height: 1.5; min-height: 3.2em; }
 
-    /* Widget Controls */
     .widget-layout{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:24px; align-items:center; }
     .controls-col{ min-width:0; }
     .control-group{ margin-bottom:18px; }
@@ -172,7 +176,7 @@
     .chart-box{ width:100%; height:200px; display: flex; justify-content: center; }
     .widget-caption{ text-align:center; margin-top:20px; color:#94a3b8; font-weight:600; font-size:0.8rem; }
 
-    /* SECTIONS */
+    /* Sections */
     .section-white{ background:var(--white); }
     .section-gray { background:#f8fafc; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
     .section-dark{ background:#0f172a; color:var(--white); }
@@ -184,7 +188,7 @@
     .mini-card h4{ font-family:Inter, sans-serif; font-weight:800; font-size:1.05rem; margin-bottom:10px; }
     .mini-card p{ margin:0; font-size:0.95rem; line-height:1.5; color:var(--text-body); }
 
-    /* COMPARISON TABLE */
+    /* Comparison Table */
     .comparison-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; max-width:1000px; margin:0 auto; }
     .comp-col-left { padding:0 24px; opacity:0.7; border-right:1px solid var(--line); }
     .comp-col-right { background:white; padding:40px; border-radius:24px; box-shadow:var(--shadow-lg); border:1px solid rgba(0,86,179,0.15); position:relative; overflow:hidden; }
@@ -193,7 +197,7 @@
     .comp-label { font-weight: 600; color: #334155; }
     .comp-val { font-weight: 700; color: #0f172a; text-align: right; }
 
-    /* REPORT SECTION */
+    /* Report Section */
     .report-layout{ display:grid; grid-template-columns:1fr 1fr; gap:74px; align-items:center; }
     .check-list{ margin-top:18px; margin-bottom:28px; padding:0; }
     .check-list li{ display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; font-weight:600; color:#e2e8f0; font-size:1rem; }
@@ -202,7 +206,7 @@
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    /* --- MOBILE RESPONSIVENESS --- */
+    /* Media Queries */
     @media (max-width: 980px){
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
@@ -507,7 +511,6 @@
   </footer>
 
   <script>
-    // MOBILE NAV LOGIC
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
@@ -520,14 +523,12 @@
       }
     })();
 
-    // ADVANCED ARCHETYPE LOGIC (CHART.JS)
     (function () {
       const canvas = document.getElementById("radarChart");
       if (!canvas) return;
 
       const ctx = canvas.getContext("2d");
 
-      // Chart Config
       const myChart = new Chart(ctx, {
         type: "radar",
         data: {
@@ -545,136 +546,43 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
-          },
+          plugins: { legend: { display: false }, tooltip: { enabled: true } },
           scales: {
             r: {
-              suggestedMin: 0,
-              suggestedMax: 100,
+              suggestedMin: 0, suggestedMax: 100,
               ticks: { display: false, count: 5 }, 
               angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
               grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
-              pointLabels: {
-                color: "#0056b3",
-                font: { size: 14, weight: "800", family: "Inter" },
-                padding: 10
-              }
+              pointLabels: { color: "#0056b3", font: { size: 14, weight: "800", family: "Inter" }, padding: 10 }
             }
           },
           elements: { line: { tension: 0.2 } } 
         }
       });
       
-      // LOGIC: Determining the Primary Constraint
       function getArchetype(g, r, i, p) {
-        const scores = [
-          { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
-        ];
-        // Sort lowest to highest
+        const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
         scores.sort((a, b) => a.v - b.v);
-        
         const avg = (g+r+i+p)/4;
         const lowest = scores[0];
-        const secondLowest = scores[1];
         const highest = scores[3];
 
-        // 1. SYSTEMIC STATES (Extremes)
-        if (avg < 35) return { 
-          title: "The Stalled Engine", 
-          body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", 
-          mode: "mode-bad" 
-        };
-        if (avg < 45 && highest.v < 60) return {
-          title: "The Fragile Foundation",
-          body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.",
-          mode: "mode-bad"
-        };
-        if (avg > 85) return { 
-          title: "The Precision Machine", 
-          body: "Elite performance. Focus on incremental optimization and expansion.", 
-          mode: "mode-good" 
-        };
-        if (avg > 75 && lowest.v > 65) return {
-          title: "The Balanced Engine",
-          body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
-          mode: "mode-good" 
-        };
+        if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
+        if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
+        if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
+        if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
 
-        // 2. CONSTRAINT LOGIC
-        
-        // --- GUIDANCE IS LOWEST ---
-        if (lowest.k === 'g') {
-           if (highest.k === 'i' && highest.v > 65) return {
-             title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn"
-           };
-           if (highest.k === 'r' && highest.v > 65) return {
-             title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn"
-           };
-           if (secondLowest.k === 'p') return {
-             title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad"
-           };
-           return {
-             title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn"
-           };
-        }
+        if (lowest.k === 'g') return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
+        if (lowest.k === 'r') return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
+        if (lowest.k === 'i') return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
+        if (lowest.k === 'p') return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
 
-        // --- RESOURCES IS LOWEST ---
-        if (lowest.k === 'r') {
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn"
-           };
-           if (highest.k === 'i' && highest.v > 70) return {
-             title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad"
-           };
-           if (secondLowest.k === 'p') return {
-             title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad"
-           };
-           return {
-             title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn"
-           };
-        }
-
-        // --- IMPLEMENTATION IS LOWEST ---
-        if (lowest.k === 'i') {
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad"
-           };
-           if (highest.k === 'p' && highest.v > 60) return {
-             title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn"
-           };
-           if (secondLowest.k === 'r') return {
-             title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad"
-           };
-           return {
-             title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn"
-           };
-        }
-
-        // --- PERFORMANCE IS LOWEST ---
-        if (lowest.k === 'p') {
-           if (highest.k === 'i' && highest.v > 70) return {
-             title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad"
-           };
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn"
-           };
-           if (highest.k === 'r' && highest.v > 70) return {
-             title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad"
-           };
-           return {
-             title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid"
-           };
-        }
-
-        // Fallback
         return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
       }
 
       function updateSliderColor(id, val) {
         const el = document.getElementById(id);
-        el.className = ""; // reset
+        el.className = ""; 
         if(val < 50) el.classList.add("range-bad");
         else if(val < 70) el.classList.add("range-warn");
       }
@@ -700,16 +608,11 @@
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
         
-        // UPDATE ARCHETYPE UI
         const arch = getArchetype(g, r, i, p);
         const boxEl = document.getElementById("archetypeBox");
-        
         document.getElementById("archetypeTitle").textContent = arch.title;
         document.getElementById("archetypeBody").textContent = arch.body;
-        
-        // Remove old mode classes
         boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
-        // Add new mode class
         boxEl.classList.add(arch.mode);
       }
 
