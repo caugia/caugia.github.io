@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- CORE STYLES (V3 SYSTEM) --- */
+    /* --- V3 CORE SYSTEM (EXACT COPY FOR CONSISTENCY) --- */
     :root{
       --primary:#0056b3;
       --primary-light:#e0f2fe;
@@ -24,10 +24,10 @@
       --bg:#f8fafc;
       --white:#ffffff;
       --line:#e2e8f0;
-      --radius-md:16px;
-      --radius-lg:24px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.03);
-      --shadow-hover:0 20px 40px -5px rgba(0,50,150,0.1);
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
       --max:1200px;
     }
 
@@ -60,18 +60,21 @@
       padding:0 24px;
     }
 
-    section{ padding:84px 0; }
+    section{ padding:80px 0; }
 
-    /* BUTTONS */
+    /* BUTTONS (STATIC) */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; 
+      white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,86,179,0.25); }
-    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); }
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-2px); }
+    .btn-primary:hover{ background:#003370; } 
+
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
     /* HEADER */
     header{
@@ -86,14 +89,17 @@
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
     .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
+    /* --- PAGE SPECIFIC --- */
+
     /* HERO */
     .resource-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
-    .resource-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; background: -webkit-linear-gradient(45deg, var(--text-dark), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .resource-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
     .resource-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
     /* RESOURCE SECTIONS */
@@ -116,16 +122,15 @@
       border-radius: var(--radius-md);
       padding: 32px;
       display: flex; flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: var(--shadow-sm);
       position: relative;
       overflow: hidden;
+      /* NO TRANSITION ON TRANSFORM */
     }
     
     .resource-card:hover { 
-      transform: translateY(-8px); 
-      box-shadow: var(--shadow-hover); 
-      border-color: var(--primary-light);
+      box-shadow: var(--shadow-card); 
+      border-color: #cbd5e1;
     }
 
     .resource-tag { 
@@ -134,7 +139,7 @@
       text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; align-self: flex-start;
     }
     
-    .resource-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); transition: color 0.2s; }
+    .resource-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); }
     .resource-card:hover h3 { color: var(--primary); }
 
     .resource-card p { font-size: 0.95rem; color: var(--text-body); flex-grow: 1; margin-bottom: 24px; }
@@ -143,16 +148,15 @@
       font-weight: 700; color: var(--text-dark); display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; 
       transition: gap 0.2s, color 0.2s;
     }
-    .card-link span { font-size: 1.2rem; line-height: 1; color: var(--primary); transition: transform 0.2s; }
+    .card-link span { font-size: 1.2rem; line-height: 1; color: var(--primary); }
     .resource-card:hover .card-link { color: var(--primary); gap: 12px; }
-    .resource-card:hover .card-link span { transform: translateX(2px); }
 
     /* COMING SOON VARIANT */
     .card-locked {
       background: #f8fafc; border-style: dashed; border-color: #cbd5e1;
-      pointer-events: none; opacity: 1;
+      pointer-events: none; opacity: 0.8;
     }
-    .card-locked:hover { transform: none; box-shadow: none; border-color: #cbd5e1; }
+    .card-locked:hover { box-shadow: none; border-color: #cbd5e1; }
     
     .tag-coming { background: #e2e8f0; color: #64748b; border: 1px solid #cbd5e1; }
     .muted-text { color: #94a3b8 !important; }
@@ -277,7 +281,7 @@
             <span class="resource-tag">Modular Deep Dives</span>
             <h3>The 12 GTM Modules</h3>
             <p>Structured fix-it packages for specific constraints. From pricing strategy to sales enablement.</p>
-            <a href="modules.html" class="card-link">View Modules <span>→</span></a>
+            <a href="services.html#marketplace" class="card-link">View Modules <span>→</span></a>
           </article>
 
           <article class="resource-card card-locked">
@@ -353,14 +357,13 @@
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
-      if (!toggle || !mobileNav) return;
-
-      toggle.addEventListener("click", () => {
-        const open = mobileNav.style.display === "block";
-        mobileNav.style.display = open ? "none" : "block";
-        toggle.setAttribute("aria-expanded", String(!open));
-        toggle.innerText = open ? "Menu" : "Close";
-      });
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
     })();
   </script>
 </body>
