@@ -20,7 +20,6 @@
 
   <script src="/auth.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  
   <script src="assets/currency.js"></script>
 
   <script type="application/ld+json">
@@ -141,7 +140,6 @@
     /* HERO VISUAL ENGINE */
     .hero-visual-wrapper { position: relative; z-index: 1; }
     
-    /* FIX: Added z-index and solid background to prevent bleed-through */
     .report-card-ui {
       background: var(--white); border: 1px solid rgba(15,23,42,0.08); border-radius: 20px;
       box-shadow: var(--shadow-lg); padding: 40px; position: relative; overflow: hidden;
@@ -167,7 +165,6 @@
     }
     .ui-icon { color: var(--primary); font-weight: 800; font-size: 1.1rem; line-height: 1; }
 
-    /* FIX: Increased z-index to ensure it's always on top */
     .float-badge {
       position: absolute; top: -20px; right: -20px;
       background: var(--text-dark); color: white; padding: 12px 20px; border-radius: 12px;
@@ -185,18 +182,15 @@
     .check-list li { margin-bottom: 12px; font-size: 1rem; color: var(--text-body); padding-left: 28px; position: relative; }
     .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 800; top: 1px; }
 
-    /* UPLIFTED Concept Visualization */
     .concept-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
     .concept-img { 
       background: #f1f5f9; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); 
       display: flex; flex-direction: column;
     }
-    /* FIX: Enhanced styling for the gray area */
     .concept-ui { 
       padding: 40px; flex-grow: 1; display: flex; align-items: center; justify-content: center; 
       background: linear-gradient(145deg, #f8fafc, #f1f5f9);
     }
-    /* FIX: New classes for premium "card-in-card" look */
     .concept-diamond-card {
       width: 160px; height: 160px; background: var(--white); border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
@@ -211,9 +205,7 @@
       border-top: 1px solid var(--line); 
     }
 
-    /* FAQ Details */
     .faq-section { max-width: 800px; margin: 0 auto; }
-    /* FIX: Increased margin below the FAQ heading */
     .faq-section h2 { text-align: center; margin-bottom: 64px; }
     details { border-bottom: 1px solid var(--line); padding: 24px 0; }
     summary { font-weight: 700; font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
@@ -222,7 +214,7 @@
     details[open] summary::after { content: "−"; }
     details p { margin-top: 16px; font-size: 1rem; color: var(--text-body); line-height: 1.6; max-width: 90%; }
 
-    /* REDESIGNED Left-Aligned Bottom CTA */
+    /* CTA */
     .cta-section {
       margin-top: 80px; padding-top: 80px; padding-bottom: 80px;
       border-top: 1px solid var(--line); background: var(--white);
@@ -288,20 +280,16 @@
         </p>
 
         <div class="pricing-lockup">
-          <div id="price-container" style="opacity:0; transition: opacity 0.3s ease;">
-            <div class="price-main">
-              <span id="display-price">€1249</span> 
-            </div>
-            <div class="price-sub">
-              One-time assessment fee.<br>
-              <strong id="display-value-text">Equivalent to a €15k+ Diagnostic.</strong>
-            </div>
+          <div class="price-main" id="display-price">€1249</div>
+          <div class="price-sub">
+            One-time assessment fee.<br>
+            <strong id="display-value-text">Equivalent to a €15k+ Diagnostic.</strong>
           </div>
         </div>
 
         <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
           <button id="stripeCheckoutBtnTop" class="btn btn-primary" style="padding:16px 36px; font-size:1.05rem;">
-            Begin Diagnostic (<span id="btn-price">€1249</span>)
+            Begin Diagnostic
           </button>
           <a href="assets/sample-report-locked.pdf" target="_blank" class="btn btn-outline" style="display:flex; gap:10px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -437,7 +425,7 @@
           Secure payment via Stripe. No login required. You receive immediate access to the diagnostic platform.
         </p>
         <button id="stripeCheckoutBtn" class="btn btn-primary" style="font-size:1.1rem; padding:18px 48px;">
-          Proceed to Checkout (<span id="btn-price">€1249</span>)
+          Proceed to Checkout
         </button>
         <div class="cta-foot">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -472,8 +460,7 @@
     const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
 
     function startCheckout() {
-      // Use the GLOBAL price ID set by currency.js
-      // If undefined (e.g. adblocker killed script), fallback to Euro ID
+      // Gebruik de global variabele van currency.js, of fallback op Euro ID
       const priceId = window.CURRENT_STRIPE_PRICE_ID || "price_REPLACE_WITH_EUR_ID";
 
       stripe.redirectToCheckout({
