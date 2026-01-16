@@ -15,6 +15,28 @@
 
   <script src="assets/currency.js"></script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "GTM Consulting",
+    "provider": {
+      "@type": "ConsultingFirm",
+      "name": "Caugia Consulting"
+    },
+    "areaServed": "Global",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "GTM Intelligence Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Score" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Intelligence Report" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "System Modules" } }
+      ]
+    }
+  }
+  </script>
+
   <style>
     /* --- V3 CORE SYSTEM (MASTER CSS) --- */
     :root{
@@ -139,19 +161,23 @@
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
     
-    /* ALIGNMENT FIX: Vaste hoogte voor tekstblokken */
+    /* GOD MODE ALIGNMENT FIX */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
-      min-height: 140px; 
+      /* Dwingt elke beschrijving om minimaal 160px te zijn. 
+         Dit duwt de prijzen van 'Free' en 'Custom' naar beneden 
+         zodat ze matchen met de middelste kaart. */
+      min-height: 160px; 
     }
     
     .service-actions { margin-top: auto; }
 
-    /* Prijs Styling: Flexbox voor alignment */
+    /* PRIJS ALIGNMENT FIX */
     .service-price{ 
-        font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
-        display:flex; align-items: baseline; gap: 6px; 
-        min-height: 32px;
+      font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
+      display:flex; align-items: baseline; gap: 6px; 
+      /* Dwingt een vaste hoogte voor het prijsblok, zodat knoppen uitlijnen */
+      min-height: 54px; 
     }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; }
     
@@ -161,7 +187,7 @@
     
     .card-gated .service-features li::before { color: #cbd5e1; }
 
-    /* MARKETPLACE */
+    /* MARKETPLACE UPGRADE */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -217,6 +243,9 @@
     @media (max-width: 1024px){
       .services-grid{ grid-template-columns:1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
       .mp-container { grid-template-columns: 1fr; }
+      
+      /* OP MOBIEL WIL JE GEEN VASTE HOOGTES */
+      .service-desc, .service-price { min-height: auto; }
     }
     @media (max-width: 768px){
       .nav-links{ display:none; }
