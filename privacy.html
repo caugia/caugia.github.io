@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,8 +26,8 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-      --max:800px; /* Optimal reading width */
+      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px; /* Standard Layout Width */
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -37,7 +37,7 @@
       font-family:Inter, sans-serif;
       background:var(--bg);
       color:var(--text-dark);
-      line-height:1.7;
+      line-height:1.7; /* Slightly increased for long-form reading */
       -webkit-font-smoothing:antialiased;
     }
 
@@ -49,30 +49,30 @@
     }
 
     p{ color:var(--text-body); margin-bottom:1.5rem; }
-    p:last-child{ margin-bottom:0; }
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
-    /* LAYOUT UTILS */
     .container{
       max-width:var(--max);
       margin:0 auto;
       padding:0 24px;
     }
-    .container-wide{
-      max-width: 1200px; margin: 0 auto; padding: 0 24px;
-    }
 
-    section{ padding:60px 0; }
+    section{ padding:80px 0; }
 
-    /* BUTTONS */
+    /* BUTTONS (STATIC) */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 28px; border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; 
+      white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-primary:hover{ background:#003370; }
+
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
     /* HEADER */
     header{
@@ -85,18 +85,20 @@
     .brand img{ width:32px; height:32px; display:block; }
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
-    .nav-links a:hover{ color:var(--primary); }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
-    /* PAGE SPECIFIC */
-    .policy-hero { text-align: center; padding: 80px 0 60px; }
-    .policy-hero h1 { font-size: 3rem; margin-bottom: 16px; }
-    .policy-hero p { font-size: 1.15rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
+    /* --- PAGE SPECIFIC --- */
 
-    /* LEGAL DOCUMENT CARD */
+    .policy-hero { text-align: center; padding: 80px 0 60px; max-width: 800px; margin: 0 auto; }
+    .policy-hero h1 { font-size: 3rem; margin-bottom: 24px; line-height: 1.1; }
+    .policy-hero p { font-size: 1.15rem; color: var(--text-body); }
+
     .policy-card {
       background: var(--white);
       border: 1px solid var(--line);
@@ -104,6 +106,8 @@
       padding: 60px;
       box-shadow: var(--shadow-sm);
       margin-bottom: 80px;
+      max-width: 800px; /* Optimal reading width for legal text */
+      margin-left: auto; margin-right: auto;
     }
 
     .policy-section {
@@ -120,22 +124,13 @@
     }
 
     .policy-list {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0;
+      list-style: none; padding: 0; margin: 20px 0;
     }
     .policy-list li {
-      position: relative;
-      padding-left: 24px;
-      margin-bottom: 10px;
-      color: var(--text-body);
+      position: relative; padding-left: 24px; margin-bottom: 10px; color: var(--text-body);
     }
     .policy-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      color: var(--primary);
-      font-weight: 900;
+      content: "•"; position: absolute; left: 6px; color: var(--primary); font-weight: 900;
     }
     .policy-list strong { color: var(--text-dark); }
 
@@ -152,7 +147,7 @@
 
 <body>
   <header>
-    <div class="container-wide nav">
+    <div class="container nav">
       <a class="brand" href="index.html">
         <img src="assets/C-logo.png" alt="Caugia" />
         <span>CAUGIA CONSULTING</span>
@@ -170,7 +165,7 @@
       </div>
     </div>
     
-    <div class="container-wide mobile-nav" id="mobileNav">
+    <div class="container mobile-nav" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
@@ -314,13 +309,13 @@
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
-      if (!toggle || !mobileNav) return;
-
-      toggle.addEventListener("click", () => {
-        const open = mobileNav.style.display === "block";
-        mobileNav.style.display = open ? "none" : "block";
-        toggle.innerText = open ? "Close" : "Menu";
-      });
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
     })();
   </script>
 </body>
