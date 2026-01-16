@@ -7,16 +7,17 @@
   <title>Caugia Consulting | The GTM Intelligence Engine</title>
   <meta name="description" content="Replace weeks of expensive discovery with one intelligent assessment. The Caugia Intelligence Engine analyzes your revenue architecture instantly." />
 
-  <link rel="icon" href="assets/C-logo.png" type="image/png" sizes="512x512" />
-  <link rel="apple-touch-icon" href="assets/C-logo.png" />
-
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/currency.js"></script>
 
   <style>
+    /* --- V3 CORE SYSTEM (EXACT COPY FROM SERVICES.HTML) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -28,10 +29,10 @@
       --radius-md:14px;
       --radius-lg:22px;
       --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
       --max:1200px;
-      
-      /* Status Colors */
+
+      /* Widget Specific Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
@@ -39,9 +40,10 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
     body{
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family:Inter, sans-serif;
       background:var(--bg);
       color:var(--text-dark);
       line-height:1.6;
@@ -55,7 +57,7 @@
       letter-spacing:-0.02em;
     }
 
-    p{ color:var(--text-body); }
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
@@ -65,331 +67,109 @@
       padding:0 24px;
     }
 
-    section{ padding:84px 0; }
+    section{ padding:80px 0; }
 
-    /* BUTTONS */
+    /* BUTTONS (UPDATED TO V3 SIZE) */
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 28px;
-      border-radius:999px;
-      font-weight:700;
-      font-size:0.95rem;
-      border:1px solid transparent;
-      cursor:pointer;
-      transition:all 0.2s ease;
-      white-space:nowrap;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 32px; /* Aangepast naar 14/32 voor consistentie */
+      border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
-    .btn-primary{
-      background:var(--primary-dark);
-      color:var(--white);
-      box-shadow:0 4px 12px rgba(0,86,179,0.15);
-    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
 
-    .btn-outline{
-      background:transparent;
-      color:var(--primary);
-      border-color:var(--line);
-    }
-    .btn-outline:hover{
-      background:var(--white);
-      border-color:var(--primary);
-      transform:translateY(-1px);
-    }
-
-    /* HEADER */
+    /* HEADER (V3 STANDAARD) */
     header{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:rgba(248,250,252,0.95);
-      backdrop-filter:blur(12px);
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{
-      height:80px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:900;
-      letter-spacing:0.02em;
-    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
     .brand img{ width:32px; height:32px; display:block; }
-    .nav-links{
-      display:flex;
-      gap:32px;
-      align-items:center;
-    }
-    .nav-links a{
-      color:var(--text-body);
-      font-weight:600;
-      font-size:0.95rem;
-      transition:color 0.15s ease;
-    }
-    .nav-links a:hover{ color:var(--primary); }
-
-    .menu-toggle{
-      display:none;
-      border:1px solid var(--line);
-      background:var(--white);
-      border-radius:8px;
-      padding:8px 12px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .mobile-nav{
-      display:none;
-      border-top:1px solid rgba(15,23,42,0.06);
-      padding:14px 0 18px;
-    }
-    .mobile-nav a{
-      display:block;
-      padding:12px 10px;
-      border-radius:8px;
-      font-weight:700;
-      color:var(--text-body);
-    }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      padding:10px 10px 0;
-    }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
 
-    /* HERO */
+    /* --- HOME SPECIFIC --- */
+
+    /* Hero */
     .hero{
       padding:68px 0 96px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:64px;
-      align-items:start;
+      display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;
     }
     .eyebrow{
-      display:block;
-      text-transform:uppercase;
-      letter-spacing:0.1em;
-      font-size:0.8rem;
-      color:var(--primary);
-      font-weight:800;
-      margin-bottom:16px;
+      display:inline-block; text-transform:uppercase; letter-spacing:0.1em;
+      font-size:0.75rem; color:var(--primary); font-weight:800; margin-bottom:16px;
+      background:#eff6ff; padding:6px 12px; border-radius:4px;
     }
-    .hero h1{
-      font-size:3.25rem;
-      line-height:1.1;
-      margin-bottom:24px;
-    }
-    .hero-desc{
-      font-size:1.1rem;
-      margin-bottom:20px;
-      max-width:580px;
-      color:#475569;
-    }
-    .hero-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-top:24px;
-      margin-bottom:40px;
-    }
-
-    /* PILLARS */
+    .hero h1{ font-size:3.5rem; line-height:1.1; margin-bottom:24px; }
+    .hero-desc{ font-size:1.25rem; line-height:1.6; color:var(--text-body); margin-bottom:32px; }
+    
+    /* Pillars Card */
     .pillars-card{
-      background:var(--white);
-      border:1px solid rgba(15,23,42,0.04);
-      border-radius:var(--radius-md);
-      padding:30px;
-      box-shadow:var(--shadow-sm);
-      border-left:4px solid var(--primary);
+      background:var(--white); border:1px solid rgba(15,23,42,0.04);
+      border-radius:var(--radius-md); padding:30px; box-shadow:var(--shadow-sm);
+      border-left:4px solid var(--primary); margin-top: 40px;
     }
-    .pillars-card h3{
-      font-family:Inter, sans-serif;
-      font-weight:800;
-      font-size:1.05rem;
-      margin-bottom:20px;
-    }
-    .pillar-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px 32px;
-      font-size:0.9rem;
-      color:#334155;
-    }
-    .pillar-col{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .pillar-item{
-      display:grid;
-      grid-template-columns:24px 1fr;
-      gap:10px;
-      align-items:baseline;
-    }
-    .pillar-num{
-      font-weight:800;
-      color:#cbd5e1;
-      text-align:right;
-      font-size:0.8rem;
-    }
+    .pillars-card h3{ font-family:Inter, sans-serif; font-weight:800; font-size:1.05rem; margin-bottom:20px; }
+    .pillar-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 32px; font-size:0.9rem; color:#334155; }
+    .pillar-item{ display:grid; grid-template-columns:24px 1fr; gap:10px; align-items:baseline; }
+    .pillar-num{ font-weight:800; color:#cbd5e1; text-align:right; font-size:0.8rem; }
 
     /* --- WIDGET STYLING --- */
     .widget-card{
-      background:var(--white);
-      border-radius:var(--radius-lg);
-      border:1px solid rgba(15,23,42,0.05);
-      box-shadow:var(--shadow-lg);
-      padding:36px;
-      position:sticky;
-      top:110px;
-      overflow:hidden;
+      background:var(--white); border-radius:var(--radius-lg); border:1px solid rgba(15,23,42,0.05);
+      box-shadow:var(--shadow-lg); padding:36px;
+      position:sticky; top:110px; overflow:hidden; z-index: 10;
     }
+    .health-header{ display:flex; justify-content:space-between; align-items:flex-end; gap:18px; padding-bottom:20px; border-bottom:1px solid var(--line); margin-bottom:24px; }
+    .health-title{ font-family:Inter, sans-serif; font-weight:800; font-size:1.15rem; color:#1e293b; }
+    .health-sub{ font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-top:4px; }
+    .health-score{ font-size:3.5rem; font-weight:800; color:var(--primary); line-height:1; }
 
-    .health-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:18px;
-      padding-bottom:20px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:24px;
-    }
-    .health-title{
-      font-family:Inter, sans-serif;
-      font-weight:800;
-      font-size:1.15rem;
-      letter-spacing:-0.01em;
-      color:#1e293b;
-    }
-    .health-sub{
-      font-size:0.75rem;
-      color:#94a3b8;
-      text-transform:uppercase;
-      letter-spacing:0.1em;
-      font-weight:700;
-      margin-top:4px;
-    }
-    .health-score{
-      font-size:3.5rem;
-      font-weight:800;
-      color:var(--primary);
-      line-height:1;
-      letter-spacing:-0.03em;
-    }
-
-    /* --- DYNAMIC INSIGHT BOX --- */
-    .insight-box {
-      border: 1px solid transparent;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
+    /* Insight Box */
+    .insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.3s ease; }
     .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
     .insight-box.mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
     .insight-box.mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
-
-    .insight-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      display: block;
-      margin-bottom: 4px;
-    }
+    
+    .insight-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
     .mode-good .insight-label { color: var(--good-text); }
     .mode-warn .insight-label { color: var(--warn-text); }
     .mode-bad .insight-label  { color: var(--bad-text); }
     .mode-mid .insight-label  { color: var(--mid-text); }
 
-    .insight-title {
-      font-weight: 800;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-      font-family: Inter, sans-serif;
-    }
+    .insight-title { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; font-family: Inter, sans-serif; }
     .mode-good .insight-title { color: #14532d; }
     .mode-warn .insight-title { color: #78350f; }
     .mode-bad .insight-title  { color: #7f1d1d; }
     .mode-mid .insight-title  { color: #0c4a6e; }
+    .insight-text { font-size: 0.85rem; color: #334155; line-height: 1.5; min-height: 3.2em; }
 
-    .insight-text {
-      font-size: 0.85rem;
-      color: #334155;
-      line-height: 1.5;
-      min-height: 3.2em; 
-    }
-
-    .widget-layout{
-      display:grid;
-      grid-template-columns:1.2fr 0.8fr; 
-      gap:24px;
-      align-items:center;
-    }
+    /* Widget Controls */
+    .widget-layout{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:24px; align-items:center; }
     .controls-col{ min-width:0; }
     .control-group{ margin-bottom:18px; }
-    .control-group:last-child{ margin-bottom:0; }
-    .control-label{
-      display:flex;
-      justify-content:space-between;
-      font-family:Inter, sans-serif;
-      font-weight:700;
-      font-size:0.9rem;
-      color:#475569;
-      margin-bottom:8px;
-    }
-    .control-label .value{
-      color:var(--text-dark);
-      font-feature-settings: "tnum";
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* SLIDERS */
+    .control-label{ display:flex; justify-content:space-between; font-family:Inter, sans-serif; font-weight:700; font-size:0.9rem; color:#475569; margin-bottom:8px; }
     .slider-wrap{ padding-right:10px; }
-    input[type=range]{
-      width:100%;
-      -webkit-appearance:none;
-      appearance:none;
-      height:4px; 
-      background:#e2e8f0;
-      border-radius:10px;
-      outline:none;
-    }
-    input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      width:16px; 
-      height:16px;
-      background:var(--primary);
-      border-radius:50%;
-      cursor:pointer;
-      border:3px solid var(--white);
-      box-shadow:0 2px 5px rgba(0,0,0,0.15);
-      margin-top:-6px;
-      transition: background 0.2s ease;
-    }
-    /* Dynamic slider colors */
+    
+    input[type=range]{ width:100%; -webkit-appearance:none; appearance:none; height:4px; background:#e2e8f0; border-radius:10px; outline:none; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; background:var(--primary); border-radius:50%; cursor:pointer; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); margin-top:-6px; transition: background 0.2s ease; }
     input.range-warn::-webkit-slider-thumb { background: #d97706; }
     input.range-bad::-webkit-slider-thumb { background: #dc2626; }
-
-    input[type=range]::-webkit-slider-runnable-track{
-      height:4px; border-radius:10px; background:#e2e8f0;
-    }
-
-    .chart-col{ display:flex; align-items:center; justify-content:center; }
-    .chart-box{ width:240px; height:240px; }
+    
+    .chart-box{ width:100%; height:200px; display: flex; justify-content: center; }
     .widget-caption{ text-align:center; margin-top:20px; color:#94a3b8; font-weight:600; font-size:0.8rem; }
 
     /* SECTIONS */
@@ -398,75 +178,49 @@
     .section-dark{ background:#0f172a; color:var(--white); }
     .section-dark h2{ color:var(--white); }
     .section-dark p{ color:#94a3b8; }
-    .section-lead{ max-width:820px; }
 
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:28px;
-      margin-top:38px;
-    }
-    .mini-card{
-      background:var(--white);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:24px;
-      box-shadow:var(--shadow-sm);
-    }
-    .mini-card h4{
-      font-family:Inter, sans-serif;
-      font-weight:800;
-      font-size:1.05rem;
-      margin-bottom:10px;
-    }
+    .grid-3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; margin-top:38px; }
+    .mini-card{ background:var(--white); border:1px solid var(--line); border-radius:16px; padding:24px; box-shadow:var(--shadow-sm); }
+    .mini-card h4{ font-family:Inter, sans-serif; font-weight:800; font-size:1.05rem; margin-bottom:10px; }
     .mini-card p{ margin:0; font-size:0.95rem; line-height:1.5; color:var(--text-body); }
 
-    .report-layout{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:74px;
-      align-items:center;
-    }
+    /* COMPARISON TABLE */
+    .comparison-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; max-width:1000px; margin:0 auto; }
+    .comp-col-left { padding:0 24px; opacity:0.7; border-right:1px solid var(--line); }
+    .comp-col-right { background:white; padding:40px; border-radius:24px; box-shadow:var(--shadow-lg); border:1px solid rgba(0,86,179,0.15); position:relative; overflow:hidden; }
+    .comp-list { list-style:none; }
+    .comp-item { padding:16px 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; }
+    .comp-label { font-weight: 600; color: #334155; }
+    .comp-val { font-weight: 700; color: #0f172a; text-align: right; }
+
+    /* REPORT SECTION */
+    .report-layout{ display:grid; grid-template-columns:1fr 1fr; gap:74px; align-items:center; }
     .check-list{ margin-top:18px; margin-bottom:28px; padding:0; }
     .check-list li{ display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; font-weight:600; color:#e2e8f0; font-size:1rem; }
     .check-list li::before{ content:"✓"; font-weight:900; color:#4ade80; margin-top:2px; }
-    
-    .report-visual{
-      border:1px solid rgba(255,255,255,0.1);
-      background:rgba(255,255,255,0.03);
-      border-radius:18px;
-      height:380px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:18px;
-      color:rgba(255,255,255,0.2);
-      font-weight:700;
-    }
+    .report-visual{ border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); border-radius:18px; height:380px; display:flex; align-items:center; justify-content:center; text-align:center; padding:18px; color:rgba(255,255,255,0.2); font-weight:700; }
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
+    /* --- MOBILE RESPONSIVENESS --- */
     @media (max-width: 980px){
-      .hero{ grid-template-columns:1fr; gap:44px; }
-      .widget-card{ position:relative; top:auto; }
-      .report-layout{ grid-template-columns:1fr; gap:44px; }
-      .grid-3{ grid-template-columns:1fr; }
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
-      section{ padding:60px 0; }
+      
+      .hero{ grid-template-columns:1fr; gap:44px; padding-top: 40px; }
+      .hero h1 { font-size: 2.5rem; }
+      
+      .widget-card{ position:relative; top:auto; margin-top: 20px; }
       .widget-layout{ grid-template-columns:1fr; gap:24px; }
       .chart-col{ padding-left:0; }
-      .slider-wrap{ padding-right:0; }
-      /* Adjust Comparison Grid for Mobile */
-      .section-gray .container > div:last-child {
-        grid-template-columns: 1fr !important; 
-      }
-      .section-gray .container > div:last-child > div:first-child {
-        border-right: none !important;
-        border-bottom: 1px solid var(--line);
-        padding-bottom: 32px;
-      }
+      
+      .comparison-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .comp-col-left { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 32px; }
+      
+      .report-layout{ grid-template-columns:1fr; gap:44px; }
+      .grid-3{ grid-template-columns:1fr; }
+      
+      section{ padding:60px 0; }
     }
   </style>
 </head>
@@ -474,26 +228,24 @@
 <body>
   <header>
     <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Caugia Consulting Home">
-        <img src="assets/C-logo.png" alt="Caugia logo" />
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
         <span>CAUGIA CONSULTING</span>
       </a>
-
-      <ul class="nav-links" aria-label="Primary navigation">
+      <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="gtm-assessment.html">GTM Score</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
-
       <div style="display:flex; gap:12px; align-items:center;">
         <a href="contact.html" class="btn btn-primary">Contact</a>
-        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
     </div>
-
-    <div class="container mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    
+    <div class="container mobile-nav" id="mobileNav">
       <a href="index.html" class="active">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
@@ -507,7 +259,7 @@
   </header>
 
   <main>
-    <section class="container hero" aria-label="Hero section">
+    <section class="container hero">
       <div>
         <span class="eyebrow">One GTM system for B2B SaaS</span>
         <h1>Stop revenue leakage by aligning your GTM system.</h1>
@@ -520,15 +272,15 @@
           No workshops. No billable hours. Just pure, algorithmic GTM strategy.
         </p>
 
-        <div class="hero-actions" aria-label="Primary actions">
+        <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:24px; margin-bottom:40px;">
           <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
           <a href="services.html" class="btn btn-outline">Explore the report</a>
         </div>
 
-        <div class="pillars-card" aria-label="The 12 System Pillars">
+        <div class="pillars-card">
           <h3>The 12 System Pillars</h3>
           <div class="pillar-grid">
-            <div class="pillar-col">
+            <div style="display:flex; flex-direction:column; gap:12px;">
               <div class="pillar-item"><span class="pillar-num">1</span><span>GTM Strategy & Leadership</span></div>
               <div class="pillar-item"><span class="pillar-num">2</span><span>Market Intelligence</span></div>
               <div class="pillar-item"><span class="pillar-num">3</span><span>Product Marketing</span></div>
@@ -536,7 +288,7 @@
               <div class="pillar-item"><span class="pillar-num">5</span><span>Sales Execution</span></div>
               <div class="pillar-item"><span class="pillar-num">6</span><span>Customer Success & Expansion</span></div>
             </div>
-            <div class="pillar-col">
+            <div style="display:flex; flex-direction:column; gap:12px;">
               <div class="pillar-item"><span class="pillar-num">7</span><span>Revenue Operations & Systems</span></div>
               <div class="pillar-item"><span class="pillar-num">8</span><span>Pricing & Packaging</span></div>
               <div class="pillar-item"><span class="pillar-num">9</span><span>Brand & Communications</span></div>
@@ -548,7 +300,7 @@
         </div>
       </div>
 
-      <aside class="widget-card" id="score" aria-label="Your GRIP Health widget">
+      <aside class="widget-card" id="score">
         <div class="health-header">
           <div>
             <div class="health-title">Your GRIP Health</div>
@@ -564,14 +316,14 @@
         </div>
 
         <div class="widget-layout">
-          <div class="controls-col" aria-label="GRIP sliders">
+          <div class="controls-col">
             <div class="control-group">
               <div class="control-label">
                 <span class="name">Guidance</span>
                 <span class="value" id="val-g">45</span>
               </div>
               <div class="slider-wrap">
-                <input type="range" id="input-g" min="0" max="100" value="45" aria-label="Guidance slider" />
+                <input type="range" id="input-g" min="0" max="100" value="45" />
               </div>
             </div>
 
@@ -581,7 +333,7 @@
                 <span class="value" id="val-r">60</span>
               </div>
               <div class="slider-wrap">
-                <input type="range" id="input-r" min="0" max="100" value="60" aria-label="Resources slider" />
+                <input type="range" id="input-r" min="0" max="100" value="60" />
               </div>
             </div>
 
@@ -591,7 +343,7 @@
                 <span class="value" id="val-i">85</span>
               </div>
               <div class="slider-wrap">
-                <input type="range" id="input-i" min="0" max="100" value="85" aria-label="Implementation slider" />
+                <input type="range" id="input-i" min="0" max="100" value="85" />
               </div>
             </div>
 
@@ -601,12 +353,12 @@
                 <span class="value" id="val-p">43</span>
               </div>
               <div class="slider-wrap">
-                <input type="range" id="input-p" min="0" max="100" value="43" aria-label="Performance slider" />
+                <input type="range" id="input-p" min="0" max="100" value="43" />
               </div>
             </div>
           </div>
 
-          <div class="chart-col" aria-label="GRIP radar chart">
+          <div class="chart-col">
             <div class="chart-box">
               <canvas id="radarChart"></canvas>
             </div>
@@ -617,9 +369,9 @@
       </aside>
     </section>
 
-    <section class="section-white" aria-label="Problem section">
+    <section class="section-white">
       <div class="container">
-        <div class="section-lead">
+        <div style="max-width:820px;">
           <h2>Why GTM feels heavy even when everyone works hard</h2>
           <p>
             Most GTM teams are not constrained by effort. They are constrained by misalignment.
@@ -655,48 +407,45 @@
           </p>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; max-width:1000px; margin:0 auto;">
+        <div class="comparison-wrapper">
           
-          <div style="padding:0 24px; opacity:0.7; border-right:1px solid var(--line);">
+          <div class="comp-col-left">
             <h4 style="margin-bottom:24px; color:#64748b; font-size:1.2rem;">Traditional Consulting</h4>
-            <ul style="list-style:none;">
-              <li style="padding:16px 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <span>Timeline</span> <strong style="color:#64748b;">6-8 Weeks</strong>
+            <ul class="comp-list">
+              <li class="comp-item">
+                <span class="comp-label">Timeline</span> <span class="comp-val" style="color:#64748b;">6-8 Weeks</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <span>Method</span> <strong style="color:#64748b;">Subjective Interviews</strong>
+              <li class="comp-item">
+                <span class="comp-label">Method</span> <span class="comp-val" style="color:#64748b;">Subjective Interviews</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <span>Bias</span> <strong style="color:#64748b;">High (Opinion based)</strong>
+              <li class="comp-item">
+                <span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <span>Cost</span> <strong style="color:#64748b;">€25k - €50k+</strong>
+              <li class="comp-item">
+                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">€25k - €50k+</span>
               </li>
             </ul>
           </div>
 
-          <div style="background:white; padding:40px; border-radius:24px; box-shadow:var(--shadow-lg); border:1px solid rgba(0,86,179,0.15); position:relative; overflow:hidden;">
+          <div class="comp-col-right">
             <div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
             
             <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.3rem;">
               <img src="assets/C-logo.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
             </h4>
-            <ul style="list-style:none;">
-              <li style="padding:16px 0; border-bottom:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:600; color:#334155;">Timeline</span> 
-                <strong style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</strong>
+            <ul class="comp-list">
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
+                <span class="comp-label">Timeline</span> 
+                <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:600; color:#334155;">Method</span> 
-                <strong style="color:#0f172a;">Algorithmic Diagnostic</strong>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
+                <span class="comp-label">Method</span> <span class="comp-val">Algorithmic Diagnostic</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:600; color:#334155;">Bias</span> 
-                <strong style="color:#0f172a;">Zero (Data-Driven)</strong>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
+                <span class="comp-label">Bias</span> <span class="comp-val">Zero (Data-Driven)</span>
               </li>
-              <li style="padding:16px 0; border-bottom:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:600; color:#334155;">Cost</span> 
-                <strong style="color:#0f172a;">Fraction of traditional</strong>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
+                <span class="comp-label">Cost</span> <span class="comp-val">Fraction of traditional</span>
               </li>
             </ul>
             <div style="margin-top:32px; text-align:center;">
@@ -708,7 +457,7 @@
       </div>
     </section>
 
-    <section id="report" class="section-dark" aria-label="Report section">
+    <section id="report" class="section-dark">
       <div class="container report-layout">
         <div>
           <span class="eyebrow" style="color:#60a5fa;">Instant Deliverable</span>
@@ -718,14 +467,14 @@
             a Board-Level Diagnostic PDF automatically. No waiting for slides.
           </p>
 
-          <ul class="check-list" aria-label="Report highlights">
+          <ul class="check-list">
             <li>Benchmarked against 30+ SaaS Growth Archetypes</li>
             <li>Identifies your #1 Constraint mathematically</li>
             <li>Provides a quarter-by-quarter execution plan</li>
           </ul>
 
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a href="https://www.caugia.com/gtm-intelligence-report.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the report</a>
+            <a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the report</a>
             <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#ffffff;">Free GTM Score</a>
           </div>
         </div>
@@ -736,7 +485,7 @@
       </div>
     </section>
 
-    <section aria-label="Next step section">
+    <section>
       <div class="container" style="max-width:860px; text-align:center;">
         <span class="eyebrow">Next step</span>
         <h2>Start with the GTM Score</h2>
@@ -758,20 +507,20 @@
   </footer>
 
   <script>
-    // Mobile nav logic
+    // MOBILE NAV LOGIC
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
-      if (!toggle || !mobileNav) return;
-
-      toggle.addEventListener("click", () => {
-        const open = mobileNav.style.display === "block";
-        mobileNav.style.display = open ? "none" : "block";
-        toggle.setAttribute("aria-expanded", String(!open));
-      });
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
     })();
 
-    // ADVANCED ARCHETYPE LOGIC (30+ VARIANTS)
+    // ADVANCED ARCHETYPE LOGIC (CHART.JS)
     (function () {
       const canvas = document.getElementById("radarChart");
       if (!canvas) return;
@@ -818,9 +567,7 @@
         }
       });
       
-      // LOGIC: Determining the Primary Constraint (Lowest) and Context (Second Lowest or Highest)
-      // This allows for 30+ nuanced archetypes instead of simple High/Low combinations.
-      
+      // LOGIC: Determining the Primary Constraint
       function getArchetype(g, r, i, p) {
         const scores = [
           { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
@@ -855,9 +602,9 @@
           mode: "mode-good" 
         };
 
-        // 2. CONSTRAINT LOGIC (Based on the Single Lowest Score)
+        // 2. CONSTRAINT LOGIC
         
-        // --- GUIDANCE IS LOWEST (Strategy Gap) ---
+        // --- GUIDANCE IS LOWEST ---
         if (lowest.k === 'g') {
            if (highest.k === 'i' && highest.v > 65) return {
              title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn"
@@ -873,7 +620,7 @@
            };
         }
 
-        // --- RESOURCES IS LOWEST (Capacity Gap) ---
+        // --- RESOURCES IS LOWEST ---
         if (lowest.k === 'r') {
            if (highest.k === 'g' && highest.v > 70) return {
              title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn"
@@ -889,7 +636,7 @@
            };
         }
 
-        // --- IMPLEMENTATION IS LOWEST (Execution Gap) ---
+        // --- IMPLEMENTATION IS LOWEST ---
         if (lowest.k === 'i') {
            if (highest.k === 'g' && highest.v > 70) return {
              title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad"
@@ -905,7 +652,7 @@
            };
         }
 
-        // --- PERFORMANCE IS LOWEST (Outcome Gap) ---
+        // --- PERFORMANCE IS LOWEST ---
         if (lowest.k === 'p') {
            if (highest.k === 'i' && highest.v > 70) return {
              title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad"
