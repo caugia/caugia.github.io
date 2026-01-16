@@ -76,6 +76,7 @@
     a{ color:inherit; text-decoration:none; }
     ul{ list-style:none; }
 
+    /* UNIFIED CONTAINER */
     .container{
       max-width:var(--max);
       margin:0 auto;
@@ -91,7 +92,7 @@
       border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; } /* Geen movement */
+    .btn-primary:hover{ background:#003370; }
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
@@ -119,10 +120,10 @@
     .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
     .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
-    /* SERVICES GRID - THE GOD MODE ALIGNMENT */
+    /* SERVICES GRID - STATIC & ALIGNED */
     .services-grid{
       display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
-      align-items: stretch;
+      align-items: stretch; /* Zorgt dat kaarten even hoog zijn */
     }
     
     .service-card{
@@ -133,7 +134,6 @@
       box-shadow:var(--shadow-sm);
       display:flex; flex-direction:column;
       height: 100%;
-      /* GEEN TRANSITIONS OP TRANSFORM */
     }
     .service-card:hover{ box-shadow:var(--shadow-card); border-color:#cbd5e1; }
 
@@ -159,50 +159,65 @@
     .pill-flagship{ background:#eff6ff; color:var(--primary); border:1px solid #bfdbfe; }
     .pill-advisory{ background:#fdf4ff; color:#86198f; border:1px solid #fae8ff; }
 
-    /* GOD MODE FIX 1: Titels vaste hoogte (2 regels) */
-    .service-title{ 
-      font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif;
-      min-height: 60px; display: flex; align-items: center; /* Zorgt voor nette centrering als het 1 regel is */
-    }
+    .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
     
-    /* GOD MODE FIX 2: Beschrijvingen vaste hoogte (Genoeg voor de langste tekst) */
+    /* GOD MODE ALIGNMENT FIX */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
-      min-height: 150px; /* Hierdoor begint het prijsblok ALTIJD op dezelfde pixel */
+      /* Dwingt elke beschrijving om minimaal 170px te zijn. 
+         Dit is iets hoger gezet om de extra regel "* Requires..." ruimte te geven
+         zonder de uitlijning te breken. */
+      min-height: 170px; 
     }
     
-    /* Actions container */
     .service-actions { margin-top: auto; }
 
-    /* GOD MODE FIX 3: Prijzen vaste hoogte */
+    /* PRIJS ALIGNMENT FIX */
     .service-price{ 
       font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
       display:flex; align-items: baseline; gap: 6px; 
-      min-height: 40px; /* Zorgt dat 'Free' (1 regel) evenveel ruimte pakt als '€1249 One-time' */
+      /* Dwingt een vaste hoogte voor het prijsblok */
+      min-height: 54px; 
     }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; }
     
-    /* Feature lijst */
     .service-features{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line); }
     .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
     .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
     
     .card-gated .service-features li::before { color: #cbd5e1; }
 
-    /* MARKETPLACE */
+    /* MARKETPLACE UPGRADE */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
+    
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-    .mp-card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 40px; box-shadow: var(--shadow-sm); }
+    
+    .mp-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
     
     .mp-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-    .mp-letter { width: 48px; height: 48px; background: var(--primary); color: white; font-size: 1.5rem; font-weight: 900; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .mp-letter {
+      width: 48px; height: 48px; background: var(--primary); color: white;
+      font-size: 1.5rem; font-weight: 900; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
     .mp-title-block h3 { margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-dark); }
     .mp-title-block p { margin: 0; font-size: 0.9rem; color: #64748b; margin-top: 4px; }
 
     .module-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-    .module-item { display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid #f1f5f9; border-radius: 8px; background: #fff; }
-    .module-item:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); }
-    .module-icon { width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0; stroke-width: 1.5px; }
+    .module-item {
+      display: flex; align-items: center; gap: 16px; padding: 16px;
+      border: 1px solid #f1f5f9; border-radius: 8px; background: #fff;
+    }
+    .module-item:hover {
+      border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,86,179,0.08); 
+    }
+    
+    .module-icon { 
+      width: 24px; height: 24px; color: var(--primary); opacity: 0.9; flex-shrink: 0; stroke-width: 1.5px;
+    }
     .module-content strong { display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 2px; }
     .module-content span { font-size: 0.85rem; color: #64748b; line-height: 1.3; display: block; }
 
@@ -210,7 +225,10 @@
     .faq-section{ max-width:800px; margin:0 auto; }
     .faq-section h2 { text-align: center; margin-bottom: 60px; }
     details{ border-bottom:1px solid var(--line); padding:24px 0; }
-    summary{ font-weight:700; font-size:1.1rem; cursor:pointer; list-style:none; color:var(--text-dark); display:flex; justify-content:space-between; align-items:center; }
+    summary{
+      font-weight:700; font-size:1.1rem; cursor:pointer; list-style:none; color:var(--text-dark);
+      display:flex; justify-content:space-between; align-items:center;
+    }
     summary::-webkit-details-marker { display:none; }
     summary::after{ content:"+"; font-weight:400; font-size:1.5rem; color:var(--primary); }
     details[open] summary::after{ content:"−"; }
@@ -226,8 +244,8 @@
       .services-grid{ grid-template-columns:1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
       .mp-container { grid-template-columns: 1fr; }
       
-      /* OP MOBIEL DE VASTE HOOGTES RESETTEN VOOR NETHEID */
-      .service-title, .service-desc, .service-price { min-height: auto; }
+      /* OP MOBIEL DE VASTE HOOGTES RESETTEN */
+      .service-desc, .service-price { min-height: auto; }
     }
     @media (max-width: 768px){
       .nav-links{ display:none; }
@@ -285,7 +303,10 @@
           <p class="service-desc">A structured five-minute assessment of your GTM system. Quantifies maturity and highlights friction points instantly.</p>
           
           <div class="service-actions">
-            <span class="service-price">Free</span>
+            <span class="service-price">
+              Free 
+              <span class="price-sub" style="opacity:0;">Spacer</span>
+            </span>
             <a href="gtm-assessment.html" class="btn btn-outline" style="width:100%;">Start Assessment</a>
             <ul class="service-features">
               <li>12-pillar maturity score</li>
@@ -326,6 +347,10 @@
           <h3 class="service-title">Execution Partner</h3>
           <p class="service-desc">
             Fractional C-Level leadership to guide the architectural transition. Ideal for Founders and Investors seeking assured execution on the Roadmap.
+            <br><br>
+            <span style="font-size:0.85rem; font-weight:700; color:var(--primary); opacity:0.8;">
+              * Requires Intelligence Report
+            </span>
           </p>
           
           <div class="service-actions">
@@ -335,7 +360,6 @@
             </span>
             
             <a href="contact.html?type=partner" class="btn btn-outline" style="width:100%; border-style:dashed;">Apply for Partnership</a>
-            <div style="text-align:center; font-size:0.75rem; color:#94a3b8; margin-top:8px; font-weight:600;">* Requires Intelligence Report</div>
             
             <ul class="service-features">
               <li>Bi-weekly Strategic Sprints</li>
