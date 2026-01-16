@@ -8,32 +8,34 @@
   <meta name="description" content="Board-level forensic audit of your revenue engine. 265 data points, AI-assisted analysis, and a 90-day priority roadmap." />
 
   <meta property="og:type" content="product" />
-  <meta property="og:url" content="https://caugia.com/gtm-intelligence-report.html" />
+  <meta property="og:url" content="[https://caugia.com/gtm-intelligence-report.html](https://caugia.com/gtm-intelligence-report.html)" />
   <meta property="og:title" content="GTM Intelligence Report - The Executive Diagnostic" />
-  <meta property="og:image" content="https://caugia.com/assets/og-intelligence-report.png" />
+  <meta property="og:image" content="[https://caugia.com/assets/og-intelligence-report.png](https://caugia.com/assets/og-intelligence-report.png)" />
 
   <link rel="icon" href="assets/C-logo.png" type="image/png" />
   
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)" />
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
+  <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap)" rel="stylesheet" />
 
   <script src="/auth.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
+  <script src="[https://js.stripe.com/v3/](https://js.stripe.com/v3/)"></script>
+  
+  <script src="assets/currency.js"></script>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org/",
+    "@context": "[https://schema.org/](https://schema.org/)",
     "@type": "Product",
     "name": "GTM Intelligence Report",
-    "image": "https://caugia.com/assets/og-intelligence-report.png",
+    "image": "[https://caugia.com/assets/og-intelligence-report.png](https://caugia.com/assets/og-intelligence-report.png)",
     "description": "A forensic GTM diagnostic for B2B SaaS leadership.",
     "brand": { "@type": "Brand", "name": "Caugia Consulting" },
     "offers": {
       "@type": "Offer",
       "priceCurrency": "EUR",
       "price": "1249.00",
-      "availability": "https://schema.org/InStock"
+      "availability": "[https://schema.org/InStock](https://schema.org/InStock)"
     }
   }
   </script>
@@ -286,10 +288,14 @@
         </p>
 
         <div class="pricing-lockup">
-          <div class="price-main">€1249</div>
-          <div class="price-sub">
-            One-time assessment fee.<br>
-            <strong>Equivalent to a €15k+ Diagnostic.</strong>
+          <div id="price-container" style="opacity:0; transition: opacity 0.3s ease;">
+            <div class="price-main">
+              <span id="display-price">€1249</span> 
+            </div>
+            <div class="price-sub">
+              One-time assessment fee.<br>
+              <strong id="display-value-text">Equivalent to a €15k+ Diagnostic.</strong>
+            </div>
           </div>
         </div>
 
@@ -431,7 +437,7 @@
           Secure payment via Stripe. No login required. You receive immediate access to the diagnostic platform.
         </p>
         <button id="stripeCheckoutBtn" class="btn btn-primary" style="font-size:1.1rem; padding:18px 48px;">
-          Proceed to Checkout (€1249)
+          Proceed to Checkout (<span id="btn-price">€1249</span>)
         </button>
         <div class="cta-foot">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -466,12 +472,15 @@
     const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
 
     function startCheckout() {
+      // Use the GLOBAL price ID set by currency.js
+      // If undefined (e.g. adblocker killed script), fallback to Euro ID
+      const priceId = window.CURRENT_STRIPE_PRICE_ID || "price_REPLACE_WITH_EUR_ID";
+
       stripe.redirectToCheckout({
-        // NOTE: You will need to create a new €1249 product in Stripe and update this ID.
-        lineItems: [{ price: "price_REPLACE_WITH_NEW_1249_EURO_PRICE_ID", quantity: 1 }],
+        lineItems: [{ price: priceId, quantity: 1 }],
         mode: "payment",
-        successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
-        cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html"
+        successUrl: "[https://www.caugia.com/gtm-intelligence-thank-you.html](https://www.caugia.com/gtm-intelligence-thank-you.html)",
+        cancelUrl: "[https://www.caugia.com/gtm-intelligence-report.html](https://www.caugia.com/gtm-intelligence-report.html)"
       });
     }
 
