@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* --- V3 CORE SYSTEM --- */
+    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -26,16 +26,17 @@
       --radius-lg:20px;
       --radius-md:12px;
       --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
-      --max:1400px;
+      --max:1400px; /* Slightly wider for dashboard */
 
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
+      --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: auto; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
     
     body{
       font-family:Inter, sans-serif;
@@ -53,20 +54,30 @@
       letter-spacing:-0.02em;
     }
 
-    /* HEADER */
+    /* HEADER (Standard V3) */
     header{
       position:sticky; top:0; z-index:100;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
-    .brand img{ width:28px; height:28px; display:block; }
-    .nav-links{ display:flex; gap:24px; align-items:center; list-style:none; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.9rem; text-decoration:none; transition:color 0.15s ease; }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; list-style:none; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; text-decoration:none; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    .btn-sm{ padding:8px 16px; border-radius:99px; background:var(--primary); color:white; font-size:0.85rem; font-weight:700; text-decoration:none; transition:0.2s; }
+    
+    /* Small Button for Dashboard */
+    .btn-sm{ 
+      padding:10px 20px; border-radius:99px; background:var(--primary); color:white; 
+      font-size:0.9rem; font-weight:700; text-decoration:none; transition:background 0.2s ease; border: none; cursor: pointer;
+    }
     .btn-sm:hover{ background:var(--primary-dark); }
+
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); text-decoration: none; }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
 
     /* DASHBOARD LAYOUT */
     .dashboard-wrap {
@@ -132,12 +143,8 @@
     /* INSIGHTS COLUMN */
     .insights-col { display: flex; flex-direction: column; gap: 20px; }
 
-    /* HEALTH METRICS - GRID FIX (Strict Alignment) */
-    .health-table {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    /* HEALTH METRICS */
+    .health-table { display: flex; flex-direction: column; gap: 12px; }
 
     .health-row {
       display: grid;
@@ -154,14 +161,9 @@
     .h-score { font-weight: 700; color: var(--text-body); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
     
     .status-badge { 
-      padding: 4px 0; /* Center vertically */
-      border-radius: 6px; 
-      font-size: 0.7rem; 
-      font-weight: 800; 
-      text-transform: uppercase; 
-      letter-spacing: 0.05em;
-      text-align: center;
-      display: block;
+      padding: 4px 0; border-radius: 6px; 
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+      text-align: center; display: block;
     }
     .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
@@ -185,11 +187,17 @@
     .summary-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
     .summary-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-body); }
 
+    /* Footer */
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; margin-top: auto; }
+
     /* Mobile */
     @media (max-width: 1000px) {
+      .nav-links{ display:none; }
+      .menu-toggle{ display:inline-flex; }
+      
       .dashboard-wrap { grid-template-columns: 1fr; }
       .visual-grid { grid-template-columns: 1fr; }
-      .visual-card { min-height: 300px; }
+      .diamond-card { min-height: 300px; }
     }
   </style>
 </head>
@@ -204,9 +212,23 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gtm-assessment.html">GTM Score</a></li>
       <li><a href="resources.html" class="active">Resources</a></li>
-      <li><a href="gtm-assessment.html" class="btn-sm">Start GTM Score</a></li>
     </ul>
+    <div style="display:flex; gap:12px; align-items:center;">
+        <button class="menu-toggle" id="menuToggle">Menu</button>
+    </div>
+  </div>
+  
+  <div class="container mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="gtm-assessment.html">GTM Score</a>
+    <a href="resources.html" class="active">Resources</a>
+    <a href="contact.html">Contact</a>
   </div>
 </header>
 
@@ -304,8 +326,25 @@
 
 </main>
 
+<footer>
+  <div class="container">
+    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
 <script>
   (function() {
+    // Mobile Nav Logic
+    const toggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+    if (toggle && mobileNav) {
+      toggle.addEventListener("click", () => {
+        const open = mobileNav.style.display === "block";
+        mobileNav.style.display = open ? "none" : "block";
+        toggle.innerText = open ? "Close" : "Menu";
+      });
+    }
+
     function getStatus(val) {
       if (val < 50) return { label: "CRITICAL", class: "badge-bad" };
       if (val < 70) return { label: "DEVELOPING", class: "badge-warn" };
