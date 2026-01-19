@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>GTM Intelligence Report | Caugia Consulting</title>
+  <meta name="description" content="Board-level forensic audit of your revenue engine. 265 data points, AI-assisted analysis, and a 90-day priority roadmap." />
+
+  <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://caugia.com/gtm-intelligence-report.html" />
+  <meta property="og:title" content="GTM Intelligence Report - The Executive Diagnostic" />
+  <meta property="og:image" content="https://caugia.com/assets/og-intelligence-report.png" />
+
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <script src="/auth.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="assets/currency.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "GTM Intelligence Report",
+    "image": "https://caugia.com/assets/og-intelligence-report.png",
+    "description": "A forensic GTM diagnostic for B2B SaaS leadership.",
+    "brand": { "@type": "Brand", "name": "Caugia Consulting" },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "1249.00",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
+
+  <style>
+    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
+    :root{
+      --primary:#0056b3;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
+      --max:1200px;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:80px 0; }
+
+    /* BUTTONS (STATIC) */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; 
+      white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; } /* No transform */
+
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); } /* No transform */
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* --- HERO SECTION --- */
+    .hero-split {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px;
+      padding-top: 80px; padding-bottom: 80px; align-items: center;
+    }
+    .eyebrow {
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
+    }
+    .hero-h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; color: var(--text-dark); letter-spacing: -0.02em; }
+    .hero-lead { font-size: 1.15rem; color: var(--text-body); margin-bottom: 32px; line-height: 1.6; max-width: 540px; }
+    
+    .pricing-lockup {
+      display: flex; align-items: center; gap: 24px; margin-bottom: 32px;
+      padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      max-width: 500px;
+    }
+    .price-main { font-size: 2rem; font-weight: 900; color: var(--text-dark); letter-spacing: -0.02em; }
+    .price-sub { font-size: 0.85rem; color: #94a3b8; line-height: 1.3; }
+    .price-sub strong { color: #64748b; font-weight: 700; }
+
+    /* HERO VISUAL ENGINE */
+    .hero-visual-wrapper { position: relative; z-index: 1; }
+    
+    .report-card-ui {
+      background: var(--white); border: 1px solid rgba(15,23,42,0.08); border-radius: 20px;
+      box-shadow: var(--shadow-lg); padding: 40px; position: relative; overflow: hidden;
+      z-index: 5; 
+      /* STATIC: Removed 3D transform */
+    }
+
+    .ui-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; border-bottom: 2px solid #f1f5f9; padding-bottom: 24px; }
+    .ui-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px; }
+    .ui-big-num { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--text-dark); font-family: Inter, sans-serif; letter-spacing: -0.03em; }
+    .ui-status { display: flex; gap: 8px; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--primary); background: #eff6ff; padding: 6px 12px; border-radius: 20px; }
+    .ui-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,86,179,0.2); }
+    .ui-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .ui-stat h4 { font-family: Inter, sans-serif; font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 4px; }
+    .ui-stat div { font-weight: 800; font-size: 1.1rem; color: var(--text-dark); }
+    .ui-bar-wrap { margin-top: 8px; background: #f1f5f9; height: 6px; border-radius: 4px; overflow: hidden; }
+    .ui-bar-fill { height: 100%; background: var(--text-dark); width: 65%; }
+    .ui-bar-fill.warn { background: #f59e0b; width: 42%; }
+    .ui-insight { 
+      background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 16px; 
+      font-size: 0.9rem; color: var(--text-body); margin-top: 24px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .ui-icon { color: var(--primary); font-weight: 800; font-size: 1.1rem; line-height: 1; }
+
+    .float-badge {
+      position: absolute; top: -20px; right: -20px;
+      background: var(--text-dark); color: white; padding: 12px 20px; border-radius: 12px;
+      font-weight: 700; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    /* --- CONTENT SECTIONS --- */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+    .content-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
+      padding: 40px; box-shadow: var(--shadow-sm); height: 100%;
+    }
+    .content-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.25rem; margin-bottom: 20px; }
+    .check-list li { margin-bottom: 12px; font-size: 1rem; color: var(--text-body); padding-left: 28px; position: relative; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 800; top: 1px; }
+
+    .concept-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+    .concept-img { 
+      background: #f1f5f9; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); 
+      display: flex; flex-direction: column;
+    }
+    .concept-ui { 
+      padding: 40px; flex-grow: 1; display: flex; align-items: center; justify-content: center; 
+      background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+    }
+    .concept-diamond-card {
+      width: 160px; height: 160px; background: var(--white); border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 12px 24px -6px rgba(0, 86, 179, 0.15);
+    }
+    .concept-archetype-card {
+      background: var(--white); padding: 32px; border-radius: 16px; text-align: center;
+      box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08); border: 1px solid var(--line);
+    }
+    .concept-caption { 
+      padding: 16px 20px; background: #fff; font-size: 0.85rem; font-weight: 600; color: #64748b; 
+      border-top: 1px solid var(--line); 
+    }
+
+    .faq-section { max-width: 800px; margin: 0 auto; }
+    .faq-section h2 { text-align: center; margin-bottom: 64px; }
+    details { border-bottom: 1px solid var(--line); padding: 24px 0; }
+    summary { font-weight: 700; font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-weight: 400; font-size: 1.5rem; color: var(--primary); }
+    details[open] summary::after { content: "−"; }
+    details p { margin-top: 16px; font-size: 1rem; color: var(--text-body); line-height: 1.6; max-width: 90%; }
+
+    /* CTA */
+    .cta-section {
+      margin-top: 80px; padding-top: 80px; padding-bottom: 80px;
+      border-top: 1px solid var(--line); background: var(--white);
+    }
+    .cta-content { text-align: center; }
+    .cta-content h2 { font-size: 2.75rem; margin-bottom: 24px; line-height: 1.1; }
+    .cta-content p { font-size: 1.15rem; color: var(--text-body); margin: 0 auto 32px; max-width: 600px; }
+    .cta-foot { font-size: 0.85rem; margin-top: 16px; color: #94a3b8; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
+
+    @media (max-width: 900px){
+      .hero-split { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
+      .hero-visual-wrapper { display: none; } /* Hide complex visual on mobile to save space */
+      .hero-h1 { font-size: 2.5rem; }
+      .grid-2, .concept-wrapper { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .pricing-lockup { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .cta-content h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
+      </div>
+    </div>
+    
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero-split">
+      <div class="hero-content">
+        <span class="eyebrow">The Executive Diagnostic</span>
+        <h1 class="hero-h1">Stop guessing why growth is expensive.</h1>
+        <p class="hero-lead">
+          Get a board-level forensic audit of your revenue engine. 
+          265 data points. AI-assisted constraint analysis. One clear roadmap.
+        </p>
+
+        <div class="pricing-lockup">
+          <div class="price-main" id="display-price">€1249</div>
+          <div class="price-sub">
+            One-time assessment fee.<br>
+            <strong id="display-value-text">Equivalent to a €15k+ Diagnostic.</strong>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <button id="stripeCheckoutBtnTop" class="btn btn-primary" style="padding:16px 36px; font-size:1.05rem;">
+            Begin Diagnostic
+          </button>
+          <a href="assets/sample-report-locked.pdf" target="_blank" class="btn btn-outline" style="display:flex; gap:10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Sample Report
+          </a>
+        </div>
+        
+        <p style="font-size:0.85rem; color:#94a3b8; display:flex; align-items:center; gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Secure Stripe Payment. Invoice generated automatically.
+        </p>
+      </div>
+
+      <div class="hero-visual-wrapper">
+        <div class="float-badge">System Status: Active</div>
+        <div class="report-card-ui">
+          <div class="ui-header">
+            <div>
+              <span class="ui-label">GTM Health Score</span>
+              <div class="ui-big-num">58<span style="font-size:1.5rem; color:#cbd5e1;">/100</span></div>
+            </div>
+            <div class="ui-status">
+              <div class="ui-dot"></div>
+              Processing
+            </div>
+          </div>
+          <div class="ui-row">
+            <div class="ui-stat">
+              <h4>Guidance</h4>
+              <div>72%</div>
+              <div class="ui-bar-wrap"><div class="ui-bar-fill"></div></div>
+            </div>
+            <div class="ui-stat">
+              <h4>Implementation</h4>
+              <div>43%</div>
+              <div class="ui-bar-wrap"><div class="ui-bar-fill warn"></div></div>
+            </div>
+          </div>
+          <div class="ui-insight">
+            <div class="ui-icon">!</div>
+            <div><strong>Primary Constraint:</strong> Leadership Alignment. Misalignment here is creating downstream drag in sales velocity.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+      <div class="container">
+        <div style="text-align:center; max-width:700px; margin:0 auto 50px;">
+          <h2>This is not a survey. It is an audit.</h2>
+          <p>
+            Most consultants guess. Caugia measures. We combine 265 questions with the GRIP Framework to visualize your system's exact shape.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="content-card">
+            <h3>System Diagnosis</h3>
+            <ul class="check-list">
+              <li>Overall GTM Score (0–100 scale)</li>
+              <li>12 individual pillar scores with maturity levels</li>
+              <li>Your GRIP Health analysis</li>
+              <li>GTM Archetype classification (1 of 30)</li>
+              <li>Primary constraint and hidden drag identified</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h3>Priority Roadmap</h3>
+            <ul class="check-list">
+              <li>Context-driven priority sequence for next 90 days</li>
+              <li>Recommendations based on your motion</li>
+              <li>High-priority tools aligned to your stage</li>
+              <li>Quick wins vs. structural improvements separated</li>
+              <li>Implementation guidance with clear ownership</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="concept-wrapper">
+          <div class="concept-img">
+            <div class="concept-ui">
+              <div class="concept-diamond-card">
+                  <div style="width:100px; height:100px; border:3px solid var(--primary); transform:rotate(45deg); display:flex; align-items:center; justify-content:center;">
+                  <span style="transform:rotate(-45deg); font-weight:900; color:var(--primary); font-size:1.25rem; letter-spacing:-0.02em;">GRIP</span>
+                </div>
+              </div>
+            </div>
+            <div class="concept-caption">Visualizing the 4 forces of your engine.</div>
+          </div>
+          <div class="concept-img">
+            <div class="concept-ui">
+               <div class="concept-archetype-card">
+                 <div style="font-size:0.7rem; text-transform:uppercase; font-weight:700; color:#94a3b8; margin-bottom:8px; letter-spacing:0.05em;">Detected Archetype</div>
+                 <div style="font-size:1.35rem; font-weight:900; color:var(--text-dark);">The Stalled Engine</div>
+               </div>
+            </div>
+            <div class="concept-caption">Pattern matching against 30+ GTM archetypes.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="container faq-section">
+      <h2>Frequently Asked Questions</h2>
+      
+      <details>
+        <summary>Who is this report NOT for?</summary>
+        <p>
+          This diagnostic is <strong>not</strong> for pre-revenue startups searching for their first 10 customers. 
+          It is engineered for companies with <strong>established revenue (€1M - €500M+)</strong> feeling the friction of scale. 
+          If you are still experimenting, start with the <a href="gtm-assessment.html" style="color:var(--primary);">free GTM Score</a>.
+        </p>
+      </details>
+      <details>
+        <summary>What is the difference between the GTM Score and this Report?</summary>
+        <p>The GTM Score is a pulse check. The Intelligence Report is a deep-dive MRI. It reveals the root causes behind the score, explains the "why," and provides a detailed 90-day execution plan.</p>
+      </details>
+      <details>
+        <summary>How long does the assessment take?</summary>
+        <p>Approximately 45-50 minutes. It covers 265 specific data points. You can save your progress and finish later.</p>
+      </details>
+      <details>
+        <summary>When do I receive the PDF?</summary>
+        <p>Generated Instantly. You will receive the report via email within approximately 30 minutes after completing the diagnostic.</p>
+      </details>
+    </section>
+
+    <section class="cta-section">
+      <div class="container cta-content">
+        <h2>Clarify your revenue engine.</h2>
+        <p>
+          Secure payment via Stripe. No login required. You receive immediate access to the diagnostic platform.
+        </p>
+        <button id="stripeCheckoutBtn" class="btn btn-primary" style="font-size:1.1rem; padding:18px 48px;">
+          Proceed to Checkout
+        </button>
+        <div class="cta-foot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Redirects to Stripe Secure Checkout.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Nav
+    (function () {
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
+    })();
+
+    // Stripe Logic
+    const stripe = Stripe("pk_test_51Sco4oDZAazoTP0sLPeaZisykIvVzCdX8V5CZZJoYNqOy0AUvQrtLpcaLLWtuS3RPq12a6GFgcZZKY7qRBTbh9KF00mtvbRLja");
+
+    function startCheckout() {
+      // Gebruik de global variabele van currency.js, of fallback op Euro ID
+      const priceId = window.CURRENT_STRIPE_PRICE_ID || "price_REPLACE_WITH_EUR_ID";
+
+      stripe.redirectToCheckout({
+        lineItems: [{ price: priceId, quantity: 1 }],
+        mode: "payment",
+        successUrl: "https://www.caugia.com/gtm-intelligence-thank-you.html",
+        cancelUrl: "https://www.caugia.com/gtm-intelligence-report.html"
+      });
+    }
+
+    ["stripeCheckoutBtnTop", "stripeCheckoutBtn"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("click", startCheckout);
+    });
+  </script>
+</body>
+</html>
