@@ -102,13 +102,18 @@
     /* --- PAGE SPECIFIC --- */
 
     .services-hero{ padding:80px 0 60px; text-align:center; max-width:860px; margin:0 auto; }
+    .eyebrow{ 
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
+    }
     .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
     .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
 
-    /* SERVICES GRID - STATIC & ALIGNED */
+    /* SERVICES GRID */
     .services-grid{
       display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
-      align-items: stretch; /* Zorgt dat kaarten even hoog zijn */
+      align-items: stretch;
     }
     
     .service-card{
@@ -146,7 +151,6 @@
 
     .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
     
-    /* ALIGNMENT FIX */
     .service-desc{ 
       font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
       min-height: 170px; 
@@ -154,7 +158,6 @@
     
     .service-actions { margin-top: auto; }
 
-    /* PRIJS ALIGNMENT FIX */
     .service-price{ 
       font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
       display:flex; align-items: baseline; gap: 6px; 
@@ -168,7 +171,7 @@
     
     .card-gated .service-features li::before { color: #cbd5e1; }
 
-    /* MARKETPLACE UPGRADE */
+    /* MARKETPLACE */
     .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
     
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -228,10 +231,7 @@
       .nav { padding: 0 20px; }
       .nav-links { display: none; }
       
-      /* Hide Header Buttons on Mobile */
       .nav-actions .btn { display: none !important; }
-
-      /* MATCHED MENU SIZE with Index: 16px padding */
       .menu-toggle { display: inline-flex; font-size: 0.85rem; padding: 8px 16px; }
 
       .mobile-nav { 
@@ -257,7 +257,7 @@
       /* 3. Hero Layout (Tightened) */
       .services-hero { 
           padding-top: 30px !important; 
-          padding-bottom: 20px !important; /* REDUCED WHITESPACE */
+          padding-bottom: 10px !important; /* LESS SPACE BEFORE CARDS */
           padding-left: 12px;
           padding-right: 12px;
       }
@@ -270,35 +270,37 @@
 
       section { padding: 60px 0 !important; }
       
-      /* 4. Service Cards (Margins & Fitting) */
+      /* 4. Container Padding Fix (Fixes Edge Touching) */
+      .container { padding-left: 24px !important; padding-right: 24px !important; }
+
+      /* 5. Service Cards & Grid */
       .services-grid { 
         grid-template-columns: 1fr !important; 
         gap: 24px !important; 
-        margin-top: 20px !important; /* REDUCED WHITESPACE */
+        margin-top: 16px !important; /* REDUCED GAP */
       }
       
       .service-card {
-          padding: 30px 24px; /* Reduced internal padding for better fit */
+          padding: 30px 24px; 
           height: auto; 
           margin-bottom: 0;
       }
       
-      /* Reset fixed heights so mobile cards don't look empty */
       .service-desc, .service-price { min-height: auto !important; }
       .service-price { margin-top: 24px; margin-bottom: 16px; }
 
-      /* 5. Marketplace */
+      /* 6. Marketplace */
       .mp-container { 
         grid-template-columns: 1fr !important; 
         gap: 40px !important;
       }
       .mp-card { padding: 30px 24px; }
 
-      /* 6. FAQ (More Space) */
+      /* 7. FAQ (More Space & No Edge Touching) */
       .faq-section { margin-top: 20px; }
       details { 
-          padding: 24px 0; /* More touch target area */
-          margin-bottom: 8px; /* Breathing room between items */
+          padding: 24px 0; 
+          margin-bottom: 8px; 
       }
       summary { font-size: 1.05rem; line-height: 1.4; padding-right: 10px; }
       details p { font-size: 0.95rem; max-width: 100%; margin-top: 12px; }
@@ -339,6 +341,7 @@
 
   <main>
     <section class="container services-hero">
+      <span class="eyebrow">Engagement Model</span>
       <h1>Structured GTM Interventions.</h1>
       <p>
         We do not sell hours. We sell architectural clarity. 
