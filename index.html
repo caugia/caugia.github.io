@@ -14,8 +14,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="assets/currency.js"></script>
-
   <style>
     /* --- V3 CORE SYSTEM --- */
     :root{
@@ -101,7 +99,7 @@
 
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
     
-    /* Mobile Nav */
+    /* Default Mobile Nav (Hidden by default, styled for overlay via JS/Media Queries) */
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
@@ -131,6 +129,9 @@
     .pillar-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 32px; font-size:0.9rem; color:#334155; }
     .pillar-item{ display:grid; grid-template-columns:24px 1fr; gap:10px; align-items:baseline; }
     .pillar-num{ font-weight:800; color:#cbd5e1; text-align:right; font-size:0.8rem; }
+    
+    /* Mobile text helper: Hidden by default on desktop */
+    .m-text { display: none; }
 
     /* Widget */
     .widget-card{
@@ -381,10 +382,7 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-cta">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-        <a href="contact.html" class="btn btn-outline">Contact</a>
-      </div>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
 
@@ -624,7 +622,9 @@
                 <span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
               </li>
               <li class="comp-item">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">€25k - €50k+</span>
+                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">
+                  <span class="curr">€</span>25k - <span class="curr">€</span>50k+
+                </span>
               </li>
             </ul>
           </div>
@@ -709,6 +709,18 @@
   </footer>
 
   <script>
+    // Dynamic Currency Logic: Default € unless strictly en-US ($)
+    (function() {
+      const userLang = navigator.language || navigator.userLanguage;
+      let currencySymbol = '€'; 
+      if (userLang.includes('en-US')) currencySymbol = '$';
+      
+      // Update all elements with class 'curr'
+      document.querySelectorAll('.curr').forEach(el => {
+        el.textContent = currencySymbol;
+      });
+    })();
+
     // MOBILE NAV LOGIC (UPDATED FOR OVERLAY)
     (function () {
       const toggle = document.getElementById("menuToggle");
@@ -784,6 +796,7 @@
         
         const avg = (g+r+i+p)/4;
         const lowest = scores[0];
+        const secondLowest = scores[1];
         const highest = scores[3];
 
         // 1. SYSTEMIC STATES (Extremes)
