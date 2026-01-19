@@ -35,7 +35,9 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: scroll; height: 100%; }
+    
+    /* ONE SCREEN POLICY (Desktop) */
+    html, body { height: 100%; overflow: hidden; } /* No body scroll on desktop */
     
     body{
       font-family:Inter, sans-serif;
@@ -43,7 +45,7 @@
       color:var(--text-dark);
       line-height:1.5;
       -webkit-font-smoothing:antialiased;
-      display: flex; flex-direction: column; min-height: 100vh;
+      display: flex; flex-direction: column;
     }
 
     h1,h2,h3,h4{
@@ -55,11 +57,11 @@
 
     /* HEADER */
     header{
-      position:sticky; top:0; z-index:100;
+      height: 80px; flex-shrink: 0; z-index: 100;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .nav{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
     .brand img{ width:32px; height:32px; display:block; }
     .nav-links{ display:flex; gap:32px; align-items:center; list-style:none; }
@@ -73,65 +75,58 @@
     .btn-sm:hover{ background:var(--primary-dark); }
 
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); text-decoration: none; }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
 
-    /* COMPACT TITLE SECTION */
-    .page-title-section {
-      text-align: center;
-      padding-top: 40px; /* Reduced to pull content up */
-      padding-bottom: 24px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .eyebrow { 
-      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.7rem; color: var(--primary); font-weight: 800; margin-bottom: 12px;
-      background: #eff6ff; padding: 4px 10px; border-radius: 4px;
-    }
-    .page-title-section h1 { font-size: 2.2rem; margin-bottom: 8px; line-height: 1.1; }
-    .page-title-section p { font-size: 1rem; color: var(--text-body); margin: 0; }
-
-    /* DASHBOARD GRID */
-    .dashboard-wrap {
-      flex: 1;
+    /* DASHBOARD WRAPPER (Fills remaining height) */
+    .dashboard-container {
+      flex-grow: 1;
+      width: 100%;
       max-width: var(--max);
       margin: 0 auto;
-      padding: 0 24px 40px;
+      padding: 24px;
       display: grid;
-      grid-template-columns: 300px 1fr; /* Controls | Visuals */
+      grid-template-columns: 320px 1fr; /* Controls | Visuals */
       gap: 24px;
-      align-items: stretch;
+      height: calc(100vh - 80px); /* Exact fit */
+      min-height: 600px; /* Prevent crushing on tiny screens */
     }
 
-    /* LEFT PANEL */
-    .panel {
+    /* LEFT PANEL (CONTROLS) */
+    .controls-panel {
       background: var(--white);
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
       box-shadow: var(--shadow-soft);
-      padding: 24px;
+      padding: 32px;
       display: flex; flex-direction: column;
+      overflow-y: auto; /* Allow scroll if screen is very short */
     }
-    .panel-header { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-    .panel-header h2 { font-size: 1.1rem; margin-bottom: 4px; }
-    .panel-header p { font-size: 0.8rem; color: var(--text-body); margin: 0; }
+    .eyebrow { 
+      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
+      font-size: 0.7rem; color: var(--primary); font-weight: 800; margin-bottom: 12px;
+      background: #eff6ff; padding: 4px 10px; border-radius: 4px; align-self: flex-start;
+    }
+    .panel-title h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.1; }
+    .panel-title p { font-size: 0.9rem; color: var(--text-body); margin-bottom: 32px; }
 
-    .control-group { margin-bottom: 20px; }
-    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-dark); }
+    .control-group { margin-bottom: 24px; }
+    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-dark); }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
 
     input[type=range]{ width:100%; -webkit-appearance:none; height:4px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; background:var(--primary); border-radius:50%; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+
+    .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
     /* RIGHT CONTENT GRID */
-    .content-area {
+    .visual-area {
       display: grid;
       grid-template-columns: 1.5fr 1fr; /* Visual | Health */
-      grid-template-rows: 380px 200px; /* Fixed Heights to prevent jumping */
+      grid-template-rows: 1fr 240px; /* Visuals take available space | Bottom fixed height */
       gap: 24px;
+      height: 100%;
     }
 
     /* 1. VISUAL CARD (Top Left) */
@@ -144,10 +139,10 @@
       grid-row: 1 / 2;
     }
     .diamond-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; }
-    #gripDiamondSVG { width: 100%; max-width: 320px; overflow: visible; }
-    /* SVG Transition Magic */
-    #gripDiamondSVG polygon { transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-    #gripDiamondSVG circle { transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+    #gripDiamondSVG { width: 100%; max-width: 380px; overflow: visible; }
+    
+    /* The Magic Transitions */
+    #gripDiamondSVG polygon, #gripDiamondSVG circle { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
     .diamond-label {
       position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
@@ -170,26 +165,28 @@
     }
     .health-row {
       display: grid; grid-template-columns: 1fr 50px 90px; gap: 12px; align-items: center;
-      padding: 12px 0; border-bottom: 1px solid #f1f5f9;
+      padding: 16px 0; border-bottom: 1px solid #f1f5f9;
     }
     .health-row:last-child { border-bottom: none; }
     .h-label { font-weight: 700; color: var(--text-dark); font-size: 0.85rem; }
     .h-score { font-weight: 700; color: #64748b; font-size: 0.85rem; text-align: right; }
     .status-badge { 
-      padding: 4px 0; border-radius: 6px; font-size: 0.65rem; font-weight: 800; 
+      padding: 6px 0; border-radius: 6px; font-size: 0.65rem; font-weight: 800; 
       text-transform: uppercase; letter-spacing: 0.05em; text-align: center; 
     }
     .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
     .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
-    /* 3. PATTERN & SUMMARY (Bottom Row) */
+    /* 3. PATTERN & SUMMARY (Bottom Row - Fixed Height) */
     .pattern-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
       padding: 24px; transition: all 0.3s ease;
       grid-column: 1 / 2;
       grid-row: 2 / 3;
-      display: flex; flex-direction: column; justify-content: center;
+      display: flex; flex-direction: column; 
+      /* Internal scroll if needed, but fixed layout */
+      overflow-y: auto; 
     }
     .mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
@@ -201,34 +198,40 @@
       padding: 24px;
       grid-column: 2 / 3;
       grid-row: 2 / 3;
-      overflow-y: auto; /* Just in case */
+      display: flex; flex-direction: column;
+      overflow-y: auto; /* CRITICAL: Enables scrolling INSIDE the box for long text */
     }
 
-    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; opacity: 0.7; }
+    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; opacity: 0.7; }
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
-    .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
+    .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    /* Footer */
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:32px 0; text-align:center; color:#94a3b8; font-size:0.85rem; margin-top: auto; }
+    /* Footer - Hidden on Desktop "Dashboard Mode" to maximize space, visible on mobile */
+    footer{ display: none; }
 
-    /* Mobile */
+    /* --- MOBILE RESPONSIVENESS (Scroll Mode) --- */
     @media (max-width: 1100px) {
+      html, body { height: auto; overflow: auto; } /* Re-enable scroll */
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
       
-      .dashboard-wrap { display: flex; flex-direction: column; gap: 32px; }
+      .dashboard-container { 
+        display: flex; flex-direction: column; gap: 32px; 
+        height: auto; min-height: auto; padding-bottom: 60px;
+      }
       
-      .content-area { 
+      .controls-panel { height: auto; }
+      
+      .visual-area { 
         display: flex; flex-direction: column; 
-        grid-template-columns: 1fr; grid-template-rows: auto;
         height: auto;
       }
       
-      .diamond-card { min-height: 320px; }
-      .pattern-card, .summary-card { min-height: auto; }
+      .diamond-card { min-height: 360px; order: -1; } /* Visual first */
+      .health-card { order: 0; }
+      .pattern-card, .summary-card { height: auto; min-height: auto; }
       
-      .page-title-section { padding-top: 30px !important; }
-      .page-title-section h1 { font-size: 2rem; }
+      footer { display: block; background:var(--white); border-top:1px solid var(--line); padding:32px 0; text-align:center; color:#94a3b8; font-size:0.85rem; }
     }
   </style>
 </head>
@@ -263,18 +266,13 @@
   </div>
 </header>
 
-<div class="page-title-section">
-  <span class="eyebrow">Interactive Model</span>
-  <h1>The GRIP Diamond</h1>
-  <p>Adjust the four dimensions to see how system balance affects growth.</p>
-</div>
-
-<main class="dashboard-wrap">
+<main class="dashboard-container">
   
-  <aside class="panel">
-    <div class="panel-header">
-      <h2>Dimensions</h2>
-      <p>Simulate your current maturity.</p>
+  <aside class="controls-panel">
+    <div class="panel-title">
+      <span class="eyebrow">Interactive Model</span>
+      <h1>The GRIP Diamond</h1>
+      <p>Adjust dimensions to simulate your state.</p>
     </div>
 
     <div class="control-group">
@@ -297,20 +295,20 @@
       <input type="range" id="input-p" min="0" max="100" value="43">
     </div>
 
-    <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line);">
+    <div class="cta-box">
       <p style="font-size:0.85rem; font-weight:700; color:var(--text-dark); margin-bottom:8px;">Need accurate data?</p>
       <a href="gtm-assessment.html" class="btn-sm" style="display:block; text-align:center;">Take Free Assessment</a>
     </div>
   </aside>
 
-  <div class="content-area">
+  <div class="visual-area">
     
     <div class="diamond-card">
       <div class="diamond-wrapper">
         <svg id="gripDiamondSVG" viewBox="0 0 260 260">
            <defs>
              <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-               <stop offset="0%" style="stop-color:#0056b3; stop-opacity:0.25" />
+               <stop offset="0%" style="stop-color:#0056b3; stop-opacity:0.3" />
                <stop offset="100%" style="stop-color:#0056b3; stop-opacity:0.05" />
              </linearGradient>
            </defs>
@@ -323,7 +321,7 @@
     </div>
 
     <div class="health-card">
-       <h2 style="font-size:1rem; margin-bottom:16px; color:var(--text-dark); text-transform:uppercase; letter-spacing:0.05em;">System Health</h2>
+       <h2 style="font-size:0.9rem; margin-bottom:16px; color:var(--text-body); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">System Health</h2>
        <div class="health-row">
          <span class="h-label">Guidance</span>
          <span class="h-score" id="score-g">45</span>
@@ -350,14 +348,14 @@
       <span class="label-xs">System Pattern</span>
       <div class="card-title" id="archetypeTitle">The Direction Gap</div>
       <div class="card-text" id="archetypeBody">
-        Execution capability exists, but the strategic compass is broken. Teams are misaligned.
+        High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.
       </div>
     </div>
 
     <div class="summary-card">
       <span class="label-xs" style="color:var(--primary); margin-bottom:8px;">Executive Summary</span>
       <div class="card-text" id="execSummary">
-        Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.
+        Your primary constraint is Guidance. The team is capable of doing the work (High Implementation), but they are constantly realigning because the goalposts keep moving. This creates a high-burn environment where output does not translate to outcome. Lock down your 12-month strategy before launching next quarter's plans.
       </div>
     </div>
 
@@ -390,63 +388,172 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // THE 30 ARCHETYPES (Simplified Logic for Demo)
+    // THE FULL ARCHETYPE LOGIC (No lazy cuts)
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
       const avg = (g+r+i+p)/4;
       const lowest = scores[0];
+      const highest = scores[3];
+      const secondLowest = scores[1];
 
+      // --- 1. EXTREMES ---
       if (avg < 35) return { 
         title: "The Stalled Engine", 
-        body: "Systemic failure across all dimensions.", 
-        summary: "The entire system requires a reset. Focus on finding product-market fit with a handful of customers before scaling any commercial functions.",
+        body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", 
+        summary: "The revenue engine has stalled. There is no single constraint to fix; the entire system requires a reset. Focus on finding product-market fit with a handful of customers before scaling any commercial functions.",
         mode: "mode-bad" 
       };
-      
-      if (lowest.k === 'g') return { 
-        title: "The Direction Gap", 
-        body: "High execution risk. Compass is broken.", 
-        summary: "Your primary constraint is Guidance. The team is capable of doing the work (Implementation), but they are constantly realigning because the goalposts keep moving.",
-        mode: "mode-warn" 
-      };
-      
-      if (lowest.k === 'r') return { 
-        title: "The Capacity Crunch", 
-        body: "Ambition exceeds bandwidth.", 
-        summary: "The math doesn't work. Your revenue goals require more capacity (leads, hours, budget) than you have available. You are burning out your best people.",
-        mode: "mode-warn" 
+
+      if (avg < 45 && highest.v < 60) return { 
+        title: "The Fragile Foundation", 
+        body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", 
+        summary: "The system is fragile. Without a clear strength to lean on, every new initiative feels heavy. Stop adding new channels or hires. Focus purely on stabilizing one core motion (likely outbound or founder-led) to build a baseline.",
+        mode: "mode-bad" 
       };
 
-      if (lowest.k === 'i') return { 
-        title: "The Broken Handoff", 
-        body: "Friction in the motion.", 
-        summary: "Your funnel is leaking at the handoffs. Marketing to Sales, or Sales to CS. The individual teams are fine, but the connection is broken.",
-        mode: "mode-warn" 
-      };
-
-      if (lowest.k === 'p') return { 
-        title: "The Blind Spot", 
-        body: "Visibility is zero.", 
-        summary: "Performance is the constraint because you can't predict it. Revenue comes in spikes. You need to install a forecasting cadence.",
-        mode: "mode-mid" 
-      };
-
-      return { 
-        title: "The Balanced Engine", 
-        body: "Strong coherence.", 
-        summary: "Your GTM engine is maturing. Focus on connecting the four pillars: ensure Strategy informs Resources, and Implementation drives Performance.", 
+      if (avg > 85) return { 
+        title: "The Precision Machine", 
+        body: "Elite performance. Focus on incremental optimization and expansion.", 
+        summary: "Your GTM engine is operating at elite levels. The risk now is complexity and complacency. Focus on marginal gains: optimization of pricing, expansion of adjacent ICPs, and defending your brand category.",
         mode: "mode-good" 
+      };
+
+      if (avg > 75 && lowest.v > 65) return { 
+        title: "The Balanced Engine", 
+        body: "Strong coherence. No major drag factors, allowing for predictable scaling.", 
+        summary: "You have achieved system balance. There are no critical bottlenecks holding you back. You can now safely pour fuel on the fire (budget/headcount) because the conversion mechanics are sound.",
+        mode: "mode-good" 
+      };
+
+      // --- 2. CONSTRAINT LOGIC ---
+
+      // === LOWEST: GUIDANCE ===
+      if (lowest.k === 'g') {
+         if (highest.k === 'i' && highest.v > 65) return { 
+           title: "The Activity Trap", 
+           body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", 
+           summary: "The team is working incredibly hard (High Implementation) but lacks strategic clarity. You are burning cash on activities that don't compound. Stop execution for one week to clarify ICP and positioning.",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'r' && highest.v > 65) return { 
+           title: "The Bloated Ship", 
+           body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", 
+           summary: "You have hired people and bought tools (High Resources) before defining exactly where to go. This creates a high-burn, low-velocity environment. Freeze hiring and audit your tool stack immediately.",
+           mode: "mode-warn" 
+         };
+         if (secondLowest.k === 'p') return { 
+           title: "The Guesswork Strategy", 
+           body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", 
+           summary: "You are flying blind. Without Strategy (G) or Data (P), every decision is a guess. You cannot optimize this system yet; you must first instrument it to see what is happening.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Direction Gap", 
+           body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", 
+           summary: "Your primary constraint is Guidance. The team is capable of doing the work, but they are constantly realigning because the goalposts keep moving. Lock down your 12-month strategy before launching next quarter's plans.",
+           mode: "mode-warn" 
+         };
+      }
+
+      // === LOWEST: RESOURCES ===
+      if (lowest.k === 'r') {
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Visionary Void", 
+           body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", 
+           summary: "Leadership has a clear vision (High Guidance), but the team is too small or underfunded to build it. You are at risk of losing morale as targets are missed despite good intentions. Prioritize: do fewer things or secure more budget.",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'i' && highest.v > 70) return { 
+           title: "The Burnout Engine", 
+           body: "High execution (I) on low resources (R). The team is over-performing but fragile.", 
+           summary: "Your team is performing heroics. They are executing well (High Implementation) despite a lack of support/tools. This is a burnout risk. Invest in automation or headcount immediately to sustain this pace.",
+           mode: "mode-bad" 
+         };
+         if (secondLowest.k === 'p') return { 
+           title: "The Tooling Debt", 
+           body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", 
+           summary: "You are underinvested in RevOps and Data. You cannot see why performance is low because you lack the tooling to track it. Your first hire should be RevOps, not Sales.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Capacity Crunch", 
+           body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", 
+           summary: "The math doesn't work. Your revenue goals require more capacity (leads, hours, budget) than you have available. You are burning out your best people. Reset expectations or unlock resources to bridge the gap.",
+           mode: "mode-warn" 
+         };
+      }
+
+      // === LOWEST: IMPLEMENTATION ===
+      if (lowest.k === 'i') {
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Ivory Tower", 
+           body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", 
+           summary: "There is a gap between the boardroom and the front line. The strategy looks good on paper (High Guidance), but it isn't landing in the market. Leadership needs to get involved in deal execution to see the friction.",
+           mode: "mode-bad" 
+         };
+         if (highest.k === 'p' && highest.v > 60) return { 
+           title: "The Heroic System", 
+           body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", 
+           summary: "You are hitting targets (High Performance) but it's pure hustle. There is no repeatable process (Low Implementation). If your top rep leaves, revenue collapses. Document the playbook now while things are going well.",
+           mode: "mode-warn" 
+         };
+         if (secondLowest.k === 'r') return { 
+           title: "The Process Void", 
+           body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", 
+           summary: "It is chaotic. You lack the people to do the work and the process to guide them. Don't hire more salespeople yet; hire a GTM manager to build the tracks first.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Broken Handoff", 
+           body: "Friction in the motion. Leads, data, or deals are dropping between silos.", 
+           summary: "Your funnel is leaking at the handoffs. Marketing to Sales, or Sales to CS. The individual teams are fine, but the connection is broken. Focus on SLA's and full-funnel definitions.",
+           mode: "mode-warn" 
+         };
+      }
+
+      // === LOWEST: PERFORMANCE ===
+      if (lowest.k === 'p') {
+         if (highest.k === 'i' && highest.v > 70) return { 
+           title: "The Leaky Bucket", 
+           body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", 
+           summary: "You are doing the work (High Implementation) but not getting the reward. Something is broken in conversion or retention. Stop pouring more leads into the top until you fix the leak in the middle.",
+           mode: "mode-bad" 
+         };
+         if (highest.k === 'g' && highest.v > 70) return { 
+           title: "The Blind Optimist", 
+           body: "Strong narrative (G), but the numbers (P) don't validate the story.", 
+           summary: "You believe in the vision (High Guidance), but the market disagrees. Win rates and retention are too low. It's time to validate product-market fit again. Is the value proposition actually landing?",
+           mode: "mode-warn" 
+         };
+         if (highest.k === 'r' && highest.v > 70) return { 
+           title: "The ROI Drag", 
+           body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", 
+           summary: "This is an efficiency crisis. You have the budget and people (High Resources), but the output per head is far below benchmark. Review team structure and channel ROI immediately.",
+           mode: "mode-bad" 
+         };
+         return { 
+           title: "The Black Box", 
+           body: "The system runs, but visibility is zero. You cannot predict next quarter.", 
+           summary: "Performance is the constraint because you can't predict it. Revenue comes in spikes. You need to install a forecasting cadence and weekly metric reviews to regain control.",
+           mode: "mode-mid" 
+         };
+      }
+
+      // Fallback
+      return { 
+        title: "The Developing Engine", 
+        body: "System shows potential but lacks coherence across pillars.", 
+        summary: "Your GTM engine is maturing but still disjointed. Focus on connecting the four pillars: ensure Strategy informs Resources, Resources enable Implementation, and Implementation drives Performance.", 
+        mode: "mode-mid" 
       };
     }
 
-    // DRAW DIAMOND (Correct Coordinates: G=Top, R=Right, I=Bottom, P=Left)
+    // 3. DRAW DIAMOND (SVG) - CLOCKWISE G -> R -> I -> P
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
-      // SVG size is 260x260, Center is 130,130
       const cx = 130; const cy = 130; const maxR = 90;
 
-      // Helper to calculate points relative to center
       function getPt(val, pos) {
         const r = (val / 100) * maxR;
         if(pos === 'top') return { x: cx, y: cy - r };
@@ -521,7 +628,7 @@
       document.getElementById(id).addEventListener("input", update);
     });
 
-    update();
+    update(); // Init
   })();
 </script>
 
