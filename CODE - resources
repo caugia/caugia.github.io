@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Resources | Caugia Consulting</title>
+  <meta name="description" content="Structured tools, frameworks and intelligence built on The GTM Framework, the GRIP Diamond and the GTM Score." />
+
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* --- V3 CORE SYSTEM (EXACT COPY FOR CONSISTENCY) --- */
+    :root{
+      --primary:#0056b3;
+      --primary-light:#e0f2fe;
+      --primary-dark:#004494;
+      --text-dark:#0f172a;
+      --text-body:#475569;
+      --bg:#f8fafc;
+      --white:#ffffff;
+      --line:#e2e8f0;
+      --radius-md:14px;
+      --radius-lg:22px;
+      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
+      --max:1200px;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    
+    body{
+      font-family:Inter, sans-serif;
+      background:var(--bg);
+      color:var(--text-dark);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h1,h2,h3,h4{
+      font-family:Merriweather, serif;
+      color:var(--text-dark);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    p{ color:var(--text-body); margin-bottom:1.5rem; }
+    p:last-child{ margin-bottom:0; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    section{ padding:80px 0; }
+
+    /* BUTTONS (STATIC) */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; 
+      transition:background 0.2s ease, border-color 0.2s ease; 
+      white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; } 
+
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
+    .brand img{ width:32px; height:32px; display:block; }
+    .nav-links{ display:flex; gap:32px; align-items:center; }
+    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
+    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
+    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
+    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
+    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
+
+    /* --- PAGE SPECIFIC --- */
+
+    /* HERO */
+    .resource-hero{ padding:80px 0 60px; text-align:center; max-width:800px; margin:0 auto; }
+    .resource-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
+    .resource-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
+
+    /* RESOURCE SECTIONS */
+    .section-title { 
+      font-family: Inter, sans-serif; font-weight: 800; font-size: 1.5rem; 
+      margin-bottom: 16px; color: var(--text-dark); display: flex; align-items: center; gap: 12px;
+    }
+    .section-title::before {
+      content: ""; display: block; width: 6px; height: 24px; 
+      background: var(--primary); border-radius: 4px;
+    }
+    
+    .section-intro { font-size: 1.05rem; color: var(--text-body); max-width: 700px; margin-bottom: 40px; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 60px; }
+    
+    .resource-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      /* NO TRANSITION ON TRANSFORM */
+    }
+    
+    .resource-card:hover { 
+      box-shadow: var(--shadow-card); 
+      border-color: #cbd5e1;
+    }
+
+    .resource-tag { 
+      font-size: 0.7rem; font-weight: 800; color: var(--primary); 
+      background: var(--primary-light); padding: 4px 10px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; align-self: flex-start;
+    }
+    
+    .resource-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); }
+    .resource-card:hover h3 { color: var(--primary); }
+
+    .resource-card p { font-size: 0.95rem; color: var(--text-body); flex-grow: 1; margin-bottom: 24px; }
+    
+    .card-link { 
+      font-weight: 700; color: var(--text-dark); display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; 
+      transition: gap 0.2s, color 0.2s;
+    }
+    .card-link span { font-size: 1.2rem; line-height: 1; color: var(--primary); }
+    .resource-card:hover .card-link { color: var(--primary); gap: 12px; }
+
+    /* COMING SOON VARIANT */
+    .card-locked {
+      background: #f8fafc; border-style: dashed; border-color: #cbd5e1;
+      pointer-events: none; opacity: 0.8;
+    }
+    .card-locked:hover { box-shadow: none; border-color: #cbd5e1; }
+    
+    .tag-coming { background: #e2e8f0; color: #64748b; border: 1px solid #cbd5e1; }
+    .muted-text { color: #94a3b8 !important; }
+    
+    .locked-footer {
+      font-size: 0.85rem; font-weight: 700; color: #94a3b8;
+      display: flex; align-items: center; gap: 8px; margin-top: auto;
+    }
+
+    /* Divider */
+    .divider { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); margin: 0 0 80px 0; }
+
+    /* Dark CTA Section */
+    .section-dark{ background:#0f172a; color:var(--white); text-align: center; padding: 100px 0; position: relative; overflow: hidden; }
+    .section-dark h2{ color:var(--white); margin-bottom: 24px; position: relative; z-index: 1; }
+    .section-dark p{ color:#94a3b8; max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem; position: relative; z-index: 1; }
+    .section-dark .btn { position: relative; z-index: 1; }
+
+    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
+
+    @media (max-width: 980px){
+      .grid-3 { grid-template-columns: 1fr; gap: 24px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+      section { padding: 60px 0; }
+      .resource-hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/C-logo.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gtm-assessment.html">GTM Score</a></li>
+        <li><a href="resources.html" class="active">Resources</a></li>
+      </ul>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <button class="menu-toggle" id="menuToggle">Menu</button>
+      </div>
+    </div>
+    
+    <div class="container mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="gtm-assessment.html">GTM Score</a>
+      <a href="resources.html" class="active">Resources</a>
+      <div class="mobile-cta">
+        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+        <a href="contact.html" class="btn btn-outline">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container resource-hero">
+      <h1>Library & Tools.</h1>
+      <p>
+        A structured collection of frameworks, models, and intelligence built on the GRIP system. 
+        Designed to replace guesswork with engineering.
+      </p>
+    </section>
+
+    <div class="container">
+      
+      <section style="padding-top: 0;">
+        <h2 class="section-title">Free Tools</h2>
+        <p class="section-intro">High-leverage diagnostics that give you immediate structure and insight.</p>
+        
+        <div class="grid-3">
+          <article class="resource-card">
+            <span class="resource-tag">Diagnostic</span>
+            <h3>The GTM Score</h3>
+            <p>A concise maturity snapshot across twelve pillars. Clear, structured and ready in 5 minutes.</p>
+            <a href="gtm-assessment.html" class="card-link">Start your GTM Score <span>→</span></a>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Interactive Model</span>
+            <h3>The GRIP Diamond</h3>
+            <p>Visualise your system stability. Adjust the four dimensions to see how balance affects growth.</p>
+            <a href="grip-diamond.html" class="card-link">Open Diamond <span>→</span></a>
+          </article>
+
+          <article class="resource-card card-locked">
+            <span class="resource-tag tag-coming">Coming soon</span>
+            <h3 class="muted-text">SaaS GTM Benchmarks</h3>
+            <p class="muted-text">
+              Compare your conversion rates, sales velocity and expansion metrics against 500+ B2B SaaS peers aligned to your stage.
+            </p>
+            <div class="locked-footer">
+              <span>🔒 Available Soon</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <section style="padding: 0;">
+        <h2 class="section-title">Strategic Intelligence</h2>
+        <p class="section-intro">Deep structured analysis for leadership teams that want complete clarity.</p>
+        
+        <div class="grid-3">
+          <article class="resource-card">
+            <span class="resource-tag">Flagship Product</span>
+            <h3>GTM Intelligence Report</h3>
+            <p>A context-aware, forensic diagnostic across all twelve pillars. The standard for board-level clarity.</p>
+            <a href="gtm-intelligence-report.html" class="card-link">Explore Report <span>→</span></a>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Modular Deep Dives</span>
+            <h3>The 12 GTM Modules</h3>
+            <p>Structured fix-it packages for specific constraints. From pricing strategy to sales enablement.</p>
+            <a href="services.html#marketplace" class="card-link">View Modules <span>→</span></a>
+          </article>
+
+          <article class="resource-card card-locked">
+            <span class="resource-tag tag-coming">Coming soon</span>
+            <h3 class="muted-text">GTM Scenario Simulator</h3>
+            <p class="muted-text">
+              Model the impact of headcount, pricing, and conversion changes on your 24-month revenue trajectory.
+            </p>
+            <div class="locked-footer">
+              <span>🔒 In Development</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <section style="padding: 0;">
+        <h2 class="section-title">Frameworks & Guides</h2>
+        <p class="section-intro">The core logic behind modern, predictable revenue engines.</p>
+        
+        <div class="grid-3">
+          <article class="resource-card">
+            <span class="resource-tag">Reference Architecture</span>
+            <h3>The GTM Framework</h3>
+            <p>A visual map of the modern revenue engine. Moving from silos to a unified system.</p>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Core Concept</span>
+            <h3>The GRIP Model</h3>
+            <p>Understanding the four structural forces (Guidance, Resources, Implementation, Performance) that drive balance.</p>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Operating Rhythm</span>
+            <h3>Planning Templates</h3>
+            <p>Clear structures to translate goals into execution without the usual spreadsheet chaos.</p>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Team Alignment</span>
+            <h3>Alignment Workshops</h3>
+            <p>Structured sessions designed to replace opinions with clarity and shared definitions.</p>
+          </article>
+
+          <article class="resource-card">
+            <span class="resource-tag">Management</span>
+            <h3>Review Rhythms</h3>
+            <p>Cadences that keep your GTM system healthy over time. Moving from inspection to improvement.</p>
+          </article>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="section-dark">
+      <div class="container">
+        <h2>Ready to diagnose your engine?</h2>
+        <p>Start with the free GTM Score. It takes 5 minutes and gives you instant clarity on where to focus.</p>
+        <a href="gtm-assessment.html" class="btn btn-primary" style="background: white; color: var(--text-dark);">Start Free Assessment</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById("menuToggle");
+      const mobileNav = document.getElementById("mobileNav");
+      if (toggle && mobileNav) {
+        toggle.addEventListener("click", () => {
+          const open = mobileNav.style.display === "block";
+          mobileNav.style.display = open ? "none" : "block";
+          toggle.innerText = open ? "Close" : "Menu";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
