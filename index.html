@@ -131,6 +131,9 @@
     .pillar-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 32px; font-size:0.9rem; color:#334155; }
     .pillar-item{ display:grid; grid-template-columns:24px 1fr; gap:10px; align-items:baseline; }
     .pillar-num{ font-weight:800; color:#cbd5e1; text-align:right; font-size:0.8rem; }
+    
+    /* Mobile text helper: Hidden by default on desktop */
+    .m-text { display: none; }
 
     /* Widget */
     .widget-card{
@@ -242,13 +245,12 @@
       }
       .mobile-cta .btn { width: 100%; }
 
-      /* 2. HERO FIX (Smaler text width + Padding) */
+      /* 2. HERO FIX */
       .hero { 
           padding-top: 30px !important; 
           padding-bottom: 50px !important; 
           gap: 40px !important;
       }
-      /* Extra marge voor de tekst aan de zijkant */
       .hero > div:first-child {
           padding-left: 12px;
           padding-right: 12px;
@@ -266,7 +268,7 @@
       .brand { font-size: 0.9rem; gap: 8px; }
       .brand img { width: 26px; height: 26px; }
 
-      /* 3. PILLARS (Compact Grid) */
+      /* 3. PILLARS (Hybrid Text Mode) */
       .pillars-card {
           padding: 24px 20px;
           margin-top: 30px;
@@ -284,8 +286,12 @@
           align-items: center;
       }
       .pillar-num { font-size: 0.7rem; }
+      
+      /* SWAP TEXT ON MOBILE */
+      .d-text { display: none; }
+      .m-text { display: inline; }
 
-      /* 4. WIDGET (Reverted GRIP Layout - Sliders Top) */
+      /* 4. WIDGET */
       .widget-card {
           margin-top: 0;
           padding: 24px 20px;
@@ -301,7 +307,6 @@
           margin-top: -9px;
       }
 
-      /* Revert to standard stacking: Controls first, Chart second */
       .widget-layout {
           display: grid !important; 
           grid-template-columns: 1fr !important;
@@ -311,15 +316,14 @@
           margin-top: 0; 
       }
 
-      /* 5. COMPARISON & REST */
-      .comparison-wrapper { gap: 0 !important; }
+      /* 5. COMPARISON - SEPARATED CARDS */
+      .comparison-wrapper { gap: 24px !important; }
       
       .comp-col-left {
           background: #f1f5f9;
           padding: 24px;
-          border-radius: 16px 16px 0 0;
+          border-radius: 16px !important; /* Full Radius */
           border: 1px solid var(--line);
-          border-bottom: none;
           opacity: 1; 
       }
       .comp-col-left h4 { font-size: 0.9rem; margin-bottom: 12px; }
@@ -328,8 +332,8 @@
 
       .comp-col-right {
           padding: 30px 24px;
-          border-radius: 0 0 16px 16px;
-          border-top: none;
+          border-radius: 16px !important; /* Full Radius */
+          border: 1px solid rgba(0,86,179,0.15) !important; /* Full Border */
           box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);
           z-index: 2;
       }
@@ -403,20 +407,92 @@
           <h3>The 12 System Pillars</h3>
           <div class="pillar-grid">
             <div>
-              <div class="pillar-item"><span class="pillar-num">1</span><span>GTM Strategy & Leadership</span></div>
-              <div class="pillar-item"><span class="pillar-num">2</span><span>Market Intelligence</span></div>
-              <div class="pillar-item"><span class="pillar-num">3</span><span>Product Marketing</span></div>
-              <div class="pillar-item"><span class="pillar-num">4</span><span>Demand Generation</span></div>
-              <div class="pillar-item"><span class="pillar-num">5</span><span>Sales Execution</span></div>
-              <div class="pillar-item"><span class="pillar-num">6</span><span>Customer Success & Expansion</span></div>
+              <div class="pillar-item">
+                  <span class="pillar-num">1</span>
+                  <span>
+                      <span class="d-text">GTM Strategy & Leadership</span>
+                      <span class="m-text">GTM Strategy</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">2</span>
+                  <span>
+                      <span class="d-text">Market Intelligence</span>
+                      <span class="m-text">Market Intel</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">3</span>
+                  <span>
+                      <span class="d-text">Product Marketing</span>
+                      <span class="m-text">Product Mktg</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">4</span>
+                  <span>
+                      <span class="d-text">Demand Generation</span>
+                      <span class="m-text">Demand Gen</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">5</span>
+                  <span>
+                      <span class="d-text">Sales Execution</span>
+                      <span class="m-text">Sales Exec</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">6</span>
+                  <span>
+                      <span class="d-text">Customer Success & Expansion</span>
+                      <span class="m-text">CS & Expansion</span>
+                  </span>
+              </div>
             </div>
             <div>
-              <div class="pillar-item"><span class="pillar-num">7</span><span>Revenue Operations & Systems</span></div>
-              <div class="pillar-item"><span class="pillar-num">8</span><span>Pricing & Packaging</span></div>
-              <div class="pillar-item"><span class="pillar-num">9</span><span>Brand & Communications</span></div>
-              <div class="pillar-item"><span class="pillar-num">10</span><span>Data & Insights</span></div>
-              <div class="pillar-item"><span class="pillar-num">11</span><span>Enablement</span></div>
-              <div class="pillar-item"><span class="pillar-num">12</span><span>Leadership & Alignment</span></div>
+              <div class="pillar-item">
+                  <span class="pillar-num">7</span>
+                  <span>
+                      <span class="d-text">Revenue Operations & Systems</span>
+                      <span class="m-text">RevOps</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">8</span>
+                  <span>
+                      <span class="d-text">Pricing & Packaging</span>
+                      <span class="m-text">Pricing</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">9</span>
+                  <span>
+                      <span class="d-text">Brand & Communications</span>
+                      <span class="m-text">Brand & Comms</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">10</span>
+                  <span>
+                      <span class="d-text">Data & Insights</span>
+                      <span class="m-text">Data</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">11</span>
+                  <span>
+                      <span class="d-text">Enablement</span>
+                      <span class="m-text">Enablement</span>
+                  </span>
+              </div>
+              <div class="pillar-item">
+                  <span class="pillar-num">12</span>
+                  <span>
+                      <span class="d-text">Leadership & Alignment</span>
+                      <span class="m-text">Leadership</span>
+                  </span>
+              </div>
             </div>
           </div>
         </div>
