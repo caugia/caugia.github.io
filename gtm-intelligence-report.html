@@ -39,7 +39,7 @@
   </script>
 
   <style>
-    /* --- V3 CORE SYSTEM (EXACT COPY) --- */
+    /* --- V3 CORE SYSTEM --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -85,7 +85,7 @@
 
     section{ padding:80px 0; }
 
-    /* BUTTONS (STATIC) */
+    /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
@@ -124,13 +124,21 @@
     /* --- HERO SECTION --- */
     .hero-split {
       display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px;
-      /* PADDING MATCHED EXACTLY TO INDEX PAGE */
+      /* ALIGNMENT FIX:
+         padding-top: 68px (Same as Index)
+         align-items: start (Pushes content to top, same as Index)
+      */
       padding-top: 68px; padding-bottom: 96px; 
-      align-items: center;
+      align-items: start; 
     }
+    
+    /* Make visual stick a bit lower so it doesn't float too high */
+    .hero-visual-wrapper { position: relative; z-index: 1; margin-top: 10px; }
+
     .eyebrow {
       display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
+      font-size: 0.75rem; color: var(--primary); font-weight: 800; 
+      margin-bottom: 16px; /* ALIGNMENT FIX: 16px matches Index */
       background: #eff6ff; padding: 6px 12px; border-radius: 4px;
     }
     .hero-h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; color: var(--text-dark); letter-spacing: -0.02em; }
@@ -145,8 +153,6 @@
     .price-sub { font-size: 0.85rem; color: #94a3b8; line-height: 1.3; }
     .price-sub strong { color: #64748b; font-weight: 700; }
 
-    /* HERO VISUAL ENGINE */
-    .hero-visual-wrapper { position: relative; z-index: 1; }
     
     .report-card-ui {
       background: var(--white); border: 1px solid rgba(15,23,42,0.08); border-radius: 20px;
@@ -251,9 +257,8 @@
       }
       .mobile-nav.active { display: block; }
       
-      /* Clean Mobile Menu (No Blue GTM Button, Simple Contact Link) */
       .mobile-cta { padding: 24px 0 0 !important; }
-      .mobile-cta .btn { display: none !important; }
+      .mobile-cta .btn { width: 100%; }
 
       /* 2. Hero Layout */
       .hero-split { 
@@ -262,9 +267,10 @@
           padding-top: 30px !important; 
           text-align: center;
           padding-left: 12px; padding-right: 12px;
+          align-items: center; /* Reset for mobile stack */
       }
       
-      .hero-visual-wrapper { display: none; } /* Hide complex UI on mobile */
+      .hero-visual-wrapper { display: none; } 
       
       .hero-h1 { 
           font-size: 2rem !important; 
@@ -517,11 +523,10 @@
     const stripe = Stripe("pk_live_51Sco4oDZAazoTP0s5aF0J3t8e1XGq1XGq1XGq1XGq1XGq1XGq1XGq"); // Live Key
 
     function startCheckout() {
-      // Gebruik de global variabele van currency.js
-      // Fallback ID voor EUR als currency.js niet laadt
+      // Use global variable from currency.js or fallback to EUR
       const priceId = window.CURRENT_STRIPE_PRICE_ID || "price_1Qim5eDZAazoTP0szK5sV78C";
 
-      // Safety check voor placeholder GBP
+      // Safety check for placeholder
       if(priceId === 'price_GBP_PLACEHOLDER') {
           alert("GBP payments are currently being configured. Please contact support.");
           return;
