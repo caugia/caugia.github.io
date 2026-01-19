@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,28 +14,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="assets/currency.js"></script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "GTM Consulting",
-    "provider": {
-      "@type": "ConsultingFirm",
-      "name": "Caugia Consulting"
-    },
-    "areaServed": "Global",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "GTM Intelligence Services",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Score" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Intelligence Report" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "System Modules" } }
-      ]
-    }
-  }
-  </script>
 
   <style>
     /* --- V3 CORE SYSTEM (MASTER CSS) --- */
@@ -116,6 +93,7 @@
 
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
     
+    /* Mobile Nav Overlay */
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
@@ -243,45 +221,87 @@
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    /* --- MOBILE RESPONSIVENESS FIXES (GOD MODE) --- */
+    /* --- MOBILE RESPONSIVENESS FIXES --- */
     @media (max-width: 980px){
-      /* 1. Header Cleanup */
-      .nav-links{ display:none; }
-      .menu-toggle{ display:inline-flex; }
+      /* 1. Header & Nav (Consistent with Index) */
+      header { backdrop-filter: blur(16px); background: rgba(255,255,255,0.9); }
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
       
-      /* Hide the desktop 'Contact' button on mobile */
+      /* Hide Header Buttons on Mobile */
       .nav-actions .btn { display: none !important; }
-      
-      /* Brand adjustment */
-      .brand { font-size: 0.9rem; gap: 8px; }
-      .brand img { width: 26px; height: 26px; }
 
-      /* 2. Layout & Typography */
-      .services-hero h1 { 
-        font-size: 2.5rem !important; 
-        line-height: 1.2 !important; 
+      /* MATCHED MENU SIZE with Index: 16px padding */
+      .menu-toggle { display: inline-flex; font-size: 0.85rem; padding: 8px 16px; }
+
+      .mobile-nav { 
+        position: absolute; top: 80px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--line);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        padding: 10px 20px 30px !important; z-index: 999;
+        display: none; 
       }
-      section { padding: 60px 0 !important; }
+      .mobile-nav.active { display: block; }
       
-      /* 3. Stacked Mobile CTA */
-      .mobile-nav { padding: 24px 0 32px !important; }
       .mobile-cta {
-          padding: 24px 10px 0 !important;
+          padding: 24px 0 0 !important;
           flex-direction: column; 
           gap: 16px;
       }
       .mobile-cta .btn { width: 100%; }
 
-      /* 4. Grid Fixes */
-      .services-grid, .mp-container { 
+      /* 2. Brand */
+      .brand { font-size: 0.9rem; gap: 8px; }
+      .brand img { width: 26px; height: 26px; }
+
+      /* 3. Hero Layout (Tightened) */
+      .services-hero { 
+          padding-top: 30px !important; 
+          padding-bottom: 20px !important; /* REDUCED WHITESPACE */
+          padding-left: 12px;
+          padding-right: 12px;
+      }
+      .services-hero h1 { 
+        font-size: 2.25rem !important; 
+        line-height: 1.2 !important; 
+        margin-bottom: 16px;
+      }
+      .services-hero p { font-size: 1.05rem; }
+
+      section { padding: 60px 0 !important; }
+      
+      /* 4. Service Cards (Margins & Fitting) */
+      .services-grid { 
         grid-template-columns: 1fr !important; 
-        max-width: 600px; 
-        margin-left: auto; margin-right: auto;
-        gap: 40px !important;
+        gap: 24px !important; 
+        margin-top: 20px !important; /* REDUCED WHITESPACE */
       }
       
-      /* Reset fixed heights on mobile for natural flow */
+      .service-card {
+          padding: 30px 24px; /* Reduced internal padding for better fit */
+          height: auto; 
+          margin-bottom: 0;
+      }
+      
+      /* Reset fixed heights so mobile cards don't look empty */
       .service-desc, .service-price { min-height: auto !important; }
+      .service-price { margin-top: 24px; margin-bottom: 16px; }
+
+      /* 5. Marketplace */
+      .mp-container { 
+        grid-template-columns: 1fr !important; 
+        gap: 40px !important;
+      }
+      .mp-card { padding: 30px 24px; }
+
+      /* 6. FAQ (More Space) */
+      .faq-section { margin-top: 20px; }
+      details { 
+          padding: 24px 0; /* More touch target area */
+          margin-bottom: 8px; /* Breathing room between items */
+      }
+      summary { font-size: 1.05rem; line-height: 1.4; padding-right: 10px; }
+      details p { font-size: 0.95rem; max-width: 100%; margin-top: 12px; }
     }
   </style>
 </head>
@@ -313,10 +333,7 @@
       <a href="services.html" class="active">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-cta">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-        <a href="contact.html" class="btn btn-outline">Contact</a>
-      </div>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
 
@@ -574,9 +591,14 @@
       const mobileNav = document.getElementById("mobileNav");
       if (toggle && mobileNav) {
         toggle.addEventListener("click", () => {
-          const open = mobileNav.style.display === "block";
-          mobileNav.style.display = open ? "none" : "block";
-          toggle.innerText = open ? "Close" : "Menu";
+          // Toggle class instead of style to support new CSS
+          mobileNav.classList.toggle("active");
+          
+          const isOpen = mobileNav.classList.contains("active");
+          toggle.innerText = isOpen ? "Close" : "Menu";
+          
+          // Lock body scroll when menu is open
+          document.body.style.overflow = isOpen ? "hidden" : "auto";
         });
       }
     })();
