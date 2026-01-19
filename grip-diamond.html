@@ -345,14 +345,14 @@
       <span class="label-xs">System Pattern</span>
       <div class="card-title" id="archetypeTitle">The Direction Gap</div>
       <div class="card-text" id="archetypeBody">
-        Execution capability exists, but the strategic compass is broken. Teams are misaligned.
+        High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.
       </div>
     </div>
 
     <div class="summary-card">
       <span class="label-xs" style="color:var(--primary); margin-bottom:8px;">Executive Summary</span>
       <div class="card-text" id="execSummary">
-        Execution capability exists, but the strategic compass is broken. Teams are misaligned.
+        Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift. The system gets heavier each quarter, even when the team is strong.
       </div>
     </div>
 
@@ -491,9 +491,13 @@
       const arch = getArchetype(g, r, i, p);
       const box = document.getElementById("archetypeBox");
       document.getElementById("archetypeTitle").textContent = arch.title;
-      // Use BODY text for both slots (Short description + Main Summary) to ensure full data visibility
       document.getElementById("archetypeBody").textContent = arch.body;
-      document.getElementById("execSummary").textContent = arch.body; 
+      
+      // Use Pattern BODY for Executive Summary if no specific Summary exists
+      // BUT for the 4-5 sentences you requested, we use static fallback initially
+      // When user interacts, we can either keep static or update. 
+      // Current logic: It updates to the specific pattern body to be dynamic.
+      document.getElementById("execSummary").textContent = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift."; 
       
       box.className = "pattern-card " + arch.mode;
 
