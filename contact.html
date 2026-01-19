@@ -87,8 +87,12 @@
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
     
+    /* Mobile Nav Overlay */
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
@@ -141,12 +145,56 @@
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    @media (max-width: 900px){
-      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    /* MOBILE OPTIMIZATIONS (GOD MODE) */
+    @media (max-width: 980px){
+      /* 1. Header & Nav */
+      header { backdrop-filter: blur(16px); background: rgba(255,255,255,0.9); }
+      .nav { padding: 0 20px; }
       .nav-links { display: none; }
-      .menu-toggle { display: inline-flex; }
-      .form-card { padding: 24px; }
-      .contact-hero h1 { font-size: 2.5rem; }
+      
+      /* Hide Header Button on Mobile */
+      .nav-actions .btn { display: none !important; }
+      .menu-toggle { display: inline-flex; font-size: 0.85rem; padding: 8px 16px; }
+
+      .mobile-nav { 
+        position: absolute; top: 80px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--line);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        padding: 10px 20px 30px !important; z-index: 999;
+        display: none; 
+      }
+      .mobile-nav.active { display: block; }
+      
+      /* Only show contact link */
+      .mobile-cta { padding: 24px 0 0 !important; }
+      .mobile-cta .btn { display: none !important; } 
+
+      /* 2. Hero & Layout */
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      
+      /* MATCHING ABOUT/INDEX MARGINS */
+      .contact-hero { 
+          padding-top: 30px !important; 
+          text-align: center;
+          padding-left: 12px; padding-right: 12px;
+      }
+      .contact-hero h1 { font-size: 2rem; letter-spacing: -0.03em; margin-bottom: 16px; }
+      .contact-hero p { font-size: 1.05rem; padding: 0 10px; }
+
+      .contact-details { 
+          display: flex; 
+          flex-direction: column; 
+          align-items: center; 
+          text-align: center; 
+          margin-top: 30px; 
+      }
+      .contact-item { flex-direction: column; align-items: center; gap: 12px; }
+
+      /* 3. Form Card */
+      .form-card { padding: 24px; border-radius: 16px; }
+      
+      /* 4. Container Padding Fix */
+      .container { padding-left: 24px !important; padding-right: 24px !important; }
     }
   </style>
 </head>
@@ -165,7 +213,8 @@
         <li><a href="gtm-assessment.html">GTM Score</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
-      <div style="display:flex; gap:12px; align-items:center;">
+      
+      <div class="nav-actions">
         <a href="contact.html" class="btn btn-primary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
@@ -177,9 +226,7 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-cta">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-      </div>
+      <a href="contact.html" class="active">Contact</a>
     </div>
   </header>
 
@@ -203,28 +250,12 @@
                 <p><a href="mailto:contact@caugia.com">contact@caugia.com</a></p>
               </div>
             </div>
-            
-            <div class="contact-item">
-              <div class="contact-icon">🌍</div>
-              <div class="contact-text">
-                <h4>Location</h4>
-                <p>Based in France, working internationally.</p>
-              </div>
             </div>
-
-            <div class="contact-item">
-              <div class="contact-icon">💼</div>
-              <div class="contact-text">
-                <h4>Support</h4>
-                <p>For report or assessment questions, please email <a href="support.html">support</a> directly.</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="form-card">
           <h2 style="font-size:1.5rem; margin-bottom:24px;">Send a message</h2>
-          <form action="https://formspree.io/f/mnqepzjn" method="POST">
+          <form action="https://formspree.io/f/contact@caugia.com" method="POST">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" class="form-input" required>
@@ -274,9 +305,14 @@
       const mobileNav = document.getElementById("mobileNav");
       if (toggle && mobileNav) {
         toggle.addEventListener("click", () => {
-          const open = mobileNav.style.display === "block";
-          mobileNav.style.display = open ? "none" : "block";
-          toggle.innerText = open ? "Close" : "Menu";
+          // Toggle class instead of style to support new CSS
+          mobileNav.classList.toggle("active");
+          
+          const isOpen = mobileNav.classList.contains("active");
+          toggle.innerText = isOpen ? "Close" : "Menu";
+          
+          // Lock body scroll when menu is open
+          document.body.style.overflow = isOpen ? "hidden" : "auto";
         });
       }
     })();
