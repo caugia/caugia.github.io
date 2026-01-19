@@ -17,7 +17,7 @@
   <script src="assets/currency.js"></script>
 
   <style>
-    /* --- V3 CORE SYSTEM (NO MOVEMENT EDITION) --- */
+    /* --- V3 CORE SYSTEM --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -69,23 +69,19 @@
 
     section{ padding:80px 0; }
 
-    /* BUTTONS - 100% STATIC */
+    /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:14px 32px; 
       border-radius:999px; font-weight:700; font-size:0.95rem;
       border:1px solid transparent; cursor:pointer; 
-      transition:background 0.2s ease, border-color 0.2s ease; /* Alleen kleur transition */
+      transition:background 0.2s ease, border-color 0.2s ease; 
       white-space:nowrap;
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    
-    /* FIX: Geen transform meer */
     .btn-primary:hover{ background:#003370; } 
     
     .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    
-    /* FIX: Geen transform meer */
     .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
 
     /* HEADER */
@@ -100,6 +96,9 @@
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
+    
+    .nav-actions { display:flex; gap:12px; align-items:center; }
+
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
     
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
@@ -206,25 +205,47 @@
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    /* Media Queries */
+    /* --- MOBILE RESPONSIVENESS (GOD MODE FIX) --- */
     @media (max-width: 980px){
+      /* 1. HEADER CLEANUP */
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
+      /* Hide the desktop buttons in header on mobile */
+      .nav-actions .btn { display: none !important; }
       
-      .hero{ grid-template-columns:1fr; gap:44px; padding-top: 40px; }
-      .hero h1 { font-size: 2.5rem; }
+      /* ADJUST BRAND SIZE */
+      .brand { font-size: 0.9rem; gap: 8px; }
+      .brand img { width: 26px; height: 26px; }
+
+      /* 2. TYPOGRAPHY & LAYOUT (Breathing Room) */
+      /* Reduce massive H1s on mobile */
+      h1, .hero h1 {
+        font-size: 2.25rem !important; /* Reduced from 3.5rem */
+        line-height: 1.2 !important;
+      }
       
-      .widget-card{ position:relative; top:auto; margin-top: 20px; }
-      .widget-layout{ grid-template-columns:1fr; gap:24px; }
-      .chart-col{ padding-left:0; }
+      /* Standardize section padding */
+      section { padding: 60px 0 !important; }
+      .hero { padding-top: 40px !important; padding-bottom: 60px !important; }
+
+      /* 3. MOBILE MENU CTA FIX */
+      .mobile-nav { padding: 24px 0 32px !important; }
+      .mobile-cta {
+          padding: 24px 10px 0 !important;
+          flex-direction: column; /* Stack buttons */
+          gap: 16px;
+      }
+      .mobile-cta .btn { width: 100%; }
+
+      /* --- LAYOUT SPECIFIC FIXES --- */
+      .hero, .grid-3, .widget-layout, .comparison-wrapper, .report-layout {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
       
-      .comparison-wrapper { grid-template-columns: 1fr; gap: 40px; }
-      .comp-col-left { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 32px; }
-      
-      .report-layout{ grid-template-columns:1fr; gap:44px; }
-      .grid-3{ grid-template-columns:1fr; }
-      
-      section{ padding:60px 0; }
+      .chart-col { padding-left: 0 !important; }
+      .comp-col-left { border-right: none !important; border-bottom: 1px solid var(--line); padding-bottom: 32px; }
+      .widget-card { position: relative; top: auto; margin-top: 20px; }
     }
   </style>
 </head>
@@ -243,7 +264,8 @@
         <li><a href="gtm-assessment.html">GTM Score</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
-      <div style="display:flex; gap:12px; align-items:center;">
+      
+      <div class="nav-actions">
         <a href="contact.html" class="btn btn-primary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
@@ -511,6 +533,7 @@
   </footer>
 
   <script>
+    // MOBILE NAV LOGIC
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
@@ -523,12 +546,14 @@
       }
     })();
 
+    // ADVANCED ARCHETYPE LOGIC (CHART.JS)
     (function () {
       const canvas = document.getElementById("radarChart");
       if (!canvas) return;
 
       const ctx = canvas.getContext("2d");
 
+      // Chart Config
       const myChart = new Chart(ctx, {
         type: "radar",
         data: {
@@ -546,37 +571,130 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false }, tooltip: { enabled: true } },
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          },
           scales: {
             r: {
-              suggestedMin: 0, suggestedMax: 100,
+              suggestedMin: 0,
+              suggestedMax: 100,
               ticks: { display: false, count: 5 }, 
               angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
               grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
-              pointLabels: { color: "#0056b3", font: { size: 14, weight: "800", family: "Inter" }, padding: 10 }
+              pointLabels: {
+                color: "#0056b3",
+                font: { size: 14, weight: "800", family: "Inter" },
+                padding: 10
+              }
             }
           },
           elements: { line: { tension: 0.2 } } 
         }
       });
       
+      // LOGIC: Determining the Primary Constraint
       function getArchetype(g, r, i, p) {
-        const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
+        const scores = [
+          { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
+        ];
+        // Sort lowest to highest
         scores.sort((a, b) => a.v - b.v);
+        
         const avg = (g+r+i+p)/4;
         const lowest = scores[0];
+        const secondLowest = scores[1];
         const highest = scores[3];
 
-        if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
-        if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
-        if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
-        if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
+        // 1. SYSTEMIC STATES (Extremes)
+        if (avg < 35) return { 
+          title: "The Stalled Engine", 
+          body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", 
+          mode: "mode-bad" 
+        };
+        if (avg < 45 && highest.v < 60) return {
+          title: "The Fragile Foundation",
+          body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.",
+          mode: "mode-bad"
+        };
+        if (avg > 85) return { 
+          title: "The Precision Machine", 
+          body: "Elite performance. Focus on incremental optimization and expansion.", 
+          mode: "mode-good" 
+        };
+        if (avg > 75 && lowest.v > 65) return {
+          title: "The Balanced Engine",
+          body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
+          mode: "mode-good" 
+        };
 
-        if (lowest.k === 'g') return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
-        if (lowest.k === 'r') return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
-        if (lowest.k === 'i') return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
-        if (lowest.k === 'p') return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
+        // 2. CONSTRAINT LOGIC
+        
+        // --- GUIDANCE IS LOWEST ---
+        if (lowest.k === 'g') {
+           if (highest.k === 'i' && highest.v > 65) return {
+             title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn"
+           };
+           if (highest.k === 'r' && highest.v > 65) return {
+             title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn"
+           };
+           if (secondLowest.k === 'p') return {
+             title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad"
+           };
+           return {
+             title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn"
+           };
+        }
 
+        // --- RESOURCES IS LOWEST ---
+        if (lowest.k === 'r') {
+           if (highest.k === 'g' && highest.v > 70) return {
+             title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn"
+           };
+           if (highest.k === 'i' && highest.v > 70) return {
+             title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad"
+           };
+           if (secondLowest.k === 'p') return {
+             title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad"
+           };
+           return {
+             title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn"
+           };
+        }
+
+        // --- IMPLEMENTATION IS LOWEST ---
+        if (lowest.k === 'i') {
+           if (highest.k === 'g' && highest.v > 70) return {
+             title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad"
+           };
+           if (highest.k === 'p' && highest.v > 60) return {
+             title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn"
+           };
+           if (secondLowest.k === 'r') return {
+             title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad"
+           };
+           return {
+             title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn"
+           };
+        }
+
+        // --- PERFORMANCE IS LOWEST ---
+        if (lowest.k === 'p') {
+           if (highest.k === 'i' && highest.v > 70) return {
+             title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad"
+           };
+           if (highest.k === 'g' && highest.v > 70) return {
+             title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn"
+           };
+           if (highest.k === 'r' && highest.v > 70) return {
+             title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad"
+           };
+           return {
+             title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid"
+           };
+        }
+
+        // Fallback
         return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
       }
 
@@ -608,11 +726,16 @@
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
         
+        // UPDATE ARCHETYPE UI
         const arch = getArchetype(g, r, i, p);
         const boxEl = document.getElementById("archetypeBox");
+        
         document.getElementById("archetypeTitle").textContent = arch.title;
         document.getElementById("archetypeBody").textContent = arch.body;
+        
+        // Remove old mode classes
         boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
+        // Add new mode class
         boxEl.classList.add(arch.mode);
       }
 
