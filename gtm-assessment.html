@@ -248,10 +248,9 @@
       }
       .mobile-nav.active { display: block; }
       
-      /* Hide Free GTM Score in mobile menu */
-      .mobile-cta .btn-primary { display: none !important; }
+      /* Only show contact link */
       .mobile-cta { padding: 24px 0 0 !important; }
-      .mobile-cta .btn { width: 100%; }
+      .mobile-cta .btn { display: none !important; } 
 
       /* 2. Hero & Layout */
       .assessment-hero { 
@@ -315,9 +314,7 @@
     <a href="services.html">Services</a>
     <a href="gtm-assessment.html" class="active">GTM Score</a>
     <a href="resources.html">Resources</a>
-    <div class="mobile-cta">
-      <a href="contact.html" class="btn btn-outline">Contact</a>
-    </div>
+    <a href="contact.html">Contact</a>
   </div>
 </header>
 
@@ -628,12 +625,11 @@
 </footer>
 
 <script>
-  // Dynamic Currency Logic
+  // Dynamic Currency Logic: Default € unless strictly en-US ($)
   (function() {
     const userLang = navigator.language || navigator.userLanguage;
-    let currencySymbol = '€'; // Default
+    let currencySymbol = '€'; // Default for everyone (including UK for now to avoid confusion)
     if (userLang.includes('en-US')) currencySymbol = '$';
-    else if (userLang.includes('en-GB')) currencySymbol = '£';
     
     // Update all elements with class 'curr'
     document.querySelectorAll('.curr').forEach(el => {
