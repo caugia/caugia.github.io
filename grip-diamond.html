@@ -36,8 +36,8 @@
 
     *{ box-sizing:border-box; margin:0; padding:0; }
     
-    /* ALLOW NATURAL SCROLL */
-    html{ scroll-behavior:smooth; }
+    /* ONE SCREEN POLICY (Desktop) */
+    html, body { height: 100%; overflow: hidden; } 
     
     body{
       font-family:Inter, sans-serif;
@@ -46,7 +46,6 @@
       line-height:1.5;
       -webkit-font-smoothing:antialiased;
       display: flex; flex-direction: column;
-      min-height: 100vh; /* Ensure footer stays down */
     }
 
     h1,h2,h3,h4{
@@ -80,17 +79,18 @@
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); text-decoration: none; }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
 
-    /* DASHBOARD WRAPPER (Natural Height + Safe Padding) */
+    /* DASHBOARD WRAPPER */
     .dashboard-container {
       flex-grow: 1;
       width: 100%;
       max-width: var(--max);
       margin: 0 auto;
-      padding: 32px 24px 80px 24px; /* Increased bottom padding for "afkaderen" */
+      padding: 24px;
       display: grid;
       grid-template-columns: 320px 1fr; /* Controls | Visuals */
-      gap: 32px;
-      align-items: start; /* Align to top */
+      gap: 24px;
+      height: calc(100vh - 80px); 
+      min-height: 600px;
     }
 
     /* LEFT PANEL (CONTROLS) */
@@ -101,7 +101,7 @@
       box-shadow: var(--shadow-soft);
       padding: 32px;
       display: flex; flex-direction: column;
-      position: sticky; top: 110px; /* Keep controls handy while scrolling */
+      overflow-y: auto; 
     }
     .eyebrow { 
       display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
@@ -118,51 +118,48 @@
     input[type=range]{ width:100%; -webkit-appearance:none; height:4px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
     input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
 
-    .cta-box { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
     /* RIGHT CONTENT GRID */
     .visual-area {
       display: grid;
       grid-template-columns: 1.5fr 1fr; /* Visual | Health */
+      grid-template-rows: 1fr 240px; /* Visuals take available space | Bottom fixed height */
       gap: 24px;
-      /* Auto rows so they fit content */
-      grid-template-rows: auto auto; 
+      height: 100%;
     }
 
     /* 1. VISUAL CARD (Top Left) */
     .diamond-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft); padding: 32px;
+      box-shadow: var(--shadow-soft); padding: 20px;
       display: flex; align-items: center; justify-content: center;
       position: relative;
       grid-column: 1 / 2;
-      min-height: 420px; /* Ensure good visual size */
+      grid-row: 1 / 2;
     }
-    .diamond-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; max-width: 400px; aspect-ratio: 1/1; }
-    #gripDiamondSVG { width: 100%; height: 100%; overflow: visible; }
+    .diamond-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; }
+    #gripDiamondSVG { width: 100%; max-width: 380px; overflow: visible; }
     
-    /* The Magic Transitions */
     #gripDiamondSVG polygon, #gripDiamondSVG circle { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
     .diamond-label {
-      position: absolute; width: 36px; height: 36px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
-      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.95rem;
+      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
+      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
       display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.06);
       z-index: 10; pointer-events: none;
-      /* Center the label on its anchor point */
-      transform: translate(-50%, -50%);
     }
-    /* Precision Positioning using Percentages */
-    .top { top: 15%; left: 50%; }
-    .bottom { top: 85%; left: 50%; }
-    .left { top: 50%; left: 15%; }
-    .right { top: 50%; left: 85%; }
+    .top { top: 20px; left: 50%; transform: translateX(-50%); }
+    .right { top: 50%; right: 20px; transform: translateY(-50%); }
+    .bottom { bottom: 20px; left: 50%; transform: translateX(-50%); }
+    .left { top: 50%; left: 20px; transform: translateY(-50%); }
 
     /* 2. HEALTH CARD (Top Right) */
     .health-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      padding: 32px;
+      padding: 24px;
       grid-column: 2 / 3;
+      grid-row: 1 / 2;
       display: flex; flex-direction: column; justify-content: center;
     }
     .health-row {
@@ -180,12 +177,14 @@
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
     .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
-    /* 3. PATTERN & SUMMARY (Bottom Row) */
+    /* 3. PATTERN & SUMMARY (Bottom Row - Fixed Height) */
     .pattern-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      padding: 32px; transition: all 0.3s ease;
+      padding: 24px; transition: all 0.3s ease;
       grid-column: 1 / 2;
-      display: flex; flex-direction: column; justify-content: center;
+      grid-row: 2 / 3;
+      display: flex; flex-direction: column; 
+      overflow-y: auto; 
     }
     .mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
@@ -194,36 +193,42 @@
 
     .summary-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      padding: 32px;
+      padding: 24px;
       grid-column: 2 / 3;
-      display: flex; flex-direction: column; justify-content: center;
+      grid-row: 2 / 3;
+      display: flex; flex-direction: column;
+      overflow-y: auto; 
     }
 
     .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; opacity: 0.7; }
-    .card-title { font-size: 1.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; font-family: Inter, sans-serif; }
-    .card-text { font-size: 0.95rem; color: var(--text-body); line-height: 1.6; }
+    .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
+    .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    /* Footer - Visible again for nice framing */
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; margin-top: auto; }
+    footer{ display: none; } /* Hidden on desktop for dashboard look */
 
-    /* --- MOBILE RESPONSIVENESS --- */
+    /* --- MOBILE RESPONSIVENESS (Scroll Mode) --- */
     @media (max-width: 1100px) {
+      html, body { height: auto; overflow: auto; }
       .nav-links{ display:none; }
       .menu-toggle{ display:inline-flex; }
       
       .dashboard-container { 
         display: flex; flex-direction: column; gap: 32px; 
-        padding-bottom: 40px;
+        height: auto; min-height: auto; padding-bottom: 60px;
       }
       
-      .controls-panel { position: static; } /* Unstick on mobile */
+      .controls-panel { height: auto; overflow: visible; }
       
       .visual-area { 
-        display: flex; flex-direction: column; gap: 24px;
+        display: flex; flex-direction: column; 
+        height: auto;
       }
       
-      .diamond-card { min-height: 360px; order: -1; } /* Visual first */
+      .diamond-card { min-height: 360px; order: -1; }
       .health-card { order: 0; }
+      .pattern-card, .summary-card { height: auto; min-height: auto; }
+      
+      footer { display: block; background:var(--white); border-top:1px solid var(--line); padding:32px 0; text-align:center; color:#94a3b8; font-size:0.85rem; }
     }
   </style>
 </head>
@@ -347,7 +352,7 @@
     <div class="summary-card">
       <span class="label-xs" style="color:var(--primary); margin-bottom:8px;">Executive Summary</span>
       <div class="card-text" id="execSummary">
-        Execution capability exists, but the strategic compass is broken. Teams are misaligned. Most GTM teams are not constrained by effort. They are constrained by misalignment.
+        Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift. The system gets heavier each quarter, even when the team is strong.
       </div>
     </div>
 
@@ -380,7 +385,7 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // THE FULL ARCHETYPE LOGIC
+    // --- OFFICIAL ARCHETYPE LOGIC ---
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
@@ -389,7 +394,7 @@
       const highest = scores[3];
       const secondLowest = scores[1];
 
-      // 1. EXTREMES
+      // 1. SYSTEMIC STATES (Extremes)
       if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
       if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
       if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
@@ -423,7 +428,7 @@
       return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
     }
 
-    // DRAW DIAMOND (SVG)
+    // DRAW DIAMOND
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
@@ -488,8 +493,11 @@
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
       
-      // Combined Summary: Dynamic Part + Static Main Theme
-      document.getElementById("execSummary").textContent = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift.";
+      // Use Pattern BODY for Executive Summary if no specific Summary exists
+      // BUT for the 4-5 sentences you requested, we use static fallback initially
+      // When user interacts, we can either keep static or update. 
+      // Current logic: It updates to the specific pattern body to be dynamic.
+      document.getElementById("execSummary").textContent = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift."; 
       
       box.className = "pattern-card " + arch.mode;
 
@@ -500,7 +508,7 @@
       document.getElementById(id).addEventListener("input", update);
     });
 
-    update(); // Init
+    update();
   })();
 </script>
 
