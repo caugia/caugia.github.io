@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- V3 CORE SYSTEM (EXACT COPY FOR CONSISTENCY) --- */
+    /* --- V3 CORE SYSTEM --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -146,11 +146,11 @@
     .gtm-question-label { font-family: Merriweather, serif; font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; line-height: 1.3; }
     .gtm-question-help { font-size: 1rem; color: #64748b; margin-bottom: 32px; }
 
-    /* REDESIGNED OPTIONS (Clean Tiles) */
+    /* REDESIGNED OPTIONS (With A/B/C) */
     .gtm-options { display: flex; flex-direction: column; gap: 12px; }
     
     .gtm-option {
-      display: flex; align-items: center; gap: 16px; padding: 18px 24px;
+      display: flex; align-items: center; gap: 16px; padding: 16px 20px;
       border: 1px solid var(--line); border-radius: 12px; background: #fff;
       cursor: pointer; transition: all 0.2s ease;
       position: relative;
@@ -158,15 +158,28 @@
     .gtm-option:hover { background: #f8fafc; border-color: #94a3b8; }
     .gtm-option input[type="radio"] { appearance: none; margin: 0; width: 0; height: 0; opacity: 0; position: absolute; }
     
+    /* The Letter Box (A/B/C) */
+    .gtm-option-code {
+      display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+      background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 700; color: #64748b; flex-shrink: 0;
+    }
+
     /* Selected State */
     .gtm-option.selected {
       background: #eff6ff; 
       border-color: var(--primary); 
-      box-shadow: 0 0 0 1px var(--primary); /* Thick border effect */
+      box-shadow: 0 0 0 1px var(--primary); 
+    }
+    .gtm-option.selected .gtm-option-code {
+      background: var(--primary); border-color: var(--primary); color: #fff;
     }
     
-    .gtm-option span { font-weight: 600; color: var(--text-dark); font-size: 1rem; width: 100%; }
-    .gtm-option.selected span { color: var(--primary-dark); }
+    .gtm-option span.opt-text { font-weight: 600; color: var(--text-dark); font-size: 1rem; width: 100%; }
+    .gtm-option.selected span.opt-text { color: var(--primary-dark); }
+
+    /* RESPONSIVE TEXT SWITCHING */
+    .m-text { display: none; } /* Hide mobile text on desktop */
 
     /* Inputs */
     .gtm-textarea { width: 100%; min-height: 120px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; font-family: Inter, sans-serif; font-size: 1rem; outline: none; resize: vertical; }
@@ -235,11 +248,9 @@
       }
       .mobile-nav.active { display: block; }
       
-      .mobile-cta {
-          padding: 24px 0 0 !important;
-          flex-direction: column; 
-          gap: 16px;
-      }
+      /* Hide Free GTM Score in mobile menu */
+      .mobile-cta .btn-primary { display: none !important; }
+      .mobile-cta { padding: 24px 0 0 !important; }
       .mobile-cta .btn { width: 100%; }
 
       /* 2. Hero & Layout */
@@ -254,16 +265,18 @@
 
       /* 3. Card */
       .assessment-card { 
-          padding: 32px 24px; /* More breathing room inside */
+          padding: 32px 24px;
           margin-bottom: 40px; 
           border-radius: 16px;
       }
-      
       .gtm-question-label { font-size: 1.25rem; }
       
       /* 4. Options - Cleaned up */
-      .gtm-option { padding: 16px; }
-      .gtm-option span { font-size: 0.95rem; }
+      .gtm-option { padding: 14px; gap: 12px; }
+      
+      /* TEXT SWAP LOGIC */
+      .d-text { display: none; }
+      .m-text { display: inline; }
 
       /* 5. Inputs */
       .two-cols { grid-template-columns: 1fr; gap: 0; }
@@ -303,7 +316,6 @@
     <a href="gtm-assessment.html" class="active">GTM Score</a>
     <a href="resources.html">Resources</a>
     <div class="mobile-cta">
-      <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
       <a href="contact.html" class="btn btn-outline">Contact</a>
     </div>
   </div>
@@ -339,24 +351,44 @@
           <div class="gtm-question-help">This anchors your GTM Score to the complexity typical for your size.</div>
           <div class="gtm-options" data-question="q1">
             <label class="gtm-option">
-              <input type="radio" name="q1" value="Seed (< £1M ARR)">
-              <span>Seed / Finding PMF (< €1M ARR)</span>
+              <input type="radio" name="q1" value="Seed (< 1M ARR)">
+              <span class="gtm-option-code">A</span>
+              <span class="opt-text">
+                <span class="d-text">Seed / Finding PMF (< <span class="curr">€</span>1M ARR)</span>
+                <span class="m-text">< <span class="curr">€</span>1M ARR</span>
+              </span>
             </label>
             <label class="gtm-option">
-              <input type="radio" name="q1" value="Early Scaling (£1M – £10M ARR)">
-              <span>Early Scaling (€1M – €10M ARR)</span>
+              <input type="radio" name="q1" value="Early Scaling (1M – 10M ARR)">
+              <span class="gtm-option-code">B</span>
+              <span class="opt-text">
+                <span class="d-text">Early Scaling (<span class="curr">€</span>1M – <span class="curr">€</span>10M ARR)</span>
+                <span class="m-text"><span class="curr">€</span>1M – <span class="curr">€</span>10M ARR</span>
+              </span>
             </label>
             <label class="gtm-option">
-              <input type="radio" name="q1" value="High Growth (£10M – £50M ARR)">
-              <span>High Growth (€10M – €50M ARR)</span>
+              <input type="radio" name="q1" value="High Growth (10M – 50M ARR)">
+              <span class="gtm-option-code">C</span>
+              <span class="opt-text">
+                <span class="d-text">High Growth (<span class="curr">€</span>10M – <span class="curr">€</span>50M ARR)</span>
+                <span class="m-text"><span class="curr">€</span>10M – <span class="curr">€</span>50M ARR</span>
+              </span>
             </label>
             <label class="gtm-option">
-              <input type="radio" name="q1" value="Expansion (£50M – £150M ARR)">
-              <span>Expansion (€50M – €150M ARR)</span>
+              <input type="radio" name="q1" value="Expansion (50M – 150M ARR)">
+              <span class="gtm-option-code">D</span>
+              <span class="opt-text">
+                <span class="d-text">Expansion (<span class="curr">€</span>50M – <span class="curr">€</span>150M ARR)</span>
+                <span class="m-text"><span class="curr">€</span>50M – <span class="curr">€</span>150M ARR</span>
+              </span>
             </label>
             <label class="gtm-option">
-              <input type="radio" name="q1" value="Enterprise / Pre-Exit (£150M+ ARR)">
-              <span>Enterprise / Pre-Exit (€150M+ ARR)</span>
+              <input type="radio" name="q1" value="Enterprise / Pre-Exit (150M+ ARR)">
+              <span class="gtm-option-code">E</span>
+              <span class="opt-text">
+                <span class="d-text">Enterprise / Pre-Exit (<span class="curr">€</span>150M+ ARR)</span>
+                <span class="m-text"><span class="curr">€</span>150M+ ARR</span>
+              </span>
             </label>
           </div>
           <div class="gtm-error" data-error-for="q1"></div>
@@ -366,12 +398,12 @@
           <div class="gtm-question-label">What is your primary go to market motion today?</div>
           <div class="gtm-question-help">Choose the motion that drives most of your new revenue.</div>
           <div class="gtm-options" data-question="q2">
-            <label class="gtm-option"><input type="radio" name="q2" value="Founder-led (early-stage driven)"><span>Founder led (early stage driven)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Sales-led (outbound focus)"><span>Sales led (outbound focus)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Marketing-led (inbound demand)"><span>Marketing led (inbound demand)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Product-led (self-serve / PLG)"><span>Product led (self serve)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Partner-led (channel/ecosystem)"><span>Partner led (channel or ecosystem)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Hybrid"><span>Hybrid model</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Founder-led (early-stage driven)"><span class="gtm-option-code">A</span><span class="opt-text">Founder led (early stage driven)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Sales-led (outbound focus)"><span class="gtm-option-code">B</span><span class="opt-text">Sales led (outbound focus)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Marketing-led (inbound demand)"><span class="gtm-option-code">C</span><span class="opt-text">Marketing led (inbound demand)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Product-led (self-serve / PLG)"><span class="gtm-option-code">D</span><span class="opt-text">Product led (self serve)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Partner-led (channel/ecosystem)"><span class="gtm-option-code">E</span><span class="opt-text">Partner led (channel or ecosystem)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Hybrid"><span class="gtm-option-code">F</span><span class="opt-text">Hybrid model</span></label>
           </div>
           <div class="gtm-error" data-error-for="q2"></div>
         </div>
@@ -380,11 +412,11 @@
           <div class="gtm-question-label">How clearly defined is your ideal customer profile?</div>
           <div class="gtm-question-help">Think about who you actively pursue, not just who you can technically sell to.</div>
           <div class="gtm-options" data-question="q3">
-            <label class="gtm-option"><input type="radio" name="q3" value="A"><span>No ICP defined</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="B"><span>Rough idea, not documented</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="C"><span>Documented but inconsistent in use</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="D"><span>Clear and widely used in practice</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="E"><span>Deeply defined and enforced across teams</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="A"><span class="gtm-option-code">A</span><span class="opt-text">No ICP defined</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Rough idea, not documented</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Documented but inconsistent in use</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Clear and widely used in practice</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Deeply defined and enforced across teams</span></label>
           </div>
           <div class="gtm-error" data-error-for="q3"></div>
         </div>
@@ -392,11 +424,11 @@
         <div class="gtm-step" data-step="4">
           <div class="gtm-question-label">How aligned are sales and marketing on lead quality?</div>
           <div class="gtm-options" data-question="q4">
-            <label class="gtm-option"><input type="radio" name="q4" value="A"><span>No real alignment</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="B"><span>Partial and informal alignment</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="C"><span>Basic definitions exist on paper</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="D"><span>Shared definitions with a clear handoff</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="E"><span>Automated process with enforced agreements</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="A"><span class="gtm-option-code">A</span><span class="opt-text">No real alignment</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Partial and informal alignment</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Basic definitions exist on paper</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Shared definitions with a clear handoff</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Automated process with enforced agreements</span></label>
           </div>
           <div class="gtm-error" data-error-for="q4"></div>
         </div>
@@ -404,11 +436,11 @@
         <div class="gtm-step" data-step="5">
           <div class="gtm-question-label">How reliable is your pipeline visibility?</div>
           <div class="gtm-options" data-question="q5">
-            <label class="gtm-option"><input type="radio" name="q5" value="A"><span>Minimal visibility across stages</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="B"><span>Some visibility, but unreliable data</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="C"><span>Clear visibility per stage in CRM</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="D"><span>Real time dashboards for leadership</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="E"><span>Predictive insights and proactive alerts</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="A"><span class="gtm-option-code">A</span><span class="opt-text">Minimal visibility across stages</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Some visibility, but unreliable data</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Clear visibility per stage in CRM</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Real time dashboards for leadership</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Predictive insights and proactive alerts</span></label>
           </div>
           <div class="gtm-error" data-error-for="q5"></div>
         </div>
@@ -416,11 +448,11 @@
         <div class="gtm-step" data-step="6">
           <div class="gtm-question-label">How consistent is your sales process in practice?</div>
           <div class="gtm-options" data-question="q6">
-            <label class="gtm-option"><input type="radio" name="q6" value="A"><span>No defined process at all</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="B"><span>Some structure, mostly ignored</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="C"><span>Documented but unevenly followed</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="D"><span>Consistently followed by most of the team</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="E"><span>Fully embedded, measured and improved</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="A"><span class="gtm-option-code">A</span><span class="opt-text">No defined process at all</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Some structure, mostly ignored</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Documented but unevenly followed</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Consistently followed by most of the team</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Fully embedded, measured and improved</span></label>
           </div>
           <div class="gtm-error" data-error-for="q6"></div>
         </div>
@@ -428,11 +460,11 @@
         <div class="gtm-step" data-step="7">
           <div class="gtm-question-label">How effective is your retention and expansion motion?</div>
           <div class="gtm-options" data-question="q7">
-            <label class="gtm-option"><input type="radio" name="q7" value="A"><span>High churn and little or no expansion</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="B"><span>Basic retention efforts, mostly reactive</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="C"><span>Stable retention with some upsell</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="D"><span>Strong retention with clear programs</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="E"><span>Predictable retention and expansion engine</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="A"><span class="gtm-option-code">A</span><span class="opt-text">High churn and little or no expansion</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Basic retention efforts, mostly reactive</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Stable retention with some upsell</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Strong retention with clear programs</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Predictable retention and expansion engine</span></label>
           </div>
           <div class="gtm-error" data-error-for="q7"></div>
         </div>
@@ -440,11 +472,11 @@
         <div class="gtm-step" data-step="8">
           <div class="gtm-question-label">How strong is your competitive intelligence in real deals?</div>
           <div class="gtm-options" data-question="q8">
-            <label class="gtm-option"><input type="radio" name="q8" value="A"><span>We mostly guess in competitive deals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="B"><span>Limited information and often outdated</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="C"><span>Basic battlecards exist for some rivals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="D"><span>Updated competitive material used in deals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="E"><span>Systematic intelligence with win or loss reviews</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="A"><span class="gtm-option-code">A</span><span class="opt-text">We mostly guess in competitive deals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Limited information and often outdated</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Basic battlecards exist for some rivals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Updated competitive material used in deals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Systematic intelligence with win or loss reviews</span></label>
           </div>
           <div class="gtm-error" data-error-for="q8"></div>
         </div>
@@ -452,11 +484,11 @@
         <div class="gtm-step" data-step="9">
           <div class="gtm-question-label">How accurate are your revenue forecasts?</div>
           <div class="gtm-options" data-question="q9">
-            <label class="gtm-option"><input type="radio" name="q9" value="A"><span>Very unpredictable from quarter to quarter</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="B"><span>Highly variable and story driven</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="C"><span>Mostly consistent with some swings</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="D"><span>Generally reliable and data informed</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="E"><span>Accurate, disciplined and data driven</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="A"><span class="gtm-option-code">A</span><span class="opt-text">Very unpredictable from quarter to quarter</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Highly variable and story driven</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Mostly consistent with some swings</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Generally reliable and data informed</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Accurate, disciplined and data driven</span></label>
           </div>
           <div class="gtm-error" data-error-for="q9"></div>
         </div>
@@ -464,11 +496,11 @@
         <div class="gtm-step" data-step="10">
           <div class="gtm-question-label">How strong is your sales enablement foundation?</div>
           <div class="gtm-options" data-question="q10">
-            <label class="gtm-option"><input type="radio" name="q10" value="A"><span>No structured enablement in place</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="B"><span>Basic content or documentation only</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="C"><span>Occasional training without clear follow up</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="D"><span>Structured onboarding and enablement plans</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="E"><span>Continuous enablement linked to performance</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="A"><span class="gtm-option-code">A</span><span class="opt-text">No structured enablement in place</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Basic content or documentation only</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Occasional training without clear follow up</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Structured onboarding and enablement plans</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Continuous enablement linked to performance</span></label>
           </div>
           <div class="gtm-error" data-error-for="q10"></div>
         </div>
@@ -476,11 +508,11 @@
         <div class="gtm-step" data-step="11">
           <div class="gtm-question-label">How mature is your GTM analytics layer?</div>
           <div class="gtm-options" data-question="q11">
-            <label class="gtm-option"><input type="radio" name="q11" value="A"><span>Mostly ad hoc reporting and exports</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="B"><span>Basic dashboards with limited adoption</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="C"><span>Regular reporting with agreed metrics</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="D"><span>Decisions often grounded in these insights</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="E"><span>Predictive analytics with clear ownership</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="A"><span class="gtm-option-code">A</span><span class="opt-text">Mostly ad hoc reporting and exports</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Basic dashboards with limited adoption</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Regular reporting with agreed metrics</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Decisions often grounded in these insights</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="E"><span class="gtm-option-code">E</span><span class="opt-text">Predictive analytics with clear ownership</span></label>
           </div>
           <div class="gtm-error" data-error-for="q11"></div>
         </div>
@@ -488,11 +520,11 @@
         <div class="gtm-step" data-step="12">
           <div class="gtm-question-label">How aligned are your core GTM teams?</div>
           <div class="gtm-options" data-question="q12">
-            <label class="gtm-option"><input type="radio" name="q12" value="A"><span>Silos dominate and goals differ</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="B"><span>Occasional coordination on key topics</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="C"><span>Basic alignment rituals in place</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="D"><span>Shared goals and shared processes</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="E"><span>One unified rhythm across GTM teams</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="A"><span class="gtm-option-code">A</span><span class="opt-text">Silos dominate and goals differ</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="B"><span class="gtm-option-code">B</span><span class="opt-text">Occasional coordination on key topics</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="C"><span class="gtm-option-code">C</span><span class="opt-text">Basic alignment rituals in place</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="D"><span class="gtm-option-code">D</span><span class="opt-text">Shared goals and shared processes</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="E"><span class="gtm-option-code">E</span><span class="opt-text">One unified rhythm across GTM teams</span></label>
           </div>
           <div class="gtm-error" data-error-for="q12"></div>
         </div>
@@ -596,6 +628,19 @@
 </footer>
 
 <script>
+  // Dynamic Currency Logic
+  (function() {
+    const userLang = navigator.language || navigator.userLanguage;
+    let currencySymbol = '€'; // Default
+    if (userLang.includes('en-US')) currencySymbol = '$';
+    else if (userLang.includes('en-GB')) currencySymbol = '£';
+    
+    // Update all elements with class 'curr'
+    document.querySelectorAll('.curr').forEach(el => {
+      el.textContent = currencySymbol;
+    });
+  })();
+
   // Mobile Nav Logic
   (function () {
     const toggle = document.getElementById("menuToggle");
