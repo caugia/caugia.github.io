@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     /* --- V3 CORE SYSTEM --- */
     :root{
@@ -383,7 +383,10 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
+      <div class="mobile-cta">
+        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+        <a href="contact.html" class="btn btn-outline">Contact</a>
+      </div>
     </div>
   </header>
 
@@ -623,9 +626,7 @@
                 <span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
               </li>
               <li class="comp-item">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">
-                  <span class="curr">€</span>25k - <span class="curr">€</span>50k+
-                </span>
+                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">€25k - €50k+</span>
               </li>
             </ul>
           </div>
@@ -633,7 +634,7 @@
           <div class="comp-col-right">
             <div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
             
-            <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.3rem;">
+            <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.1rem; font-family:Inter, sans-serif; font-weight:900; letter-spacing:0.02em; text-transform:uppercase;">
               <img src="assets/C-logo.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
             </h4>
             <ul class="comp-list">
@@ -710,31 +711,15 @@
   </footer>
 
   <script>
-    // Dynamic Currency Logic: Default € unless strictly en-US ($)
-    (function() {
-      const userLang = navigator.language || navigator.userLanguage;
-      let currencySymbol = '€'; 
-      if (userLang.includes('en-US')) currencySymbol = '$';
-      
-      // Update all elements with class 'curr'
-      document.querySelectorAll('.curr').forEach(el => {
-        el.textContent = currencySymbol;
-      });
-    })();
-
     // MOBILE NAV LOGIC (UPDATED FOR OVERLAY)
     (function () {
       const toggle = document.getElementById("menuToggle");
       const mobileNav = document.getElementById("mobileNav");
       if (toggle && mobileNav) {
         toggle.addEventListener("click", () => {
-          // Toggle class instead of style to support new CSS
           mobileNav.classList.toggle("active");
-          
           const isOpen = mobileNav.classList.contains("active");
           toggle.innerText = isOpen ? "Close" : "Menu";
-          
-          // Lock body scroll when menu is open
           document.body.style.overflow = isOpen ? "hidden" : "auto";
         });
       }
@@ -797,7 +782,6 @@
         
         const avg = (g+r+i+p)/4;
         const lowest = scores[0];
-        const secondLowest = scores[1];
         const highest = scores[3];
 
         // 1. SYSTEMIC STATES (Extremes)
