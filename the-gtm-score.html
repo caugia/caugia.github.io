@@ -4,14 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Your GTM Score | Caugia Consulting</title>
-  <meta name="description" content="Your GTM Score is a structured indicator of how mature, aligned and scalable your go to market system is." />
+  <title>Your GTM Score Analysis | Caugia Consulting</title>
+  <meta name="description" content="Your detailed GTM Score analysis. Understand your revenue architecture maturity and identify the primary constraints in your growth engine." />
+  <meta name="keywords" content="GTM Score, Revenue Architecture, SaaS Audit, GTM Maturity, Caugia" />
+  <link rel="canonical" href="https://www.caugia.com/the-gtm-score.html" />
 
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/favicon-32x32.png" type="image/png" />
-  <link rel="icon" href="/favicon-16x16.png" type="image/png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/the-gtm-score.html" />
+  <meta property="og:title" content="My GTM Score Analysis | Caugia Consulting" />
+  <meta property="og:description" content="I just analyzed my revenue architecture with the Caugia Intelligence Engine. See the breakdown." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="icon" href="/android-chrome-192x192.png" sizes="192x192" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  
+  <link rel="icon" href="assets/C-logo.png" type="image/png" />
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Caugia GTM Score Calculator",
+    "url": "https://www.caugia.com/the-gtm-score.html",
+    "description": "An algorithmic tool that assesses B2B SaaS GTM maturity across 12 pillars.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -85,7 +110,7 @@
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
     
-    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
+    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:999px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
     .btn-outline{ background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s; }
     .btn-outline:hover{ background:var(--white); color:var(--text-dark); }
@@ -568,7 +593,9 @@
     const arch = getArchetype(gVal, rVal, iVal, pVal);
     const boxEl = document.getElementById("gripArchetypeBox");
     document.getElementById("gripArchetypeTitle").innerText = arch.title;
-    document.getElementById("gripArchetypeDesc").innerText = arch.body;
+    // Use Body + Static Summary text like other tools
+    document.getElementById("gripArchetypeDesc").innerText = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift.";
+    
     boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
     boxEl.classList.add(arch.mode);
 
