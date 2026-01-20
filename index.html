@@ -16,12 +16,10 @@
   <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-
-<link rel="apple-touch-icon" href="assets/logo-final.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
   
   <script type="application/ld+json">
   {
@@ -389,9 +387,9 @@
   <header>
     <div class="container nav">
       <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+        <img src="assets/logo-final.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -655,7 +653,7 @@
                 <span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
               </li>
               <li class="comp-item">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;">€25k - €50k+</span>
+                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;"><span class="currency-symbol">$</span>25k - <span class="currency-symbol">$</span>50k+</span>
               </li>
             </ul>
           </div>
@@ -664,7 +662,7 @@
             <div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
             
             <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.1rem; font-family:Inter, sans-serif; font-weight:900; letter-spacing:0.02em; text-transform:uppercase;">
-              <img src="assets/C-logo.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
+              <img src="assets/logo-final.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
             </h4>
             <ul class="comp-list">
               <li class="comp-item" style="border-bottom-color:#f1f5f9;">
@@ -953,6 +951,35 @@
 
       updateChart();
     })();
+  </script>
+
+  <script>
+  (function() {
+    // 1. Define Euro countries
+    const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+
+    // 2. Helper function to update text
+    function setCurrency(symbol) {
+      document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = symbol);
+    }
+
+    // 3. Check location
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.country_code === 'GB') {
+          setCurrency('£'); // UK
+        } else if (euroCountries.includes(data.country_code)) {
+          setCurrency('€'); // Europe
+        } else {
+          setCurrency('$'); // Rest of world (default)
+        }
+      })
+      .catch(err => {
+        // If api fails, do nothing (keep default $)
+        console.log('Currency check failed, keeping default.');
+      });
+  })();
   </script>
 </body>
 </html>
