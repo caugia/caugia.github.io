@@ -16,12 +16,10 @@
   <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-
-<link rel="apple-touch-icon" href="assets/logo-final.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
   
   <script type="application/ld+json">
   {
@@ -36,7 +34,7 @@
         "offers": {
           "@type": "Offer",
           "price": "0",
-          "priceCurrency": "EUR"
+          "priceCurrency": "USD"
         }
       },
       {
@@ -47,7 +45,7 @@
         "offers": {
           "@type": "Offer",
           "price": "1249",
-          "priceCurrency": "EUR"
+          "priceCurrency": "USD"
         }
       },
       {
@@ -63,8 +61,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
-
-  <script src="assets/currency.js"></script>
 
   <style>
     /* --- V3 CORE SYSTEM (MASTER CSS) --- */
@@ -332,9 +328,9 @@
       }
       
       .service-card {
-          padding: 30px 24px; 
-          height: auto; 
-          margin-bottom: 0;
+        padding: 30px 24px; 
+        height: auto; 
+        margin-bottom: 0;
       }
       
       .service-desc, .service-price { min-height: auto !important; }
@@ -363,9 +359,9 @@
   <header>
     <div class="container nav">
       <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+        <img src="assets/logo-final.png" alt="Caugia" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -433,7 +429,7 @@
           
           <div class="service-actions">
             <span class="service-price">
-              <span id="display-price">€1249</span> 
+              <span id="display-price"><span class="currency-symbol">$</span>1249</span> 
               <span class="price-sub">One-time</span>
             </span>
             
@@ -604,7 +600,7 @@
 
       <details>
         <summary>What is the difference between the GTM Score and the Intelligence Report?</summary>
-        <p>The GTM Score is a free "pulse check" to see where you stand. The Intelligence Report (€1249) is a deep-dive, board-level diagnostic. It reveals the root causes, explains the constraints, and prioritises where improvement will have the highest return.</p>
+        <p>The GTM Score is a free "pulse check" to see where you stand. The Intelligence Report (<span class="currency-symbol">$</span>1249) is a deep-dive, board-level diagnostic. It reveals the root causes, explains the constraints, and prioritises where improvement will have the highest return.</p>
       </details>
 
       <details>
@@ -656,6 +652,35 @@
         });
       }
     })();
+  </script>
+
+  <script>
+  (function() {
+    // 1. Define Euro countries
+    const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+
+    // 2. Helper function to update text
+    function setCurrency(symbol) {
+      document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = symbol);
+    }
+
+    // 3. Check location
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.country_code === 'GB') {
+          setCurrency('£'); // UK
+        } else if (euroCountries.includes(data.country_code)) {
+          setCurrency('€'); // Europe
+        } else {
+          setCurrency('$'); // Rest of world (default)
+        }
+      })
+      .catch(err => {
+        // If api fails, do nothing (keep default $)
+        console.log('Currency check failed, keeping default.');
+      });
+  })();
   </script>
 </body>
 </html>
