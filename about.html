@@ -103,8 +103,7 @@
     }
     .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
     .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}<br>    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
 
     /* HEADER */
     header{
@@ -112,9 +111,23 @@
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .nav{ 
+      height:80px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:18px; 
+      /* FIX: Prevent collapse */
+      min-height: 80px;
+    }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
+    .brand img{ 
+      width:32px; 
+      height:32px; 
+      display:block; 
+      /* FIX: Prevent distortion */
+      object-fit: contain;
+    }
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
@@ -295,9 +308,9 @@
   <header>
     <div class="container nav">
       <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+        <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html" class="active">About</a></li>
