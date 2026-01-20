@@ -44,7 +44,7 @@
         "description": "A forensic, board-level diagnostic of your entire revenue engine based on 265 data points.",
         "offers": {
           "@type": "Offer",
-          "price": "1249",
+          "price": "1499",
           "priceCurrency": "USD"
         }
       },
@@ -656,34 +656,48 @@
 
   <script>
   (function() {
-    // 1. Define Euro countries
+    // 1. Configuratie
     const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+    
+    // Prijzen configuratie (voor Report pagina)
+    const prices = {
+      USD: { symbol: '$', val: '1499', equiv: '18k' },
+      EUR: { symbol: '€', val: '1249', equiv: '15k' },
+      GBP: { symbol: '£', val: '1099', equiv: '13k' }
+    };
 
-    fetch('https://ipapi.co/json/')
+    // 2. Helper functie om alles te updaten
+    function updateCurrency(code) {
+      const config = prices[code] || prices['USD']; // Fallback naar USD
+
+      // Update alle symbolen (.curr)
+      document.querySelectorAll('.curr').forEach(el => el.textContent = config.symbol);
+
+      // Update specifieke prijs getallen (alleen als ze bestaan op de pagina)
+      const priceVal = document.getElementById('price-val');
+      const priceEquiv = document.getElementById('price-equivalent');
+      
+      if (priceVal) priceVal.textContent = config.val;
+      if (priceEquiv) priceEquiv.textContent = config.equiv;
+    }
+
+    // 3. Check locatie via GeoJS (Minder snel geblokkeerd dan ipapi)
+    fetch('https://get.geojs.io/v1/ip/country.json')
       .then(res => res.json())
       .then(data => {
-        const country = data.country_code;
-        let symbol = '$';
-        let price = '1499';
+        const country = data.country_3 || data.country; // GeoJS geeft soms 2 of 3 letter codes
 
-        if (country === 'GB') {
-          symbol = '£';
-          price = '1099';
+        if (country === 'GB' || country === 'GBR') {
+          updateCurrency('GBP');
         } else if (euroCountries.includes(country)) {
-          symbol = '€';
-          price = '1249';
+          updateCurrency('EUR');
+        } else {
+          updateCurrency('USD');
         }
-
-        // Update symbols
-        document.querySelectorAll('.curr').forEach(el => el.textContent = symbol);
-        
-        // Update price value if element exists
-        const priceVal = document.getElementById('price-val');
-        if (priceVal) priceVal.textContent = price;
       })
       .catch(err => {
-        // Fallback to default ($1499)
-        console.log('Currency check failed, keeping default.');
+        console.log('Currency check blocked/failed. Keeping default USD.');
+        // Geen actie nodig, HTML staat standaard al op $
       });
   })();
   </script>
