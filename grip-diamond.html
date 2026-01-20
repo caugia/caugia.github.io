@@ -93,9 +93,26 @@
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:18px; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .nav{ 
+      height:100%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:18px; 
+      max-width: var(--max); 
+      margin: 0 auto; 
+      padding: 0 24px; 
+      /* FIX: Prevent collapse */
+      min-height: 80px;
+    }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
-    .brand img{ width:32px; height:32px; display:block; }
+    .brand img{ 
+      width:32px; 
+      height:32px; 
+      display:block; 
+      /* FIX: Prevent distortion */
+      object-fit: contain;
+    }
     .nav-links{ display:flex; gap:32px; align-items:center; list-style:none; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; text-decoration:none; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
@@ -107,6 +124,7 @@
     .btn-sm:hover{ background:var(--primary-dark); }
 
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); text-decoration: none; }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
@@ -270,9 +288,9 @@
 <header>
   <div class="nav">
     <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+      <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
+      <span>CAUGIA CONSULTING</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
