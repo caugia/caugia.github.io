@@ -32,8 +32,8 @@
     "offers": {
       "@type": "Offer",
       "url": "https://www.caugia.com/gtm-intelligence-report.html",
-      "priceCurrency": "EUR",
-      "price": "1249.00",
+      "priceCurrency": "USD",
+      "price": "1499.00",
       "availability": "https://schema.org/InStock",
       "priceValidUntil": "2026-12-31"
     }
@@ -45,6 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <script src="https://js.stripe.com/v3/"></script>
+
   <style>
     /* --- V3 CORE SYSTEM (EXACT COPY) --- */
     :root{
@@ -525,43 +526,43 @@
       }
     })();
 
-    // --- NIEUWE CURRENCY & PRICE LOGIC ---
+    // --- GEOJS CURRENCY LOGIC ---
     (function() {
       const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+      
+      const prices = {
+        USD: { symbol: '$', val: '1499', equiv: '18k' },
+        EUR: { symbol: '€', val: '1249', equiv: '15k' },
+        GBP: { symbol: '£', val: '1099', equiv: '13k' }
+      };
 
-      fetch('https://ipapi.co/json/')
+      function updateCurrency(code) {
+        const config = prices[code] || prices['USD'];
+
+        document.querySelectorAll('.curr').forEach(el => el.textContent = config.symbol);
+
+        const priceVal = document.getElementById('price-value');
+        const priceEquiv = document.getElementById('price-equivalent');
+        
+        if (priceVal) priceVal.textContent = config.val;
+        if (priceEquiv) priceEquiv.textContent = config.equiv;
+      }
+
+      fetch('https://get.geojs.io/v1/ip/country.json')
         .then(res => res.json())
         .then(data => {
-          const country = data.country_code;
-          let symbol = '$';
-          let price = '1499'; // Standaard USD prijs
-          let equiv = '18k'; // Standaard USD equivalent
+          const country = data.country; // Forceer 2-letter code
 
           if (country === 'GB') {
-            symbol = '£';
-            price = '1099';
-            equiv = '13k';
+            updateCurrency('GBP');
           } else if (euroCountries.includes(country)) {
-            symbol = '€';
-            price = '1249';
-            equiv = '15k';
+            updateCurrency('EUR');
+          } else {
+            updateCurrency('USD');
           }
-
-          // 1. Update alle symbolen (€, $, £) in de held en FAQ
-          document.querySelectorAll('.curr').forEach(el => el.textContent = symbol);
-          
-          // 2. Update het hoofdgetal (1249, 1499, 1099)
-          const valEl = document.getElementById('price-value');
-          if (valEl) valEl.textContent = price;
-
-          // 3. Update de equivalent tekst (15k, 18k, 13k)
-          const equivEl = document.getElementById('price-equivalent');
-          if (equivEl) equivEl.textContent = equiv;
         })
         .catch(err => {
-          // Als de check mislukt, doe niets. 
-          // De standaard in de HTML ($1499) blijft staan.
-          console.log('Locatiecheck mislukt, fallback naar standaard USD.');
+          console.log('Currency check failed. Keeping default USD.');
         });
     })();
 
@@ -569,9 +570,7 @@
     const stripe = Stripe("pk_live_51Sco4oDZAazoTP0s5aF0J3t8e1XGq1XGq1XGq1XGq1XGq1XGq1XGq"); // Live Key
 
     function startCheckout() {
-      // LET OP: Deze logica gebruikt nog steeds ALTIJD de Euro-prijs voor de checkout.
-      // Dit is prima zolang je geen USD/GBP prijzen hebt aangemaakt in Stripe.
-      // Zodra je dat wel hebt, moet je deze logica aanpassen.
+      // Gebruikt nu nog hardcoded EUR prijs, later aanpassen naar dynamisch indien nodig
       const priceId = "price_1Qim5eDZAazoTP0szK5sV78C"; 
 
       stripe.redirectToCheckout({
