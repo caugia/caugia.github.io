@@ -47,7 +47,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- MASTER STYLES (EXACT MATCH TO INDEX) --- */
+    /* --- V3 CORE SYSTEM (EXACT MATCH TO INDEX) --- */
     :root{
       --primary:#0056b3;
       --primary-dark:#004494;
@@ -99,25 +99,48 @@
       padding:0 24px;
     }
 
+    /* BUTTONS */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
+      border:1px solid transparent; cursor:pointer; transition:all 0.2s ease; white-space:nowrap;
+    }
+    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
+    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
+    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
+    .btn-outline:hover{ background:var(--white); border-color:var(--primary); transform:translateY(-1px); }
+
     /* HEADER */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .nav{ 
+      height:80px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:18px; 
+      /* FIX: Prevent collapse */
+      min-height: 80px;
+    }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
+    .brand img{ 
+      width:32px; 
+      height:32px; 
+      display:block; 
+      /* FIX: Prevent distortion */
+      object-fit: contain;
+    }
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
     
-    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:999px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-outline{ background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s; }
-    .btn-outline:hover{ background:var(--white); color:var(--text-dark); }
-
+    .nav-actions { display:flex; gap:12px; align-items:center; }
     .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
+    
+    /* Mobile Nav Overlay */
     .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
     .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
     .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
@@ -279,11 +302,30 @@
 
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
+    /* MOBILE RESPONSIVE FIXES */
     @media (max-width: 900px) {
+      /* 1. Header & Nav (Overlay) */
+      header { backdrop-filter: blur(16px); background: rgba(255,255,255,0.9); }
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      
+      /* Hide Header Buttons on Mobile */
+      .nav-actions .btn { display: none !important; }
+
+      .menu-toggle { display: inline-flex; font-size: 0.85rem; padding: 8px 16px; }
+
+      .mobile-nav { 
+        position: absolute; top: 80px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--line);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        padding: 10px 20px 30px !important; z-index: 999;
+        display: none; 
+      }
+      .mobile-nav.active { display: block; }
+
+      /* 2. Grid Fixes */
       .result-grid, .focus-grid, .next-steps-grid { grid-template-columns: 1fr; }
       .score-number { font-size: 4rem; }
-      .nav-links { display: none; }
-      .menu-toggle { display: inline-flex; }
     }
   </style>
 </head>
@@ -293,9 +335,9 @@
 <header>
   <div class="container nav">
     <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+      <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
+      <span>CAUGIA CONSULTING</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -303,8 +345,9 @@
       <li><a href="gtm-assessment.html" class="active">GTM Score</a></li>
       <li><a href="resources.html">Resources</a></li>
     </ul>
-    <div style="display:flex; gap:12px; align-items:center;">
-      <a href="contact.html" class="btn-primary">Contact</a>
+    
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn-primary">Contact</a>
       <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
@@ -314,6 +357,7 @@
     <a href="about.html">About</a>
     <a href="services.html">Services</a>
     <a href="gtm-assessment.html" class="active">GTM Score</a>
+    <a href="resources.html">Resources</a>
     <a href="contact.html">Contact</a>
   </div>
 </header>
@@ -431,7 +475,7 @@
       </div>
 
       <div style="text-align:center; margin-top: 60px;">
-        <a href="services.html" class="btn-primary" style="background:var(--white); color:var(--text-dark); margin-right: 12px;">Explore Intelligence Report</a>
+        <a href="services.html" class="btn btn-primary" style="background:var(--white); color:var(--text-dark); margin-right: 12px;">Explore Intelligence Report</a>
         <a href="mailto:hello@caugia.com" class="btn-outline">Ask a question</a>
       </div>
     </div>
@@ -446,16 +490,17 @@
 </footer>
 
 <script>
-  // Mobile Nav Logic
+  // Mobile Nav Logic (Standardized)
   (function () {
     const toggle = document.getElementById("menuToggle");
     const mobileNav = document.getElementById("mobileNav");
-    if (!toggle || !mobileNav) return;
-    toggle.addEventListener("click", () => {
-      const open = mobileNav.style.display === "block";
-      mobileNav.style.display = open ? "none" : "block";
-      toggle.innerText = open ? "Menu" : "Close";
-    });
+    if (toggle && mobileNav) {
+      toggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("active");
+        const isOpen = mobileNav.classList.contains("active");
+        toggle.innerText = isOpen ? "Close" : "Menu";
+      });
+    }
   })();
 
   // 1. Get Score from URL
