@@ -959,24 +959,33 @@
     const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
 
     // 2. Helper function to update text
-    function setCurrency(symbol) {
+    function updateCurrency(code) {
+      const symbols = {
+        'USD': '$',
+        'EUR': '€',
+        'GBP': '£'
+      };
+      const symbol = symbols[code] || '$';
       document.querySelectorAll('.curr').forEach(el => el.textContent = symbol);
     }
 
-    // 3. Check location
-    fetch('https://ipapi.co/json/')
+    // 3. Check location via GeoJS
+    fetch('https://get.geojs.io/v1/ip/country.json')
       .then(res => res.json())
       .then(data => {
-        if (data.country_code === 'GB') {
-          setCurrency('£'); // UK
-        } else if (euroCountries.includes(data.country_code)) {
-          setCurrency('€'); // Europe
+        // Force 2-letter country code
+        const country = data.country; 
+
+        if (country === 'GB') {
+          updateCurrency('GBP');
+        } else if (euroCountries.includes(country)) {
+          updateCurrency('EUR');
         } else {
-          setCurrency('$'); // Rest of world (default)
+          updateCurrency('USD');
         }
       })
       .catch(err => {
-        // If api fails, do nothing (keep default $)
+        // Fallback to default ($)
         console.log('Currency check failed, keeping default.');
       });
   })();
