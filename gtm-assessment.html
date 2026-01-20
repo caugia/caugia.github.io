@@ -16,12 +16,10 @@
   <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-
-<link rel="apple-touch-icon" href="assets/logo-final.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
   
   <script type="application/ld+json">
   {
@@ -35,7 +33,7 @@
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "EUR"
+      "priceCurrency": "USD"
     }
   }
   </script>
@@ -254,7 +252,7 @@
     /* FOOTER */
     footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
 
-    /* MOBILE OPTIMIZATIONS (GOD MODE) */
+    /* MOBILE OPTIMIZATIONS */
     @media (max-width: 768px) {
       /* 1. Header Cleanup */
       .nav-links{ display:none; }
@@ -316,9 +314,9 @@
 <header>
   <div class="container nav">
     <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+      <img src="assets/logo-final.png" alt="Caugia" />
+      <span>CAUGIA CONSULTING</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -373,36 +371,36 @@
             <label class="gtm-option">
               <input type="radio" name="q1" value="Seed (< 1M ARR)">
               <span class="opt-text">
-                <span class="d-text">Seed / Finding PMF (< <span class="curr">€</span>1M ARR)</span>
-                <span class="m-text">< <span class="curr">€</span>1M ARR</span>
+                <span class="d-text">Seed / Finding PMF (&lt; <span class="curr">$</span>1M ARR)</span>
+                <span class="m-text">&lt; <span class="curr">$</span>1M ARR</span>
               </span>
             </label>
             <label class="gtm-option">
               <input type="radio" name="q1" value="Early Scaling (1M – 10M ARR)">
               <span class="opt-text">
-                <span class="d-text">Early Scaling (<span class="curr">€</span>1M – <span class="curr">€</span>10M ARR)</span>
-                <span class="m-text"><span class="curr">€</span>1M – <span class="curr">€</span>10M ARR</span>
+                <span class="d-text">Early Scaling (<span class="curr">$</span>1M – <span class="curr">$</span>10M ARR)</span>
+                <span class="m-text"><span class="curr">$</span>1M – <span class="curr">$</span>10M ARR</span>
               </span>
             </label>
             <label class="gtm-option">
               <input type="radio" name="q1" value="High Growth (10M – 50M ARR)">
               <span class="opt-text">
-                <span class="d-text">High Growth (<span class="curr">€</span>10M – <span class="curr">€</span>50M ARR)</span>
-                <span class="m-text"><span class="curr">€</span>10M – <span class="curr">€</span>50M ARR</span>
+                <span class="d-text">High Growth (<span class="curr">$</span>10M – <span class="curr">$</span>50M ARR)</span>
+                <span class="m-text"><span class="curr">$</span>10M – <span class="curr">$</span>50M ARR</span>
               </span>
             </label>
             <label class="gtm-option">
               <input type="radio" name="q1" value="Expansion (50M – 150M ARR)">
               <span class="opt-text">
-                <span class="d-text">Expansion (<span class="curr">€</span>50M – <span class="curr">€</span>150M ARR)</span>
-                <span class="m-text"><span class="curr">€</span>50M – <span class="curr">€</span>150M ARR</span>
+                <span class="d-text">Expansion (<span class="curr">$</span>50M – <span class="curr">$</span>150M ARR)</span>
+                <span class="m-text"><span class="curr">$</span>50M – <span class="curr">$</span>150M ARR</span>
               </span>
             </label>
             <label class="gtm-option">
               <input type="radio" name="q1" value="Enterprise / Pre-Exit (150M+ ARR)">
               <span class="opt-text">
-                <span class="d-text">Enterprise / Pre-Exit (<span class="curr">€</span>150M+ ARR)</span>
-                <span class="m-text"><span class="curr">€</span>150M+ ARR</span>
+                <span class="d-text">Enterprise / Pre-Exit (<span class="curr">$</span>150M+ ARR)</span>
+                <span class="m-text"><span class="curr">$</span>150M+ ARR</span>
               </span>
             </label>
           </div>
@@ -643,16 +641,32 @@
 </footer>
 
 <script>
-  // Dynamic Currency Logic
+  // DYNAMIC CURRENCY LOGIC
   (function() {
-    const userLang = navigator.language || navigator.userLanguage;
-    let currencySymbol = '€'; 
-    if (userLang.includes('en-US')) currencySymbol = '$';
-    
-    // Update all elements with class 'curr'
-    document.querySelectorAll('.curr').forEach(el => {
-      el.textContent = currencySymbol;
-    });
+    // 1. Define Euro countries
+    const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+
+    // 2. Helper to set currency
+    function setCurrency(symbol) {
+      document.querySelectorAll('.curr').forEach(el => el.textContent = symbol);
+    }
+
+    // 3. API Check
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.country_code === 'GB') {
+          setCurrency('£'); 
+        } else if (euroCountries.includes(data.country_code)) {
+          setCurrency('€'); 
+        } else {
+          setCurrency('$'); 
+        }
+      })
+      .catch(err => {
+        // Fallback is already $ in HTML
+        console.log('Currency fallback used ($)');
+      });
   })();
 
   // Mobile Nav Logic
@@ -662,13 +676,9 @@
     if (!toggle || !mobileNav) return;
 
     toggle.addEventListener("click", () => {
-      // Toggle class instead of style to support new CSS
       mobileNav.classList.toggle("active");
-      
       const isOpen = mobileNav.classList.contains("active");
       toggle.innerText = isOpen ? "Close" : "Menu";
-      
-      // Lock body scroll when menu is open
       document.body.style.overflow = isOpen ? "hidden" : "auto";
     });
   })();
