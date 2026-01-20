@@ -654,26 +654,24 @@
     })();
   </script>
 
-  <script>
+<script>
   (function() {
     // 1. Configuratie
     const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
     
-    // Prijzen configuratie (voor Report pagina)
+    // Prijzen configuratie
     const prices = {
       USD: { symbol: '$', val: '1499', equiv: '18k' },
       EUR: { symbol: '€', val: '1249', equiv: '15k' },
       GBP: { symbol: '£', val: '1099', equiv: '13k' }
     };
 
-    // 2. Helper functie om alles te updaten
+    // 2. Helper functie
     function updateCurrency(code) {
-      const config = prices[code] || prices['USD']; // Fallback naar USD
+      const config = prices[code] || prices['USD'];
 
-      // Update alle symbolen (.curr)
       document.querySelectorAll('.curr').forEach(el => el.textContent = config.symbol);
 
-      // Update specifieke prijs getallen (alleen als ze bestaan op de pagina)
       const priceVal = document.getElementById('price-val');
       const priceEquiv = document.getElementById('price-equivalent');
       
@@ -681,13 +679,17 @@
       if (priceEquiv) priceEquiv.textContent = config.equiv;
     }
 
-    // 3. Check locatie via GeoJS (Minder snel geblokkeerd dan ipapi)
+    // 3. Check locatie
     fetch('https://get.geojs.io/v1/ip/country.json')
       .then(res => res.json())
       .then(data => {
-        const country = data.country_3 || data.country; // GeoJS geeft soms 2 of 3 letter codes
+        // HIER ZAT DE FOUT: We dwingen nu de 2-letter code (data.country) af
+        // In plaats van data.country_3
+        const country = data.country; 
 
-        if (country === 'GB' || country === 'GBR') {
+        console.log("Detected Country:", country); // Check in je browser console (F12) wat hier staat
+
+        if (country === 'GB') {
           updateCurrency('GBP');
         } else if (euroCountries.includes(country)) {
           updateCurrency('EUR');
@@ -696,10 +698,9 @@
         }
       })
       .catch(err => {
-        console.log('Currency check blocked/failed. Keeping default USD.');
-        // Geen actie nodig, HTML staat standaard al op $
+        console.log('Currency check failed. Keeping default USD.');
       });
   })();
-  </script>
+</script>
 </body>
 </html>
