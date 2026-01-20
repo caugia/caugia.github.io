@@ -16,84 +16,196 @@
   <script src="/auth.js"></script>
 
   <style>
-    /* --- FIXES & UPDATES --- */
+    /* --- CRITICAL OVERRIDES & FIXES --- */
+
+    /* 1. APP LAYOUT (NO SCROLL ON BODY) */
+    body { 
+      overflow: hidden; 
+      height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      background-color: #f8fafc;
+    }
+    .gi-main { flex-grow: 1; overflow: hidden; padding: 0; }
+    .gi-shell { 
+      height: 100%; 
+      display: grid; 
+      grid-template-columns: 320px 1fr 280px; 
+      gap: 0; 
+    }
+
+    /* 2. HEADER FIXES */
+    .gi-header {
+      height: 64px; flex-shrink: 0; border-bottom: 1px solid #e2e8f0; background: white;
+      display: flex; align-items: center; padding: 0 24px;
+    }
+    .gi-header-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+    .gi-logo { width: 32px; height: 32px; object-fit: contain; }
+
+    /* 3. LEFT PANEL & BOTTOM BOX FIX */
+    .gi-left-info {
+      background: white; border-right: 1px solid #e2e8f0;
+      padding: 32px 24px; display: flex; flex-direction: column; overflow-y: auto;
+    }
     
-    /* 1. Layout Lock (Keep it on the fold) */
-    body { overflow-y: hidden; height: 100vh; display: flex; flex-direction: column; }
-    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; }
-    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
-    
-    /* 2. Utility Buttons (Save/Jump) - Modern Look */
+    /* Het kader linksonder hersteld */
+    .gi-pillar-desc-box {
+      margin-top: auto; /* Push to bottom */
+      background: #f1f5f9; /* Lichtgrijs kader */
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .gi-pillar-desc-box h3 {
+      font-size: 0.85rem; font-weight: 800; text-transform: uppercase; 
+      letter-spacing: 0.05em; color: #64748b; margin-bottom: 8px;
+    }
+    .gi-pillar-desc-box p {
+      font-size: 0.9rem; line-height: 1.5; color: #334155; margin: 0;
+    }
+
+    /* 4. CENTER ENGINE & QUESTION CARD */
+    .gi-center {
+      background: #f8fafc; padding: 40px; 
+      display: flex; justify-content: center; align-items: flex-start;
+      overflow-y: auto;
+    }
+    .gi-question-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+      padding: 48px; width: 100%; max-width: 800px;
+      box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+      position: relative; 
+      /* Fix layout shifts */
+      display: flex; flex-direction: column;
+      min-height: 600px; 
+    }
+
+    /* UTILITY BUTTONS (Save/Jump) - Modern Look */
     .gi-utility-row {
-      position: absolute; top: 20px; right: 20px;
+      position: absolute; top: 24px; right: 24px;
       display: flex; gap: 8px;
     }
     .gi-utility-btn {
-      background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px;
-      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
+      background: white; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 8px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
       cursor: pointer; transition: all 0.2s ease;
     }
-    .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
+    .gi-utility-btn:hover {
+      border-color: #0056b3; color: #0056b3; background: #f0f9ff;
+    }
 
-    /* 3. Pillar 0 Contrast Fix */
+    /* 5. INPUT & RADIO STYLING (LOS VAN ELKAAR) */
+    .gi-options-grid {
+      display: flex; flex-direction: column;
+      gap: 16px; /* Ruimte tussen de balken */
+      margin-top: 24px;
+    }
+    
+    /* De antwoord kaart */
+    .gi-option-card {
+      display: flex; align-items: center;
+      padding: 20px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .gi-option-card:hover {
+      border-color: #94a3b8;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    /* Selected state styling handled often by JS, but basics: */
+    .gi-option-card input[type="radio"] {
+      margin-right: 16px;
+      width: 20px; height: 20px;
+      accent-color: #0056b3;
+    }
+    
+    /* Input Fields (Context) */
+    .gi-group-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 24px;
+    }
+    .gi-input {
+      width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-size: 1rem; color: #0f172a;
+    }
+
+    /* 6. PILLAR NAV (RIGHT) */
+    .gi-right-pillars {
+      background: white; border-left: 1px solid #e2e8f0;
+      padding: 32px 24px; overflow-y: auto;
+    }
+    .gi-pillar-nav { list-style: none; padding: 0; }
+    .gi-pillar-nav li {
+      padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; font-weight: 500;
+      color: #64748b; cursor: pointer; margin-bottom: 4px; transition: 0.2s;
+    }
+    .gi-pillar-nav li:hover { background: #f1f5f9; color: #0f172a; }
+    
+    /* CONTRAST FIX: Active State */
     .gi-pillar-nav li.active {
-      background-color: #0056b3 !important; /* Force Caugia Blue */
-      color: #ffffff !important; /* Force White Text */
+      background-color: #0056b3 !important;
+      color: #ffffff !important;
       font-weight: 700;
     }
-    .gi-pillar-nav li { color: #475569; } /* Default text color */
 
-    /* 4. Input Spacing Fixes */
-    .gi-group-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; /* Meer ruimte */
-      margin-top: 16px; margin-bottom: 24px;
-    }
-    .gi-group-grid label {
-      display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b;
-    }
-    .gi-input, .gi-textarea {
-      width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
-      font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff;
-    }
-    .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
-
-    /* 5. Radio Cards Spacing */
-    .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
-    .gi-option-card {
-      display: flex; align-items: center; padding: 16px;
-      border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
-    }
-    .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
-    .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
-
-    /* 6. Question Card Layout */
-    .gi-question-card {
-      position: relative; /* For utility buttons positioning */
-      height: 100%; display: flex; flex-direction: column;
-      padding: 40px; overflow-y: auto;
-    }
-    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } /* Space for nav */
-    
-    /* 7. Bottom Nav Bar */
+    /* 7. BOTTOM NAV & TEST BUTTON */
     .gi-nav-row {
-      position: sticky; bottom: 0; left: 0; right: 0;
-      background: white; border-top: 1px solid #e2e8f0;
-      padding: 20px 40px; margin: 0 -40px -40px -40px; /* Stretch to edges */
+      margin-top: auto; padding-top: 32px; border-top: 1px solid #f1f5f9;
       display: flex; gap: 12px; align-items: center;
     }
-
-    /* Test Button Style */
     #gi-test-submit-btn {
-      background: #dc2626; color: white; border: none; margin-left: auto;
+      background: #dc2626; color: white; border: none; padding: 12px 24px;
+      border-radius: 99px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      margin-left: auto; /* Rechts uitlijnen */
     }
+    #gi-test-submit-btn:hover { background: #b91c1c; }
 
-    /* Mobile Reset */
-    @media (max-width: 1000px) {
-      body { overflow-y: auto; height: auto; }
-      .gi-shell { display: flex; flex-direction: column; }
-      .gi-left-info, .gi-right-pillars { display: none; }
-      .gi-question-card { height: auto; overflow: visible; }
+    /* 8. DARK MODE FIXES */
+    body.dark { background-color: #0f172a; color: #f8fafc; }
+    body.dark .gi-header, 
+    body.dark .gi-left-info, 
+    body.dark .gi-right-pillars,
+    body.dark .gi-center { 
+      background-color: #0f172a; border-color: #1e293b; 
     }
+    
+    /* Dark Mode Cards */
+    body.dark .gi-question-card {
+      background-color: #1e293b; 
+      border-color: #334155;
+      color: white;
+    }
+    body.dark .gi-option-card {
+      background-color: #0f172a; /* Donkerder dan de kaart */
+      border-color: #334155;
+      color: #f8fafc;
+    }
+    body.dark .gi-option-card:hover { border-color: #60a5fa; }
+    
+    body.dark .gi-input {
+      background-color: #0f172a; border-color: #334155; color: white;
+    }
+    
+    /* Dark Mode Pillar Desc */
+    body.dark .gi-pillar-desc-box {
+      background-color: #1e293b; border-color: #334155;
+    }
+    body.dark .gi-pillar-desc-box h3 { color: #94a3b8; }
+    body.dark .gi-pillar-desc-box p { color: #cbd5e1; }
+    
+    /* Dark Mode Text */
+    body.dark .gi-info-h1, body.dark h2, body.dark label { color: white; }
+    body.dark .gi-info-desc { color: #cbd5e1; }
+    
+    /* Dark Mode Utility Buttons */
+    body.dark .gi-utility-btn {
+      background: #0f172a; border-color: #334155; color: #94a3b8;
+    }
+    body.dark .gi-utility-btn:hover { color: white; border-color: white; }
+
   </style>
 </head>
 
@@ -135,12 +247,14 @@
         </div>
       </div>
 
-      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
+      <button class="gi-btn gi-reset" id="gi-reset-btn" style="margin-top: 24px;">Reset Assessment</button>
 
       <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
           Context provides the foundation for interpreting the rest of the assessment.
+          By capturing essential details about your company, the system adjusts
+          recommendations, highlights risks and identifies the right priorities.
         </p>
       </div>
     </aside>
@@ -160,18 +274,17 @@
           <p class="gi-question-sub" id="gi-question-sub"></p>
         </div>
 
-        <div class="gi-question-body" id="gi-question-body">
-          </div>
+        <div class="gi-question-body" id="gi-question-body"></div>
 
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
           
-          <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
-          
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
 
-          <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+
+          <button id="gi-test-submit-btn">TEST SUBMIT</button>
         </div>
 
       </div>
@@ -221,7 +334,7 @@ const PILLAR_META = {
 };
 </script>
 
-<script src="assets/engine.js?v=8002"></script>
+<script src="assets/engine.js?v=8005"></script>
 
 <script>
 const toggle = document.getElementById("darkToggle");
