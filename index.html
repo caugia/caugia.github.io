@@ -116,9 +116,23 @@
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .nav{ 
+      height:80px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:18px; 
+      /* FIX: Prevent collapse/jump */
+      min-height: 80px;
+    }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
+    .brand img{ 
+      width:32px; 
+      height:32px; 
+      display:block; 
+      /* FIX: Prevent distortion */
+      object-fit: contain;
+    }
     .nav-links{ display:flex; gap:32px; align-items:center; }
     .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
     .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
@@ -264,12 +278,8 @@
       }
       .mobile-nav.active { display: block; }
       
-      .mobile-cta {
-          padding: 24px 0 0 !important;
-          flex-direction: column; 
-          gap: 16px;
-      }
-      .mobile-cta .btn { width: 100%; }
+      /* --- MENU FIX: Removed Big Buttons, Added simple link --- */
+      .mobile-cta { display: none !important; }
 
       /* 2. HERO FIX (Centered Text & Adjusted Padding) */
       .hero { 
@@ -387,7 +397,7 @@
   <header>
     <div class="container nav">
       <a class="brand" href="index.html">
-        <img src="assets/logo-final.png" alt="Caugia" />
+        <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
         <span>CAUGIA CONSULTING</span>
       </a>
       <ul class="nav-links">
@@ -410,10 +420,7 @@
       <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
-      <div class="mobile-cta">
-        <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-        <a href="contact.html" class="btn btn-outline">Contact</a>
-      </div>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
 
