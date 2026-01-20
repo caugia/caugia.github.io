@@ -110,9 +110,23 @@
       background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(15,23,42,0.04);
     }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .nav{ 
+      height:80px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:18px; 
+      /* FIX: Prevent collapse */
+      min-height: 80px;
+    }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
+    .brand img{ 
+      width:32px; 
+      height:32px; 
+      display:block; 
+      /* FIX: Prevent distortion */
+      object-fit: contain;
+    }
     
     /* Minimal Nav for Assessment Context */
     .nav-actions { display: flex; gap: 16px; align-items: center; }
@@ -193,12 +207,12 @@
   <header>
     <div class="container-wide nav">
      <a class="brand" href="index.html">
-  <img src="assets/logo-final.png" alt="Caugia" />
-  <span>CAUGIA CONSULTING</span>
-</a>
+        <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
+        <span>CAUGIA CONSULTING</span>
+      </a>
       
       <div class="nav-actions">
-        <a href="gtm-intelligence-report-v2-test.html" class="back-link">← Return to Assessment</a>
+        <a href="gtm-intelligence-assessment.html" class="back-link">← Return to Assessment</a>
       </div>
     </div>
   </header>
