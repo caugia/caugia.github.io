@@ -205,7 +205,7 @@ const PILLAR_META = {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // 1. Dark Mode
+  // 1. Dark Mode Toggle
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // 2. Pillar Info Update
+  // 2. Pillar Info Update Logic
   const list = document.getElementById("gi-left-pillar-list");
   const titleBox = document.getElementById("gi-pillar-name");
   const descBox = document.getElementById("gi-pillar-desc");
@@ -235,28 +235,34 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // 3. ROBUSTE TEST SUBMIT (Nu met ECHTE VERZENDING NAAR MAKE)
+  // =========================================================
+  // 3. THE DEFINITIVE TEST SUBMIT LOGIC (ALWAYS SENDS)
+  // =========================================================
   const testBtn = document.getElementById("gi-test-submit-btn");
+  
   if(testBtn) {
-    testBtn.addEventListener("click", function() {
-        console.log("--- START TEST SUBMIT ---");
+    testBtn.addEventListener("click", function(e) {
+        // Prevent any default behavior just in case
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log("🚀 TEST SUBMIT BUTTON CLICKED");
         
-        // We trekken de data LIVE uit de velden die nu in beeld staan
+        // --- STAP 1: DATA VERZAMELEN ---
         const container = document.getElementById("gi-question-card");
         const inputs = container.querySelectorAll("input, select, textarea");
         
         let collectedData = {};
         let hasData = false;
 
+        // Scrape Live Inputs
         inputs.forEach(el => {
-            // Checkboxes / Radio
             if(el.type === 'radio' || el.type === 'checkbox') {
                 if(el.checked) {
                     collectedData[el.name || el.id] = el.value;
                     hasData = true;
                 }
             } else {
-                // Text, Email, etc.
                 if(el.value && el.value.trim() !== "") {
                     collectedData[el.id || el.name] = el.value;
                     hasData = true;
@@ -264,52 +270,70 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        if(hasData) {
-            console.log("✅ LIVE DATA GEVONDEN:", collectedData);
-            
-            // --- HIER IS DE FIX: ECHT VERZENDEN NAAR MAKE ---
-            const WEBHOOK_URL = "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj";
-            
-            // We wrappen de data in 'answers' zodat Make structuur herkent
-            const payload = {
-                test_submit: true,
-                timestamp: new Date().toISOString(),
-                answers: collectedData
-            };
-
-            testBtn.innerText = "Sending...";
-            
-            fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if(response.ok) {
-                    alert("✅ SUCCES: Data verstuurd naar Make!\n\nGa nu naar Make.com en check of het scenario is getriggerd.");
-                } else {
-                    alert("❌ FOUT: Webhook reageerde met error " + response.status);
-                }
-            })
-            .catch(error => {
-                console.error("Fetch error:", error);
-                alert("❌ FOUT: Kon data niet versturen. Check console.");
-            })
-            .finally(() => {
-                testBtn.innerText = "TEST SUBMIT";
-            });
-
-        } else {
-            // Als er geen live data is, proberen we de cache (als fallback)
-            const stored = localStorage.getItem("gi_progress");
+        // Add Cache fallback logic
+        if(!hasData) {
+            console.log("⚠️ Geen live input gevonden, proberen cache...");
+            const stored = localStorage.getItem("gi_progress"); // of jouw specifieke storageKey uit engine.js
             if(stored) {
-                console.log("✅ CACHED DATA GEVONDEN:", JSON.parse(stored));
-                alert("Geen live data op scherm, maar data in cache gevonden. \n\nLET OP: Deze test knop stuurt nu ALLEEN wat je op dit scherm ziet. Vul de velden in en druk nogmaals op TEST SUBMIT.");
-            } else {
-                alert("⚠️ LEGE SUBMIT\n\nVul eerst een veld in op dit scherm voordat je op submit klikt.");
+                try {
+                    const parsed = JSON.parse(stored);
+                    if(parsed.answers) {
+                        collectedData = parsed.answers;
+                        hasData = true;
+                        console.log("✅ Cache data gevonden:", collectedData);
+                    }
+                } catch(err) { console.error("Cache corrupt", err); }
             }
         }
+
+        // Als er NOG STEEDS geen data is, stuur dan DUMMY data zodat Make stopt met wachten
+        if(!hasData) {
+            console.warn("⚠️ HELEMAAL GEEN DATA. We sturen dummy data om Make te triggeren.");
+            collectedData = { 
+                "test_mode": "empty_submit", 
+                "message": "User pressed submit without filling fields.",
+                "dummy_question": "Dummy Answer"
+            };
+        }
+
+        // --- STAP 2: VERZENDEN NAAR MAKE ---
+        const WEBHOOK_URL = "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj";
+        
+        testBtn.innerText = "Sending...";
+        testBtn.disabled = true;
+
+        const payload = {
+            timestamp: new Date().toISOString(),
+            is_test: true,
+            answers: collectedData
+        };
+
+        console.log("📤 Sending Payload to Make:", payload);
+
+        fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            console.log("Response status:", response.status);
+            if(response.ok) {
+                alert("✅ SUCCES: Data verstuurd naar Make!\n\nDe webhook heeft de data ontvangen.");
+            } else {
+                alert("❌ FOUT: Webhook reageerde met error " + response.status + ". \nCheck of de URL klopt.");
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            alert("❌ NETWERK FOUT: Kon data niet versturen. \n\n1. Check je internet.\n2. Gebruik je een AdBlocker? Zet die uit.\n3. Zie de Console (F12) voor details.");
+        })
+        .finally(() => {
+            testBtn.innerText = "TEST SUBMIT";
+            testBtn.disabled = false;
+        });
     });
+  } else {
+      console.error("❌ Kan Test knop (id='gi-test-submit-btn') niet vinden in de DOM.");
   }
 
 });
