@@ -270,8 +270,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-    });
+  const isDark = document.body.classList.toggle("dark");
+  const icon = toggle.querySelector(".dark-icon");
+  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+});
   }
 
   // INTERACTIVE PILLAR INFO
