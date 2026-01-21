@@ -18,12 +18,12 @@
   <style>
     /* --- FIXES & UPDATES --- */
     
-    /* 1. Layout Lock */
+    /* 1. Layout Lock (Keep it on the fold) */
     body { overflow-y: hidden; height: 100vh; display: flex; flex-direction: column; }
     .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; }
     .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
     
-    /* 2. Utility Buttons */
+    /* 2. Utility Buttons (Save/Jump) - Modern Look */
     .gi-utility-row {
       position: absolute; top: 20px; right: 20px;
       display: flex; gap: 8px;
@@ -35,7 +35,7 @@
     }
     .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
 
-    /* 3. Pillar Nav - INTERACTIVE */
+    /* 3. Pillar Nav - INTERACTIVE UPDATE */
     .gi-pillar-nav li { 
         color: #475569; 
         cursor: pointer; 
@@ -46,31 +46,14 @@
         background-color: #f1f5f9;
     }
     .gi-pillar-nav li.active {
-      background-color: #0056b3 !important; 
-      color: #ffffff !important; 
+      background-color: #0056b3 !important; /* Force Caugia Blue */
+      color: #ffffff !important; /* Force White Text */
       font-weight: 700;
     }
 
-    /* 4. DESCRIPTION BOX - FIXED SIZE FIX */
-    .gi-pillar-desc-box {
-      /* Zorg dat deze class al bestaat in je v10.1.css of voeg hem hier toe */
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 24px;
-      margin-top: 24px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      
-      /* DE FIX: Vaste minimale hoogte zodat hij niet springt */
-      min-height: 280px; 
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    /* 5. Input Spacing */
+    /* 4. Input Spacing Fixes */
     .gi-group-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; /* Meer ruimte */
       margin-top: 16px; margin-bottom: 24px;
     }
     .gi-group-grid label {
@@ -82,7 +65,7 @@
     }
     .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
 
-    /* 6. Radio Cards */
+    /* 5. Radio Cards Spacing */
     .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
     .gi-option-card {
       display: flex; align-items: center; padding: 16px;
@@ -91,22 +74,23 @@
     .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
     .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
 
-    /* 7. Question Card Layout */
+    /* 6. Question Card Layout */
     .gi-question-card {
-      position: relative; 
+      position: relative; /* For utility buttons positioning */
       height: 100%; display: flex; flex-direction: column;
       padding: 40px; overflow-y: auto;
     }
-    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } 
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } /* Space for nav */
     
-    /* 8. Bottom Nav Bar */
+    /* 7. Bottom Nav Bar */
     .gi-nav-row {
       position: sticky; bottom: 0; left: 0; right: 0;
       background: white; border-top: 1px solid #e2e8f0;
-      padding: 20px 40px; margin: 0 -40px -40px -40px; 
+      padding: 20px 40px; margin: 0 -40px -40px -40px; /* Stretch to edges */
       display: flex; gap: 12px; align-items: center;
     }
 
+    /* Test Button Style */
     #gi-test-submit-btn {
       background: #dc2626; color: white; border: none; margin-left: auto;
     }
@@ -164,7 +148,7 @@
       <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
-          Context lays the foundation for the assessment. By capturing your stage and motion, the system adjusts recommendations to your reality, ensuring you are benchmarked against relevant peers.
+          Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards.
         </p>
       </div>
     </aside>
@@ -228,10 +212,9 @@
 <script src="assets/QUESTIONS.js?v=1"></script>
 
 <script>
-// UPDATED PILLAR META: Shortened Pillar 0 & 1, Fixed Box Size via CSS
 const PILLAR_META = {
-  0:{name:"Context", desc:"Context lays the foundation for the assessment. By capturing your stage and motion, the system adjusts recommendations to your reality, ensuring you are benchmarked against relevant peers."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction is defined. It evaluates if your vision translates into actionable roadmaps that guide resources, preventing teams from executing efficiently but in conflicting directions."},
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined across the organization. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation. Without this, teams often execute efficiently but in conflicting directions."},
   2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers, and competitors based on data rather than opinion. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs to anticipate market moves."},
   3:{name:"Product Marketing", desc:"Product Marketing connects deep customer understanding with product value to create a compelling narrative. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message, shortening sales cycles."},
   4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated across inbound, outbound, and partner channels. It looks beyond vanity metrics to assess the quality of capture and the efficiency of your acquisition cost over the long term."},
@@ -266,17 +249,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if(list && titleBox && descBox) {
     list.addEventListener("click", (e) => {
+      // Zoek het dichtstbijzijnde LI element
       const li = e.target.closest("li");
       if(!li) return;
 
+      // Haal het pillar nummer op
       const pIndex = li.getAttribute("data-p");
+      
+      // Zoek de info in PILLAR_META
       const info = PILLAR_META[pIndex];
 
       if(info) {
+        // Update de linker box
         titleBox.innerText = info.name;
         descBox.innerText = info.desc;
         
-        // Fade effect
+        // Optioneel: Voeg een visueel effect toe aan de tekst om te laten zien dat hij ververst is
         descBox.style.opacity = 0;
         setTimeout(() => descBox.style.opacity = 1, 100);
       }
