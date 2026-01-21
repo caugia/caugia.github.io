@@ -146,8 +146,9 @@
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
     <div class="gi-header-right">
-      <button id="darkToggle" class="gi-dark-toggle">Dark</button>
-      <a href="contact.html" class="gi-contact-link">Contact</a>
+      <button id="darkToggle" class="gi-dark-toggle" aria-label="Toggle dark mode">
+  <span class="dark-icon">🌙</span>
+</button>
     </div>
   </div>
 </header>
@@ -239,7 +240,7 @@
   </div>
 </main>
 
-<a href="assessment-support.html" target="_blank" class="gi-faq-button">FAQ</a>
+<a href="/faq.html" class="gi-faq-button">FAQ</a>
 
 <script src="assets/QUESTIONS.js?v=1"></script>
 
@@ -269,8 +270,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-    });
+  const isDark = document.body.classList.toggle("dark");
+  const icon = toggle.querySelector(".dark-icon");
+  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+});
   }
 
   // INTERACTIVE PILLAR INFO
