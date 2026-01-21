@@ -35,13 +35,21 @@
     }
     .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
 
-    /* 3. Pillar 0 Contrast Fix */
+    /* 3. Pillar Nav - INTERACTIVE UPDATE */
+    .gi-pillar-nav li { 
+        color: #475569; 
+        cursor: pointer; /* Laat zien dat het klikbaar is */
+        transition: color 0.2s, background-color 0.2s;
+    } 
+    .gi-pillar-nav li:hover {
+        color: #0056b3;
+        background-color: #f1f5f9;
+    }
     .gi-pillar-nav li.active {
       background-color: #0056b3 !important; /* Force Caugia Blue */
       color: #ffffff !important; /* Force White Text */
       font-weight: 700;
     }
-    .gi-pillar-nav li { color: #475569; } /* Default text color */
 
     /* 4. Input Spacing Fixes */
     .gi-group-grid {
@@ -224,12 +232,46 @@ const PILLAR_META = {
 <script src="assets/engine.js?v=8002"></script>
 
 <script>
-const toggle = document.getElementById("darkToggle");
-if(toggle){
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-  });
-}
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // 1. Dark Mode Toggle
+  const toggle = document.getElementById("darkToggle");
+  if(toggle){
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+  }
+
+  // 2. INTERACTIVE PILLAR INFO (The Feature You Asked For)
+  const list = document.getElementById("gi-left-pillar-list");
+  const titleBox = document.getElementById("gi-pillar-name");
+  const descBox = document.getElementById("gi-pillar-desc");
+
+  if(list && titleBox && descBox) {
+    list.addEventListener("click", (e) => {
+      // Zoek het dichtstbijzijnde LI element
+      const li = e.target.closest("li");
+      if(!li) return;
+
+      // Haal het pillar nummer op
+      const pIndex = li.getAttribute("data-p");
+      
+      // Zoek de info in PILLAR_META
+      const info = PILLAR_META[pIndex];
+
+      if(info) {
+        // Update de linker box
+        titleBox.innerText = info.name;
+        descBox.innerText = info.desc;
+        
+        // Optioneel: Voeg een visueel effect toe aan de tekst om te laten zien dat hij ververst is
+        descBox.style.opacity = 0;
+        setTimeout(() => descBox.style.opacity = 1, 100);
+      }
+    });
+  }
+
+});
 </script>
 
 </body>
