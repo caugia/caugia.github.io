@@ -73,18 +73,20 @@
     .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1.5; opacity: 0.15; }
     .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
 
-    /* Icon Overlay Styles */
+    /* --- HIER IS DE FIX VOOR DE WITTE ACHTERGRONDEN --- */
+    /* Floating Icons on Diamond - Nu transparant zonder kader */
     .grip-icon-pos {
         position: absolute;
-        width: 68px; height: 68px;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 14px;
+        width: 72px; height: 72px; /* Iets groter gemaakt nu het kader weg is */
+        background: transparent; /* WEG met de witte achtergrond */
+        border: none; /* WEG met de rand */
+        border-radius: 0;
+        padding: 0; /* WEG met de padding, icoon mag de ruimte vullen */
         display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        box-shadow: none; /* WEG met de schaduw van het doosje */
         z-index: 2;
     }
+    /* Zorgt dat het icoon de volledige ruimte van de container benut */
     .grip-icon-pos img { width: 100%; height: 100%; object-fit: contain; }
 
     /* Positions on the Diamond */
@@ -93,8 +95,7 @@
     .pos-bottom { bottom: 40px; left: 50%; transform: translateX(-50%); }
     .pos-left   { top: 50%; left: 40px; transform: translateY(-50%); }
 
-    /* --- DE KLEUR FIX VOOR RESOURCES --- */
-    /* Dit maakt het lichtblauwe plaatje donkerder zodat het matcht met de rest */
+    /* Kleur fix voor resources (nog steeds actief) */
     .fix-color {
         filter: brightness(0.5) contrast(1.2) saturate(1.2); 
     }
@@ -185,7 +186,8 @@
       
       .diamond-visual { height: 320px; }
       .grip-diamond-svg { width: 220px; height: 220px; }
-      .grip-icon-pos { width: 50px; height: 50px; padding: 8px; }
+      /* Aangepast voor mobiel: kleiner en geen padding */
+      .grip-icon-pos { width: 56px; height: 56px; padding: 0; }
       .pos-top { top: 30px; } .pos-right { right: 30px; } .pos-bottom { bottom: 30px; } .pos-left { left: 30px; }
 
       .grip-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -262,7 +264,7 @@
            </svg>
 
            <div class="grip-icon-pos pos-top">
-             <img src="assets/grip-guidance.jpg" alt="Guidance Icon">
+             <img src="assets/grip-guidance.png" alt="Guidance Icon">
            </div>
 
            <div class="grip-icon-pos pos-right">
@@ -270,7 +272,7 @@
            </div>
 
            <div class="grip-icon-pos pos-bottom">
-             <img src="assets/grip-implementation.jpg" alt="Implementation Icon">
+             <img src="assets/grip-implementation.png" alt="Implementation Icon">
            </div>
 
            <div class="grip-icon-pos pos-left">
@@ -290,7 +292,7 @@
         <div class="grip-grid">
           <div class="grip-card">
             <div class="grip-icon-box">
-                <img src="assets/grip-guidance.jpg" alt="Compass Icon">
+                <img src="assets/grip-guidance.png" alt="Compass Icon">
             </div>
             <h3>Guidance</h3>
             <span class="grip-question">Do teams know exactly what to do?</span>
@@ -308,7 +310,7 @@
 
           <div class="grip-card">
             <div class="grip-icon-box">
-                <img src="assets/grip-implementation.jpg" alt="Gears Icon">
+                <img src="assets/grip-implementation.png" alt="Gears Icon">
             </div>
             <h3>Implementation</h3>
             <span class="grip-question">Do teams execute the same way?</span>
