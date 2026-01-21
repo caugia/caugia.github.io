@@ -16,13 +16,11 @@
   <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-
-<link rel="apple-touch-icon" href="assets/logo-final.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-  
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+   
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -39,101 +37,41 @@
     }
   }
   </script>
-  
+   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
-  <style>
-    /* --- V3 CORE SYSTEM --- */
-    :root{
-      --primary:#0056b3;
-      --primary-dark:#004494;
-      --text-dark:#0f172a;
-      --text-body:#475569;
-      --bg:#f8fafc;
-      --white:#ffffff;
-      --line:#e2e8f0;
-      --radius-lg:16px;
-      --radius-md:12px;
-      --shadow-soft:0 10px 30px -5px rgba(0,0,0,0.06);
-      --max:1400px; 
+  <link rel="stylesheet" href="assets/caugia-base.css">
 
+  <style>
+    /* --- PAGE SPECIFIC STYLES (Diamond Simulator Only) --- */
+
+    :root {
       /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
       --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
-
-    *{ box-sizing:border-box; margin:0; padding:0; }
     
-    /* ONE SCREEN POLICY (Desktop) */
-    html, body { height: 100%; overflow: hidden; } 
+    /* ONE SCREEN POLICY (Desktop) - Overrides default scroll behavior */
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; } 
     
-    body{
-      font-family:Inter, sans-serif;
-      background:var(--bg);
-      color:var(--text-dark);
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-      display: flex; flex-direction: column;
-    }
+    /* HEADER (Specific override to ensure it doesn't shrink) */
+    header { height: 80px; flex-shrink: 0; z-index: 100; }
 
-    h1,h2,h3,h4{
-      font-family:Merriweather, serif;
-      color:var(--text-dark);
-      font-weight:900;
-      letter-spacing:-0.02em;
+    .btn-sm { 
+      padding: 10px 20px; border-radius: 999px; background: var(--primary); color: white; 
+      font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: background 0.2s ease; border: none; cursor: pointer; white-space: nowrap;
     }
-
-    /* HEADER */
-    header{
-      height: 80px; flex-shrink: 0; z-index: 100;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
-    }
-    .nav{ 
-      height:100%; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
-      gap:18px; 
-      max-width: var(--max); 
-      margin: 0 auto; 
-      padding: 0 24px; 
-      /* FIX: Prevent collapse */
-      min-height: 80px;
-    }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; text-decoration:none; color:var(--text-dark); }
-    .brand img{ 
-      width:32px; 
-      height:32px; 
-      display:block; 
-      /* FIX: Prevent distortion */
-      object-fit: contain;
-    }
-    .nav-links{ display:flex; gap:32px; align-items:center; list-style:none; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; text-decoration:none; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    
-    .btn-sm{ 
-      padding:10px 20px; border-radius:999px; background:var(--primary); color:white; 
-      font-size:0.85rem; font-weight:700; text-decoration:none; transition:background 0.2s ease; border: none; cursor: pointer; white-space: nowrap;
-    }
-    .btn-sm:hover{ background:var(--primary-dark); }
-
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); text-decoration: none; }
-    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
+    .btn-sm:hover { background: var(--primary-dark); }
 
     /* DASHBOARD WRAPPER */
     .dashboard-container {
       flex-grow: 1;
       width: 100%;
-      max-width: var(--max);
+      max-width: 1400px; /* Specific wider max-width for dashboard */
       margin: 0 auto;
       padding: 24px;
       display: grid;
@@ -148,15 +86,14 @@
       background: var(--white);
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow-sm);
       padding: 32px;
       display: flex; flex-direction: column;
       overflow-y: auto; 
     }
-    .eyebrow { 
-      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.7rem; color: var(--primary); font-weight: 800; margin-bottom: 12px;
-      background: #eff6ff; padding: 4px 10px; border-radius: 4px; align-self: flex-start;
+    /* Eyebrow override for smaller size */
+    .controls-panel .eyebrow { 
+      font-size: 0.7rem; padding: 4px 10px; align-self: flex-start; margin-bottom: 12px;
     }
     .panel-title h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.1; }
     .panel-title p { font-size: 0.9rem; color: var(--text-body); margin-bottom: 32px; }
@@ -165,8 +102,8 @@
     .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-dark); }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
 
-    input[type=range]{ width:100%; -webkit-appearance:none; height:4px; background:#e2e8f0; border-radius:10px; outline:none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; background:var(--primary); border-radius:50%; border:3px solid var(--white); box-shadow:0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+    input[type=range] { width: 100%; -webkit-appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
 
     .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
@@ -182,7 +119,7 @@
     /* 1. VISUAL CARD (Top Left) */
     .diamond-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft); padding: 20px;
+      box-shadow: var(--shadow-sm); padding: 20px;
       display: flex; align-items: center; justify-content: center;
       position: relative;
       grid-column: 1 / 2;
@@ -254,17 +191,16 @@
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
     .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    footer{ display: none; } /* Hidden on desktop for dashboard look */
+    footer { display: none; } /* Hidden on desktop for dashboard look */
 
     /* --- MOBILE RESPONSIVENESS (Scroll Mode) --- */
     @media (max-width: 1100px) {
-      html, body { height: auto; overflow: auto; }
-      .nav-links{ display:none; }
-      .menu-toggle{ display:inline-flex; }
+      html, body { height: auto; overflow: auto; display: block; } /* Reset layout */
       
       .dashboard-container { 
         display: flex; flex-direction: column; gap: 32px; 
         height: auto; min-height: auto; padding-bottom: 60px;
+        max-width: 100%; /* Reset width */
       }
       
       .controls-panel { height: auto; overflow: visible; }
@@ -278,7 +214,7 @@
       .health-card { order: 0; }
       .pattern-card, .summary-card { height: auto; min-height: auto; }
       
-      footer { display: block; background:var(--white); border-top:1px solid var(--line); padding:32px 0; text-align:center; color:#94a3b8; font-size:0.85rem; }
+      footer { display: block; background: var(--white); border-top: 1px solid var(--line); padding: 32px 0; text-align: center; color: #94a3b8; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -412,23 +348,15 @@
 
 <footer>
   <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
   </div>
 </footer>
 
+<script src="assets/caugia-base.js"></script>
+
 <script>
   (function() {
-    // Mobile Nav
-    const toggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-    if (toggle && mobileNav) {
-      toggle.addEventListener("click", () => {
-        const open = mobileNav.style.display === "block";
-        mobileNav.style.display = open ? "none" : "block";
-        toggle.innerText = open ? "Close" : "Menu";
-      });
-    }
-
+    
     function getStatus(val) {
       if (val < 50) return { label: "CRITICAL", class: "badge-bad" };
       if (val < 75) return { label: "DEVELOPING", class: "badge-warn" };
@@ -543,10 +471,6 @@
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
       
-      // Use Pattern BODY for Executive Summary if no specific Summary exists
-      // BUT for the 4-5 sentences you requested, we use static fallback initially
-      // When user interacts, we can either keep static or update. 
-      // Current logic: It updates to the specific pattern body to be dynamic.
       document.getElementById("execSummary").textContent = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift."; 
       
       box.className = "pattern-card " + arch.mode;
