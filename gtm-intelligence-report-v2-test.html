@@ -145,8 +145,11 @@
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          
           <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+          
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
+
           <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
         </div>
 
@@ -232,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // 3. ROBUSTE TEST SUBMIT (SCRAPES REAL-TIME DOM DATA)
+  // 3. ROBUSTE TEST SUBMIT (Nu met ECHTE VERZENDING NAAR MAKE)
   const testBtn = document.getElementById("gi-test-submit-btn");
   if(testBtn) {
     testBtn.addEventListener("click", function() {
@@ -263,15 +266,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if(hasData) {
             console.log("✅ LIVE DATA GEVONDEN:", collectedData);
-            alert("TEST GESLAAGD!\n\nIk heb de ingevulde velden uitgelezen.\nZie de Console (F12) voor het object dat verstuurd zou worden.");
+            
+            // --- HIER IS DE FIX: ECHT VERZENDEN NAAR MAKE ---
+            const WEBHOOK_URL = "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj";
+            
+            // We wrappen de data in 'answers' zodat Make structuur herkent
+            const payload = {
+                test_submit: true,
+                timestamp: new Date().toISOString(),
+                answers: collectedData
+            };
+
+            testBtn.innerText = "Sending...";
+            
+            fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if(response.ok) {
+                    alert("✅ SUCCES: Data verstuurd naar Make!\n\nGa nu naar Make.com en check of het scenario is getriggerd.");
+                } else {
+                    alert("❌ FOUT: Webhook reageerde met error " + response.status);
+                }
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                alert("❌ FOUT: Kon data niet versturen. Check console.");
+            })
+            .finally(() => {
+                testBtn.innerText = "TEST SUBMIT";
+            });
+
         } else {
-            // Fallback naar localStorage als er niets op het scherm is ingevuld (bv. net genavigeerd)
+            // Als er geen live data is, proberen we de cache (als fallback)
             const stored = localStorage.getItem("gi_progress");
             if(stored) {
                 console.log("✅ CACHED DATA GEVONDEN:", JSON.parse(stored));
-                alert("TEST GESLAAGD (Uit Cache)!\n\nGeen data op scherm, maar wel in geheugen gevonden.\nZie console.");
+                alert("Geen live data op scherm, maar data in cache gevonden. \n\nLET OP: Deze test knop stuurt nu ALLEEN wat je op dit scherm ziet. Vul de velden in en druk nogmaals op TEST SUBMIT.");
             } else {
-                alert("⚠️ LEGE SUBMIT\n\nVul eerst een veld in of selecteer een optie voordat je op submit klikt.");
+                alert("⚠️ LEGE SUBMIT\n\nVul eerst een veld in op dit scherm voordat je op submit klikt.");
             }
         }
     });
