@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
   <link rel="apple-touch-icon" href="assets/logo-final.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-   
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,7 +37,7 @@
     }
   }
   </script>
-   
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
@@ -48,23 +48,37 @@
     /* --- PAGE SPECIFIC STYLES (Diamond Simulator Only) --- */
 
     :root {
-      /* Status Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
       --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
-    
-    /* ONE SCREEN POLICY (Desktop) */
-    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; } 
-    
-    /* HEADER FIX: Ensure centering */
-    header { height: 80px; flex-shrink: 0; z-index: 100; }
-    .nav { max-width: 1400px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-    .btn-sm { 
-      padding: 10px 20px; border-radius: 999px; background: var(--primary); color: white; 
-      font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: background 0.2s ease; border: none; cursor: pointer; white-space: nowrap;
+    /* ONE SCREEN POLICY (Desktop) */
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* HEADER ALIGNMENT FIX (match other pages, no layout side effects) */
+    header { flex-shrink: 0; z-index: 100; }
+    header .nav { max-width: 1400px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* Ensure header height matches base */
+    header .nav { min-height: 72px; display: flex; align-items: center; }
+
+    .btn-sm {
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .btn-sm:hover { background: var(--primary-dark); }
 
@@ -72,13 +86,13 @@
     .dashboard-container {
       flex-grow: 1;
       width: 100%;
-      max-width: 1400px; 
+      max-width: 1400px;
       margin: 0 auto;
       padding: 24px;
       display: grid;
-      grid-template-columns: 320px 1fr; 
+      grid-template-columns: 320px 1fr;
       gap: 24px;
-      height: calc(100vh - 80px); 
+      height: calc(100vh - 72px);
       min-height: 600px;
     }
 
@@ -89,21 +103,49 @@
       border: 1px solid var(--line);
       box-shadow: var(--shadow-sm);
       padding: 32px;
-      display: flex; flex-direction: column;
-      overflow-y: auto; 
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
-    .controls-panel .eyebrow { 
-      font-size: 0.7rem; padding: 4px 10px; align-self: flex-start; margin-bottom: 12px;
+    .controls-panel .eyebrow {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      align-self: flex-start;
+      margin-bottom: 12px;
     }
     .panel-title h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.1; }
     .panel-title p { font-size: 0.9rem; color: var(--text-body); margin-bottom: 32px; }
 
     .control-group { margin-bottom: 24px; }
-    .control-label { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-dark); }
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
     .control-label .val { font-variant-numeric: tabular-nums; color: var(--primary); }
 
-    input[type=range] { width: 100%; -webkit-appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: background 0.2s ease; }
+    input[type=range] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      transition: background 0.2s ease;
+    }
 
     .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
@@ -111,30 +153,47 @@
     .visual-area {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
-      grid-template-rows: 1fr 240px; 
+      grid-template-rows: 1fr 240px;
       gap: 24px;
       height: 100%;
     }
 
     /* 1. VISUAL CARD */
     .diamond-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      box-shadow: var(--shadow-sm); padding: 20px;
-      display: flex; align-items: center; justify-content: center;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       grid-column: 1 / 2;
       grid-row: 1 / 2;
     }
     .diamond-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; }
     #gripDiamondSVG { width: 100%; max-width: 380px; overflow: visible; }
-    
+
     #gripDiamondSVG polygon, #gripDiamondSVG circle { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
     .diamond-label {
-      position: absolute; width: 32px; height: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50%;
-      color: var(--primary); font-family: Merriweather, serif; font-weight: 900; font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-      z-index: 10; pointer-events: none;
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 50%;
+      color: var(--primary);
+      font-family: Merriweather, serif;
+      font-weight: 900;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+      z-index: 10;
+      pointer-events: none;
     }
     .top { top: 20px; left: 50%; transform: translateX(-50%); }
     .right { top: 50%; right: 20px; transform: translateY(-50%); }
@@ -143,78 +202,115 @@
 
     /* 2. HEALTH CARD */
     .health-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
       padding: 24px;
       grid-column: 2 / 3;
       grid-row: 1 / 2;
-      display: flex; flex-direction: column; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .health-row {
-      display: grid; grid-template-columns: 1fr 50px 90px; gap: 12px; align-items: center;
-      padding: 16px 0; border-bottom: 1px solid #f1f5f9;
+      display: grid;
+      grid-template-columns: 1fr 50px 90px;
+      gap: 12px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #f1f5f9;
     }
     .health-row:last-child { border-bottom: none; }
     .h-label { font-weight: 700; color: var(--text-dark); font-size: 0.85rem; }
     .h-score { font-weight: 700; color: #64748b; font-size: 0.85rem; text-align: right; }
-    .status-badge { 
-      padding: 6px 0; border-radius: 6px; font-size: 0.65rem; font-weight: 800; 
-      text-transform: uppercase; letter-spacing: 0.05em; text-align: center; 
+    .status-badge {
+      padding: 6px 0;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
     }
     .badge-good { background: var(--good-bg); color: var(--good-text); border: 1px solid var(--good-border); }
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
-    .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
+    .badge-bad  { background: var(--bad-bg);  color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
     /* 3. PATTERN & SUMMARY */
     .pattern-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
-      padding: 24px; transition: all 0.3s ease;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      padding: 24px;
+      transition: all 0.3s ease;
       grid-column: 1 / 2;
       grid-row: 2 / 3;
-      display: flex; flex-direction: column; 
-      overflow-y: auto; 
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
     .mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
-    .mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
-    .mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
+    .mode-bad  { background: var(--bad-bg);  border-color: var(--bad-border); }
+    .mode-mid  { background: var(--mid-bg);  border-color: var(--mid-border); }
 
     .summary-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
       padding: 24px;
       grid-column: 2 / 3;
       grid-row: 2 / 3;
-      display: flex; flex-direction: column;
-      overflow-y: auto; 
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
 
-    .label-xs { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; opacity: 0.7; }
+    .label-xs {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
     .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    footer { display: none; } 
+    footer { display: none; }
 
     /* MOBILE RESPONSIVENESS */
     @media (max-width: 1100px) {
       html, body { height: auto; overflow: auto; display: block; }
-      
-      .dashboard-container { 
-        display: flex; flex-direction: column; gap: 32px; 
-        height: auto; min-height: auto; padding-bottom: 60px;
-        max-width: 100%; 
-      }
-      
-      .controls-panel { height: auto; overflow: visible; }
-      
-      .visual-area { 
-        display: flex; flex-direction: column; 
+
+      .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
         height: auto;
+        min-height: auto;
+        padding-bottom: 60px;
+        max-width: 100%;
       }
-      
+
+      .controls-panel { height: auto; overflow: visible; }
+
+      .visual-area { display: flex; flex-direction: column; height: auto; }
+
       .diamond-card { min-height: 360px; order: -1; }
       .health-card { order: 0; }
       .pattern-card, .summary-card { height: auto; min-height: auto; }
-      
-      footer { display: block; background: var(--white); border-top: 1px solid var(--line); padding: 32px 0; text-align: center; color: #94a3b8; font-size: 0.85rem; }
+
+      footer {
+        display: block;
+        background: var(--white);
+        border-top: 1px solid var(--line);
+        padding: 32px 0;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -235,11 +331,11 @@
       <li><a href="resources.html" class="active">Resources</a></li>
     </ul>
     <div class="nav-actions">
-        <a href="contact.html" class="btn btn-primary">Contact</a>
-        <button class="menu-toggle" id="menuToggle">Menu</button>
+      <a href="contact.html" class="btn btn-primary">Contact</a>
+      <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
-  
+
   <div class="container mobile-nav" id="mobileNav">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -251,7 +347,7 @@
 </header>
 
 <main class="dashboard-container">
-  
+
   <aside class="controls-panel">
     <div class="panel-title">
       <span class="eyebrow">Interactive Model</span>
@@ -286,16 +382,16 @@
   </aside>
 
   <div class="visual-area">
-    
+
     <div class="diamond-card">
       <div class="diamond-wrapper">
         <svg id="gripDiamondSVG" viewBox="0 0 260 260">
-           <defs>
-             <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-               <stop offset="0%" style="stop-color:#0056b3; stop-opacity:0.3" />
-               <stop offset="100%" style="stop-color:#0056b3; stop-opacity:0.05" />
-             </linearGradient>
-           </defs>
+          <defs>
+            <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#0056b3; stop-opacity:0.3" />
+              <stop offset="100%" style="stop-color:#0056b3; stop-opacity:0.05" />
+            </linearGradient>
+          </defs>
         </svg>
         <div class="diamond-label top">G</div>
         <div class="diamond-label right">R</div>
@@ -305,27 +401,28 @@
     </div>
 
     <div class="health-card">
-       <h2 style="font-size:0.9rem; margin-bottom:16px; color:var(--text-body); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">System Health</h2>
-       <div class="health-row">
-         <span class="h-label">Guidance</span>
-         <span class="h-score" id="score-g">45</span>
-         <span class="status-badge badge-bad" id="badge-g">CRITICAL</span>
-       </div>
-       <div class="health-row">
-         <span class="h-label">Resources</span>
-         <span class="h-score" id="score-r">48</span>
-         <span class="status-badge badge-bad" id="badge-r">CRITICAL</span>
-       </div>
-       <div class="health-row">
-         <span class="h-label">Implementation</span>
-         <span class="h-score" id="score-i">85</span>
-         <span class="status-badge badge-good" id="badge-i">STRONG</span>
-       </div>
-       <div class="health-row">
-         <span class="h-label">Performance</span>
-         <span class="h-score" id="score-p">43</span>
-         <span class="status-badge badge-bad" id="badge-p">CRITICAL</span>
-       </div>
+      <h2 style="font-size:0.9rem; margin-bottom:16px; color:var(--text-body); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">System Health</h2>
+
+      <div class="health-row">
+        <span class="h-label">Guidance</span>
+        <span class="h-score" id="score-g">45</span>
+        <span class="status-badge badge-bad" id="badge-g">CRITICAL</span>
+      </div>
+      <div class="health-row">
+        <span class="h-label">Resources</span>
+        <span class="h-score" id="score-r">48</span>
+        <span class="status-badge badge-bad" id="badge-r">CRITICAL</span>
+      </div>
+      <div class="health-row">
+        <span class="h-label">Implementation</span>
+        <span class="h-score" id="score-i">85</span>
+        <span class="status-badge badge-good" id="badge-i">STRONG</span>
+      </div>
+      <div class="health-row">
+        <span class="h-label">Performance</span>
+        <span class="h-score" id="score-p">43</span>
+        <span class="status-badge badge-bad" id="badge-p">CRITICAL</span>
+      </div>
     </div>
 
     <div class="pattern-card mode-warn" id="archetypeBox">
@@ -357,14 +454,13 @@
 
 <script>
   (function() {
-    
+
     function getStatus(val) {
       if (val < 50) return { label: "CRITICAL", class: "badge-bad" };
       if (val < 75) return { label: "DEVELOPING", class: "badge-warn" };
       return { label: "STRONG", class: "badge-good" };
     }
 
-    // --- OFFICIAL ARCHETYPE LOGIC ---
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
@@ -373,60 +469,57 @@
       const highest = scores[3];
       const secondLowest = scores[1];
 
-      // 1. SYSTEMIC STATES (Extremes)
       if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
       if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
       if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
       if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
 
-      // 2. CONSTRAINT LOGIC
       if (lowest.k === 'g') {
-         if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn" };
-         if (highest.k === 'r' && highest.v > 65) return { title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn" };
-         if (secondLowest.k === 'p') return { title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad" };
-         return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
+        if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn" };
+        if (highest.k === 'r' && highest.v > 65) return { title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn" };
+        if (secondLowest.k === 'p') return { title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad" };
+        return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
       }
       if (lowest.k === 'r') {
-         if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn" };
-         if (highest.k === 'i' && highest.v > 70) return { title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad" };
-         if (secondLowest.k === 'p') return { title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad" };
-         return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
+        if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn" };
+        if (highest.k === 'i' && highest.v > 70) return { title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad" };
+        if (secondLowest.k === 'p') return { title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad" };
+        return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
       }
       if (lowest.k === 'i') {
-         if (highest.k === 'g' && highest.v > 70) return { title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad" };
-         if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn" };
-         if (secondLowest.k === 'r') return { title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad" };
-         return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
+        if (highest.k === 'g' && highest.v > 70) return { title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad" };
+        if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn" };
+        if (secondLowest.k === 'r') return { title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad" };
+        return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
       }
       if (lowest.k === 'p') {
-         if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
-         if (highest.k === 'g' && highest.v > 70) return { title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn" };
-         if (highest.k === 'r' && highest.v > 70) return { title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad" };
-         return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
+        if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
+        if (highest.k === 'g' && highest.v > 70) return { title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn" };
+        if (highest.k === 'r' && highest.v > 70) return { title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad" };
+        return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
       }
       return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
     }
 
-    // DRAW DIAMOND
     function drawDiamond(g, r, i, p) {
       const svg = document.getElementById("gripDiamondSVG");
       const cx = 130; const cy = 130; const maxR = 90;
 
       function getPt(val, pos) {
-        const r = (val / 100) * maxR;
-        if(pos === 'top') return { x: cx, y: cy - r };
-        if(pos === 'right') return { x: cx + r, y: cy };
-        if(pos === 'bottom') return { x: cx, y: cy + r };
-        if(pos === 'left') return { x: cx - r, y: cy };
+        const rr = (val / 100) * maxR;
+        if (pos === 'top') return { x: cx, y: cy - rr };
+        if (pos === 'right') return { x: cx + rr, y: cy };
+        if (pos === 'bottom') return { x: cx, y: cy + rr };
+        return { x: cx - rr, y: cy };
       }
-      
+
       let grid = "";
       [33, 66, 100].forEach(v => {
-         const p1 = getPt(v, 'top');
-         const p2 = getPt(v, 'right');
-         const p3 = getPt(v, 'bottom');
-         const p4 = getPt(v, 'left');
-         grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
+        const p1 = getPt(v, 'top');
+        const p2 = getPt(v, 'right');
+        const p3 = getPt(v, 'bottom');
+        const p4 = getPt(v, 'left');
+        grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
       });
 
       const axes = `
@@ -438,7 +531,7 @@
       const R = getPt(r, 'right');
       const I = getPt(i, 'bottom');
       const P = getPt(p, 'left');
-      
+
       const shape = `<polygon points="${G.x},${G.y} ${R.x},${R.y} ${I.x},${I.y} ${P.x},${P.y}" fill="url(#diamondGradient)" stroke="#0056b3" stroke-width="2.5" stroke-linejoin="round" />`;
       const dots = [G, R, I, P].map(pt => `<circle cx="${pt.x}" cy="${pt.y}" r="5" fill="#fff" stroke="#0056b3" stroke-width="2.5" />`).join("");
 
@@ -447,10 +540,10 @@
     }
 
     function update() {
-      const g = parseInt(document.getElementById("input-g").value);
-      const r = parseInt(document.getElementById("input-r").value);
-      const i = parseInt(document.getElementById("input-i").value);
-      const p = parseInt(document.getElementById("input-p").value);
+      const g = parseInt(document.getElementById("input-g").value, 10);
+      const r = parseInt(document.getElementById("input-r").value, 10);
+      const i = parseInt(document.getElementById("input-i").value, 10);
+      const p = parseInt(document.getElementById("input-p").value, 10);
 
       document.getElementById("val-g").textContent = g;
       document.getElementById("val-r").textContent = r;
@@ -458,22 +551,28 @@
       document.getElementById("val-p").textContent = p;
 
       function setHealth(key, val) {
-        const b = document.getElementById("badge-"+key);
-        const v = document.getElementById("score-"+key);
+        const b = document.getElementById("badge-" + key);
+        const v = document.getElementById("score-" + key);
         const s = getStatus(val);
         b.className = "status-badge " + s.class;
         b.textContent = s.label;
         v.textContent = val + "/100";
       }
-      setHealth("g", g); setHealth("r", r); setHealth("i", i); setHealth("p", p);
+
+      setHealth("g", g);
+      setHealth("r", r);
+      setHealth("i", i);
+      setHealth("p", p);
 
       const arch = getArchetype(g, r, i, p);
       const box = document.getElementById("archetypeBox");
+
       document.getElementById("archetypeTitle").textContent = arch.title;
       document.getElementById("archetypeBody").textContent = arch.body;
-      
-      document.getElementById("execSummary").textContent = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift."; 
-      
+
+      document.getElementById("execSummary").textContent =
+        arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift.";
+
       box.className = "pattern-card " + arch.mode;
 
       drawDiamond(g, r, i, p);
