@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
   <link rel="apple-touch-icon" href="assets/logo-final.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-  
+   
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,127 +37,19 @@
     }
   }
   </script>
-  
+   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="assets/caugia-base.css">
+
   <style>
-    /* --- V3 CORE SYSTEM --- */
-    :root{
-      --primary:#0056b3;
-      --primary-dark:#004494;
-      --text-dark:#0f172a;
-      --text-body:#475569;
-      --bg:#f8fafc;
-      --white:#ffffff;
-      --line:#e2e8f0;
-      --radius-md:14px;
-      --radius-lg:22px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 40px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.01);
-      --max:1200px;
-    }
-
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: scroll; }
-    
-    body{
-      font-family:Inter, sans-serif;
-      background:var(--bg);
-      color:var(--text-dark);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    h1,h2,h3,h4{
-      font-family:Merriweather, serif;
-      color:var(--text-dark);
-      font-weight:900;
-      letter-spacing:-0.02em;
-    }
-
-    p{ color:var(--text-body); margin-bottom: 1.5rem;}
-    a{ color:inherit; text-decoration:none; }
-    ul{ list-style:none; }
-
-    .container{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 24px;
-    }
-
-    section{ padding:80px 0; }
-
-    /* BUTTONS */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 32px; 
-      border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; 
-      transition:background 0.2s ease, border-color 0.2s ease; 
-      white-space:nowrap;
-    }
-    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; } 
-
-    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
-    
-    .btn-secondary{
-      background:transparent; color:var(--text-body); border:1px solid var(--line); 
-      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s;
-    }
-    .btn-secondary:hover{ background:var(--white); color:var(--text-dark); }
-    .btn-secondary:disabled{ opacity:0.5; cursor:not-allowed; }
-
-    /* HEADER */
-    header{
-      position:sticky; top:0; z-index:1000;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
-    }
-    .nav{ 
-      height:80px; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
-      gap:18px; 
-      /* FIX: Prevent collapse */
-      min-height: 80px;
-    }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ 
-      width:32px; 
-      height:32px; 
-      display:block; 
-      /* FIX: Prevent distortion */
-      object-fit: contain;
-    }
-    .nav-links{ display:flex; gap:32px; align-items:center; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    
-    .nav-actions { display: flex; gap: 12px; align-items: center; }
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    
-    /* Mobile Nav Overlay */
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
-    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
-
-    /* --- PAGE SPECIFIC STYLES --- */
+    /* --- PAGE SPECIFIC STYLES (Assessment Only) --- */
 
     /* Hero */
     .assessment-hero { padding: 80px 0 40px; text-align: center; max-width: 760px; margin: 0 auto; }
     
-    .eyebrow { 
-      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
-      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
-    }
-
     .assessment-hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
     .assessment-hero p { font-size: 1.15rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
 
@@ -253,52 +145,19 @@
     /* FAQ SECTION */
     .faq-section { max-width: 800px; margin: 80px auto; }
     .faq-section h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; }
-    details { border-bottom: 1px solid var(--line); padding: 24px 0; }
-    summary {
-      font-weight: 700; font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--text-dark);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: "+"; font-weight: 400; font-size: 1.5rem; color: var(--primary); }
-    details[open] summary::after { content: "−"; }
-    details p { margin-top: 16px; font-size: 1rem; color: var(--text-body); max-width: 90%; line-height: 1.6; }
-
-    /* FOOTER */
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
-
-    /* MOBILE OPTIMIZATIONS */
+    
+    /* MOBILE OPTIMIZATIONS (Page Specific) */
     @media (max-width: 768px) {
-      /* 1. Header Cleanup */
-      .nav-links{ display:none; }
-      .menu-toggle{ display:inline-flex; font-size: 0.85rem; padding: 8px 16px; }
-      .nav-actions .btn { display: none !important; }
-      
-      .mobile-nav { 
-        position: absolute; top: 80px; left: 0; right: 0;
-        background: var(--white); border-bottom: 1px solid var(--line);
-        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
-        padding: 10px 20px 30px !important; z-index: 999;
-        display: none; 
-      }
-      .mobile-nav.active { display: block; }
-      
-      /* Only show contact link */
-      .mobile-cta { padding: 24px 0 0 !important; }
-      .mobile-cta .btn { display: none !important; } 
-
-      /* 2. Hero & Layout */
       .assessment-hero { 
           padding-top: 30px; 
           padding-bottom: 30px;
           text-align: center;
-          /* MATCHING ABOUT/INDEX MARGINS */
           padding-left: 36px !important; 
           padding-right: 36px !important; 
       }
       .assessment-hero h1 { font-size: 2rem; letter-spacing: -0.03em; margin-bottom: 16px;}
       .assessment-hero p { font-size: 1.05rem; padding: 0; }
 
-      /* 3. Card */
       .assessment-card { 
           padding: 32px 24px;
           margin-bottom: 40px; 
@@ -306,17 +165,13 @@
       }
       .gtm-question-label { font-size: 1.25rem; }
       
-      /* 4. Options - Cleaned up */
       .gtm-option { padding: 14px; gap: 12px; }
       
-      /* TEXT SWAP LOGIC */
       .d-text { display: none; }
       .m-text { display: inline; }
 
-      /* 5. Inputs */
       .two-cols { grid-template-columns: 1fr; gap: 0; }
       
-      /* 6. Footer steps */
       .steps-grid { grid-template-columns: 1fr; gap: 32px; }
       .step-item { text-align: center; }
     }
@@ -650,56 +505,13 @@
 
 <footer>
   <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
   </div>
 </footer>
 
+<script src="assets/caugia-base.js"></script>
+
 <script>
-  // DYNAMIC CURRENCY LOGIC
-  (function() {
-    // 1. Define Euro countries
-    const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
-
-    // 2. Helper to set currency
-    function setCurrency(symbol) {
-      document.querySelectorAll('.curr').forEach(el => el.textContent = symbol);
-    }
-
-    // 3. API Check via GeoJS (Better reliability)
-    fetch('https://get.geojs.io/v1/ip/country.json')
-      .then(res => res.json())
-      .then(data => {
-        // Force 2-letter code from data.country
-        const country = data.country; 
-
-        if (country === 'GB') {
-          setCurrency('£'); 
-        } else if (euroCountries.includes(country)) {
-          setCurrency('€'); 
-        } else {
-          setCurrency('$'); 
-        }
-      })
-      .catch(err => {
-        // Fallback is already $ in HTML
-        console.log('Currency check failed, keeping default ($)');
-      });
-  })();
-
-  // Mobile Nav Logic
-  (function () {
-    const toggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-    if (!toggle || !mobileNav) return;
-
-    toggle.addEventListener("click", () => {
-      mobileNav.classList.toggle("active");
-      const isOpen = mobileNav.classList.contains("active");
-      toggle.innerText = isOpen ? "Close" : "Menu";
-      document.body.style.overflow = isOpen ? "hidden" : "auto";
-    });
-  })();
-
   const GTM_TOTAL_STEPS = 14;
   const GTM_SCORE_MAP = { A: 0, B: 2, C: 5, D: 7, E: 10 };
 
