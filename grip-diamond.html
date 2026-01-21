@@ -55,11 +55,12 @@
       --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
     
-    /* ONE SCREEN POLICY (Desktop) - Overrides default scroll behavior */
+    /* ONE SCREEN POLICY (Desktop) */
     html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; } 
     
-    /* HEADER (Specific override to ensure it doesn't shrink) */
+    /* HEADER FIX: Ensure centering */
     header { height: 80px; flex-shrink: 0; z-index: 100; }
+    .nav { max-width: 1400px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
     .btn-sm { 
       padding: 10px 20px; border-radius: 999px; background: var(--primary); color: white; 
@@ -71,11 +72,11 @@
     .dashboard-container {
       flex-grow: 1;
       width: 100%;
-      max-width: 1400px; /* Specific wider max-width for dashboard */
+      max-width: 1400px; 
       margin: 0 auto;
       padding: 24px;
       display: grid;
-      grid-template-columns: 320px 1fr; /* Controls | Visuals */
+      grid-template-columns: 320px 1fr; 
       gap: 24px;
       height: calc(100vh - 80px); 
       min-height: 600px;
@@ -91,7 +92,6 @@
       display: flex; flex-direction: column;
       overflow-y: auto; 
     }
-    /* Eyebrow override for smaller size */
     .controls-panel .eyebrow { 
       font-size: 0.7rem; padding: 4px 10px; align-self: flex-start; margin-bottom: 12px;
     }
@@ -110,13 +110,13 @@
     /* RIGHT CONTENT GRID */
     .visual-area {
       display: grid;
-      grid-template-columns: 1.5fr 1fr; /* Visual | Health */
-      grid-template-rows: 1fr 240px; /* Visuals take available space | Bottom fixed height */
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-rows: 1fr 240px; 
       gap: 24px;
       height: 100%;
     }
 
-    /* 1. VISUAL CARD (Top Left) */
+    /* 1. VISUAL CARD */
     .diamond-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
       box-shadow: var(--shadow-sm); padding: 20px;
@@ -141,7 +141,7 @@
     .bottom { bottom: 20px; left: 50%; transform: translateX(-50%); }
     .left { top: 50%; left: 20px; transform: translateY(-50%); }
 
-    /* 2. HEALTH CARD (Top Right) */
+    /* 2. HEALTH CARD */
     .health-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
       padding: 24px;
@@ -164,7 +164,7 @@
     .badge-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
     .badge-bad  { background: var(--bad-bg); color: var(--bad-text);  border: 1px solid var(--bad-border); }
 
-    /* 3. PATTERN & SUMMARY (Bottom Row - Fixed Height) */
+    /* 3. PATTERN & SUMMARY */
     .pattern-card {
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line);
       padding: 24px; transition: all 0.3s ease;
@@ -191,16 +191,16 @@
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
     .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    footer { display: none; } /* Hidden on desktop for dashboard look */
+    footer { display: none; } 
 
-    /* --- MOBILE RESPONSIVENESS (Scroll Mode) --- */
+    /* MOBILE RESPONSIVENESS */
     @media (max-width: 1100px) {
-      html, body { height: auto; overflow: auto; display: block; } /* Reset layout */
+      html, body { height: auto; overflow: auto; display: block; }
       
       .dashboard-container { 
         display: flex; flex-direction: column; gap: 32px; 
         height: auto; min-height: auto; padding-bottom: 60px;
-        max-width: 100%; /* Reset width */
+        max-width: 100%; 
       }
       
       .controls-panel { height: auto; overflow: visible; }
@@ -222,7 +222,7 @@
 <body>
 
 <header>
-  <div class="nav">
+  <div class="container nav">
     <a class="brand" href="index.html">
       <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
       <span>CAUGIA CONSULTING</span>
@@ -234,7 +234,8 @@
       <li><a href="gtm-assessment.html">GTM Score</a></li>
       <li><a href="resources.html" class="active">Resources</a></li>
     </ul>
-    <div style="display:flex; gap:12px; align-items:center;">
+    <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
