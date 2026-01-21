@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
   <link rel="apple-touch-icon" href="assets/logo-final.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-   
+    
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,7 +40,7 @@
     "description": "Tom Meijer is a Revenue Architect specialized in designing GTM systems for hyper-growth B2B SaaS companies."
   }
   </script>
-   
+    
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
@@ -73,32 +73,36 @@
     .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1.5; opacity: 0.15; }
     .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
 
-    /* --- HIER IS DE FIX VOOR DE WITTE ACHTERGRONDEN --- */
-    /* Floating Icons on Diamond - Nu transparant zonder kader */
+    /* Floating Icons Container */
     .grip-icon-pos {
         position: absolute;
-        width: 72px; height: 72px; /* Iets groter gemaakt nu het kader weg is */
-        background: transparent; /* WEG met de witte achtergrond */
-        border: none; /* WEG met de rand */
+        width: 72px; height: 72px;
+        background: transparent;
+        border: none;
         border-radius: 0;
-        padding: 0; /* WEG met de padding, icoon mag de ruimte vullen */
+        padding: 0;
         display: flex; align-items: center; justify-content: center;
-        box-shadow: none; /* WEG met de schaduw van het doosje */
+        box-shadow: none;
         z-index: 2;
     }
-    /* Zorgt dat het icoon de volledige ruimte van de container benut */
-    .grip-icon-pos img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* NIEUW: Stijlen voor de inline SVG's in de diamant */
+    .grip-icon-pos svg {
+        width: 100%;
+        height: 100%;
+        /* Zorgt dat de iconen de primaire merkkleur krijgen */
+        stroke: var(--primary);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
 
     /* Positions on the Diamond */
     .pos-top    { top: 40px; left: 50%; transform: translateX(-50%); }
     .pos-right  { top: 50%; right: 40px; transform: translateY(-50%); }
     .pos-bottom { bottom: 40px; left: 50%; transform: translateX(-50%); }
     .pos-left   { top: 50%; left: 40px; transform: translateY(-50%); }
-
-    /* Kleur fix voor resources (nog steeds actief) */
-    .fix-color {
-        filter: brightness(0.5) contrast(1.2) saturate(1.2); 
-    }
 
     /* GRIP Framework Section */
     .section-grip { background: #f8fafc; padding: 100px 0; }
@@ -256,27 +260,39 @@
         
         <div class="diamond-visual">
            <svg class="grip-diamond-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(100,100) rotate(45) translate(-100,-100)">
-                <line class="grip-lines" x1="100" y1="20" x2="100" y2="180" />
-                <line class="grip-lines" x1="20" y1="100" x2="180" y2="100" />
-                <rect class="grip-border" x="20" y="20" width="160" height="160" rx="4" />
-              </g>
+             <g transform="translate(100,100) rotate(45) translate(-100,-100)">
+               <line class="grip-lines" x1="100" y1="20" x2="100" y2="180" />
+               <line class="grip-lines" x1="20" y1="100" x2="180" y2="100" />
+               <rect class="grip-border" x="20" y="20" width="160" height="160" rx="4" />
+             </g>
            </svg>
 
            <div class="grip-icon-pos pos-top">
-             <img src="assets/grip-guidance.png" alt="Guidance Icon">
+             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="12" cy="12" r="10"></circle>
+               <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+             </svg>
            </div>
 
            <div class="grip-icon-pos pos-right">
-             <img src="assets/grip-resources.png" alt="Resources Icon" class="fix-color">
+             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+             </svg>
            </div>
 
            <div class="grip-icon-pos pos-bottom">
-             <img src="assets/grip-implementation.png" alt="Implementation Icon">
+             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="12" cy="12" r="3"></circle>
+               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+             </svg>
            </div>
 
            <div class="grip-icon-pos pos-left">
-             <img src="assets/grip-performance.png" alt="Performance Icon">
+             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+             </svg>
            </div>
         </div>
       </div>
