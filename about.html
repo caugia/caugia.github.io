@@ -61,23 +61,40 @@
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
     .mission-content p { font-size: 1.05rem; }
     
-    /* Diamond Visual (SVG Placeholder style, replaced in GRIP section below) */
+    /* Diamond Visual (Updated for Icons) */
     .diamond-visual {
       background: #f8fafc;
       border-radius: 24px; height: 380px; border: 1px solid var(--line);
       display: flex; align-items: center; justify-content: center;
+      position: relative; /* Essential for absolute icon positioning */
       box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
     }
     
-    .grip-diamond-svg { width: 220px; height: 220px; }
+    .grip-diamond-svg { width: 260px; height: 260px; }
     .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1.5; opacity: 0.15; }
     .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
-    .grip-text {
-      fill: var(--primary); font-family: 'Inter', sans-serif; font-weight: 900; font-size: 32px;
-      text-anchor: middle; dominant-baseline: middle;
-    }
 
-    /* GRIP Framework Section (Updated for Icons) */
+    /* Floating Icons on Diamond */
+    .grip-icon-pos {
+        position: absolute;
+        width: 64px; height: 64px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 12px;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        z-index: 2;
+    }
+    .grip-icon-pos img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* Positions */
+    .pos-top    { top: 40px; left: 50%; transform: translateX(-50%); }
+    .pos-right  { top: 50%; right: 40px; transform: translateY(-50%); }
+    .pos-bottom { bottom: 40px; left: 50%; transform: translateX(-50%); }
+    .pos-left   { top: 50%; left: 40px; transform: translateY(-50%); }
+
+    /* GRIP Framework Section */
     .section-grip { background: #f8fafc; padding: 100px 0; }
     .grip-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
     .grip-intro h2 { font-size: 2.2rem; margin-bottom: 16px; }
@@ -89,17 +106,17 @@
       border: 1px solid var(--line); box-shadow: var(--shadow-sm);
       transition: transform 0.2s, box-shadow 0.2s;
       text-align: center; height: 100%; display: flex; flex-direction: column;
-      align-items: center; /* Center items */
+      align-items: center; 
     }
     .grip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: #bfdbfe; }
     
-    /* Icon Container instead of Letter */
+    /* Icon Container in Cards */
     .grip-icon-box { 
       width: 72px; height: 72px; 
       background: #eff6ff; border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px;
-      padding: 14px; /* Space for icon inside */
+      padding: 14px; 
     }
     .grip-icon-box img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -169,7 +186,12 @@
 
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
       .mission-content h2 { font-size: 1.75rem; }
-      .diamond-visual { height: 280px; }
+      
+      /* Visual Adjustment Mobile */
+      .diamond-visual { height: 320px; }
+      .grip-diamond-svg { width: 220px; height: 220px; }
+      .grip-icon-pos { width: 50px; height: 50px; padding: 8px; }
+      .pos-top { top: 30px; } .pos-right { right: 30px; } .pos-bottom { bottom: 30px; } .pos-left { left: 30px; }
 
       /* GRIP Cards */
       .grip-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -245,11 +267,20 @@
                 <line class="grip-lines" x1="20" y1="100" x2="180" y2="100" />
                 <rect class="grip-border" x="20" y="20" width="160" height="160" rx="4" />
               </g>
-              <text class="grip-text" x="100" y="55">G</text> 
-              <text class="grip-text" x="145" y="100">R</text> 
-              <text class="grip-text" x="100" y="145">I</text> 
-              <text class="grip-text" x="55" y="100">P</text> 
            </svg>
+
+           <div class="grip-icon-pos pos-top">
+             <img src="assets/grip-guidance.jpg" alt="Guidance">
+           </div>
+           <div class="grip-icon-pos pos-right">
+             <img src="assets/grip-resources.png" alt="Resources">
+           </div>
+           <div class="grip-icon-pos pos-bottom">
+             <img src="assets/grip-implementation.jpg" alt="Implementation">
+           </div>
+           <div class="grip-icon-pos pos-left">
+             <img src="assets/grip-performance.png" alt="Performance">
+           </div>
         </div>
       </div>
     </section>
@@ -264,7 +295,7 @@
         <div class="grip-grid">
           <div class="grip-card">
             <div class="grip-icon-box">
-                <img src="assets/grip-guidance.png" alt="Compass Icon">
+                <img src="assets/grip-guidance.jpg" alt="Compass Icon">
             </div>
             <h3>Guidance</h3>
             <span class="grip-question">Do teams know exactly what to do?</span>
@@ -282,7 +313,7 @@
 
           <div class="grip-card">
             <div class="grip-icon-box">
-                <img src="assets/grip-implementation.png" alt="Gears Icon">
+                <img src="assets/grip-implementation.jpg" alt="Gears Icon">
             </div>
             <h3>Implementation</h3>
             <span class="grip-question">Do teams execute the same way?</span>
