@@ -6,55 +6,123 @@
 
   <title>The GTM Intelligence Report | Caugia Consulting</title>
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
 
-<link rel="apple-touch-icon" href="assets/logo-final.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
-  <!-- Security -->
   <script src="/auth.js"></script>
+
+  <style>
+    /* --- FIXES & UPDATES --- */
+    
+    /* 1. Layout Lock (Keep it on the fold) */
+    body { overflow-y: hidden; height: 100vh; display: flex; flex-direction: column; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; }
+    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
+    
+    /* 2. Utility Buttons (Save/Jump) - Modern Look */
+    .gi-utility-row {
+      position: absolute; top: 20px; right: 20px;
+      display: flex; gap: 8px;
+    }
+    .gi-utility-btn {
+      background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
+
+    /* 3. Pillar 0 Contrast Fix */
+    .gi-pillar-nav li.active {
+      background-color: #0056b3 !important; /* Force Caugia Blue */
+      color: #ffffff !important; /* Force White Text */
+      font-weight: 700;
+    }
+    .gi-pillar-nav li { color: #475569; } /* Default text color */
+
+    /* 4. Input Spacing Fixes */
+    .gi-group-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; /* Meer ruimte */
+      margin-top: 16px; margin-bottom: 24px;
+    }
+    .gi-group-grid label {
+      display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b;
+    }
+    .gi-input, .gi-textarea {
+      width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff;
+    }
+    .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
+
+    /* 5. Radio Cards Spacing */
+    .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .gi-option-card {
+      display: flex; align-items: center; padding: 16px;
+      border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
+    }
+    .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
+    .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
+
+    /* 6. Question Card Layout */
+    .gi-question-card {
+      position: relative; /* For utility buttons positioning */
+      height: 100%; display: flex; flex-direction: column;
+      padding: 40px; overflow-y: auto;
+    }
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } /* Space for nav */
+    
+    /* 7. Bottom Nav Bar */
+    .gi-nav-row {
+      position: sticky; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid #e2e8f0;
+      padding: 20px 40px; margin: 0 -40px -40px -40px; /* Stretch to edges */
+      display: flex; gap: 12px; align-items: center;
+    }
+
+    /* Test Button Style */
+    #gi-test-submit-btn {
+      background: #dc2626; color: white; border: none; margin-left: auto;
+    }
+
+    /* Mobile Reset */
+    @media (max-width: 1000px) {
+      body { overflow-y: auto; height: auto; }
+      .gi-shell { display: flex; flex-direction: column; }
+      .gi-left-info, .gi-right-pillars { display: none; }
+      .gi-question-card { height: auto; overflow: visible; }
+    }
+  </style>
 </head>
 
 <body>
 
 <header class="gi-header">
   <div class="gi-header-inner">
-
     <div class="gi-header-left">
-      <img src="assets/logo-final.png" class="gi-logo" alt="Caugia logo">
+      <img src="assets/logo-final.png" class="gi-logo" alt="Caugia logo" width="32" height="32">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
-
     <div class="gi-header-right">
       <button id="darkToggle" class="gi-dark-toggle">Dark</button>
       <a href="contact.html" class="gi-contact-link">Contact</a>
     </div>
-
   </div>
 </header>
-
 
 <main class="gi-main">
   <div class="gi-shell">
 
-    <!-- LEFT INFO PANEL -->
     <aside class="gi-left-info">
-
       <div class="gi-info-title">Premium GTM Assessment</div>
-
       <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
-
       <p class="gi-info-desc">
         A structured, 12-pillar diagnostic that evaluates your entire
         go-to-market system and reveals strengths, risks and hidden
         dependencies across the full revenue engine.
       </p>
-
       <div class="gi-info-meta">12 pillars • 265 questions • ~45 minutes</div>
 
       <div class="gi-progress-box">
@@ -73,17 +141,18 @@
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
           Context provides the foundation for interpreting the rest of the assessment.
-          By capturing essential details about your company, the system adjusts
-          recommendations, highlights risks and identifies the right priorities.
         </p>
       </div>
-
     </aside>
 
-
-    <!-- CENTER ENGINE -->
     <section class="gi-center">
       <div class="gi-question-card" id="gi-question-card">
+
+        <div class="gi-utility-row">
+          <button class="gi-utility-btn" id="gi-save-btn">Save Progress</button>
+          <button class="gi-utility-btn" id="gi-jump-first">First Unanswered</button>
+          <button class="gi-utility-btn" id="gi-jump-last">Last Answered</button>
+        </div>
 
         <div class="gi-question-header">
           <div class="gi-question-kicker" id="gi-question-kicker">Context</div>
@@ -91,32 +160,25 @@
           <p class="gi-question-sub" id="gi-question-sub"></p>
         </div>
 
-        <div class="gi-question-body" id="gi-question-body"></div>
+        <div class="gi-question-body" id="gi-question-body">
+          </div>
 
-        <!-- ⭐ UTILITY BUTTONS (TOP RIGHT INSIDE CARD) -->
-        <div class="gi-utility-row">
-          <button class="gi-utility-btn" id="gi-save-btn">Save</button>
-          <button class="gi-utility-btn" id="gi-jump-first">First unanswered</button>
-          <button class="gi-utility-btn" id="gi-jump-last">Last answered</button>
-        </div>
-
-        <!-- ⭐ PRIMARY NAVIGATION (BOTTOM FIXED INSIDE CARD) -->
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-          <button class="gi-btn gi-primary" id="gi-submit-btn">Submit</button>
+          
+          <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+          
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
+
+          <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
         </div>
 
       </div>
     </section>
 
-
-    <!-- RIGHT PILLARS -->
     <aside class="gi-right-pillars">
-
       <div class="gi-pillars-title">Pillars</div>
-
       <ul class="gi-pillar-nav" id="gi-left-pillar-list">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
@@ -132,15 +194,12 @@
         <li data-p="11">11 — Enablement</li>
         <li data-p="12">12 — Leadership & Alignment</li>
       </ul>
-
     </aside>
 
   </div>
 </main>
 
-
-<a href="faq.html" class="gi-faq-button">FAQ</a>
-
+<a href="assessment-support.html" target="_blank" class="gi-faq-button">FAQ</a>
 
 <script src="assets/QUESTIONS.js?v=1"></script>
 
@@ -162,13 +221,15 @@ const PILLAR_META = {
 };
 </script>
 
-<script src="assets/engine.js?v=7003"></script>
+<script src="assets/engine.js?v=8002"></script>
 
 <script>
 const toggle = document.getElementById("darkToggle");
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
+if(toggle){
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+  });
+}
 </script>
 
 </body>
