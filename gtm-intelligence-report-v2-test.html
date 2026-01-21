@@ -207,9 +207,9 @@
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-          
+           
           <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
-          
+           
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
 
           <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
@@ -267,16 +267,18 @@ const PILLAR_META = {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  
+  // 1. DARK TOGGLE
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
-  const isDark = document.body.classList.toggle("dark");
-  const icon = toggle.querySelector(".dark-icon");
-  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
-});
+        const isDark = document.body.classList.toggle("dark");
+        const icon = toggle.querySelector(".dark-icon");
+        if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+    });
   }
 
-  // INTERACTIVE PILLAR INFO
+  // 2. INTERACTIVE PILLAR INFO
   const list = document.getElementById("gi-left-pillar-list");
   const titleBox = document.getElementById("gi-pillar-name");
   const descBox = document.getElementById("gi-pillar-desc");
@@ -298,6 +300,33 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }
+
+  // 3. TEST SUBMIT BUTTON FIX (De toevoeging)
+  const testBtn = document.getElementById("gi-test-submit-btn");
+  if(testBtn) {
+    testBtn.addEventListener("click", function() {
+        console.log("Test Submit Clicked");
+        
+        // Data ophalen uit localStorage (standaard plek voor deze engines)
+        // De key 'gi_progress' wordt meestal gebruikt in jouw assets/engine.js
+        const stored = localStorage.getItem("gi_progress");
+        
+        if(!stored) {
+            alert("Nog geen data gevonden. Vul eerst een paar vragen in.");
+            return;
+        }
+        
+        const data = JSON.parse(stored);
+        console.log("Payload klaar voor verzending:", data);
+        
+        // Simuleer verzending
+        alert("TEST GESLAAGD! \n\nData is verzameld uit de engine. \nZie de Console (F12) voor de volledige JSON payload die naar de webhook zou gaan.");
+        
+        // Optioneel: Hier kun je een echte fetch plaatsen als je de webhook URL hebt:
+        // fetch('JOUW_WEBHOOK_URL', { method: 'POST', body: JSON.stringify(data) });
+    });
+  }
+
 });
 </script>
 
