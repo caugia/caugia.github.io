@@ -259,9 +259,12 @@
         if (STATE.currentStep < window.QUESTIONS.length - 1) {
             STATE.currentStep++;
             renderQuestion();
-            window.scrollTo(0,0);
+            
+            // FIX: Scroll de kaart naar boven, niet het window
+            const card = document.getElementById("gi-question-card");
+            if(card) card.scrollTop = 0;
+            
         } else {
-            // Trigger Submit logic (could show a final review button)
             alert("Assessment Complete! Use the Test Submit button to send.");
         }
     }
@@ -270,7 +273,10 @@
         if (STATE.currentStep > 0) {
             STATE.currentStep--;
             renderQuestion();
-            window.scrollTo(0,0);
+            
+            // FIX: Scroll de kaart naar boven
+            const card = document.getElementById("gi-question-card");
+            if(card) card.scrollTop = 0;
         }
     }
 
