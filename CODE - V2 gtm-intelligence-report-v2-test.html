@@ -13,29 +13,62 @@
 
   <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
-  <script src="/auth.js"></script>
-
   <style>
     /* --- FIXES & UPDATES --- */
     
-    /* 1. Layout Lock (Keep it on the fold) */
-    body { overflow-y: hidden; height: 100vh; display: flex; flex-direction: column; }
-    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; }
+    /* 1. Layout Lock */
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin:0; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 60px); }
     .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
     
-    /* 2. Utility Buttons (Save/Jump) - Modern Look */
+    /* 2. Left Sidebar (Fixed Flex Column) */
+    .gi-left-info {
+        display: flex; flex-direction: column; 
+        height: 100%; 
+        overflow: hidden; /* Geen scrollbar in de sidebar zelf */
+        padding-bottom: 32px; /* Ruimte onderaan */
+    }
+
+    /* 3. Description Box (STATIC & FIXED BOTTOM) */
+    .gi-pillar-desc-box {
+        margin-top: auto; /* Duwt de box naar beneden */
+        height: 240px;    /* Vaste hoogte */
+        min-height: 240px;
+        max-height: 240px;
+        overflow: hidden; /* Tekst breekt layout niet */
+        flex-shrink: 0;   /* Voorkomt pletten */
+        
+        /* Styling */
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    /* 4. Utility Buttons (Clean White Style) */
     .gi-utility-row {
       position: absolute; top: 20px; right: 20px;
-      display: flex; gap: 8px;
+      display: flex; gap: 8px; z-index: 10;
     }
     .gi-utility-btn {
-      background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px;
-      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
-      cursor: pointer; transition: all 0.2s ease;
+      background: #ffffff; /* Wit */
+      border: 1px solid #e2e8f0; 
+      border-radius: 6px;
+      padding: 6px 12px; 
+      font-size: 0.75rem; 
+      font-weight: 600; 
+      color: #64748b;
+      cursor: pointer; 
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
+    .gi-utility-btn:hover { 
+        border-color: #0056b3; 
+        color: #0056b3; 
+    }
 
-    /* 3. Pillar Nav - INTERACTIVE UPDATE */
+    /* 5. Pillar Nav */
     .gi-pillar-nav li { 
         color: #475569; 
         cursor: pointer; 
@@ -46,14 +79,14 @@
         background-color: #f1f5f9;
     }
     .gi-pillar-nav li.active {
-      background-color: #0056b3 !important; /* Force Caugia Blue */
-      color: #ffffff !important; /* Force White Text */
+      background-color: #0056b3 !important; 
+      color: #ffffff !important; 
       font-weight: 700;
     }
 
-    /* 4. Input Spacing Fixes */
+    /* 6. Input Spacing */
     .gi-group-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; /* Meer ruimte */
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
       margin-top: 16px; margin-bottom: 24px;
     }
     .gi-group-grid label {
@@ -65,7 +98,7 @@
     }
     .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
 
-    /* 5. Radio Cards Spacing */
+    /* 7. Radio Cards */
     .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
     .gi-option-card {
       display: flex; align-items: center; padding: 16px;
@@ -74,23 +107,22 @@
     .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
     .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
 
-    /* 6. Question Card Layout */
+    /* 8. Question Card Layout */
     .gi-question-card {
-      position: relative; /* For utility buttons positioning */
+      position: relative; 
       height: 100%; display: flex; flex-direction: column;
       padding: 40px; overflow-y: auto;
     }
-    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } /* Space for nav */
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } 
     
-    /* 7. Bottom Nav Bar */
+    /* 9. Bottom Nav Bar */
     .gi-nav-row {
       position: sticky; bottom: 0; left: 0; right: 0;
       background: white; border-top: 1px solid #e2e8f0;
-      padding: 20px 40px; margin: 0 -40px -40px -40px; /* Stretch to edges */
+      padding: 20px 40px; margin: 0 -40px -40px -40px; 
       display: flex; gap: 12px; align-items: center;
     }
 
-    /* Test Button Style */
     #gi-test-submit-btn {
       background: #dc2626; color: white; border: none; margin-left: auto;
     }
@@ -148,7 +180,7 @@
       <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
-          Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards.
+          Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality.
         </p>
       </div>
     </aside>
@@ -212,20 +244,21 @@
 <script src="assets/QUESTIONS.js?v=1"></script>
 
 <script>
+// TEKSTEN INGEKORT VOOR VAST KADER
 const PILLAR_META = {
-  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined across the organization. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation. Without this, teams often execute efficiently but in conflicting directions."},
-  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers, and competitors based on data rather than opinion. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs to anticipate market moves."},
-  3:{name:"Product Marketing", desc:"Product Marketing connects deep customer understanding with product value to create a compelling narrative. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message, shortening sales cycles."},
-  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated across inbound, outbound, and partner channels. It looks beyond vanity metrics to assess the quality of capture and the efficiency of your acquisition cost over the long term."},
-  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency, deal quality, and the discipline of your closing motion. It looks at whether your process is followed rigorously or if revenue relies on individual heroics, ensuring predictable target attainment."},
-  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures your ability to onboard, retain, and grow customers systematically. It shifts the focus from reactive support to proactive value delivery, which is critical for compounding growth through Net Revenue Retention (NRR)."},
-  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates the process, tooling, and data foundations that connect your GTM teams. It assesses whether your tech stack removes friction or adds complexity, providing the necessary infrastructure for scale."},
-  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and your ability to monetize features effectively. It checks if your model aligns with how customers actually receive value and if it supports frictionless expansion revenue."},
-  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity, consistency, and market authority. It assesses whether your company is seen as a trusted thought leader, acting as gravity that pulls deals in and lowers acquisition costs."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures the reliability, accessibility, and usability of your information assets. It determines if leadership makes decisions based on real-time evidence or gut feeling, which is a prerequisite for accurate forecasting."},
- 11:{name:"Enablement", desc:"Enablement evaluates the quality of training, materials, and coaching provided to your revenue teams. It focuses on reducing ramp time for new hires and ensuring that your strategy is actually executed consistently at the frontline."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects the level of collaboration and unified direction among the executive team. It assesses whether silos are broken down and if the operating rhythm drives accountability towards shared revenue goals."}
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction and priorities are defined. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs to anticipate market moves."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message, shortening sales cycles."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated. It looks beyond vanity metrics to assess the quality of capture and the efficiency of your acquisition cost over the long term."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality. It looks at whether your process is followed rigorously or if revenue relies on individual heroics, ensuring predictable target attainment."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion. It shifts the focus from reactive support to proactive value delivery, which is critical for compounding growth through Net Revenue Retention."},
+  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations. It assesses whether your tech stack removes friction or adds complexity, providing the necessary infrastructure for scale."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation. It checks if your model aligns with how customers actually receive value and if it supports frictionless expansion revenue."},
+  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency. It assesses whether your company is seen as a trusted thought leader, acting as gravity that pulls deals in and lowers acquisition costs."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information. It determines if leadership makes decisions based on real-time evidence or gut feeling, which is a prerequisite for accurate forecasting."},
+ 11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality. It focuses on reducing ramp time for new hires and ensuring that your strategy is actually executed consistently at the frontline."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction. It assesses whether silos are broken down and if the operating rhythm drives accountability towards shared revenue goals."}
 };
 </script>
 
@@ -233,8 +266,6 @@ const PILLAR_META = {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  
-  // 1. Dark Mode Toggle
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
@@ -242,35 +273,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // 2. INTERACTIVE PILLAR INFO
+  // INTERACTIVE PILLAR INFO
   const list = document.getElementById("gi-left-pillar-list");
   const titleBox = document.getElementById("gi-pillar-name");
   const descBox = document.getElementById("gi-pillar-desc");
 
   if(list && titleBox && descBox) {
     list.addEventListener("click", (e) => {
-      // Zoek het dichtstbijzijnde LI element
       const li = e.target.closest("li");
       if(!li) return;
 
-      // Haal het pillar nummer op
       const pIndex = li.getAttribute("data-p");
-      
-      // Zoek de info in PILLAR_META
       const info = PILLAR_META[pIndex];
 
       if(info) {
-        // Update de linker box
         titleBox.innerText = info.name;
         descBox.innerText = info.desc;
         
-        // Optioneel: Voeg een visueel effect toe aan de tekst om te laten zien dat hij ververst is
         descBox.style.opacity = 0;
         setTimeout(() => descBox.style.opacity = 1, 100);
       }
     });
   }
-
 });
 </script>
 
