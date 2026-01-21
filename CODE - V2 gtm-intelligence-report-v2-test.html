@@ -35,13 +35,21 @@
     }
     .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
 
-    /* 3. Pillar 0 Contrast Fix */
+    /* 3. Pillar Nav - INTERACTIVE UPDATE */
+    .gi-pillar-nav li { 
+        color: #475569; 
+        cursor: pointer; 
+        transition: color 0.2s, background-color 0.2s;
+    } 
+    .gi-pillar-nav li:hover {
+        color: #0056b3;
+        background-color: #f1f5f9;
+    }
     .gi-pillar-nav li.active {
       background-color: #0056b3 !important; /* Force Caugia Blue */
       color: #ffffff !important; /* Force White Text */
       font-weight: 700;
     }
-    .gi-pillar-nav li { color: #475569; } /* Default text color */
 
     /* 4. Input Spacing Fixes */
     .gi-group-grid {
@@ -140,7 +148,7 @@
       <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
-          Context provides the foundation for interpreting the rest of the assessment.
+          Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards.
         </p>
       </div>
     </aside>
@@ -205,31 +213,65 @@
 
 <script>
 const PILLAR_META = {
-  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations, highlights risks and identifies the right priorities."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined."},
-  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors."},
-  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value."},
-  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated."},
-  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality."},
-  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion."},
-  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations."},
-  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation."},
-  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency."},
- 10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
- 11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
- 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects collaboration and unified direction."}
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined across the organization. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation. Without this, teams often execute efficiently but in conflicting directions."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers, and competitors based on data rather than opinion. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs to anticipate market moves."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects deep customer understanding with product value to create a compelling narrative. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message, shortening sales cycles."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated across inbound, outbound, and partner channels. It looks beyond vanity metrics to assess the quality of capture and the efficiency of your acquisition cost over the long term."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency, deal quality, and the discipline of your closing motion. It looks at whether your process is followed rigorously or if revenue relies on individual heroics, ensuring predictable target attainment."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures your ability to onboard, retain, and grow customers systematically. It shifts the focus from reactive support to proactive value delivery, which is critical for compounding growth through Net Revenue Retention (NRR)."},
+  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates the process, tooling, and data foundations that connect your GTM teams. It assesses whether your tech stack removes friction or adds complexity, providing the necessary infrastructure for scale."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and your ability to monetize features effectively. It checks if your model aligns with how customers actually receive value and if it supports frictionless expansion revenue."},
+  9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity, consistency, and market authority. It assesses whether your company is seen as a trusted thought leader, acting as gravity that pulls deals in and lowers acquisition costs."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures the reliability, accessibility, and usability of your information assets. It determines if leadership makes decisions based on real-time evidence or gut feeling, which is a prerequisite for accurate forecasting."},
+ 11:{name:"Enablement", desc:"Enablement evaluates the quality of training, materials, and coaching provided to your revenue teams. It focuses on reducing ramp time for new hires and ensuring that your strategy is actually executed consistently at the frontline."},
+ 12:{name:"Leadership & Alignment", desc:"Leadership & Alignment reflects the level of collaboration and unified direction among the executive team. It assesses whether silos are broken down and if the operating rhythm drives accountability towards shared revenue goals."}
 };
 </script>
 
 <script src="assets/engine.js?v=8002"></script>
 
 <script>
-const toggle = document.getElementById("darkToggle");
-if(toggle){
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-  });
-}
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // 1. Dark Mode Toggle
+  const toggle = document.getElementById("darkToggle");
+  if(toggle){
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+  }
+
+  // 2. INTERACTIVE PILLAR INFO
+  const list = document.getElementById("gi-left-pillar-list");
+  const titleBox = document.getElementById("gi-pillar-name");
+  const descBox = document.getElementById("gi-pillar-desc");
+
+  if(list && titleBox && descBox) {
+    list.addEventListener("click", (e) => {
+      // Zoek het dichtstbijzijnde LI element
+      const li = e.target.closest("li");
+      if(!li) return;
+
+      // Haal het pillar nummer op
+      const pIndex = li.getAttribute("data-p");
+      
+      // Zoek de info in PILLAR_META
+      const info = PILLAR_META[pIndex];
+
+      if(info) {
+        // Update de linker box
+        titleBox.innerText = info.name;
+        descBox.innerText = info.desc;
+        
+        // Optioneel: Voeg een visueel effect toe aan de tekst om te laten zien dat hij ververst is
+        descBox.style.opacity = 0;
+        setTimeout(() => descBox.style.opacity = 1, 100);
+      }
+    });
+  }
+
+});
 </script>
 
 </body>
