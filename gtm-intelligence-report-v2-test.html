@@ -14,108 +14,49 @@
   <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
 
   <style>
-    /* --- FIXES & UPDATES --- */
-    
-    /* 1. Layout Lock */
+    /* --- LAYOUT & FIXES --- */
     html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin:0; }
     .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 60px); }
     .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
     
-    /* 2. Left Sidebar (Fixed Flex Column) */
     .gi-left-info {
-        display: flex; flex-direction: column; 
-        height: 100%; 
-        overflow: hidden; /* Geen scrollbar in de sidebar zelf */
-        padding-bottom: 32px; /* Ruimte onderaan */
+        display: flex; flex-direction: column; height: 100%; 
+        overflow: hidden; padding-bottom: 32px; 
     }
 
-    /* 3. Description Box (STATIC & FIXED BOTTOM) */
+    /* Fixed Description Box */
     .gi-pillar-desc-box {
-        margin-top: auto; /* Duwt de box naar beneden */
-        height: 240px;    /* Vaste hoogte */
-        min-height: 240px;
-        max-height: 240px;
-        overflow: hidden; /* Tekst breekt layout niet */
-        flex-shrink: 0;   /* Voorkomt pletten */
-        
-        /* Styling */
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 24px;
+        margin-top: auto; height: 240px; min-height: 240px; max-height: 240px;
+        overflow: hidden; flex-shrink: 0; background: #fff;
+        border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px;
         box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     }
 
-    /* 4. Utility Buttons (Clean White Style) */
-    .gi-utility-row {
-      position: absolute; top: 20px; right: 20px;
-      display: flex; gap: 8px; z-index: 10;
-    }
+    .gi-utility-row { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 10; }
     .gi-utility-btn {
-      background: #ffffff; /* Wit */
-      border: 1px solid #e2e8f0; 
-      border-radius: 6px;
-      padding: 6px 12px; 
-      font-size: 0.75rem; 
-      font-weight: 600; 
-      color: #64748b;
-      cursor: pointer; 
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
+      cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    .gi-utility-btn:hover { 
-        border-color: #0056b3; 
-        color: #0056b3; 
-    }
+    .gi-utility-btn:hover { border-color: #0056b3; color: #0056b3; }
 
-    /* 5. Pillar Nav */
-    .gi-pillar-nav li { 
-        color: #475569; 
-        cursor: pointer; 
-        transition: color 0.2s, background-color 0.2s;
-    } 
-    .gi-pillar-nav li:hover {
-        color: #0056b3;
-        background-color: #f1f5f9;
-    }
-    .gi-pillar-nav li.active {
-      background-color: #0056b3 !important; 
-      color: #ffffff !important; 
-      font-weight: 700;
-    }
+    .gi-pillar-nav li { color: #475569; cursor: pointer; transition: color 0.2s, background-color 0.2s; } 
+    .gi-pillar-nav li:hover { color: #0056b3; background-color: #f1f5f9; }
+    .gi-pillar-nav li.active { background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700; }
 
-    /* 6. Input Spacing */
-    .gi-group-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      margin-top: 16px; margin-bottom: 24px;
-    }
-    .gi-group-grid label {
-      display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b;
-    }
-    .gi-input, .gi-textarea {
-      width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
-      font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff;
-    }
+    .gi-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; margin-bottom: 24px; }
+    .gi-group-grid label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b; }
+    .gi-input, .gi-textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff; }
     .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
 
-    /* 7. Radio Cards */
     .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
-    .gi-option-card {
-      display: flex; align-items: center; padding: 16px;
-      border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
-    }
+    .gi-option-card { display: flex; align-items: center; padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff; }
     .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
     .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
 
-    /* 8. Question Card Layout */
-    .gi-question-card {
-      position: relative; 
-      height: 100%; display: flex; flex-direction: column;
-      padding: 40px; overflow-y: auto;
-    }
+    .gi-question-card { position: relative; height: 100%; display: flex; flex-direction: column; padding: 40px; overflow-y: auto; }
     .gi-question-body { flex-grow: 1; padding-bottom: 80px; } 
     
-    /* 9. Bottom Nav Bar */
     .gi-nav-row {
       position: sticky; bottom: 0; left: 0; right: 0;
       background: white; border-top: 1px solid #e2e8f0;
@@ -123,11 +64,8 @@
       display: flex; gap: 12px; align-items: center;
     }
 
-    #gi-test-submit-btn {
-      background: #dc2626; color: white; border: none; margin-left: auto;
-    }
+    #gi-test-submit-btn { background: #dc2626; color: white; border: none; margin-left: auto; }
 
-    /* Mobile Reset */
     @media (max-width: 1000px) {
       body { overflow-y: auto; height: auto; }
       .gi-shell { display: flex; flex-direction: column; }
@@ -147,8 +85,8 @@
     </div>
     <div class="gi-header-right">
       <button id="darkToggle" class="gi-dark-toggle" aria-label="Toggle dark mode">
-  <span class="dark-icon">🌙</span>
-</button>
+        <span class="dark-icon">🌙</span>
+      </button>
     </div>
   </div>
 </header>
@@ -207,11 +145,8 @@
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-           
           <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
-           
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
-
           <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
         </div>
 
@@ -245,7 +180,6 @@
 <script src="assets/QUESTIONS.js?v=1"></script>
 
 <script>
-// TEKSTEN INGEKORT VOOR VAST KADER
 const PILLAR_META = {
   0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality."},
   1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction and priorities are defined. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation."},
@@ -268,7 +202,7 @@ const PILLAR_META = {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // 1. DARK TOGGLE
+  // 1. Dark Mode
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
@@ -278,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // 2. INTERACTIVE PILLAR INFO
+  // 2. Pillar Info Update
   const list = document.getElementById("gi-left-pillar-list");
   const titleBox = document.getElementById("gi-pillar-name");
   const descBox = document.getElementById("gi-pillar-desc");
@@ -287,43 +221,59 @@ document.addEventListener("DOMContentLoaded", function() {
     list.addEventListener("click", (e) => {
       const li = e.target.closest("li");
       if(!li) return;
-
       const pIndex = li.getAttribute("data-p");
       const info = PILLAR_META[pIndex];
-
       if(info) {
         titleBox.innerText = info.name;
         descBox.innerText = info.desc;
-        
         descBox.style.opacity = 0;
         setTimeout(() => descBox.style.opacity = 1, 100);
       }
     });
   }
 
-  // 3. TEST SUBMIT BUTTON FIX (De toevoeging)
+  // 3. ROBUSTE TEST SUBMIT (SCRAPES REAL-TIME DOM DATA)
   const testBtn = document.getElementById("gi-test-submit-btn");
   if(testBtn) {
     testBtn.addEventListener("click", function() {
-        console.log("Test Submit Clicked");
+        console.log("--- START TEST SUBMIT ---");
         
-        // Data ophalen uit localStorage (standaard plek voor deze engines)
-        // De key 'gi_progress' wordt meestal gebruikt in jouw assets/engine.js
-        const stored = localStorage.getItem("gi_progress");
+        // We trekken de data LIVE uit de velden die nu in beeld staan
+        const container = document.getElementById("gi-question-card");
+        const inputs = container.querySelectorAll("input, select, textarea");
         
-        if(!stored) {
-            alert("Nog geen data gevonden. Vul eerst een paar vragen in.");
-            return;
+        let collectedData = {};
+        let hasData = false;
+
+        inputs.forEach(el => {
+            // Checkboxes / Radio
+            if(el.type === 'radio' || el.type === 'checkbox') {
+                if(el.checked) {
+                    collectedData[el.name || el.id] = el.value;
+                    hasData = true;
+                }
+            } else {
+                // Text, Email, etc.
+                if(el.value && el.value.trim() !== "") {
+                    collectedData[el.id || el.name] = el.value;
+                    hasData = true;
+                }
+            }
+        });
+
+        if(hasData) {
+            console.log("✅ LIVE DATA GEVONDEN:", collectedData);
+            alert("TEST GESLAAGD!\n\nIk heb de ingevulde velden uitgelezen.\nZie de Console (F12) voor het object dat verstuurd zou worden.");
+        } else {
+            // Fallback naar localStorage als er niets op het scherm is ingevuld (bv. net genavigeerd)
+            const stored = localStorage.getItem("gi_progress");
+            if(stored) {
+                console.log("✅ CACHED DATA GEVONDEN:", JSON.parse(stored));
+                alert("TEST GESLAAGD (Uit Cache)!\n\nGeen data op scherm, maar wel in geheugen gevonden.\nZie console.");
+            } else {
+                alert("⚠️ LEGE SUBMIT\n\nVul eerst een veld in of selecteer een optie voordat je op submit klikt.");
+            }
         }
-        
-        const data = JSON.parse(stored);
-        console.log("Payload klaar voor verzending:", data);
-        
-        // Simuleer verzending
-        alert("TEST GESLAAGD! \n\nData is verzameld uit de engine. \nZie de Console (F12) voor de volledige JSON payload die naar de webhook zou gaan.");
-        
-        // Optioneel: Hier kun je een echte fetch plaatsen als je de webhook URL hebt:
-        // fetch('JOUW_WEBHOOK_URL', { method: 'POST', body: JSON.stringify(data) });
     });
   }
 
