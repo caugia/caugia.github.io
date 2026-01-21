@@ -16,114 +16,44 @@
   <script src="/auth.js"></script>
 
   <style>
-    /* --- 1. GLOBAL LAYOUT LOCK --- */
-    html, body { 
-        height: 100%; width: 100%; margin: 0; padding: 0; 
-        overflow: hidden; display: flex; flex-direction: column; 
-    }
-
-    .gi-main { 
-        flex-grow: 1; overflow: hidden; 
-        height: calc(100vh - 60px);
-    }
+    /* --- FIXES & UPDATES --- */
     
-    .gi-shell { 
-        height: 100%; display: grid; 
-        grid-template-columns: 320px 1fr 280px; gap: 0; 
-    }
-
-    /* --- 2. LEFT SIDEBAR (FIXED BOX) --- */
-    .gi-left-info {
-        display: flex; flex-direction: column; height: 100%;
-        padding: 32px; background: #f8fafc; border-right: 1px solid #e2e8f0;
-        overflow: hidden; 
-    }
-
-    /* !!! DE FIX VOOR HET KADER !!! */
-    .gi-pillar-desc-box {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        
-        /* Dwingt het kader naar onderen */
-        margin-top: auto; 
-        
-        /* HARDE AFMETINGEN - BEWEEGT NIET */
-        height: 240px; 
-        min-height: 240px;
-        max-height: 240px;
-        flex-shrink: 0;
-        overflow-y: auto; /* Alleen scrollen IN het kader als tekst écht te lang is */
-    }
+    /* 1. Layout Lock (Keep it on the fold) */
+    body { overflow-y: hidden; height: 100vh; display: flex; flex-direction: column; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; }
+    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
     
-    .gi-pillar-desc-box h3 {
-        margin-top: 0; margin-bottom: 12px; font-size: 1.1rem;
-        color: #0f172a; font-family: 'Merriweather', serif;
-    }
-    
-    .gi-pillar-desc-box p {
-        font-size: 0.9rem; line-height: 1.6; color: #475569; margin: 0;
-    }
-
-    /* --- 3. CENTER AREA --- */
-    .gi-center {
-        background: #fff; height: 100%; overflow: hidden; position: relative;
-    }
-    
-    .gi-question-card {
-        height: 100%; display: flex; flex-direction: column;
-        padding: 40px 60px; overflow-y: auto; 
-    }
-    
-    .gi-question-body { flex-grow: 1; padding-bottom: 40px; }
-
-    /* --- 4. RIGHT SIDEBAR --- */
-    .gi-right-pillars {
-        height: 100%; overflow-y: auto; border-left: 1px solid #e2e8f0;
-        background: #fff; padding: 24px;
-    }
-
-    /* --- 5. UTILITY BUTTONS (HERSTELD) --- */
+    /* 2. Utility Buttons (Save/Jump) - Modern Look */
     .gi-utility-row {
       position: absolute; top: 20px; right: 20px;
-      display: flex; gap: 8px; z-index: 10;
+      display: flex; gap: 8px;
     }
     .gi-utility-btn {
-      background: white; 
-      border: 1px solid #e2e8f0; 
-      border-radius: 6px;
-      padding: 8px 14px; 
-      font-size: 0.75rem; 
-      font-weight: 600; 
-      color: #64748b;
-      cursor: pointer; 
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
+      cursor: pointer; transition: all 0.2s ease;
     }
-    .gi-utility-btn:hover { 
-      border-color: #0056b3; 
-      color: #0056b3; 
-      transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
+    .gi-utility-btn:hover { background: #e0f2fe; color: #0056b3; border-color: #bae6fd; }
 
-    /* Pillar Nav Styling */
+    /* 3. Pillar Nav - INTERACTIVE UPDATE */
     .gi-pillar-nav li { 
-        color: #64748b; padding: 8px 12px; border-radius: 6px;
-        cursor: pointer; transition: all 0.2s; font-size: 0.9rem; margin-bottom: 4px;
+        color: #475569; 
+        cursor: pointer; 
+        transition: color 0.2s, background-color 0.2s;
     } 
     .gi-pillar-nav li:hover {
-        color: #0056b3; background-color: #f1f5f9;
+        color: #0056b3;
+        background-color: #f1f5f9;
     }
     .gi-pillar-nav li.active {
-        background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700;
+      background-color: #0056b3 !important; /* Force Caugia Blue */
+      color: #ffffff !important; /* Force White Text */
+      font-weight: 700;
     }
 
-    /* Inputs & Radios */
+    /* 4. Input Spacing Fixes */
     .gi-group-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; /* Meer ruimte */
       margin-top: 16px; margin-bottom: 24px;
     }
     .gi-group-grid label {
@@ -135,29 +65,42 @@
     }
     .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
 
+    /* 5. Radio Cards Spacing */
     .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
     .gi-option-card {
       display: flex; align-items: center; padding: 16px;
       border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
-      transition: all 0.15s ease;
     }
     .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
     .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
 
-    /* Bottom Nav Row */
+    /* 6. Question Card Layout */
+    .gi-question-card {
+      position: relative; /* For utility buttons positioning */
+      height: 100%; display: flex; flex-direction: column;
+      padding: 40px; overflow-y: auto;
+    }
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } /* Space for nav */
+    
+    /* 7. Bottom Nav Bar */
     .gi-nav-row {
-      margin-top: auto; padding-top: 20px; border-top: 1px solid #e2e8f0;
+      position: sticky; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid #e2e8f0;
+      padding: 20px 40px; margin: 0 -40px -40px -40px; /* Stretch to edges */
       display: flex; gap: 12px; align-items: center;
     }
+
+    /* Test Button Style */
     #gi-test-submit-btn {
       background: #dc2626; color: white; border: none; margin-left: auto;
     }
 
+    /* Mobile Reset */
     @media (max-width: 1000px) {
       body { overflow-y: auto; height: auto; }
       .gi-shell { display: flex; flex-direction: column; }
       .gi-left-info, .gi-right-pillars { display: none; }
-      .gi-question-card { height: auto; overflow: visible; padding: 20px; }
+      .gi-question-card { height: auto; overflow: visible; }
     }
   </style>
 </head>
@@ -181,32 +124,31 @@
   <div class="gi-shell">
 
     <aside class="gi-left-info">
-      <div>
-          <div class="gi-info-title">Premium GTM Assessment</div>
-          <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
-          <p class="gi-info-desc">
-            A structured, 12-pillar diagnostic revealing strengths, risks and hidden
-            dependencies across your revenue engine.
-          </p>
-          <div class="gi-info-meta">12 pillars • 265 questions • ~45 min</div>
+      <div class="gi-info-title">Premium GTM Assessment</div>
+      <h1 class="gi-info-h1">The GTM Intelligence Report</h1>
+      <p class="gi-info-desc">
+        A structured, 12-pillar diagnostic that evaluates your entire
+        go-to-market system and reveals strengths, risks and hidden
+        dependencies across the full revenue engine.
+      </p>
+      <div class="gi-info-meta">12 pillars • 265 questions • ~45 minutes</div>
 
-          <div class="gi-progress-box">
-            <div class="gi-progress-top">
-              <span id="gi-progress-count">0 / 265</span>
-              <span id="gi-progress-percent">0%</span>
-            </div>
-            <div class="gi-progress-track">
-              <div id="gi-progress-bar" class="gi-progress-fill"></div>
-            </div>
-          </div>
-          
-          <button class="gi-btn gi-reset" id="gi-reset-btn" style="margin-top:16px;">Reset</button>
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 265</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
       </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn">Reset</button>
 
       <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
         <h3 id="gi-pillar-name">Context</h3>
         <p id="gi-pillar-desc">
-          Context anchors the assessment. By capturing your stage and motion, the system adjusts recommendations to your reality, ensuring relevant benchmarking.
+          Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards.
         </p>
       </div>
     </aside>
@@ -232,8 +174,11 @@
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
           <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          
           <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+          
           <button class="gi-btn" id="gi-clear-btn">Clear</button>
+
           <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
         </div>
 
@@ -242,7 +187,7 @@
 
     <aside class="gi-right-pillars">
       <div class="gi-pillars-title">Pillars</div>
-      <ul class="gi-pillar-nav" id="gi-right-pillar-list">
+      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
         <li data-p="0" class="active">0 — Context</li>
         <li data-p="1">1 — GTM Strategy & Leadership</li>
         <li data-p="2">2 — Market Intelligence</li>
@@ -267,10 +212,9 @@
 <script src="assets/QUESTIONS.js?v=1"></script>
 
 <script>
-// UPDATED DATA: Shortened Pillar 0 & 1 for perfect fit.
 const PILLAR_META = {
-  0:{name:"Context", desc:"Context anchors the assessment. By capturing your stage and motion, the system adjusts recommendations to your reality, ensuring relevant benchmarking."},
-  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction is defined. It evaluates if vision translates into roadmaps that align resources, preventing conflicting execution."},
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company stage and motion, the system adjusts recommendations to your specific reality. This ensures you are benchmarked against relevant peers rather than generic standards."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy & Leadership measures how clearly direction and priorities are defined across the organization. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation. Without this, teams often execute efficiently but in conflicting directions."},
   2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers, and competitors based on data rather than opinion. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs to anticipate market moves."},
   3:{name:"Product Marketing", desc:"Product Marketing connects deep customer understanding with product value to create a compelling narrative. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message, shortening sales cycles."},
   4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated across inbound, outbound, and partner channels. It looks beyond vanity metrics to assess the quality of capture and the efficiency of your acquisition cost over the long term."},
@@ -290,7 +234,7 @@ const PILLAR_META = {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // Dark Mode
+  // 1. Dark Mode Toggle
   const toggle = document.getElementById("darkToggle");
   if(toggle){
     toggle.addEventListener("click", () => {
@@ -298,23 +242,29 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Pillar Interaction
-  const list = document.getElementById("gi-right-pillar-list");
+  // 2. INTERACTIVE PILLAR INFO
+  const list = document.getElementById("gi-left-pillar-list");
   const titleBox = document.getElementById("gi-pillar-name");
   const descBox = document.getElementById("gi-pillar-desc");
 
   if(list && titleBox && descBox) {
     list.addEventListener("click", (e) => {
+      // Zoek het dichtstbijzijnde LI element
       const li = e.target.closest("li");
       if(!li) return;
 
+      // Haal het pillar nummer op
       const pIndex = li.getAttribute("data-p");
+      
+      // Zoek de info in PILLAR_META
       const info = PILLAR_META[pIndex];
 
       if(info) {
+        // Update de linker box
         titleBox.innerText = info.name;
         descBox.innerText = info.desc;
         
+        // Optioneel: Voeg een visueel effect toe aan de tekst om te laten zien dat hij ververst is
         descBox.style.opacity = 0;
         setTimeout(() => descBox.style.opacity = 1, 100);
       }
