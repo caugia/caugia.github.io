@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Caugia | The GTM Operating System</title>
+  <meta name="description" content="The first algorithmic Go-to-Market (GTM) system. Replace weeks of consulting with one intelligent assessment. Powered by the Grip Diamond." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --text: #334155;
+      --text-light: #64748b;
+      --bg-gray: #f8fafc;
+      --line: #e2e8f0;
+      --radius: 12px;
+      
+      /* Status Colors */
+      --success: #16a34a; --success-bg: #dcfce7;
+      --warning: #d97706; --warning-bg: #fef3c7;
+      --danger: #dc2626;  --danger-bg: #fee2e2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: var(--primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    
+    a { text-decoration: none; color: inherit; transition: 0.2s; }
+    ul { list-style: none; }
+    
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 { letter-spacing: -0.02em; font-weight: 800; line-height: 1.1; }
+    h1 { font-size: 3.5rem; margin-bottom: 24px; }
+    h2 { font-size: 2.5rem; margin-bottom: 16px; }
+    p { color: var(--text); font-size: 1.125rem; }
+    
+    .eyebrow { 
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 0.75rem; 
+      text-transform: uppercase; 
+      color: var(--accent); 
+      font-weight: 700; 
+      letter-spacing: 0.05em;
+      margin-bottom: 12px; display: block;
+    }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; font-weight: 600; border-radius: 8px; font-size: 0.95rem; transition: all 0.2s; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: white; border: 1px solid var(--primary); }
+    .btn-primary:hover { background: #1e293b; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,23,42,0.15); }
+    .btn-outline { background: transparent; border: 1px solid var(--line); color: var(--primary); }
+    .btn-outline:hover { border-color: var(--primary); background: white; }
+
+    /* HEADER */
+    header { border-bottom: 1px solid var(--line); background: white; position: sticky; top: 0; z-index: 100; padding: 16px 0; }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; }
+    .nav-links { display: flex; gap: 32px; font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* HERO SECTION */
+    .hero { padding: 80px 0; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
+    .hero-content { padding-top: 20px; }
+    
+    /* THE DASHBOARD WIDGET (Right Side) */
+    .dashboard-card {
+      background: white; border: 1px solid var(--line); border-radius: 24px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); padding: 32px;
+      position: relative; overflow: hidden;
+    }
+    .dashboard-header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 24px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+    .score-block { text-align: right; }
+    .score-val { font-size: 3.5rem; font-weight: 800; line-height: 1; color: var(--accent); }
+    .score-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: 0.1em; }
+    
+    .pattern-card {
+      background: var(--bg-gray); border-radius: 12px; padding: 16px; margin-bottom: 24px; border-left: 4px solid var(--text-light);
+      transition: all 0.3s ease;
+    }
+    .pattern-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .pattern-status { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.05); }
+    .pattern-desc { font-size: 0.85rem; color: var(--text); line-height: 1.4; }
+
+    /* Modes for Pattern Card */
+    .mode-good { background: var(--success-bg); border-left-color: var(--success); }
+    .mode-good .pattern-status { background: rgba(22, 163, 74, 0.15); color: #14532d; }
+    
+    .mode-warn { background: var(--warning-bg); border-left-color: var(--warning); }
+    .mode-warn .pattern-status { background: rgba(217, 119, 6, 0.15); color: #78350f; }
+    
+    .mode-bad { background: var(--danger-bg); border-left-color: var(--danger); }
+    .mode-bad .pattern-status { background: rgba(220, 38, 38, 0.15); color: #7f1d1d; }
+
+    .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+    .sliders { display: flex; flex-direction: column; gap: 16px; }
+    
+    .slider-item label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    input[type=range] { width: 100%; height: 6px; background: var(--line); border-radius: 10px; -webkit-appearance: none; outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+    /* FRAMEWORK SECTION */
+    .section-framework { padding: 100px 0; background: var(--bg-gray); }
+    .framework-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+    .pillar-card { background: white; padding: 24px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
+    .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .pillar-icon { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 12px; display: block; }
+    .pillar-list { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
+    .pillar-list li { font-size: 0.85rem; color: var(--text); margin-bottom: 8px; padding-left: 16px; position: relative; }
+    .pillar-list li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+
+    /* COMPARISON SECTION */
+    .section-comp { padding: 100px 0; }
+    .comp-table { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; margin-top: 48px; align-items: center; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .comp-traditional { opacity: 0.6; padding: 24px; }
+    .comp-caugia { 
+      background: var(--primary); color: white; padding: 40px; border-radius: 24px; 
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25); position: relative; overflow: hidden;
+    }
+    .comp-caugia::before {
+      content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%); pointer-events: none;
+    }
+    .comp-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px 0; font-size: 0.95rem; }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-row strong { color: #4ade80; }
+    .trad-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 12px 0; font-size: 0.9rem; }
+
+    /* CTA / FOOTER */
+    .cta-strip { background: var(--accent); color: white; padding: 60px 0; text-align: center; }
+    footer { padding: 40px 0; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--text-light); text-align: center; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      h1 { font-size: 2.5rem; }
+      .hero { grid-template-columns: 1fr; padding-top: 40px; text-align: center; }
+      .hero-content { margin-bottom: 40px; }
+      .hero-btns { justify-content: center; }
+      .framework-grid { grid-template-columns: 1fr; }
+      .comp-table { grid-template-columns: 1fr; }
+      .control-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <a href="#" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="4" fill="#0F172A"/>
+          <path d="M7 12L12 7L17 12L12 17L7 12Z" fill="white"/>
+        </svg>
+        CAUGIA
+      </a>
+      <nav>
+        <ul class="nav-links" style="display:flex; align-items:center;">
+          <li><a href="#">The Framework</a></li>
+          <li><a href="#">Report</a></li>
+          <li><a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">Get GTM Score</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-content">
+        <span class="eyebrow">The GTM Operating System</span>
+        <h1>Stop revenue leakage. Align your architecture.</h1>
+        <p style="margin-bottom: 32px; max-width: 500px;">
+          Replace weeks of subjective consulting with one algorithmic assessment. 
+          The <strong>Caugia Intelligence Engine</strong> benchmarks your GTM motion against 30+ growth archetypes instantly.
+        </p>
+        <div class="hero-btns" style="display:flex; gap: 16px;">
+          <a href="#" class="btn btn-primary">Start Assessment</a>
+          <a href="#framework" class="btn btn-outline">How it works</a>
+        </div>
+        
+        <div style="margin-top: 40px; display:flex; gap: 24px; opacity: 0.6; font-size: 0.8rem; font-weight: 600;">
+          <span>✓ Instant Diagnostic</span>
+          <span>✓ Zero Billable Hours</span>
+          <span>✓ 4-Force Analysis</span>
+        </div>
+      </div>
+
+      <aside class="dashboard-card">
+        <div class="dashboard-header">
+          <div>
+            <div style="font-weight:800; font-size:1.1rem;">Grip Health</div>
+            <div class="score-label">Live Simulation</div>
+          </div>
+          <div class="score-block">
+            <div class="score-val" id="totalScore">58</div>
+            <div class="score-label">Maturity Score</div>
+          </div>
+        </div>
+
+        <div class="pattern-card mode-warn" id="patternBox">
+          <div class="pattern-title">
+            <span id="patternTitle">The Leaky Bucket</span>
+            <span class="pattern-status">Warning</span>
+          </div>
+          <div class="pattern-desc" id="patternBody">
+            High Implementation effort with low Performance output. You are burning fuel without moving forward.
+          </div>
+        </div>
+
+        <div class="control-grid">
+          <div class="sliders">
+            <div class="slider-item">
+              <label><span>Guidance (G)</span> <span id="val-g">45</span></label>
+              <input type="range" id="input-g" min="0" max="100" value="45">
+            </div>
+            <div class="slider-item">
+              <label><span>Resources (R)</span> <span id="val-r">60</span></label>
+              <input type="range" id="input-r" min="0" max="100" value="60">
+            </div>
+            <div class="slider-item">
+              <label><span>Implementation (I)</span> <span id="val-i">85</span></label>
+              <input type="range" id="input-i" min="0" max="100" value="85">
+            </div>
+            <div class="slider-item">
+              <label><span>Performance (P)</span> <span id="val-p">43</span></label>
+              <input type="range" id="input-p" min="0" max="100" value="43">
+            </div>
+          </div>
+          <div style="height: 160px; display: flex; align-items: center; justify-content: center;">
+            <canvas id="diamondChart"></canvas>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="framework" class="section-framework">
+      <div class="container">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+          <span class="eyebrow">The Grip Diamond™</span>
+          <h2>A complete revenue architecture</h2>
+          <p>We don't look at sales or marketing in isolation. We analyze the 4 forces and 12 capabilities that dictate growth velocity.</p>
+        </div>
+
+        <div class="framework-grid">
+          <div class="pillar-card">
+            <span class="pillar-icon">G</span>
+            <h4>Guidance</h4>
+            <div style="font-size:0.8rem; color:var(--text-light); margin-bottom:12px;">Strategic Clarity & Direction</div>
+            <ul class="pillar-list">
+              <li>GTM Strategy</li>
+              <li>Market Intelligence</li>
+              <li>Leadership Alignment</li>
+            </ul>
+          </div>
+
+          <div class="pillar-card">
+            <span class="pillar-icon">R</span>
+            <h4>Resources</h4>
+            <div style="font-size:0.8rem; color:var(--text-light); margin-bottom:12px;">Capacity & Infrastructure</div>
+            <ul class="pillar-list">
+              <li>Brand & Comms</li>
+              <li>Data & Insights</li>
+              <li>Enablement</li>
+            </ul>
+          </div>
+
+          <div class="pillar-card">
+            <span class="pillar-icon">I</span>
+            <h4>Implementation</h4>
+            <div style="font-size:0.8rem; color:var(--text-light); margin-bottom:12px;">Execution Velocity</div>
+            <ul class="pillar-list">
+              <li>Product Marketing</li>
+              <li>Demand Gen</li>
+              <li>Sales Execution</li>
+            </ul>
+          </div>
+
+          <div class="pillar-card">
+            <span class="pillar-icon">P</span>
+            <h4>Performance</h4>
+            <div style="font-size:0.8rem; color:var(--text-light); margin-bottom:12px;">Output & Validation</div>
+            <ul class="pillar-list">
+              <li>RevOps & Systems</li>
+              <li>Pricing & Packaging</li>
+              <li>CS & Expansion</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-comp">
+      <div class="container">
+        <div style="text-align: center;">
+          <span class="eyebrow">The New Standard</span>
+          <h2>Why wait 8 weeks for a slide deck?</h2>
+        </div>
+
+        <div class="comp-table">
+          <div class="comp-traditional">
+            <h4 style="margin-bottom:20px; color:var(--text-light);">Traditional Consulting</h4>
+            <div class="trad-row"><span>Timeline</span> <span>6-12 Weeks</span></div>
+            <div class="trad-row"><span>Method</span> <span>Interviews & Opinions</span></div>
+            <div class="trad-row"><span>Output</span> <span>Static PDF Deck</span></div>
+            <div class="trad-row"><span>Continuity</span> <span>None (Project based)</span></div>
+            <div class="trad-row"><span>Cost</span> <span>€25k - €50k+</span></div>
+          </div>
+
+          <div class="comp-caugia">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+              <h3 style="color:white; margin:0;">Caugia Engine</h3>
+              <span style="background:#22c55e; color:#064e3b; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:4px; text-transform:uppercase;">Recommended</span>
+            </div>
+            
+            <div class="comp-row"><span>Timeline</span> <strong>45 Minutes</strong></div>
+            <div class="comp-row"><span>Method</span> <strong>Algorithmic 4-Force Analysis</strong></div>
+            <div class="comp-row"><span>Output</span> <strong>Dynamic Roadmap & Scores</strong></div>
+            <div class="comp-row"><span>Continuity</span> <strong>Available (AI Copilot)</strong></div>
+            <div class="comp-row"><span>Cost</span> <strong>Fraction of traditional</strong></div>
+            
+            <a href="#" class="btn" style="background:white; color:var(--primary); width:100%; margin-top:24px;">Start Free Analysis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2>Your GTM System is speaking.<br>Are you listening?</h2>
+      <a href="#" class="btn btn-primary" style="background:white; color:var(--accent); margin-top:24px;">Get your GTM Score</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 Caugia Consulting. Powered by the Grip Diamond™.
+    </div>
+  </footer>
+
+  <script>
+    // --- GRIP DIAMOND LOGIC ---
+    (function() {
+      const ctx = document.getElementById('diamondChart').getContext('2d');
+      
+      const chart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['G', 'R', 'I', 'P'],
+          datasets: [{
+            data: [45, 60, 85, 43],
+            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+            borderColor: '#2563eb',
+            borderWidth: 2,
+            pointBackgroundColor: '#1e293b',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#2563eb'
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: {
+            r: {
+              angleLines: { color: 'rgba(0,0,0,0.05)' },
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              pointLabels: { font: { weight: '800', size: 14 }, color: '#334155' },
+              suggestedMin: 0, suggestedMax: 100,
+              ticks: { display: false }
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // ARQUETYPE LOGIC
+      function updateDiagnosis(g, r, i, p) {
+        const avg = (g+r+i+p)/4;
+        const scores = [{k:'g',v:g}, {k:'r',v:r}, {k:'i',v:i}, {k:'p',v:p}].sort((a,b)=>a.v-b.v);
+        const lowest = scores[0];
+        const highest = scores[3];
+
+        const elBox = document.getElementById('patternBox');
+        const elTitle = document.getElementById('patternTitle');
+        const elBody = document.getElementById('patternBody');
+        
+        let mode = 'mode-mid';
+        let title = 'Developing System';
+        let body = 'System is balanced but immature. Increase investment across all forces.';
+
+        // Logic Tree
+        if(avg > 80) {
+           title = 'The Precision Machine'; body = 'Elite performance. Focus on expansion.'; mode = 'mode-good';
+        } else if (lowest.k === 'p' && highest.k === 'i' && (highest.v - lowest.v > 30)) {
+           title = 'The Leaky Bucket'; body = 'High effort (I) with low outcome (P). You are burning fuel efficiently but not capturing value.'; mode = 'mode-bad';
+        } else if (lowest.k === 'i' && highest.k === 'g') {
+           title = 'The Ivory Tower'; body = 'Great strategy (G) but disconnected from execution (I). The plan is not reaching the street.'; mode = 'mode-warn';
+        } else if (lowest.k === 'r' && highest.v > 70) {
+           title = 'The Burnout Star'; body = 'High performance is driven by heroics, not resources. System failure risk is high.'; mode = 'mode-warn';
+        } else if (lowest.k === 'g' && highest.k === 'i') {
+           title = 'Headless Chicken'; body = 'Fast execution without direction. You are running fast in the wrong direction.'; mode = 'mode-bad';
+        }
+
+        // Apply
+        elTitle.innerText = title;
+        elBody.innerText = body;
+        elBox.className = `pattern-card ${mode}`;
+      }
+
+      // Event Listeners
+      const inputs = ['g','r','i','p'];
+      inputs.forEach(k => {
+        document.getElementById(`input-${k}`).addEventListener('input', (e) => {
+          const val = parseInt(e.target.value);
+          document.getElementById(`val-${k}`).innerText = val;
+          
+          // Update Chart
+          const vals = inputs.map(id => parseInt(document.getElementById(`input-${id}`).value));
+          chart.data.datasets[0].data = vals;
+          chart.update();
+          
+          // Update Score & Logic
+          const avg = Math.round(vals.reduce((a,b)=>a+b,0)/4);
+          document.getElementById('totalScore').innerText = avg;
+          updateDiagnosis(vals[0], vals[1], vals[2], vals[3]);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
