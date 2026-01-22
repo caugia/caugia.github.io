@@ -107,14 +107,15 @@
     return String(n).padStart(2, "0");
   }
 
-  // 1..5 -> 0..100
+  // Converts a 1..5 average to 0..100
   function toScore100(avg1to5) {
     return Math.round(((avg1to5 - 1) / 4) * 100);
   }
 
+  // Returns 1..5 index for a 5-option scale question; otherwise null
   function optionsIndex1to5(question, answerValue) {
     const opts = Array.isArray(question.options) ? question.options : [];
-    if (opts.length !== 5) return null; // only score 5-point scales
+    if (opts.length !== 5) return null;
     const idx = opts.indexOf(answerValue);
     if (idx === -1) return null;
     return idx + 1;
@@ -249,7 +250,7 @@
 
       const input = document.createElement("input");
       input.type = "radio";
-      input.name = key; // unified naming
+      input.name = key;
       input.value = opt;
       input.style.marginRight = "10px";
 
@@ -261,7 +262,6 @@
 
       input.addEventListener("change", () => {
         STATE.answers[key] = opt;
-        // Re-render to refresh selection styling
         if (UI.body) UI.body.innerHTML = "";
         renderRadio(q);
       });
@@ -291,7 +291,7 @@
     input.style.padding = "12px";
     input.style.border = "1px solid #e2e8f0";
     input.style.borderRadius = "8px";
-    input.name = key; // unified naming
+    input.name = key;
 
     if (STATE.answers[key]) input.value = STATE.answers[key];
 
@@ -314,7 +314,7 @@
     input.style.padding = "12px";
     input.style.border = "1px solid #e2e8f0";
     input.style.borderRadius = "8px";
-    input.name = key; // unified naming
+    input.name = key;
 
     if (STATE.answers[key]) input.value = STATE.answers[key];
 
@@ -346,7 +346,6 @@
       return true;
     }
 
-    // For non-group
     const k = qKey(q.id);
     if (!isNonEmpty(STATE.answers[k])) {
       alert("Please answer the question.");
@@ -433,6 +432,7 @@
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
 
+      // IMPORTANT: accept previous saved schema versions too, but normalize
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
@@ -495,24 +495,18 @@
 
   // --- 11. LEGACY-FRIENDLY BUILDERS (customer/context/answers + scores) ---
   function buildLegacyCustomer(answersRaw) {
-    // v9 keys
+    // IMPORTANT: QUESTIONS v2.0 group(1) contains ONLY these 5 fields
     return {
       fullname: answersRaw["q1__fullname"] || "",
       role: answersRaw["q1__role"] || "",
       email: answersRaw["q1__email"] || "",
-      mobile: answersRaw["q1__mobile"] || "",
       company: answersRaw["q1__company"] || "",
-      website: answersRaw["q1__website"] || "",
-      sector: answersRaw["q1__sector"] || "",
-      country: answersRaw["q1__country"] || "",
-      activity: answersRaw["q1__activity"] || "",
-      companysize: answersRaw["q1__companysize"] || "",
-      payment_id: answersRaw["q1__payment_id"] || ""
+      website: answersRaw["q1__website"] || ""
     };
   }
 
   function buildLegacyContext(answersRaw) {
-    // This keeps the older clean mapping (Context metrics + Q6..Q25)
+    // Context groups (2..5) + Q6..Q25
     return {
       arr: answersRaw["q2__arr"] || "",
       growth_rate: answersRaw["q2__growth_rate"] || "",
@@ -559,13 +553,16 @@
     };
   }
 
-  function buildLegacyAnswersQ(answersRaw) {
-    // Only the scored pillar answers in Q format (Q1001.. etc)
+  function buildLegacyAnswersQOnly(answersRaw) {
+    // Only scored pillar answers in Q format (Q1001.. etc).
+    // Excludes Context Q1..Q25 to keep Make clean.
     const out = {};
     Object.keys(answersRaw).forEach((k) => {
       if (!/^q\d+$/.test(k)) return;
-      const id = k.slice(1); // remove leading q
-      out[`Q${id}`] = answersRaw[k];
+      const idNum = Number(k.slice(1));
+      if (!Number.isFinite(idNum)) return;
+      if (idNum < 1000) return;
+      out[`Q${idNum}`] = answersRaw[k];
     });
     return out;
   }
@@ -576,10 +573,8 @@
     const buckets = {}; // pillar_index -> {sum,count}
 
     window.QUESTIONS.forEach((q) => {
-      // Exclude Context pillar (0)
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
 
-      // Score only scale (and/or any question with 5 options)
       const opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -604,9 +599,7 @@
   }
 
   function buildQuestionMapLegacy() {
-    // Matches your older "question_map" style:
-    // - group fields mapped by field name
-    // - all other questions mapped by Q{id}
+    // Legacy: field labels + Q{id} -> title
     const map = {};
 
     window.QUESTIONS.forEach((q) => {
@@ -650,12 +643,9 @@
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
 
-    // Important: answers collection in Make should contain:
-    // - Qxxxx keys
-    // - score_01..score_12 keys
-    const answersQ = buildLegacyAnswersQ(answersRaw);
+    // answers: Q1001.. + score_01..score_12
+    const answersQ = buildLegacyAnswersQOnly(answersRaw);
     const scores = computePillarScores(answersRaw);
-
     const answers = Object.assign({}, answersQ, scores);
 
     const payload = {
@@ -669,7 +659,7 @@
       },
       message: message,
 
-      // -------- V9 debug (keep) --------
+      // -------- V9 debug --------
       answers_raw: answersRaw,
       questions_map: questionsMap,
       full_report: fullReport,
@@ -677,7 +667,7 @@
       // -------- Legacy-friendly (fast in Make) --------
       customer: customer,
       context: context,
-      answers: answers, // <- this is where score_01..score_12 live (like your old webhook)
+      answers: answers, // includes score_01..score_12
       question_map: buildQuestionMapLegacy()
     };
 
@@ -696,14 +686,14 @@
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
       if (isTest) {
-        // show scores in alert for sanity
         const scoreLines = Object.keys(scores)
+          .sort()
           .map((k) => `${k}: ${scores[k]}`)
           .join("\n");
 
         alert(
           `✅ TEST SUCCESVOL!\n\n` +
-            `Verzonden: ${fullReport.length} items.\n\n` +
+            `Verzonden: full_report(${fullReport.length})\n\n` +
             `Scores (answers.score_XX):\n${scoreLines}\n\n` +
             `Check Make.com: customer/context/answers + full_report/questions_map`
         );
