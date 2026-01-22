@@ -1,8 +1,10 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.0 (DETERMINISTIC Q/A EDITION)
+   CAUGIA INTELLIGENCE ENGINE v9.0 (DETERMINISTIC + SCORES)
    - Single key standard: q{questionId} and q{questionId}__{fieldName}
    - Always builds full_report with ALL questions (even unanswered)
-   - Sends: metadata, message, answers_raw, full_report, questions_map
+   - Sends V9 debug payload: metadata, message, answers_raw, full_report, questions_map
+   - ALSO sends legacy-friendly blocks (clean + fast in Make):
+       customer, context, answers (Q-keys), score_01..score_12, question_map
    - Safe loadState (schema guard) and autosave
    =========================================================== */
 
@@ -99,6 +101,23 @@
   function scrollQuestionCardTop() {
     const card = document.getElementById("gi-question-card");
     if (card) card.scrollTop = 0;
+  }
+
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  // 1..5 -> 0..100
+  function toScore100(avg1to5) {
+    return Math.round(((avg1to5 - 1) / 4) * 100);
+  }
+
+  function optionsIndex1to5(question, answerValue) {
+    const opts = Array.isArray(question.options) ? question.options : [];
+    if (opts.length !== 5) return null; // only score 5-point scales
+    const idx = opts.indexOf(answerValue);
+    if (idx === -1) return null;
+    return idx + 1;
   }
 
   // --- 5. INITIALIZATION ---
@@ -256,7 +275,7 @@
   }
 
   function renderScale(q) {
-    // In your current design, scale behaves like radio options
+    // scale behaves like radio options
     renderRadio(q);
   }
 
@@ -414,7 +433,6 @@
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
 
-      // Adopt safe fields
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
@@ -426,7 +444,7 @@
     }
   }
 
-  // --- 10. PAYLOAD BUILDERS ---
+  // --- 10. PAYLOAD BUILDERS (V9) ---
   function buildQuestionsMap() {
     return window.QUESTIONS.map((q) => ({
       id: q.id,
@@ -475,15 +493,144 @@
     return report;
   }
 
-  // --- 11. SUBMISSION ---
+  // --- 11. LEGACY-FRIENDLY BUILDERS (customer/context/answers + scores) ---
+  function buildLegacyCustomer(answersRaw) {
+    // v9 keys
+    return {
+      fullname: answersRaw["q1__fullname"] || "",
+      role: answersRaw["q1__role"] || "",
+      email: answersRaw["q1__email"] || "",
+      mobile: answersRaw["q1__mobile"] || "",
+      company: answersRaw["q1__company"] || "",
+      website: answersRaw["q1__website"] || "",
+      sector: answersRaw["q1__sector"] || "",
+      country: answersRaw["q1__country"] || "",
+      activity: answersRaw["q1__activity"] || "",
+      companysize: answersRaw["q1__companysize"] || "",
+      payment_id: answersRaw["q1__payment_id"] || ""
+    };
+  }
+
+  function buildLegacyContext(answersRaw) {
+    // This keeps the older clean mapping (Context metrics + Q6..Q25)
+    return {
+      arr: answersRaw["q2__arr"] || "",
+      growth_rate: answersRaw["q2__growth_rate"] || "",
+      nrr: answersRaw["q2__nrr"] || "",
+      gross_margin: answersRaw["q2__gross_margin"] || "",
+      burn_multiple: answersRaw["q2__burn_multiple"] || "",
+
+      sales_headcount: answersRaw["q3__sales_headcount"] || "",
+      sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
+      marketing_headcount: answersRaw["q3__marketing_headcount"] || "",
+      cs_headcount: answersRaw["q3__cs_headcount"] || "",
+      revops_headcount: answersRaw["q3__revops_headcount"] || "",
+
+      arr_target: answersRaw["q4__arr_target"] || "",
+      quota_attainment: answersRaw["q4__quota_attainment"] || "",
+      cac_payback: answersRaw["q4__cac_payback"] || "",
+      ltv_cac: answersRaw["q4__ltv_cac"] || "",
+
+      win_rate: answersRaw["q5__win_rate"] || "",
+      sales_cycle: answersRaw["q5__sales_cycle"] || "",
+      pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "",
+      churn_rate: answersRaw["q5__churn_rate"] || "",
+
+      Q6: answersRaw["q6"] || "",
+      Q7: answersRaw["q7"] || "",
+      Q8: answersRaw["q8"] || "",
+      Q9: answersRaw["q9"] || "",
+      Q10: answersRaw["q10"] || "",
+      Q11: answersRaw["q11"] || "",
+      Q12: answersRaw["q12"] || "",
+      Q13: answersRaw["q13"] || "",
+      Q14: answersRaw["q14"] || "",
+      Q15: answersRaw["q15"] || "",
+      Q16: answersRaw["q16"] || "",
+      Q17: answersRaw["q17"] || "",
+      Q18: answersRaw["q18"] || "",
+      Q19: answersRaw["q19"] || "",
+      Q20: answersRaw["q20"] || "",
+      Q21: answersRaw["q21"] || "",
+      Q22: answersRaw["q22"] || "",
+      Q23: answersRaw["q23"] || "",
+      Q24: answersRaw["q24"] || "",
+      Q25: answersRaw["q25"] || ""
+    };
+  }
+
+  function buildLegacyAnswersQ(answersRaw) {
+    // Only the scored pillar answers in Q format (Q1001.. etc)
+    const out = {};
+    Object.keys(answersRaw).forEach((k) => {
+      if (!/^q\d+$/.test(k)) return;
+      const id = k.slice(1); // remove leading q
+      out[`Q${id}`] = answersRaw[k];
+    });
+    return out;
+  }
+
+  function computePillarScores(answersRaw) {
+    // Scores for pillars 1..12 (pillar_index in QUESTIONS)
+    // Only uses 5-point scale questions (options length 5)
+    const buckets = {}; // pillar_index -> {sum,count}
+
+    window.QUESTIONS.forEach((q) => {
+      // Exclude Context pillar (0)
+      if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
+
+      // Score only scale (and/or any question with 5 options)
+      const opts = Array.isArray(q.options) ? q.options : [];
+      if (opts.length !== 5) return;
+
+      const key = qKey(q.id);
+      const val = answersRaw[key];
+      if (!isNonEmpty(val)) return;
+
+      const score1to5 = optionsIndex1to5(q, val);
+      if (!score1to5) return;
+
+      if (!buckets[q.pillar]) buckets[q.pillar] = { sum: 0, count: 0 };
+      buckets[q.pillar].sum += score1to5;
+      buckets[q.pillar].count += 1;
+    });
+
+    const out = {};
+    for (let p = 1; p <= 12; p++) {
+      const b = buckets[p];
+      out[`score_${pad2(p)}`] = b && b.count ? toScore100(b.sum / b.count) : null;
+    }
+    return out;
+  }
+
+  function buildQuestionMapLegacy() {
+    // Matches your older "question_map" style:
+    // - group fields mapped by field name
+    // - all other questions mapped by Q{id}
+    const map = {};
+
+    window.QUESTIONS.forEach((q) => {
+      if (q.type === "group" && Array.isArray(q.fields)) {
+        q.fields.forEach((f) => {
+          map[f.name] = f.label;
+        });
+        return;
+      }
+      map[`Q${q.id}`] = q.title;
+    });
+
+    return map;
+  }
+
+  // --- 12. SUBMISSION ---
   async function submitData(isTest = false) {
     const answersRaw = STATE.answers || {};
     const questionsMap = buildQuestionsMap();
 
-    // Always build deterministically
+    // V9 deterministic report
     let fullReport = buildFullReport(answersRaw);
 
-    // If truly empty (no keys) add a visible test entry (optional but keeps Make from weird empty logic)
+    // message
     let message = isTest ? "Test Submission" : "Official Submission";
     if (Object.keys(answersRaw).length === 0) {
       message = "⚠️ TEST DATA (Input was empty)";
@@ -499,7 +646,20 @@
       ];
     }
 
+    // Legacy clean blocks
+    const customer = buildLegacyCustomer(answersRaw);
+    const context = buildLegacyContext(answersRaw);
+
+    // Important: answers collection in Make should contain:
+    // - Qxxxx keys
+    // - score_01..score_12 keys
+    const answersQ = buildLegacyAnswersQ(answersRaw);
+    const scores = computePillarScores(answersRaw);
+
+    const answers = Object.assign({}, answersQ, scores);
+
     const payload = {
+      // -------- V9 header --------
       metadata: {
         timestamp: new Date().toISOString(),
         schema_version: CONFIG.schemaVersion,
@@ -509,14 +669,16 @@
       },
       message: message,
 
-      // Raw storage object (for legacy or debugging)
+      // -------- V9 debug (keep) --------
       answers_raw: answersRaw,
-
-      // Canonical map of what the questions are
       questions_map: questionsMap,
+      full_report: fullReport,
 
-      // Canonical flattened answers (always includes all questions)
-      full_report: fullReport
+      // -------- Legacy-friendly (fast in Make) --------
+      customer: customer,
+      context: context,
+      answers: answers, // <- this is where score_01..score_12 live (like your old webhook)
+      question_map: buildQuestionMapLegacy()
     };
 
     console.log("🚀 Sending Payload to Make:", payload);
@@ -534,7 +696,17 @@
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
       if (isTest) {
-        alert(`✅ TEST SUCCESVOL!\n\nVerzonden: ${fullReport.length} items.\nCheck Make.com voor 'full_report' en 'questions_map'.`);
+        // show scores in alert for sanity
+        const scoreLines = Object.keys(scores)
+          .map((k) => `${k}: ${scores[k]}`)
+          .join("\n");
+
+        alert(
+          `✅ TEST SUCCESVOL!\n\n` +
+            `Verzonden: ${fullReport.length} items.\n\n` +
+            `Scores (answers.score_XX):\n${scoreLines}\n\n` +
+            `Check Make.com: customer/context/answers + full_report/questions_map`
+        );
       } else {
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
@@ -548,7 +720,7 @@
     }
   }
 
-  // --- 12. CLEAR / RESET / MANUAL SAVE ---
+  // --- 13. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
     const q = getCurrentQuestion();
     if (!q) return;
@@ -575,7 +747,7 @@
     alert("✅ Saved.");
   }
 
-  // --- 13. EVENT BINDING ---
+  // --- 14. EVENT BINDING ---
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
 
@@ -592,6 +764,6 @@
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
-  // --- 14. START ---
+  // --- 15. START ---
   init();
 })();
