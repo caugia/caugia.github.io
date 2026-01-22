@@ -85,9 +85,9 @@
     .health-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
     .health-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; color: #1e293b; }
     .health-sub { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-top: 4px; }
-    .health-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .health-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; transition: color 0.3s; }
 
-    .insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.3s ease; }
+    .insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.5s ease; }
     .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
     .insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
     .insight-box.mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
@@ -113,12 +113,22 @@
     .slider-wrap { padding-right: 10px; }
     
     input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); margin-top: -6px; transition: background 0.2s ease; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); margin-top: -6px; transition: background 0.2s ease, transform 0.2s; }
     input.range-warn::-webkit-slider-thumb { background: #d97706; }
     input.range-bad::-webkit-slider-thumb { background: #dc2626; }
     
+    /* Active state for auto-play visual cue */
+    .widget-card.playing input[type=range]::-webkit-slider-thumb { transform: scale(1.1); box-shadow: 0 0 10px rgba(37, 99, 235, 0.3); }
+
     .chart-box { width: 100%; height: 200px; display: flex; justify-content: center; }
     .widget-caption { text-align: center; margin-top: 20px; color: #94a3b8; font-weight: 600; font-size: 0.8rem; }
+    
+    .demo-badge { 
+      background: #0f172a; color: white; padding: 4px 8px; border-radius: 4px; 
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+      position: absolute; top: 36px; right: 36px; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .playing .demo-badge { opacity: 0.6; }
 
     /* Content Cards */
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 38px; }
@@ -143,8 +153,6 @@
 
     /* --- MOBILE RESPONSIVENESS (Page Specific) --- */
     @media (max-width: 980px) {
-      
-      /* Hero Fix */
       .hero { 
           padding-top: 30px !important; 
           padding-bottom: 50px !important; 
@@ -155,11 +163,8 @@
       .hero > div:first-child { padding-left: 12px; padding-right: 12px; }
       .hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
       .hero-desc { font-size: 1.05rem; line-height: 1.5; }
-      
-      /* Center Buttons in Hero */
       .hero > div:first-child > div[style*="display:flex"] { justify-content: center; }
 
-      /* Pillars */
       .pillars-card { padding: 24px 20px; margin-top: 30px; text-align: left; }
       .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
       .pillar-grid > div { display: contents; }
@@ -168,31 +173,23 @@
       .d-text { display: none; }
       .m-text { display: inline; }
 
-      /* Widget */
       .widget-card { margin-top: 0; padding: 24px 20px; box-shadow: none; border: 1px solid var(--line); }
       .health-score { font-size: 3rem; }
       
       .slider-wrap { padding: 10px 0; }
       input[type=range] { height: 6px; }
       input[type=range]::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -9px; }
-
       .widget-layout { display: grid !important; grid-template-columns: 1fr !important; gap: 30px !important; }
       .chart-col { margin-top: 0; }
-
-      /* Comparison */
-      .comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
       
-      .comp-col-left { background: #f1f5f9; padding: 24px; border-radius: 16px !important; border: 1px solid var(--line); opacity: 1; }
-      .comp-col-left h4 { font-size: 0.9rem; margin-bottom: 12px; }
-      .comp-col-left .comp-item { padding: 8px 0; border-color: rgba(0,0,0,0.05); }
-      .comp-col-left .comp-val { font-size: 0.85rem; }
+      .demo-badge { top: 20px; right: 20px; }
 
+      .comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
+      .comp-col-left { background: #f1f5f9; padding: 24px; border-radius: 16px !important; border: 1px solid var(--line); opacity: 1; }
       .comp-col-right { padding: 30px 24px; border-radius: 16px !important; border: 1px solid rgba(0,86,179,0.15) !important; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); z-index: 2; }
       
-      /* Report */
       .report-layout { gap: 40px !important; grid-template-columns: 1fr !important; }
       .report-visual { height: 280px; }
-      
       .grid-3 { grid-template-columns: 1fr !important; }
     }
   </style>
@@ -214,7 +211,7 @@
       </ul>
       
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-secondary">Contact</a>
+        <a href="contact.html" class="btn btn-primary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
     </div>
@@ -343,7 +340,8 @@
         </div>
       </div>
 
-      <aside class="widget-card" id="score">
+      <aside class="widget-card playing" id="scoreWidget">
+        <div class="demo-badge">Auto Demo</div>
         <div class="health-header">
           <div>
             <div class="health-title">Your GRIP Health</div>
@@ -408,7 +406,7 @@
           </div>
         </div>
 
-        <div class="widget-caption">The system shape across four forces</div>
+        <div class="widget-caption">Interact with sliders to stop demo</div>
       </aside>
     </section>
 
@@ -582,6 +580,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: { duration: 800, easing: 'easeOutQuart' }, // Smoother animation
           plugins: {
             legend: { display: false },
             tooltip: { enabled: true }
@@ -606,156 +605,133 @@
       
       // LOGIC: Determining the Primary Constraint
       function getArchetype(g, r, i, p) {
-        const scores = [
-          { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
-        ];
-        // Sort lowest to highest
-        scores.sort((a, b) => a.v - b.v);
-        
+        const scores = [{k:'g',v:g},{k:'r',v:r},{k:'i',v:i},{k:'p',v:p}];
+        scores.sort((a,b)=>a.v-b.v);
         const avg = (g+r+i+p)/4;
         const lowest = scores[0];
-        const secondLowest = scores[1]; // Corrected reference
         const highest = scores[3];
 
-        // 1. SYSTEMIC STATES (Extremes)
-        if (avg < 35) return { 
-          title: "The Stalled Engine", 
-          body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", 
-          mode: "mode-bad" 
-        };
-        if (avg < 45 && highest.v < 60) return {
-          title: "The Fragile Foundation",
-          body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.",
-          mode: "mode-bad"
-        };
-        if (avg > 85) return { 
-          title: "The Precision Machine", 
-          body: "Elite performance. Focus on incremental optimization and expansion.", 
-          mode: "mode-good" 
-        };
-        if (avg > 75 && lowest.v > 65) return {
-          title: "The Balanced Engine",
-          body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
-          mode: "mode-good" 
-        };
+        if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
+        if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
+        if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
+        if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
 
-        // 2. CONSTRAINT LOGIC
-        
-        // --- GUIDANCE IS LOWEST ---
-        if (lowest.k === 'g') {
-           if (highest.k === 'i' && highest.v > 65) return {
-             title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn"
-           };
-           if (highest.k === 'r' && highest.v > 65) return {
-             title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn"
-           };
-           if (secondLowest.k === 'p') return {
-             title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad"
-           };
-           return {
-             title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn"
-           };
-        }
-
-        // --- RESOURCES IS LOWEST ---
-        if (lowest.k === 'r') {
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn"
-           };
-           if (highest.k === 'i' && highest.v > 70) return {
-             title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad"
-           };
-           if (secondLowest.k === 'p') return {
-             title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad"
-           };
-           return {
-             title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn"
-           };
-        }
-
-        // --- IMPLEMENTATION IS LOWEST ---
-        if (lowest.k === 'i') {
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad"
-           };
-           if (highest.k === 'p' && highest.v > 60) return {
-             title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn"
-           };
-           if (secondLowest.k === 'r') return {
-             title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad"
-           };
-           return {
-             title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn"
-           };
-        }
-
-        // --- PERFORMANCE IS LOWEST ---
+        if (lowest.k === 'g') return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
+        if (lowest.k === 'r') return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
+        if (lowest.k === 'i') return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
         if (lowest.k === 'p') {
-           if (highest.k === 'i' && highest.v > 70) return {
-             title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad"
-           };
-           if (highest.k === 'g' && highest.v > 70) return {
-             title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn"
-           };
-           if (highest.k === 'r' && highest.v > 70) return {
-             title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad"
-           };
-           return {
-             title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid"
-           };
+           if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
+           return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
         }
-
-        // Fallback
         return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
       }
 
-      function updateSliderColor(id, val) {
-        const el = document.getElementById(id);
-        el.className = ""; 
-        if(val < 50) el.classList.add("range-bad");
-        else if(val < 70) el.classList.add("range-warn");
-      }
-
-      function updateChart() {
-        const g = parseInt(document.getElementById("input-g").value, 10);
-        const r = parseInt(document.getElementById("input-r").value, 10);
-        const i = parseInt(document.getElementById("input-i").value, 10);
-        const p = parseInt(document.getElementById("input-p").value, 10);
-
-        document.getElementById("val-g").textContent = g;
-        document.getElementById("val-r").textContent = r;
-        document.getElementById("val-i").textContent = i;
-        document.getElementById("val-p").textContent = p;
-
-        updateSliderColor("input-g", g);
-        updateSliderColor("input-r", r);
-        updateSliderColor("input-i", i);
-        updateSliderColor("input-p", p);
-
-        document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
-
+      function updateUI(g, r, i, p) {
+        // Update Chart
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
         
-        // UPDATE ARCHETYPE UI
+        // Update Sliders visually (without triggering events)
+        document.getElementById("input-g").value = g;
+        document.getElementById("input-r").value = r;
+        document.getElementById("input-i").value = i;
+        document.getElementById("input-p").value = p;
+
+        // Update Numbers
+        document.getElementById("val-g").textContent = Math.round(g);
+        document.getElementById("val-r").textContent = Math.round(r);
+        document.getElementById("val-i").textContent = Math.round(i);
+        document.getElementById("val-p").textContent = Math.round(p);
+        
+        // Update Colors
+        ["g","r","i","p"].forEach(k => {
+          const val = eval(k);
+          const el = document.getElementById("input-"+k);
+          el.className = val < 50 ? "range-bad" : (val < 70 ? "range-warn" : "");
+        });
+
+        // Update Total
+        document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
+
+        // Update Archetype Text
         const arch = getArchetype(g, r, i, p);
         const boxEl = document.getElementById("archetypeBox");
-        
         document.getElementById("archetypeTitle").textContent = arch.title;
         document.getElementById("archetypeBody").textContent = arch.body;
+        boxEl.className = "insight-box " + arch.mode;
+      }
+
+      // --- AUTO DEMO LOGIC ---
+      let demoActive = true;
+      let demoInterval;
+      
+      // Keyframes for the movie
+      const keyframes = [
+        { g: 40, r: 50, i: 85, p: 35 }, // Leaky Bucket
+        { g: 85, r: 60, i: 30, p: 40 }, // Ivory Tower
+        { g: 30, r: 85, i: 80, p: 35 }, // Burnout / Tooling Debt
+        { g: 80, r: 85, i: 90, p: 85 }  // Precision Machine
+      ];
+      
+      let currentFrame = 0;
+      let currentVals = { ...keyframes[0] };
+      
+      function lerp(start, end, amt) {
+        return (1 - amt) * start + amt * end;
+      }
+
+      function playDemo() {
+        if (!demoActive) return;
         
-        // Remove old mode classes
-        boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
-        // Add new mode class
-        boxEl.classList.add(arch.mode);
+        const target = keyframes[currentFrame];
+        const speed = 0.04; // Speed of morphing (lower is slower)
+        
+        // Interpolate towards target
+        currentVals.g = lerp(currentVals.g, target.g, speed);
+        currentVals.r = lerp(currentVals.r, target.r, speed);
+        currentVals.i = lerp(currentVals.i, target.i, speed);
+        currentVals.p = lerp(currentVals.p, target.p, speed);
+
+        updateUI(currentVals.g, currentVals.r, currentVals.i, currentVals.p);
+
+        // Check if close to target, then switch frame
+        if (Math.abs(currentVals.g - target.g) < 1 && Math.abs(currentVals.p - target.p) < 1) {
+          currentFrame = (currentFrame + 1) % keyframes.length;
+        }
+
+        requestAnimationFrame(playDemo);
+      }
+
+      // Start the movie
+      requestAnimationFrame(playDemo);
+
+      // --- USER INTERACTION ---
+      function stopDemo() {
+        if (demoActive) {
+          demoActive = false;
+          document.getElementById("scoreWidget").classList.remove("playing");
+          // Slight delay to ensure UI feels responsive to the user's touch immediately
+        }
       }
 
       ["input-g","input-r","input-i","input-p"].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener("input", updateChart);
+        // Stop demo on any interaction
+        el.addEventListener("mousedown", stopDemo);
+        el.addEventListener("touchstart", stopDemo);
+        
+        // Normal update logic
+        el.addEventListener("input", (e) => {
+          stopDemo(); // Ensure it stops
+          // Read actual values from sliders now that user is in control
+          const g = parseInt(document.getElementById("input-g").value);
+          const r = parseInt(document.getElementById("input-r").value);
+          const i = parseInt(document.getElementById("input-i").value);
+          const p = parseInt(document.getElementById("input-p").value);
+          updateUI(g, r, i, p);
+        });
       });
 
-      updateChart();
     })();
   </script>
 </body>
