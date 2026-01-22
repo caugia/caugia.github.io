@@ -30,6 +30,13 @@
 
   <style>
     /* --- PAGE SPECIFIC STYLES (About Only) --- */
+    
+    :root {
+      --accent-blue: #3b82f6;   /* G */
+      --accent-green: #10b981;  /* I */
+      --accent-orange: #f59e0b; /* R */
+      --accent-red: #ef4444;    /* P */
+    }
 
     /* Hero */
     .about-hero { text-align: center; max-width: 860px; margin: 0 auto; padding-top: 80px; padding-bottom: 60px; }
@@ -41,70 +48,108 @@
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
     .mission-content p { font-size: 1.05rem; line-height: 1.6; color: var(--text-body); }
       
-    /* Diamond Container */
+    /* Diamond Visual */
     .diamond-col { text-align: center; }
     .diamond-title { 
-        font-family: 'Inter', sans-serif; 
-        font-weight: 800; 
-        font-size: 0.9rem; 
-        color: var(--primary); 
-        text-transform: uppercase; 
-        letter-spacing: 0.1em; 
-        margin-bottom: 20px;
-        display: inline-block;
-        border-bottom: 2px solid var(--accent);
-        padding-bottom: 4px;
+        font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.9rem; color: var(--primary); 
+        text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;
+        display: inline-block; border-bottom: 2px solid var(--accent); padding-bottom: 4px;
     }
-
     .diamond-visual {
-      background: #f8fafc;
-      border-radius: 24px; 
-      border: 1px solid var(--line);
+      background: #f8fafc; border-radius: 24px; border: 1px solid var(--line);
       display: flex; align-items: center; justify-content: center;
-      box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
-      position: relative;
-      overflow: hidden; /* Ensures smooth corners */
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); position: relative; overflow: hidden; 
     }
-      
     .grip-diamond-svg { width: 100%; height: auto; max-height: 400px; } 
     .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1; opacity: 0.15; }
     .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
-    
-    .grip-icon { 
-      fill: none; stroke: var(--primary); stroke-width: 1.5; 
-      stroke-linecap: round; stroke-linejoin: round; 
-    }
-    
+    .grip-icon { fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .grip-label-ext {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 800;
-      fill: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800; fill: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.08em;
     }
 
-    /* GRIP Cards */
-    .section-grip { background: #f8fafc; padding: 100px 0; }
+    /* GRIP Philosophy Cards */
+    .section-grip { background: #f8fafc; padding: 100px 0; padding-bottom: 40px; } /* Reduced bottom padding to connect with architecture */
     .grip-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
     .grip-intro h2 { font-size: 2.2rem; margin-bottom: 16px; }
     .grip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: stretch; }
+    
     .grip-card {
       background: var(--white); padding: 32px 24px; border-radius: 16px;
       border: 1px solid var(--line); box-shadow: var(--shadow-sm);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-align: center; height: 100%; display: flex; flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-align: center; height: 100%; display: flex; flex-direction: column; cursor: default;
     }
-    .grip-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: #bfdbfe; }
+    /* Interactive Hover States for Cards */
+    .grip-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
+    .grip-card[data-force="g"]:hover { border-color: var(--accent-blue); }
+    .grip-card[data-force="r"]:hover { border-color: var(--accent-orange); }
+    .grip-card[data-force="i"]:hover { border-color: var(--accent-green); }
+    .grip-card[data-force="p"]:hover { border-color: var(--accent-red); }
+
     .grip-letter { 
       font-size: 2.5rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 20px; 
       display: inline-flex; align-items: center; justify-content: center;
       background: #eff6ff; width: 72px; height: 72px; border-radius: 16px;
-      margin-left: auto; margin-right: auto;
+      margin-left: auto; margin-right: auto; transition: background 0.3s, color 0.3s;
     }
+    /* Colorize letters on hover */
+    .grip-card[data-force="g"]:hover .grip-letter { background: var(--accent-blue); color: white; }
+    .grip-card[data-force="r"]:hover .grip-letter { background: var(--accent-orange); color: white; }
+    .grip-card[data-force="i"]:hover .grip-letter { background: var(--accent-green); color: white; }
+    .grip-card[data-force="p"]:hover .grip-letter { background: var(--accent-red); color: white; }
+
     .grip-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; color: var(--text-dark); }
     .grip-question { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; display: block; line-height: 1.4; }
     .grip-context { font-size: 0.9rem; color: #64748b; line-height: 1.5; margin: 0; flex-grow: 1; }
+
+    /* ARCHITECTURE SECTION (NEW) */
+    .section-architecture { background: #f8fafc; padding-bottom: 100px; }
+    .arch-container { 
+      background: white; border-radius: 24px; border: 1px solid var(--line); 
+      padding: 40px; max-width: 1000px; margin: 0 auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .arch-header { text-align: center; margin-bottom: 40px; }
+    .arch-header h3 { text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+    .arch-header h2 { font-size: 1.8rem; color: var(--primary); }
+
+    .arch-grid { 
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; 
+    }
+    @media (min-width: 1000px) { .arch-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .arch-pill {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 8px;
+      background: #f8fafc; border: 1px solid transparent;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+    .arch-pill.active {
+      opacity: 1; background: white; transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    /* Specific Active Colors */
+    .arch-pill.active-g { border-color: var(--accent-blue); background: #eff6ff; }
+    .arch-pill.active-r { border-color: var(--accent-orange); background: #fffbeb; }
+    .arch-pill.active-i { border-color: var(--accent-green); background: #f0fdf4; }
+    .arch-pill.active-p { border-color: var(--accent-red); background: #fef2f2; }
+
+    .arch-num { 
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; color: #cbd5e1; 
+      min-width: 18px;
+    }
+    .arch-name { font-size: 0.85rem; font-weight: 600; color: #475569; line-height: 1.3; }
+    
+    .active .arch-name { color: #0f172a; }
+    .active-g .arch-num { color: var(--accent-blue); }
+    .active-r .arch-num { color: var(--accent-orange); }
+    .active-i .arch-num { color: var(--accent-green); }
+    .active-p .arch-num { color: var(--accent-red); }
+
 
     /* Leadership Section */
     .section-lead { background: var(--white); padding: 100px 0; border-top: 1px solid var(--line); }
@@ -147,6 +192,7 @@
       .about-hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; }
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
       .grip-grid { grid-template-columns: 1fr; gap: 24px; }
+      .arch-grid { grid-template-columns: 1fr; } /* Stack pills on mobile */
       .lead-card { grid-template-columns: 1fr; }
       .lead-img-col { padding: 30px; border-right: none; border-bottom: 1px solid var(--line); }
       .lead-content { padding: 30px 24px; }
@@ -202,7 +248,7 @@
             Traditional consulting is linear: you pay for hours, you get slides. But revenue problems in SaaS are exponential. Processes break, tools accumulate, and complexity compounds faster than any consultant can fix manually.
           </p>
           <p style="margin-top:16px;">
-            We realized that to solve this at scale, we couldn't just 'consult.' We had to engineer a solution. Caugia exists to digitize the clarity of a Revenue Architect into the GRIP Diamond, a system you can own.
+            We realized that to solve this at scale, we couldn't just "consult." We had to engineer a solution. Caugia exists to digitize the clarity of a Revenue Architect into the <strong>GRIP Diamond</strong>, a system you can own.
           </p>
         </div>
           
@@ -269,29 +315,58 @@
         </div>
           
         <div class="grip-grid">
-          <div class="grip-card">
+          <div class="grip-card" data-force="g">
             <span class="grip-letter">G</span>
             <h3>Guidance</h3>
             <span class="grip-question">Do teams know exactly what to do?</span>
             <p class="grip-context">Strategy, targeting, and market clarity.</p>
           </div>
-          <div class="grip-card">
+          <div class="grip-card" data-force="r">
             <span class="grip-letter">R</span>
             <h3>Resources</h3>
             <span class="grip-question">Do teams have what they need?</span>
             <p class="grip-context">Product fit, pricing, talent, and tools.</p>
           </div>
-          <div class="grip-card">
+          <div class="grip-card" data-force="i">
             <span class="grip-letter">I</span>
             <h3>Implementation</h3>
             <span class="grip-question">Do teams execute the same way?</span>
             <p class="grip-context">Process, handoffs, and revenue ops.</p>
           </div>
-          <div class="grip-card">
+          <div class="grip-card" data-force="p">
             <span class="grip-letter">P</span>
             <h3>Performance</h3>
             <span class="grip-question">Does it deliver predictable results?</span>
             <p class="grip-context">Metrics, forecasting, and governance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-architecture">
+      <div class="container">
+        <div class="arch-container">
+          <div class="arch-header">
+            <h3>The System Blueprint</h3>
+            <h2>The 12 Core Pillars</h2>
+          </div>
+          
+          <div class="arch-grid">
+            <div class="arch-pill pill-g" id="pill-1"><span class="arch-num">01</span><span class="arch-name">GTM Strategy & Leadership</span></div>
+            <div class="arch-pill pill-g" id="pill-2"><span class="arch-num">02</span><span class="arch-name">Market Intelligence</span></div>
+            <div class="arch-pill pill-g" id="pill-3"><span class="arch-num">03</span><span class="arch-name">Product Marketing</span></div>
+            <div class="arch-pill pill-g" id="pill-12"><span class="arch-num">12</span><span class="arch-name">Leadership & Alignment</span></div>
+            
+            <div class="arch-pill pill-i" id="pill-4"><span class="arch-num">04</span><span class="arch-name">Demand Generation</span></div>
+            <div class="arch-pill pill-i" id="pill-5"><span class="arch-num">05</span><span class="arch-name">Sales Execution</span></div>
+            <div class="arch-pill pill-i" id="pill-6"><span class="arch-num">06</span><span class="arch-name">Customer Success</span></div>
+            
+            <div class="arch-pill pill-p" id="pill-7"><span class="arch-num">07</span><span class="arch-name">Revenue Operations</span></div>
+            <div class="arch-pill pill-p" id="pill-10"><span class="arch-num">10</span><span class="arch-name">Data & Insights</span></div>
+            <div class="arch-pill pill-p" id="pill-11"><span class="arch-num">11</span><span class="arch-name">Enablement</span></div>
+
+            <div class="arch-pill pill-r" id="pill-8"><span class="arch-num">08</span><span class="arch-name">Pricing & Packaging</span></div>
+            <div class="arch-pill pill-r" id="pill-9"><span class="arch-num">09</span><span class="arch-name">Brand & Communications</span></div>
           </div>
         </div>
       </div>
@@ -363,5 +438,31 @@
   </footer>
 
   <script src="assets/caugia-base.js"></script>
+  
+  <script>
+    // Interaction Logic for Pillars
+    (function(){
+      const cards = document.querySelectorAll('.grip-card');
+      
+      function highlightPillars(force) {
+        // Reset all
+        document.querySelectorAll('.arch-pill').forEach(p => {
+          p.className = p.className.replace(/active(-\w)?/g, '').trim();
+        });
+        
+        if(!force) return;
+        
+        // Highlight specific
+        document.querySelectorAll('.pill-' + force).forEach(p => {
+          p.classList.add('active', 'active-' + force);
+        });
+      }
+
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => highlightPillars(card.dataset.force));
+        card.addEventListener('mouseleave', () => highlightPillars(null));
+      });
+    })();
+  </script>
 </body>
 </html>
