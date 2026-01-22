@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,117 +62,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="assets/caugia-base.css">
+
   <style>
-    /* --- V3 CORE SYSTEM (MASTER CSS) --- */
-    :root{
-      --primary:#0056b3;
-      --primary-dark:#004494;
-      --text-dark:#0f172a;
-      --text-body:#475569;
-      --bg:#f8fafc;
-      --white:#ffffff;
-      --line:#e2e8f0;
-      --radius-md:14px;
-      --radius-lg:22px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-card:0 10px 30px -5px rgba(0,0,0,0.06);
-      --max:1200px;
-    }
+    /* --- PAGE SPECIFIC STYLES (Services Only) --- */
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; overflow-y: scroll; }
+    .services-hero { padding: 80px 0 60px; text-align: center; max-width: 860px; margin: 0 auto; }
     
-    body{
-      font-family:Inter, sans-serif;
-      background:var(--bg);
-      color:var(--text-dark);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    h1,h2,h3,h4{
-      font-family:Merriweather, serif;
-      color:var(--text-dark);
-      font-weight:900;
-      letter-spacing:-0.02em;
-    }
-
-    p{ color:var(--text-body); margin-bottom:1.5rem; }
-    a{ color:inherit; text-decoration:none; }
-    ul{ list-style:none; }
-
-    /* UNIFIED CONTAINER */
-    .container{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 24px;
-    }
-
-    section{ padding:80px 0; }
-
-    /* BUTTONS */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 32px; border-radius:999px; font-weight:700; font-size:0.95rem;
-      border:1px solid transparent; cursor:pointer; 
-      transition:background 0.2s ease, border-color 0.2s ease; 
-      white-space:nowrap;
-    }
-    .btn-primary{ background:var(--primary-dark); color:var(--white); box-shadow:0 4px 12px rgba(0,86,179,0.15); }
-    .btn-primary:hover{ background:#003370; }
-    .btn-outline{ background:transparent; color:var(--primary); border-color:var(--line); padding:14px 32px;}
-    .btn-outline:hover{ background:var(--white); border-color:var(--primary); }
-
-    /* HEADER */
-    header{
-      position:sticky; top:0; z-index:1000;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
-    }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
-    .nav-links{ display:flex; gap:32px; align-items:center; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    
-    .nav-actions { display: flex; gap: 12px; align-items: center; }
-
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    
-    /* Mobile Nav Overlay */
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
-    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-    .mobile-cta{ display:flex; gap:12px; flex-wrap:wrap; padding:10px 10px 0; }
-
-    /* --- PAGE SPECIFIC --- */
-
-    .services-hero{ padding:80px 0 60px; text-align:center; max-width:860px; margin:0 auto; }
-    .eyebrow{ 
-      display: inline-block; text-transform: uppercase; letter-spacing: 0.1em; 
-      font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 20px;
-      background: #eff6ff; padding: 6px 12px; border-radius: 4px;
-    }
-    .services-hero h1{ font-size:3.5rem; margin-bottom:24px; line-height:1.1; }
-    .services-hero p{ font-size:1.25rem; color:var(--text-body); line-height:1.6; }
+    .services-hero h1 { font-size: 3.5rem; margin-bottom: 24px; line-height: 1.1; }
+    .services-hero p { font-size: 1.25rem; color: var(--text-body); line-height: 1.6; }
 
     /* SERVICES GRID */
-    .services-grid{
-      display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; margin-top:40px; 
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 40px; 
       align-items: stretch;
     }
     
-    .service-card{
-      background:var(--white);
-      border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      padding:40px 32px;
-      box-shadow:var(--shadow-sm);
-      display:flex; flex-direction:column;
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column;
       height: 100%;
     }
-    .service-card:hover{ box-shadow:var(--shadow-card); border-color:#cbd5e1; }
+    .service-card:hover { box-shadow: var(--shadow-card); border-color: #cbd5e1; }
 
     /* Flagship Styling */
     .card-flagship {
@@ -189,39 +103,37 @@
     }
     .card-gated .service-title, .card-gated .service-price { opacity: 0.8; }
 
-    .service-pill{
-      display:inline-block; padding:6px 12px; background:#f1f5f9; color:#475569;
-      font-weight:700; font-size:0.75rem; border-radius:50px; margin-bottom:24px;
-      align-self:flex-start; text-transform:uppercase; letter-spacing:0.05em;
+    .service-pill {
+      display: inline-block; padding: 6px 12px; background: #f1f5f9; color: #475569;
+      font-weight: 700; font-size: 0.75rem; border-radius: 50px; margin-bottom: 24px;
+      align-self: flex-start; text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .pill-flagship{ background:#eff6ff; color:var(--primary); border:1px solid #bfdbfe; }
-    .pill-advisory{ background:#fdf4ff; color:#86198f; border:1px solid #fae8ff; }
+    .pill-flagship { background: #eff6ff; color: var(--primary); border: 1px solid #bfdbfe; }
+    .pill-advisory { background: #fdf4ff; color: #86198f; border: 1px solid #fae8ff; }
 
-    .service-title{ font-size:1.5rem; margin-bottom:12px; font-weight:800; color:var(--text-dark); font-family:Inter, sans-serif; }
+    .service-title { font-size: 1.5rem; margin-bottom: 12px; font-weight: 800; color: var(--text-dark); font-family: 'Inter', sans-serif; }
     
-    .service-desc{ 
-      font-size:0.95rem; color:var(--text-body); margin-bottom:32px; line-height: 1.5; 
+    .service-desc { 
+      font-size: 0.95rem; color: var(--text-body); margin-bottom: 32px; line-height: 1.5; 
       min-height: 170px; 
     }
     
     .service-actions { margin-top: auto; }
 
-    .service-price{ 
-      font-size:1.5rem; font-weight:900; color:var(--text-dark); margin-bottom:24px; 
-      display:flex; align-items: baseline; gap: 6px; 
+    .service-price { 
+      font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 24px; 
+      display: flex; align-items: baseline; gap: 6px; 
       min-height: 54px; 
     }
     .price-sub { font-size: 0.85rem; font-weight: 500; color: #94a3b8; }
     
-    .service-features{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line); }
-    .service-features li{ margin-bottom:12px; font-size:0.9rem; color:var(--text-body); display:flex; gap:10px; align-items: flex-start; }
-    .service-features li::before{ content:"✓"; color:var(--primary); font-weight:900; flex-shrink: 0; }
+    .service-features { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .service-features li { margin-bottom: 12px; font-size: 0.9rem; color: var(--text-body); display: flex; gap: 10px; align-items: flex-start; }
+    .service-features li::before { content: "✓"; color: var(--primary); font-weight: 900; flex-shrink: 0; }
     
     .card-gated .service-features li::before { color: #cbd5e1; }
 
     /* MARKETPLACE */
-    .section-gray { background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 100px 0; }
-    
     .mp-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
     
     .mp-card {
@@ -254,58 +166,19 @@
     .module-content span { font-size: 0.85rem; color: #64748b; line-height: 1.3; display: block; }
 
     /* FAQ */
-    .faq-section{ max-width:800px; margin:0 auto; }
+    .faq-section { max-width: 800px; margin: 0 auto; }
     .faq-section h2 { text-align: center; margin-bottom: 60px; }
-    details{ border-bottom:1px solid var(--line); padding:24px 0; }
-    summary{
-      font-weight:700; font-size:1.1rem; cursor:pointer; list-style:none; color:var(--text-dark);
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    summary::-webkit-details-marker { display:none; }
-    summary::after{ content:"+"; font-weight:400; font-size:1.5rem; color:var(--primary); }
-    details[open] summary::after{ content:"−"; }
-    details p{ margin-top:16px; font-size:1rem; color:var(--text-body); max-width:90%; line-height:1.6; }
-
+    
     /* CTA */
     .cta-section { text-align: center; padding: 100px 0; border-top: 1px solid var(--line); background: #fff; }
     .cta-section h2 { font-size: 2.5rem; margin-bottom: 24px; }
 
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
-
-    /* --- MOBILE RESPONSIVENESS FIXES --- */
-    @media (max-width: 980px){
-      /* 1. Header & Nav (Consistent with Index) */
-      header { backdrop-filter: blur(16px); background: rgba(255,255,255,0.9); }
-      .nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      
-      .nav-actions .btn { display: none !important; }
-      .menu-toggle { display: inline-flex; font-size: 0.85rem; padding: 8px 16px; }
-
-      .mobile-nav { 
-        position: absolute; top: 80px; left: 0; right: 0;
-        background: var(--white); border-bottom: 1px solid var(--line);
-        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
-        padding: 10px 20px 30px !important; z-index: 999;
-        display: none; 
-      }
-      .mobile-nav.active { display: block; }
-      
-      .mobile-cta {
-        padding: 24px 0 0 !important;
-        flex-direction: column; 
-        gap: 16px;
-      }
-      .mobile-cta .btn { width: 100%; }
-
-      /* 2. Brand */
-      .brand { font-size: 0.9rem; gap: 8px; }
-      .brand img { width: 26px; height: 26px; }
-
-      /* 3. Hero Layout (Tightened) */
+    /* --- MOBILE RESPONSIVENESS FIXES (Page Specific) --- */
+    @media (max-width: 980px) {
+      /* Hero Layout (Tightened) */
       .services-hero { 
           padding-top: 30px !important; 
-          padding-bottom: 10px !important; /* LESS SPACE BEFORE CARDS */
+          padding-bottom: 10px !important; 
           padding-left: 12px;
           padding-right: 12px;
       }
@@ -316,16 +189,11 @@
       }
       .services-hero p { font-size: 1.05rem; }
 
-      section { padding: 60px 0 !important; }
-      
-      /* 4. Container Padding Fix (Fixes Edge Touching) */
-      .container { padding-left: 24px !important; padding-right: 24px !important; }
-
-      /* 5. Service Cards & Grid */
+      /* Service Cards & Grid */
       .services-grid { 
         grid-template-columns: 1fr !important; 
         gap: 24px !important; 
-        margin-top: 16px !important; /* REDUCED GAP */
+        margin-top: 16px !important; 
       }
       
       .service-card {
@@ -337,21 +205,15 @@
       .service-desc, .service-price { min-height: auto !important; }
       .service-price { margin-top: 24px; margin-bottom: 16px; }
 
-      /* 6. Marketplace */
+      /* Marketplace */
       .mp-container { 
         grid-template-columns: 1fr !important; 
         gap: 40px !important;
       }
       .mp-card { padding: 30px 24px; }
 
-      /* 7. FAQ (More Space & No Edge Touching) */
+      /* FAQ */
       .faq-section { margin-top: 20px; }
-      details { 
-          padding: 24px 0; 
-          margin-bottom: 8px; 
-      }
-      summary { font-size: 1.05rem; line-height: 1.4; padding-right: 10px; }
-      details p { font-size: 0.95rem; max-width: 100%; margin-top: 12px; }
     }
   </style>
 </head>
@@ -366,13 +228,13 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="gtm-assessment.html">GTM Score</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
       
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-primary">Contact</a>
+        <a href="contact.html" class="btn btn-secondary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
     </div>
@@ -380,7 +242,7 @@
     <div class="container mobile-nav" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="services.html" class="active">Services</a>
+      <a href="services.html">Services</a>
       <a href="gtm-assessment.html">GTM Score</a>
       <a href="resources.html">Resources</a>
       <a href="contact.html">Contact</a>
@@ -632,76 +494,10 @@
 
   <footer>
     <div class="container">
-      <p>© 2026 Caugia Consulting. All rights reserved.</p>
+      <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
     </div>
   </footer>
 
-  <script>
-    (function () {
-      const toggle = document.getElementById("menuToggle");
-      const mobileNav = document.getElementById("mobileNav");
-      if (toggle && mobileNav) {
-        toggle.addEventListener("click", () => {
-          // Toggle class instead of style to support new CSS
-          mobileNav.classList.toggle("active");
-          
-          const isOpen = mobileNav.classList.contains("active");
-          toggle.innerText = isOpen ? "Close" : "Menu";
-          
-          // Lock body scroll when menu is open
-          document.body.style.overflow = isOpen ? "hidden" : "auto";
-        });
-      }
-    })();
-  </script>
-
-<script>
-  (function() {
-    // 1. Configuratie
-    const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
-    
-    // Prijzen configuratie
-    const prices = {
-      USD: { symbol: '$', val: '1499', equiv: '18k' },
-      EUR: { symbol: '€', val: '1249', equiv: '15k' },
-      GBP: { symbol: '£', val: '1099', equiv: '13k' }
-    };
-
-    // 2. Helper functie
-    function updateCurrency(code) {
-      const config = prices[code] || prices['USD'];
-
-      document.querySelectorAll('.curr').forEach(el => el.textContent = config.symbol);
-
-      const priceVal = document.getElementById('price-val');
-      const priceEquiv = document.getElementById('price-equivalent');
-      
-      if (priceVal) priceVal.textContent = config.val;
-      if (priceEquiv) priceEquiv.textContent = config.equiv;
-    }
-
-    // 3. Check locatie
-    fetch('https://get.geojs.io/v1/ip/country.json')
-      .then(res => res.json())
-      .then(data => {
-        // HIER ZAT DE FOUT: We dwingen nu de 2-letter code (data.country) af
-        // In plaats van data.country_3
-        const country = data.country; 
-
-        console.log("Detected Country:", country); // Check in je browser console (F12) wat hier staat
-
-        if (country === 'GB') {
-          updateCurrency('GBP');
-        } else if (euroCountries.includes(country)) {
-          updateCurrency('EUR');
-        } else {
-          updateCurrency('USD');
-        }
-      })
-      .catch(err => {
-        console.log('Currency check failed. Keeping default USD.');
-      });
-  })();
-</script>
+  <script src="assets/caugia-base.js"></script>
 </body>
 </html>
