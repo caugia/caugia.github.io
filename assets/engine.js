@@ -1,8 +1,7 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v8.2 (CONTEXT AWARE)
-   - Preserves ALL original logic.
-   - Fixes: Test Submit connection.
-   - IMPROVED: Sends Question Text + Answer to Make (for Claude context).
+   CAUGIA INTELLIGENCE ENGINE v8.2 (CLAUDE CONTEXT EDITION)
+   - Feature: Maps Question IDs to Real Text for AI Analysis
+   - Fix: Ensures all saved answers are sent, not just current page
    =========================================================== */
 
 (function() {
@@ -35,8 +34,10 @@
 
         prevBtn: document.getElementById("gi-prev-btn"),
         nextBtn: document.getElementById("gi-next-btn"),
+        
+        // Buttons
         submitBtn: document.getElementById("gi-submit-btn"),
-        testBtn: document.getElementById("gi-test-submit-btn"), 
+        testBtn: document.getElementById("gi-test-submit-btn"),
         
         clearBtn: document.getElementById("gi-clear-btn"),
         saveBtn: document.getElementById("gi-save-btn"),
@@ -50,10 +51,13 @@
             if(UI.title) UI.title.innerText = "Error: Questions File Missing";
             return;
         }
+
         loadState();
+        
         console.log(`Engine v8.2 Started. Loaded ${window.QUESTIONS.length} questions.`);
         renderQuestion();
         updateSidebar();
+        
         setInterval(saveState, CONFIG.autoSaveInterval);
     }
 
@@ -94,9 +98,8 @@
         const grid = document.createElement('div');
         grid.className = "gi-group-grid"; 
         grid.style.display = "grid";
-        grid.style.gridTemplateColumns = "1fr 1fr";
+        grid.style.gridTemplateColumns = window.innerWidth < 768 ? "1fr" : "1fr 1fr";
         grid.style.gap = "20px";
-        if(window.innerWidth < 768) grid.style.gridTemplateColumns = "1fr";
 
         q.fields.forEach(f => {
             const wrapper = document.createElement('div');
@@ -114,7 +117,7 @@
             input.style.padding = "10px";
             input.style.border = "1px solid #e2e8f0";
             input.style.borderRadius = "6px";
-            input.name = f.name; // FIX: Name attribute
+            input.name = f.name; 
             
             if(STATE.answers[f.name]) input.value = STATE.answers[f.name];
 
@@ -296,48 +299,56 @@
         }
     }
 
-    // --- 10. SUBMISSION (ENRICHED WITH QUESTION TEXT) ---
+    // --- 10. SUBMISSION (THE CLAUDE ENABLER) ---
     async function submitData(isTest = false) {
         
         let answersRaw = STATE.answers;
-        let enrichedData = []; // This will hold the Question + Answer pairs
+        let fullReport = []; // DIT IS DE KEY VOOR CLAUDE
         let message = "Official Submission";
 
-        // If empty, force dummy data
+        // 1. Check if empty
         if(Object.keys(answersRaw).length === 0) {
             console.warn("⚠️ No answers found. Generating DUMMY data.");
-            answersRaw = { "test_mode": "true" };
-            enrichedData.push({
+            // Dummy data zodat Make niet crashed, maar je ziet wel dat het dummy is
+            fullReport.push({
                 id: "test_q1",
-                question: "This is a dummy question to test connection",
-                answer: "Dummy Answer"
+                pillar: "Test",
+                question: "This is a connection test (no real input found)",
+                answer: "Success"
             });
-            message = "⚠️ TEST DATA (Auto-generated because input was empty)";
+            message = "⚠️ TEST DATA (Input was empty)";
         } else {
-            // BUILD THE ENRICHED REPORT FOR CLAUDE
-            // We loop through the master QUESTIONS array to map IDs to Text
+            // 2. Build the 'Human/Claude Readable' Report
+            // We loop through the MASTER QUESTIONS list to get the Titles
+            const pillarNames = [
+                "Context", "GTM Strategy & Leadership", "Market Intelligence", "Product Marketing", 
+                "Demand Generation", "Sales Execution", "Customer Success", "RevOps", 
+                "Pricing", "Brand", "Data", "Enablement", "Leadership"
+            ];
+
             window.QUESTIONS.forEach(q => {
                 if(q.type === 'group') {
-                    // For groups, we map each field
                     q.fields.forEach(field => {
                         if(answersRaw[field.name]) {
-                            enrichedData.push({
+                            fullReport.push({
                                 id: field.name,
-                                pillar: q.pillar, // Add pillar context if useful
+                                pillar: pillarNames[q.pillar],
                                 question: `${q.title} - ${field.label}`,
                                 answer: answersRaw[field.name]
                             });
                         }
                     });
                 } else {
-                    // For single questions
-                    const key = `q${q.id}`; // Match the key format used in STATE
-                    if(answersRaw[key] || answersRaw[`q_${q.id}`]) { // Handle potential key format variation
-                        enrichedData.push({
+                    const key = `q${q.id}`;
+                    const keyAlt = `q_${q.id}`; // Handle both formats
+                    const val = answersRaw[key] || answersRaw[keyAlt];
+                    
+                    if(val) {
+                        fullReport.push({
                             id: key,
-                            pillar: q.pillar,
+                            pillar: pillarNames[q.pillar],
                             question: q.title,
-                            answer: answersRaw[key] || answersRaw[`q_${q.id}`]
+                            answer: val
                         });
                     }
                 }
@@ -348,16 +359,16 @@
             metadata: {
                 timestamp: new Date().toISOString(),
                 questions_count: window.QUESTIONS.length,
-                source: "Engine v8.2 Enriched",
+                source: "Engine v8.2",
                 is_test: isTest
             },
             message: message,
             
-            // OPTION A: Keep raw answers for legacy support
+            // Raw answers (for legacy processing if needed)
             answers: answersRaw,
             
-            // OPTION B: The new "Claude-Ready" Report
-            full_report: enrichedData 
+            // CLAUDE READY REPORT (Array of Objects)
+            full_report: fullReport 
         };
 
         console.log("🚀 Sending Payload to Make:", payload);
@@ -377,7 +388,7 @@
             
             if(res.ok) {
                 if(isTest) {
-                    alert("✅ TEST SUCCESVOL!\n\nData (inclusief vraagteksten) verstuurd naar Make.");
+                    alert(`✅ TEST SUCCESVOL!\n\nVerzonden: ${fullReport.length} antwoorden.\nCheck Make.com voor de 'full_report' array.`);
                 } else {
                     STATE.completed = true;
                     localStorage.removeItem(CONFIG.storageKey);
@@ -400,6 +411,7 @@
     // --- 11. EVENT BINDING ---
     if(UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
     if(UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
+    
     if(UI.submitBtn) UI.submitBtn.addEventListener("click", () => submitData(false));
 
     if(UI.testBtn) {
