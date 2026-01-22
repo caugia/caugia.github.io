@@ -4,8 +4,14 @@
    - Always builds full_report with ALL questions (even unanswered)
    - Sends V9 debug payload: metadata, message, answers_raw, full_report, questions_map
    - ALSO sends legacy-friendly blocks (clean + fast in Make):
-       customer, context, answers (Q-keys), score_01..score_12, question_map
+       customer, context, answers (Q-keys), score_01..score_12, score_total, grip_g/r/i/p, confidence_range, coverage
+       question_map
    - Safe loadState (schema guard) and autosave
+   - Fixes weak points:
+       * overall score always present (score_total) even with missing pillar scores
+       * GRIP scores always present (grip_scores + flat keys) even with partial data
+       * coverage + missing questions surfaced deterministically
+       * test payload is still structurally identical (no “fake report” that breaks Make mapping)
    =========================================================== */
 
 (function () {
@@ -67,6 +73,23 @@
     "Leadership"
   ];
 
+  // Pillar index -> GRIP dimension mapping (fixed, deterministic)
+  // You can change this mapping later, but keep it explicit and stable.
+  const PILLAR_TO_GRIP = {
+    1: "G",
+    2: "G",
+    3: "G",
+    4: "R",
+    5: "I",
+    6: "I",
+    7: "P",
+    8: "R",
+    9: "G",
+    10: "G",
+    11: "R",
+    12: "I"
+  };
+
   function pillarNameByIndex(i) {
     return PILLAR_NAMES[i] || `Pillar ${i}`;
   }
@@ -107,9 +130,20 @@
     return String(n).padStart(2, "0");
   }
 
+  function roundInt(n) {
+    if (!Number.isFinite(n)) return null;
+    return Math.round(n);
+  }
+
+  function clamp0to100(n) {
+    if (!Number.isFinite(n)) return null;
+    return Math.max(0, Math.min(100, n));
+  }
+
   // Converts a 1..5 average to 0..100
   function toScore100(avg1to5) {
-    return Math.round(((avg1to5 - 1) / 4) * 100);
+    if (!Number.isFinite(avg1to5)) return null;
+    return clamp0to100(Math.round(((avg1to5 - 1) / 4) * 100));
   }
 
   // Returns 1..5 index for a 5-option scale question; otherwise null
@@ -119,6 +153,23 @@
     const idx = opts.indexOf(answerValue);
     if (idx === -1) return null;
     return idx + 1;
+  }
+
+  function safeNumberFromInput(v) {
+    // Accept numbers, "12", "12%", "1,2", "€1.2M" (best-effort)
+    // This is only used for sanity checks and optional metrics; scoring uses discrete scale options.
+    if (v === null || v === undefined) return null;
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+    const s = String(v).trim();
+    if (!s) return null;
+    // strip currency and percent and spaces
+    const cleaned = s
+      .replace(/\s/g, "")
+      .replace(/%/g, "")
+      .replace(/[€$£]/g, "")
+      .replace(/,/g, ".");
+    const n = Number(cleaned);
+    return Number.isFinite(n) ? n : null;
   }
 
   // --- 5. INITIALIZATION ---
@@ -232,7 +283,7 @@
     const wrapper = document.createElement("div");
     wrapper.className = "gi-options-grid";
     wrapper.style.display = "grid";
-    wrapper.style.gridTemplateColumns = "1fr 1fr";
+    wrapper.style.gridTemplateColumns = window.innerWidth < 768 ? "1fr" : "1fr 1fr";
     wrapper.style.gap = "12px";
 
     const key = qKey(q.id);
@@ -275,7 +326,6 @@
   }
 
   function renderScale(q) {
-    // scale behaves like radio options
     renderRadio(q);
   }
 
@@ -428,11 +478,9 @@
     try {
       const parsed = JSON.parse(raw);
 
-      // Minimal schema guard
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
 
-      // IMPORTANT: accept previous saved schema versions too, but normalize
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
@@ -493,9 +541,46 @@
     return report;
   }
 
+  function buildCoverage(answersRaw) {
+    // coverage over ALL questions (including group fields)
+    let total = 0;
+    let answered = 0;
+    const missing = [];
+
+    window.QUESTIONS.forEach((q) => {
+      if (q.type === "group") {
+        (q.fields || []).forEach((f) => {
+          total++;
+          const k = groupKey(q.id, f.name);
+          if (isNonEmpty(answersRaw[k])) {
+            answered++;
+          } else {
+            missing.push(k);
+          }
+        });
+        return;
+      }
+
+      total++;
+      const k = qKey(q.id);
+      if (isNonEmpty(answersRaw[k])) {
+        answered++;
+      } else {
+        missing.push(k);
+      }
+    });
+
+    const completion_rate = total ? Math.round((answered / total) * 100) : 0;
+    return {
+      total_questions: total,
+      answered_questions: answered,
+      completion_rate: completion_rate,
+      missing_keys: missing.slice(0, 250) // cap for payload size safety
+    };
+  }
+
   // --- 11. LEGACY-FRIENDLY BUILDERS (customer/context/answers + scores) ---
   function buildLegacyCustomer(answersRaw) {
-    // IMPORTANT: QUESTIONS v2.0 group(1) contains ONLY these 5 fields
     return {
       fullname: answersRaw["q1__fullname"] || "",
       role: answersRaw["q1__role"] || "",
@@ -506,7 +591,6 @@
   }
 
   function buildLegacyContext(answersRaw) {
-    // Context groups (2..5) + Q6..Q25
     return {
       arr: answersRaw["q2__arr"] || "",
       growth_rate: answersRaw["q2__growth_rate"] || "",
@@ -554,8 +638,6 @@
   }
 
   function buildLegacyAnswersQOnly(answersRaw) {
-    // Only scored pillar answers in Q format (Q1001.. etc).
-    // Excludes Context Q1..Q25 to keep Make clean.
     const out = {};
     Object.keys(answersRaw).forEach((k) => {
       if (!/^q\d+$/.test(k)) return;
@@ -568,8 +650,6 @@
   }
 
   function computePillarScores(answersRaw) {
-    // Scores for pillars 1..12 (pillar_index in QUESTIONS)
-    // Only uses 5-point scale questions (options length 5)
     const buckets = {}; // pillar_index -> {sum,count}
 
     window.QUESTIONS.forEach((q) => {
@@ -598,8 +678,75 @@
     return out;
   }
 
+  function computeOverallScore(scores) {
+    // Deterministic: average of non-null pillar scores.
+    // If none available: null (explicit)
+    const vals = [];
+    for (let p = 1; p <= 12; p++) {
+      const v = scores[`score_${pad2(p)}`];
+      if (Number.isFinite(v)) vals.push(v);
+    }
+    if (!vals.length) return null;
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    return clamp0to100(Math.round(avg));
+  }
+
+  function computeConfidenceRange(scores, coverage) {
+    // Deterministic and boring:
+    // - Based on how many pillar scores exist + overall completion rate.
+    // - Returns a string like "±10" (percentage points) and a numeric value.
+    // You can refine later in Make, but keep a stable field for prompts.
+    const scored = [];
+    for (let p = 1; p <= 12; p++) {
+      const v = scores[`score_${pad2(p)}`];
+      if (Number.isFinite(v)) scored.push(v);
+    }
+    const pillarScoreCoverage = scored.length / 12; // 0..1
+    const completion = Number.isFinite(coverage?.completion_rate) ? coverage.completion_rate / 100 : 0;
+
+    // Wider range when coverage is low
+    const uncertainty = 1 - (0.6 * pillarScoreCoverage + 0.4 * completion); // 0..1
+    const range = Math.round(8 + uncertainty * 20); // 8..28
+    return {
+      confidence_range: `±${range}`,
+      confidence_range_num: range,
+      pillar_score_coverage_pct: Math.round(pillarScoreCoverage * 100)
+    };
+  }
+
+  function computeGripScores(scores) {
+    // Uses pillar scores grouped into GRIP dimensions via PILLAR_TO_GRIP mapping.
+    // Returns 0..100 ints or null if no data for that dimension.
+    const buckets = {
+      G: [],
+      R: [],
+      I: [],
+      P: []
+    };
+
+    for (let p = 1; p <= 12; p++) {
+      const dim = PILLAR_TO_GRIP[p];
+      const v = scores[`score_${pad2(p)}`];
+      if (!dim) continue;
+      if (Number.isFinite(v)) buckets[dim].push(v);
+    }
+
+    function avgOrNull(arr) {
+      if (!arr.length) return null;
+      return clamp0to100(Math.round(arr.reduce((a, b) => a + b, 0) / arr.length));
+    }
+
+    const grip = {
+      G: avgOrNull(buckets.G),
+      R: avgOrNull(buckets.R),
+      I: avgOrNull(buckets.I),
+      P: avgOrNull(buckets.P)
+    };
+
+    return grip;
+  }
+
   function buildQuestionMapLegacy() {
-    // Legacy: field labels + Q{id} -> title
     const map = {};
 
     window.QUESTIONS.forEach((q) => {
@@ -618,35 +765,45 @@
   // --- 12. SUBMISSION ---
   async function submitData(isTest = false) {
     const answersRaw = STATE.answers || {};
+
+    // Always build these even in test mode (keep structure stable for Make)
     const questionsMap = buildQuestionsMap();
+    const fullReport = buildFullReport(answersRaw);
+    const coverage = buildCoverage(answersRaw);
 
-    // V9 deterministic report
-    let fullReport = buildFullReport(answersRaw);
-
-    // message
-    let message = isTest ? "Test Submission" : "Official Submission";
-    if (Object.keys(answersRaw).length === 0) {
-      message = "⚠️ TEST DATA (Input was empty)";
-      fullReport = [
-        {
-          id: "test_q1",
-          pillar: "Test",
-          pillar_index: -1,
-          question_id: "test_q1",
-          question: "This is a connection test (no real input found)",
-          answer: "Success"
-        }
-      ];
-    }
-
-    // Legacy clean blocks
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
 
-    // answers: Q1001.. + score_01..score_12
     const answersQ = buildLegacyAnswersQOnly(answersRaw);
-    const scores = computePillarScores(answersRaw);
-    const answers = Object.assign({}, answersQ, scores);
+    const pillarScores = computePillarScores(answersRaw);
+    const overallScore = computeOverallScore(pillarScores);
+    const gripScores = computeGripScores(pillarScores);
+    const confidence = computeConfidenceRange(pillarScores, coverage);
+
+    // Legacy-friendly answers block (fast in Make)
+    // IMPORTANT: this becomes your single mapping surface in Make.
+    const answers = Object.assign(
+      {},
+      answersQ,
+      pillarScores,
+      {
+        // NEW: always present
+        score_total: overallScore, // overall GTM score
+        grip_g: gripScores.G,
+        grip_r: gripScores.R,
+        grip_i: gripScores.I,
+        grip_p: gripScores.P,
+        confidence_range: confidence.confidence_range,
+        confidence_range_num: confidence.confidence_range_num,
+        completion_rate: coverage.completion_rate,
+        total_questions: coverage.total_questions,
+        answered_questions: coverage.answered_questions,
+        pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
+      }
+    );
+
+    // Stable message
+    const message = isTest ? "Test Submission" : "Official Submission";
 
     const payload = {
       // -------- V9 header --------
@@ -659,15 +816,24 @@
       },
       message: message,
 
-      // -------- V9 debug --------
+      // -------- V9 debug (keep) --------
       answers_raw: answersRaw,
       questions_map: questionsMap,
       full_report: fullReport,
 
+      // extra debug surfaces (deterministic)
+      coverage: coverage,
+      grip_scores: gripScores,
+      scoring: {
+        pillar_scores: pillarScores,
+        overall_score: overallScore,
+        confidence_range: confidence
+      },
+
       // -------- Legacy-friendly (fast in Make) --------
       customer: customer,
       context: context,
-      answers: answers, // includes score_01..score_12
+      answers: answers,
       question_map: buildQuestionMapLegacy()
     };
 
@@ -686,17 +852,13 @@
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
       if (isTest) {
-        const scoreLines = Object.keys(scores)
-          .sort()
-          .map((k) => `${k}: ${scores[k]}`)
-          .join("\n");
-
-        alert(
-          `✅ TEST SUCCESVOL!\n\n` +
-            `Verzonden: full_report(${fullReport.length})\n\n` +
-            `Scores (answers.score_XX):\n${scoreLines}\n\n` +
-            `Check Make.com: customer/context/answers + full_report/questions_map`
-        );
+        const lines = [];
+        lines.push(`score_total: ${overallScore}`);
+        lines.push(`confidence_range: ${confidence.confidence_range}`);
+        lines.push(`grip: G=${gripScores.G} R=${gripScores.R} I=${gripScores.I} P=${gripScores.P}`);
+        lines.push(`coverage: ${coverage.answered_questions}/${coverage.total_questions} (${coverage.completion_rate}%)`);
+        lines.push(`pillar score coverage: ${confidence.pillar_score_coverage_pct}%`);
+        alert(`✅ TEST SUCCESVOL!\n\n${lines.join("\n")}\n\nCheck Make.com mapping on payload.answers.*`);
       } else {
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
