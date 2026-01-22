@@ -39,19 +39,34 @@
     /* Mission Section */
     .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .mission-content h2 { font-size: 2rem; margin-bottom: 24px; }
-    .mission-content p { font-size: 1.05rem; }
+    .mission-content p { font-size: 1.05rem; line-height: 1.6; color: var(--text-body); }
       
-    /* Diamond Visual */
+    /* Diamond Container */
+    .diamond-col { text-align: center; }
+    .diamond-title { 
+        font-family: 'Inter', sans-serif; 
+        font-weight: 800; 
+        font-size: 0.9rem; 
+        color: var(--primary); 
+        text-transform: uppercase; 
+        letter-spacing: 0.1em; 
+        margin-bottom: 20px;
+        display: inline-block;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 4px;
+    }
+
     .diamond-visual {
       background: #f8fafc;
-      border-radius: 24px; height: 500px;
+      border-radius: 24px; 
       border: 1px solid var(--line);
       display: flex; align-items: center; justify-content: center;
       box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
       position: relative;
+      overflow: hidden; /* Ensures smooth corners */
     }
       
-    .grip-diamond-svg { width: 460px; height: 460px; } 
+    .grip-diamond-svg { width: 100%; height: auto; max-height: 400px; } 
     .grip-lines { fill: none; stroke: var(--primary); stroke-width: 1; opacity: 0.15; }
     .grip-border { fill: none; stroke: var(--primary); stroke-width: 2.5; }
     
@@ -60,14 +75,13 @@
       stroke-linecap: round; stroke-linejoin: round; 
     }
     
-    /* Text Labels */
     .grip-label-ext {
       font-family: 'Inter', sans-serif;
-      font-size: 15px; /* Slightly larger */
+      font-size: 13px;
       font-weight: 800;
       fill: var(--primary);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
     }
 
     /* GRIP Cards */
@@ -132,8 +146,6 @@
       .about-hero { padding: 30px 36px 40px !important; }
       .about-hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; }
       .mission-grid { grid-template-columns: 1fr; gap: 40px; }
-      .diamond-visual { height: 360px; }
-      .grip-diamond-svg { width: 320px; height: 320px; }
       .grip-grid { grid-template-columns: 1fr; gap: 24px; }
       .lead-card { grid-template-columns: 1fr; }
       .lead-img-col { padding: 30px; border-right: none; border-bottom: 1px solid var(--line); }
@@ -190,60 +202,61 @@
             Traditional consulting is linear: you pay for hours, you get slides. But revenue problems in SaaS are exponential. Processes break, tools accumulate, and complexity compounds faster than any consultant can fix manually.
           </p>
           <p style="margin-top:16px;">
-            We realized that to solve this at scale, we couldn't just "consult." We had to engineer a solution. Caugia exists to digitize the clarity of a Revenue Architect into a system you can own.
+            We realized that to solve this at scale, we couldn't just 'consult.' We had to engineer a solution. Caugia exists to digitize the clarity of a Revenue Architect into the GRIP Diamond, a system you can own.
           </p>
         </div>
           
-<div class="diamond-visual">
-           <svg class="grip-diamond-svg" viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; max-height:400px;">
+        <div class="diamond-col">
+           <div class="diamond-title">The GRIP Diamond</div>
+           <div class="diamond-visual">
              
-             <g transform="translate(300,230)">
-               <g transform="rotate(45)">
-                 <rect class="grip-border" x="-100" y="-100" width="200" height="200" rx="4" />
-                 <line class="grip-lines" x1="0" y1="-100" x2="0" y2="100" />
-                 <line class="grip-lines" x1="-100" y1="0" x2="100" y2="0" />
+             <svg class="grip-diamond-svg" viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg">
+               
+               <g transform="translate(300,230)">
+                 <g transform="rotate(45)">
+                   <rect class="grip-border" x="-100" y="-100" width="200" height="200" rx="4" />
+                   <line class="grip-lines" x1="0" y1="-100" x2="0" y2="100" />
+                   <line class="grip-lines" x1="-100" y1="0" x2="100" y2="0" />
+                 </g>
                </g>
-             </g>
 
-             <g transform="translate(300, 160)">
-               <g transform="translate(-15, -15) scale(1.5)">
-                 <circle cx="10" cy="10" r="9" class="grip-icon"/>
-                 <polygon points="10 4 12 10 10 16 8 10" fill="var(--primary)" stroke="none"/>
-                 <circle cx="10" cy="10" r="1" fill="#fff"/>
+               <g transform="translate(300, 160)">
+                 <g transform="translate(-15, -15) scale(1.5)">
+                   <circle cx="10" cy="10" r="9" class="grip-icon"/>
+                   <polygon points="10 4 12 10 10 16 8 10" fill="var(--primary)" stroke="none"/>
+                   <circle cx="10" cy="10" r="1" fill="#fff"/>
+                 </g>
                </g>
-             </g>
 
-             <g transform="translate(370, 230)">
-               <g transform="translate(-15, -15) scale(1.5)">
-                 <rect x="2" y="6" width="16" height="11" rx="1" class="grip-icon" />
-                 <path d="M7 6V4C7 3 8 2 10 2C12 2 13 3 13 4V6" class="grip-icon" />
-                 <rect x="9" y="9" width="2" height="2" fill="var(--primary)" stroke="none"/>
+               <g transform="translate(370, 230)">
+                 <g transform="translate(-15, -15) scale(1.5)">
+                   <rect x="2" y="6" width="16" height="11" rx="1" class="grip-icon" />
+                   <path d="M7 6V4C7 3 8 2 10 2C12 2 13 3 13 4V6" class="grip-icon" />
+                   <rect x="9" y="9" width="2" height="2" fill="var(--primary)" stroke="none"/>
+                 </g>
                </g>
-             </g>
 
-             <g transform="translate(300, 300)">
-               <g transform="translate(-15, -15) scale(1.5)">
-                  <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" class="grip-icon"/>
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" class="grip-icon" transform="scale(0.8) translate(2,2)"/>
+               <g transform="translate(300, 300)">
+                 <g transform="translate(-15, -15) scale(1.5)">
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" class="grip-icon"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" class="grip-icon" transform="scale(0.8) translate(2,2)"/>
+                 </g>
                </g>
-             </g>
 
-             <g transform="translate(230, 230)">
-               <g transform="translate(-15, -15) scale(1.5)">
-                  <polyline points="18 6 11 13 7 9 2 14" class="grip-icon"/>
-                  <polyline points="13 6 18 6 18 11" class="grip-icon"/>
+               <g transform="translate(230, 230)">
+                 <g transform="translate(-15, -15) scale(1.5)">
+                    <polyline points="18 6 11 13 7 9 2 14" class="grip-icon"/>
+                    <polyline points="13 6 18 6 18 11" class="grip-icon"/>
+                 </g>
                </g>
-             </g>
 
-             <text x="300" y="55" class="grip-label-ext" text-anchor="middle">Guidance</text>
-             
-             <text x="455" y="235" class="grip-label-ext" text-anchor="start">Resources</text>
-             
-             <text x="300" y="415" class="grip-label-ext" text-anchor="middle">Implementation</text>
-             
-             <text x="145" y="235" class="grip-label-ext" text-anchor="end">Performance</text>
+               <text x="300" y="55" class="grip-label-ext" text-anchor="middle">Guidance</text>
+               <text x="455" y="235" class="grip-label-ext" text-anchor="start">Resources</text>
+               <text x="300" y="415" class="grip-label-ext" text-anchor="middle">Implementation</text>
+               <text x="145" y="235" class="grip-label-ext" text-anchor="end">Performance</text>
 
-           </svg>
+             </svg>
+           </div>
         </div>
       </div>
     </section>
