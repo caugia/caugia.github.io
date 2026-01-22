@@ -4,55 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Caugia | The GTM & Go-to-Market Intelligence Engine</title>
-  <meta name="description" content="The first algorithmic Go-to-Market (GTM) system for B2B SaaS. Replace weeks of consulting with one intelligent assessment. Align Strategy, Revenue, and Execution." />
-  <meta name="keywords" content="GTM, Go-to-Market, GTM Strategy, Revenue Architecture, B2B SaaS, Revenue Operations, Caugia" />
+  <title>Caugia | Get GRIP on your Revenue</title>
+  <meta name="description" content="The first algorithmic Go-to-Market (GTM) system for B2B SaaS. Replace weeks of consulting with one intelligent assessment." />
   <link rel="canonical" href="https://www.caugia.com/" />
 
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.caugia.com/" />
-  <meta property="og:title" content="Caugia | The GTM Intelligence Engine" />
-  <meta property="og:description" content="Stop revenue leakage. Analyze your B2B SaaS revenue architecture instantly with the Caugia Intelligence Engine." />
-  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-  <link rel="apple-touch-icon" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-    
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Caugia Consulting",
-    "url": "https://www.caugia.com",
-    "logo": "https://www.caugia.com/assets/logo-final.png",
-    "sameAs": [
-      "https://www.linkedin.com/company/caugia"
-    ],
-    "description": "Caugia provides an algorithmic Go-to-Market (GTM) intelligence engine for B2B SaaS companies to optimize revenue architecture.",
-    "knowsAbout": ["Go-to-Market Strategy", "GTM", "Revenue Operations", "SaaS Growth"]
-  }
-  </script>
-
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/caugia-base.css">
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- PAGE SPECIFIC STYLES (Index Only) --- */
+    /* --- PAGE SPECIFIC STYLES --- */
     
     :root {
-      /* Widget Specific Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
       --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
+      --glow-blue: 0 0 20px rgba(37, 99, 235, 0.3);
     }
 
     /* Hero */
@@ -60,19 +33,38 @@
       padding: 68px 0 96px;
       display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
     }
-    .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
+    .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.02em; }
     .hero-desc { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); margin-bottom: 32px; }
     
+    /* Pillars Card - NOW ANIMATED */
     .pillars-card {
       background: var(--white); border: 1px solid rgba(15,23,42,0.04);
       border-radius: var(--radius-md); padding: 30px; box-shadow: var(--shadow-sm);
       border-left: 4px solid var(--primary); margin-top: 40px;
+      position: relative; overflow: hidden;
     }
-    .pillars-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 20px; }
+    .pillars-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .live-badge { font-size: 0.65rem; background: #22c55e; color: #052e16; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 800; opacity: 0; transition: opacity 0.3s; }
+    .playing .live-badge { opacity: 1; }
+
     .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; font-size: 0.9rem; color: #334155; }
-    .pillar-item { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: baseline; }
-    .pillar-num { font-weight: 800; color: #cbd5e1; text-align: right; font-size: 0.8rem; }
     
+    .pillar-item { 
+      display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: center; 
+      padding: 8px; border-radius: 6px; transition: all 0.3s ease; border: 1px solid transparent;
+    }
+    
+    /* Active States for Pillars */
+    .pillar-item.active-force { background: #f8fafc; border-color: #e2e8f0; transform: translateX(5px); }
+    .pillar-item.status-bad  { background: var(--bad-bg); border-color: var(--bad-border); color: var(--bad-text); }
+    .pillar-item.status-warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-text); }
+    .pillar-item.status-good { background: var(--good-bg); border-color: var(--good-border); color: var(--good-text); }
+
+    .pillar-num { font-weight: 800; color: #cbd5e1; text-align: right; font-size: 0.75rem; transition: color 0.3s; }
+    .status-bad .pillar-num, .status-warn .pillar-num, .status-good .pillar-num { color: currentColor; opacity: 0.6; }
+    .pillar-name { font-weight: 500; }
+    .status-bad .pillar-name, .status-warn .pillar-name, .status-good .pillar-name { font-weight: 700; }
+
     /* Mobile text helper */
     .m-text { display: none; }
 
@@ -81,7 +73,10 @@
       background: var(--white); border-radius: var(--radius-lg); border: 1px solid rgba(15,23,42,0.05);
       box-shadow: var(--shadow-lg); padding: 36px;
       position: sticky; top: 110px; overflow: hidden; z-index: 10;
+      transition: border-color 0.3s;
     }
+    .widget-card.playing { border-color: #3b82f6; box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.15); }
+
     .health-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
     .health-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; color: #1e293b; }
     .health-sub { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-top: 4px; }
@@ -108,8 +103,8 @@
 
     .widget-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: center; }
     .controls-col { min-width: 0; }
-    .control-group { margin-bottom: 18px; }
-    .control-label { display: flex; justify-content: space-between; font-family: Inter, sans-serif; font-weight: 700; font-size: 0.9rem; color: #475569; margin-bottom: 8px; }
+    .control-group { margin-bottom: 12px; }
+    .control-label { display: flex; justify-content: space-between; font-family: Inter, sans-serif; font-weight: 700; font-size: 0.85rem; color: #475569; margin-bottom: 4px; }
     .slider-wrap { padding-right: 10px; }
     
     input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; }
@@ -117,11 +112,10 @@
     input.range-warn::-webkit-slider-thumb { background: #d97706; }
     input.range-bad::-webkit-slider-thumb { background: #dc2626; }
     
-    /* Active state for auto-play visual cue */
     .widget-card.playing input[type=range]::-webkit-slider-thumb { transform: scale(1.1); box-shadow: 0 0 10px rgba(37, 99, 235, 0.3); }
 
     .chart-box { width: 100%; height: 200px; display: flex; justify-content: center; }
-    .widget-caption { text-align: center; margin-top: 20px; color: #94a3b8; font-weight: 600; font-size: 0.8rem; }
+    .widget-caption { text-align: center; margin-top: 20px; color: #94a3b8; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
     
     .demo-badge { 
       background: #0f172a; color: white; padding: 4px 8px; border-radius: 4px; 
@@ -129,12 +123,6 @@
       position: absolute; top: 36px; right: 36px; opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
     .playing .demo-badge { opacity: 0.6; }
-
-    /* Content Cards */
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 38px; }
-    .mini-card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); }
-    .mini-card h4 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 10px; }
-    .mini-card p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-body); }
 
     /* Comparison Table */
     .comparison-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1000px; margin: 0 auto; }
@@ -148,10 +136,9 @@
     /* Report Section */
     .report-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 74px; align-items: center; }
     .check-list { margin-top: 18px; margin-bottom: 28px; padding: 0; }
-    
     .report-visual { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); border-radius: 18px; height: 380px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 18px; color: rgba(255,255,255,0.2); font-weight: 700; }
 
-    /* --- MOBILE RESPONSIVENESS (Page Specific) --- */
+    /* --- MOBILE RESPONSIVENESS --- */
     @media (max-width: 980px) {
       .hero { 
           padding-top: 30px !important; 
@@ -161,27 +148,20 @@
           grid-template-columns: 1fr !important;
       }
       .hero > div:first-child { padding-left: 12px; padding-right: 12px; }
-      .hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
+      .hero h1 { font-size: 2.2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
       .hero-desc { font-size: 1.05rem; line-height: 1.5; }
       .hero > div:first-child > div[style*="display:flex"] { justify-content: center; }
 
       .pillars-card { padding: 24px 20px; margin-top: 30px; text-align: left; }
       .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
       .pillar-grid > div { display: contents; }
-      .pillar-item { font-size: 0.75rem; align-items: center; }
+      .pillar-item { font-size: 0.75rem; align-items: center; padding: 6px; }
       .pillar-num { font-size: 0.7rem; }
       .d-text { display: none; }
       .m-text { display: inline; }
 
       .widget-card { margin-top: 0; padding: 24px 20px; box-shadow: none; border: 1px solid var(--line); }
       .health-score { font-size: 3rem; }
-      
-      .slider-wrap { padding: 10px 0; }
-      input[type=range] { height: 6px; }
-      input[type=range]::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -9px; }
-      .widget-layout { display: grid !important; grid-template-columns: 1fr !important; gap: 30px !important; }
-      .chart-col { margin-top: 0; }
-      
       .demo-badge { top: 20px; right: 20px; }
 
       .comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
@@ -190,7 +170,6 @@
       
       .report-layout { gap: 40px !important; grid-template-columns: 1fr !important; }
       .report-visual { height: 280px; }
-      .grid-3 { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -211,7 +190,7 @@
       </ul>
       
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-secondary">Contact</a>
+        <a href="contact.html" class="btn btn-primary">Contact</a>
         <button class="menu-toggle" id="menuToggle">Menu</button>
       </div>
     </div>
@@ -229,8 +208,8 @@
   <main>
     <section class="container hero">
       <div>
-        <span class="eyebrow">One GTM system for B2B SaaS</span>
-        <h1>Stop revenue leakage by aligning your GTM system.</h1>
+        <span class="eyebrow">The GTM Intelligence Engine</span>
+        <h1>Get <span style="color:#2563eb">GRIP</span> on your Revenue.</h1>
         
         <p class="hero-desc">
           <strong>Replace weeks of expensive discovery with one intelligent assessment.</strong>
@@ -245,92 +224,92 @@
           <a href="services.html" class="btn btn-outline">Explore the report</a>
         </div>
 
-        <div class="pillars-card">
-          <h3>The 12 System Pillars</h3>
+        <div class="pillars-card" id="pillarsContainer">
+          <h3>The 12 System Pillars <span class="live-badge">Live Sync</span></h3>
           <div class="pillar-grid">
             <div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="g">
                   <span class="pillar-num">1</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">GTM Strategy & Leadership</span>
                       <span class="m-text">GTM Strategy</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="g">
                   <span class="pillar-num">2</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Market Intelligence</span>
                       <span class="m-text">Market Intel</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="i">
                   <span class="pillar-num">3</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Product Marketing</span>
                       <span class="m-text">Product Mktg</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="i">
                   <span class="pillar-num">4</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Demand Generation</span>
                       <span class="m-text">Demand Gen</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="i">
                   <span class="pillar-num">5</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Sales Execution</span>
                       <span class="m-text">Sales Exec</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="p">
                   <span class="pillar-num">6</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Customer Success & Expansion</span>
                       <span class="m-text">CS & Expansion</span>
                   </span>
               </div>
             </div>
             <div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="p">
                   <span class="pillar-num">7</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Revenue Operations & Systems</span>
                       <span class="m-text">RevOps</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="p">
                   <span class="pillar-num">8</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Pricing & Packaging</span>
                       <span class="m-text">Pricing</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="r">
                   <span class="pillar-num">9</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Brand & Communications</span>
                       <span class="m-text">Brand & Comms</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="r">
                   <span class="pillar-num">10</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Data & Insights</span>
                       <span class="m-text">Data</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="r">
                   <span class="pillar-num">11</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Enablement</span>
                       <span class="m-text">Enablement</span>
                   </span>
               </div>
-              <div class="pillar-item">
+              <div class="pillar-item" data-force="g">
                   <span class="pillar-num">12</span>
-                  <span>
+                  <span class="pillar-name">
                       <span class="d-text">Leadership & Alignment</span>
                       <span class="m-text">Leadership</span>
                   </span>
@@ -359,50 +338,25 @@
         <div class="widget-layout">
           <div class="controls-col">
             <div class="control-group">
-              <div class="control-label">
-                <span class="name">Guidance</span>
-                <span class="value" id="val-g">45</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-g" min="0" max="100" value="45" />
-              </div>
+              <div class="control-label"><span class="name">Guidance</span> <span class="value" id="val-g">45</span></div>
+              <div class="slider-wrap"><input type="range" id="input-g" min="0" max="100" value="45" /></div>
             </div>
-
             <div class="control-group">
-              <div class="control-label">
-                <span class="name">Resources</span>
-                <span class="value" id="val-r">60</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-r" min="0" max="100" value="60" />
-              </div>
+              <div class="control-label"><span class="name">Resources</span> <span class="value" id="val-r">60</span></div>
+              <div class="slider-wrap"><input type="range" id="input-r" min="0" max="100" value="60" /></div>
             </div>
-
             <div class="control-group">
-              <div class="control-label">
-                <span class="name">Implementation</span>
-                <span class="value" id="val-i">85</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-i" min="0" max="100" value="85" />
-              </div>
+              <div class="control-label"><span class="name">Implementation</span> <span class="value" id="val-i">85</span></div>
+              <div class="slider-wrap"><input type="range" id="input-i" min="0" max="100" value="85" /></div>
             </div>
-
             <div class="control-group">
-              <div class="control-label">
-                <span class="name">Performance</span>
-                <span class="value" id="val-p">43</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-p" min="0" max="100" value="43" />
-              </div>
+              <div class="control-label"><span class="name">Performance</span> <span class="value" id="val-p">43</span></div>
+              <div class="slider-wrap"><input type="range" id="input-p" min="0" max="100" value="43" /></div>
             </div>
           </div>
 
           <div class="chart-col">
-            <div class="chart-box">
-              <canvas id="radarChart"></canvas>
-            </div>
+            <div class="chart-box"><canvas id="radarChart"></canvas></div>
           </div>
         </div>
 
@@ -414,12 +368,8 @@
       <div class="container">
         <div style="max-width:820px;">
           <h2>Why GTM feels heavy even when everyone works hard</h2>
-          <p>
-            Most GTM teams are not constrained by effort. They are constrained by misalignment.
-            Strategy, execution, and measurement drift. The system gets heavier each quarter, even when the team is strong.
-          </p>
+          <p>Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift.</p>
         </div>
-
         <div class="grid-3">
           <div class="mini-card">
             <h4>Misaligned priorities</h4>
@@ -431,7 +381,7 @@
           </div>
           <div class="mini-card">
             <h4>Execution without sequence</h4>
-            <p>Strong initiatives arrive in the wrong order. The real constraint stays untouched, so effort does not compound.</p>
+            <p>Strong initiatives arrive in the wrong order. The real constraint stays untouched.</p>
           </div>
         </div>
       </div>
@@ -442,64 +392,36 @@
         <div style="text-align:center; max-width:700px; margin:0 auto 56px;">
           <span class="eyebrow">Productized Consulting</span>
           <h2>Why wait 8 weeks for a slide deck?</h2>
-          <p>
-            We codified the intuition of a seasoned CRO into a digital engine. 
-            Get the same board-level insights you'd expect from a Tier-1 firm, but without the timeline.
-          </p>
+          <p>We codified the intuition of a seasoned CRO into a digital engine. Get board-level insights without the timeline.</p>
         </div>
 
         <div class="comparison-wrapper">
-          
           <div class="comp-col-left">
             <h4 style="margin-bottom:24px; color:#64748b; font-size:1.2rem;">Traditional Consulting</h4>
             <ul class="comp-list">
-              <li class="comp-item">
-                <span class="comp-label">Timeline</span> <span class="comp-val" style="color:#64748b;">6-12 Weeks</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Method</span> <span class="comp-val" style="color:#64748b;">Interviews & Opinions</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Output</span> <span class="comp-val" style="color:#64748b;">Static PDF Deck</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Continuity</span> <span class="comp-val" style="color:#64748b;">None (Project based)</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;"><span class="curr">$</span>25k - <span class="curr">$</span>50k+</span>
-              </li>
+              <li class="comp-item"><span class="comp-label">Timeline</span> <span class="comp-val" style="color:#64748b;">6-12 Weeks</span></li>
+              <li class="comp-item"><span class="comp-label">Method</span> <span class="comp-val" style="color:#64748b;">Interviews & Opinions</span></li>
+              <li class="comp-item"><span class="comp-label">Output</span> <span class="comp-val" style="color:#64748b;">Static PDF Deck</span></li>
+              <li class="comp-item"><span class="comp-label">Continuity</span> <span class="comp-val" style="color:#64748b;">None (Project based)</span></li>
+              <li class="comp-item"><span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;"><span class="curr">$</span>25k - <span class="curr">$</span>50k+</span></li>
             </ul>
           </div>
-
           <div class="comp-col-right">
             <div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
-            
             <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.1rem; font-family:Inter, sans-serif; font-weight:900; letter-spacing:0.02em; text-transform:uppercase;">
               <img src="assets/logo-final.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Engine
             </h4>
             <ul class="comp-list">
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Timeline</span> 
-                <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Method</span> <span class="comp-val">Algorithmic 4-Force Analysis</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Output</span> <span class="comp-val">Dynamic Roadmap & Scores</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Continuity</span> <span class="comp-val">Available (AI Copilot)</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Cost</span> <span class="comp-val">Fraction of traditional</span>
-              </li>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;"><span class="comp-label">Timeline</span> <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</span></li>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;"><span class="comp-label">Method</span> <span class="comp-val">Algorithmic 4-Force Analysis</span></li>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;"><span class="comp-label">Output</span> <span class="comp-val">Dynamic Roadmap & Scores</span></li>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;"><span class="comp-label">Continuity</span> <span class="comp-val">Active Monitoring (AI Copilot)</span></li>
+              <li class="comp-item" style="border-bottom-color:#f1f5f9;"><span class="comp-label">Cost</span> <span class="comp-val">Fraction of traditional</span></li>
             </ul>
             <div style="margin-top:32px; text-align:center;">
                 <a href="gtm-assessment.html" class="btn btn-primary" style="width:100%;">Start Free Assessment</a>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -509,26 +431,18 @@
         <div>
           <span class="eyebrow" style="color:#60a5fa;">Instant Deliverable</span>
           <h2>Your Strategy Roadmap.<br>Generated Instantly.</h2>
-          <p style="color:#94a3b8; font-size:1.1rem; margin-bottom:32px;">
-            The Engine processes 265 data points across your revenue system and compiles 
-            a Board-Level Diagnostic PDF automatically. No waiting for slides.
-          </p>
-
+          <p style="color:#94a3b8; font-size:1.1rem; margin-bottom:32px;">The Engine processes 265 data points across your revenue system and compiles a Board-Level Diagnostic PDF automatically.</p>
           <ul class="check-list">
             <li>Benchmarked against 30+ SaaS Growth Archetypes</li>
             <li>Identifies your #1 Constraint mathematically</li>
             <li>Provides a quarter-by-quarter execution plan</li>
           </ul>
-
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
             <a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the report</a>
             <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#ffffff;">Free GTM Score</a>
           </div>
         </div>
-
-        <div class="report-visual">
-          [ Report Cover Placeholder ]
-        </div>
+        <div class="report-visual">[ Report Cover Placeholder ]</div>
       </div>
     </section>
 
@@ -536,9 +450,7 @@
       <div class="container" style="max-width:860px; text-align:center;">
         <span class="eyebrow">Next step</span>
         <h2>Your GTM System is speaking.<br>Are you listening?</h2>
-        <p style="font-size:1.1rem; max-width:600px; margin:0 auto 24px auto;">
-          A structured self assessment that gives you an executive narrative and clear priorities in under five minutes.
-        </p>
+        <p style="font-size:1.1rem; max-width:600px; margin:0 auto 24px auto;">A structured self assessment that gives you an executive narrative and clear priorities in under five minutes.</p>
         <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
           <a href="gtm-assessment.html" class="btn btn-primary">Get your GTM Score</a>
           <a href="contact.html" class="btn btn-outline">Contact</a>
@@ -548,9 +460,7 @@
   </main>
 
   <footer>
-    <div class="container">
-      <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
-    </div>
+    <div class="container"><p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p></div>
   </footer>
 
   <script src="assets/caugia-base.js"></script>
@@ -562,7 +472,6 @@
 
       const ctx = canvas.getContext("2d");
 
-      // Chart Config
       const myChart = new Chart(ctx, {
         type: "radar",
         data: {
@@ -572,121 +481,112 @@
             backgroundColor: "rgba(0, 86, 179, 0.15)",
             borderColor: "#0056b3",
             pointBackgroundColor: "#0056b3",
-            borderWidth: 2, 
-            pointRadius: 3, 
-            pointHoverRadius: 5
+            borderWidth: 2, pointRadius: 3, pointHoverRadius: 5
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 800, easing: 'easeOutQuart' }, // Smoother animation
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
-          },
+          animation: { duration: 800, easing: 'easeOutQuart' },
+          plugins: { legend: { display: false }, tooltip: { enabled: true } },
           scales: {
             r: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              ticks: { display: false, count: 5 }, 
-              angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
-              grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
-              pointLabels: {
-                color: "#0056b3",
-                font: { size: 14, weight: "800", family: "Inter" },
-                padding: 10
-              }
+              suggestedMin: 0, suggestedMax: 100, ticks: { display: false, count: 5 },
+              angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
+              grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
+              pointLabels: { color: "#0056b3", font: { size: 14, weight: "800", family: "Inter" }, padding: 10 }
             }
           },
-          elements: { line: { tension: 0.2 } } 
+          elements: { line: { tension: 0.2 } }
         }
       });
       
-      // LOGIC: Determining the Primary Constraint
-      function getArchetype(g, r, i, p) {
+      // LOGIC: Determining Constraint & Syncing Pillars
+      function updateSystemState(g, r, i, p) {
         const scores = [{k:'g',v:g},{k:'r',v:r},{k:'i',v:i},{k:'p',v:p}];
         scores.sort((a,b)=>a.v-b.v);
-        const avg = (g+r+i+p)/4;
         const lowest = scores[0];
         const highest = scores[3];
+        const avg = (g+r+i+p)/4;
 
-        if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
-        if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
-        if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
-        if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
+        // 1. Determine Archetype
+        let arch = { title: "Developing", body: "System is syncing...", mode: "mode-mid" };
+        
+        if (avg < 35) arch = { title: "The Stalled Engine", body: "Systemic failure across all dimensions.", mode: "mode-bad" };
+        else if (avg < 45 && highest.v < 60) arch = { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others.", mode: "mode-bad" };
+        else if (avg > 85) arch = { title: "The Precision Machine", body: "Elite performance. Focus on expansion.", mode: "mode-good" };
+        else if (lowest.k === 'p' && highest.k === 'i' && (highest.v - lowest.v > 30)) arch = { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). You are burning fuel.", mode: "mode-bad" };
+        else if (lowest.k === 'i' && highest.k === 'g') arch = { title: "The Ivory Tower", body: "Strategy (G) disconnected from reality (I).", mode: "mode-warn" };
+        else if (lowest.k === 'r') arch = { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth (R).", mode: "mode-warn" };
+        else if (lowest.k === 'g') arch = { title: "The Direction Gap", body: "Execution capability without strategic compass.", mode: "mode-warn" };
+        else if (lowest.k === 'p') arch = { title: "The Black Box", body: "System runs, but results (P) are not visible.", mode: "mode-mid" };
 
-        if (lowest.k === 'g') return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
-        if (lowest.k === 'r') return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
-        if (lowest.k === 'i') return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
-        if (lowest.k === 'p') {
-           if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
-           return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
+        // 2. Update Widget UI
+        document.getElementById("archetypeTitle").textContent = arch.title;
+        document.getElementById("archetypeBody").textContent = arch.body;
+        document.getElementById("archetypeBox").className = "insight-box " + arch.mode;
+
+        // 3. ANIMATE PILLARS (The "Vette Animatie")
+        // Reset all pillars
+        document.querySelectorAll('.pillar-item').forEach(el => {
+          el.className = 'pillar-item'; // remove status classes
+        });
+
+        // Highlight the Force that is the CONSTRAINT (lowest score)
+        // We make these 'pulsate' red or orange
+        const badStatus = (lowest.v < 50) ? 'status-bad' : 'status-warn';
+        document.querySelectorAll(`.pillar-item[data-force="${lowest.k}"]`).forEach(el => {
+          el.classList.add(badStatus);
+        });
+
+        // Highlight the Force that is the STRENGTH (highest score) if > 70
+        if (highest.v > 70) {
+          document.querySelectorAll(`.pillar-item[data-force="${highest.k}"]`).forEach(el => {
+            el.classList.add('status-good');
+          });
         }
-        return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
       }
 
       function updateUI(g, r, i, p) {
-        // Update Chart
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
         
-        // Update Sliders visually (without triggering events)
-        document.getElementById("input-g").value = g;
-        document.getElementById("input-r").value = r;
-        document.getElementById("input-i").value = i;
-        document.getElementById("input-p").value = p;
-
-        // Update Numbers
-        document.getElementById("val-g").textContent = Math.round(g);
-        document.getElementById("val-r").textContent = Math.round(r);
-        document.getElementById("val-i").textContent = Math.round(i);
-        document.getElementById("val-p").textContent = Math.round(p);
+        document.getElementById("input-g").value = g; document.getElementById("val-g").textContent = Math.round(g);
+        document.getElementById("input-r").value = r; document.getElementById("val-r").textContent = Math.round(r);
+        document.getElementById("input-i").value = i; document.getElementById("val-i").textContent = Math.round(i);
+        document.getElementById("input-p").value = p; document.getElementById("val-p").textContent = Math.round(p);
         
-        // Update Colors
         ["g","r","i","p"].forEach(k => {
           const val = eval(k);
           const el = document.getElementById("input-"+k);
           el.className = val < 50 ? "range-bad" : (val < 70 ? "range-warn" : "");
         });
 
-        // Update Total
         document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
-
-        // Update Archetype Text
-        const arch = getArchetype(g, r, i, p);
-        const boxEl = document.getElementById("archetypeBox");
-        document.getElementById("archetypeTitle").textContent = arch.title;
-        document.getElementById("archetypeBody").textContent = arch.body;
-        boxEl.className = "insight-box " + arch.mode;
+        
+        // Trigger the logic
+        updateSystemState(g, r, i, p);
       }
 
       // --- AUTO DEMO LOGIC ---
       let demoActive = true;
-      let demoInterval;
-      
-      // Keyframes for the movie
       const keyframes = [
-        { g: 40, r: 50, i: 85, p: 35 }, // Leaky Bucket
-        { g: 85, r: 60, i: 30, p: 40 }, // Ivory Tower
-        { g: 30, r: 85, i: 80, p: 35 }, // Burnout / Tooling Debt
-        { g: 80, r: 85, i: 90, p: 85 }  // Precision Machine
+        { g: 40, r: 50, i: 85, p: 35 }, // Leaky Bucket (Pillars 'P' should turn red)
+        { g: 85, r: 60, i: 30, p: 40 }, // Ivory Tower (Pillars 'I' turn red, 'G' turn green)
+        { g: 30, r: 85, i: 80, p: 35 }, // Burnout (Pillars 'G' and 'P' low)
+        { g: 85, r: 85, i: 90, p: 85 }  // Precision Machine (All green)
       ];
       
       let currentFrame = 0;
       let currentVals = { ...keyframes[0] };
       
-      function lerp(start, end, amt) {
-        return (1 - amt) * start + amt * end;
-      }
+      function lerp(start, end, amt) { return (1 - amt) * start + amt * end; }
 
       function playDemo() {
         if (!demoActive) return;
-        
         const target = keyframes[currentFrame];
-        const speed = 0.04; // Speed of morphing (lower is slower)
+        const speed = 0.03; // Slightly slower for dramatic effect on pillars
         
-        // Interpolate towards target
         currentVals.g = lerp(currentVals.g, target.g, speed);
         currentVals.r = lerp(currentVals.r, target.r, speed);
         currentVals.i = lerp(currentVals.i, target.i, speed);
@@ -694,36 +594,28 @@
 
         updateUI(currentVals.g, currentVals.r, currentVals.i, currentVals.p);
 
-        // Check if close to target, then switch frame
         if (Math.abs(currentVals.g - target.g) < 1 && Math.abs(currentVals.p - target.p) < 1) {
           currentFrame = (currentFrame + 1) % keyframes.length;
         }
-
         requestAnimationFrame(playDemo);
       }
 
-      // Start the movie
       requestAnimationFrame(playDemo);
 
-      // --- USER INTERACTION ---
       function stopDemo() {
         if (demoActive) {
           demoActive = false;
           document.getElementById("scoreWidget").classList.remove("playing");
-          // Slight delay to ensure UI feels responsive to the user's touch immediately
+          document.querySelector(".pillars-card").classList.remove("playing"); // remove live badge opacity
         }
       }
 
       ["input-g","input-r","input-i","input-p"].forEach(id => {
         const el = document.getElementById(id);
-        // Stop demo on any interaction
         el.addEventListener("mousedown", stopDemo);
         el.addEventListener("touchstart", stopDemo);
-        
-        // Normal update logic
         el.addEventListener("input", (e) => {
-          stopDemo(); // Ensure it stops
-          // Read actual values from sliders now that user is in control
+          stopDemo();
           const g = parseInt(document.getElementById("input-g").value);
           const r = parseInt(document.getElementById("input-r").value);
           const i = parseInt(document.getElementById("input-i").value);
@@ -731,6 +623,9 @@
           updateUI(g, r, i, p);
         });
       });
+
+      // Add playing class initially for badge visibility
+      document.querySelector(".pillars-card").classList.add("playing");
 
     })();
   </script>
