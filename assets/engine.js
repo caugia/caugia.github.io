@@ -1,8 +1,8 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v8.1 (FULL REPAIR)
-   - Preserves ALL original logic (v8.0)
-   - Fixes: Adds 'name' attributes to inputs
-   - Fixes: Robust Test Submit logic inside engine
+   CAUGIA INTELLIGENCE ENGINE v8.2 (CONTEXT AWARE)
+   - Preserves ALL original logic.
+   - Fixes: Test Submit connection.
+   - IMPROVED: Sends Question Text + Answer to Make (for Claude context).
    =========================================================== */
 
 (function() {
@@ -23,23 +23,20 @@
 
     // --- 3. DOM ELEMENTS ---
     const UI = {
-        // Main Question Area
-        kicker: document.getElementById("gi-question-kicker"), 
+        kicker: document.getElementById("gi-question-kicker"),
         title: document.getElementById("gi-question-title"),
-        sub: document.getElementById("gi-question-sub"), 
-        body: document.getElementById("gi-question-body"), 
+        sub: document.getElementById("gi-question-sub"),
+        body: document.getElementById("gi-question-body"),
         
-        // Sidebar / Progress
         pillarList: document.getElementById("gi-left-pillar-list"),
-        progressCount: document.getElementById("gi-progress-count"), 
-        progressPercent: document.getElementById("gi-progress-percent"), 
+        progressCount: document.getElementById("gi-progress-count"),
+        progressPercent: document.getElementById("gi-progress-percent"),
         progressBar: document.getElementById("gi-progress-bar"),
 
-        // Navigation & Actions
         prevBtn: document.getElementById("gi-prev-btn"),
         nextBtn: document.getElementById("gi-next-btn"),
-        submitBtn: document.getElementById("gi-submit-btn"), // The real one
-        testBtn: document.getElementById("gi-test-submit-btn"), // The test one
+        submitBtn: document.getElementById("gi-submit-btn"),
+        testBtn: document.getElementById("gi-test-submit-btn"), 
         
         clearBtn: document.getElementById("gi-clear-btn"),
         saveBtn: document.getElementById("gi-save-btn"),
@@ -53,15 +50,10 @@
             if(UI.title) UI.title.innerText = "Error: Questions File Missing";
             return;
         }
-
-        // Restore Session
         loadState();
-        
-        console.log(`Engine v8.1 Started. Loaded ${window.QUESTIONS.length} questions.`);
+        console.log(`Engine v8.2 Started. Loaded ${window.QUESTIONS.length} questions.`);
         renderQuestion();
         updateSidebar();
-        
-        // Auto-save loop
         setInterval(saveState, CONFIG.autoSaveInterval);
     }
 
@@ -70,7 +62,6 @@
         const q = window.QUESTIONS[STATE.currentStep];
         if(!q) return;
 
-        // A. Header Info
         const pillarNames = [
             "Context", "GTM Strategy & Leadership", "Market Intelligence", "Product Marketing", 
             "Demand Generation", "Sales Execution", "Customer Success", "RevOps", 
@@ -82,7 +73,6 @@
         if(UI.title) UI.title.innerText = q.title;
         if(UI.sub) UI.sub.innerText = q.sub || ""; 
 
-        // B. Render Input Body
         UI.body.innerHTML = ''; 
 
         switch (q.type) {
@@ -94,21 +84,18 @@
             default: UI.body.innerHTML = `<p style="color:red">Unknown type: ${q.type}</p>`;
         }
 
-        // C. Update Navigation State
         updateNavState();
         updateProgress();
         updateSidebar();
     }
 
     // --- 6. INPUT BUILDERS ---
-
     function renderGroup(q) {
         const grid = document.createElement('div');
         grid.className = "gi-group-grid"; 
         grid.style.display = "grid";
         grid.style.gridTemplateColumns = "1fr 1fr";
         grid.style.gap = "20px";
-        
         if(window.innerWidth < 768) grid.style.gridTemplateColumns = "1fr";
 
         q.fields.forEach(f => {
@@ -127,10 +114,8 @@
             input.style.padding = "10px";
             input.style.border = "1px solid #e2e8f0";
             input.style.borderRadius = "6px";
+            input.name = f.name; // FIX: Name attribute
             
-            // FIX: Add name attribute for debugging/scraping
-            input.name = f.name;
-
             if(STATE.answers[f.name]) input.value = STATE.answers[f.name];
 
             input.addEventListener('input', (e) => {
@@ -164,7 +149,7 @@
 
             const input = document.createElement('input');
             input.type = "radio";
-            input.name = `q_${q.id}`; // FIX: Name attribute added
+            input.name = `q_${q.id}`; 
             input.value = opt;
             input.style.marginRight = "10px";
 
@@ -176,8 +161,7 @@
 
             input.addEventListener('change', () => {
                 STATE.answers[`q${q.id}`] = opt;
-                // Simple re-render to update selected styles
-                UI.body.innerHTML = '';
+                UI.body.innerHTML = ''; 
                 renderRadio(q);
             });
 
@@ -188,9 +172,7 @@
         UI.body.appendChild(wrapper);
     }
 
-    function renderScale(q) {
-        renderRadio(q); 
-    }
+    function renderScale(q) { renderRadio(q); }
 
     function renderTextarea(q) {
         const input = document.createElement('textarea');
@@ -200,10 +182,8 @@
         input.style.padding = "12px";
         input.style.border = "1px solid #e2e8f0";
         input.style.borderRadius = "8px";
+        input.name = `q_${q.id}`; 
         
-        // FIX: Add name
-        input.name = `q_${q.id}`;
-
         if(STATE.answers[`q${q.id}`]) input.value = STATE.answers[`q${q.id}`];
 
         input.addEventListener('input', (e) => {
@@ -220,8 +200,6 @@
         input.style.padding = "12px";
         input.style.border = "1px solid #e2e8f0";
         input.style.borderRadius = "8px";
-
-        // FIX: Add name
         input.name = `q_${q.id}`;
 
         if(STATE.answers[`q${q.id}`]) input.value = STATE.answers[`q${q.id}`];
@@ -232,24 +210,19 @@
         UI.body.appendChild(input);
     }
 
-    // --- 7. NAVIGATION & VALIDATION ---
-
+    // --- 7. NAVIGATION ---
     function validateCurrent() {
         const q = window.QUESTIONS[STATE.currentStep];
-        
-        // Bypass validation if user wants to just test submit (optional)
-        // But for normal flow:
         if (q.type === 'group') {
             let allFilled = true;
             q.fields.forEach(f => {
                 if(!STATE.answers[f.name] || STATE.answers[f.name].trim() === "") allFilled = false;
             });
-            if(!allFilled) alert("Please fill in all fields.");
-            return allFilled;
+            if(!allFilled) { alert("Please fill in all fields."); return false; }
+            return true;
         } else {
             if(!STATE.answers[`q${q.id}`] || STATE.answers[`q${q.id}`].trim() === "") {
-                alert("Please answer the question.");
-                return false;
+                alert("Please answer the question."); return false;
             }
             return true;
         }
@@ -257,7 +230,6 @@
 
     function goNext() {
         if(!validateCurrent()) return;
-
         if (STATE.currentStep < window.QUESTIONS.length - 1) {
             STATE.currentStep++;
             renderQuestion();
@@ -284,13 +256,10 @@
         }
     }
 
-    // --- 8. PROGRESS & SIDEBAR ---
-
     function updateProgress() {
         const total = window.QUESTIONS.length;
         const current = STATE.currentStep + 1;
         const pct = Math.round((current / total) * 100);
-
         if(UI.progressCount) UI.progressCount.innerText = `${current} / ${total}`;
         if(UI.progressPercent) UI.progressPercent.innerText = `${pct}%`;
         if(UI.progressBar) UI.progressBar.style.width = `${pct}%`;
@@ -300,11 +269,10 @@
         if(!UI.pillarList) return;
         const currentQ = window.QUESTIONS[STATE.currentStep];
         const currentPillar = currentQ.pillar;
-
         const items = UI.pillarList.querySelectorAll('li');
         items.forEach((item, index) => {
             if(index === currentPillar) {
-                item.classList.add('active'); // Add your CSS active class
+                item.classList.add('active'); 
                 item.style.fontWeight = "bold";
                 item.style.color = "#0056b3";
             } else {
@@ -315,7 +283,6 @@
         });
     }
 
-    // --- 9. STATE STORAGE ---
     function saveState() {
         if(STATE.completed) return;
         localStorage.setItem(CONFIG.storageKey, JSON.stringify(STATE));
@@ -329,34 +296,68 @@
         }
     }
 
-    // --- 10. SUBMISSION (ROBUST REPAIR) ---
-    // Handles both Real and Test submissions directly from STATE
-    
+    // --- 10. SUBMISSION (ENRICHED WITH QUESTION TEXT) ---
     async function submitData(isTest = false) {
         
-        let answersToSend = STATE.answers;
-        let msg = "Official Submission";
+        let answersRaw = STATE.answers;
+        let enrichedData = []; // This will hold the Question + Answer pairs
+        let message = "Official Submission";
 
-        // FIX: Force Dummy Data if empty so Make doesn't hang
-        if(Object.keys(answersToSend).length === 0) {
-            console.warn("⚠️ No answers found. Generating DUMMY data for connection test.");
-            answersToSend = {
-                "test_mode": "empty_trigger",
-                "fullname": "Connection Test User",
-                "q1": "Dummy Answer"
-            };
-            msg = "Auto-Generated Dummy Data (Input was empty)";
+        // If empty, force dummy data
+        if(Object.keys(answersRaw).length === 0) {
+            console.warn("⚠️ No answers found. Generating DUMMY data.");
+            answersRaw = { "test_mode": "true" };
+            enrichedData.push({
+                id: "test_q1",
+                question: "This is a dummy question to test connection",
+                answer: "Dummy Answer"
+            });
+            message = "⚠️ TEST DATA (Auto-generated because input was empty)";
+        } else {
+            // BUILD THE ENRICHED REPORT FOR CLAUDE
+            // We loop through the master QUESTIONS array to map IDs to Text
+            window.QUESTIONS.forEach(q => {
+                if(q.type === 'group') {
+                    // For groups, we map each field
+                    q.fields.forEach(field => {
+                        if(answersRaw[field.name]) {
+                            enrichedData.push({
+                                id: field.name,
+                                pillar: q.pillar, // Add pillar context if useful
+                                question: `${q.title} - ${field.label}`,
+                                answer: answersRaw[field.name]
+                            });
+                        }
+                    });
+                } else {
+                    // For single questions
+                    const key = `q${q.id}`; // Match the key format used in STATE
+                    if(answersRaw[key] || answersRaw[`q_${q.id}`]) { // Handle potential key format variation
+                        enrichedData.push({
+                            id: key,
+                            pillar: q.pillar,
+                            question: q.title,
+                            answer: answersRaw[key] || answersRaw[`q_${q.id}`]
+                        });
+                    }
+                }
+            });
         }
 
         const payload = {
             metadata: {
                 timestamp: new Date().toISOString(),
                 questions_count: window.QUESTIONS.length,
-                source: "Engine v8.1",
+                source: "Engine v8.2 Enriched",
                 is_test: isTest
             },
-            message: msg,
-            answers: answersToSend
+            message: message,
+            
+            // OPTION A: Keep raw answers for legacy support
+            answers: answersRaw,
+            
+            // OPTION B: The new "Claude-Ready" Report
+            full_report: enrichedData 
         };
 
         console.log("🚀 Sending Payload to Make:", payload);
@@ -376,7 +377,7 @@
             
             if(res.ok) {
                 if(isTest) {
-                    alert("✅ TEST SUCCESVOL! \nData is verstuurd naar Make. Check je scenario.");
+                    alert("✅ TEST SUCCESVOL!\n\nData (inclusief vraagteksten) verstuurd naar Make.");
                 } else {
                     STATE.completed = true;
                     localStorage.removeItem(CONFIG.storageKey);
@@ -399,16 +400,13 @@
     // --- 11. EVENT BINDING ---
     if(UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
     if(UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
-    
-    // Real Submit
     if(UI.submitBtn) UI.submitBtn.addEventListener("click", () => submitData(false));
 
-    // Test Submit (NEW FIX)
     if(UI.testBtn) {
         console.log("✅ Test Button Bound");
         UI.testBtn.addEventListener("click", (e) => {
             e.preventDefault(); 
-            submitData(true); // Call with isTest = true
+            submitData(true);
         });
     }
 
@@ -429,7 +427,6 @@
         }
     });
 
-    // Start
     init();
 
 })();
