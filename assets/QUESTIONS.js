@@ -24,7 +24,7 @@ const QUESTIONS = [
     { name: "role", label: "Your role or job title" },
     { name: "email", label: "Email address" },
     { name: "company", label: "Company name" },
-    { name: "website", label: "Company website" },
+    { name: "industry", label: "Industry (e.g. FinTech, HRTech, DevTools)" },
     { name: "total_employees", label: "Total Employees (FTE equivalent)" },
     { name: "year_founded", label: "Year Founded (YYYY)" },
     { name: "hq_region", label: "HQ Region (US, FR, UK, Other)" }
