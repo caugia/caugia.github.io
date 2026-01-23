@@ -26,7 +26,8 @@ const QUESTIONS = [
     { name: "company", label: "Company name" },
     { name: "website", label: "Company website" },
     { name: "total_employees", label: "Total Employees (FTE equivalent)" },
-    { name: "year_founded", label: "Year Founded (YYYY)" }
+    { name: "year_founded", label: "Year Founded (YYYY)" },
+    { name: "hq_region", label: "HQ Region (US, FR, UK, Other)" }
   ]
 },
 
@@ -43,7 +44,8 @@ const QUESTIONS = [
     { name: "gross_margin", label: "Gross Margin (%)" },
     { name: "monthly_burn", label: "Monthly Net Burn ($)" },
     { name: "cash_runway", label: "Cash Runway (Estimated months remaining)" },
-    { name: "pricing_model", label: "Pricing Model (e.g. Flat, Per Seat, Usage-based)" }
+    { name: "pricing_model", label: "Pricing Model (e.g. Flat, Per Seat, Usage-based)" },
+    { name: "number_of_clients", label: "Number of Active Paying Customers" }
   ]
 },
 
@@ -60,6 +62,7 @@ const QUESTIONS = [
     { name: "marketing_headcount", label: "# Marketing (Demand + PMM + Brand)" },
     { name: "cs_headcount", label: "# Customer Success / Account Management" },
     { name: "revops_enablement_headcount", label: "# RevOps / Enablement" },
+    { name: "product_headcount", label: "# Product (PM + Design)" },
     { name: "gtm_other_headcount", label: "# Other GTM (Partners, Solutions, SEs)" }
   ]
 },
@@ -76,7 +79,9 @@ const QUESTIONS = [
     { name: "cac_payback", label: "CAC Payback Period (Months)" },
     { name: "ltv_cac", label: "LTV to CAC Ratio" },
     { name: "avg_discount", label: "Average Discount % on New Logo Deals" },
-    { name: "expansion_pct", label: "% of New ARR from Upsell / Expansion" }
+    { name: "expansion_pct", label: "% of New ARR from Upsell / Expansion" },
+    { name: "opex_includes_payroll", label: "Does the monthly burn include payroll? (Yes/No)" },
+    { name: "sales_marketing_pct", label: "Sales & Marketing spend as % of revenue" }
   ]
 },
 
@@ -92,8 +97,9 @@ const QUESTIONS = [
     { name: "pipeline_coverage", label: "Pipeline Coverage Ratio (e.g. 3.5x)" },
     { name: "churn_rate", label: "Annual Churn Rate (%)" },
     { name: "top_competitors", label: "Top 3 Competitors (Comma separated)" },
-    { name: "primary_loss_reason", label: "Primary lost reason (e.g. Budget, Competition)" },
-    { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" }
+    { name: "primary_loss_reason", label: "Primary loss reason (e.g. Budget, Competition)" },
+    { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" },
+    { name: "primary_churn_reason", label: "Primary reason for churn (e.g. Price, Product, Service)" }
   ]
 },
 
