@@ -18,26 +18,32 @@ const QUESTIONS = [
   pillar: 0,
   type: "group",
   title: "Tell us about you and your company",
+  subtitle: "Basic context to calibrate benchmarks and velocity",
   fields: [
     { name: "fullname", label: "Your full name" },
     { name: "role", label: "Your role or job title" },
     { name: "email", label: "Email address" },
     { name: "company", label: "Company name" },
-    { name: "website", label: "Company website" }
+    { name: "website", label: "Company website" },
+    { name: "total_employees", label: "Total Employees (FTE equivalent)" },
+    { name: "year_founded", label: "Year Founded (YYYY)" }
   ]
 },
-   
+
 {
   id: 2,
   pillar: 0,
   type: "group",
   title: "Key SaaS Performance Metrics",
+  subtitle: "Core financial health indicators",
   fields: [
     { name: "arr", label: "Current ARR (Annual Recurring Revenue)" },
     { name: "growth_rate", label: "Year-over-Year Growth Rate (%)" },
     { name: "nrr", label: "Net Revenue Retention (NRR %)" },
     { name: "gross_margin", label: "Gross Margin (%)" },
-    { name: "burn_multiple", label: "Burn Multiple (or Monthly Burn)" }
+    { name: "monthly_burn", label: "Monthly Net Burn ($)" },
+    { name: "cash_runway", label: "Cash Runway (Estimated months remaining)" },
+    { name: "pricing_model", label: "Pricing Model (e.g. Flat, Per Seat, Usage-based)" }
   ]
 },
 
@@ -46,12 +52,15 @@ const QUESTIONS = [
   pillar: 0,
   type: "group",
   title: "GTM Team Composition (Full Time Employees)",
+  subtitle: "How your revenue engine is staffed today",
   fields: [
-    { name: "sales_headcount", label: "# Sales (AE + Leadership)" },
+    { name: "sales_headcount", label: "# Sales (AEs)" },
+    { name: "sales_leadership_headcount", label: "# Sales Leadership (VP/Head/Managers)" },
     { name: "sdr_headcount", label: "# SDR / BDR" },
-    { name: "marketing_headcount", label: "# Marketing" },
-    { name: "cs_headcount", label: "# Customer Success / AM" },
-    { name: "revops_headcount", label: "# RevOps / Enablement" }
+    { name: "marketing_headcount", label: "# Marketing (Demand + PMM + Brand)" },
+    { name: "cs_headcount", label: "# Customer Success / Account Management" },
+    { name: "revops_enablement_headcount", label: "# RevOps / Enablement" },
+    { name: "gtm_other_headcount", label: "# Other GTM (Partners, Solutions, SEs)" }
   ]
 },
 
@@ -60,11 +69,14 @@ const QUESTIONS = [
   pillar: 0,
   type: "group",
   title: "Targets & Efficiency",
+  subtitle: "Revenue efficiency and pricing power",
   fields: [
     { name: "arr_target", label: "ARR Target for this Fiscal Year" },
-    { name: "quota_attainment", label: "% of Reps hitting Quota last quarter" },
+    { name: "quota_attainment", label: "% of Reps Hitting Quota (Last Quarter)" },
     { name: "cac_payback", label: "CAC Payback Period (Months)" },
-    { name: "ltv_cac", label: "LTV:CAC Ratio" }
+    { name: "ltv_cac", label: "LTV to CAC Ratio" },
+    { name: "avg_discount", label: "Average Discount % on New Logo Deals" },
+    { name: "expansion_pct", label: "% of New ARR from Upsell / Expansion" }
   ]
 },
 
@@ -72,12 +84,16 @@ const QUESTIONS = [
   id: 5,
   pillar: 0,
   type: "group",
-  title: "Funnel Velocity",
+  title: "Funnel Velocity & Risk Context",
+  subtitle: "Where deals slow down, break, or disappear",
   fields: [
     { name: "win_rate", label: "Average Win Rate (%)" },
     { name: "sales_cycle", label: "Average Sales Cycle (Days)" },
     { name: "pipeline_coverage", label: "Pipeline Coverage Ratio (e.g. 3.5x)" },
-    { name: "churn_rate", label: "Annual Churn Rate (%)" }
+    { name: "churn_rate", label: "Annual Churn Rate (%)" },
+    { name: "top_competitors", label: "Top 3 Competitors (Comma separated)" },
+    { name: "primary_loss_reason", label: "Primary reason deals are lost (e.g. Budget, Competition, No decision)" },
+    { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" }
   ]
 },
 
