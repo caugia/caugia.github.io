@@ -99,7 +99,7 @@ const QUESTIONS = [
     { name: "top_competitors", label: "Top 3 Competitors (Comma separated)" },
     { name: "primary_loss_reason", label: "Primary loss reason (e.g. Budget, Competition)" },
     { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" },
-    { name: "primary_churn_reason", label: "Primary reason for churn (e.g. Price, Product, Service)" }
+    { name: "primary_churn_reason", label: "Primary reason for churn (e.g. Price, Product)" }
   ]
 },
 
