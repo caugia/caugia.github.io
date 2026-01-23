@@ -584,9 +584,9 @@
       company: answersRaw["q1__company"] || "",
       website: answersRaw["q1__website"] || "",
 
-      // new Q1 fields
       total_employees: answersRaw["q1__total_employees"] || "",
-      year_founded: answersRaw["q1__year_founded"] || ""
+      year_founded: answersRaw["q1__year_founded"] || "",
+      hq_region: answersRaw["q1__hq_region"] || ""
     };
   }
 
@@ -597,16 +597,20 @@
       growth_rate: answersRaw["q2__growth_rate"] || "",
       nrr: answersRaw["q2__nrr"] || "",
       gross_margin: answersRaw["q2__gross_margin"] || "",
-      burn_multiple: answersRaw["q2__burn_multiple"] || "",
+      monthly_burn: answersRaw["q2__monthly_burn"] || "",
       cash_runway: answersRaw["q2__cash_runway"] || "",
       pricing_model: answersRaw["q2__pricing_model"] || "",
+      number_of_clients: answersRaw["q2__number_of_clients"] || "",
 
       // Q3
       sales_headcount: answersRaw["q3__sales_headcount"] || "",
+      sales_leadership_headcount: answersRaw["q3__sales_leadership_headcount"] || "",
       sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
       marketing_headcount: answersRaw["q3__marketing_headcount"] || "",
       cs_headcount: answersRaw["q3__cs_headcount"] || "",
-      revops_headcount: answersRaw["q3__revops_headcount"] || "",
+      revops_enablement_headcount: answersRaw["q3__revops_enablement_headcount"] || "",
+      product_headcount: answersRaw["q3__product_headcount"] || "",
+      gtm_other_headcount: answersRaw["q3__gtm_other_headcount"] || "",
 
       // Q4
       arr_target: answersRaw["q4__arr_target"] || "",
@@ -615,6 +619,8 @@
       ltv_cac: answersRaw["q4__ltv_cac"] || "",
       avg_discount: answersRaw["q4__avg_discount"] || "",
       expansion_pct: answersRaw["q4__expansion_pct"] || "",
+      opex_includes_payroll: answersRaw["q4__opex_includes_payroll"] || "",
+      sales_marketing_pct: answersRaw["q4__sales_marketing_pct"] || "",
 
       // Q5
       win_rate: answersRaw["q5__win_rate"] || "",
@@ -622,8 +628,9 @@
       pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "",
       churn_rate: answersRaw["q5__churn_rate"] || "",
       top_competitors: answersRaw["q5__top_competitors"] || "",
-      primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
+      primary_loss_reason: answersRaw["q5__primary_loss_reason"] || "",
       revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
+      primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
 
       // Legacy passthrough for big Q ids (if present)
       Q6: answersRaw["q6"] || "",
@@ -743,7 +750,7 @@
   }
 
   function buildQuestionMapLegacy() {
-    // Fix: prevent collisions for group fields. Use full q{id}__{name} key.
+    // Deterministic: avoid collisions for group field names.
     const map = {};
     window.QUESTIONS.forEach((q) => {
       if (q.type === "group" && Array.isArray(q.fields)) {
@@ -774,25 +781,19 @@
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
 
-    // Legacy-friendly answers block (fast mapping surface in Make)
-    const answers = Object.assign(
-      {},
-      answersQ,
-      pillarScores,
-      {
-        score_total: overallScore,
-        grip_g: gripScores.G,
-        grip_r: gripScores.R,
-        grip_i: gripScores.I,
-        grip_p: gripScores.P,
-        confidence_range: confidence.confidence_range,
-        confidence_range_num: confidence.confidence_range_num,
-        completion_rate: coverage.completion_rate,
-        total_questions: coverage.total_questions,
-        answered_questions: coverage.answered_questions,
-        pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
-      }
-    );
+    const answers = Object.assign({}, answersQ, pillarScores, {
+      score_total: overallScore,
+      grip_g: gripScores.G,
+      grip_r: gripScores.R,
+      grip_i: gripScores.I,
+      grip_p: gripScores.P,
+      confidence_range: confidence.confidence_range,
+      confidence_range_num: confidence.confidence_range_num,
+      completion_rate: coverage.completion_rate,
+      total_questions: coverage.total_questions,
+      answered_questions: coverage.answered_questions,
+      pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
+    });
 
     const message = isTest ? "Test Submission" : "Official Submission";
 
