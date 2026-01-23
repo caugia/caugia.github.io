@@ -92,7 +92,7 @@ const QUESTIONS = [
     { name: "pipeline_coverage", label: "Pipeline Coverage Ratio (e.g. 3.5x)" },
     { name: "churn_rate", label: "Annual Churn Rate (%)" },
     { name: "top_competitors", label: "Top 3 Competitors (Comma separated)" },
-    { name: "primary_loss_reason", label: "Primary reason deals are lost (e.g. Budget, Competition, No decision)" },
+    { name: "primary_loss_reason", label: "Primary lost reason (e.g. Budget, Competition, No decision)" },
     { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" }
   ]
 },
