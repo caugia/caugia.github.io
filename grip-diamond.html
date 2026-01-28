@@ -461,44 +461,143 @@
       return { label: "STRONG", class: "badge-good" };
     }
 
+    // LOGIC: Determining the Primary Constraint (aligned with index.html)
     function getArchetype(g, r, i, p) {
-      const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
+      const scores = [
+        { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
+      ];
       scores.sort((a, b) => a.v - b.v);
+
       const avg = (g+r+i+p)/4;
       const lowest = scores[0];
-      const highest = scores[3];
       const secondLowest = scores[1];
+      const highest = scores[3];
 
-      if (avg < 35) return { title: "The Stalled Engine", body: "Systemic failure across all dimensions. Foundational rebuild required immediately.", mode: "mode-bad" };
-      if (avg < 45 && highest.v < 60) return { title: "The Fragile Foundation", body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.", mode: "mode-bad" };
-      if (avg > 85) return { title: "The Precision Machine", body: "Elite performance. Focus on incremental optimization and expansion.", mode: "mode-good" };
-      if (avg > 75 && lowest.v > 65) return { title: "The Balanced Engine", body: "Strong coherence. No major drag factors, allowing for predictable scaling.", mode: "mode-good" };
+      // 1. SYSTEMIC STATES (Extremes)
+      if (avg < 35) return {
+        title: "The Stalled Engine",
+        body: "Systemic failure across all dimensions. Foundational rebuild required immediately.",
+        mode: "mode-bad"
+      };
+      if (avg < 45 && highest.v < 60) return {
+        title: "The Fragile Foundation",
+        body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.",
+        mode: "mode-bad"
+      };
+      if (avg > 85) return {
+        title: "The Precision Machine",
+        body: "Elite performance. Focus on incremental optimization and expansion.",
+        mode: "mode-good"
+      };
+      if (avg > 75 && lowest.v > 65) return {
+        title: "The Balanced Engine",
+        body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
+        mode: "mode-good"
+      };
 
+      // 2. CONSTRAINT LOGIC
+
+      // --- GUIDANCE IS LOWEST ---
       if (lowest.k === 'g') {
-        if (highest.k === 'i' && highest.v > 65) return { title: "The Activity Trap", body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.", mode: "mode-warn" };
-        if (highest.k === 'r' && highest.v > 65) return { title: "The Bloated Ship", body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.", mode: "mode-warn" };
-        if (secondLowest.k === 'p') return { title: "The Guesswork Strategy", body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.", mode: "mode-bad" };
-        return { title: "The Direction Gap", body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.", mode: "mode-warn" };
+        if (highest.k === 'i' && highest.v > 65) return {
+          title: "The Activity Trap",
+          body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.",
+          mode: "mode-warn"
+        };
+        if (highest.k === 'r' && highest.v > 65) return {
+          title: "The Bloated Ship",
+          body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.",
+          mode: "mode-warn"
+        };
+        if (secondLowest.k === 'p') return {
+          title: "The Guesswork Strategy",
+          body: "No clear direction (G) and no data (P) to prove it. Decisions are purely anecdotal.",
+          mode: "mode-bad"
+        };
+        return {
+          title: "The Direction Gap",
+          body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.",
+          mode: "mode-warn"
+        };
       }
+
+      // --- RESOURCES IS LOWEST ---
       if (lowest.k === 'r') {
-        if (highest.k === 'g' && highest.v > 70) return { title: "The Visionary Void", body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.", mode: "mode-warn" };
-        if (highest.k === 'i' && highest.v > 70) return { title: "The Burnout Engine", body: "High execution (I) on low resources (R). The team is over-performing but fragile.", mode: "mode-bad" };
-        if (secondLowest.k === 'p') return { title: "The Tooling Debt", body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.", mode: "mode-bad" };
-        return { title: "The Capacity Crunch", body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.", mode: "mode-warn" };
+        if (highest.k === 'g' && highest.v > 70) return {
+          title: "The Visionary Void",
+          body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.",
+          mode: "mode-warn"
+        };
+        if (highest.k === 'i' && highest.v > 70) return {
+          title: "The Burnout Engine",
+          body: "High execution (I) on low resources (R). The team is over-performing but fragile.",
+          mode: "mode-bad"
+        };
+        if (secondLowest.k === 'p') return {
+          title: "The Tooling Debt",
+          body: "Lack of resources (R) is causing a data blackout (P). You cannot fix what you cannot measure.",
+          mode: "mode-bad"
+        };
+        return {
+          title: "The Capacity Crunch",
+          body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.",
+          mode: "mode-warn"
+        };
       }
+
+      // --- IMPLEMENTATION IS LOWEST ---
       if (lowest.k === 'i') {
-        if (highest.k === 'g' && highest.v > 70) return { title: "The Ivory Tower", body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.", mode: "mode-bad" };
-        if (highest.k === 'p' && highest.v > 60) return { title: "The Heroic System", body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.", mode: "mode-warn" };
-        if (secondLowest.k === 'r') return { title: "The Process Void", body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.", mode: "mode-bad" };
-        return { title: "The Broken Handoff", body: "Friction in the motion. Leads, data, or deals are dropping between silos.", mode: "mode-warn" };
+        if (highest.k === 'g' && highest.v > 70) return {
+          title: "The Ivory Tower",
+          body: "Strategy is perfect (G), but reality breaks down. A disconnect between leadership and the front line.",
+          mode: "mode-bad"
+        };
+        if (highest.k === 'p' && highest.v > 60) return {
+          title: "The Heroic System",
+          body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.",
+          mode: "mode-warn"
+        };
+        if (secondLowest.k === 'r') return {
+          title: "The Process Void",
+          body: "No process (I) and limited resources (R). Efficiency is impossible; friction is high.",
+          mode: "mode-bad"
+        };
+        return {
+          title: "The Broken Handoff",
+          body: "Friction in the motion. Leads, data, or deals are dropping between silos.",
+          mode: "mode-warn"
+        };
       }
+
+      // --- PERFORMANCE IS LOWEST ---
       if (lowest.k === 'p') {
-        if (highest.k === 'i' && highest.v > 70) return { title: "The Leaky Bucket", body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.", mode: "mode-bad" };
-        if (highest.k === 'g' && highest.v > 70) return { title: "The Blind Optimist", body: "Strong narrative (G), but the numbers (P) don't validate the story.", mode: "mode-warn" };
-        if (highest.k === 'r' && highest.v > 70) return { title: "The ROI Drag", body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.", mode: "mode-bad" };
-        return { title: "The Black Box", body: "The system runs, but visibility is zero. You cannot predict next quarter.", mode: "mode-mid" };
+        if (highest.k === 'i' && highest.v > 70) return {
+          title: "The Leaky Bucket",
+          body: "High effort (I), low outcome (P). Conversion rates or retention are draining value.",
+          mode: "mode-bad"
+        };
+        if (highest.k === 'g' && highest.v > 70) return {
+          title: "The Blind Optimist",
+          body: "Strong narrative (G), but the numbers (P) don't validate the story.",
+          mode: "mode-warn"
+        };
+        if (highest.k === 'r' && highest.v > 70) return {
+          title: "The ROI Drag",
+          body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.",
+          mode: "mode-bad"
+        };
+        return {
+          title: "The Black Box",
+          body: "The system runs, but visibility is zero. You cannot predict next quarter.",
+          mode: "mode-mid"
+        };
       }
-      return { title: "The Developing Engine", body: "System shows potential but lacks coherence across pillars.", mode: "mode-mid" };
+
+      return {
+        title: "The Developing Engine",
+        body: "System shows potential but lacks coherence across pillars.",
+        mode: "mode-mid"
+      };
     }
 
     function drawDiamond(g, r, i, p) {
