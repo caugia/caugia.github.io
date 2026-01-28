@@ -30,14 +30,14 @@
       short: "Systemic failure across all dimensions. The engine is not currently producing reliable revenue motion.",
       diamond_short: "Systemic failure across all dimensions. The engine is not currently producing reliable revenue motion. The system lacks a stable baseline to learn from.",
       exec: L(
-        "Revenue motion is unstable across the full system.",
-        "Effort does not translate into repeatable outcomes.",
-        "Signals conflict, so teams reset priorities too often.",
-        "First priority is controllability, not optimization.",
-        "Avoid scaling decisions while the baseline is volatile.",
-        "The report will isolate the minimum backbone to restart compounding."
+        "Unstable motion across the full GTM system",
+        "High effort low repeatability of outcomes",
+        "Conflicting signals constant priority resets",
+        "First move restore controllability and baseline",
+        "Freeze scaling decisions while volatility persists",
+        "Next isolate the minimum backbone to restart compounding"
       ),
-      pdf: "This archetype represents a system-wide breakdown where no dimension is strong enough to stabilize the whole. Guidance is not providing usable direction, resources are insufficient or misallocated, implementation is inconsistent, and performance is weak or volatile. In practice, leaders experience constant firefighting, repeated resets of priorities, and an inability to forecast or rely on pipeline or retention. The core risk is not underperformance alone but the absence of a controllable system. The fastest path forward typically starts by re-establishing a minimum operating baseline: a single coherent GTM focus, a measurable operating cadence, and a narrow set of leading indicators that can be trusted. Until the system is stabilized, optimization and growth initiatives tend to compound noise rather than create momentum."
+      pdf: "This archetype represents a system-wide breakdown where no dimension is strong enough to stabilize the whole. Guidance does not produce usable direction, resources are misallocated or insufficient, implementation is inconsistent, and performance is volatile. Leaders experience constant firefighting and repeated priority resets. The primary risk is the absence of a controllable system rather than underperformance alone. The fastest path forward starts with a minimum operating baseline and a single coherent GTM focus. A measurable operating cadence and a narrow set of trusted leading indicators must come first. Until stability exists, optimization and growth initiatives compound noise instead of momentum."
     },
 
     fragile_foundation: {
@@ -46,14 +46,14 @@
       short: "No dimension is strong enough to carry the others. The system operates, but it is structurally unstable.",
       diamond_short: "No dimension is strong enough to carry the others. The system operates, but it is structurally unstable. Small shocks create outsized disruption.",
       exec: L(
-        "The system runs, but it does not hold its shape.",
-        "Progress resets when the market or team shifts slightly.",
-        "There is no stabilizer that anchors execution quality.",
-        "Choose one stabilizing spine and build around it.",
-        "Avoid adding parallel initiatives that increase fragility.",
-        "The report will identify the stabilizer that reduces volatility fastest."
+        "System runs but shape does not hold",
+        "Small shocks trigger large execution swings",
+        "No stabilizer anchors quality and decisions",
+        "Pick one stabilizing spine and reinforce it",
+        "Do not add parallel initiatives that raise fragility",
+        "Next identify the fastest stabilizer to reduce volatility"
       ),
-      pdf: "This archetype appears when overall maturity is low and there is no compensating strength to keep the engine steady. The organization may have pockets of competence, but none are strong enough to anchor execution or performance. As a result, the system behaves like a fragile structure: small changes in market, team, or product produce disproportionate instability. You typically see inconsistent pipeline quality, uneven customer outcomes, and internal disagreement about what is actually working. The strategic danger is that leaders may interpret the problem as purely executional, when the deeper issue is structural. The system needs a stabilizer: either clearer guidance, meaningful resourcing, a reliable execution process, or measurable performance control. Without one, each quarter becomes a re-interpretation of reality rather than a step forward."
+      pdf: "This archetype appears when overall maturity is low and there is no compensating strength to keep the engine steady. The organization may have pockets of competence, but none anchors execution or performance. Small shifts in market, team, or product create outsized disruption. You see inconsistent pipeline quality, uneven customer outcomes, and internal disagreement about what is working. The danger is treating this as a pure execution problem when the deeper issue is structural. The system needs one stabilizer that can carry the others for a cycle. Clearer guidance, right-sized resourcing, repeatable mechanics, or measurable performance control can each serve as that stabilizer."
     },
 
     precision_machine: {
@@ -62,14 +62,14 @@
       short: "Elite performance across all dimensions. The system compounds reliably with low internal drag.",
       diamond_short: "Elite performance across all dimensions. The system compounds reliably with low internal drag. The constraint is now selection, not capability.",
       exec: L(
-        "The system is coherent and behaves predictably.",
-        "Strategy, capacity, execution, and performance reinforce each other.",
-        "Small improvements create compounding gains over time.",
-        "Focus shifts to selecting the highest leverage bets.",
-        "Avoid drift that weakens operating cadence and definitions.",
-        "The report will show where compounding can be accelerated safely."
+        "Coherent system predictable behavior",
+        "Strategy capacity execution performance reinforce",
+        "Small improvements compound over time",
+        "Primary constraint is bet selection",
+        "Protect cadence definitions and operating discipline",
+        "Next locate safe levers to accelerate compounding"
       ),
-      pdf: "This archetype signals a high-coherence GTM system. Guidance is clear and actionable, resources are sized correctly for the motion, implementation is consistent and repeatable, and performance is measurable and predictable. Leaders typically experience fewer surprises because the system’s control plane is strong: pipeline creation is stable, conversion behavior is understood, and retention economics are monitored in a way that supports decisions. The strategic opportunity is not reinvention but compounding. In this state, the highest leverage often comes from incremental improvements that scale: improving segment mix, tightening packaging, increasing conversion efficiency, or expanding acquisition channels without losing quality. The main risk is drift: a strong system can still degrade if the operating cadence weakens or if the company expands into segments that break the underlying mechanics."
+      pdf: "This archetype signals a high-coherence GTM system. Guidance is clear and actionable, resources match the motion, implementation is repeatable, and performance is predictable. Leaders face fewer surprises because the control plane is strong and definitions are stable. Pipeline creation is steady, conversion behavior is understood, and retention economics are monitored for decisions. The opportunity is compounding rather than reinvention. Incremental improvements can scale across segment mix, packaging, and conversion efficiency. Expansion into new channels or segments can be done without breaking mechanics. The main risk is drift if cadence, definitions, or segment discipline weakens."
     },
 
     balanced_engine: {
@@ -78,14 +78,14 @@
       short: "Strong coherence with no major drag factor. The system is stable enough to scale predictably.",
       diamond_short: "Strong coherence with no major drag factor. The system is stable enough to scale predictably. Growth becomes a matter of disciplined compounding.",
       exec: L(
-        "No single constraint dominates the system right now.",
-        "The engine is stable enough for predictable scaling.",
-        "Performance is driven by focus and consistency of execution.",
-        "Clarify what the system is optimized for by segment and motion.",
-        "Avoid complexity that breaks the balance you have achieved.",
-        "The report will highlight safe expansion paths and guardrails."
+        "No dominant constraint in the system",
+        "Stable baseline supports predictable scaling",
+        "Outcomes driven by focus and consistency",
+        "Clarify optimization target by segment and motion",
+        "Avoid complexity that breaks current balance",
+        "Next define guardrails for safe expansion paths"
       ),
-      pdf: "This archetype represents a balanced GTM system where the four dimensions are healthy and aligned. While there may be improvement opportunities, there is no single structural weakness dominating outcomes. Execution tends to feel steady rather than reactive. Forecasting is typically feasible because signal quality is acceptable and the system behaves consistently. In this state, the strategic question shifts from what is broken to what the system is optimized for. Growth becomes a matter of selecting the right bets and maintaining discipline. New initiatives should be assessed for how they affect system geometry, not just output metrics."
+      pdf: "This archetype represents a balanced GTM system where the four dimensions are healthy and aligned. There may be improvement opportunities, but no single weakness dominates outcomes. Execution feels steady rather than reactive, and signal quality supports planning. Forecasting is feasible because the system behaves consistently enough across cycles. The strategic question shifts from what is broken to what the system is optimized for. Growth becomes disciplined compounding with deliberate choices on segments and motions. New initiatives should be evaluated for their impact on system geometry, not only output metrics. The primary risk is unnecessary optionality that increases coordination tax and weakens coherence."
     },
 
     // Guidance low family
@@ -95,14 +95,14 @@
       short: "High execution volume with unclear direction. Teams move fast, but alignment is weak.",
       diamond_short: "High execution volume with unclear direction. Teams move fast, but alignment is weak. Output rises without compounding learning.",
       exec: L(
-        "Execution is strong, but direction is under specified.",
-        "Teams ship and sell, yet wins are inconsistent to repeat.",
-        "Effort spreads across too many priorities at once.",
-        "The fastest lift comes from sharper ICP and decision rules.",
-        "Avoid adding more activity before alignment is tightened.",
-        "The report will pinpoint the guidance gap that blocks compounding."
+        "High activity low strategic specificity",
+        "Wins inconsistent and hard to repeat",
+        "Effort spread across too many priorities",
+        "Tighten ICP segment and decision rules",
+        "Do not add volume before alignment improves",
+        "Next pinpoint guidance gaps blocking compounding"
       ),
-      pdf: "This archetype occurs when implementation is high but guidance is the constraint. The organization is busy, responsive, and capable of shipping and selling, yet lacks the strategic clarity to ensure that effort compounds. You often see high activity metrics, frequent campaign launches, and many initiatives in flight, but inconsistent win patterns and weak narrative coherence across teams. The system consumes energy without consistently building a stronger position. The stabilizing move is sharper guidance: explicit ICP definition, disciplined segment prioritization, a clear value narrative, and decision rules that reduce optionality. When guidance improves, existing execution capacity typically converts into rapid performance gains."
+      pdf: "This archetype occurs when implementation is high but guidance is the constraint. The organization ships and sells fast yet lacks clarity that makes effort compound. Activity metrics can look strong while win patterns remain inconsistent. Messaging, offers, and prioritization drift across teams and quarters. The system consumes energy without building a stronger position. The stabilizing move is sharper guidance through explicit ICP, disciplined segment choices, and clear value narrative. Decision rules should reduce optionality and enforce focus. When guidance improves, existing execution capacity often converts into rapid performance gains."
     },
 
     bloated_ship: {
@@ -111,14 +111,14 @@
       short: "Resources are heavy but strategy is unclear. Investment exists, but direction is diluted.",
       diamond_short: "Resources are heavy but strategy is unclear. Investment exists, but direction is diluted. The system pays for capacity it cannot steer.",
       exec: L(
-        "Spend and headcount are present, but direction is diluted.",
-        "The system carries weight without converting it into efficiency.",
-        "Too many truths coexist, so priorities fragment across teams.",
-        "Leverage comes from narrowing to one primary segment and motion.",
-        "Avoid tool and team growth while the design remains unclear.",
-        "The report will show where resourcing is creating drag instead of lift."
+        "Heavy spend without a steering design",
+        "Capacity exists but efficiency stays low",
+        "Multiple truths create fragmented priorities",
+        "Narrow to one primary segment and motion",
+        "Pause tool and team growth until direction is clear",
+        "Next identify where resourcing creates drag not lift"
       ),
-      pdf: "This archetype reflects a system where resourcing is not the limiting factor, but guidance is. Teams, budget, and tooling exist, yet there is insufficient strategic clarity to translate capacity into repeatable outcomes. This manifests as over-extended roadmaps, ambiguous prioritization, and internal competition between narratives or segments. The board-level risk is burn without learning. The remedy is to narrow the system: choose a primary segment and motion, define the dominant path to revenue, and align investment behind that path."
+      pdf: "This archetype reflects a system where resourcing is not the limiting factor, but guidance is. Teams, budget, and tooling exist, yet clarity is insufficient to translate capacity into repeatable outcomes. Roadmaps expand, prioritization becomes ambiguous, and narratives compete internally. The board-level risk is burn without learning and widening coordination tax. The remedy is to narrow the system with a primary segment and dominant revenue path. Investment must align behind that path with explicit tradeoffs. Operating definitions should be enforced across functions to reduce drift. Once direction is sharp, existing capacity typically produces a step change in efficiency."
     },
 
     guesswork_strategy: {
@@ -127,14 +127,14 @@
       short: "Direction is unclear and performance proof is weak. Decisions rely on anecdotes rather than validated signal.",
       diamond_short: "Direction is unclear and performance proof is weak. Decisions rely on anecdotes rather than validated signal. The system cannot tell signal from noise.",
       exec: L(
-        "Strategy is moving without validated performance proof.",
-        "The system feels active, but learning is weak and slow.",
-        "Teams debate opinions because evidence is insufficient.",
-        "Priority is to rebuild signal and hypothesis testing cadence.",
-        "Avoid major repositioning until proof becomes defensible.",
-        "The report will define the minimum measurement spine for evidence based decisions."
+        "Strategy moving without validated proof",
+        "Weak learning cadence and slow signal formation",
+        "Opinion debates replace evidence based decisions",
+        "Rebuild hypotheses tests and measurement spine",
+        "Delay major repositioning until proof is defensible",
+        "Next define minimum instrumentation for decision quality"
       ),
-      pdf: "This archetype occurs when guidance is low and performance signal is also weak. The organization lacks a validated story about what drives outcomes, so strategy becomes a sequence of assumptions. Execution may continue, but without measurement proof, the system cannot distinguish signal from noise. You often see repeated repositioning, shifting priorities, and inconsistent commercial narratives. The stabilizing move is to build a measurement spine that supports guidance: define the few decisions that matter most, create clear hypotheses, and install instrumentation that can confirm or falsify them quickly."
+      pdf: "This archetype occurs when guidance is low and performance signal is also weak. The organization lacks a validated story about what drives outcomes, so strategy becomes a sequence of assumptions. Execution continues, but the system cannot distinguish signal from noise. Repositioning and priority shifts happen faster than learning can accumulate. Commercial narratives become inconsistent across teams and channels. The stabilizing move is a measurement spine that supports guidance. Define the few decisions that matter most, create explicit hypotheses, and instrument fast feedback loops. Once evidence becomes trustworthy, strategy can converge and execution starts compounding."
     },
 
     direction_gap: {
@@ -143,14 +143,14 @@
       short: "Execution capability exists, but the strategic compass is weak. Teams are misaligned on what matters most.",
       diamond_short: "Execution capability exists, but the strategic compass is weak. Teams are misaligned on what matters most. Conversion becomes noisy and hard to forecast.",
       exec: L(
-        "The team can execute, but not against one shared plan.",
-        "Messaging and qualification drift across functions and cycles.",
-        "Performance becomes noisy even when effort stays high.",
-        "Leverage comes from segmentation, positioning, and shared definitions.",
-        "Avoid adding new initiatives that increase optionality.",
-        "The report will surface where misalignment is leaking revenue and confidence."
+        "Execution capability without shared compass",
+        "Messaging and qualification drift across functions",
+        "Noisy conversion and volatile forecasting",
+        "Align on segmentation positioning and definitions",
+        "Avoid new initiatives that increase optionality",
+        "Next locate misalignment points leaking revenue confidence"
       ),
-      pdf: "This archetype reflects a system where people can execute but are not consistently executing the same plan. Guidance is not translating into a shared operating model across marketing, sales, and customer success. The system behaves inconsistently: messaging varies, qualification standards drift, and priorities change faster than learning can accumulate. The fix is better system design: explicit segmentation choices, a unified positioning spine, operating definitions, and a cadence that forces decisions into the open."
+      pdf: "This archetype reflects a system where teams can execute but are not executing the same plan. Guidance does not translate into a shared operating model across marketing, sales, and customer success. The market receives inconsistent signals as messaging and qualification drift. Performance becomes noisy even when effort stays high. Forecasting suffers because behavior changes by team and cycle. The fix is system design with explicit segmentation and a unified positioning spine. Shared definitions and decision rules must constrain day-to-day execution. A cadence that surfaces divergence early prevents drift from compounding."
     },
 
     narrative_drift: {
@@ -159,14 +159,14 @@
       short: "Teams execute, but messaging shifts across channels. The market receives an inconsistent story.",
       diamond_short: "Teams execute, but messaging shifts across channels. The market receives an inconsistent story. Buyers do not get one stable reason to choose you.",
       exec: L(
-        "Execution is present, but the external story is not coherent.",
-        "Different functions sell different value frames to the market.",
-        "Trust and conversion weaken without obvious internal failure.",
-        "Leverage is a single positioning spine and enforced enablement.",
-        "Avoid multiplying content and offers before the story stabilizes.",
-        "The report will map narrative divergence to funnel leakage points."
+        "Active execution inconsistent external story",
+        "Functions sell different value frames",
+        "Trust and conversion weaken quietly",
+        "Install one positioning spine and enforce enablement",
+        "Stop multiplying offers before story stabilizes",
+        "Next map divergence to funnel leakage locations"
       ),
-      pdf: "Narrative Drift appears when execution is active but the external story lacks coherence. Each function communicates a different value frame. Over time, the company accumulates multiple messages, each partially true, none dominant. The result is lower trust, longer cycles, and weaker referrals. The solution is a single positioning spine enforced through enablement, content, and sales motions."
+      pdf: "Narrative Drift appears when execution is active but the external story lacks coherence. Each function communicates a different value frame, creating confusion in the market. Over time, the company accumulates multiple messages, each partially true, none dominant. Buyers struggle to anchor a stable reason to choose you. The result is lower trust, longer cycles, and weaker referrals. The solution is a single positioning spine enforced through enablement, content, and sales motions. Messaging governance and repeated training reduce drift across channels. Once the story stabilizes, conversion efficiency and sales confidence typically improve."
     },
 
     channel_scatter: {
@@ -175,14 +175,14 @@
       short: "Acquisition runs across too many channels without a dominant engine. Learning is diluted.",
       diamond_short: "Acquisition runs across too many channels without a dominant engine. Learning is diluted. Depth never forms, so efficiency stays flat.",
       exec: L(
-        "Many channels are active, but none becomes a primary engine.",
-        "Learning is diluted and repeatable wins stay shallow.",
-        "Attribution noise increases and CAC clarity weakens.",
-        "Choose the primary channel for your motion and build density.",
-        "Avoid adding more channels while signal quality is low.",
-        "The report will identify the channel pattern that can compound fastest."
+        "Too many active channels no primary engine",
+        "Diluted learning shallow repeatability",
+        "Attribution noise weak CAC clarity",
+        "Choose the primary channel for the motion",
+        "Do not add channels while signal remains weak",
+        "Next identify channel pattern that compounds fastest"
       ),
-      pdf: "Channel Scatter appears when demand generation is spread across multiple channels without a clear primary engine. The organization runs many tests but cannot build depth in any one channel. The fix is to select a primary channel strategy aligned to the motion and build density: repeatable offers, consistent creative, and an operating cadence for optimization."
+      pdf: "Channel Scatter appears when demand generation is spread across multiple channels without a clear primary engine. Many tests run, but depth never forms in any one channel. The system cannot build repeatable offers, creative, and audiences with confidence. Attribution becomes noisy and decisions turn slower. Efficiency stays flat because learning is diluted across too many experiments. The fix is to select a primary channel strategy aligned to the motion. Build density through consistent offers, iteration loops, and clear success metrics. Once a primary engine is stable, secondary channels can be added with discipline."
     },
 
     alignment_theater: {
@@ -191,14 +191,14 @@
       short: "The organization appears aligned in meetings, but execution decisions diverge across teams.",
       diamond_short: "The organization appears aligned in meetings, but execution decisions diverge across teams. Drift accumulates quietly each cycle.",
       exec: L(
-        "Alignment exists in conversation, not in observable behavior.",
-        "Teams interpret priorities differently, so execution diverges.",
-        "The system slows because decisions are revisited repeatedly.",
-        "Translate alignment into ownership, definitions, and decision rules.",
-        "Avoid big plans that are not enforced through cadence.",
-        "The report will show where divergence starts and how it propagates."
+        "Alignment in meetings not in behavior",
+        "Teams interpret priorities differently",
+        "Decisions revisited cycle after cycle",
+        "Convert alignment into ownership definitions rules",
+        "Avoid big plans without enforcement cadence",
+        "Next show where divergence starts and propagates"
       ),
-      pdf: "Alignment Theater occurs when leadership alignment is performative rather than operational. Strategy documents exist, but day-to-day decisions are not constrained by them. Teams interpret priorities differently, leading to inconsistent execution and repeated debates. The solution is to translate alignment into mechanics: ownership, decision rules, shared definitions, and a cadence that exposes divergence early."
+      pdf: "Alignment Theater occurs when leadership alignment is performative rather than operational. Strategy documents exist, but day-to-day decisions are not constrained by them. Teams interpret priorities differently, leading to inconsistent execution and repeated debates. Drift accumulates quietly because it is not measured at the point of divergence. The solution is to translate alignment into mechanics that shape behavior. Ownership, decision rules, and shared definitions must be explicit. A cadence that reviews outcomes against decisions exposes divergence early. Over time, the system becomes faster because fewer decisions are reopened."
     },
 
     // Resources low family
@@ -208,14 +208,14 @@
       short: "Strong strategy, weak resourcing. The plan is coherent, but capacity cannot support it.",
       diamond_short: "Strong strategy, weak resourcing. The plan is coherent, but capacity cannot support it. The roadmap cannot land at the required density.",
       exec: L(
-        "Direction is clear, but the system is under resourced for it.",
-        "Backlogs grow and execution stalls despite good intent.",
-        "Hero effort increases while throughput stays constrained.",
-        "Leverage is honest capacity planning and explicit tradeoffs.",
-        "Avoid expanding scope while capacity remains thin.",
-        "The report will quantify the smallest resourcing change that unlocks momentum."
+        "Clear direction insufficient capacity to execute",
+        "Backlogs grow throughput remains constrained",
+        "Hero effort rises but progress stalls",
+        "Do capacity planning and explicit tradeoffs",
+        "Stop expanding scope while capacity is thin",
+        "Next quantify smallest resourcing change to unlock momentum"
       ),
-      pdf: "This archetype appears when guidance is strong but resources are the constraint. The system lacks bandwidth, skills, or budget to execute at the required density. The solution is honest capacity planning: narrow scope, increase capacity, or redesign the motion to match resources. Without explicit trade-offs, the system accumulates fatigue and stalls."
+      pdf: "This archetype appears when guidance is strong but resources are the constraint. The system lacks bandwidth, skills, or budget to execute at the required density. Backlogs accumulate and execution stalls despite coherent intent. Teams compensate with hero effort, which increases fatigue and reduces quality. The remedy is honest capacity planning and explicit tradeoffs. Narrow scope, increase capacity, or redesign the motion to match what is available. Without tradeoffs, coordination tax grows and morale erodes. When capacity matches the plan, progress becomes steady and repeatable."
     },
 
     burnout_engine: {
@@ -224,14 +224,14 @@
       short: "High execution on low resources. The team is over-performing but structurally fragile.",
       diamond_short: "High execution on low resources. The team is over-performing but structurally fragile. Resilience erodes each quarter the strain continues.",
       exec: L(
-        "Execution is high, but the system runs on strain.",
-        "Quality and handoffs degrade as bandwidth stays constrained.",
-        "Knowledge concentrates in a few people, increasing fragility.",
-        "Leverage is reducing load or increasing capacity deliberately.",
-        "Avoid adding initiatives that increase coordination tax.",
-        "The report will show where the strain converts into churn and missed pipeline."
+        "High execution sustained by strain",
+        "Quality and handoffs degrade under load",
+        "Knowledge concentrates increasing fragility",
+        "Reduce load or add capacity deliberately",
+        "Avoid initiatives that raise coordination tax",
+        "Next trace strain into churn pipeline misses rework"
       ),
-      pdf: "This archetype is defined by high implementation on low resources. In the short term it can look impressive. In the medium term it creates fragility: quality declines, handoffs break, onboarding suffers, and knowledge concentrates in a few people. The corrective move is to reduce strain by increasing capacity or simplifying the motion. If unresolved, it often transitions into performance decline and higher churn."
+      pdf: "This archetype is defined by high implementation on low resources. Short-term results can look impressive, but the system becomes structurally fragile. Quality declines, handoffs break, and onboarding suffers under sustained load. Knowledge concentrates in a few people, increasing concentration risk. The corrective move is to reduce strain by increasing capacity or simplifying the motion. Load should be made explicit through scope cuts and sequencing. If unresolved, the pattern often transitions into performance decline, missed pipeline, and higher churn. Stabilization restores resilience and prevents heroics from becoming the operating model."
     },
 
     tooling_debt: {
@@ -240,14 +240,14 @@
       short: "Resourcing constraints create a data blackout. The system cannot observe itself well enough to improve.",
       diamond_short: "Resourcing constraints create a data blackout. The system cannot observe itself well enough to improve. Decisions become slow because proof is missing.",
       exec: L(
-        "The system cannot see itself clearly enough to steer.",
-        "Measurement gaps slow learning and increase internal debate.",
-        "Teams optimize effort without knowing what actually converts.",
-        "Leverage is minimum viable instrumentation and clean definitions.",
-        "Avoid buying tools without installing operating discipline.",
-        "The report will define the control plane needed for predictable steering."
+        "Low visibility weak steering capability",
+        "Measurement gaps slow learning and decisions",
+        "Teams optimize effort without conversion truth",
+        "Install minimum viable instrumentation and definitions",
+        "Do not buy tools without operating discipline",
+        "Next define the control plane for predictable steering"
       ),
-      pdf: "This archetype shows up when resources are low and performance visibility is weak. The company lacks the instrumentation, RevOps capacity, or analytical bandwidth to measure what is working. The remedy is to invest in minimum viable measurement: define funnel metrics, implement clean capture, and create a cadence that uses data consistently. This installs a control plane so the system can steer."
+      pdf: "This archetype shows up when resources are low and performance visibility is weak. The company lacks instrumentation, RevOps capacity, or analytical bandwidth to measure what is working. Decisions slow down because proof is missing and reports conflict. Teams optimize effort without knowing what actually converts. The remedy is minimum viable measurement with clean definitions across key stages. Implement consistent capture, enforce hygiene, and connect metrics to decisions. Create a cadence where data is used the same way every cycle. Once the control plane exists, the system can steer and learning accelerates."
     },
 
     capacity_crunch: {
@@ -256,14 +256,14 @@
       short: "Ambition exceeds bandwidth. The system is undersized relative to its goals and motion.",
       diamond_short: "Ambition exceeds bandwidth. The system is undersized relative to its goals and motion. Velocity slows because density is impossible to sustain.",
       exec: L(
-        "The engine is trying to run a motion that is too heavy.",
-        "Cycle times extend and follow up quality becomes inconsistent.",
-        "Experimentation slows, so the system learns too slowly.",
-        "Leverage is redesigning the motion or right sizing capacity.",
-        "Avoid treating this as a motivation problem.",
-        "The report will show where scope and density must be reduced to unlock speed."
+        "Ambition exceeds bandwidth and coverage",
+        "Cycle times extend follow up quality drops",
+        "Experimentation slows learning pace collapses",
+        "Right size capacity or redesign the motion",
+        "Do not frame this as a motivation issue",
+        "Next reduce scope and density to restore speed"
       ),
-      pdf: "This pattern emerges when the engine runs a motion that requires more density than the organization can support. Symptoms include long cycles, inconsistent follow-up, limited experimentation, and slow iteration. The leverage comes from capacity realism: invest to match the motion or redesign the motion to match capacity. Narrow focus, tighten qualification, simplify packaging, and reduce bespoke work."
+      pdf: "This pattern emerges when the engine runs a motion that requires more density than the organization can support. Symptoms include long cycles, inconsistent follow-up, limited experimentation, and slow iteration. Teams feel busy yet progress stays constrained by bandwidth. The leverage comes from capacity realism and explicit design choices. Invest to match the motion or redesign the motion to match capacity. Narrow focus, tighten qualification, and reduce bespoke work that raises delivery tax. Simplify packaging and handoffs to reduce coordination load. Once scope matches capacity, velocity and learning rate recover quickly."
     },
 
     underpowered_motion: {
@@ -272,14 +272,14 @@
       short: "The motion chosen requires more density than the organization can support. Velocity suffers.",
       diamond_short: "The motion chosen requires more density than the organization can support. Velocity suffers. The design is heavier than the current coverage model.",
       exec: L(
-        "The chosen GTM motion is too heavy for current coverage.",
-        "Deals and onboarding require roles the system does not have.",
-        "Pipeline may exist, but throughput and consistency break down.",
-        "Leverage is simplifying motion or investing in enabling capacity.",
-        "Avoid copying an enterprise motion without its infrastructure.",
-        "The report will identify the lightest motion that still hits your targets."
+        "Motion design heavier than coverage model",
+        "Deals onboarding require missing roles",
+        "Pipeline may exist throughput breaks down",
+        "Simplify motion or invest enabling capacity",
+        "Do not copy enterprise motion without infrastructure",
+        "Next choose the lightest motion that meets targets"
       ),
-      pdf: "Underpowered Motion reflects a mismatch between the selected GTM motion and available resourcing. The company pursues complex deals and onboarding while lacking the supporting roles required. The system slows due to operating design, not poor effort. Either simplify the motion, narrow scope, or invest deliberately in enabling capacity."
+      pdf: "Underpowered Motion reflects a mismatch between the selected GTM motion and available resourcing. The company pursues complex deals and onboarding while lacking the supporting roles required. The system slows because operating design is heavier than current coverage. Teams compensate with workarounds that reduce consistency and scale. Either simplify the motion, narrow scope, or invest deliberately in enabling capacity. Role clarity and stage discipline reduce hidden load in the funnel. Packaging and qualification can be adjusted to reduce delivery and onboarding tax. When motion and capacity match, throughput and predictability improve without heroics."
     },
 
     // Implementation low family
@@ -289,14 +289,14 @@
       short: "Strategy is strong, but execution breaks down in reality. The system cannot translate intent into action.",
       diamond_short: "Strategy is strong, but execution breaks down in reality. The system cannot translate intent into action. Plans remain correct but non operational.",
       exec: L(
-        "Leadership intent is coherent, but mechanics are missing.",
-        "Work breaks down in handoffs, adoption, and daily execution.",
-        "Teams lose trust because strategy does not land in reality.",
-        "Leverage is playbooks, ownership, and consistent operating cadence.",
-        "Avoid adding strategy layers before execution is stabilized.",
-        "The report will map the exact points where intent fails to become behavior."
+        "Coherent intent missing execution mechanics",
+        "Handoffs adoption daily behavior break down",
+        "Trust declines when plans do not land",
+        "Build playbooks ownership and operating cadence",
+        "Stop adding strategy layers before stabilization",
+        "Next map where intent fails to become behavior"
       ),
-      pdf: "This archetype appears when guidance is high but implementation is low. Initiatives look good in decks but fail in handoffs, adoption, or daily execution. The fix is to build execution mechanics: define process stages, install playbooks, simplify handoffs, and create an operating cadence that enforces consistency."
+      pdf: "This archetype appears when guidance is high but implementation is low. Initiatives look correct in decks but fail in handoffs, adoption, or daily execution. Teams lose trust because strategy does not translate into observable behavior. The system accumulates rework and exceptions instead of repeatable flow. The fix is to install execution mechanics that make the plan operable. Define stages, ownership, playbooks, and handoff contracts that teams can follow. Create an operating cadence that enforces consistency and reveals breakdowns early. Once mechanics exist, performance often improves without changing strategy."
     },
 
     heroic_system: {
@@ -305,14 +305,14 @@
       short: "Results happen despite process, not because of it. The system relies on individual heroes.",
       diamond_short: "Results happen despite process, not because of it. The system relies on individual heroes. Scale is limited by concentration risk.",
       exec: L(
-        "Outcomes depend on exceptional individuals and workarounds.",
-        "Metrics may look fine, but the system is fragile and hard to scale.",
-        "When key people slow down, performance drops quickly.",
-        "Leverage is codifying what works into playbooks and tooling.",
-        "Avoid assuming results prove the system is healthy.",
-        "The report will convert hero behavior into repeatable institutional mechanics."
+        "Outcomes driven by heroes and workarounds",
+        "System fragile hard to scale reliably",
+        "Performance drops when key people slow",
+        "Codify winning behaviors into playbooks and tooling",
+        "Do not treat results as proof of health",
+        "Next convert hero patterns into institutional mechanics"
       ),
-      pdf: "This archetype occurs when performance is relatively strong while implementation is weak. Outcomes come from exceptional individuals and informal workarounds. The risk is concentration and burnout. The remedy is to capture what works and standardize it: qualification, handoffs, messaging, and tooling to support consistent behavior."
+      pdf: "This archetype occurs when performance is relatively strong while implementation is weak. Outcomes come from exceptional individuals and informal workarounds rather than repeatable process. The hidden risk is concentration, burnout, and unpredictable variance across the team. When key people slow down, performance drops quickly. The remedy is to capture what works and standardize it into shared mechanics. Qualification, discovery, demos, onboarding, and handoffs should be codified and trained. Tooling should reinforce behavior rather than compensate for missing structure. Once institutionalized, the system becomes scalable and less dependent on individual heroics."
     },
 
     process_void: {
@@ -321,14 +321,14 @@
       short: "Low process and limited resources create high friction. Efficiency is structurally impossible.",
       diamond_short: "Low process and limited resources create high friction. Efficiency is structurally impossible. Manual effort cannot compensate for missing mechanics.",
       exec: L(
-        "The backbone mechanics are missing across the motion.",
-        "Teams compensate with manual work, creating chaos and delays.",
-        "Quality drifts because there is no repeatable structure.",
-        "Leverage is minimum viable stages, handoffs, and definitions.",
-        "Avoid adding complexity when the skeleton is not built.",
-        "The report will specify the smallest operating system that restores throughput."
+        "Backbone mechanics missing end to end",
+        "Manual work creates delays and chaos",
+        "Quality drifts without repeatable structure",
+        "Install minimum viable stages handoffs definitions",
+        "Do not add complexity before skeleton exists",
+        "Next specify the smallest operating system for throughput"
       ),
-      pdf: "This archetype reflects a system where implementation is the constraint and resources are limited. The organization lacks consistent mechanics from lead to close to renewal. Manual effort compensates but remains inefficient. The fix is a minimum viable operating system: stages, responsibilities, handoffs, reduced complexity, and a rhythm that forces consistency."
+      pdf: "This archetype reflects a system where implementation is the constraint and resources are limited. The organization lacks consistent mechanics from lead to close to renewal. Manual effort compensates, but efficiency remains structurally impossible. Work gets stuck at interfaces because responsibilities and definitions are unclear. The fix is a minimum viable operating system with stages, ownership, and clean handoffs. Reduce complexity and bespoke work until the skeleton is stable. Install a rhythm that forces consistency and exposes exceptions early. Once mechanics exist, the same team capacity produces meaningfully higher throughput."
     },
 
     broken_handoff: {
@@ -337,14 +337,14 @@
       short: "Friction in the motion causes leakage between silos. Leads, context, or deals drop across transitions.",
       diamond_short: "Friction in the motion causes leakage between silos. Leads, context, or deals drop across transitions. Value is lost at the seams, not inside one team.",
       exec: L(
-        "The system leaks value at interfaces between teams.",
-        "Handoffs fail, so throughput drops without obvious ownership.",
-        "Pipeline exists, but conversion breaks across stages.",
-        "Leverage is handoff contracts, shared definitions, and joint cadence.",
-        "Avoid blaming one function when the interface is the issue.",
-        "The report will identify the exact seams where revenue and context fall out."
+        "Value leaks at team interfaces",
+        "Handoffs fail without clear ownership",
+        "Pipeline exists conversion breaks between stages",
+        "Define handoff contracts and shared definitions",
+        "Stop blaming one function for an interface issue",
+        "Next locate seams where revenue and context fall out"
       ),
-      pdf: "This archetype appears when cross-team transitions are weak. Marketing produces leads sales does not accept, sales closes deals CS cannot onboard cleanly, or renewals lack ownership. The solution is interface design: handoff contracts, shared definitions, mutual accountability, and a cadence that reviews interfaces using data."
+      pdf: "This archetype appears when cross-team transitions are weak. Marketing produces leads sales does not accept, sales closes deals CS cannot onboard cleanly, or renewals lack ownership. Leakage happens at seams rather than inside one function. The result is lower throughput and finger-pointing without systemic repair. The solution is interface design with explicit handoff contracts and mutual accountability. Shared definitions and stage entry criteria reduce ambiguity. A joint cadence should review interface metrics and exceptions. When seams are repaired, conversion improves without adding more volume."
     },
 
     inconsistent_playbooks: {
@@ -353,14 +353,14 @@
       short: "Execution varies by team and individual. The system cannot reproduce wins consistently.",
       diamond_short: "Execution varies by team and individual. The system cannot reproduce wins consistently. Forecasting suffers because behavior is not standardized.",
       exec: L(
-        "The motion changes by person, team, and segment.",
-        "Wins happen, but they are not reliably repeatable.",
-        "Learning is slow because each cycle feels unique.",
-        "Leverage is codifying stages, decision rules, and artifacts.",
-        "Avoid scaling headcount before standardizing the motion.",
-        "The report will surface the playbook gaps causing variance in outcomes."
+        "Behavior varies by person team segment",
+        "Wins occur but are not repeatable",
+        "Learning slow because each cycle feels unique",
+        "Codify stages decision rules and artifacts",
+        "Do not scale headcount before standardization",
+        "Next expose playbook gaps driving outcome variance"
       ),
-      pdf: "Inconsistent Playbooks appears when teams lack shared mechanics for qualification, discovery, demos, onboarding, or expansion. Wins happen but cannot be repeated reliably. The fix is codification: stages, decision rules, and artifacts. Enablement is often the leverage point. Once playbooks exist and are adopted, outcomes become repeatable."
+      pdf: "Inconsistent Playbooks appears when teams lack shared mechanics for qualification, discovery, demos, onboarding, or expansion. Wins happen, but the system cannot reproduce them consistently across people and segments. Forecasting suffers because behavior and definitions are not standardized. Enablement becomes reactive and scattered. The fix is codification of stages, decision rules, and artifacts that shape execution. Adoption must be enforced through training and inspection in cadence. Tooling should support the playbook rather than create parallel workflows. Once standardized, outcomes become repeatable and learning compounds faster."
     },
 
     // Performance low family
@@ -370,14 +370,14 @@
       short: "High effort, low outcome. Value leaks through conversion or retention, preventing compounding growth.",
       diamond_short: "High effort, low outcome. Value leaks through conversion or retention, preventing compounding growth. More volume increases cost without fixing the leak.",
       exec: L(
-        "Execution is active, but outcomes do not match the effort.",
-        "Leakage sits in conversion, retention, or deal mechanics.",
-        "The system works harder each quarter to stay in place.",
-        "Leverage is forensic diagnosis of where value drops out.",
-        "Avoid pushing more volume before sealing the leak.",
-        "The report will pinpoint the leakage points and the mechanisms behind them."
+        "High effort low outcome mismatch",
+        "Leakage in conversion retention or deal mechanics",
+        "System works harder to stay in place",
+        "Diagnose exactly where value drops out",
+        "Do not push volume before sealing leaks",
+        "Next pinpoint leakage points and underlying mechanisms"
       ),
-      pdf: "This archetype is strong implementation but weak performance, usually due to leakage: conversion drop-offs, poor qualification, discounting, churn, or weak expansion. Pushing more activity increases cost without resolving the leak. The correct approach is forensic: identify where value is lost and why. Once the leak is sealed, existing execution capacity produces outsized gains."
+      pdf: "This archetype is strong implementation but weak performance, usually due to leakage in conversion, retention, or value capture. Activity increases cost without resolving the leak. Symptoms include drop-offs, poor qualification, discounting, churn, or weak expansion. The correct approach is forensic diagnosis of where value is lost and why. Stage-level decomposition should isolate the dominant leak rather than spread fixes everywhere. Once the leak is sealed, existing execution capacity produces outsized gains. Predictability improves because outcomes map to controllable levers again. Only then should scaling and new channels be reintroduced."
     },
 
     blind_optimist: {
@@ -386,14 +386,14 @@
       short: "The narrative is strong, but the numbers do not validate it. Confidence exceeds proof.",
       diamond_short: "The narrative is strong, but the numbers do not validate it. Confidence exceeds proof. The system needs faster reality checks to regain credibility.",
       exec: L(
-        "The story is coherent, but outcomes do not confirm it.",
-        "Teams feel confident internally while the market disagrees.",
-        "Forecasts drift because proof is weaker than belief.",
-        "Leverage is tighter feedback loops and segment level validation.",
-        "Avoid scaling a narrative that has not earned its conversion.",
-        "The report will isolate which assumptions fail and where evidence must be built."
+        "Strong story weak confirming outcomes",
+        "Internal confidence exceeds market proof",
+        "Forecast drift driven by belief not evidence",
+        "Tighten feedback loops and segment validation",
+        "Do not scale narrative without earned conversion",
+        "Next isolate failing assumptions and build evidence"
       ),
-      pdf: "This archetype appears when guidance is strong but performance is weak. The company has a clear story, yet outcomes do not match. Tighten the feedback loop: instrument the funnel, validate assumptions about segment and message, and separate leading indicators from hope. Once story aligns with observed reality, traction returns."
+      pdf: "This archetype appears when guidance is strong but performance is weak. The company has a coherent story, yet outcomes do not confirm it. Teams can feel confident internally while the market disagrees. Forecasting drifts because proof is weaker than belief. The remedy is faster reality checks through instrumented funnel learning. Validate at segment level and separate leading indicators from hope. Win-loss patterns should be translated into specific message and offer changes. Once story aligns with observed reality, traction and credibility return."
     },
 
     roi_drag: {
@@ -402,14 +402,14 @@
       short: "Investment is heavy but returns are low. The engine is inefficient and value capture is weak.",
       diamond_short: "Investment is heavy but returns are low. The engine is inefficient and value capture is weak. Burn increases without proportional learning or ARR.",
       exec: L(
-        "Inputs are high, but outputs are not keeping pace.",
-        "Unit economics and efficiency signals are under pressure.",
-        "The system invests broadly without converting into outcomes.",
-        "Leverage is decomposition by segment, channel, and stage.",
-        "Avoid across the board cuts without identifying the inefficient layer.",
-        "The report will show where investment fails to convert and how to restore efficiency."
+        "High inputs low outputs",
+        "Efficiency and unit economics under pressure",
+        "Broad investment without conversion to outcomes",
+        "Decompose by segment channel and stage",
+        "Avoid blunt cuts without locating inefficiency layer",
+        "Next restore efficiency by reallocating to converting mechanics"
       ),
-      pdf: "This archetype occurs when resources are high but performance is low. It points to structural inefficiency: misaligned targeting, weak positioning, poor packaging, low conversion, or operational drag. The solution is decomposition: segment economics, channel performance, win drivers, churn drivers, and discount behavior. Reallocate resources from low leverage activity to mechanics that convert."
+      pdf: "This archetype occurs when resources are high but performance is low. It points to structural inefficiency across targeting, positioning, packaging, conversion, or operational drag. Burn rises without proportional learning or ARR. The solution is decomposition rather than generalized cost control. Segment economics, channel performance, and stage conversion must be inspected to find the inefficient layer. Discounting behavior and churn drivers often reveal weak value capture. Reallocate resources from low leverage activity to mechanics that convert. Once inefficiency is removed, the same spend produces clearer signal and better outcomes."
     },
 
     black_box: {
@@ -418,14 +418,14 @@
       short: "The system runs, but visibility is weak. Predictability and steering are limited.",
       diamond_short: "The system runs, but visibility is weak. Predictability and steering are limited. Leaders cannot explain results with confidence.",
       exec: L(
-        "Output exists, but the system cannot explain why it happens.",
-        "Forecasting is volatile because signal quality is weak.",
-        "Definitions drift and attribution remains disputed.",
-        "Leverage is a clean control plane with consistent instrumentation.",
-        "Avoid optimizing dashboards that do not map to decisions.",
-        "The report will define the metrics spine needed for predictable steering."
+        "Output exists unclear causal explanation",
+        "Volatile forecasting due to weak signal",
+        "Definitions drift attribution disputed",
+        "Build clean control plane and instrumentation",
+        "Do not optimize dashboards detached from decisions",
+        "Next define metrics spine for predictable steering"
       ),
-      pdf: "This archetype reflects insufficient performance visibility. Forecasting is volatile, attribution is unclear, and definitions drift. The risk is misallocation because the system cannot see which levers matter. Install a control plane: consistent funnel definitions, instrumentation of key stages, and a cadence that uses metrics to drive decisions."
+      pdf: "This archetype reflects insufficient performance visibility. Output exists, but leaders cannot explain why results happen. Forecasting is volatile, attribution is unclear, and definitions drift across teams. The risk is misallocation because the system cannot see which levers matter. Installing a control plane becomes the priority. Unify funnel definitions and instrument key stage transitions consistently. Connect reporting to the decisions it must support and remove vanity metrics. Establish a cadence that uses the same metrics each cycle. Once visibility improves, steering becomes faster and confidence returns."
     },
 
     discount_dependency: {
@@ -434,14 +434,14 @@
       short: "Deals close through discounting rather than conviction. Value capture is structurally weak.",
       diamond_short: "Deals close through discounting rather than conviction. Value capture is structurally weak. Margin becomes the silent casualty of growth.",
       exec: L(
-        "Deals rely on price reduction rather than differentiated value.",
-        "Margin compresses and forecast quality weakens over time.",
-        "Discounting becomes a habit that hides positioning tension.",
-        "Leverage is segmentation, value articulation, and packaging fit.",
-        "Avoid solving this only with approvals and policing.",
-        "The report will isolate where willingness to pay diverges from your offer design."
+        "Deals won by price reduction not conviction",
+        "Margin compression weak forecast integrity",
+        "Discounting masks positioning tension",
+        "Fix segmentation value articulation packaging fit",
+        "Do not solve only with approvals and policing",
+        "Next locate willingness to pay gaps vs offer design"
       ),
-      pdf: "Discount Dependency occurs when the system compensates for weak conviction by reducing price. Over time it becomes habitual, compressing margins and weakening forecasts. The remedy is stronger value articulation, clearer segmentation, and packaging that matches willingness to pay. Pricing and packaging restore value capture."
+      pdf: "Discount Dependency occurs when the system compensates for weak conviction by reducing price. Over time it becomes habitual and trains buyers to wait for concessions. Margin compresses and forecast quality weakens as price becomes the closing lever. The pattern often signals positioning tension or packaging mismatch by segment. The remedy is stronger value articulation and clearer segmentation with explicit willingness to pay. Packaging should align to outcomes and buyer economics. Deal review should focus on root causes rather than approvals alone. When conviction improves, discounting declines and value capture stabilizes."
     },
 
     churn_pressure: {
@@ -450,14 +450,14 @@
       short: "Retention instability limits growth. The engine replaces revenue instead of compounding it.",
       diamond_short: "Retention instability limits growth. The engine replaces revenue instead of compounding it. Expansion cannot outpace the base erosion.",
       exec: L(
-        "Retention behavior is taxing growth and predictability.",
-        "The engine spends effort replacing revenue rather than compounding it.",
-        "Churn often reflects upstream targeting and expectation setting.",
-        "Leverage is onboarding quality, fit by segment, and CS capacity design.",
-        "Avoid treating churn as a CS only problem.",
-        "The report will trace churn drivers back to the system decisions that created them."
+        "Retention instability taxes growth",
+        "Effort goes to replacement not compounding",
+        "Churn often rooted in upstream fit and expectations",
+        "Improve onboarding fit by segment and CS design",
+        "Do not treat churn as a CS only issue",
+        "Next trace churn drivers back to system decisions"
       ),
-      pdf: "Churn Pressure appears when retention undermines growth economics. Acquisition requirements rise just to stay flat. The fix spans onboarding quality, product fit by segment, success capacity, and expectation management set in sales. Churn is not only a CS metric. It is often a symptom of upstream targeting and packaging."
+      pdf: "Churn Pressure appears when retention undermines growth economics. Acquisition requirements rise just to stay flat, increasing CAC pressure and reducing confidence. Expansion cannot outpace base erosion, so the system feels stuck. Churn is often created upstream through targeting, expectation setting, and packaging choices. Onboarding quality and time-to-value become decisive leverage points. Customer success capacity design must match segment needs and product complexity. The fix requires cross-functional ownership rather than CS isolation. When retention stabilizes, the engine starts compounding again and forecasting becomes more reliable."
     },
 
     measurement_mirage: {
@@ -466,14 +466,14 @@
       short: "Metrics exist, but definitions and instrumentation are inconsistent. Signal quality is weaker than it appears.",
       diamond_short: "Metrics exist, but definitions and instrumentation are inconsistent. Signal quality is weaker than it appears. Decisions become confidently wrong.",
       exec: L(
-        "Dashboards exist, but the system is not measuring consistently.",
-        "Teams optimize numbers that do not map to outcomes.",
-        "Leadership cannot reconcile reports with observed reality.",
-        "Leverage is unified definitions and clean capture at key stages.",
-        "Avoid adding new KPIs before making existing ones trustworthy.",
-        "The report will specify the measurement backbone that restores decision quality."
+        "Metrics present inconsistent definitions and capture",
+        "Teams optimize numbers detached from outcomes",
+        "Reports conflict with observed reality",
+        "Unify definitions and instrument key stages cleanly",
+        "Stop adding KPIs before trust is restored",
+        "Next rebuild measurement backbone for decision quality"
       ),
-      pdf: "Measurement Mirage occurs when dashboards exist but definitions, tracking, or attribution are inconsistent. Teams optimize local metrics that do not map to outcomes. Leadership struggles to reconcile reporting with reality. Rebuild the measurement spine: unify definitions, ensure capture at key stages, and align reporting to the decisions it must support."
+      pdf: "Measurement Mirage occurs when dashboards exist but definitions, tracking, or attribution are inconsistent. The system appears data-rich, yet signal quality is weak. Teams optimize local metrics that do not map to outcomes, creating confidently wrong decisions. Leadership cannot reconcile reports with reality, slowing execution and increasing debate. The fix is to rebuild the measurement spine with unified definitions. Ensure clean capture at key stages and remove ambiguous fields that invite drift. Align reporting to the few decisions that matter each cycle. Once metrics are trustworthy, learning accelerates and alignment improves."
     },
 
     developing_engine: {
@@ -482,14 +482,14 @@
       short: "The system shows potential, but coherence is still forming. Outcomes depend on local strengths rather than a unified engine.",
       diamond_short: "The system shows potential, but coherence is still forming. Outcomes depend on local strengths rather than a unified engine. Integration is the lever for compounding.",
       exec: L(
-        "Some parts of the system work, others lag behind.",
-        "Outcomes vary because interfaces and cadence are still forming.",
-        "Local wins do not yet translate into predictable compounding.",
-        "Leverage is a primary path to revenue and standardized execution.",
-        "Avoid expanding scope before the system becomes repeatable.",
-        "The report will connect local strengths into one coherent operating model."
+        "Local strengths without full system coherence",
+        "Interfaces and cadence still forming",
+        "Wins do not yet compound predictably",
+        "Define primary path to revenue and standardize execution",
+        "Avoid expanding scope before repeatability exists",
+        "Next connect strengths into one operating model"
       ),
-      pdf: "This archetype represents a system that is not broken, but not yet coherent. Some dimensions work, others lag, and interfaces between teams are underdeveloped. The opportunity is to turn local wins into a scalable system: clarify the primary GTM path, standardize execution mechanics, and improve measurement so learning compounds."
+      pdf: "This archetype represents a system that is not broken, but not yet coherent. Some dimensions work while others lag, and interfaces between teams are underdeveloped. Outcomes depend on local strengths rather than a unified engine. The opportunity is integration that converts isolated wins into compounding learning. Clarify the primary GTM path and enforce shared definitions across functions. Standardize execution mechanics so behavior is consistent by segment and stage. Improve measurement so signal supports decisions and iteration. With coherence, performance becomes more predictable without needing a full rebuild."
     },
 
     // ====== Extra archetypes to reach 30 (not routed yet) ======
@@ -499,14 +499,14 @@
       short: "Across-dimension failure. The system is below functional threshold and cannot sustain revenue motion.",
       diamond_short: "Across-dimension failure. The system is below functional threshold and cannot sustain revenue motion. Immediate stabilization is required before any bets.",
       exec: L(
-        "The system is operating below functional threshold.",
-        "Revenue motion is sporadic and cannot be relied on.",
-        "Teams cannot learn because the baseline keeps collapsing.",
-        "Leverage is a restart plan with strict sequencing.",
-        "Avoid growth initiatives until minimum stability exists.",
-        "The report will define the stabilization sequence and the non negotiables."
+        "Below functional threshold across dimensions",
+        "Sporadic motion no reliable baseline",
+        "Learning impossible because baseline collapses",
+        "Execute strict restart sequence and gating",
+        "Pause growth bets until minimum stability exists",
+        "Next define stabilization steps and non negotiables"
       ),
-      pdf: "This archetype signals below-threshold operation where stability is absent. The system cannot sustain reliable pipeline creation, conversion, or retention. The path forward is sequencing: restore minimum direction, restore minimum resourcing, restore minimum execution mechanics, then reintroduce performance targets that the system can actually support."
+      pdf: "This archetype signals below-threshold operation where stability is absent. The system cannot sustain reliable pipeline creation, conversion, or retention. Leaders experience repeated collapses of cadence, definitions, and ownership. The priority is stabilization, not optimization. The path forward is sequencing with strict gates for what must be true before the next step. Restore minimum direction, then minimum resourcing, then minimum execution mechanics. Only then reintroduce performance targets the system can actually support. When the baseline holds, learning restarts and confidence returns."
     },
 
     even_drag: {
@@ -515,14 +515,14 @@
       short: "No single constraint dominates. Multiple small frictions compound into slow progress.",
       diamond_short: "No single constraint dominates. Multiple small frictions compound into slow progress. The system needs prioritization discipline to remove drag.",
       exec: L(
-        "The system is slowed by many small frictions at once.",
-        "No single fix creates a step change by itself.",
-        "Teams feel busy because drag is distributed everywhere.",
-        "Leverage is ruthless prioritization and sequencing of removals.",
-        "Avoid launching broad programs that add more coordination tax.",
-        "The report will identify the few drag points that unlock compounding."
+        "Distributed friction across many areas",
+        "No single fix creates a step change",
+        "Busy teams slow progress due to compounding drag",
+        "Prioritize and sequence removals ruthlessly",
+        "Avoid broad programs that add coordination tax",
+        "Next identify few drag points that unlock compounding"
       ),
-      pdf: "Even Drag appears when all dimensions are moderate but none are sharp enough to carry the system. Performance is not catastrophic, but progress is slow. The correct approach is not reinvention. It is identifying which frictions create the largest compounding tax and removing them in a deliberate sequence."
+      pdf: "Even Drag appears when all dimensions are moderate but none are sharp enough to carry the system. Performance is not catastrophic, yet progress is slow and effort feels high. Friction is distributed, so teams debate where to start. The correct approach is not reinvention, but prioritization discipline. Identify which frictions create the largest compounding tax over time. Sequence removals so each fix makes the next one easier. Avoid launching broad transformation programs that increase coordination load. When drag is reduced in the right order, the system accelerates without major redesign."
     },
 
     underfunded_compass: {
@@ -531,14 +531,14 @@
       short: "Guidance is weak and resources are thin. Teams cannot align or execute consistently.",
       diamond_short: "Guidance is weak and resources are thin. Teams cannot align or execute consistently. The system lacks both direction and capacity.",
       exec: L(
-        "Direction is unclear and capacity is insufficient at the same time.",
-        "Teams cannot align because tradeoffs are not explicit.",
-        "Execution fragments and results stay volatile.",
-        "Leverage is narrowing scope and restoring minimum resourcing.",
-        "Avoid treating this as purely a performance issue.",
-        "The report will define which scope cuts restore control fastest."
+        "Weak direction and thin capacity together",
+        "Tradeoffs implicit alignment breaks down",
+        "Execution fragments results stay volatile",
+        "Cut scope until ambition matches capacity",
+        "Stop treating as a pure performance issue",
+        "Next define scope cuts that restore control fastest"
       ),
-      pdf: "This archetype combines low guidance and low resources, creating a system that cannot align or execute with consistency. The remedy is to cut scope until capacity matches ambition, then install clear decision rules that keep the system from fragmenting again."
+      pdf: "This archetype combines low guidance and low resources, creating a system that cannot align or execute consistently. Tradeoffs remain implicit, so priorities fragment across teams. Execution becomes reactive and results stay volatile across cycles. The remedy starts with scope reduction until capacity matches ambition. Once scope is narrow enough, decision rules can be made explicit and enforced. A small set of priorities should be resourced to completion rather than spread thin. Measurement should focus on the few indicators that confirm control is returning. When direction and capacity stabilize, the system can start rebuilding predictability."
     },
 
     accidental_growth: {
@@ -547,14 +547,14 @@
       short: "Performance holds for now, but without guidance it is fragile and hard to repeat.",
       diamond_short: "Performance holds for now, but without guidance it is fragile and hard to repeat. The system is winning without knowing why.",
       exec: L(
-        "Performance exists, but it is not well explained.",
-        "Wins are difficult to repeat because guidance is not explicit.",
-        "The system risks drift when the market shifts slightly.",
-        "Leverage is codifying the win pattern into guidance and playbooks.",
-        "Avoid assuming current performance will persist automatically.",
-        "The report will isolate the drivers of performance and make them repeatable."
+        "Current performance without explicit guidance",
+        "Win pattern unclear hard to repeat",
+        "High drift risk with small market shifts",
+        "Codify drivers into guidance and playbooks",
+        "Do not assume performance will persist automatically",
+        "Next isolate drivers and make them intentional"
       ),
-      pdf: "Accidental Growth occurs when performance is acceptable despite weak guidance. The system is winning, but it cannot reliably explain or repeat the pattern. The goal is to codify the win drivers, then align the organization to execute that pattern intentionally."
+      pdf: "Accidental Growth occurs when performance is acceptable despite weak guidance. The system is winning, but it cannot explain why with confidence. Repeatability is fragile and depends on circumstances rather than design. Small shifts in market or team can break the pattern quickly. The goal is to codify win drivers into explicit guidance and playbooks. Segment-level analysis should reveal what is actually converting and retaining. Once codified, alignment improves and execution becomes intentional. With clarity, the organization can scale without relying on luck."
     },
 
     starved_winner: {
@@ -563,14 +563,14 @@
       short: "Performance is acceptable, but resource scarcity blocks repeatability and scale.",
       diamond_short: "Performance is acceptable, but resource scarcity blocks repeatability and scale. The system is constrained by coverage, not intent.",
       exec: L(
-        "The system produces outcomes, but it cannot scale them.",
-        "Resource scarcity forces tradeoffs that stay implicit and messy.",
-        "Quality and follow up consistency become the bottleneck.",
-        "Leverage is right sizing coverage and simplifying the motion.",
-        "Avoid increasing targets without expanding enabling capacity.",
-        "The report will show which capacity additions unlock the highest ROI."
+        "Outcomes exist but scaling is blocked",
+        "Scarcity forces messy implicit tradeoffs",
+        "Follow up quality and consistency become bottleneck",
+        "Right size coverage or simplify the motion",
+        "Do not raise targets without enabling capacity",
+        "Next identify capacity adds with highest ROI"
       ),
-      pdf: "Starved Winner appears when performance is okay but resourcing is too thin to sustain or scale. The system works, yet cannot run at the density required for growth. The fix is to size capacity to motion or redesign motion to fit capacity."
+      pdf: "Starved Winner appears when performance is okay but resourcing is too thin to sustain or scale. The system works, yet cannot run at the density required for growth. Scarcity creates implicit tradeoffs that stay messy and unowned. Follow-up and enablement quality become the hidden bottleneck. The fix is to size capacity to the motion or redesign the motion to fit capacity. Role coverage should match deal complexity and onboarding load. Simplifying handoffs can reduce coordination tax without hiring. With adequate capacity, repeatability improves and growth becomes less fragile."
     },
 
     misused_stack: {
@@ -579,14 +579,14 @@
       short: "Resources exist, but implementation is weak. Tools and people are not converted into throughput.",
       diamond_short: "Resources exist, but implementation is weak. Tools and people are not converted into throughput. The system pays for capacity it does not activate.",
       exec: L(
-        "The stack and roles exist, but throughput remains limited.",
-        "Tools are under adopted and processes are inconsistent.",
-        "Work gets stuck because interfaces and playbooks are missing.",
-        "Leverage is adoption, ownership, and stage based execution design.",
-        "Avoid buying more tooling before activating what is already there.",
-        "The report will identify where capacity is trapped and how to release it."
+        "Stack and roles present low throughput",
+        "Tools under adopted processes inconsistent",
+        "Work stuck due to missing interfaces playbooks",
+        "Drive adoption ownership and stage based design",
+        "Do not buy more tools before activation",
+        "Next locate trapped capacity and release it"
       ),
-      pdf: "Misused Stack reflects a system where resourcing is present but implementation mechanics are missing or inconsistent. The remedy is adoption and operating design: ownership, stage definitions, and playbooks that turn tools into throughput."
+      pdf: "Misused Stack reflects a system where resourcing is present but implementation mechanics are missing or inconsistent. The company pays for tools and roles, yet throughput stays limited. Adoption is uneven and workflows diverge by team. Work gets stuck at interfaces because playbooks and ownership are unclear. The remedy is operating design that turns capacity into consistent execution. Define stages, responsibilities, and handoff contracts that tools can support. Train and inspect adoption through cadence rather than hoping it spreads. Once activated, the existing stack typically produces a measurable lift without new spend."
     },
 
     leaky_motion: {
@@ -595,14 +595,14 @@
       short: "Implementation and performance both lag. Effort does not convert into outcomes reliably.",
       diamond_short: "Implementation and performance both lag. Effort does not convert into outcomes reliably. The motion itself is leaking at multiple stages.",
       exec: L(
-        "Both mechanics and outcomes are under pressure.",
-        "Activity exists, but conversion breaks across the motion.",
-        "Teams cannot rely on process to create predictable throughput.",
-        "Leverage is rebuilding the motion with strict stage discipline.",
-        "Avoid scaling acquisition until conversion mechanics are repaired.",
-        "The report will map the conversion breaks and their systemic causes."
+        "Weak mechanics and weak outcomes together",
+        "Activity exists conversion breaks across stages",
+        "Process not trusted for predictable throughput",
+        "Rebuild motion with strict stage discipline",
+        "Do not scale acquisition while conversion is broken",
+        "Next map conversion breaks and systemic causes"
       ),
-      pdf: "Leaky Motion occurs when execution mechanics are weak and performance is also weak. The system is not converting effort into outcomes. The corrective move is to rebuild the motion stage by stage, with clear handoffs, instrumentation, and enforcement through cadence."
+      pdf: "Leaky Motion occurs when execution mechanics are weak and performance is also weak. Effort does not convert into outcomes, so teams push more activity and create more noise. Conversion breaks at multiple stages and ownership is unclear at the seams. The system cannot rely on process to produce predictable throughput. The corrective move is to rebuild the motion stage by stage with strict entry and exit criteria. Instrument each stage transition and enforce handoffs through cadence. Simplify the motion until it becomes controllable and repeatable. Once mechanics hold, performance can recover without disproportionate effort."
     },
 
     unproven_narrative: {
@@ -611,14 +611,14 @@
       short: "Guidance is weak and performance is weak. The story cannot be defended with outcomes.",
       diamond_short: "Guidance is weak and performance is weak. The story cannot be defended with outcomes. Credibility erodes inside and outside the company.",
       exec: L(
-        "The narrative is not validated by consistent outcomes.",
-        "Teams are forced to sell a story that the market does not confirm.",
-        "Confidence declines as results stay inconsistent.",
-        "Leverage is segment level proof and tightened feedback loops.",
-        "Avoid broad messaging changes without evidence and sequencing.",
-        "The report will define which claims are defensible and what must be proven next."
+        "Story lacks proof in outcomes",
+        "Teams sell claims the market does not confirm",
+        "Confidence erodes internally and externally",
+        "Build segment proof and tighter feedback loops",
+        "Do not change messaging broadly without evidence",
+        "Next define defensible claims and what to prove"
       ),
-      pdf: "Unproven Narrative reflects a system where guidance is not strong enough to align the organization and performance does not provide proof. The solution is to rebuild the story on evidence: segment validation, win loss patterns, and instrumented funnel learning."
+      pdf: "Unproven Narrative reflects a system where guidance is not strong enough to align execution and performance does not provide proof. Teams are forced to sell a story the market does not consistently validate. Credibility erodes, increasing sales friction and internal debate. The solution is to rebuild the narrative on evidence rather than aspiration. Segment validation and win-loss patterns should determine what claims are defensible today. Funnel instrumentation must support faster learning and clearer decision points. Sequence narrative changes to match proof, not preference. When evidence and message align, confidence and conversion typically recover."
     }
   };
 
