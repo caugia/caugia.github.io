@@ -61,18 +61,18 @@
   // Pillar 0 is context wrapper in the UI. Pillars 1–12 are canonical.
   const PILLAR_NAMES = [
     "Context",
-    "Strategy & Planning",
+    "GTM Strategy & Leadership",
     "Market Intelligence",
-    "ICP & Segmentation",
-    "Positioning & Messaging",
-    "Sales Execution",
-    "Customer Success",
+    "Product Marketing",
     "Demand Generation",
-    "RevOps & Tooling",
-    "Forecasting & Pipeline Management",
+    "Sales Execution",
+    "Customer Success & Expansion",
+    "Revenue Operations & Systems",
     "Pricing & Packaging",
-    "Enablement & Playbooks",
-    "Operating Cadence"
+    "Brand & Communications",
+    "Data & Insights",
+    "Enablement",
+    "Leadership & Alignment"
   ];
 
   // Pillar index -> GRIP dimension mapping (fixed, deterministic)
