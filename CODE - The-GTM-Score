@@ -4,98 +4,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Your GTM Score | Caugia Consulting</title>
-  <meta name="description" content="Your GTM Score is a structured indicator of how mature, aligned and scalable your go to market system is." />
+  <title>Your GTM Score Analysis | Caugia Consulting</title>
+  <meta name="description" content="Your detailed GTM Score analysis. Understand your revenue architecture maturity and identify the primary constraints in your growth engine." />
+  <meta name="keywords" content="GTM Score, Revenue Architecture, SaaS Audit, GTM Maturity, Caugia" />
+  <link rel="canonical" href="https://www.caugia.com/the-gtm-score.html" />
 
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/favicon-32x32.png" type="image/png" />
-  <link rel="icon" href="/favicon-16x16.png" type="image/png" />
-  <link rel="icon" href="/android-chrome-192x192.png" sizes="192x192" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/the-gtm-score.html" />
+  <meta property="og:title" content="My GTM Score Analysis | Caugia Consulting" />
+  <meta property="og:description" content="I just analyzed my revenue architecture with the Caugia Intelligence Engine. See the breakdown." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+   
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Caugia GTM Score Calculator",
+    "url": "https://www.caugia.com/the-gtm-score.html",
+    "description": "An algorithmic tool that assesses B2B SaaS GTM maturity across 12 pillars.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="assets/caugia-base.css">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* --- MASTER STYLES (EXACT MATCH TO INDEX) --- */
-    :root{
-      --primary:#0056b3;
-      --primary-dark:#004494;
-      --text-dark:#0f172a;
-      --text-body:#475569;
-      --bg:#f8fafc;
-      --white:#ffffff;
-      --line:#e2e8f0;
-      --radius-md:14px;
-      --radius-lg:22px;
-      --shadow-sm:0 4px 6px -1px rgba(0,0,0,0.05);
-      --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-      --max:1200px;
+    /* --- PAGE SPECIFIC STYLES (Result Page Only) --- */
 
-      /* Status Colors (Same as Index) */
+    :root {
+      /* Status Colors (Same as Index logic) */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
       --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
     }
-
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    
-    /* FIX: Force scrollbar */
-    html{ scroll-behavior:smooth; overflow-y: scroll; }
-    
-    body{
-      font-family:Inter, sans-serif;
-      background:var(--bg);
-      color:var(--text-dark);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    h1,h2,h3,h4{
-      font-family:Merriweather, serif;
-      color:var(--text-dark);
-      font-weight:900;
-      letter-spacing:-0.02em;
-    }
-
-    p{ color:var(--text-body); margin-bottom:1.5rem; }
-    a{ color:inherit; text-decoration:none; }
-    ul{ list-style:none; }
-
-    .container{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 24px;
-    }
-
-    /* HEADER */
-    header{
-      position:sticky; top:0; z-index:1000;
-      background:rgba(248,250,252,0.95); backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(15,23,42,0.04);
-    }
-    .nav{ height:80px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:0.02em; }
-    .brand img{ width:32px; height:32px; display:block; }
-    .nav-links{ display:flex; gap:32px; align-items:center; }
-    .nav-links a{ color:var(--text-body); font-weight:600; font-size:0.95rem; transition:color 0.15s ease; }
-    .nav-links a:hover, .nav-links a.active{ color:var(--primary); }
-    
-    .btn-primary{ background:var(--primary-dark); color:var(--white); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; transition:0.2s; border:none; cursor:pointer; display:inline-block;}
-    .btn-primary:hover{ background:#003370; transform:translateY(-1px); }
-    .btn-outline{ background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); padding:10px 24px; border-radius:99px; font-weight:700; font-size:0.95rem; cursor:pointer; transition:0.2s; }
-    .btn-outline:hover{ background:var(--white); color:var(--text-dark); }
-
-    .menu-toggle{ display:none; border:1px solid var(--line); background:var(--white); border-radius:8px; padding:8px 12px; font-weight:700; cursor:pointer; }
-    .mobile-nav{ display:none; border-top:1px solid rgba(15,23,42,0.06); padding:14px 0 18px; }
-    .mobile-nav a{ display:block; padding:12px 10px; border-radius:8px; font-weight:700; color:var(--text-body); }
-    .mobile-nav a:hover{ background:var(--white); color:var(--primary); }
-
-    /* --- RESULT SPECIFIC STYLES --- */
 
     /* Hero Area */
     .result-hero { padding: 60px 0 40px; text-align: center; max-width: 800px; margin: 0 auto; }
@@ -131,7 +91,6 @@
     .status-card p { color: #166534; margin-bottom: 0; font-size: 0.95rem; }
 
     /* GRIP Layout (2 Columns) */
-    /* UPDATED: align-items stretch for equal height */
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; align-items: stretch; }
     
     .result-content-card {
@@ -250,13 +209,10 @@
     .next-step-item h3::before { content: "→"; color: #60a5fa; }
     .next-step-item p { color: #94a3b8; font-size: 1rem; }
 
-    footer{ background:var(--white); border-top:1px solid var(--line); padding:44px 0; text-align:center; color:#94a3b8; font-size:0.9rem; }
-
+    /* MOBILE RESPONSIVE FIXES */
     @media (max-width: 900px) {
       .result-grid, .focus-grid, .next-steps-grid { grid-template-columns: 1fr; }
       .score-number { font-size: 4rem; }
-      .nav-links { display: none; }
-      .menu-toggle { display: inline-flex; }
     }
   </style>
 </head>
@@ -266,7 +222,7 @@
 <header>
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/C-logo.png" alt="Caugia" />
+      <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
       <span>CAUGIA CONSULTING</span>
     </a>
     <ul class="nav-links">
@@ -276,8 +232,9 @@
       <li><a href="gtm-assessment.html" class="active">GTM Score</a></li>
       <li><a href="resources.html">Resources</a></li>
     </ul>
-    <div style="display:flex; gap:12px; align-items:center;">
-      <a href="contact.html" class="btn-primary">Contact</a>
+    
+    <div class="nav-actions">
+      <a href="contact.html" class="btn btn-secondary">Contact</a>
       <button class="menu-toggle" id="menuToggle">Menu</button>
     </div>
   </div>
@@ -287,6 +244,7 @@
     <a href="about.html">About</a>
     <a href="services.html">Services</a>
     <a href="gtm-assessment.html" class="active">GTM Score</a>
+    <a href="resources.html">Resources</a>
     <a href="contact.html">Contact</a>
   </div>
 </header>
@@ -404,7 +362,7 @@
       </div>
 
       <div style="text-align:center; margin-top: 60px;">
-        <a href="services.html" class="btn-primary" style="background:var(--white); color:var(--text-dark); margin-right: 12px;">Explore Intelligence Report</a>
+        <a href="services.html" class="btn btn-primary" style="background:var(--white); color:var(--text-dark); margin-right: 12px;">Explore Intelligence Report</a>
         <a href="mailto:hello@caugia.com" class="btn-outline">Ask a question</a>
       </div>
     </div>
@@ -414,23 +372,13 @@
 
 <footer>
   <div class="container">
-    <p>© 2026 Caugia Consulting. All rights reserved.</p>
+    <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
   </div>
 </footer>
 
-<script>
-  // Mobile Nav Logic
-  (function () {
-    const toggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-    if (!toggle || !mobileNav) return;
-    toggle.addEventListener("click", () => {
-      const open = mobileNav.style.display === "block";
-      mobileNav.style.display = open ? "none" : "block";
-      toggle.innerText = open ? "Menu" : "Close";
-    });
-  })();
+<script src="assets/caugia-base.js"></script>
 
+<script>
   // 1. Get Score from URL
   function getScoreFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -522,7 +470,7 @@
     updateGripBar("Implementation", iVal);
     updateGripBar("Performance", pVal);
 
-    // --- ARCHETYPE LOGIC (30+ VARIANTS IMPORTED FROM INDEX) ---
+    // --- ARCHETYPE LOGIC ---
     function getArchetype(g, r, i, p) {
       const scores = [{ k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }];
       scores.sort((a, b) => a.v - b.v);
@@ -568,11 +516,12 @@
     const arch = getArchetype(gVal, rVal, iVal, pVal);
     const boxEl = document.getElementById("gripArchetypeBox");
     document.getElementById("gripArchetypeTitle").innerText = arch.title;
-    document.getElementById("gripArchetypeDesc").innerText = arch.body;
+    document.getElementById("gripArchetypeDesc").innerText = arch.body + " Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift.";
+    
     boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
     boxEl.classList.add(arch.mode);
 
-    // --- DIAMOND RASTER (Updated SVG style) ---
+    // --- DIAMOND RASTER (SVG) ---
     drawGripDiamond(gVal, rVal, iVal, pVal);
 
     // GENERATE PRIORITY CARDS
@@ -603,7 +552,7 @@
     }).join("");
   }
 
-  // 4. Diamond Engine (Updated SVG style)
+  // 4. Diamond Engine (SVG)
   function drawGripDiamond(g, r, i, p) {
     const svg = document.getElementById("gripDiamondSVG");
     if (!svg) return;
@@ -611,7 +560,7 @@
     
     function point(angle, value) {
       const rad = (Math.PI / 180) * angle;
-      // Index uses Chart.js which has slight padding, we map 0-100 to radius 0-100 (leaving 30px padding)
+      // Map 0-100 score to 0-100 radius (leaving 30px padding)
       return { x: center + Math.cos(rad) * value, y: center + Math.sin(rad) * value };
     }
 
@@ -621,17 +570,17 @@
     const R = point(180, r);
 
     let grid = "";
-    // Draw 30/60/90 grid lines (Grey, Thin - like Index)
+    // Draw 30/60/90 grid lines
     [30, 60, 90].forEach(val => {
       const p1 = point(-90, val); const p2 = point(0, val);
       const p3 = point(90, val); const p4 = point(180, val);
       grid += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}" fill="none" stroke="#e2e8f0" stroke-width="1.5" />`;
     });
 
-    // Draw Shape (Blue Fill, Blue Stroke - like Index)
+    // Draw Shape
     const shape = `<polygon points="${G.x},${G.y} ${I.x},${I.y} ${P.x},${P.y} ${R.x},${R.y}" fill="rgba(0, 86, 179, 0.15)" stroke="#0056b3" stroke-width="2.5" />`;
     
-    // Draw Dots (Blue circle, White border - like Index point style)
+    // Draw Dots
     const dots = [G, I, P, R].map(pt => 
         `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="#0056b3" stroke="#fff" stroke-width="2" />`
     ).join("");
