@@ -1520,107 +1520,107 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 12 — LEADERSHIP & ALIGNMENT (20 QUESTIONS)
+   PILLAR 12 — ALIGNMENT & GOVERNANCE (20 QUESTIONS)
    =========================================================== */
 
 {
   id: 12001, pillar: 12, type: "scale",
-  title: "GTM leadership provides clear direction and priorities.",
+  title: "GTM decision making provides clear direction and priorities.",
   options: ["No clarity", "Weak clarity", "Solid clarity", "Strong clarity", "Clear strategic direction"]
 },
 {
   id: 12002, pillar: 12, type: "scale",
-  title: "Executive meetings focus on solving problems, not debating whose data is correct.",
-  options: ["Always debating data", "Often debating", "Sometimes", "Mostly solving problems", "Always strategic"]
+  title: "Executive forums resolve issues without recurring debates about data definitions or sources of truth.",
+  options: ["Always debating data", "Often debating", "Sometimes", "Mostly solving problems", "Always decision focused"]
 },
 {
   id: 12003, pillar: 12, type: "scale",
-  title: "Leadership holds teams accountable to goals.",
-  options: ["No accountability", "Weak accountability", "Solid accountability", "Strong accountability", "Disciplined culture"]
+  title: "Accountability mechanisms ensure teams deliver against committed GTM goals.",
+  options: ["No accountability", "Weak accountability", "Solid accountability", "Strong accountability", "Disciplined accountability system"]
 },
 {
   id: 12004, pillar: 12, type: "scale",
-  title: "We have strong cross-functional collaboration.",
-  options: ["Siloed", "Weak collaboration", "Solid collaboration", "Strong collaboration", "Deep collaborative culture"]
+  title: "The GTM operating model enables effective cross functional collaboration.",
+  options: ["Siloed", "Weak collaboration", "Solid collaboration", "Strong collaboration", "Highly integrated operating model"]
 },
 {
   id: 12005, pillar: 12, type: "scale",
-  title: "We have a standardized meeting cadence that is never cancelled.",
+  title: "The GTM operating cadence is standardized and consistently upheld.",
   options: ["No cadence", "Often cancelled", "Mostly respected", "Disciplined", "Sacred operating rhythm"]
 },
 {
   id: 12006, pillar: 12, type: "scale",
-  title: "Leadership communicates GTM strategy effectively.",
-  options: ["Very weak", "Weak", "Solid", "Strong", "Best-in-class communication"]
+  title: "GTM strategy and priorities are communicated consistently across teams.",
+  options: ["Very weak", "Weak", "Solid", "Strong", "Best in class communication"]
 },
 {
   id: 12007, pillar: 12, type: "scale",
-  title: "We have strong executive sponsorship for GTM initiatives.",
-  options: ["No sponsorship", "Weak sponsorship", "Solid sponsorship", "Strong sponsorship", "Engaged support"]
+  title: "GTM initiatives have clear executive sponsorship with defined ownership.",
+  options: ["No sponsorship", "Weak sponsorship", "Solid sponsorship", "Strong sponsorship", "Fully owned initiatives"]
 },
 {
   id: 12008, pillar: 12, type: "scale",
-  title: "Leadership removes blockers proactively.",
-  options: ["No removal", "Weak removal", "Solid removal", "Strong removal", "Proactive leadership"]
+  title: "Blockers are removed through a predictable escalation and decision process.",
+  options: ["No removal", "Weak removal", "Solid removal", "Strong removal", "Systematic blocker resolution"]
 },
 {
   id: 12009, pillar: 12, type: "scale",
-  title: "We run effective GTM leadership meetings.",
-  options: ["No meetings", "Weak meetings", "Solid meetings", "Strong meetings", "Effective cadence"]
+  title: "GTM governance meetings drive decisions, ownership and follow through.",
+  options: ["No meetings", "Weak meetings", "Solid meetings", "Strong meetings", "Effective decision cadence"]
 },
 {
   id: 12010, pillar: 12, type: "scale",
-  title: "Leadership fosters a high-performance culture.",
-  options: ["No culture", "Weak culture", "Solid culture", "Strong culture", "Performance culture"]
+  title: "Performance management is systematic rather than ad hoc.",
+  options: ["No system", "Weak system", "Basic system", "Strong system", "Disciplined performance management"]
 },
 {
   id: 12011, pillar: 12, type: "scale",
-  title: "We have clear roles and responsibilities across GTM teams.",
-  options: ["Unclear", "Weak clarity", "Solid clarity", "Strong clarity", "Perfect organizational design"]
+  title: "Roles, responsibilities and interfaces across GTM teams are explicitly defined.",
+  options: ["Unclear", "Weak clarity", "Solid clarity", "Strong clarity", "Clear organizational design"]
 },
 {
   id: 12012, pillar: 12, type: "scale",
-  title: "Leadership invests in the right areas for growth.",
+  title: "Investment and prioritization decisions align resources with growth strategy.",
   options: ["Misaligned", "Weak alignment", "Solid alignment", "Strong alignment", "Strategic allocation"]
 },
 {
   id: 12013, pillar: 12, type: "scale",
-  title: "We have strong feedback loops between leadership and teams.",
-  options: ["No loop", "Weak loop", "Solid loop", "Strong loop", "Effective feedback culture"]
+  title: "Feedback loops between frontline teams and executives are structured and acted upon.",
+  options: ["No loop", "Weak loop", "Solid loop", "Strong loop", "Effective feedback system"]
 },
 {
   id: 12014, pillar: 12, type: "scale",
-  title: "Leadership adapts strategy based on performance data.",
-  options: ["Static strategy", "Weak adaptation", "Solid adaptation", "Strong adaptation", "Adaptive leadership"]
+  title: "Strategic adjustments follow a defined review cycle using agreed performance signals.",
+  options: ["Static strategy", "Weak adaptation", "Solid adaptation", "Strong adaptation", "Adaptive governance"]
 },
 {
   id: 12015, pillar: 12, type: "scale",
-  title: "We maintain a strong GTM operating rhythm.",
+  title: "The GTM operating rhythm creates predictable planning, execution and review loops.",
   options: ["No rhythm", "Weak rhythm", "Solid rhythm", "Strong rhythm", "Disciplined cadence"]
 },
 {
   id: 12016, pillar: 12, type: "scale",
-  title: "Leadership aligns GTM strategy with company strategy.",
-  options: ["Misaligned", "Weak alignment", "Solid alignment", "Strong alignment", "Aligned strategy"]
+  title: "GTM priorities are aligned with company strategy through explicit governance.",
+  options: ["Misaligned", "Weak alignment", "Solid alignment", "Strong alignment", "Fully aligned strategy"]
 },
 {
   id: 12017, pillar: 12, type: "scale",
-  title: "We have clear escalation paths for GTM challenges.",
-  options: ["No paths", "Weak paths", "Solid paths", "Strong paths", "Effective escalation"]
+  title: "Escalation paths and decision rights for GTM challenges are clear and actively used.",
+  options: ["No paths", "Weak paths", "Solid paths", "Strong paths", "Effective escalation system"]
 },
 {
   id: 12018, pillar: 12, type: "scale",
-  title: "Leadership builds trust and psychological safety.",
-  options: ["Very weak", "Weak", "Solid", "Strong", "Trusting culture"]
+  title: "Teams can surface risks and issues without fear of negative consequences.",
+  options: ["Very weak", "Weak", "Solid", "Strong", "High trust environment"]
 },
 {
   id: 12019, pillar: 12, type: "scale",
-  title: "Leadership & Alignment drives GTM execution.",
-  options: ["Not a driver", "Weak driver", "Solid driver", "Strong driver", "Strategic leadership"]
+  title: "Alignment and governance materially accelerate GTM execution.",
+  options: ["Not a driver", "Weak driver", "Solid driver", "Strong driver", "Governance as a growth lever"]
 },
 {
   id: 12020, pillar: 12, type: "scale",
-  title: "Information flows freely from the frontline to leadership without being filtered.",
+  title: "Information flows from the frontline to executives with minimal filtering or distortion.",
   options: ["Highly filtered", "Filtered", "Somewhat open", "Open", "Radical transparency"]
 }
 
