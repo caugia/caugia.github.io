@@ -1,9 +1,17 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.0 (DETERMINISTIC Q/A EDITION)
+   CAUGIA INTELLIGENCE ENGINE v9.0 (DETERMINISTIC + SCORES)
    - Single key standard: q{questionId} and q{questionId}__{fieldName}
    - Always builds full_report with ALL questions (even unanswered)
-   - Sends: metadata, message, answers_raw, full_report, questions_map
+   - Sends V9 debug payload: metadata, message, answers_raw, full_report, questions_map
+   - ALSO sends legacy-friendly blocks (clean + fast in Make):
+       customer, context, answers (Q-keys), score_01..score_12, score_total, grip_g/r/i/p, confidence_range, coverage
+       question_map
    - Safe loadState (schema guard) and autosave
+   - Fixes weak points:
+       * overall score always present (score_total) even with missing pillar scores
+       * GRIP scores always present (grip_scores + flat keys) even with partial data
+       * coverage + missing questions surfaced deterministically
+       * test payload is still structurally identical (no “fake report” that breaks Make mapping)
    =========================================================== */
 
 (function () {
@@ -49,6 +57,8 @@
   };
 
   // --- 4. CONSTANTS / HELPERS ---
+
+  // Pillar 0 is context wrapper in the UI. Pillars 1–12 are canonical.
   const PILLAR_NAMES = [
     "Context",
     "GTM Strategy & Leadership",
@@ -56,14 +66,31 @@
     "Product Marketing",
     "Demand Generation",
     "Sales Execution",
-    "Customer Success",
-    "RevOps",
-    "Pricing",
-    "Brand",
-    "Data",
+    "Customer Success & Expansion",
+    "Revenue Operations & Systems",
+    "Pricing & Packaging",
+    "Brand & Communications",
+    "Data & Insights",
     "Enablement",
-    "Leadership"
+    "Alignment & Governance"
   ];
+
+  // Pillar index -> GRIP dimension mapping (fixed, deterministic)
+  // Keep explicit and stable, change only intentionally.
+  const PILLAR_TO_GRIP = {
+    1: "G",
+    2: "G",
+    3: "G",
+    4: "G",
+    5: "I",
+    6: "P",
+    7: "R",
+    8: "R",
+    9: "P",
+    10: "G",
+    11: "I",
+    12: "P"
+  };
 
   function pillarNameByIndex(i) {
     return PILLAR_NAMES[i] || `Pillar ${i}`;
@@ -101,6 +128,53 @@
     if (card) card.scrollTop = 0;
   }
 
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function clamp0to100(n) {
+    if (!Number.isFinite(n)) return null;
+    return Math.max(0, Math.min(100, n));
+  }
+
+  // Converts a 1..5 average to 0..100
+  function toScore100(avg1to5) {
+    if (!Number.isFinite(avg1to5)) return null;
+    return clamp0to100(Math.round(((avg1to5 - 1) / 4) * 100));
+  }
+
+  // Returns 1..5 index for a 5-option scale question; otherwise null
+  function optionsIndex1to5(question, answerValue) {
+    const opts = Array.isArray(question.options) ? question.options : [];
+    if (opts.length !== 5) return null;
+    const idx = opts.indexOf(answerValue);
+    if (idx === -1) return null;
+    return idx + 1;
+  }
+
+  function safeNumberFromInput(v) {
+    // Accept numbers, "12", "12%", "1,2", "$1.2M", "3.5x"
+    if (v === null || v === undefined) return null;
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+
+    const s0 = String(v).trim();
+    if (!s0) return null;
+
+    // handle multiplier like 3.5x
+    const s1 = s0.replace(/x$/i, "");
+
+    const cleaned = s1
+      .replace(/\s/g, "")
+      .replace(/%/g, "")
+      .replace(/[€$£]/g, "")
+      .replace(/,/g, ".")
+      .replace(/[^0-9.\-]/g, "");
+
+    if (!cleaned) return null;
+    const n = Number(cleaned);
+    return Number.isFinite(n) ? n : null;
+  }
+
   // --- 5. INITIALIZATION ---
   function init() {
     if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
@@ -111,7 +185,6 @@
 
     loadState();
 
-    // Clamp currentStep
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
 
@@ -212,7 +285,7 @@
     const wrapper = document.createElement("div");
     wrapper.className = "gi-options-grid";
     wrapper.style.display = "grid";
-    wrapper.style.gridTemplateColumns = "1fr 1fr";
+    wrapper.style.gridTemplateColumns = window.innerWidth < 768 ? "1fr" : "1fr 1fr";
     wrapper.style.gap = "12px";
 
     const key = qKey(q.id);
@@ -230,7 +303,7 @@
 
       const input = document.createElement("input");
       input.type = "radio";
-      input.name = key; // unified naming
+      input.name = key;
       input.value = opt;
       input.style.marginRight = "10px";
 
@@ -242,7 +315,6 @@
 
       input.addEventListener("change", () => {
         STATE.answers[key] = opt;
-        // Re-render to refresh selection styling
         if (UI.body) UI.body.innerHTML = "";
         renderRadio(q);
       });
@@ -256,7 +328,6 @@
   }
 
   function renderScale(q) {
-    // In your current design, scale behaves like radio options
     renderRadio(q);
   }
 
@@ -272,7 +343,7 @@
     input.style.padding = "12px";
     input.style.border = "1px solid #e2e8f0";
     input.style.borderRadius = "8px";
-    input.name = key; // unified naming
+    input.name = key;
 
     if (STATE.answers[key]) input.value = STATE.answers[key];
 
@@ -295,7 +366,7 @@
     input.style.padding = "12px";
     input.style.border = "1px solid #e2e8f0";
     input.style.borderRadius = "8px";
-    input.name = key; // unified naming
+    input.name = key;
 
     if (STATE.answers[key]) input.value = STATE.answers[key];
 
@@ -311,6 +382,7 @@
     const q = getCurrentQuestion();
     if (!q) return false;
 
+    // Keep current strict behavior: group requires all fields.
     if (q.type === "group") {
       const fields = q.fields || [];
       let ok = true;
@@ -327,7 +399,6 @@
       return true;
     }
 
-    // For non-group
     const k = qKey(q.id);
     if (!isNonEmpty(STATE.answers[k])) {
       alert("Please answer the question.");
@@ -410,11 +481,9 @@
     try {
       const parsed = JSON.parse(raw);
 
-      // Minimal schema guard
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
 
-      // Adopt safe fields
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
@@ -426,7 +495,7 @@
     }
   }
 
-  // --- 10. PAYLOAD BUILDERS ---
+  // --- 10. PAYLOAD BUILDERS (V9) ---
   function buildQuestionsMap() {
     return window.QUESTIONS.map((q) => ({
       id: q.id,
@@ -475,29 +544,258 @@
     return report;
   }
 
-  // --- 11. SUBMISSION ---
+  function buildCoverage(answersRaw) {
+    let total = 0;
+    let answered = 0;
+    const missing = [];
+
+    window.QUESTIONS.forEach((q) => {
+      if (q.type === "group") {
+        (q.fields || []).forEach((f) => {
+          total++;
+          const k = groupKey(q.id, f.name);
+          if (isNonEmpty(answersRaw[k])) answered++;
+          else missing.push(k);
+        });
+        return;
+      }
+
+      total++;
+      const k = qKey(q.id);
+      if (isNonEmpty(answersRaw[k])) answered++;
+      else missing.push(k);
+    });
+
+    const completion_rate = total ? Math.round((answered / total) * 100) : 0;
+    return {
+      total_questions: total,
+      answered_questions: answered,
+      completion_rate: completion_rate,
+      missing_keys: missing.slice(0, 250)
+    };
+  }
+
+  // --- 11. LEGACY-FRIENDLY BUILDERS (customer/context/answers + scores) ---
+  function buildLegacyCustomer(answersRaw) {
+    return {
+      fullname: answersRaw["q1__fullname"] || "",
+      role: answersRaw["q1__role"] || "",
+      email: answersRaw["q1__email"] || "",
+      company: answersRaw["q1__company"] || "",
+      website: answersRaw["q1__website"] || "",
+
+      total_employees: answersRaw["q1__total_employees"] || "",
+      year_founded: answersRaw["q1__year_founded"] || "",
+      hq_region: answersRaw["q1__hq_region"] || ""
+    };
+  }
+
+  function buildLegacyContext(answersRaw) {
+    return {
+      // Q2
+      arr: answersRaw["q2__arr"] || "",
+      growth_rate: answersRaw["q2__growth_rate"] || "",
+      nrr: answersRaw["q2__nrr"] || "",
+      gross_margin: answersRaw["q2__gross_margin"] || "",
+      monthly_burn: answersRaw["q2__monthly_burn"] || "",
+      cash_runway: answersRaw["q2__cash_runway"] || "",
+      pricing_model: answersRaw["q2__pricing_model"] || "",
+      number_of_clients: answersRaw["q2__number_of_clients"] || "",
+
+      // Q3
+      sales_headcount: answersRaw["q3__sales_headcount"] || "",
+      sales_leadership_headcount: answersRaw["q3__sales_leadership_headcount"] || "",
+      sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
+      marketing_headcount: answersRaw["q3__marketing_headcount"] || "",
+      cs_headcount: answersRaw["q3__cs_headcount"] || "",
+      revops_enablement_headcount: answersRaw["q3__revops_enablement_headcount"] || "",
+      product_headcount: answersRaw["q3__product_headcount"] || "",
+      gtm_other_headcount: answersRaw["q3__gtm_other_headcount"] || "",
+
+      // Q4
+      arr_target: answersRaw["q4__arr_target"] || "",
+      quota_attainment: answersRaw["q4__quota_attainment"] || "",
+      cac_payback: answersRaw["q4__cac_payback"] || "",
+      ltv_cac: answersRaw["q4__ltv_cac"] || "",
+      avg_discount: answersRaw["q4__avg_discount"] || "",
+      expansion_pct: answersRaw["q4__expansion_pct"] || "",
+      opex_includes_payroll: answersRaw["q4__opex_includes_payroll"] || "",
+      sales_marketing_pct: answersRaw["q4__sales_marketing_pct"] || "",
+
+      // Q5
+      win_rate: answersRaw["q5__win_rate"] || "",
+      sales_cycle: answersRaw["q5__sales_cycle"] || "",
+      pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "",
+      churn_rate: answersRaw["q5__churn_rate"] || "",
+      top_competitors: answersRaw["q5__top_competitors"] || "",
+      primary_loss_reason: answersRaw["q5__primary_loss_reason"] || "",
+      revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
+      primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
+
+      // Legacy passthrough for big Q ids (if present)
+      Q6: answersRaw["q6"] || "",
+      Q7: answersRaw["q7"] || "",
+      Q8: answersRaw["q8"] || "",
+      Q9: answersRaw["q9"] || "",
+      Q10: answersRaw["q10"] || "",
+      Q11: answersRaw["q11"] || "",
+      Q12: answersRaw["q12"] || "",
+      Q13: answersRaw["q13"] || "",
+      Q14: answersRaw["q14"] || "",
+      Q15: answersRaw["q15"] || "",
+      Q16: answersRaw["q16"] || "",
+      Q17: answersRaw["q17"] || "",
+      Q18: answersRaw["q18"] || "",
+      Q19: answersRaw["q19"] || "",
+      Q20: answersRaw["q20"] || "",
+      Q21: answersRaw["q21"] || "",
+      Q22: answersRaw["q22"] || "",
+      Q23: answersRaw["q23"] || "",
+      Q24: answersRaw["q24"] || "",
+      Q25: answersRaw["q25"] || ""
+    };
+  }
+
+  function buildLegacyAnswersQOnly(answersRaw) {
+    const out = {};
+    Object.keys(answersRaw).forEach((k) => {
+      if (!/^q\d+$/.test(k)) return;
+      const idNum = Number(k.slice(1));
+      if (!Number.isFinite(idNum)) return;
+      if (idNum < 1000) return;
+      out[`Q${idNum}`] = answersRaw[k];
+    });
+    return out;
+  }
+
+  function computePillarScores(answersRaw) {
+    const buckets = {}; // pillar_index -> {sum,count}
+
+    window.QUESTIONS.forEach((q) => {
+      if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
+
+      const opts = Array.isArray(q.options) ? q.options : [];
+      if (opts.length !== 5) return;
+
+      const key = qKey(q.id);
+      const val = answersRaw[key];
+      if (!isNonEmpty(val)) return;
+
+      const score1to5 = optionsIndex1to5(q, val);
+      if (!score1to5) return;
+
+      if (!buckets[q.pillar]) buckets[q.pillar] = { sum: 0, count: 0 };
+      buckets[q.pillar].sum += score1to5;
+      buckets[q.pillar].count += 1;
+    });
+
+    const out = {};
+    for (let p = 1; p <= 12; p++) {
+      const b = buckets[p];
+      out[`score_${pad2(p)}`] = b && b.count ? toScore100(b.sum / b.count) : null;
+    }
+    return out;
+  }
+
+  function computeOverallScore(scores) {
+    const vals = [];
+    for (let p = 1; p <= 12; p++) {
+      const v = scores[`score_${pad2(p)}`];
+      if (Number.isFinite(v)) vals.push(v);
+    }
+    if (!vals.length) return null;
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    return clamp0to100(Math.round(avg));
+  }
+
+  function computeConfidenceRange(scores, coverage) {
+    const scored = [];
+    for (let p = 1; p <= 12; p++) {
+      const v = scores[`score_${pad2(p)}`];
+      if (Number.isFinite(v)) scored.push(v);
+    }
+    const pillarScoreCoverage = scored.length / 12;
+    const completion = Number.isFinite(coverage?.completion_rate) ? coverage.completion_rate / 100 : 0;
+
+    const uncertainty = 1 - (0.6 * pillarScoreCoverage + 0.4 * completion);
+    const range = Math.round(8 + uncertainty * 20); // 8..28
+    return {
+      confidence_range: `±${range}`,
+      confidence_range_num: range,
+      pillar_score_coverage_pct: Math.round(pillarScoreCoverage * 100)
+    };
+  }
+
+  function computeGripScores(scores) {
+    const buckets = { G: [], R: [], I: [], P: [] };
+
+    for (let p = 1; p <= 12; p++) {
+      const dim = PILLAR_TO_GRIP[p];
+      const v = scores[`score_${pad2(p)}`];
+      if (!dim) continue;
+      if (Number.isFinite(v)) buckets[dim].push(v);
+    }
+
+    function avgOrNull(arr) {
+      if (!arr.length) return null;
+      return clamp0to100(Math.round(arr.reduce((a, b) => a + b, 0) / arr.length));
+    }
+
+    return {
+      G: avgOrNull(buckets.G),
+      R: avgOrNull(buckets.R),
+      I: avgOrNull(buckets.I),
+      P: avgOrNull(buckets.P)
+    };
+  }
+
+  function buildQuestionMapLegacy() {
+    // Deterministic: avoid collisions for group field names.
+    const map = {};
+    window.QUESTIONS.forEach((q) => {
+      if (q.type === "group" && Array.isArray(q.fields)) {
+        q.fields.forEach((f) => {
+          map[groupKey(q.id, f.name)] = f.label;
+        });
+        return;
+      }
+      map[`Q${q.id}`] = q.title;
+    });
+    return map;
+  }
+
+  // --- 12. SUBMISSION ---
   async function submitData(isTest = false) {
     const answersRaw = STATE.answers || {};
+
     const questionsMap = buildQuestionsMap();
+    const fullReport = buildFullReport(answersRaw);
+    const coverage = buildCoverage(answersRaw);
 
-    // Always build deterministically
-    let fullReport = buildFullReport(answersRaw);
+    const customer = buildLegacyCustomer(answersRaw);
+    const context = buildLegacyContext(answersRaw);
 
-    // If truly empty (no keys) add a visible test entry (optional but keeps Make from weird empty logic)
-    let message = isTest ? "Test Submission" : "Official Submission";
-    if (Object.keys(answersRaw).length === 0) {
-      message = "⚠️ TEST DATA (Input was empty)";
-      fullReport = [
-        {
-          id: "test_q1",
-          pillar: "Test",
-          pillar_index: -1,
-          question_id: "test_q1",
-          question: "This is a connection test (no real input found)",
-          answer: "Success"
-        }
-      ];
-    }
+    const answersQ = buildLegacyAnswersQOnly(answersRaw);
+    const pillarScores = computePillarScores(answersRaw);
+    const overallScore = computeOverallScore(pillarScores);
+    const gripScores = computeGripScores(pillarScores);
+    const confidence = computeConfidenceRange(pillarScores, coverage);
+
+    const answers = Object.assign({}, answersQ, pillarScores, {
+      score_total: overallScore,
+      grip_g: gripScores.G,
+      grip_r: gripScores.R,
+      grip_i: gripScores.I,
+      grip_p: gripScores.P,
+      confidence_range: confidence.confidence_range,
+      confidence_range_num: confidence.confidence_range_num,
+      completion_rate: coverage.completion_rate,
+      total_questions: coverage.total_questions,
+      answered_questions: coverage.answered_questions,
+      pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
+    });
+
+    const message = isTest ? "Test Submission" : "Official Submission";
 
     const payload = {
       metadata: {
@@ -509,14 +807,22 @@
       },
       message: message,
 
-      // Raw storage object (for legacy or debugging)
       answers_raw: answersRaw,
-
-      // Canonical map of what the questions are
       questions_map: questionsMap,
+      full_report: fullReport,
 
-      // Canonical flattened answers (always includes all questions)
-      full_report: fullReport
+      coverage: coverage,
+      grip_scores: gripScores,
+      scoring: {
+        pillar_scores: pillarScores,
+        overall_score: overallScore,
+        confidence_range: confidence
+      },
+
+      customer: customer,
+      context: context,
+      answers: answers,
+      question_map: buildQuestionMapLegacy()
     };
 
     console.log("🚀 Sending Payload to Make:", payload);
@@ -534,7 +840,13 @@
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
       if (isTest) {
-        alert(`✅ TEST SUCCESVOL!\n\nVerzonden: ${fullReport.length} items.\nCheck Make.com voor 'full_report' en 'questions_map'.`);
+        const lines = [];
+        lines.push(`score_total: ${overallScore}`);
+        lines.push(`confidence_range: ${confidence.confidence_range}`);
+        lines.push(`grip: G=${gripScores.G} R=${gripScores.R} I=${gripScores.I} P=${gripScores.P}`);
+        lines.push(`coverage: ${coverage.answered_questions}/${coverage.total_questions} (${coverage.completion_rate}%)`);
+        lines.push(`pillar score coverage: ${confidence.pillar_score_coverage_pct}%`);
+        alert(`✅ TEST SUCCESVOL!\n\n${lines.join("\n")}\n\nCheck Make.com mapping on payload.answers.*`);
       } else {
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
@@ -548,7 +860,7 @@
     }
   }
 
-  // --- 12. CLEAR / RESET / MANUAL SAVE ---
+  // --- 13. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
     const q = getCurrentQuestion();
     if (!q) return;
@@ -575,7 +887,7 @@
     alert("✅ Saved.");
   }
 
-  // --- 13. EVENT BINDING ---
+  // --- 14. EVENT BINDING ---
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
 
@@ -592,6 +904,6 @@
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
-  // --- 14. START ---
+  // --- 15. START ---
   init();
 })();
