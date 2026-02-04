@@ -1205,109 +1205,109 @@ const QUESTIONS = [
 },
 
 /* ===========================================================
-   PILLAR 9 — BRAND & COMMUNICATIONS (20 QUESTIONS)
+   PILLAR 9 — PRODUCT READINESS (20 QUESTIONS)
    =========================================================== */
 
 {
   id: 9001, pillar: 9, type: "scale",
-  title: "We have a clear brand narrative and story.",
-  options: ["No narrative", "Weak narrative", "Solid narrative", "Strong narrative", "Compelling story"]
+  title: "The product clearly solves a well-defined primary use case for our target customers.",
+  options: ["Unclear use case", "Loosely defined", "Defined but inconsistent", "Clearly defined", "Unambiguous core use case"]
 },
 {
   id: 9002, pillar: 9, type: "scale",
-  title: "Our brand communicates trust and authority.",
-  options: ["Very weak", "Weak", "Solid", "Strong", "Trusted brand"]
+  title: "Time-to-value for new customers is predictable and consistently achieved.",
+  options: ["Unpredictable", "Highly variable", "Somewhat predictable", "Mostly predictable", "Consistently predictable"]
 },
 {
   id: 9003, pillar: 9, type: "scale",
-  title: "We have strong visual brand identity.",
-  options: ["Very weak", "Weak", "Solid", "Strong", "Best-in-class identity"]
+  title: "The product can be demonstrated convincingly within a standard sales cycle.",
+  options: ["Cannot be demonstrated", "Difficult to demo", "Demo requires customization", "Clear standard demo", "Highly effective demo motion"]
 },
 {
   id: 9004, pillar: 9, type: "scale",
-  title: "Our brand is consistent across all touchpoints.",
-  options: ["Inconsistent", "Somewhat inconsistent", "Solid consistency", "Strong consistency", "Perfectly consistent"]
+  title: "Prospects understand the product value without extensive explanation.",
+  options: ["Rarely understand", "Often confused", "Generally understand", "Quickly understand", "Immediately grasp value"]
 },
 {
   id: 9005, pillar: 9, type: "scale",
-  title: "We communicate thought leadership effectively.",
-  options: ["No thought leadership", "Weak", "Solid", "Strong", "Influential"]
+  title: "The product fits naturally into our chosen GTM motion (SMB, Mid-Market, Enterprise).",
+  options: ["Poor fit", "Weak fit", "Partial fit", "Strong fit", "Designed for this motion"]
 },
 {
   id: 9006, pillar: 9, type: "scale",
-  title: "Our PR and media strategy drives brand awareness.",
-  options: ["No strategy", "Weak", "Solid", "Strong", "Strategic PR engine"]
+  title: "Implementation and onboarding effort matches what is promised during sales.",
+  options: ["Frequently mismatched", "Often mismatched", "Occasionally mismatched", "Mostly aligned", "Fully aligned"]
 },
 {
   id: 9007, pillar: 9, type: "scale",
-  title: "We emphasize value and outcomes in our communications.",
-  options: ["Feature-focused", "Some value", "Solid value focus", "Strong value emphasis", "Value-driven narrative"]
+  title: "The product supports the pricing and packaging model without friction.",
+  options: ["Misaligned", "Weakly aligned", "Mostly aligned", "Strongly aligned", "Perfectly aligned"]
 },
 {
   id: 9008, pillar: 9, type: "scale",
-  title: "We use customer stories and testimonials effectively.",
-  options: ["No stories", "Weak usage", "Solid usage", "Strong usage", "Strategic proof engine"]
+  title: "Sales teams can confidently qualify product fit early in the deal.",
+  options: ["Cannot qualify", "Late qualification", "Inconsistent qualification", "Early qualification", "Highly reliable qualification"]
 },
 {
   id: 9009, pillar: 9, type: "scale",
-  title: "Our brand differentiates us clearly in the market.",
-  options: ["No differentiation", "Weak", "Solid", "Strong", "Highly differentiated"]
+  title: "Product limitations and constraints are well understood internally.",
+  options: ["Unknown", "Poorly understood", "Partially understood", "Well understood", "Explicitly documented"]
 },
 {
   id: 9010, pillar: 9, type: "scale",
-  title: "We have a strong social media presence.",
-  options: ["No presence", "Weak", "Solid", "Strong", "Influential presence"]
+  title: "Product gaps rarely surface as surprises late in the sales cycle.",
+  options: ["Frequent surprises", "Common surprises", "Occasional surprises", "Rare surprises", "No surprises"]
 },
 {
   id: 9011, pillar: 9, type: "scale",
-  title: "Sales reps rarely have to explain 'who we are' on the first call.",
-  options: ["Always explain", "Often explain", "Sometimes explain", "Rarely explain", "Never (Strong Brand)"]
+  title: "Customer onboarding does not require excessive manual intervention.",
+  options: ["Fully manual", "Mostly manual", "Mixed", "Mostly automated", "Highly streamlined"]
 },
 {
   id: 9012, pillar: 9, type: "scale",
-  title: "We use content marketing strategically.",
-  options: ["No content", "Weak content", "Solid content", "Strong content engine", "Strategic content system"]
+  title: "The product supports repeatable delivery across customers.",
+  options: ["Highly bespoke", "Mostly bespoke", "Some standardization", "Mostly repeatable", "Fully repeatable"]
 },
 {
   id: 9013, pillar: 9, type: "scale",
-  title: "We communicate our position in the competitive landscape clearly.",
-  options: ["No clarity", "Weak clarity", "Solid clarity", "Strong clarity", "Strategic messaging"]
+  title: "The product integrates cleanly into the customer’s existing environment.",
+  options: ["Poor integration", "Limited integration", "Acceptable integration", "Strong integration", "Seamless integration"]
 },
 {
   id: 9014, pillar: 9, type: "scale",
-  title: "Our internal teams understand and embody the brand.",
-  options: ["No alignment", "Weak alignment", "Solid alignment", "Strong alignment", "Embedded brand culture"]
+  title: "Sales, CS, and Product share a consistent view of what the product does well.",
+  options: ["No shared view", "Conflicting views", "Partial alignment", "Strong alignment", "Fully aligned understanding"]
 },
 {
   id: 9015, pillar: 9, type: "scale",
-  title: "We maintain strong brand messaging frameworks.",
-  options: ["No frameworks", "Weak frameworks", "Solid frameworks", "Strong frameworks", "Best-in-class architecture"]
+  title: "The product supports expansion and upsell without significant rework.",
+  options: ["Expansion impossible", "High rework required", "Some rework", "Low rework", "Designed for expansion"]
 },
 {
   id: 9016, pillar: 9, type: "scale",
-  title: "We invest in brand awareness strategically.",
-  options: ["No investment", "Weak investment", "Solid investment", "Strong investment", "Strategic investment"]
+  title: "Product documentation and enablement materials are sufficient for GTM teams.",
+  options: ["Missing", "Insufficient", "Basic", "Comprehensive", "Best-in-class"]
 },
 {
   id: 9017, pillar: 9, type: "scale",
-  title: "Our brand evolves with our GTM strategy.",
-  options: ["Static brand", "Weak evolution", "Solid evolution", "Strong evolution", "Adaptive strategy"]
+  title: "Product feedback from GTM teams is incorporated in a structured way.",
+  options: ["No feedback loop", "Ad-hoc feedback", "Occasional loop", "Structured loop", "Continuous feedback system"]
 },
 {
   id: 9018, pillar: 9, type: "scale",
-  title: "We measure brand performance and perception.",
-  options: ["No measurement", "Weak measurement", "Solid measurement", "Strong measurement", "Deep analytics"]
+  title: "The product roadmap reflects validated GTM and customer signals.",
+  options: ["Disconnected", "Weakly connected", "Partially connected", "Strongly connected", "Directly driven by signals"]
 },
 {
   id: 9019, pillar: 9, type: "scale",
-  title: "Brand & Communications drives GTM success.",
-  options: ["Not a driver", "Weak driver", "Solid driver", "Strong driver", "Strategic function"]
+  title: "Product readiness actively enables GTM execution rather than constraining it.",
+  options: ["Major constraint", "Frequent constraint", "Occasional constraint", "Mostly enabling", "Strong execution enabler"]
 },
 {
   id: 9020, pillar: 9, type: "scale",
-  title: "We are consistently mentioned in deals where we were not actively outbound prospecting.",
-  options: ["Never", "Rarely", "Sometimes", "Often", "Always (Brand Gravity)"]
-},
+  title: "The product can be sold, implemented, and scaled without custom exceptions.",
+  options: ["Always exceptions", "Frequent exceptions", "Some exceptions", "Rare exceptions", "No exceptions"]
+}
 
 /* ===========================================================
    PILLAR 10 — DATA & INSIGHTS (20 QUESTIONS)
