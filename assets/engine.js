@@ -72,7 +72,7 @@
     "Brand & Communications",
     "Data & Insights",
     "Enablement",
-    "Leadership & Alignment"
+    "Alignment & Governance"
   ];
 
   // Pillar index -> GRIP dimension mapping (fixed, deterministic)
