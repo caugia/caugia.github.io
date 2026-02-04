@@ -59,6 +59,8 @@
   // --- 4. CONSTANTS / HELPERS ---
 
   // Pillar 0 is context wrapper in the UI. Pillars 1–12 are canonical.
+  // Decision applied:
+  // - Pillar 9 renamed to "Product Readiness" (replaces "Brand & Communications").
   const PILLAR_NAMES = [
     "Context",
     "GTM Strategy & Leadership",
@@ -69,26 +71,27 @@
     "Customer Success & Expansion",
     "Revenue Operations & Systems",
     "Pricing & Packaging",
-    "Brand & Communications",
+    "Product Readiness",
     "Data & Insights",
     "Enablement",
     "Alignment & Governance"
   ];
 
   // Pillar index -> GRIP dimension mapping (fixed, deterministic)
-  // Keep explicit and stable, change only intentionally.
+  // Decision applied: exactly 3 pillars per letter.
+  // G: 1,2,3 | R: 8,9,11 | I: 4,5,7 | P: 6,10,12
   const PILLAR_TO_GRIP = {
     1: "G",
     2: "G",
     3: "G",
-    4: "G",
+    4: "I",
     5: "I",
     6: "P",
-    7: "R",
+    7: "I",
     8: "R",
-    9: "P",
-    10: "G",
-    11: "I",
+    9: "R",
+    10: "P",
+    11: "R",
     12: "P"
   };
 
@@ -382,7 +385,7 @@
     const q = getCurrentQuestion();
     if (!q) return false;
 
-    // Keep current strict behavior: group requires all fields.
+    // Strict behavior: group requires all fields.
     if (q.type === "group") {
       const fields = q.fields || [];
       let ok = true;
