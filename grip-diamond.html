@@ -149,11 +149,11 @@
 
     .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
-    /* RIGHT CONTENT GRID — FIX 2: bottom row auto instead of fixed 240px */
+    /* RIGHT CONTENT GRID — fixed bottom row height to prevent layout shift */
     .visual-area {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
-      grid-template-rows: 1fr auto;
+      grid-template-rows: 1fr 200px;
       gap: 24px;
       height: 100%;
     }
@@ -277,7 +277,7 @@
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
     .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
 
-    /* FIX 1: Executive summary as compact dash-list instead of pre-line block */
+    /* Executive summary as compact dash-list */
     .exec-list {
       list-style: none;
       padding: 0;
@@ -450,7 +450,6 @@
       </div>
     </div>
 
-    <!-- FIX 1: changed from <div> with white-space:pre-line to <ul> with compact dash items -->
     <div class="summary-card">
       <span class="label-xs" style="color:var(--primary); margin-bottom:8px;">Executive Summary</span>
       <ul class="exec-list" id="execSummary"></ul>
@@ -522,7 +521,6 @@
       el.className = "pattern-card " + (mode || "mode-mid");
     }
 
-    /* FIX 1: render exec text as <li> items instead of pre-line text */
     function renderExecSummary(execText) {
       const list = document.getElementById("execSummary");
       const lines = (execText || "").split("\n").map(l => l.trim()).filter(Boolean);
