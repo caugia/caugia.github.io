@@ -3,6 +3,15 @@
    Safe: data-only + pure functions. No HTML. No CSS injection.
    Exports:
      window.GRIP = { archetypes, getArchetype, getByKey, count }
+
+   v2.0 — All 30 archetypes now routed via getArchetype()
+   Changes from v1:
+     - Added dual-constraint detection (underfunded_compass, unproven_narrative, leaky_motion)
+     - Added developing_engine systemic check (avg 60-75, spread <15, lowest >=55)
+     - Expanded G-low family: narrative_drift, channel_scatter, alignment_theater, accidental_growth
+     - Expanded R-low family: starved_winner
+     - Expanded I-low family: misused_stack, inconsistent_playbooks
+     - Expanded P-low family: churn_pressure, discount_dependency, measurement_mirage
 */
 (function () {
   "use strict";
@@ -14,13 +23,6 @@
 
   // =========================
   // 1) Registry (30)
-  // Fields:
-  // - title: label
-  // - mode: mode-good | mode-warn | mode-bad | mode-mid
-  // - short: one sentence for Index
-  // - diamond_short: short + one extra sentence for Diamond only
-  // - exec: Diamond executive summary, MUST be 6 lines (use \n)
-  // - pdf: long narrative for PDF (not used on website)
   // =========================
   const archetypes = {
     // Systemic states
@@ -492,7 +494,6 @@
       pdf: "This archetype represents a system that is not broken, but not yet coherent. Some dimensions work while others lag, and interfaces between teams are underdeveloped. Outcomes depend on local strengths rather than a unified engine. The opportunity is integration that converts isolated wins into compounding learning. Clarify the primary GTM path and enforce shared definitions across functions. Standardize execution mechanics so behavior is consistent by segment and stage. Improve measurement so signal supports decisions and iteration. With coherence, performance becomes more predictable without needing a full rebuild."
     },
 
-    // ====== Extra archetypes to reach 30 (not routed yet) ======
     collapsed_engine: {
       title: "The Collapsed Engine",
       mode: "mode-bad",
@@ -623,9 +624,7 @@
   };
 
   // =========================
-  // 2) Selection logic
-  // Returns a registry entry plus key.
-  // Mirrors your current website logic.
+  // 2) Selection logic — v2: routes all 30 archetypes
   // =========================
   function getArchetype(g, r, i, p) {
     const scores = [
@@ -640,45 +639,153 @@
     const avg = (g + r + i + p) / 4;
     const lowest = scores[0];
     const secondLowest = scores[1];
+    const secondHighest = scores[2];
     const highest = scores[3];
+    const spread = highest.v - lowest.v;
 
-    // 1) Systemic extremes
+    // =========================
+    // 1) Systemic extremes (checked first)
+    // =========================
     if (avg < 30) return withKey("collapsed_engine");
     if (avg < 35) return withKey("stalled_engine");
     if (avg < 45 && highest.v < 60) return withKey("fragile_foundation");
-    if (avg >= 45 && avg < 60 && (highest.v - lowest.v) < 12) return withKey("even_drag");
+    if (avg >= 45 && avg < 60 && spread < 12) return withKey("even_drag");
+
+    // Developing engine: moderate-to-good scores, low spread, no extreme weakness
+    if (avg >= 60 && avg <= 75 && spread < 15 && lowest.v >= 55) return withKey("developing_engine");
+
     if (avg > 85) return withKey("precision_machine");
     if (avg > 75 && lowest.v > 65) return withKey("balanced_engine");
 
-    // 2) Constraint logic families
+    // =========================
+    // 2) Dual-constraint patterns (two dimensions weak)
+    //    Check BEFORE single-constraint to catch compound issues
+    // =========================
+
+    // G + R both low → underfunded_compass
+    if (lowest.k === "g" && secondLowest.k === "r" && secondLowest.v < 45) {
+      return withKey("underfunded_compass");
+    }
+    if (lowest.k === "r" && secondLowest.k === "g" && secondLowest.v < 45) {
+      return withKey("underfunded_compass");
+    }
+
+    // G + P both low → unproven_narrative
+    if (lowest.k === "g" && secondLowest.k === "p" && secondLowest.v < 45) {
+      return withKey("unproven_narrative");
+    }
+    if (lowest.k === "p" && secondLowest.k === "g" && secondLowest.v < 45) {
+      return withKey("unproven_narrative");
+    }
+
+    // I + P both low → leaky_motion
+    if (lowest.k === "i" && secondLowest.k === "p" && secondLowest.v < 45) {
+      return withKey("leaky_motion");
+    }
+    if (lowest.k === "p" && secondLowest.k === "i" && secondLowest.v < 45) {
+      return withKey("leaky_motion");
+    }
+
+    // =========================
+    // 3) Single-constraint families
+    // =========================
+
+    // --- GUIDANCE LOW ---
     if (lowest.k === "g") {
+      // G low + I highest and high → activity_trap
       if (highest.k === "i" && highest.v > 65) return withKey("activity_trap");
+
+      // G low + R highest and high → bloated_ship
       if (highest.k === "r" && highest.v > 65) return withKey("bloated_ship");
+
+      // G low + P highest and decent → accidental_growth
+      if (highest.k === "p" && highest.v > 60) return withKey("accidental_growth");
+
+      // G low + P second lowest → guesswork_strategy
       if (secondLowest.k === "p") return withKey("guesswork_strategy");
+
+      // Narrative drift: G low, execution happens but messaging inconsistent
+      if (i > 55 && r > 50 && p > 50) return withKey("narrative_drift");
+
+      // Channel scatter: G low, resources spread thin across channels
+      if (r > 50 && i > 45 && p < 55) return withKey("channel_scatter");
+
+      // Alignment theater: G low but other scores look decent (appears aligned)
+      if (secondLowest.v > 50) return withKey("alignment_theater");
+
+      // Fallback for G low
       return withKey("direction_gap");
     }
 
+    // --- RESOURCES LOW ---
     if (lowest.k === "r") {
+      // R low + G highest and high → visionary_void
       if (highest.k === "g" && highest.v > 70) return withKey("visionary_void");
+
+      // R low + I highest and high → burnout_engine
       if (highest.k === "i" && highest.v > 70) return withKey("burnout_engine");
+
+      // R low + P highest and decent → starved_winner
+      if (highest.k === "p" && highest.v > 60) return withKey("starved_winner");
+
+      // R low + P second lowest → tooling_debt
       if (secondLowest.k === "p") return withKey("tooling_debt");
+
+      // R low + moderate spread → underpowered_motion
+      if (g > 50 && i > 50) return withKey("underpowered_motion");
+
+      // Fallback for R low
       return withKey("capacity_crunch");
     }
 
+    // --- IMPLEMENTATION LOW ---
     if (lowest.k === "i") {
+      // I low + G highest and high → ivory_tower
       if (highest.k === "g" && highest.v > 70) return withKey("ivory_tower");
+
+      // I low + P highest and decent → heroic_system
       if (highest.k === "p" && highest.v > 60) return withKey("heroic_system");
+
+      // I low + R highest and decent → misused_stack
+      if (highest.k === "r" && highest.v > 60) return withKey("misused_stack");
+
+      // I low + R second lowest → process_void
       if (secondLowest.k === "r") return withKey("process_void");
+
+      // I low + moderate other scores → inconsistent_playbooks
+      if (g > 50 && p > 45) return withKey("inconsistent_playbooks");
+
+      // Fallback for I low
       return withKey("broken_handoff");
     }
 
+    // --- PERFORMANCE LOW ---
     if (lowest.k === "p") {
+      // P low + I highest and high → leaky_bucket
       if (highest.k === "i" && highest.v > 70) return withKey("leaky_bucket");
+
+      // P low + G highest and high → blind_optimist
       if (highest.k === "g" && highest.v > 70) return withKey("blind_optimist");
+
+      // P low + R highest and high → roi_drag
       if (highest.k === "r" && highest.v > 70) return withKey("roi_drag");
+
+      // P low + churn signals (I decent, retention weak)
+      if (i > 55 && g > 50) return withKey("churn_pressure");
+
+      // P low + deals close via discounting
+      if (r > 55 && g > 50) return withKey("discount_dependency");
+
+      // P low + metrics exist but unreliable
+      if (secondLowest.v > 50) return withKey("measurement_mirage");
+
+      // Fallback for P low
       return withKey("black_box");
     }
 
+    // =========================
+    // 4) Fallback
+    // =========================
     return withKey("developing_engine");
   }
 
@@ -688,7 +795,6 @@
       key,
       title: a.title,
       mode: a.mode,
-      // Index uses short, Diamond should use short_diamond
       short: a.short,
       short_diamond: a.diamond_short || a.short,
       exec: a.exec,
