@@ -149,11 +149,11 @@
 
     .cta-box { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
 
-    /* RIGHT CONTENT GRID */
+    /* RIGHT CONTENT GRID — FIX 2: bottom row auto instead of fixed 240px */
     .visual-area {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
-      grid-template-rows: 1fr 240px;
+      grid-template-rows: 1fr auto;
       gap: 24px;
       height: 100%;
     }
@@ -263,7 +263,6 @@
       grid-row: 2 / 3;
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
     }
 
     .label-xs {
@@ -277,8 +276,25 @@
     }
     .card-title { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; font-family: Inter, sans-serif; }
     .card-text { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
-#execSummary { white-space: pre-line; }
-    
+
+    /* FIX 1: Executive summary as compact dash-list instead of pre-line block */
+    .exec-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .exec-list li {
+      font-size: 0.78rem;
+      color: var(--text-body);
+      line-height: 1.45;
+      padding: 1px 0;
+    }
+    .exec-list li::before {
+      content: "– ";
+      color: var(--primary);
+      font-weight: 700;
+    }
+
     footer { display: none; }
 
     /* MOBILE RESPONSIVENESS */
@@ -434,11 +450,10 @@
       </div>
     </div>
 
+    <!-- FIX 1: changed from <div> with white-space:pre-line to <ul> with compact dash items -->
     <div class="summary-card">
       <span class="label-xs" style="color:var(--primary); margin-bottom:8px;">Executive Summary</span>
-      <div class="card-text" id="execSummary">
-        When implementation looks strong but performance stays low, the system often hides leakage in conversion, retention, or deal mechanics. The next step is not more activity, but finding where value falls out of the funnel.
-      </div>
+      <ul class="exec-list" id="execSummary"></ul>
     </div>
 
   </div>
@@ -504,8 +519,14 @@
     }
 
     function setModeClass(el, mode) {
-      // mode expected: "mode-good" | "mode-warn" | "mode-bad" | "mode-mid"
       el.className = "pattern-card " + (mode || "mode-mid");
+    }
+
+    /* FIX 1: render exec text as <li> items instead of pre-line text */
+    function renderExecSummary(execText) {
+      const list = document.getElementById("execSummary");
+      const lines = (execText || "").split("\n").map(l => l.trim()).filter(Boolean);
+      list.innerHTML = lines.map(line => `<li>${line}</li>`).join("");
     }
 
     function update() {
@@ -533,14 +554,14 @@
       setHealth("i", i);
       setHealth("p", p);
 
-      // Pull archetype from shared registry
       const arch = (window.GRIP && typeof window.GRIP.getArchetype === "function")
         ? window.GRIP.getArchetype(g, r, i, p)
         : { title: "The Developing Engine", short: "System shows potential but lacks coherence across pillars.", exec: "A developing system typically improves fastest by tightening decision logic, role clarity, and measurement hygiene.", mode: "mode-mid" };
 
       document.getElementById("archetypeTitle").textContent = arch.title || "";
       document.getElementById("archetypeBody").textContent = arch.short_diamond || arch.short || "";
-      document.getElementById("execSummary").textContent = arch.exec || "";
+
+      renderExecSummary(arch.exec);
 
       setModeClass(document.getElementById("archetypeBox"), arch.mode);
 
