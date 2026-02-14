@@ -809,19 +809,18 @@
         is_test: !!isTest
       },
       message: message,
-
       answers_raw: answersRaw,
       questions_map: questionsMap,
       full_report: fullReport,
-
       coverage: coverage,
       grip_scores: gripScores,
+      pillar_scores: pillarScores,
+      overall_score: overallScore,
       scoring: {
         pillar_scores: pillarScores,
         overall_score: overallScore,
         confidence_range: confidence
       },
-
       customer: customer,
       context: context,
       answers: answers,
