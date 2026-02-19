@@ -1307,7 +1307,7 @@ const QUESTIONS = [
   id: 9020, pillar: 9, type: "scale",
   title: "The product can be sold, implemented, and scaled without custom exceptions.",
   options: ["Always exceptions", "Frequent exceptions", "Some exceptions", "Rare exceptions", "No exceptions"]
-}
+},
 
 /* ===========================================================
    PILLAR 10 — DATA & INSIGHTS (20 QUESTIONS)
