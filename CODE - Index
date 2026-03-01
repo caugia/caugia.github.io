@@ -48,7 +48,6 @@
     /* --- PAGE SPECIFIC STYLES (Index Only) --- */
     
     :root {
-      /* Widget Specific Colors */
       --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
       --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
       --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
@@ -69,11 +68,11 @@
       border-left: 4px solid var(--primary); margin-top: 40px;
     }
     .pillars-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 20px; }
-    .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; font-size: 0.9rem; color: #334155; }
-    .pillar-item { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: baseline; }
-    .pillar-num { font-weight: 800; color: #cbd5e1; text-align: right; font-size: 0.8rem; }
+    .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+    .pillar-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.82rem; color: #334155; }
+    .pillar-item:last-child { border-bottom: none; }
+    .pillar-num { width: 22px; height: 22px; border-radius: 6px; background: #f1f5f9; color: #0056b3; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     
-    /* Mobile text helper */
     .m-text { display: none; }
 
     /* Widget */
@@ -138,14 +137,66 @@
     /* Report Section */
     .report-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 74px; align-items: center; }
     .check-list { margin-top: 18px; margin-bottom: 28px; padding: 0; }
-    /* Noot: basis check-list styles zitten in base.css, hier evt. specifieke overrides */
     
-    .report-visual { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); border-radius: 18px; height: 380px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 18px; color: rgba(255,255,255,0.2); font-weight: 700; }
+    .report-visual { display: flex; align-items: center; justify-content: center; }
+
+    /* Report Page Mockup */
+    .report-page {
+      width: 360px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+      overflow: hidden;
+      transform: perspective(900px) rotateY(-3deg) rotateX(1.5deg);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .report-page:hover {
+      transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(1.02);
+    }
+    .rp-header { background: linear-gradient(135deg, #0056b3, #0073e6); padding: 16px 22px 14px; position: relative; }
+    .rp-chapter { font-size: 0.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+    .rp-title { font-family: Merriweather, serif; font-size: 0.95rem; font-weight: 900; color: #ffffff; line-height: 1.2; }
+    .rp-subtitle { font-size: 0.52rem; color: rgba(255,255,255,0.5); margin-top: 3px; font-weight: 500; }
+    .rp-logo { position: absolute; top: 14px; right: 18px; width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .rp-logo span { font-weight: 900; font-size: 0.65rem; color: #fff; }
+    .rp-body { padding: 18px 22px 14px; }
+    .rp-verdict-label { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
+    .rp-verdict-text { font-size: 0.55rem; color: #475569; line-height: 1.55; margin-bottom: 16px; }
+    .rp-section-title { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .rp-section-desc { font-size: 0.48rem; color: #94a3b8; margin-bottom: 12px; }
+    .rp-score-row { margin-bottom: 10px; }
+    .rp-score-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .rp-score-label { font-size: 0.6rem; font-weight: 700; color: #0f172a; }
+    .rp-score-val { font-size: 0.65rem; font-weight: 800; color: #0f172a; }
+    .rp-score-delta { font-size: 0.5rem; font-weight: 700; margin-left: 3px; }
+    .delta-neg { color: #dc2626; }
+    .delta-pos { color: #16a34a; }
+    .rp-bar-track { height: 7px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative; }
+    .rp-bar-fill { height: 100%; border-radius: 4px; }
+    .rp-bar-track::after { content: ""; position: absolute; top: 0; left: 70%; width: 1.5px; height: 100%; background: #1e293b; opacity: 0.3; }
+    .bar-strong { background: linear-gradient(90deg, #0056b3, #3b82f6); }
+    .bar-dev { background: linear-gradient(90deg, #d97706, #fbbf24); }
+    .bar-crit { background: linear-gradient(90deg, #dc2626, #f87171); }
+    .rp-score-sub { font-size: 0.45rem; color: #94a3b8; margin-top: 2px; }
+    .rp-score-sub .status-text { font-weight: 700; }
+    .status-strong { color: #16a34a; }
+    .status-dev { color: #d97706; }
+    .status-crit { color: #dc2626; }
+    .rp-divider { height: 1px; background: #e2e8f0; margin: 14px 0; }
+    .rp-pattern { background: #fff7ed; border: 1px solid #fed7aa; border-left: 3px solid #f59e0b; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; }
+    .rp-pattern-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; margin-bottom: 2px; }
+    .rp-pattern-title { font-size: 0.7rem; font-weight: 800; color: #78350f; margin-bottom: 3px; }
+    .rp-pattern-text { font-size: 0.5rem; color: #92400e; line-height: 1.45; }
+    .rp-priority { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #0056b3; border-radius: 6px; padding: 10px 12px; }
+    .rp-priority-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #0056b3; margin-bottom: 2px; }
+    .rp-priority-title { font-size: 0.62rem; font-weight: 800; color: #1e3a5f; margin-bottom: 3px; }
+    .rp-priority-text { font-size: 0.5rem; color: #334155; line-height: 1.45; }
+    .rp-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 8px 22px; display: flex; justify-content: space-between; align-items: center; }
+    .rp-footer-left { font-size: 0.42rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
+    .rp-footer-right { font-size: 0.42rem; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.06em; }
 
     /* --- MOBILE RESPONSIVENESS (Page Specific) --- */
     @media (max-width: 980px) {
-      
-      /* Hero Fix */
       .hero { 
           padding-top: 30px !important; 
           padding-bottom: 50px !important; 
@@ -156,11 +207,8 @@
       .hero > div:first-child { padding-left: 12px; padding-right: 12px; }
       .hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
       .hero-desc { font-size: 1.05rem; line-height: 1.5; }
-      
-      /* Center Buttons in Hero */
       .hero > div:first-child > div[style*="display:flex"] { justify-content: center; }
 
-      /* Pillars */
       .pillars-card { padding: 24px 20px; margin-top: 30px; text-align: left; }
       .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
       .pillar-grid > div { display: contents; }
@@ -169,30 +217,23 @@
       .d-text { display: none; }
       .m-text { display: inline; }
 
-      /* Widget */
       .widget-card { margin-top: 0; padding: 24px 20px; box-shadow: none; border: 1px solid var(--line); }
       .health-score { font-size: 3rem; }
-      
       .slider-wrap { padding: 10px 0; }
       input[type=range] { height: 6px; }
       input[type=range]::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -9px; }
-
       .widget-layout { display: grid !important; grid-template-columns: 1fr !important; gap: 30px !important; }
       .chart-col { margin-top: 0; }
 
-      /* Comparison */
       .comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
-      
       .comp-col-left { background: #f1f5f9; padding: 24px; border-radius: 16px !important; border: 1px solid var(--line); opacity: 1; }
       .comp-col-left h4 { font-size: 0.9rem; margin-bottom: 12px; }
       .comp-col-left .comp-item { padding: 8px 0; border-color: rgba(0,0,0,0.05); }
       .comp-col-left .comp-val { font-size: 0.85rem; }
-
       .comp-col-right { padding: 30px 24px; border-radius: 16px !important; border: 1px solid rgba(0,86,179,0.15) !important; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); z-index: 2; }
       
-      /* Report */
       .report-layout { gap: 40px !important; grid-template-columns: 1fr !important; }
-      .report-visual { height: 280px; }
+      .report-page { width: 100%; max-width: 360px; }
       
       .grid-3 { grid-template-columns: 1fr !important; }
     }
@@ -314,8 +355,8 @@
               <div class="pillar-item">
                   <span class="pillar-num">9</span>
                   <span>
-                      <span class="d-text">Brand & Communications</span>
-                      <span class="m-text">Brand & Comms</span>
+                      <span class="d-text">Product Readiness</span>
+                      <span class="m-text">Product Ready</span>
                   </span>
               </div>
               <div class="pillar-item">
@@ -335,8 +376,8 @@
               <div class="pillar-item">
                   <span class="pillar-num">12</span>
                   <span>
-                      <span class="d-text">Leadership & Alignment</span>
-                      <span class="m-text">Leadership</span>
+                      <span class="d-text">Alignment & Governance</span>
+                      <span class="m-text">Governance</span>
                   </span>
               </div>
             </div>
@@ -489,11 +530,11 @@
                 <span class="comp-label">Bias</span> <span class="comp-val">Zero (Data-Driven)</span>
               </li>
               <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Cost</span> <span class="comp-val">Fraction of traditional</span>
+                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">From €1,249</span>
               </li>
             </ul>
             <div style="margin-top:32px; text-align:center;">
-                <a href="gtm-assessment.html" class="btn btn-primary" style="width:100%;">Start Free Assessment</a>
+                <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get Your Intelligence Report</a>
             </div>
           </div>
 
@@ -524,17 +565,64 @@
         </div>
 
         <div class="report-visual">
-          [ Report Cover Placeholder ]
+          <div class="report-page">
+            <div class="rp-header">
+              <div class="rp-chapter">Chapter 2</div>
+              <div class="rp-title">GRIP Dimension Scores</div>
+              <div class="rp-subtitle">Guidance · Resources · Implementation · Performance</div>
+              <div class="rp-logo"><span>C</span></div>
+            </div>
+            <div class="rp-body">
+              <div class="rp-verdict-label">Executive Verdict</div>
+              <div class="rp-verdict-text">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs. The system cannot convert intent into repeatable outcomes. Fixing this unlocks the existing investment.</div>
+              <div class="rp-section-title">The GRIP View</div>
+              <div class="rp-section-desc">Benchmark target: 70+ per dimension</div>
+              <div class="rp-score-row">
+                <div class="rp-score-top"><span class="rp-score-label">Guidance</span><span><span class="rp-score-val">74</span><span class="rp-score-delta delta-pos">+4</span></span></div>
+                <div class="rp-bar-track"><div class="rp-bar-fill bar-strong" style="width:74%"></div></div>
+                <div class="rp-score-sub">Strategic direction and ICP clarity · <span class="status-text status-strong">On track</span></div>
+              </div>
+              <div class="rp-score-row">
+                <div class="rp-score-top"><span class="rp-score-label">Resources</span><span><span class="rp-score-val">66</span><span class="rp-score-delta delta-neg">-4</span></span></div>
+                <div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:66%"></div></div>
+                <div class="rp-score-sub">Team capacity and investment allocation · <span class="status-text status-dev">Below target</span></div>
+              </div>
+              <div class="rp-score-row">
+                <div class="rp-score-top"><span class="rp-score-label">Implementation</span><span><span class="rp-score-val">41</span><span class="rp-score-delta delta-neg">-29</span></span></div>
+                <div class="rp-bar-track"><div class="rp-bar-fill bar-crit" style="width:41%"></div></div>
+                <div class="rp-score-sub">Sales execution and conversion efficiency · <span class="status-text status-crit">Critical</span></div>
+              </div>
+              <div class="rp-score-row">
+                <div class="rp-score-top"><span class="rp-score-label">Performance</span><span><span class="rp-score-val">62</span><span class="rp-score-delta delta-neg">-8</span></span></div>
+                <div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:62%"></div></div>
+                <div class="rp-score-sub">Revenue outcomes and growth trajectory · <span class="status-text status-dev">Below target</span></div>
+              </div>
+              <div class="rp-divider"></div>
+              <div class="rp-pattern">
+                <div class="rp-pattern-label">System Pattern</div>
+                <div class="rp-pattern-title">The Ivory Tower</div>
+                <div class="rp-pattern-text">Strategy is strong but execution breaks down at handoffs. Plans remain correct on paper but non-operational in the field.</div>
+              </div>
+              <div class="rp-priority">
+                <div class="rp-priority-label">Your #1 Priority Fix</div>
+                <div class="rp-priority-title">Build execution mechanics before adding strategy layers</div>
+                <div class="rp-priority-text">Install playbooks, ownership contracts, and an operating cadence. Map where intent fails to become behavior. This single move typically recovers 15-25% of leaked pipeline value.</div>
+              </div>
+            </div>
+            <div class="rp-footer">
+              <span class="rp-footer-left">Confidential Analysis · February 2026</span>
+              <span class="rp-footer-right">Page 8 of 41</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
     <section>
       <div class="container" style="max-width:860px; text-align:center;">
         <span class="eyebrow">Next step</span>
-        <h2>Your GTM System is speaking.
-Are you listening?
-</h2>
+        <h2>Your GTM System is speaking.<br>Are you listening?</h2>
         <p style="font-size:1.1rem; max-width:600px; margin:0 auto 24px auto;">
           Opinion-based strategy is slow. Data-driven architecture is scalable. See exactly which constraints are holding back your revenue today.
         </p>
@@ -553,6 +641,7 @@ Are you listening?
   </footer>
 
   <script src="assets/caugia-base.js"></script>
+  <script src="assets/grip-archetypes.js"></script>
 
   <script>
     (function () {
@@ -561,7 +650,6 @@ Are you listening?
 
       const ctx = canvas.getContext("2d");
 
-      // Chart Config
       const myChart = new Chart(ctx, {
         type: "radar",
         data: {
@@ -571,8 +659,8 @@ Are you listening?
             backgroundColor: "rgba(0, 86, 179, 0.15)",
             borderColor: "#0056b3",
             pointBackgroundColor: "#0056b3",
-            borderWidth: 2, 
-            pointRadius: 3, 
+            borderWidth: 2,
+            pointRadius: 3,
             pointHoverRadius: 5
           }]
         },
@@ -587,9 +675,9 @@ Are you listening?
             r: {
               suggestedMin: 0,
               suggestedMax: 100,
-              ticks: { display: false, count: 5 }, 
-              angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
-              grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 }, 
+              ticks: { display: false, count: 5 },
+              angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
+              grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
               pointLabels: {
                 color: "#0056b3",
                 font: { size: 14, weight: "800", family: "Inter" },
@@ -597,235 +685,23 @@ Are you listening?
               }
             }
           },
-          elements: { line: { tension: 0.2 } } 
+          elements: { line: { tension: 0.2 } }
         }
       });
-      
-      // LOGIC: Determining the Primary Constraint (30 archetypes)
-function getArchetype(g, r, i, p) {
-  const scores = [
-    { k: 'g', v: g }, { k: 'r', v: r }, { k: 'i', v: i }, { k: 'p', v: p }
-  ];
-  scores.sort((a, b) => a.v - b.v);
-
-  const avg = (g + r + i + p) / 4;
-  const lowest = scores[0];
-  const secondLowest = scores[1];
-  const third = scores[2];
-  const highest = scores[3];
-
-  const spread = highest.v - lowest.v;
-
-  // 1) SYSTEMIC STATES (6)
-  if (avg < 30) return {
-    title: "The Collapsed Engine",
-    body: "Across-dimension failure. Stabilize fundamentals before any scaling work is attempted.",
-    mode: "mode-bad"
-  };
-  if (avg < 35) return {
-    title: "The Stalled Engine",
-    body: "Systemic failure across all dimensions. Foundational rebuild required immediately.",
-    mode: "mode-bad"
-  };
-  if (avg < 45 && highest.v < 60) return {
-    title: "The Fragile Foundation",
-    body: "No dimension is strong enough to carry the others. Risk of total revenue deceleration.",
-    mode: "mode-bad"
-  };
-  if (avg >= 45 && avg < 60 && spread < 12) return {
-    title: "The Even Drag",
-    body: "No single constraint dominates. Multiple small frictions compound into slow progress.",
-    mode: "mode-mid"
-  };
-  if (avg > 85) return {
-    title: "The Precision Machine",
-    body: "Elite performance. Focus on incremental optimization and expansion.",
-    mode: "mode-good"
-  };
-  if (avg > 75 && lowest.v > 65) return {
-    title: "The Balanced Engine",
-    body: "Strong coherence. No major drag factors, allowing for predictable scaling.",
-    mode: "mode-good"
-  };
-
-  // Helper: when two lows are close, treat as dual-constraint
-  const dualLow = (secondLowest.v - lowest.v) <= 6;
-
-  // 2) CONSTRAINT LOGIC (24 = 6 per constraint)
-
-  // --- GUIDANCE IS LOWEST (6) ---
-  if (lowest.k === 'g') {
-
-    // Dual-constraint variants (2)
-    if (dualLow && secondLowest.k === 'p') return {
-      title: "The Guesswork Strategy",
-      body: "No clear direction (G) and no performance proof (P). Decisions stay anecdotal and reactive.",
-      mode: "mode-bad"
-    };
-    if (dualLow && secondLowest.k === 'r') return {
-      title: "The Underfunded Compass",
-      body: "Strategy (G) is weak and resources (R) are thin. Teams cannot align or execute consistently.",
-      mode: "mode-bad"
-    };
-
-    // High-high interaction variants (3)
-    if (highest.k === 'i' && highest.v > 65) return {
-      title: "The Activity Trap",
-      body: "High execution volume (I), but direction is unclear. The team is running fast in the wrong direction.",
-      mode: "mode-warn"
-    };
-    if (highest.k === 'r' && highest.v > 65) return {
-      title: "The Bloated Ship",
-      body: "Heavy on resources (R), light on strategy. High burn rate with low strategic clarity.",
-      mode: "mode-warn"
-    };
-    if (highest.k === 'p' && highest.v > 60) return {
-      title: "The Accidental Growth",
-      body: "Performance (P) is holding for now, but without guidance (G) it is fragile and hard to repeat.",
-      mode: "mode-warn"
-    };
-
-    // Default (1)
-    return {
-      title: "The Direction Gap",
-      body: "Execution capability exists, but the strategic compass is broken. Teams are misaligned.",
-      mode: "mode-warn"
-    };
-  }
-
-  // --- RESOURCES IS LOWEST (6) ---
-  if (lowest.k === 'r') {
-
-    // Dual-constraint variants (2)
-    if (dualLow && secondLowest.k === 'p') return {
-      title: "The Tooling Debt",
-      body: "Lack of resources (R) is causing a performance and visibility gap (P). You cannot steer what you cannot measure.",
-      mode: "mode-bad"
-    };
-    if (dualLow && secondLowest.k === 'g') return {
-      title: "The Unbacked Plan",
-      body: "Guidance (G) is weak and resources (R) are weak. Roadmaps exist, but nothing is funded or staffed properly.",
-      mode: "mode-bad"
-    };
-
-    // High-high interaction variants (3)
-    if (highest.k === 'g' && highest.v > 70) return {
-      title: "The Visionary Void",
-      body: "Great strategy (G), but no resources (R) to back it up. A roadmap to nowhere.",
-      mode: "mode-warn"
-    };
-    if (highest.k === 'i' && highest.v > 70) return {
-      title: "The Burnout Engine",
-      body: "High execution (I) on low resources (R). The team is over-performing but fragile.",
-      mode: "mode-bad"
-    };
-    if (highest.k === 'p' && highest.v > 60) return {
-      title: "The Starved Winner",
-      body: "Performance (P) is acceptable, but resource scarcity (R) blocks repeatability and scale.",
-      mode: "mode-warn"
-    };
-
-    // Default (1)
-    return {
-      title: "The Capacity Crunch",
-      body: "Ambition exceeds bandwidth. The engine is undersized for the goals set.",
-      mode: "mode-warn"
-    };
-  }
-
-  // --- IMPLEMENTATION IS LOWEST (6) ---
-  if (lowest.k === 'i') {
-
-    // Dual-constraint variants (2)
-    if (dualLow && secondLowest.k === 'r') return {
-      title: "The Process Void",
-      body: "No process (I) and limited resources (R). Efficiency is impossible and friction stays high.",
-      mode: "mode-bad"
-    };
-    if (dualLow && secondLowest.k === 'g') return {
-      title: "The Unoperational Plan",
-      body: "Guidance (G) and implementation (I) are both weak. Strategy does not translate into daily behavior.",
-      mode: "mode-bad"
-    };
-
-    // High-high interaction variants (3)
-    if (highest.k === 'g' && highest.v > 70) return {
-      title: "The Ivory Tower",
-      body: "Strategy is strong (G), but reality breaks down. A disconnect between leadership and the front line.",
-      mode: "mode-bad"
-    };
-    if (highest.k === 'p' && highest.v > 60) return {
-      title: "The Heroic System",
-      body: "Results (P) happen despite process (I), not because of it. Revenue relies on individual heroes.",
-      mode: "mode-warn"
-    };
-    if (highest.k === 'r' && highest.v > 65) return {
-      title: "The Misused Stack",
-      body: "Resources (R) exist, but implementation (I) is weak. Tools and people are not converted into throughput.",
-      mode: "mode-warn"
-    };
-
-    // Default (1)
-    return {
-      title: "The Broken Handoff",
-      body: "Friction in the motion. Leads, data, or deals are dropping between silos.",
-      mode: "mode-warn"
-    };
-  }
-
-  // --- PERFORMANCE IS LOWEST (6) ---
-  if (lowest.k === 'p') {
-
-    // Dual-constraint variants (2)
-    if (dualLow && secondLowest.k === 'g') return {
-      title: "The Unproven Narrative",
-      body: "Guidance (G) is weak and performance (P) is weak. The story cannot be defended with outcomes.",
-      mode: "mode-warn"
-    };
-    if (dualLow && secondLowest.k === 'i') return {
-      title: "The Leaky Motion",
-      body: "Implementation (I) and performance (P) both lag. Effort does not convert into outcomes.",
-      mode: "mode-bad"
-    };
-
-    // High-high interaction variants (3)
-    if (highest.k === 'i' && highest.v > 70) return {
-      title: "The Leaky Bucket",
-      body: "High effort (I), low outcome (P). Conversion or retention is draining value.",
-      mode: "mode-bad"
-    };
-    if (highest.k === 'g' && highest.v > 70) return {
-      title: "The Blind Optimist",
-      body: "Strong narrative (G), but the numbers (P) do not validate the story.",
-      mode: "mode-warn"
-    };
-    if (highest.k === 'r' && highest.v > 70) return {
-      title: "The ROI Drag",
-      body: "Heavy investment (R) yielding low returns (P). The engine is inefficient.",
-      mode: "mode-bad"
-    };
-
-    // Default (1)
-    return {
-      title: "The Black Box",
-      body: "The system runs, but visibility is low. You cannot predict next quarter with confidence.",
-      mode: "mode-mid"
-    };
-  }
-
-  // Fallback (should not hit)
-  return {
-    title: "The Developing Engine",
-    body: "System shows potential but lacks coherence across pillars.",
-    mode: "mode-mid"
-  };
-}
 
       function updateSliderColor(id, val) {
         const el = document.getElementById(id);
-        el.className = ""; 
-        if(val < 50) el.classList.add("range-bad");
-        else if(val < 70) el.classList.add("range-warn");
+        el.className = "";
+        if (val < 50) el.classList.add("range-bad");
+        else if (val < 70) el.classList.add("range-warn");
+      }
+
+      function getFallbackArchetype() {
+        return {
+          title: "The Developing Engine",
+          short: "The system shows potential, but coherence is still forming. Outcomes depend on local strengths rather than a unified engine.",
+          mode: "mode-mid"
+        };
       }
 
       function updateChart() {
@@ -848,18 +724,18 @@ function getArchetype(g, r, i, p) {
 
         myChart.data.datasets[0].data = [g, r, i, p];
         myChart.update();
-        
-        // UPDATE ARCHETYPE UI
-        const arch = getArchetype(g, r, i, p);
+
+        const arch = (window.GRIP && typeof window.GRIP.getArchetype === "function")
+          ? window.GRIP.getArchetype(g, r, i, p)
+          : getFallbackArchetype();
+
         const boxEl = document.getElementById("archetypeBox");
-        
-        document.getElementById("archetypeTitle").textContent = arch.title;
-        document.getElementById("archetypeBody").textContent = arch.body;
-        
-        // Remove old mode classes
+
+        document.getElementById("archetypeTitle").textContent = arch.title || "";
+        document.getElementById("archetypeBody").textContent = arch.short || "";
+
         boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
-        // Add new mode class
-        boxEl.classList.add(arch.mode);
+        boxEl.classList.add(arch.mode || "mode-mid");
       }
 
       ["input-g","input-r","input-i","input-p"].forEach(id => {
@@ -870,5 +746,6 @@ function getArchetype(g, r, i, p) {
       updateChart();
     })();
   </script>
+
 </body>
 </html>
