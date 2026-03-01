@@ -20,6 +20,12 @@
       "@media(max-width:980px){" +
         ".nav-actions .btn-secondary{display:none!important;}" +
         ".nav-actions .btn-cta{display:inline-flex!important;padding:8px 16px;font-size:0.8rem;}" +
+      ".brand .brand-full{display:none;}" +
+      ".brand .brand-short{display:inline;}" +
+      "}" +
+      "@media(min-width:981px){" +
+        ".brand .brand-full{display:inline;}" +
+        ".brand .brand-short{display:none;}" +
       "}";
     document.head.appendChild(style);
 
@@ -36,7 +42,8 @@
         '<div class="container nav">' +
           '<a class="brand" href="index.html">' +
             '<img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />' +
-            "<span>CAUGIA CONSULTING</span>" +
+            "<span class=\"brand-full\">CAUGIA CONSULTING</span>" +
+            "<span class=\"brand-short\">CAUGIA</span>" +
           "</a>" +
           '<ul class="nav-links">' +
             "<li>" + a("index.html", "Home") + "</li>" +
