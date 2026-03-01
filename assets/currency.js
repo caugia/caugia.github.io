@@ -19,7 +19,8 @@
       module:       "749",
       bundle:       "1,795",
       reportModule: "2,995",
-      reportBundle: "3,995"
+      reportBundle: "3,995",
+      consultingComp: "25k"
     },
     USD: {
       symbol: "$",
@@ -27,7 +28,8 @@
       module:       "849",
       bundle:       "1,995",
       reportModule: "3,295",
-      reportBundle: "4,495"
+      reportBundle: "4,495",
+      consultingComp: "25k"
     },
     GBP: {
       symbol: "£",
@@ -35,7 +37,8 @@
       module:       "649",
       bundle:       "1,595",
       reportModule: "2,695",
-      reportBundle: "3,495"
+      reportBundle: "3,495",
+      consultingComp: "25k"
     }
   };
 
