@@ -123,16 +123,32 @@
 .p-price { font-size: 1.5rem; font-weight: 900; color: #fff; align-self: end; padding-top: 16px; }
 .p-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; padding-top: 4px; }
 
-/* ── How It Works ── */
-.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 36px; }
-.step { text-align: center; }
-.step-num {
-  width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: #fff;
-  font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px;
+/* ── How It Works (connected flow, Caugia style) ── */
+.hiw {
+  display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: start; margin-top: 40px; gap: 0;
 }
-.step h4 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 6px; color: #0f172a; }
-.step p { font-size: 0.9rem; color: #64748b; line-height: 1.5; margin: 0; }
+.hiw-card {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
+  padding: 28px 24px; position: relative;
+}
+.hiw-card:first-child { border-top: 3px solid var(--primary); }
+.hiw-card:nth-child(3) { border-top: 3px solid #60a5fa; }
+.hiw-card:nth-child(5) { border-top: 3px solid #0f172a; }
+.hiw-num {
+  font-family: Inter, sans-serif; font-weight: 900; font-size: 2.5rem;
+  color: #f1f5f9; line-height: 1; margin-bottom: 12px;
+}
+.hiw-card:first-child .hiw-num { color: rgba(0,86,179,0.12); }
+.hiw-card:nth-child(3) .hiw-num { color: rgba(96,165,250,0.15); }
+.hiw-card:nth-child(5) .hiw-num { color: rgba(15,23,42,0.08); }
+.hiw-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; color: #0f172a; margin-bottom: 8px; }
+.hiw-text { font-size: 0.9rem; color: #64748b; line-height: 1.55; }
+.hiw-connector {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 8px; align-self: center;
+  color: #cbd5e1; font-size: 1.4rem;
+}
 
 /* ── GRIP Marketplace ── */
 .grip-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
@@ -188,7 +204,8 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
   .j-col:last-child { border-bottom: none; }
   .j-arrow { display: none !important; }
   .j-price { align-self: auto; padding-top: 12px; }
-  .steps { grid-template-columns: 1fr !important; gap: 24px; }
+  .hiw { grid-template-columns: 1fr; gap: 16px; }
+  .hiw-connector { transform: rotate(90deg); padding: 0; justify-self: center; }
   .grip-grid { grid-template-columns: 1fr 1fr !important; gap: 16px; }
   .grip-head { flex-direction: column; align-items: flex-start; }
   .paths-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
@@ -342,26 +359,28 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
 <!-- HOW IT WORKS -->
 <!-- ═══════════════════════════════════════════════════ -->
 <div class="block">
-  <div class="container" style="max-width:860px;">
-    <div style="text-align:center;">
+  <div class="container">
+    <div style="text-align:center; max-width:600px; margin:0 auto;">
       <span class="eyebrow">How It Works</span>
       <h2>Three steps. Zero consultants.</h2>
     </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h4>Complete the assessment</h4>
-        <p>Answer structured questions about your GTM system. 5 minutes for the Score, 45 for the Report, 20 for a Deep Dive.</p>
+    <div class="hiw">
+      <div class="hiw-card">
+        <div class="hiw-num">01</div>
+        <div class="hiw-title">Complete the assessment</div>
+        <div class="hiw-text">Answer structured questions about your GTM system. 5 minutes for the Score, 45 for the Report, 20 for a Deep Dive.</div>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h4>The engine runs</h4>
-        <p>72 diagnostic engines analyze your responses. Constraint Priority Scoring, archetype matching, revenue leakage modelling — all deterministic, all automated.</p>
+      <div class="hiw-connector">→</div>
+      <div class="hiw-card">
+        <div class="hiw-num">02</div>
+        <div class="hiw-title">The engine runs</div>
+        <div class="hiw-text">72 diagnostic engines analyze your responses. Constraint Priority Scoring, archetype matching, revenue leakage modelling — all deterministic, all automated.</div>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h4>Receive your diagnostic</h4>
-        <p>A board-ready PDF lands in your inbox within minutes. No waiting for slides. No follow-up calls. Share it with your team and act immediately.</p>
+      <div class="hiw-connector">→</div>
+      <div class="hiw-card">
+        <div class="hiw-num">03</div>
+        <div class="hiw-title">Receive your diagnostic</div>
+        <div class="hiw-text">A board-ready PDF lands in your inbox within minutes. No waiting for slides. No follow-up calls. Share it with your team and act immediately.</div>
       </div>
     </div>
   </div>
