@@ -203,23 +203,69 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
 @media (max-width: 980px) {
   .s-hero { padding-top: 20px; }
   .s-hero h1 { font-size: 1.75rem !important; }
-  .journey { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .j-col { grid-row: auto; border-right: none; border-bottom: 1px solid #f1f5f9; }
+
+  /* Journey cards: kill subgrid, stack vertically */
+  .journey {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto !important; /* override the 8-row definition */
+    display: flex !important;
+    flex-direction: column;
+  }
+  .j-col {
+    display: flex !important;
+    flex-direction: column;
+    grid-row: auto !important;
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 28px 24px;
+  }
   .j-col:last-child { border-bottom: none; }
   .j-arrow { display: none !important; }
-  .j-price { align-self: auto; padding-top: 12px; }
-  .hiw { grid-template-columns: 1fr; gap: 16px; }
-  .hiw-connector { transform: rotate(90deg); padding: 0; justify-self: center; }
+  .j-desc { margin-bottom: 12px; }
+  .j-price { align-self: flex-start; padding-top: 12px; }
+  .j-sub { padding-bottom: 8px; }
+  .j-cta { margin-bottom: 8px; }
+  .j-features { margin-top: 12px; padding-top: 12px; }
+  .j-features li { min-height: auto !important; }
+
+  /* Paths cards: same treatment */
+  .paths-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .p-card {
+    display: flex !important;
+    flex-direction: column;
+    grid-row: auto !important;
+    margin-bottom: 0;
+  }
+  .p-price { align-self: flex-start; padding-top: 12px; }
+  .paths-block { padding: 56px 0; }
+
+  /* How It Works: stack */
+  .hiw {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .hiw-card {
+    display: flex !important;
+    flex-direction: column;
+    grid-row: auto !important;
+  }
+  .hiw-connector { transform: rotate(90deg); padding: 0; align-self: center; }
+
+  /* GRIP grid */
   .grip-grid { grid-template-columns: 1fr 1fr !important; gap: 16px; }
   .grip-head { flex-direction: column; align-items: flex-start; }
-  .paths-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .p-card { grid-row: auto; margin-bottom: 16px; }
-  .p-price { align-self: auto; padding-top: 12px; }
-  .paths-block { padding: 56px 0; }
   .block { padding: 48px 0; }
 }
 @media (max-width: 520px) {
   .grip-grid { grid-template-columns: 1fr !important; }
+  .j-col { padding: 24px 20px; }
+  .j-title { font-size: 1.05rem; }
+  .j-price { font-size: 1.3rem; }
 }
 </style>
 </head>
