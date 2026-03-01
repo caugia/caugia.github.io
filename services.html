@@ -53,7 +53,10 @@
   overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.04);
 }
 .j-step {
-  flex: 1; padding: 36px 28px; display: flex; flex-direction: column;
+  flex: 1; padding: 36px 28px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto auto auto;
+  /* rows: head | title | desc+spacer | price | price-sub | cta | features */
   border-right: 1px solid #f1f5f9; position: relative;
 }
 .j-step:last-child { border-right: none; }
@@ -66,7 +69,7 @@
 .j-step.flagship .j-arrow { background: #fafbff; }
 .j-step:last-child .j-arrow { display: none; }
 
-.j-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.j-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; grid-row: 1; }
 .j-num {
   width: 28px; height: 28px; border-radius: 50%; background: #f1f5f9; color: #64748b;
   font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -75,12 +78,13 @@
 .j-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; }
 .j-step.flagship .j-label { color: var(--primary); }
 
-.j-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; color: #0f172a; margin-bottom: 8px; }
-.j-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; margin-bottom: 16px; flex-grow: 1; }
-.j-price { font-size: 1.4rem; font-weight: 900; color: #0f172a; margin-bottom: 2px; }
-.j-price-sub { font-size: 0.78rem; color: #94a3b8; margin-bottom: 16px; }
+.j-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; color: #0f172a; margin-bottom: 8px; grid-row: 2; }
+.j-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; grid-row: 3; align-self: start; }
+.j-price { font-size: 1.4rem; font-weight: 900; color: #0f172a; margin-bottom: 2px; grid-row: 4; align-self: end; }
+.j-price-sub { font-size: 0.78rem; color: #94a3b8; margin-bottom: 16px; grid-row: 5; }
 .j-cta a { display: block; text-align: center; width: 100%; }
-.j-features { margin-top: 18px; padding-top: 16px; border-top: 1px solid #f1f5f9; list-style: none; padding-left: 0; }
+.j-cta { grid-row: 6; }
+.j-features { margin-top: 18px; padding-top: 16px; border-top: 1px solid #f1f5f9; list-style: none; padding-left: 0; grid-row: 7; }
 .j-features li { font-size: 0.82rem; color: #475569; padding: 5px 0; display: flex; align-items: flex-start; gap: 7px; }
 .j-features li::before { content: "✓"; color: var(--primary); font-weight: 800; flex-shrink: 0; font-size: 0.78rem; }
 
@@ -131,16 +135,18 @@
 .paths-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .path-card {
   background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column;
+  border-radius: 16px; padding: 28px 24px;
+  display: grid; grid-template-rows: auto auto 1fr auto auto;
+  /* rows: label | title | desc | price | save */
   transition: border-color 0.2s, background 0.2s;
 }
 .path-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
 .path-card.best { border: 2px solid #60a5fa; background: rgba(96,165,250,0.06); }
-.path-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa; margin-bottom: 10px; }
-.path-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
-.path-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
-.path-price { font-size: 1.5rem; font-weight: 900; color: #fff; }
-.path-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; margin-top: 4px; }
+.path-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa; margin-bottom: 10px; grid-row: 1; }
+.path-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; margin-bottom: 8px; grid-row: 2; }
+.path-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 0; grid-row: 3; align-self: start; }
+.path-price { font-size: 1.5rem; font-weight: 900; color: #fff; grid-row: 4; align-self: end; margin-top: 20px; }
+.path-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; margin-top: 4px; grid-row: 5; }
 
 /* ── FAQ ── */
 .faq { max-width: 760px; margin: 0 auto; }
@@ -163,13 +169,17 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
   .s-hero { padding-top: 28px; }
   .s-hero h1 { font-size: 2rem !important; }
   .journey { flex-direction: column; }
-  .j-step { border-right: none; border-bottom: 1px solid #f1f5f9; }
+  .j-step { border-right: none; border-bottom: 1px solid #f1f5f9; grid-template-rows: auto auto auto auto auto auto auto; }
   .j-step:last-child { border-bottom: none; }
   .j-arrow { display: none !important; }
+  .j-desc { align-self: auto; }
+  .j-price { align-self: auto; }
   .steps { grid-template-columns: 1fr !important; gap: 24px; }
   .grip-grid { grid-template-columns: 1fr 1fr !important; gap: 16px; }
   .grip-market-head { flex-direction: column; align-items: flex-start; }
   .paths-grid { grid-template-columns: 1fr !important; }
+  .path-desc { align-self: auto; }
+  .path-price { align-self: auto; margin-top: 12px; }
   .paths-block { padding: 56px 0; }
   .block { padding: 48px 0; }
 }
@@ -364,7 +374,7 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
           <span class="g-mod-tag tag-soon">Coming Soon</span>
         </div>
         <div class="g-mod coming">
-          <div class="g-mod-name">Revenue Operations & Systems</div>
+          <div class="g-mod-name">Enablement</div>
           <span class="g-mod-tag tag-soon">Coming Soon</span>
         </div>
       </div>
@@ -382,7 +392,7 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
           <span class="g-mod-tag tag-live">Available</span>
         </div>
         <div class="g-mod coming">
-          <div class="g-mod-name">Customer Success & Expansion</div>
+          <div class="g-mod-name">Revenue Operations & Systems</div>
           <span class="g-mod-tag tag-soon">Coming Soon</span>
         </div>
       </div>
@@ -390,11 +400,11 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
       <div class="grip-col">
         <div class="grip-letter-bar"><span class="grip-letter">P</span><span class="grip-dim-name">Performance</span></div>
         <div class="g-mod coming">
-          <div class="g-mod-name">Data & Insights</div>
+          <div class="g-mod-name">Customer Success & Expansion</div>
           <span class="g-mod-tag tag-soon">Coming Soon</span>
         </div>
         <div class="g-mod coming">
-          <div class="g-mod-name">Enablement</div>
+          <div class="g-mod-name">Data & Insights</div>
           <span class="g-mod-tag tag-soon">Coming Soon</span>
         </div>
         <div class="g-mod coming">
