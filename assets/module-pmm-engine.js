@@ -596,6 +596,9 @@
 
   function resetAll() {
     if (!confirm("Reset all PMM answers?")) return;
+    STATE.completed = true;  // stops autosave
+    STATE.answers = {};
+    STATE.currentStep = 0;
     localStorage.removeItem(CONFIG.storageKey);
     location.reload();
   }
