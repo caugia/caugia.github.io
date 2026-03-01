@@ -1,34 +1,52 @@
 /* ═══════════════════════════════════════════════════
-   CAUGIA — header.js v1.0
+   CAUGIA — header.js v1.1
    Single source of truth for site header & mobile nav.
+   Fully self-contained: injects HTML, CSS, and JS.
    
-   Usage in every page:
-   1. Remove the entire <header>...</header> block
-   2. Add this right before </body>:
-      <script src="assets/header.js"></script>
+   Usage: <script src="assets/header.js"></script>
    ═══════════════════════════════════════════════════ */
 
 (function () {
+
+  /* ── 1. Inject CSS (so we don't depend on any base CSS version) ── */
+  var style = document.createElement("style");
+  style.textContent =
+    /* CTA button in header */
+    ".btn-cta{display:inline-flex;align-items:center;justify-content:center;" +
+    "padding:10px 22px;border-radius:999px;font-weight:700;font-size:0.85rem;" +
+    "background:#0056b3;color:#fff;border:none;cursor:pointer;" +
+    "transition:all 0.2s ease;box-shadow:0 2px 8px rgba(0,86,179,0.15);text-decoration:none;white-space:nowrap;}" +
+    ".btn-cta:hover{background:#004494;transform:translateY(-1px);}" +
+
+    /* Mobile: keep CTA visible, shrink it */
+    "@media(max-width:980px){" +
+      ".nav-actions .btn-secondary{display:none!important;}" +
+      ".nav-actions .btn-cta{display:inline-flex!important;padding:8px 16px;font-size:0.8rem;}" +
+    "}";
+  document.head.appendChild(style);
+
+  /* ── 2. Build header HTML ── */
   var currentPath = window.location.pathname.split("/").pop() || "index.html";
 
-  function isActive(href) {
-    return href === currentPath ? ' class="active"' : "";
+  function a(href, label) {
+    var cls = href === currentPath ? ' class="active"' : "";
+    return "<a href=\"" + href + "\"" + cls + ">" + label + "</a>";
   }
 
   var headerHTML =
-    '<header>' +
+    "<header>" +
       '<div class="container nav">' +
         '<a class="brand" href="index.html">' +
           '<img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />' +
-          '<span>CAUGIA CONSULTING</span>' +
-        '</a>' +
+          "<span>CAUGIA CONSULTING</span>" +
+        "</a>" +
         '<ul class="nav-links">' +
-          '<li><a href="index.html"' + isActive("index.html") + ">Home</a></li>" +
-          '<li><a href="about.html"' + isActive("about.html") + ">About</a></li>" +
-          '<li><a href="services.html"' + isActive("services.html") + ">Services</a></li>" +
-          '<li><a href="gtm-assessment.html"' + isActive("gtm-assessment.html") + ">GTM Score</a></li>" +
-          '<li><a href="resources.html"' + isActive("resources.html") + ">Resources</a></li>" +
-          '<li><a href="contact.html"' + isActive("contact.html") + ">Contact</a></li>" +
+          "<li>" + a("index.html", "Home") + "</li>" +
+          "<li>" + a("about.html", "About") + "</li>" +
+          "<li>" + a("services.html", "Services") + "</li>" +
+          "<li>" + a("gtm-assessment.html", "GTM Score") + "</li>" +
+          "<li>" + a("resources.html", "Resources") + "</li>" +
+          "<li>" + a("contact.html", "Contact") + "</li>" +
         "</ul>" +
         '<div class="nav-actions">' +
           '<a href="grip-marketplace.html" class="btn-cta">GRIP Marketplace</a>' +
@@ -36,20 +54,20 @@
         "</div>" +
       "</div>" +
       '<div class="container mobile-nav" id="mobileNav">' +
-        '<a href="index.html"' + isActive("index.html") + ">Home</a>" +
-        '<a href="about.html"' + isActive("about.html") + ">About</a>" +
-        '<a href="services.html"' + isActive("services.html") + ">Services</a>" +
-        '<a href="gtm-assessment.html"' + isActive("gtm-assessment.html") + ">GTM Score</a>" +
-        '<a href="resources.html"' + isActive("resources.html") + ">Resources</a>" +
-        '<a href="contact.html"' + isActive("contact.html") + ">Contact</a>" +
-        '<a href="grip-marketplace.html"' + isActive("grip-marketplace.html") + ">GRIP Marketplace</a>" +
+        a("index.html", "Home") +
+        a("about.html", "About") +
+        a("services.html", "Services") +
+        a("gtm-assessment.html", "GTM Score") +
+        a("resources.html", "Resources") +
+        a("contact.html", "Contact") +
+        a("grip-marketplace.html", "GRIP Marketplace") +
       "</div>" +
     "</header>";
 
-  // Inject at the very start of <body>
+  /* ── 3. Inject at start of <body> ── */
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // Mobile nav toggle
+  /* ── 4. Mobile nav toggle ── */
   var toggle = document.getElementById("menuToggle");
   var mobileNav = document.getElementById("mobileNav");
 
@@ -69,4 +87,5 @@
       }
     });
   }
+
 })();
