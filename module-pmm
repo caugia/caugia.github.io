@@ -1,943 +1,416 @@
-// PMM Deep Dive Questions — 60 questions, 6 engines
-// Auto-generated from PMM v1.6 spec
-var QUESTIONS = [
-  {
-    "id": 1001,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "G",
-    "qid": "PM-1001",
-    "type": "scale",
-    "title": "We have documented buyer personas based on actual customer research (not assumptions).",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "No personas",
-      "Assumption-based",
-      "Basic research-backed",
-      "Strong validated",
-      "Living personas with continuous research"
-    ]
-  },
-  {
-    "id": 1002,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "G",
-    "qid": "PM-1002",
-    "type": "scale",
-    "title": "Our ICP is defined with quantifiable firmographic, technographic, and behavioral criteria.",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "No ICP",
-      "Vague",
-      "Basic criteria",
-      "Strong multi-dimensional",
-      "Data-validated, continuously refined"
-    ]
-  },
-  {
-    "id": 1003,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "R",
-    "qid": "PM-1003",
-    "type": "text",
-    "title": "How many customer/prospect research interviews conducted in the last 6 months?",
-    "sub": "Do you understand WHO buys and WHY?"
-  },
-  {
-    "id": 1004,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "R",
-    "qid": "PM-1004",
-    "type": "scale",
-    "title": "We have systematic access to customer insights (win/loss, NPS, support, usage data).",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "No access",
-      "Ad-hoc",
-      "Some systematic",
-      "Strong integrated",
-      "Real-time intelligence platform"
-    ]
-  },
-  {
-    "id": 1005,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "I",
-    "qid": "PM-1005",
-    "type": "scale",
-    "title": "How often do we conduct formal win/loss analysis on closed deals?",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "Never",
-      "Occasionally",
-      "Quarterly",
-      "Monthly",
-      "Every closed deal above threshold"
-    ]
-  },
-  {
-    "id": 1006,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "I",
-    "qid": "PM-1006",
-    "type": "scale",
-    "title": "Buyer journey is mapped and used to inform content, sales process, and product decisions.",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "No map",
-      "Basic awareness-stage",
-      "Solid multi-stage",
-      "Strong driving decisions",
-      "Dynamic with behavioral data"
-    ]
-  },
-  {
-    "id": 1007,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "I",
-    "qid": "PM-1007",
-    "type": "scale",
-    "title": "Customer research findings are systematically shared across Marketing, Sales, Product.",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "Never shared",
-      "Ad-hoc",
-      "Quarterly",
-      "Monthly structured",
-      "Continuous integrated loop"
-    ]
-  },
-  {
-    "id": 1008,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "P",
-    "qid": "PM-1008",
-    "type": "scale",
-    "title": "Sales team reports that our buyer personas accurately reflect the people they talk to.",
-    "sub": "Do you understand WHO buys and WHY?",
-    "options": [
-      "Never validated",
-      "Disconnected",
-      "Somewhat accurate",
-      "Accurate",
-      "Highly accurate, Sales relies on them"
-    ]
-  },
-  {
-    "id": 1009,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "P",
-    "qid": "PM-1009",
-    "type": "text",
-    "title": "What percentage of pipeline comes from ICP-fit accounts?",
-    "sub": "Do you understand WHO buys and WHY?"
-  },
-  {
-    "id": 1010,
-    "pillar": 1,
-    "pillar_name": "Market & Buyer Intelligence",
-    "grip": "P",
-    "qid": "PM-1010",
-    "type": "text",
-    "title": "Win rate for ICP-fit accounts vs non-ICP? (percentage difference)",
-    "sub": "Do you understand WHO buys and WHY?"
-  },
-  {
-    "id": 2001,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "G",
-    "qid": "PM-2001",
-    "type": "scale",
-    "title": "We have a documented positioning framework that defines our category, differentiation, and value.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "No doc",
-      "Informal",
-      "Basic framework",
-      "Strong documented",
-      "Validated with segment variants"
-    ]
-  },
-  {
-    "id": 2002,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "G",
-    "qid": "PM-2002",
-    "type": "scale",
-    "title": "We have a messaging hierarchy: company narrative → product → persona-specific.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "No hierarchy",
-      "Disconnected",
-      "Basic",
-      "Strong consistent",
-      "Full with testing data"
-    ]
-  },
-  {
-    "id": 2003,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "R",
-    "qid": "PM-2003",
-    "type": "scale",
-    "title": "Dedicated PMM resource responsible for positioning and messaging.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "No resource",
-      "Generalist",
-      "Part-time PMM",
-      "Dedicated PMM",
-      "PMM team"
-    ]
-  },
-  {
-    "id": 2004,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "R",
-    "qid": "PM-2004",
-    "type": "scale",
-    "title": "Messaging is based on validated customer language (not internal jargon).",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "Pure jargon",
-      "Mostly internal",
-      "Some customer language",
-      "Strong validated",
-      "Message-tested quantitatively"
-    ]
-  },
-  {
-    "id": 2005,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "I",
-    "qid": "PM-2005",
-    "type": "scale",
-    "title": "How often is core positioning/messaging reviewed and updated?",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "Never",
-      "When breaks",
-      "Annually",
-      "Quarterly",
-      "Quarterly + event-driven"
-    ]
-  },
-  {
-    "id": 2006,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "I",
-    "qid": "PM-2006",
-    "type": "scale",
-    "title": "Website homepage communicates clear value proposition within 5 seconds.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "No value prop",
-      "Product description",
-      "Basic VP",
-      "Strong VP",
-      "Tested, optimized, persona-aware"
-    ]
-  },
-  {
-    "id": 2007,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "I",
-    "qid": "PM-2007",
-    "type": "scale",
-    "title": "All customer-facing teams use consistent messaging.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "Everyone improvises",
-      "Mostly inconsistent",
-      "Some consistency",
-      "Strong",
-      "Universal adoption"
-    ]
-  },
-  {
-    "id": 2008,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "P",
-    "qid": "PM-2008",
-    "type": "text",
-    "title": "Website visitor-to-demo/signup conversion rate? (percentage)",
-    "sub": "Can you articulate WHY choose you?"
-  },
-  {
-    "id": 2009,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "P",
-    "qid": "PM-2009",
-    "type": "scale",
-    "title": "Prospects can articulate our differentiation after a first interaction.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "Never",
-      "Rarely",
-      "Sometimes",
-      "Usually",
-      "Consistently"
-    ]
-  },
-  {
-    "id": 2010,
-    "pillar": 2,
-    "pillar_name": "Positioning & Messaging",
-    "grip": "P",
-    "qid": "PM-2010",
-    "type": "scale",
-    "title": "Our messaging clearly resonates with the primary pain point of our ICP.",
-    "sub": "Can you articulate WHY choose you?",
-    "options": [
-      "No resonance",
-      "Weak",
-      "Some",
-      "Strong",
-      "Market recognizes us for this **Engine 3: Competitive Intelligence**"
-    ]
-  },
-  {
-    "id": 3001,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "G",
-    "qid": "PM-3001",
-    "type": "scale",
-    "title": "We have a documented competitive strategy with clear positioning against top 3 alternatives.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "No strategy",
-      "Informal",
-      "Basic list",
-      "Strong strategy",
-      "Dynamic intel program"
-    ]
-  },
-  {
-    "id": 3002,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "G",
-    "qid": "PM-3002",
-    "type": "scale",
-    "title": "We understand why we WIN and why we LOSE against each key competitor.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "No data",
-      "Anecdotal",
-      "Basic patterns",
-      "Strong data-backed",
-      "Quantified with causal analysis"
-    ]
-  },
-  {
-    "id": 3003,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "R",
-    "qid": "PM-3003",
-    "type": "scale",
-    "title": "Battlecards exist for top competitors and are accessible to Sales.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "None",
-      "Outdated",
-      "Basic",
-      "Strong",
-      "Dynamic with win data"
-    ]
-  },
-  {
-    "id": 3004,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "R",
-    "qid": "PM-3004",
-    "type": "text",
-    "title": "How many competitor battlecards are actively maintained (updated last 90 days)?",
-    "sub": "Can you WIN against alternatives?"
-  },
-  {
-    "id": 3005,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "I",
-    "qid": "PM-3005",
-    "type": "scale",
-    "title": "Competitive intelligence is systematically gathered from Sales, CS, market, product.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "No system",
-      "Sales anecdotes",
-      "Some cross-functional",
-      "Strong systematic",
-      "Real-time monitoring"
-    ]
-  },
-  {
-    "id": 3006,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "I",
-    "qid": "PM-3006",
-    "type": "scale",
-    "title": "How often are competitive materials updated?",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "Never",
-      "When complained",
-      "Semi-annually",
-      "Quarterly",
-      "Monthly/event-driven"
-    ]
-  },
-  {
-    "id": 3007,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "I",
-    "qid": "PM-3007",
-    "type": "scale",
-    "title": "Sales team is trained on competitive positioning and objection handling.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "No training",
-      "Onboarding only",
-      "Annual",
-      "Quarterly",
-      "Continuous + deal support"
-    ]
-  },
-  {
-    "id": 3008,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "P",
-    "qid": "PM-3008",
-    "type": "text",
-    "title": "Competitive win rate? (percentage)",
-    "sub": "Can you WIN against alternatives?"
-  },
-  {
-    "id": 3009,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "P",
-    "qid": "PM-3009",
-    "type": "scale",
-    "title": "Sales team feels confident in competitive situations.",
-    "sub": "Can you WIN against alternatives?",
-    "options": [
-      "Not confident",
-      "Low",
-      "Moderate",
-      "Confident",
-      "Highly --- competitive advantage"
-    ]
-  },
-  {
-    "id": 3010,
-    "pillar": 3,
-    "pillar_name": "Competitive Intelligence",
-    "grip": "P",
-    "qid": "PM-3010",
-    "type": "text",
-    "title": "Loss reason \\'chose competitor\\' as % of all losses?",
-    "sub": "Can you WIN against alternatives?"
-  },
-  {
-    "id": 4001,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "G",
-    "qid": "PM-4001",
-    "type": "scale",
-    "title": "We have a tiered launch framework (major/minor/maintenance) with defined activities per tier.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No framework",
-      "Ad-hoc",
-      "Basic tiers",
-      "Strong tiered",
-      "Optimized with data"
-    ]
-  },
-  {
-    "id": 4002,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "G",
-    "qid": "PM-4002",
-    "type": "scale",
-    "title": "Every launch has a pre-defined success metric before it ships.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No metrics",
-      "Vague goals",
-      "Basic metric",
-      "Strong defined",
-      "Tied to business outcome"
-    ]
-  },
-  {
-    "id": 4003,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "R",
-    "qid": "PM-4003",
-    "type": "scale",
-    "title": "Cross-functional launch team identified per launch.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No cross-func",
-      "PMM alone",
-      "Basic coord",
-      "Strong cross-func",
-      "Dedicated team with RACI"
-    ]
-  },
-  {
-    "id": 4004,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "R",
-    "qid": "PM-4004",
-    "type": "text",
-    "title": "How many product launches (all tiers) in the last 12 months?",
-    "sub": "Do launches create IMPACT?",
-    "has_na": true
-  },
-  {
-    "id": 4005,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "I",
-    "qid": "PM-4005",
-    "type": "scale",
-    "title": "Launches follow a documented checklist.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No checklist",
-      "Informal",
-      "Basic",
-      "Strong documented",
-      "Full playbook per tier"
-    ]
-  },
-  {
-    "id": 4006,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "I",
-    "qid": "PM-4006",
-    "type": "scale",
-    "title": "Sales team is briefed and equipped BEFORE a launch goes live.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No briefing",
-      "Same-day email",
-      "Basic",
-      "Strong with materials",
-      "Full enablement + cert"
-    ]
-  },
-  {
-    "id": 4007,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "I",
-    "qid": "PM-4007",
-    "type": "scale",
-    "title": "Post-launch reviews conducted to measure impact and capture learnings.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "Never",
-      "Rarely",
-      "Sometimes",
-      "Usually",
-      "Always with shared learnings"
-    ],
-    "has_na": true
-  },
-  {
-    "id": 4008,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "P",
-    "qid": "PM-4008",
-    "type": "text",
-    "title": "Average feature adoption rate within 90 days of launch? (percentage)",
-    "sub": "Do launches create IMPACT?",
-    "has_na": true
-  },
-  {
-    "id": 4009,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "P",
-    "qid": "PM-4009",
-    "type": "scale",
-    "title": "Launches consistently drive measurable pipeline or expansion impact.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "No impact",
-      "Minimal",
-      "Some",
-      "Strong",
-      "Predictable lever"
-    ]
-  },
-  {
-    "id": 4010,
-    "pillar": 4,
-    "pillar_name": "Launch & GTM Execution",
-    "grip": "P",
-    "qid": "PM-4010",
-    "type": "scale",
-    "title": "Sales team feels informed and equipped for product launches.",
-    "sub": "Do launches create IMPACT?",
-    "options": [
-      "Surprised",
-      "Underinformed",
-      "Moderate",
-      "Well prepared",
-      "Fully equipped **Engine 5: Sales & Marketing Enablement (PMM)**"
-    ]
-  },
-  {
-    "id": 5001,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "G",
-    "qid": "PM-5001",
-    "type": "scale",
-    "title": "We have a documented enablement content strategy mapped to buyer journey.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "No strategy",
-      "Random",
-      "Basic mapping",
-      "Strong journey-mapped",
-      "Full engine with gap analysis"
-    ]
-  },
-  {
-    "id": 5002,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "G",
-    "qid": "PM-5002",
-    "type": "scale",
-    "title": "Content is created for specific personas and deal stages (not generic).",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "All generic",
-      "Mostly generic",
-      "Some persona-specific",
-      "Strong persona+stage",
-      "Fully segmented"
-    ]
-  },
-  {
-    "id": 5003,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "R",
-    "qid": "PM-5003",
-    "type": "text",
-    "title": "How many persona-specific case studies are actively available?",
-    "sub": "Does Sales have the right MATERIALS?"
-  },
-  {
-    "id": 5004,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "R",
-    "qid": "PM-5004",
-    "type": "scale",
-    "title": "ROI calculators, business case templates, or value frameworks exist for Sales.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "Nothing",
-      "Basic one-pager",
-      "Some tools",
-      "Strong toolkit",
-      "Interactive ROI with data"
-    ]
-  },
-  {
-    "id": 5005,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "I",
-    "qid": "PM-5005",
-    "type": "scale",
-    "title": "How often is the Sales content library audited and refreshed?",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "Never",
-      "When complained",
-      "Annually",
-      "Quarterly",
-      "Quarterly + usage-driven"
-    ]
-  },
-  {
-    "id": 5006,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "I",
-    "qid": "PM-5006",
-    "type": "scale",
-    "title": "Sales team is trained on HOW to use PMM content in deals.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "No training",
-      "Email with links",
-      "Basic training",
-      "Strong with practice",
-      "Ongoing + deal coaching"
-    ]
-  },
-  {
-    "id": 5007,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "I",
-    "qid": "PM-5007",
-    "type": "scale",
-    "title": "New content is proactively pushed to Sales, not just stored.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "Buried in drive",
-      "Posted in Slack",
-      "Email",
-      "Structured distribution",
-      "Contextual push at point of need"
-    ]
-  },
-  {
-    "id": 5008,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "P",
-    "qid": "PM-5008",
-    "type": "text",
-    "title": "Sales content utilization rate? (% actually used in deals)",
-    "sub": "Does Sales have the right MATERIALS?"
-  },
-  {
-    "id": 5009,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "P",
-    "qid": "PM-5009",
-    "type": "scale",
-    "title": "Sales team reports having the right content at the right time.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "Never",
-      "Rarely",
-      "Sometimes",
-      "Usually",
-      "Always --- competitive advantage"
-    ]
-  },
-  {
-    "id": 5010,
-    "pillar": 5,
-    "pillar_name": "Sales/Marketing Enablement",
-    "grip": "P",
-    "qid": "PM-5010",
-    "type": "scale",
-    "title": "PMM content measurably influences deal outcomes.",
-    "sub": "Does Sales have the right MATERIALS?",
-    "options": [
-      "No evidence",
-      "Anecdotal",
-      "Some evidence",
-      "Strong evidence",
-      "Quantified impact on revenue **Engine 6: Messaging Performance & Iteration**"
-    ]
-  },
-  {
-    "id": 6001,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "G",
-    "qid": "PM-6001",
-    "type": "scale",
-    "title": "We have a defined process for testing and iterating on messaging.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "No process",
-      "Ad-hoc",
-      "Basic",
-      "Strong structured",
-      "Continuous experimentation engine"
-    ]
-  },
-  {
-    "id": 6002,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "G",
-    "qid": "PM-6002",
-    "type": "scale",
-    "title": "Clear KPIs exist for measuring messaging effectiveness.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "No KPIs",
-      "Vague goals",
-      "Basic metrics",
-      "Strong KPIs",
-      "Multi-layer (awareness→conversion→revenue)"
-    ]
-  },
-  {
-    "id": 6003,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "R",
-    "qid": "PM-6003",
-    "type": "scale",
-    "title": "We have tools and infrastructure for A/B testing messaging at scale.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "No tools",
-      "Basic",
-      "Solid stack",
-      "Strong infrastructure",
-      "Advanced with statistical rigor"
-    ]
-  },
-  {
-    "id": 6004,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "R",
-    "qid": "PM-6004",
-    "type": "scale",
-    "title": "We track analyst, press, and market perception of our positioning.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "No tracking",
-      "Occasional",
-      "Basic",
-      "Strong systematic",
-      "Real-time perception intelligence"
-    ]
-  },
-  {
-    "id": 6005,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "I",
-    "qid": "PM-6005",
-    "type": "text",
-    "title": "How many messaging experiments (A/B tests) per quarter?",
-    "sub": "Do you MEASURE and IMPROVE?"
-  },
-  {
-    "id": 6006,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "I",
-    "qid": "PM-6006",
-    "type": "scale",
-    "title": "Win/loss feedback is systematically used to refine messaging.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "Never",
-      "Occasionally",
-      "Quarterly",
-      "Monthly integration",
-      "Continuous closed-loop"
-    ]
-  },
-  {
-    "id": 6007,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "I",
-    "qid": "PM-6007",
-    "type": "scale",
-    "title": "Messaging is tested across channels before broad rollout.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "No testing",
-      "Single-channel",
-      "Two channels",
-      "Multi-channel",
-      "Systematic cross-channel"
-    ]
-  },
-  {
-    "id": 6008,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "P",
-    "qid": "PM-6008",
-    "type": "scale",
-    "title": "Website messaging conversion rate trend (last 2 quarters)?",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "Declining",
-      "Flat",
-      "Slightly improving",
-      "Improving",
-      "Significantly improving"
-    ]
-  },
-  {
-    "id": 6009,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "P",
-    "qid": "PM-6009",
-    "type": "scale",
-    "title": "Our messaging is cited by customers as a reason they chose us.",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "Never",
-      "Rarely",
-      "Sometimes",
-      "Often",
-      "Frequently --- differentiator"
-    ]
-  },
-  {
-    "id": 6010,
-    "pillar": 6,
-    "pillar_name": "Messaging Performance",
-    "grip": "P",
-    "qid": "PM-6010",
-    "type": "scale",
-    "title": "Time from messaging change to measurable pipeline impact?",
-    "sub": "Do you MEASURE and IMPROVE?",
-    "options": [
-      "Unknown",
-      "\\>6mo",
-      "3-6mo",
-      "1-3mo",
-      "\\<1mo (rapid) **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  12 numeric questions converted to 1-5 scores using segment/stage.  ----------------------------------------------------------------------- **4.1 Interviews PM-1003 --- By Stage**"
-    ]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Product Marketing Deep Dive | Caugia Consulting</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+
+  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
+
+  <style>
+    /* --- MODULE ASSESSMENT OVERRIDES --- */
+    
+    /* 1. Layout Lock */
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin:0; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 60px); }
+    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
+    
+    /* 2. Left Sidebar */
+    .gi-left-info {
+        display: flex; flex-direction: column; 
+        height: 100%; 
+        overflow: hidden;
+        padding-bottom: 4px;
+    }
+
+    /* 3. Description Box (fixed bottom) */
+    .gi-pillar-desc-box {
+        margin-top: auto;
+        height: 240px; min-height: 240px; max-height: 240px;
+        overflow: hidden; flex-shrink: 0;
+        background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+        padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    /* 4. Utility Buttons */
+    .gi-utility-row {
+      position: absolute; top: 20px; right: 20px;
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .gi-utility-btn {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
+      cursor: pointer; transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .gi-utility-btn:hover { border-color: #0056b3; color: #0056b3; }
+
+    /* 5. Engine Nav */
+    .gi-pillar-nav li { 
+        color: #475569; cursor: pointer; 
+        transition: color 0.2s, background-color 0.2s;
+    } 
+    .gi-pillar-nav li:hover { color: #0056b3; background-color: #f1f5f9; }
+    .gi-pillar-nav li.active {
+      background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700;
+    }
+
+    /* 6. Input Spacing */
+    .gi-group-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 16px; margin-bottom: 24px;
+    }
+    .gi-group-grid label {
+      display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b;
+    }
+    .gi-input, .gi-textarea {
+      width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff;
+    }
+    .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
+
+    /* 7. Radio Cards */
+    .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .gi-option-card {
+      display: flex; align-items: center; padding: 16px;
+      border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
+    }
+    .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
+    .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
+
+    /* 8. Question Card — NO SCROLLBAR */
+    .gi-question-card {
+      position: relative; 
+      height: 100%; display: flex; flex-direction: column;
+      padding: 40px; overflow: hidden;
+    }
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; overflow: hidden; } 
+    
+    /* 9. Bottom Nav Bar */
+    .gi-nav-row {
+      position: sticky; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid #e2e8f0;
+      padding: 20px 40px; margin: 0 -40px -40px -40px; 
+      display: flex; gap: 12px; align-items: center;
+    }
+
+    #gi-test-submit-btn {
+      background: #dc2626; color: white; border: none; margin-left: auto;
+    }
+
+    /* Mobile */
+    @media (max-width: 1000px) {
+      body { overflow-y: auto; height: auto; }
+      .gi-shell { display: flex; flex-direction: column; }
+      .gi-left-info, .gi-right-pillars { display: none; }
+      .gi-question-card { height: auto; overflow: visible; }
+    }
+
+    /* ═══ WORLD CLASS POLISH ═══ */
+    .gi-question-header, .gi-question-body {
+      animation: fadeIn 0.25s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .gi-option-card {
+      transition: all 0.2s ease !important;
+    }
+    .gi-option-card:hover {
+      border-color: #94a3b8 !important; background: #f8fafc !important;
+      transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    @keyframes subtlePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,86,179,0.2); }
+      50% { box-shadow: 0 0 0 6px rgba(0,86,179,0); }
+    }
+    #gi-next-btn:not(:disabled) {
+      animation: subtlePulse 2s ease-in-out infinite;
+    }
+    .gi-pillar-nav li {
+      display: flex !important; justify-content: space-between !important; align-items: center !important;
+    }
+    .pillar-progress { flex-shrink: 0; margin-left: 8px; }
+    .gi-utility-btn { font-size: 0.72rem; padding: 5px 10px; white-space: nowrap; }
+    .gi-faq-button {
+      padding: 10px 16px !important; font-size: 0.8rem !important;
+      bottom: 16px !important; right: 16px !important;
+    }
+
+    /* Module badge */
+    .module-badge {
+      display: inline-block; background: #eff6ff; color: #0056b3;
+      font-size: 0.7rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 4px; margin-bottom: 8px; letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="gi-header">
+  <div class="gi-header-inner">
+    <div class="gi-header-left">
+      <img src="assets/logo-final.png" class="gi-logo" alt="Caugia logo" width="32" height="32">
+      <span class="gi-header-brand">Caugia Consulting</span>
+    </div>
+    <div class="gi-header-right"></div>
+  </div>
+</header>
+
+<main class="gi-main">
+  <div class="gi-shell">
+
+    <aside class="gi-left-info">
+      <span class="module-badge">GRIP Deep Dive Module</span>
+      <div class="gi-info-title">Product Marketing</div>
+      <h1 class="gi-info-h1">PMM Deep Dive</h1>
+      <p class="gi-info-desc">
+        A 60-question diagnostic across 6 engines that reveals where your
+        product marketing system creates value — and where it leaks.
+      </p>
+      <div class="gi-info-meta">6 engines · 60 questions · ~25 min</div>
+
+      <div class="gi-progress-box">
+        <div class="gi-progress-top">
+          <span id="gi-progress-count">0 / 60</span>
+          <span id="gi-progress-percent">0%</span>
+        </div>
+        <div class="gi-progress-track">
+          <div id="gi-progress-bar" class="gi-progress-fill"></div>
+        </div>
+      </div>
+
+      <button class="gi-btn gi-reset" id="gi-reset-btn" style="margin-bottom:16px;">Reset</button>
+
+      <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+        <h3 id="gi-pillar-name">Market & Buyer Intelligence</h3>
+        <p id="gi-pillar-desc">
+          Do you understand WHO buys and WHY? This engine evaluates the depth of your buyer personas, ICP definition, win/loss analysis, and how research findings flow across the organization.
+        </p>
+      </div>
+    </aside>
+
+    <section class="gi-center">
+      <div class="gi-question-card" id="gi-question-card">
+
+        <div class="gi-utility-row">
+          <button class="gi-utility-btn" id="gi-save-btn">Save Progress</button>
+          <button class="gi-utility-btn" id="gi-jump-first">First Unanswered</button>
+          <button class="gi-utility-btn" id="gi-jump-last">Last Answered</button>
+        </div>
+
+        <div class="gi-question-header">
+          <div class="gi-question-kicker" id="gi-question-kicker">Engine 1: Market & Buyer Intelligence</div>
+          <h2 class="gi-question-title" id="gi-question-title"></h2>
+          <p class="gi-question-sub" id="gi-question-sub"></p>
+        </div>
+
+        <div class="gi-question-body" id="gi-question-body"></div>
+
+        <div class="gi-nav-row">
+          <button class="gi-btn" id="gi-prev-btn">Previous</button>
+          <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
+          <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
+          <button class="gi-btn" id="gi-clear-btn">Clear</button>
+          <button class="gi-btn" id="gi-test-submit-btn">TEST SUBMIT</button>
+        </div>
+
+      </div>
+    </section>
+
+    <aside class="gi-right-pillars">
+      <div class="gi-pillars-title">Engines</div>
+      <ul class="gi-pillar-nav" id="gi-left-pillar-list">
+        <li data-p="1" class="active">1 — Market & Buyer Intel</li>
+        <li data-p="2">2 — Positioning & Messaging</li>
+        <li data-p="3">3 — Competitive Intelligence</li>
+        <li data-p="4">4 — Launch & GTM Execution</li>
+        <li data-p="5">5 — Sales/Mkt Enablement</li>
+        <li data-p="6">6 — Messaging Performance</li>
+      </ul>
+    </aside>
+
+  </div>
+</main>
+
+<a href="faq.html" class="gi-faq-button">FAQ</a>
+
+<script src="assets/PMM_QUESTIONS.js"></script>
+
+<script>
+const PILLAR_META = {
+  1:{name:"Market & Buyer Intelligence", desc:"Do you understand WHO buys and WHY? This engine evaluates the depth of your buyer personas, ICP definition, win/loss analysis, and how research findings flow across the organization."},
+  2:{name:"Positioning & Messaging", desc:"Can you articulate WHY choose you? This engine assesses your positioning framework, messaging hierarchy, customer language adoption, and cross-team consistency."},
+  3:{name:"Competitive Intelligence", desc:"Can you WIN against alternatives? This engine evaluates competitive strategy, battlecard quality, intel gathering systems, and how confident Sales feels in competitive situations."},
+  4:{name:"Launch & GTM Execution", desc:"Do launches create IMPACT? This engine assesses your launch framework, cross-functional coordination, post-launch reviews, and whether launches drive measurable pipeline."},
+  5:{name:"Sales/Marketing Enablement", desc:"Does Sales have the right MATERIALS? This engine evaluates content strategy, case study coverage, ROI tools, content utilization, and whether PMM content measurably influences deals."},
+  6:{name:"Messaging Performance", desc:"Do you MEASURE and IMPROVE? This engine assesses testing processes, KPIs, A/B infrastructure, feedback loops, and the speed from messaging change to pipeline impact."}
+};
+</script>
+
+<script src="assets/PMM-engine.js"></script>
+
+<!-- ═══ WORLD CLASS UPGRADES ═══ -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  // ── 1. JUMP BUTTONS ──
+  var jumpFirstBtn = document.getElementById("gi-jump-first");
+  var jumpLastBtn = document.getElementById("gi-jump-last");
+  var STORAGE_KEY = "caugia_pmm_v1_state";
+
+  if (jumpFirstBtn && window.QUESTIONS) {
+    jumpFirstBtn.addEventListener("click", function() {
+      var state = null;
+      try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+      if (!state || !state.answers) return;
+
+      for (var i = 0; i < window.QUESTIONS.length; i++) {
+        var q = window.QUESTIONS[i];
+        var k = "q" + q.id;
+        var answered = state.answers[k] && String(state.answers[k]).trim().length > 0;
+        if (!answered) {
+          state.currentStep = i;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          location.reload();
+          return;
+        }
+      }
+      alert("All questions are answered.");
+    });
   }
-];
+
+  if (jumpLastBtn && window.QUESTIONS) {
+    jumpLastBtn.addEventListener("click", function() {
+      var state = null;
+      try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+      if (!state || !state.answers) return;
+
+      var lastAnswered = -1;
+      for (var i = 0; i < window.QUESTIONS.length; i++) {
+        var q = window.QUESTIONS[i];
+        var k = "q" + q.id;
+        if (state.answers[k] && String(state.answers[k]).trim().length > 0) lastAnswered = i;
+      }
+
+      if (lastAnswered >= 0) {
+        state.currentStep = lastAnswered;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        location.reload();
+      } else {
+        alert("No answers recorded yet.");
+      }
+    });
+  }
+
+  // ── 2. VISUAL FEEDBACK ──
+  var body = document.getElementById("gi-question-body");
+  if (body) {
+    var observer = new MutationObserver(function() {
+      var cards = body.querySelectorAll(".gi-option-card");
+      cards.forEach(function(card) {
+        var radio = card.querySelector("input[type='radio']");
+        if (!radio) return;
+        card.style.transition = "all 0.2s ease";
+        if (radio.checked) {
+          card.style.borderColor = "#0056b3";
+          card.style.backgroundColor = "#eff6ff";
+          card.style.boxShadow = "0 0 0 2px rgba(0,86,179,0.15)";
+        }
+      });
+    });
+    observer.observe(body, { childList: true, subtree: true });
+  }
+
+  // ── 3. ENGINE PROGRESS ──
+  function updatePillarProgress() {
+    var state = null;
+    try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+    if (!state || !state.answers || !window.QUESTIONS) return;
+
+    var pillarTotal = {};
+    var pillarAnswered = {};
+
+    window.QUESTIONS.forEach(function(q) {
+      var p = q.pillar;
+      if (!pillarTotal[p]) { pillarTotal[p] = 0; pillarAnswered[p] = 0; }
+      pillarTotal[p]++;
+      var k = "q" + q.id;
+      if (state.answers[k] && String(state.answers[k]).trim().length > 0) pillarAnswered[p]++;
+    });
+
+    var items = document.querySelectorAll(".gi-pillar-nav li");
+    items.forEach(function(li) {
+      var p = parseInt(li.getAttribute("data-p"));
+      var total = pillarTotal[p] || 0;
+      var done = pillarAnswered[p] || 0;
+
+      var existing = li.querySelector(".pillar-progress");
+      if (existing) existing.remove();
+
+      if (total > 0) {
+        var indicator = document.createElement("span");
+        indicator.className = "pillar-progress";
+        indicator.style.cssText = "float:right; font-size:0.7rem; font-weight:600; opacity:0.7;";
+        if (done === total) {
+          indicator.textContent = "✓";
+          indicator.style.color = "#16a34a";
+          indicator.style.opacity = "1";
+        } else if (done > 0) {
+          indicator.textContent = done + "/" + total;
+        }
+        li.appendChild(indicator);
+      }
+    });
+  }
+  updatePillarProgress();
+  setInterval(updatePillarProgress, 2000);
+
+  // ── 4. PILLAR INFO ──
+  var list = document.getElementById("gi-left-pillar-list");
+  var titleBox = document.getElementById("gi-pillar-name");
+  var descBox = document.getElementById("gi-pillar-desc");
+
+  if(list && titleBox && descBox) {
+    list.addEventListener("click", function(e) {
+      var li = e.target.closest("li");
+      if(!li) return;
+      var pIndex = li.getAttribute("data-p");
+      var info = PILLAR_META[pIndex];
+      if(info) {
+        titleBox.innerText = info.name;
+        descBox.style.opacity = "0";
+        descBox.style.transition = "opacity 0.15s ease";
+        setTimeout(function() {
+          descBox.innerText = info.desc;
+          descBox.style.opacity = "1";
+        }, 150);
+      }
+    });
+  }
+
+  // ── 5. KEYBOARD NAV ──
+  document.addEventListener("keydown", function(e) {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+    if (e.key === "ArrowRight" || e.key === "Enter") {
+      var nextBtn = document.getElementById("gi-next-btn");
+      if (nextBtn && nextBtn.style.display !== "none") nextBtn.click();
+    }
+    if (e.key === "ArrowLeft") {
+      var prevBtn = document.getElementById("gi-prev-btn");
+      if (prevBtn && prevBtn.style.display !== "none") prevBtn.click();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
