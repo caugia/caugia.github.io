@@ -30,94 +30,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-/* ═══════════════════════════════════════════════════════
-   SERVICES v3 — PIXEL-PERFECT ALIGNMENT
-   ═══════════════════════════════════════════════════════ */
-
 .s-hero { padding: 40px 0 0; text-align: center; max-width: 780px; margin: 0 auto; }
 .s-hero h1 { font-size: 2.75rem; line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.02em; }
 .s-hero p { font-size: 1.05rem; color: var(--text-body); line-height: 1.55; }
 .s-hero-sub { font-size: 0.9rem; color: #94a3b8; margin-top: 4px; }
-
 .block { padding: 64px 0; }
 .block + .block { border-top: 1px solid #f1f5f9; }
-
-/* ──────────────────────────────────────────────────────
-   JOURNEY CARDS — parent grid controls ALL row heights
-   ────────────────────────────────────────────────────── */
-.journey {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto auto 1fr auto auto auto auto;
-  /* 8 rows: label | title | desc | spacer | price | sub | cta | features */
-  margin-top: 32px;
-  background: #fff; border: 1px solid #e2e8f0; border-radius: 20px;
-  overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-}
-
-/* Each card spans all 8 rows in its column */
-.j-col {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: 1 / -1;
-  padding: 36px 28px;
-  border-right: 1px solid #f1f5f9;
-  position: relative;
-}
+.journey { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto auto 1fr auto auto auto auto; margin-top: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+.j-col { display: grid; grid-template-rows: subgrid; grid-row: 1 / -1; padding: 36px 28px; border-right: 1px solid #f1f5f9; position: relative; }
 .j-col:last-child { border-right: none; }
 .j-col.flagship { background: #f8faff; }
-
-/* Arrow connector */
-.j-arrow {
-  position: absolute; right: -13px; top: 50%; width: 24px; height: 24px;
-  background: #fff; border: 1px solid #e2e8f0; border-left: none; border-bottom: none;
-  transform: translateY(-50%) rotate(45deg); z-index: 2;
-}
+.j-arrow { position: absolute; right: -13px; top: 50%; width: 24px; height: 24px; background: #fff; border: 1px solid #e2e8f0; border-left: none; border-bottom: none; transform: translateY(-50%) rotate(45deg); z-index: 2; }
 .j-col.flagship .j-arrow { background: #f8faff; }
 .j-col:last-child .j-arrow { display: none; }
-
-/* Row elements */
-.j-label {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
-  color: #94a3b8; margin-bottom: 12px;
-}
+.j-label { display: flex; align-items: center; gap: 10px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; margin-bottom: 12px; }
 .j-col.flagship .j-label { color: var(--primary); }
-.j-num {
-  width: 26px; height: 26px; border-radius: 50%; background: #f1f5f9; color: #64748b;
-  font-weight: 800; font-size: 0.72rem; display: inline-flex; align-items: center;
-  justify-content: center; flex-shrink: 0;
-}
+.j-num { width: 26px; height: 26px; border-radius: 50%; background: #f1f5f9; color: #64748b; font-weight: 800; font-size: 0.72rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .j-col.flagship .j-num { background: var(--primary); color: #fff; }
-
 .j-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; color: #0f172a; margin-bottom: 8px; }
 .j-desc { font-size: 0.9rem; color: #64748b; line-height: 1.55; align-self: start; }
 .j-price { font-size: 1.5rem; font-weight: 900; color: #0f172a; align-self: end; padding-top: 16px; }
 .j-sub { font-size: 0.78rem; color: #94a3b8; padding-bottom: 16px; padding-top: 2px; }
 .j-cta a { display: block; text-align: center; width: 100%; }
 .j-features { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; list-style: none; padding-left: 0; }
-.j-features li {
-  font-size: 0.82rem; color: #475569; display: flex; align-items: flex-start;
-  gap: 7px; line-height: 1.4; min-height: 2.4em; padding: 3px 0;
-}
+.j-features li { font-size: 0.82rem; color: #475569; display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; min-height: 2.4em; padding: 3px 0; }
 .j-features li::before { content: "✓"; color: var(--primary); font-weight: 800; flex-shrink: 0; font-size: 0.78rem; margin-top: 1px; }
-
-/* ── Diagnostic Journey (dark, directly below cards) ── */
 .paths-block { background: #0f172a; padding: 80px 0; }
 .paths-block h2 { color: #fff; }
 .paths-intro { color: #cbd5e1; font-size: 1.05rem; max-width: 620px; margin-bottom: 40px; line-height: 1.6; }
-
-.paths-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  grid-template-rows: auto auto 1fr auto auto;
-  gap: 0 24px;
-}
-.p-card {
-  display: grid; grid-template-rows: subgrid; grid-row: 1 / -1;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px; padding: 28px 24px;
-  transition: border-color 0.2s, background 0.2s;
-}
+.paths-grid { display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: auto auto 1fr auto auto; gap: 0 24px; }
+.p-card { display: grid; grid-template-rows: subgrid; grid-row: 1 / -1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px 24px; transition: border-color 0.2s, background 0.2s; }
 .p-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
 .p-card.best { border: 2px solid #60a5fa; background: rgba(96,165,250,0.06); }
 .p-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa; margin-bottom: 6px; }
@@ -125,100 +67,51 @@
 .p-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; align-self: start; }
 .p-price { font-size: 1.5rem; font-weight: 900; color: #fff; align-self: end; padding-top: 16px; }
 .p-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; padding-top: 4px; }
-
-/* ── How It Works (connected flow, Caugia style) ── */
-.hiw {
-  display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
-  grid-template-rows: auto auto 1fr;
-  align-items: start; margin-top: 40px; gap: 0;
-}
-.hiw-card {
-  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
-  padding: 28px 24px; display: grid; grid-template-rows: subgrid; grid-row: 1 / -1;
-}
+.hiw { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; grid-template-rows: auto auto 1fr; align-items: start; margin-top: 40px; gap: 0; }
+.hiw-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 24px; display: grid; grid-template-rows: subgrid; grid-row: 1 / -1; }
 .hiw-card:first-child { border-top: 3px solid var(--primary); }
 .hiw-card:nth-child(3) { border-top: 3px solid #60a5fa; }
 .hiw-card:nth-child(5) { border-top: 3px solid #0f172a; }
-.hiw-num {
-  font-family: Inter, sans-serif; font-weight: 900; font-size: 2.5rem;
-  color: #f1f5f9; line-height: 1; margin-bottom: 12px;
-}
+.hiw-num { font-family: Inter, sans-serif; font-weight: 900; font-size: 2.5rem; color: #f1f5f9; line-height: 1; margin-bottom: 12px; }
 .hiw-card:first-child .hiw-num { color: rgba(0,86,179,0.12); }
 .hiw-card:nth-child(3) .hiw-num { color: rgba(96,165,250,0.15); }
 .hiw-card:nth-child(5) .hiw-num { color: rgba(15,23,42,0.08); }
 .hiw-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; color: #0f172a; margin-bottom: 8px; }
 .hiw-text { font-size: 0.9rem; color: #64748b; line-height: 1.55; }
-.hiw-connector {
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 8px; grid-row: 1 / -1;
-  color: #cbd5e1; font-size: 1.4rem;
-}
-
-/* ── GRIP Marketplace ── */
+.hiw-connector { display: flex; align-items: center; justify-content: center; padding: 0 8px; grid-row: 1 / -1; color: #cbd5e1; font-size: 1.4rem; }
 .grip-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
 .grip-head div:first-child { max-width: 560px; }
 .price-box { background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 16px 22px; text-align: right; }
 .price-box-line { font-size: 0.85rem; color: #64748b; margin-bottom: 4px; }
 .price-box-line strong { color: #0f172a; font-weight: 800; }
-
 .grip-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
 .grip-col { display: flex; flex-direction: column; }
-.grip-bar {
-  display: flex; align-items: center; gap: 10px; padding: 12px 16px; margin-bottom: 12px;
-  background: var(--primary); border-radius: 12px 12px 0 0;
-}
+.grip-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; margin-bottom: 12px; background: var(--primary); border-radius: 12px 12px 0 0; }
 .grip-bar span:first-child { font-weight: 900; font-size: 1.2rem; color: #fff; }
 .grip-bar span:last-child { font-weight: 700; font-size: 0.8rem; color: rgba(255,255,255,0.85); }
-
-.gm {
-  padding: 14px 16px; border: 1px solid #f1f5f9; border-radius: 10px; background: #fff;
-  margin-bottom: 8px; transition: border-color 0.2s, box-shadow 0.2s;
-}
+.gm { padding: 14px 16px; border: 1px solid #f1f5f9; border-radius: 10px; background: #fff; margin-bottom: 8px; transition: border-color 0.2s, box-shadow 0.2s; }
 .gm:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,86,179,0.08); }
-.gm.live { border-left: 3px solid var(--primary); }
-.gm.soon { opacity: 0.45; border-style: dashed; }
+a.gm { text-decoration: none; display: block; cursor: pointer; border-left: 3px solid var(--primary); transition: all 0.2s ease; }
+a.gm:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(0,86,179,0.12); transform: translateY(-2px); }
+a.gm:hover .gm-tag { padding-left: 10px; }
 .gm-name { font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 3px; }
 .gm-q { font-size: 0.78rem; color: #64748b; line-height: 1.35; font-style: italic; margin-bottom: 6px; }
 .gm-tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 4px; }
-.tag-live { background: #dcfce7; color: #166534; }
-.tag-soon { background: #f1f5f9; color: #94a3b8; }
-
-/* ── FAQ ── */
+.tag-live { background: #eff6ff; color: var(--primary); font-weight: 800; transition: padding-left 0.2s; }
 .faq { max-width: 760px; margin: 0 auto; }
 .faq h2 { text-align: center; margin-bottom: 40px; }
 details { border-bottom: 1px solid #f1f5f9; padding: 18px 0; }
-details summary {
-  font-family: Inter, sans-serif; font-weight: 700; font-size: 1rem; color: #0f172a;
-  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
-}
+details summary { font-family: Inter, sans-serif; font-weight: 700; font-size: 1rem; color: #0f172a; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
 details summary::after { content: "+"; font-size: 1.2rem; color: #94a3b8; font-weight: 400; }
 details[open] summary::after { content: "−"; }
 details summary::-webkit-details-marker { display: none; }
 details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1.6; }
-
-/* ── CTA ── */
 .s-cta { padding: 72px 0; text-align: center; }
-
-/* ═══ MOBILE ═══ */
 @media (max-width: 980px) {
   .s-hero { padding-top: 20px; }
   .s-hero h1 { font-size: 1.75rem !important; }
-
-  /* Journey cards: kill subgrid, stack vertically */
-  .journey {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto !important; /* override the 8-row definition */
-    display: flex !important;
-    flex-direction: column;
-  }
-  .j-col {
-    display: flex !important;
-    flex-direction: column;
-    grid-row: auto !important;
-    border-right: none;
-    border-bottom: 1px solid #f1f5f9;
-    padding: 28px 24px;
-  }
+  .journey { grid-template-columns: 1fr; grid-template-rows: auto !important; display: flex !important; flex-direction: column; }
+  .j-col { display: flex !important; flex-direction: column; grid-row: auto !important; border-right: none; border-bottom: 1px solid #f1f5f9; padding: 28px 24px; }
   .j-col:last-child { border-bottom: none; }
   .j-arrow { display: none !important; }
   .j-desc { margin-bottom: 12px; }
@@ -227,36 +120,13 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
   .j-cta { margin-bottom: 8px; }
   .j-features { margin-top: 12px; padding-top: 12px; }
   .j-features li { min-height: auto !important; }
-
-  /* Paths cards: same treatment */
-  .paths-grid {
-    display: flex !important;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .p-card {
-    display: flex !important;
-    flex-direction: column;
-    grid-row: auto !important;
-    margin-bottom: 0;
-  }
+  .paths-grid { display: flex !important; flex-direction: column; gap: 16px; }
+  .p-card { display: flex !important; flex-direction: column; grid-row: auto !important; margin-bottom: 0; }
   .p-price { align-self: flex-start; padding-top: 12px; }
   .paths-block { padding: 56px 0; }
-
-  /* How It Works: stack */
-  .hiw {
-    display: flex !important;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .hiw-card {
-    display: flex !important;
-    flex-direction: column;
-    grid-row: auto !important;
-  }
+  .hiw { display: flex !important; flex-direction: column; gap: 16px; }
+  .hiw-card { display: flex !important; flex-direction: column; grid-row: auto !important; }
   .hiw-connector { transform: rotate(90deg); padding: 0; align-self: center; }
-
-  /* GRIP grid */
   .grip-grid { grid-template-columns: 1fr 1fr !important; gap: 16px; }
   .grip-head { flex-direction: column; align-items: flex-start; }
   .block { padding: 48px 0; }
@@ -297,25 +167,16 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     <a href="contact.html">Contact</a>
   </div>
 </header>
-
 <main>
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- HERO -->
-<!-- ═══════════════════════════════════════════════════ -->
 <section class="container s-hero">
   <span class="eyebrow">Diagnostic Products</span>
   <h1>The engine does the work.<br>You act on the data.</h1>
   <p>Every product is fully automated. No calls, no workshops, no waiting. Complete an assessment, receive your diagnostic, share it with your board.</p>
   <p class="s-hero-sub">Three products. One diagnostic journey. Choose your depth.</p>
 </section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- JOURNEY CARDS (subgrid aligned) -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block" style="padding-top:24px; padding-bottom:0; border-bottom:none; border-top:none;">
   <div class="container">
     <div class="journey">
-      <!-- Col 1: GTM Score -->
       <div class="j-col">
         <div class="j-arrow"></div>
         <div class="j-label"><span class="j-num">1</span> Start Here</div>
@@ -332,8 +193,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
           <li>Personalized next-step recommendation</li>
         </ul>
       </div>
-
-      <!-- Col 2: Intelligence Report -->
       <div class="j-col flagship">
         <div class="j-arrow"></div>
         <div class="j-label"><span class="j-num">2</span> The Full Diagnostic</div>
@@ -350,8 +209,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
           <li>Board-ready executive summary with GRIP scores</li>
         </ul>
       </div>
-
-      <!-- Col 3: GRIP Marketplace -->
       <div class="j-col">
         <div class="j-label"><span class="j-num">3</span> Go Deep</div>
         <div class="j-title">GRIP Marketplace</div>
@@ -370,10 +227,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- THE DIAGNOSTIC JOURNEY (dark, directly below cards) -->
-<!-- ═══════════════════════════════════════════════════ -->
 <section class="paths-block">
   <div class="container">
     <span class="eyebrow" style="color:#60a5fa;">Recommended Paths</span>
@@ -404,10 +257,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     </div>
   </div>
 </section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- HOW IT WORKS -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block">
   <div class="container">
     <div style="text-align:center; max-width:600px; margin:0 auto;">
@@ -435,17 +284,13 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- GRIP MARKETPLACE -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block" id="marketplace">
   <div class="container">
     <div class="grip-head">
       <div>
         <span class="eyebrow">The GRIP Marketplace</span>
         <h2>12 pillars. 4 dimensions.<br>Choose your Deep Dive.</h2>
-        <p style="color:var(--text-body); font-size:0.95rem; line-height:1.6;">Each Deep Dive covers one GTM pillar with 60 questions and 6 diagnostic engines. Available standalone — but the Intelligence Report tells you exactly which one to buy first.</p>
+        <p style="color:var(--text-body); font-size:0.95rem; line-height:1.6;">Each Deep Dive covers one GTM pillar with 60 questions and 6 diagnostic engines. Pick the pillar that matters most — or let the Intelligence Report tell you where to start.</p>
       </div>
       <div class="price-box">
         <div class="price-box-line"><strong><span class="curr">€</span><span data-price-key="module">749</span></strong> per Deep Dive</div>
@@ -453,89 +298,85 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
       </div>
     </div>
     <div class="grip-grid">
-      <!-- G = Guidance: pillars 1, 2, 3 -->
+      <!-- G = Guidance -->
       <div class="grip-col">
         <div class="grip-bar"><span>G</span><span>Guidance</span></div>
-        <div class="gm live">
-          <div class="gm-name">Product Marketing Deep Dive</div>
-          <div class="gm-q">"Why doesn't the market understand our value?"</div>
-          <span class="gm-tag tag-live">Available</span>
-        </div>
-        <div class="gm soon">
-          <div class="gm-name">Market Intelligence</div>
-          <div class="gm-q">"Are we targeting the right segments with the right assumptions?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
-        <div class="gm soon">
+        <a class="gm" href="module-gsl.html">
           <div class="gm-name">GTM Strategy & Leadership</div>
           <div class="gm-q">"Does leadership have a shared model for how we grow?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-mi.html">
+          <div class="gm-name">Market Intelligence</div>
+          <div class="gm-q">"Are we targeting the right segments with the right assumptions?"</div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-pmm.html">
+          <div class="gm-name">Product Marketing</div>
+          <div class="gm-q">"Why doesn't the market understand our value?"</div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
       </div>
-      <!-- R = Resources: pillars 8, 9, 11 -->
+      <!-- R = Resources -->
       <div class="grip-col">
         <div class="grip-bar"><span>R</span><span>Resources</span></div>
-        <div class="gm soon">
+        <a class="gm" href="module-pp.html">
           <div class="gm-name">Pricing & Packaging</div>
           <div class="gm-q">"Is our pricing aligned with how customers perceive value?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
-        <div class="gm soon">
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-pr.html">
           <div class="gm-name">Product Readiness</div>
           <div class="gm-q">"Does our product actually support the motion we're running?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
-        <div class="gm soon">
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-en.html">
           <div class="gm-name">Enablement</div>
           <div class="gm-q">"Do our teams have the tools and knowledge to execute?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
       </div>
-      <!-- I = Implementation: pillars 4, 5, 7 -->
+      <!-- I = Implementation -->
       <div class="grip-col">
         <div class="grip-bar"><span>I</span><span>Implementation</span></div>
-        <div class="gm live">
-          <div class="gm-name">Demand Generation Deep Dive</div>
+        <a class="gm" href="module-dg.html">
+          <div class="gm-name">Demand Generation</div>
           <div class="gm-q">"Why is pipeline not converting into qualified opportunities?"</div>
-          <span class="gm-tag tag-live">Available</span>
-        </div>
-        <div class="gm live">
-          <div class="gm-name">Sales Execution Deep Dive</div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-se.html">
+          <div class="gm-name">Sales Execution</div>
           <div class="gm-q">"Why are deals stalling or closing below potential?"</div>
-          <span class="gm-tag tag-live">Available</span>
-        </div>
-        <div class="gm soon">
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-revops.html">
           <div class="gm-name">Revenue Operations & Systems</div>
           <div class="gm-q">"Is our operational infrastructure keeping pace with growth?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
       </div>
-      <!-- P = Performance: pillars 6, 10, 12 -->
+      <!-- P = Performance -->
       <div class="grip-col">
         <div class="grip-bar"><span>P</span><span>Performance</span></div>
-        <div class="gm soon">
+        <a class="gm" href="module-cse.html">
           <div class="gm-name">Customer Success & Expansion</div>
           <div class="gm-q">"Are we retaining and growing the revenue we already won?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
-        <div class="gm soon">
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-di.html">
           <div class="gm-name">Data & Insights</div>
           <div class="gm-q">"Can leadership trust the numbers they're making decisions on?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
-        <div class="gm soon">
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
+        <a class="gm" href="module-ag.html">
           <div class="gm-name">Alignment & Governance</div>
           <div class="gm-q">"Do teams have the forums and cadence to stay aligned?"</div>
-          <span class="gm-tag tag-soon">Coming Soon</span>
-        </div>
+          <span class="gm-tag tag-live">Start Deep Dive →</span>
+        </a>
       </div>
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- FAQ -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block">
   <div class="container faq">
     <h2>Frequently Asked Questions</h2>
@@ -565,10 +406,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     </details>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- CTA -->
-<!-- ═══════════════════════════════════════════════════ -->
 <section class="s-cta">
   <div class="container" style="max-width:780px;">
     <h2>Your GTM system is already telling you what's wrong.<br>You just can't hear it yet.</h2>
@@ -582,7 +419,6 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
   </div>
 </section>
 </main>
-
 <footer>
   <div class="container">
     <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
