@@ -1,10 +1,10 @@
 /* ===========================================================
-   CAUGIA PP MODULE ENGINE v1.0 (DETERMINISTIC + SCORES)
+   CAUGIA PR MODULE ENGINE v1.0 (DETERMINISTIC + SCORES)
    Based on Intelligence Engine v9.0
-   Adapted for: Pricing & Packaging Deep Dive (60 questions, 6 engines)
+   Adapted for: Product Readiness Deep Dive (60 questions, 6 engines)
    
    Key differences from v9:
-   - Storage key: caugia_pp_v1_state
+   - Storage key: caugia_pr_v1_state
    - No group questions (all scale or text/numeric)
    - 6 engines instead of 12 pillars
    - GRIP mapping per question (from tags), not per pillar
@@ -16,10 +16,10 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_PP_WEBHOOK",
-    storageKey: "caugia_pp_v1_state",
+    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_PR_WEBHOOK",
+    storageKey: "caugia_pr_v1_state",
     autoSaveInterval: 1000,
-    schemaVersion: "pp-1.0"
+    schemaVersion: "pr-1.0"
   };
 
   // --- 2. STATE ---
@@ -116,7 +116,7 @@
   // --- 5. INITIALIZATION ---
   function init() {
     if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
-      console.error("❌ PP_QUESTIONS.js not loaded or empty.");
+      console.error("❌ PR_QUESTIONS.js not loaded or empty.");
       if (UI.title) UI.title.innerText = "Error: Questions File Missing";
       return;
     }
@@ -126,7 +126,7 @@
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
 
-    console.log("PP Engine v" + CONFIG.schemaVersion + " started. " + window.QUESTIONS.length + " questions.");
+    console.log("PR Engine v" + CONFIG.schemaVersion + " started. " + window.QUESTIONS.length + " questions.");
     renderQuestion();
     updateSidebar();
 
@@ -520,16 +520,16 @@
       });
     });
 
-    var message = isTest ? "PP Test Submission" : "PP Official Submission";
+    var message = isTest ? "PR Test Submission" : "PR Official Submission";
 
     var payload = {
       metadata: {
         timestamp: new Date().toISOString(),
         schema_version: CONFIG.schemaVersion,
-        module: "pp",
-        module_name: "Pricing & Packaging Deep Dive",
+        module: "pr",
+        module_name: "Product Readiness Deep Dive",
         questions_count: window.QUESTIONS.length,
-        source: "PP Engine v" + CONFIG.schemaVersion,
+        source: "PR Engine v" + CONFIG.schemaVersion,
         is_test: !!isTest
       },
       message: message,
@@ -550,7 +550,7 @@
       completion_rate: coverage.completion_rate
     };
 
-    console.log("🚀 PP Payload:", payload);
+    console.log("🚀 PR Payload:", payload);
 
     var btn = isTest ? UI.testBtn : UI.submitBtn;
     setButtonState(btn, "Sending...", true);
@@ -566,17 +566,17 @@
 
       if (isTest) {
         var lines = [];
-        lines.push("PP Overall: " + overallScore);
+        lines.push("PR Overall: " + overallScore);
         for (var e = 1; e <= 6; e++) {
           lines.push("  E" + e + " " + engineNameByIndex(e) + ": " + engineScores["engine_" + e]);
         }
         lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
-        alert("✅ PP TEST SUCCESS!\n\n" + lines.join("\n"));
+        alert("✅ PR TEST SUCCESS!\n\n" + lines.join("\n"));
       } else {
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
-        window.location.href = "module-pp-thank-you.html";
+        window.location.href = "module-pr-thank-you.html";
       }
     } catch (e) {
       alert("❌ Error: " + e.message);
@@ -595,7 +595,7 @@
   }
 
   function resetAll() {
-    if (!confirm("Reset all PP answers?")) return;
+    if (!confirm("Reset all PR answers?")) return;
     STATE.completed = true;  // stops autosave
     STATE.answers = {};
     STATE.currentStep = 0;
@@ -614,7 +614,7 @@
 
   if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { submitData(false); });
   if (UI.testBtn) {
-    console.log("✅ PP Test Button Bound");
+    console.log("✅ PR Test Button Bound");
     UI.testBtn.addEventListener("click", function(e) {
       e.preventDefault();
       submitData(true);
