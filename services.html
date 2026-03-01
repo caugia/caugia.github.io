@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Diagnostic Products | Caugia Consulting</title>
 <meta name="description" content="Fully automated GTM diagnostics for B2B SaaS. From free GTM Score to board-level Intelligence Reports and Deep Dive modules. No calls, no consultants — the engine does the work." />
-<meta name="keywords" content="GTM Diagnostic, GTM Audit, Revenue Architecture, B2B SaaS, Intelligence Report, GRIP Framework, GRIP Marketplace, Caugia" />
 <link rel="canonical" href="https://www.caugia.com/services.html" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.caugia.com/services.html" />
@@ -14,17 +13,15 @@
 <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
 <link rel="apple-touch-icon" href="assets/logo-final.png">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
 "@type": "ItemList",
 "itemListElement": [
   {"@type":"Service","position":1,"name":"The GTM Score","description":"A structured five-minute assessment of your GTM system maturity.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}},
-  {"@type":"Service","position":2,"name":"GTM Intelligence Report","description":"A 42-page board-level diagnostic of your entire revenue engine — fully automated.","offers":{"@type":"Offer","price":"2495","priceCurrency":"EUR"}},
-  {"@type":"Service","position":3,"name":"GRIP Marketplace Deep Dive","description":"Deep-dive diagnostics on a specific GTM pillar with implementation priorities.","offers":{"@type":"Offer","price":"749","priceCurrency":"EUR"}}
+  {"@type":"Service","position":2,"name":"GTM Intelligence Report","description":"A 42-page board-level diagnostic of your entire revenue engine.","offers":{"@type":"Offer","price":"2495","priceCurrency":"EUR"}},
+  {"@type":"Service","position":3,"name":"GRIP Marketplace Deep Dive","description":"Deep-dive diagnostics on a specific GTM pillar.","offers":{"@type":"Offer","price":"749","priceCurrency":"EUR"}}
 ]
 }
 </script>
@@ -34,8 +31,7 @@
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
 /* ═══════════════════════════════════════════════════════
-   SERVICES v2 — WORLD CLASS
-   One story: Score → Report → Deep Dive
+   SERVICES v3 — PIXEL-PERFECT ALIGNMENT
    ═══════════════════════════════════════════════════════ */
 
 .s-hero { padding: 72px 0 0; text-align: center; max-width: 780px; margin: 0 auto; }
@@ -46,47 +42,86 @@
 .block { padding: 64px 0; }
 .block + .block { border-top: 1px solid #f1f5f9; }
 
-/* ── Journey (connected step cards) ── */
+/* ──────────────────────────────────────────────────────
+   JOURNEY CARDS — parent grid controls ALL row heights
+   ────────────────────────────────────────────────────── */
 .journey {
-  display: flex; align-items: stretch; gap: 0; margin-top: 48px;
-  background: #fff; border: 1px solid #e8ecf1; border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto 1fr auto auto auto auto;
+  /* 8 rows: label | title | desc | spacer | price | sub | cta | features */
+  margin-top: 48px;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 20px;
   overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.04);
 }
-.j-step {
-  flex: 1; padding: 36px 28px;
+
+/* Each card spans all 8 rows in its column */
+.j-col {
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto auto auto;
-  /* rows: head | title | desc+spacer | price | price-sub | cta | features */
-  border-right: 1px solid #f1f5f9; position: relative;
+  grid-template-rows: subgrid;
+  grid-row: 1 / -1;
+  padding: 36px 28px;
+  border-right: 1px solid #f1f5f9;
+  position: relative;
 }
-.j-step:last-child { border-right: none; }
-.j-step.flagship { background: #fafbff; }
+.j-col:last-child { border-right: none; }
+.j-col.flagship { background: #f8faff; }
+
+/* Arrow connector */
 .j-arrow {
-  position: absolute; right: -13px; top: 50%; width: 26px; height: 26px;
-  background: #fff; border: 1px solid #e8ecf1; border-left: none; border-bottom: none;
+  position: absolute; right: -13px; top: 50%; width: 24px; height: 24px;
+  background: #fff; border: 1px solid #e2e8f0; border-left: none; border-bottom: none;
   transform: translateY(-50%) rotate(45deg); z-index: 2;
 }
-.j-step.flagship .j-arrow { background: #fafbff; }
-.j-step:last-child .j-arrow { display: none; }
+.j-col.flagship .j-arrow { background: #f8faff; }
+.j-col:last-child .j-arrow { display: none; }
 
-.j-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; grid-row: 1; }
-.j-num {
-  width: 28px; height: 28px; border-radius: 50%; background: #f1f5f9; color: #64748b;
-  font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+/* Row elements */
+.j-label {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+  color: #94a3b8; margin-bottom: 12px;
 }
-.j-step.flagship .j-num { background: var(--primary); color: #fff; }
-.j-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; }
-.j-step.flagship .j-label { color: var(--primary); }
+.j-col.flagship .j-label { color: var(--primary); }
+.j-num {
+  width: 26px; height: 26px; border-radius: 50%; background: #f1f5f9; color: #64748b;
+  font-weight: 800; font-size: 0.72rem; display: inline-flex; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.j-col.flagship .j-num { background: var(--primary); color: #fff; }
 
-.j-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; color: #0f172a; margin-bottom: 8px; grid-row: 2; }
-.j-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; grid-row: 3; align-self: start; }
-.j-price { font-size: 1.4rem; font-weight: 900; color: #0f172a; margin-bottom: 2px; grid-row: 4; align-self: end; }
-.j-price-sub { font-size: 0.78rem; color: #94a3b8; margin-bottom: 16px; grid-row: 5; }
+.j-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.2rem; color: #0f172a; margin-bottom: 8px; }
+.j-desc { font-size: 0.9rem; color: #64748b; line-height: 1.55; align-self: start; }
+.j-price { font-size: 1.5rem; font-weight: 900; color: #0f172a; align-self: end; padding-top: 16px; }
+.j-sub { font-size: 0.78rem; color: #94a3b8; padding-bottom: 16px; padding-top: 2px; }
 .j-cta a { display: block; text-align: center; width: 100%; }
-.j-cta { grid-row: 6; }
-.j-features { margin-top: 18px; padding-top: 16px; border-top: 1px solid #f1f5f9; list-style: none; padding-left: 0; grid-row: 7; }
-.j-features li { font-size: 0.82rem; color: #475569; padding: 5px 0; display: flex; align-items: flex-start; gap: 7px; }
+.j-features { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; list-style: none; padding-left: 0; }
+.j-features li { font-size: 0.82rem; color: #475569; padding: 5px 0; display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
 .j-features li::before { content: "✓"; color: var(--primary); font-weight: 800; flex-shrink: 0; font-size: 0.78rem; }
+
+/* ── Diagnostic Journey (dark, directly below cards) ── */
+.paths-block { background: #0f172a; padding: 80px 0; }
+.paths-block h2 { color: #fff; }
+.paths-intro { color: #cbd5e1; font-size: 1.05rem; max-width: 620px; margin-bottom: 40px; line-height: 1.6; }
+
+.paths-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 0 24px;
+}
+.p-card {
+  display: grid; grid-template-rows: subgrid; grid-row: 1 / -1;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 28px 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.p-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
+.p-card.best { border: 2px solid #60a5fa; background: rgba(96,165,250,0.06); }
+.p-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa; margin-bottom: 6px; }
+.p-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; margin-bottom: 6px; }
+.p-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; align-self: start; }
+.p-price { font-size: 1.5rem; font-weight: 900; color: #fff; align-self: end; padding-top: 16px; }
+.p-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; padding-top: 4px; }
 
 /* ── How It Works ── */
 .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 36px; }
@@ -100,53 +135,33 @@
 .step p { font-size: 0.9rem; color: #64748b; line-height: 1.5; margin: 0; }
 
 /* ── GRIP Marketplace ── */
-.grip-market-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
-.grip-market-head div:first-child { max-width: 560px; }
-.pricing-box { background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 16px 22px; text-align: right; }
-.pricing-box-line { font-size: 0.85rem; color: #64748b; margin-bottom: 4px; }
-.pricing-box-line strong { color: #0f172a; font-weight: 800; }
+.grip-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+.grip-head div:first-child { max-width: 560px; }
+.price-box { background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 16px 22px; text-align: right; }
+.price-box-line { font-size: 0.85rem; color: #64748b; margin-bottom: 4px; }
+.price-box-line strong { color: #0f172a; font-weight: 800; }
 
 .grip-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
 .grip-col { display: flex; flex-direction: column; }
-.grip-letter-bar {
+.grip-bar {
   display: flex; align-items: center; gap: 10px; padding: 12px 16px; margin-bottom: 12px;
   background: var(--primary); border-radius: 12px 12px 0 0;
 }
-.grip-letter { font-weight: 900; font-size: 1.2rem; color: #fff; }
-.grip-dim-name { font-weight: 700; font-size: 0.8rem; color: rgba(255,255,255,0.85); }
+.grip-bar span:first-child { font-weight: 900; font-size: 1.2rem; color: #fff; }
+.grip-bar span:last-child { font-weight: 700; font-size: 0.8rem; color: rgba(255,255,255,0.85); }
 
-.g-mod {
+.gm {
   padding: 14px 16px; border: 1px solid #f1f5f9; border-radius: 10px; background: #fff;
   margin-bottom: 8px; transition: border-color 0.2s, box-shadow 0.2s;
 }
-.g-mod:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,86,179,0.08); }
-.g-mod.active { border-left: 3px solid var(--primary); }
-.g-mod.coming { opacity: 0.45; border-style: dashed; }
-.g-mod-name { font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 2px; }
-.g-mod-q { font-size: 0.78rem; color: #64748b; line-height: 1.35; font-style: italic; }
-.g-mod-tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 4px; margin-top: 6px; }
+.gm:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,86,179,0.08); }
+.gm.live { border-left: 3px solid var(--primary); }
+.gm.soon { opacity: 0.45; border-style: dashed; }
+.gm-name { font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 3px; }
+.gm-q { font-size: 0.78rem; color: #64748b; line-height: 1.35; font-style: italic; margin-bottom: 6px; }
+.gm-tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 4px; }
 .tag-live { background: #dcfce7; color: #166534; }
 .tag-soon { background: #f1f5f9; color: #94a3b8; }
-
-/* ── Recommended Paths (dark section) ── */
-.paths-block { background: #0f172a; padding: 80px 0; }
-.paths-block h2 { color: #fff; }
-.paths-intro { color: #cbd5e1; font-size: 1.05rem; max-width: 600px; margin-bottom: 40px; line-height: 1.6; }
-.paths-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-.path-card {
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px; padding: 28px 24px;
-  display: grid; grid-template-rows: auto auto 1fr auto auto;
-  /* rows: label | title | desc | price | save */
-  transition: border-color 0.2s, background 0.2s;
-}
-.path-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
-.path-card.best { border: 2px solid #60a5fa; background: rgba(96,165,250,0.06); }
-.path-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa; margin-bottom: 10px; grid-row: 1; }
-.path-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; margin-bottom: 8px; grid-row: 2; }
-.path-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 0; grid-row: 3; align-self: start; }
-.path-price { font-size: 1.5rem; font-weight: 900; color: #fff; grid-row: 4; align-self: end; margin-top: 20px; }
-.path-save { font-size: 0.78rem; color: #4ade80; font-weight: 600; margin-top: 4px; grid-row: 5; }
 
 /* ── FAQ ── */
 .faq { max-width: 760px; margin: 0 auto; }
@@ -168,18 +183,17 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
 @media (max-width: 980px) {
   .s-hero { padding-top: 28px; }
   .s-hero h1 { font-size: 2rem !important; }
-  .journey { flex-direction: column; }
-  .j-step { border-right: none; border-bottom: 1px solid #f1f5f9; grid-template-rows: auto auto auto auto auto auto auto; }
-  .j-step:last-child { border-bottom: none; }
+  .journey { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .j-col { grid-row: auto; border-right: none; border-bottom: 1px solid #f1f5f9; }
+  .j-col:last-child { border-bottom: none; }
   .j-arrow { display: none !important; }
-  .j-desc { align-self: auto; }
-  .j-price { align-self: auto; }
+  .j-price { align-self: auto; padding-top: 12px; }
   .steps { grid-template-columns: 1fr !important; gap: 24px; }
   .grip-grid { grid-template-columns: 1fr 1fr !important; gap: 16px; }
-  .grip-market-head { flex-direction: column; align-items: flex-start; }
-  .paths-grid { grid-template-columns: 1fr !important; }
-  .path-desc { align-self: auto; }
-  .path-price { align-self: auto; margin-top: 12px; }
+  .grip-head { flex-direction: column; align-items: flex-start; }
+  .paths-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .p-card { grid-row: auto; margin-bottom: 16px; }
+  .p-price { align-self: auto; padding-top: 12px; }
   .paths-block { padding: 56px 0; }
   .block { padding: 48px 0; }
 }
@@ -229,22 +243,19 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
 </section>
 
 <!-- ═══════════════════════════════════════════════════ -->
-<!-- THE JOURNEY -->
+<!-- JOURNEY CARDS (subgrid aligned) -->
 <!-- ═══════════════════════════════════════════════════ -->
-<div class="block">
+<div class="block" style="padding-bottom:0; border-bottom:none;">
   <div class="container">
     <div class="journey">
-      <!-- 1: GTM Score -->
-      <div class="j-step">
+      <!-- Col 1: GTM Score -->
+      <div class="j-col">
         <div class="j-arrow"></div>
-        <div class="j-head">
-          <div class="j-num">1</div>
-          <div class="j-label">Start Here</div>
-        </div>
+        <div class="j-label"><span class="j-num">1</span> Start Here</div>
         <div class="j-title">The GTM Score</div>
         <div class="j-desc">See the shape of your GTM problem in 5 minutes. No commitment. Just a score that shows where your system has friction.</div>
         <div class="j-price">Free</div>
-        <div class="j-price-sub">5-minute self-assessment</div>
+        <div class="j-sub">5-minute self-assessment</div>
         <div class="j-cta"><a href="gtm-assessment.html" class="btn btn-outline">Start Assessment</a></div>
         <ul class="j-features">
           <li>Overall GTM maturity score (0–100)</li>
@@ -255,17 +266,14 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
         </ul>
       </div>
 
-      <!-- 2: Intelligence Report -->
-      <div class="j-step flagship">
+      <!-- Col 2: Intelligence Report -->
+      <div class="j-col flagship">
         <div class="j-arrow"></div>
-        <div class="j-head">
-          <div class="j-num">2</div>
-          <div class="j-label">The Full Diagnostic</div>
-        </div>
+        <div class="j-label"><span class="j-num">2</span> The Full Diagnostic</div>
         <div class="j-title">Intelligence Report</div>
         <div class="j-desc">42 pages of board-level intelligence. Constraint analysis across 72 diagnostic engines. Revenue leakage modelling tied to your actual ARR.</div>
         <div class="j-price"><span class="curr">€</span><span data-price-key="report">2,495</span></div>
-        <div class="j-price-sub">One-time · 45-minute assessment</div>
+        <div class="j-sub">One-time · 45-minute assessment</div>
         <div class="j-cta"><a href="gtm-intelligence-report.html" class="btn btn-primary">Get the Report</a></div>
         <ul class="j-features">
           <li>Constraint Priority Scoring across 12 pillars</li>
@@ -276,16 +284,13 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
         </ul>
       </div>
 
-      <!-- 3: GRIP Marketplace -->
-      <div class="j-step">
-        <div class="j-head">
-          <div class="j-num">3</div>
-          <div class="j-label">Go Deep</div>
-        </div>
+      <!-- Col 3: GRIP Marketplace -->
+      <div class="j-col">
+        <div class="j-label"><span class="j-num">3</span> Go Deep</div>
         <div class="j-title">GRIP Marketplace</div>
         <div class="j-desc">Deep Dive modules that dissect one specific pillar. 60 questions, 6 engines, one constraint — fully resolved.</div>
         <div class="j-price">From <span class="curr">€</span><span data-price-key="module">749</span></div>
-        <div class="j-price-sub">Per Deep Dive · 20-minute assessment</div>
+        <div class="j-sub">Per Deep Dive · 20-minute assessment</div>
         <div class="j-cta"><a href="#marketplace" class="btn btn-outline">Explore Modules</a></div>
         <ul class="j-features">
           <li>60-question focused diagnostic per pillar</li>
@@ -298,6 +303,40 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- THE DIAGNOSTIC JOURNEY (dark, directly below cards) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="paths-block">
+  <div class="container">
+    <span class="eyebrow" style="color:#60a5fa;">Recommended Paths</span>
+    <h2>The diagnostic journey</h2>
+    <p class="paths-intro">The Intelligence Report identifies your constraint. The Deep Dive gives you the resolution. Together, they replace what a consulting firm charges €25k+ to deliver.</p>
+    <div class="paths-grid">
+      <div class="p-card">
+        <div class="p-label">Bundle</div>
+        <div class="p-title">GRIP Bundle</div>
+        <div class="p-desc">All 3 Deep Dives within one GRIP dimension. Resolve an entire layer of your GTM system instead of a single pillar.</div>
+        <div class="p-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
+        <div class="p-save">Save €452 vs. individual</div>
+      </div>
+      <div class="p-card">
+        <div class="p-label">Combo</div>
+        <div class="p-title">Report + 1 Deep Dive</div>
+        <div class="p-desc">The full system diagnostic plus a deep-dive on your primary constraint. The most natural path from diagnosis to action.</div>
+        <div class="p-price"><span class="curr">€</span><span data-price-key="reportModule">2,995</span></div>
+        <div class="p-save">Save €249</div>
+      </div>
+      <div class="p-card best">
+        <div class="p-label">Best Value</div>
+        <div class="p-title">Report + GRIP Bundle</div>
+        <div class="p-desc">Complete diagnostic plus full dimension deep-dive. Board-level clarity on the system, plus surgical resolution on the constraint layer.</div>
+        <div class="p-price"><span class="curr">€</span><span data-price-key="reportBundle">3,995</span></div>
+        <div class="p-save">Save €295</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════════════════ -->
 <!-- HOW IT WORKS -->
@@ -333,122 +372,97 @@ details p { margin-top: 12px; font-size: 0.95rem; color: #64748b; line-height: 1
 <!-- ═══════════════════════════════════════════════════ -->
 <div class="block" id="marketplace">
   <div class="container">
-    <div class="grip-market-head">
+    <div class="grip-head">
       <div>
         <span class="eyebrow">The GRIP Marketplace</span>
-        <h2>Go deep on the constraint<br>that matters most</h2>
+        <h2>12 pillars. 4 dimensions.<br>Choose your Deep Dive.</h2>
         <p style="color:var(--text-body); font-size:0.95rem; line-height:1.6;">Each Deep Dive covers one GTM pillar with 60 questions and 6 diagnostic engines. Available standalone — but the Intelligence Report tells you exactly which one to buy first.</p>
       </div>
-      <div class="pricing-box">
-        <div class="pricing-box-line"><strong><span class="curr">€</span><span data-price-key="module">749</span></strong> per Deep Dive</div>
-        <div class="pricing-box-line"><strong><span class="curr">€</span><span data-price-key="bundle">1,795</span></strong> per GRIP Bundle (3 modules)</div>
+      <div class="price-box">
+        <div class="price-box-line"><strong><span class="curr">€</span><span data-price-key="module">749</span></strong> per Deep Dive</div>
+        <div class="price-box-line"><strong><span class="curr">€</span><span data-price-key="bundle">1,795</span></strong> per GRIP Bundle (3 modules)</div>
       </div>
     </div>
     <div class="grip-grid">
-      <!-- G -->
+      <!-- G = Guidance: pillars 1, 2, 3 -->
       <div class="grip-col">
-        <div class="grip-letter-bar"><span class="grip-letter">G</span><span class="grip-dim-name">Guidance</span></div>
-        <div class="g-mod active">
-          <div class="g-mod-name">Product Marketing Deep Dive</div>
-          <div class="g-mod-q">"Why doesn't the market understand our value?"</div>
-          <span class="g-mod-tag tag-live">Available</span>
+        <div class="grip-bar"><span>G</span><span>Guidance</span></div>
+        <div class="gm live">
+          <div class="gm-name">Product Marketing Deep Dive</div>
+          <div class="gm-q">"Why doesn't the market understand our value?"</div>
+          <span class="gm-tag tag-live">Available</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Market Intelligence</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Market Intelligence</div>
+          <div class="gm-q">"Are we targeting the right segments with the right assumptions?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">GTM Strategy & Leadership</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">GTM Strategy & Leadership</div>
+          <div class="gm-q">"Does leadership have a shared model for how we grow?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
       </div>
-      <!-- R -->
+      <!-- R = Resources: pillars 8, 9, 11 -->
       <div class="grip-col">
-        <div class="grip-letter-bar"><span class="grip-letter">R</span><span class="grip-dim-name">Resources</span></div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Pricing & Packaging</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="grip-bar"><span>R</span><span>Resources</span></div>
+        <div class="gm soon">
+          <div class="gm-name">Pricing & Packaging</div>
+          <div class="gm-q">"Is our pricing aligned with how customers perceive value?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Product Readiness</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Product Readiness</div>
+          <div class="gm-q">"Does our product actually support the motion we're running?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Enablement</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Enablement</div>
+          <div class="gm-q">"Do our teams have the tools and knowledge to execute?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
       </div>
-      <!-- I -->
+      <!-- I = Implementation: pillars 4, 5, 7 -->
       <div class="grip-col">
-        <div class="grip-letter-bar"><span class="grip-letter">I</span><span class="grip-dim-name">Implementation</span></div>
-        <div class="g-mod active">
-          <div class="g-mod-name">Demand Generation Deep Dive</div>
-          <div class="g-mod-q">"Why is pipeline not converting into qualified opportunities?"</div>
-          <span class="g-mod-tag tag-live">Available</span>
+        <div class="grip-bar"><span>I</span><span>Implementation</span></div>
+        <div class="gm live">
+          <div class="gm-name">Demand Generation Deep Dive</div>
+          <div class="gm-q">"Why is pipeline not converting into qualified opportunities?"</div>
+          <span class="gm-tag tag-live">Available</span>
         </div>
-        <div class="g-mod active">
-          <div class="g-mod-name">Sales Execution Deep Dive</div>
-          <div class="g-mod-q">"Why are deals stalling or closing below potential?"</div>
-          <span class="g-mod-tag tag-live">Available</span>
+        <div class="gm live">
+          <div class="gm-name">Sales Execution Deep Dive</div>
+          <div class="gm-q">"Why are deals stalling or closing below potential?"</div>
+          <span class="gm-tag tag-live">Available</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Revenue Operations & Systems</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Revenue Operations & Systems</div>
+          <div class="gm-q">"Is our operational infrastructure keeping pace with growth?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
       </div>
-      <!-- P -->
+      <!-- P = Performance: pillars 6, 10, 12 -->
       <div class="grip-col">
-        <div class="grip-letter-bar"><span class="grip-letter">P</span><span class="grip-dim-name">Performance</span></div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Customer Success & Expansion</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="grip-bar"><span>P</span><span>Performance</span></div>
+        <div class="gm soon">
+          <div class="gm-name">Customer Success & Expansion</div>
+          <div class="gm-q">"Are we retaining and growing the revenue we already won?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Data & Insights</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Data & Insights</div>
+          <div class="gm-q">"Can leadership trust the numbers they're making decisions on?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
-        <div class="g-mod coming">
-          <div class="g-mod-name">Alignment & Governance</div>
-          <span class="g-mod-tag tag-soon">Coming Soon</span>
+        <div class="gm soon">
+          <div class="gm-name">Alignment & Governance</div>
+          <div class="gm-q">"Do teams have the forums and cadence to stay aligned?"</div>
+          <span class="gm-tag tag-soon">Coming Soon</span>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- RECOMMENDED PATHS (dark section) -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="paths-block">
-  <div class="container">
-    <span class="eyebrow" style="color:#60a5fa;">Recommended Paths</span>
-    <h2>The diagnostic journey</h2>
-    <p class="paths-intro">The Intelligence Report identifies your constraint. The Deep Dive gives you the resolution. Together, they replace what a consulting firm charges €25k+ to deliver.</p>
-    <div class="paths-grid">
-      <div class="path-card">
-        <div class="path-label">Bundle</div>
-        <div class="path-title">GRIP Bundle</div>
-        <div class="path-desc">All 3 Deep Dives within one GRIP dimension. Resolve an entire layer of your GTM system instead of a single pillar.</div>
-        <div class="path-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
-        <div class="path-save">Save €452 vs. individual</div>
-      </div>
-      <div class="path-card">
-        <div class="path-label">Combo</div>
-        <div class="path-title">Report + 1 Deep Dive</div>
-        <div class="path-desc">The full system diagnostic plus a deep-dive on your primary constraint. The most natural path from diagnosis to action.</div>
-        <div class="path-price"><span class="curr">€</span><span data-price-key="reportModule">2,995</span></div>
-        <div class="path-save">Save €249</div>
-      </div>
-      <div class="path-card best">
-        <div class="path-label">Best Value</div>
-        <div class="path-title">Report + GRIP Bundle</div>
-        <div class="path-desc">Complete diagnostic plus a full dimension deep-dive. Board-level clarity on the system, plus surgical resolution on the constraint layer.</div>
-        <div class="path-price"><span class="curr">€</span><span data-price-key="reportBundle">3,995</span></div>
-        <div class="path-save">Save €295</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════════════ -->
 <!-- FAQ -->
