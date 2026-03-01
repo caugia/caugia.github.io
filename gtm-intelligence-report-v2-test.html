@@ -139,6 +139,58 @@
       .gi-left-info, .gi-right-pillars { display: none; }
       .gi-question-card { height: auto; overflow: visible; }
     }
+
+    /* ═══ WORLD CLASS POLISH ═══ */
+
+    /* Smooth page transitions */
+    .gi-question-header, .gi-question-body {
+      animation: fadeIn 0.25s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Option cards: better hover and selected states */
+    .gi-option-card {
+      transition: all 0.2s ease !important;
+    }
+    .gi-option-card:hover {
+      border-color: #94a3b8 !important;
+      background: #f8fafc !important;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Next button pulse when answer selected */
+    @keyframes subtlePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,86,179,0.2); }
+      50% { box-shadow: 0 0 0 6px rgba(0,86,179,0); }
+    }
+    #gi-next-btn:not(:disabled) {
+      animation: subtlePulse 2s ease-in-out infinite;
+    }
+
+    /* Pillar nav: completion indicator */
+    .gi-pillar-nav li {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .pillar-progress {
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    /* Utility buttons: better spacing */
+    .gi-utility-row {
+      gap: 6px;
+    }
+    .gi-utility-btn {
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -267,30 +319,202 @@ const PILLAR_META = {
 
 <script src="assets/engine.js?v=8002"></script>
 
+<!-- ═══ WORLD CLASS UPGRADES (patches engine.js, does not modify it) ═══ -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // INTERACTIVE PILLAR INFO
-  const list = document.getElementById("gi-left-pillar-list");
-  const titleBox = document.getElementById("gi-pillar-name");
-  const descBox = document.getElementById("gi-pillar-desc");
 
-  if(list && titleBox && descBox) {
-    list.addEventListener("click", (e) => {
-      const li = e.target.closest("li");
-      if(!li) return;
+  // ── 1. JUMP BUTTONS ──────────────────────────────────
+  var jumpFirstBtn = document.getElementById("gi-jump-first");
+  var jumpLastBtn = document.getElementById("gi-jump-last");
 
-      const pIndex = li.getAttribute("data-p");
-      const info = PILLAR_META[pIndex];
+  if (jumpFirstBtn && window.QUESTIONS) {
+    jumpFirstBtn.addEventListener("click", function() {
+      var state = null;
+      try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
+      if (!state || !state.answers) return;
 
-      if(info) {
-        titleBox.innerText = info.name;
-        descBox.innerText = info.desc;
-        
-        descBox.style.opacity = 0;
-        setTimeout(() => descBox.style.opacity = 1, 100);
+      for (var i = 0; i < window.QUESTIONS.length; i++) {
+        var q = window.QUESTIONS[i];
+        var answered = false;
+
+        if (q.type === "group" && q.fields) {
+          answered = q.fields.every(function(f) {
+            var k = "q" + q.id + "__" + f.name;
+            return state.answers[k] && String(state.answers[k]).trim().length > 0;
+          });
+        } else {
+          var k = "q" + q.id;
+          answered = state.answers[k] && String(state.answers[k]).trim().length > 0;
+        }
+
+        if (!answered) {
+          // Found first unanswered — navigate to it
+          state.currentStep = i;
+          localStorage.setItem("caugia_assessment_v9_state", JSON.stringify(state));
+          location.reload();
+          return;
+        }
+      }
+      alert("All questions are answered.");
+    });
+  }
+
+  if (jumpLastBtn && window.QUESTIONS) {
+    jumpLastBtn.addEventListener("click", function() {
+      var state = null;
+      try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
+      if (!state || !state.answers) return;
+
+      var lastAnswered = -1;
+      for (var i = 0; i < window.QUESTIONS.length; i++) {
+        var q = window.QUESTIONS[i];
+        var answered = false;
+
+        if (q.type === "group" && q.fields) {
+          answered = q.fields.some(function(f) {
+            var k = "q" + q.id + "__" + f.name;
+            return state.answers[k] && String(state.answers[k]).trim().length > 0;
+          });
+        } else {
+          var k = "q" + q.id;
+          answered = state.answers[k] && String(state.answers[k]).trim().length > 0;
+        }
+
+        if (answered) lastAnswered = i;
+      }
+
+      if (lastAnswered >= 0) {
+        state.currentStep = lastAnswered;
+        localStorage.setItem("caugia_assessment_v9_state", JSON.stringify(state));
+        location.reload();
+      } else {
+        alert("No answers recorded yet.");
       }
     });
   }
+
+  // ── 2. VISUAL FEEDBACK ON OPTION SELECTION ───────────
+  // Watch for radio changes and add selected styling
+  var body = document.getElementById("gi-question-body");
+  if (body) {
+    var observer = new MutationObserver(function() {
+      var cards = body.querySelectorAll(".gi-option-card");
+      cards.forEach(function(card) {
+        var radio = card.querySelector("input[type='radio']");
+        if (!radio) return;
+
+        // Add transition
+        card.style.transition = "all 0.2s ease";
+
+        // Check state on render
+        if (radio.checked) {
+          card.style.borderColor = "#0056b3";
+          card.style.backgroundColor = "#eff6ff";
+          card.style.boxShadow = "0 0 0 2px rgba(0,86,179,0.15)";
+        }
+      });
+    });
+    observer.observe(body, { childList: true, subtree: true });
+  }
+
+  // ── 3. PILLAR PROGRESS ON NAV ITEMS ──────────────────
+  // Add completion dots to pillar nav items
+  function updatePillarProgress() {
+    var state = null;
+    try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
+    if (!state || !state.answers || !window.QUESTIONS) return;
+
+    // Count answered per pillar
+    var pillarTotal = {};
+    var pillarAnswered = {};
+
+    window.QUESTIONS.forEach(function(q) {
+      var p = q.pillar;
+      if (!pillarTotal[p]) { pillarTotal[p] = 0; pillarAnswered[p] = 0; }
+
+      if (q.type === "group" && q.fields) {
+        q.fields.forEach(function(f) {
+          pillarTotal[p]++;
+          var k = "q" + q.id + "__" + f.name;
+          if (state.answers[k] && String(state.answers[k]).trim().length > 0) pillarAnswered[p]++;
+        });
+      } else {
+        pillarTotal[p]++;
+        var k = "q" + q.id;
+        if (state.answers[k] && String(state.answers[k]).trim().length > 0) pillarAnswered[p]++;
+      }
+    });
+
+    // Update nav items
+    var items = document.querySelectorAll(".gi-pillar-nav li");
+    items.forEach(function(li) {
+      var p = parseInt(li.getAttribute("data-p"));
+      var total = pillarTotal[p] || 0;
+      var done = pillarAnswered[p] || 0;
+
+      // Remove existing indicator
+      var existing = li.querySelector(".pillar-progress");
+      if (existing) existing.remove();
+
+      if (total > 0) {
+        var indicator = document.createElement("span");
+        indicator.className = "pillar-progress";
+        indicator.style.cssText = "float:right; font-size:0.7rem; font-weight:600; opacity:0.7;";
+
+        if (done === total) {
+          indicator.textContent = "✓";
+          indicator.style.color = "#16a34a";
+          indicator.style.opacity = "1";
+        } else if (done > 0) {
+          indicator.textContent = done + "/" + total;
+        }
+
+        li.appendChild(indicator);
+      }
+    });
+  }
+
+  // Run on load and periodically
+  updatePillarProgress();
+  setInterval(updatePillarProgress, 2000);
+
+  // ── 4. INTERACTIVE PILLAR INFO ───────────────────────
+  var list = document.getElementById("gi-left-pillar-list");
+  var titleBox = document.getElementById("gi-pillar-name");
+  var descBox = document.getElementById("gi-pillar-desc");
+
+  if(list && titleBox && descBox) {
+    list.addEventListener("click", function(e) {
+      var li = e.target.closest("li");
+      if(!li) return;
+      var pIndex = li.getAttribute("data-p");
+      var info = PILLAR_META[pIndex];
+      if(info) {
+        titleBox.innerText = info.name;
+        descBox.style.opacity = "0";
+        descBox.style.transition = "opacity 0.15s ease";
+        setTimeout(function() {
+          descBox.innerText = info.desc;
+          descBox.style.opacity = "1";
+        }, 150);
+      }
+    });
+  }
+
+  // ── 5. KEYBOARD NAVIGATION ───────────────────────────
+  document.addEventListener("keydown", function(e) {
+    // Don't capture when typing in inputs
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+
+    if (e.key === "ArrowRight" || e.key === "Enter") {
+      var nextBtn = document.getElementById("gi-next-btn");
+      if (nextBtn && nextBtn.style.display !== "none") nextBtn.click();
+    }
+    if (e.key === "ArrowLeft") {
+      var prevBtn = document.getElementById("gi-prev-btn");
+      if (prevBtn && prevBtn.style.display !== "none") prevBtn.click();
+    }
+  });
 });
 </script>
 
