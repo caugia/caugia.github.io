@@ -11,67 +11,115 @@
   <link rel="apple-touch-icon" href="assets/logo-final.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
 
-  <link rel="stylesheet" href="assets/caugia-v10.1.css?v=10.1"/>
+  <link rel="stylesheet" href="assets/caugia-v10.2.css"/>
 
   <style>
-    /* 1. Layout Lock */
-    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin:0; }
-    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 60px); }
-    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
+    /* --- ASSESSMENT PAGE OVERRIDES --- */
+    
+    /* 1. Layout Lock — NO scrollbars on main shell */
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin: 0; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 64px); }
+    .gi-shell { height: 100%; display: grid; grid-template-columns: 280px 1fr 280px; gap: 0; }
     
     /* 2. Left Sidebar */
-    .gi-left-info { display: flex; flex-direction: column; height: 100%; overflow: hidden; padding-bottom: 32px; }
+    .gi-left-info {
+      display: flex; flex-direction: column;
+      height: 100%; overflow: hidden;
+      padding: 32px 24px 32px 32px;
+    }
 
-    /* 3. Description Box */
+    /* 3. Description Box (fixed bottom) */
     .gi-pillar-desc-box {
-        margin-top: auto; height: 240px; min-height: 240px; max-height: 240px;
-        overflow: hidden; flex-shrink: 0; background: #fff;
-        border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-top: auto;
+      height: 240px; min-height: 240px; max-height: 240px;
+      overflow: hidden; flex-shrink: 0;
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     }
 
     /* 4. Utility Buttons */
-    .gi-utility-row { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 10; }
+    .gi-utility-row {
+      position: absolute; top: 20px; right: 20px;
+      display: flex; gap: 8px; z-index: 10;
+    }
     .gi-utility-btn {
-      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
       padding: 6px 12px; font-size: 0.75rem; font-weight: 600; color: #64748b;
-      cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      cursor: pointer; transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .gi-utility-btn:hover { border-color: #0056b3; color: #0056b3; }
 
-    /* 5. Navigation & Cards */
+    /* 5. Pillar Nav */
     .gi-pillar-nav li { color: #475569; cursor: pointer; transition: color 0.2s, background-color 0.2s; } 
     .gi-pillar-nav li:hover { color: #0056b3; background-color: #f1f5f9; }
-    .gi-pillar-nav li.active { background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700; }
+    .gi-pillar-nav li.active {
+      background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700;
+    }
 
-    .gi-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; margin-bottom: 24px; }
-    .gi-group-grid label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b; }
-    .gi-input, .gi-textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff; }
+    /* 6. Input Spacing */
+    .gi-group-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 16px; margin-bottom: 24px;
+    }
+    .gi-group-grid label {
+      display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #1e293b;
+    }
+    .gi-input, .gi-textarea {
+      width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #fff;
+    }
     .gi-input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); outline: none; }
 
+    /* 7. Radio Cards */
     .gi-options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
-    .gi-option-card { display: flex; align-items: center; padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff; }
+    .gi-option-card {
+      display: flex; align-items: center; padding: 16px;
+      border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: #fff;
+    }
     .gi-option-card:hover { border-color: #94a3b8; background: #f8fafc; }
-    .gi-option-card.selected { border-color: #0056b3; background-color: #eff6ff; } /* Engine adds this class now */
     .gi-option-card input { margin-right: 12px; transform: scale(1.2); }
 
-    .gi-question-card { position: relative; height: 100%; display: flex; flex-direction: column; padding: 40px; overflow-y: auto; }
-    .gi-question-body { flex-grow: 1; padding-bottom: 80px; } 
+    /* 8. Question Card — NO scrollbar */
+    .gi-question-card {
+      position: relative;
+      height: 100%; display: flex; flex-direction: column;
+      padding: 40px; overflow: hidden;
+    }
+    .gi-question-body { flex-grow: 1; padding-bottom: 80px; overflow: hidden; }
     
+    /* 9. Bottom Nav Bar */
     .gi-nav-row {
       position: sticky; bottom: 0; left: 0; right: 0;
       background: white; border-top: 1px solid #e2e8f0;
-      padding: 20px 40px; margin: 0 -40px -40px -40px; 
+      padding: 20px 40px; margin: 0 -40px -40px -40px;
       display: flex; gap: 12px; align-items: center;
     }
 
-    #gi-test-submit-btn { background: #dc2626; color: white; border: none; margin-left: auto; }
+    #gi-test-submit-btn {
+      background: #dc2626; color: white; border: none; margin-left: auto;
+    }
 
-    @media (max-width: 1000px) {
+    /* ═══ RESPONSIVE ═══ */
+    
+    /* Tablet: hide right sidebar, expand center */
+    @media (max-width: 1100px) {
+      .gi-shell { grid-template-columns: 280px 1fr; }
+      .gi-right-pillars { display: none; }
+    }
+
+    /* Mobile: stack everything */
+    @media (max-width: 768px) {
       body { overflow-y: auto; height: auto; }
-      .gi-shell { display: flex; flex-direction: column; }
-      .gi-left-info, .gi-right-pillars { display: none; }
-      .gi-question-card { height: auto; overflow: visible; }
+      .gi-main { height: auto; overflow-y: auto; }
+      .gi-shell { display: flex; flex-direction: column; height: auto; overflow: visible; padding: 16px; gap: 16px; }
+      .gi-left-info { height: auto; overflow: visible; padding: 16px; }
+      .gi-right-pillars { display: none; }
+      .gi-pillar-desc-box { height: auto; min-height: auto; max-height: none; }
+      .gi-question-card { height: auto; overflow: visible; padding: 20px; }
+      .gi-question-body { overflow: visible; padding-bottom: 20px; }
+      .gi-nav-row { position: relative; margin: 0; padding: 16px 0; flex-wrap: wrap; }
+      .gi-utility-row { position: relative; top: auto; right: auto; flex-wrap: wrap; margin-bottom: 16px; }
     }
   </style>
 </head>
@@ -84,9 +132,7 @@
       <img src="assets/logo-final.png" class="gi-logo" alt="Caugia logo" width="32" height="32">
       <span class="gi-header-brand">Caugia Consulting</span>
     </div>
-    <div class="gi-header-right">
-      <button id="darkToggle" class="gi-dark-toggle">🌙</button>
-    </div>
+    <div class="gi-header-right"></div>
   </div>
 </header>
 
@@ -101,7 +147,7 @@
         go-to-market system and reveals strengths, risks and hidden
         dependencies across the full revenue engine.
       </p>
-      <div class="gi-info-meta">12 pillars • 265 questions • ~45 minutes</div>
+      <div class="gi-info-meta">12 pillars · 265 questions · ~45 minutes</div>
 
       <div class="gi-progress-box">
         <div class="gi-progress-top">
@@ -138,8 +184,7 @@
           <p class="gi-question-sub" id="gi-question-sub"></p>
         </div>
 
-        <div class="gi-question-body" id="gi-question-body">
-          </div>
+        <div class="gi-question-body" id="gi-question-body"></div>
 
         <div class="gi-nav-row">
           <button class="gi-btn" id="gi-prev-btn">Previous</button>
@@ -174,56 +219,48 @@
   </div>
 </main>
 
-<a href="/faq.html" class="gi-faq-button">FAQ</a>
+<a href="faq.html" class="gi-faq-button">FAQ</a>
 
-<script src="assets/QUESTIONS.js?v=2.0"></script>
+<script src="assets/QUESTIONS.js?v=1"></script>
 
-<script src="assets/engine.js?v=9.0.99"></script>
+<script>
+const PILLAR_META = {
+  0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality."},
+  1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction and priorities are defined. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors. It assesses the depth of your ICP definition and your ability to detect shifting buyer needs."},
+  3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value. It evaluates your ability to translate features into benefits and ensure Sales delivers a consistent message."},
+  4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated. It looks beyond vanity metrics to assess capture quality and acquisition cost efficiency over the long term."},
+  5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality. It looks at whether your process is followed rigorously or if revenue relies on individual heroics."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion. It shifts the focus from reactive support to proactive value delivery, critical for compounding NRR growth."},
+  7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations. It assesses whether your tech stack removes friction or adds complexity."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation. It checks if your model aligns with how customers receive value and supports frictionless expansion revenue."},
+  9:{name:"Product Readiness", desc:"Product Readiness evaluates whether your product actually supports the GTM motion you are running. It assesses feature completeness, integration quality, and the gap between what Sales promises and what Product delivers."},
+ 10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information. It determines if leadership makes decisions based on real-time evidence or gut feeling."},
+ 11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality. It focuses on reducing ramp time and ensuring strategy is executed consistently at the frontline."},
+ 12:{name:"Alignment & Governance", desc:"Alignment & Governance reflects collaboration and unified direction. It assesses whether silos are broken down and if the operating rhythm drives accountability towards shared revenue goals."}
+};
+</script>
+
+<script src="assets/engine.js?v=8002"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  
-  // A. Dark Mode
-  const toggle = document.getElementById("darkToggle");
-  if(toggle){
-    toggle.addEventListener("click", () => {
-        const isDark = document.body.classList.toggle("dark");
-        toggle.innerText = isDark ? "☀️" : "🌙";
-    });
-  }
-
-  // B. Pillar Text Updates
-  const PILLAR_META = {
-    0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality."},
-    1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction and priorities are defined. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation."},
-    2:{name:"Market Intelligence", desc:"Market Intelligence reflects how well you understand your market, customers and competitors."},
-    3:{name:"Product Marketing", desc:"Product Marketing connects customer understanding with product value."},
-    4:{name:"Demand Generation", desc:"Demand Generation measures how predictably pipeline is generated."},
-    5:{name:"Sales Execution", desc:"Sales Execution evaluates funnel consistency and deal quality."},
-    6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion measures onboarding, retention and expansion."},
-    7:{name:"Revenue Operations & Systems", desc:"Revenue Operations evaluates process, tooling and data foundations."},
-    8:{name:"Pricing & Packaging", desc:"Pricing & Packaging evaluates clarity of value and monetisation."},
-    9:{name:"Brand & Communications", desc:"Brand & Communications evaluates narrative clarity and consistency."},
-   10:{name:"Data & Insights", desc:"Data & Insights measures reliability and usability of information."},
-   11:{name:"Enablement", desc:"Enablement evaluates training, materials and coaching quality."},
-   12:{name:"Alignment & Governance", desc:"Alignment & Governance reflects collaboration and unified direction."}
-  };
-
-  const list = document.getElementById("gi-left-pillar-list");
-  const titleBox = document.getElementById("gi-pillar-name");
-  const descBox = document.getElementById("gi-pillar-desc");
+  // INTERACTIVE PILLAR INFO
+  var list = document.getElementById("gi-left-pillar-list");
+  var titleBox = document.getElementById("gi-pillar-name");
+  var descBox = document.getElementById("gi-pillar-desc");
 
   if(list && titleBox && descBox) {
-    list.addEventListener("click", (e) => {
-      const li = e.target.closest("li");
+    list.addEventListener("click", function(e) {
+      var li = e.target.closest("li");
       if(!li) return;
-      const pIndex = li.getAttribute("data-p");
-      const info = PILLAR_META[pIndex];
+      var pIndex = li.getAttribute("data-p");
+      var info = PILLAR_META[pIndex];
       if(info) {
         titleBox.innerText = info.name;
         descBox.innerText = info.desc;
         descBox.style.opacity = 0;
-        setTimeout(() => descBox.style.opacity = 1, 100);
+        setTimeout(function() { descBox.style.opacity = 1; }, 100);
       }
     });
   }
