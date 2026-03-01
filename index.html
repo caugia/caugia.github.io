@@ -1,751 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Caugia | The GTM & Go-to-Market Intelligence Engine</title>
-  <meta name="description" content="The first algorithmic Go-to-Market (GTM) system for B2B SaaS. Replace weeks of consulting with one intelligent assessment. Align Strategy, Revenue, and Execution." />
-  <meta name="keywords" content="GTM, Go-to-Market, GTM Strategy, Revenue Architecture, B2B SaaS, Revenue Operations, Caugia" />
-  <link rel="canonical" href="https://www.caugia.com/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.caugia.com/" />
-  <meta property="og:title" content="Caugia | The GTM Intelligence Engine" />
-  <meta property="og:description" content="Stop revenue leakage. Analyze your B2B SaaS revenue architecture instantly with the Caugia Intelligence Engine." />
-  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
-  <link rel="apple-touch-icon" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
-   
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Caugia Consulting",
-    "url": "https://www.caugia.com",
-    "logo": "https://www.caugia.com/assets/logo-final.png",
-    "sameAs": [
-      "https://www.linkedin.com/company/caugia"
-    ],
-    "description": "Caugia provides an algorithmic Go-to-Market (GTM) intelligence engine for B2B SaaS companies to optimize revenue architecture.",
-    "knowsAbout": ["Go-to-Market Strategy", "GTM", "Revenue Operations", "SaaS Growth"]
-  }
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="assets/caugia-base.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    /* --- PAGE SPECIFIC STYLES (Index Only) --- */
-    
-    :root {
-      --good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
-      --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
-      --bad-bg: #fef2f2;  --bad-border: #fecaca;  --bad-text: #b91c1c;
-      --mid-bg: #f0f9ff;  --mid-border: #bae6fd;  --mid-text: #0369a1;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 68px 0 96px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
-    }
-    .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
-    .hero-desc { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); margin-bottom: 32px; }
-    
-    .pillars-card {
-      background: var(--white); border: 1px solid rgba(15,23,42,0.04);
-      border-radius: var(--radius-md); padding: 30px; box-shadow: var(--shadow-sm);
-      border-left: 4px solid var(--primary); margin-top: 40px;
-    }
-    .pillars-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 20px; }
-    .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
-    .pillar-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.82rem; color: #334155; }
-    .pillar-item:last-child { border-bottom: none; }
-    .pillar-num { width: 22px; height: 22px; border-radius: 6px; background: #f1f5f9; color: #0056b3; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    
-    .m-text { display: none; }
-
-    /* Widget */
-    .widget-card {
-      background: var(--white); border-radius: var(--radius-lg); border: 1px solid rgba(15,23,42,0.05);
-      box-shadow: var(--shadow-lg); padding: 36px;
-      position: sticky; top: 110px; overflow: hidden; z-index: 10;
-    }
-    .health-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
-    .health-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; color: #1e293b; }
-    .health-sub { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-top: 4px; }
-    .health-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
-
-    .insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.3s ease; }
-    .insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
-    .insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
-    .insight-box.mode-bad  { background: var(--bad-bg); border-color: var(--bad-border); }
-    .insight-box.mode-mid  { background: var(--mid-bg); border-color: var(--mid-border); }
-    
-    .insight-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-    .mode-good .insight-label { color: var(--good-text); }
-    .mode-warn .insight-label { color: var(--warn-text); }
-    .mode-bad .insight-label  { color: var(--bad-text); }
-    .mode-mid .insight-label  { color: var(--mid-text); }
-
-    .insight-title { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; font-family: Inter, sans-serif; }
-    .mode-good .insight-title { color: #14532d; }
-    .mode-warn .insight-title { color: #78350f; }
-    .mode-bad .insight-title  { color: #7f1d1d; }
-    .mode-mid .insight-title  { color: #0c4a6e; }
-    .insight-text { font-size: 0.85rem; color: #334155; line-height: 1.5; min-height: 3.2em; }
-
-    .widget-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: center; }
-    .controls-col { min-width: 0; }
-    .control-group { margin-bottom: 18px; }
-    .control-label { display: flex; justify-content: space-between; font-family: Inter, sans-serif; font-weight: 700; font-size: 0.9rem; color: #475569; margin-bottom: 8px; }
-    .slider-wrap { padding-right: 10px; }
-    
-    input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); margin-top: -6px; transition: background 0.2s ease; }
-    input.range-warn::-webkit-slider-thumb { background: #d97706; }
-    input.range-bad::-webkit-slider-thumb { background: #dc2626; }
-    
-    .chart-box { width: 100%; height: 200px; display: flex; justify-content: center; }
-    .widget-caption { text-align: center; margin-top: 20px; color: #94a3b8; font-weight: 600; font-size: 0.8rem; }
-
-    /* Content Cards */
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 38px; }
-    .mini-card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); }
-    .mini-card h4 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 10px; }
-    .mini-card p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-body); }
-
-    /* Comparison Table */
-    .comparison-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1000px; margin: 0 auto; }
-    .comp-col-left { padding: 0 24px; opacity: 0.7; border-right: 1px solid var(--line); }
-    .comp-col-right { background: white; padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid rgba(0,86,179,0.15); position: relative; overflow: hidden; }
-    .comp-list { list-style: none; }
-    .comp-item { padding: 16px 0; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-    .comp-label { font-weight: 600; color: #334155; }
-    .comp-val { font-weight: 700; color: #0f172a; text-align: right; }
-
-    /* Report Section */
-    .report-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 74px; align-items: center; }
-    .check-list { margin-top: 18px; margin-bottom: 28px; padding: 0; }
-    
-    .report-visual { display: flex; align-items: center; justify-content: center; }
-
-    /* Report Page Mockup */
-    .report-page {
-      width: 360px;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
-      overflow: hidden;
-      transform: perspective(900px) rotateY(-3deg) rotateX(1.5deg);
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .report-page:hover {
-      transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(1.02);
-    }
-    .rp-header { background: linear-gradient(135deg, #0056b3, #0073e6); padding: 16px 22px 14px; position: relative; }
-    .rp-chapter { font-size: 0.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
-    .rp-title { font-family: Merriweather, serif; font-size: 0.95rem; font-weight: 900; color: #ffffff; line-height: 1.2; }
-    .rp-subtitle { font-size: 0.52rem; color: rgba(255,255,255,0.5); margin-top: 3px; font-weight: 500; }
-    .rp-logo { position: absolute; top: 14px; right: 18px; width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .rp-logo span { font-weight: 900; font-size: 0.65rem; color: #fff; }
-    .rp-body { padding: 18px 22px 14px; }
-    .rp-verdict-label { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
-    .rp-verdict-text { font-size: 0.55rem; color: #475569; line-height: 1.55; margin-bottom: 16px; }
-    .rp-section-title { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-    .rp-section-desc { font-size: 0.48rem; color: #94a3b8; margin-bottom: 12px; }
-    .rp-score-row { margin-bottom: 10px; }
-    .rp-score-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-    .rp-score-label { font-size: 0.6rem; font-weight: 700; color: #0f172a; }
-    .rp-score-val { font-size: 0.65rem; font-weight: 800; color: #0f172a; }
-    .rp-score-delta { font-size: 0.5rem; font-weight: 700; margin-left: 3px; }
-    .delta-neg { color: #dc2626; }
-    .delta-pos { color: #16a34a; }
-    .rp-bar-track { height: 7px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative; }
-    .rp-bar-fill { height: 100%; border-radius: 4px; }
-    .rp-bar-track::after { content: ""; position: absolute; top: 0; left: 70%; width: 1.5px; height: 100%; background: #1e293b; opacity: 0.3; }
-    .bar-strong { background: linear-gradient(90deg, #0056b3, #3b82f6); }
-    .bar-dev { background: linear-gradient(90deg, #d97706, #fbbf24); }
-    .bar-crit { background: linear-gradient(90deg, #dc2626, #f87171); }
-    .rp-score-sub { font-size: 0.45rem; color: #94a3b8; margin-top: 2px; }
-    .rp-score-sub .status-text { font-weight: 700; }
-    .status-strong { color: #16a34a; }
-    .status-dev { color: #d97706; }
-    .status-crit { color: #dc2626; }
-    .rp-divider { height: 1px; background: #e2e8f0; margin: 14px 0; }
-    .rp-pattern { background: #fff7ed; border: 1px solid #fed7aa; border-left: 3px solid #f59e0b; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; }
-    .rp-pattern-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; margin-bottom: 2px; }
-    .rp-pattern-title { font-size: 0.7rem; font-weight: 800; color: #78350f; margin-bottom: 3px; }
-    .rp-pattern-text { font-size: 0.5rem; color: #92400e; line-height: 1.45; }
-    .rp-priority { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #0056b3; border-radius: 6px; padding: 10px 12px; }
-    .rp-priority-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #0056b3; margin-bottom: 2px; }
-    .rp-priority-title { font-size: 0.62rem; font-weight: 800; color: #1e3a5f; margin-bottom: 3px; }
-    .rp-priority-text { font-size: 0.5rem; color: #334155; line-height: 1.45; }
-    .rp-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 8px 22px; display: flex; justify-content: space-between; align-items: center; }
-    .rp-footer-left { font-size: 0.42rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
-    .rp-footer-right { font-size: 0.42rem; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.06em; }
-
-    /* --- MOBILE RESPONSIVENESS (Page Specific) --- */
-    @media (max-width: 980px) {
-      .hero { 
-          padding-top: 30px !important; 
-          padding-bottom: 50px !important; 
-          gap: 40px !important;
-          text-align: center;
-          grid-template-columns: 1fr !important;
-      }
-      .hero > div:first-child { padding-left: 12px; padding-right: 12px; }
-      .hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
-      .hero-desc { font-size: 1.05rem; line-height: 1.5; }
-      .hero > div:first-child > div[style*="display:flex"] { justify-content: center; }
-
-      .pillars-card { padding: 24px 20px; margin-top: 30px; text-align: left; }
-      .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
-      .pillar-grid > div { display: contents; }
-      .pillar-item { font-size: 0.75rem; align-items: center; }
-      .pillar-num { font-size: 0.7rem; }
-      .d-text { display: none; }
-      .m-text { display: inline; }
-
-      .widget-card { margin-top: 0; padding: 24px 20px; box-shadow: none; border: 1px solid var(--line); }
-      .health-score { font-size: 3rem; }
-      .slider-wrap { padding: 10px 0; }
-      input[type=range] { height: 6px; }
-      input[type=range]::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -9px; }
-      .widget-layout { display: grid !important; grid-template-columns: 1fr !important; gap: 30px !important; }
-      .chart-col { margin-top: 0; }
-
-      .comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
-      .comp-col-left { background: #f1f5f9; padding: 24px; border-radius: 16px !important; border: 1px solid var(--line); opacity: 1; }
-      .comp-col-left h4 { font-size: 0.9rem; margin-bottom: 12px; }
-      .comp-col-left .comp-item { padding: 8px 0; border-color: rgba(0,0,0,0.05); }
-      .comp-col-left .comp-val { font-size: 0.85rem; }
-      .comp-col-right { padding: 30px 24px; border-radius: 16px !important; border: 1px solid rgba(0,86,179,0.15) !important; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); z-index: 2; }
-      
-      .report-layout { gap: 40px !important; grid-template-columns: 1fr !important; }
-      .report-page { width: 100%; max-width: 360px; }
-      
-      .grid-3 { grid-template-columns: 1fr !important; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caugia | The GTM & Go-to-Market Intelligence Engine</title>
+<meta name="description" content="The first algorithmic Go-to-Market (GTM) system for B2B SaaS. See exactly which constraints are holding back your growth. Automated diagnostics, delivered in 24 hours." />
+<meta name="keywords" content="GTM, Go-to-Market, GTM Strategy, Revenue Architecture, B2B SaaS, Revenue Operations, Caugia" />
+<link rel="canonical" href="https://www.caugia.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/" />
+<meta property="og:title" content="Caugia | The GTM Intelligence Engine" />
+<meta property="og:description" content="Your GTM team is working hard. Your revenue isn't keeping up. See why. Automated diagnostics for B2B SaaS." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
+<link rel="apple-touch-icon" href="assets/logo-final.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "ProfessionalService",
+"name": "Caugia Consulting",
+"url": "https://www.caugia.com",
+"logo": "https://www.caugia.com/assets/logo-final.png",
+"sameAs": [
+"https://www.linkedin.com/company/caugia"
+],
+"description": "Caugia provides an algorithmic Go-to-Market (GTM) intelligence engine for B2B SaaS companies to optimize revenue architecture.",
+"knowsAbout": ["Go-to-Market Strategy", "GTM", "Revenue Operations", "SaaS Growth"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/caugia-base.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* --- PAGE SPECIFIC STYLES (Index Only) --- */
+:root {
+--good-bg: #f0fdf4; --good-border: #bbf7d0; --good-text: #15803d;
+--warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #b45309;
+--bad-bg: #fef2f2; --bad-border: #fecaca; --bad-text: #b91c1c;
+--mid-bg: #f0f9ff; --mid-border: #bae6fd; --mid-text: #0369a1;
+}
+/* Hero */
+.hero {
+padding: 68px 0 96px;
+display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+.hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
+.hero-desc { font-size: 1.25rem; line-height: 1.6; color: var(--text-body); margin-bottom: 32px; }
+.pillars-card {
+background: var(--white); border: 1px solid rgba(15,23,42,0.04);
+border-radius: var(--radius-md); padding: 30px; box-shadow: var(--shadow-sm);
+border-left: 4px solid var(--primary); margin-top: 40px;
+}
+.pillars-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 20px; }
+.pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+.pillar-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.82rem; color: #334155; }
+.pillar-item:last-child { border-bottom: none; }
+.pillar-num { width: 22px; height: 22px; border-radius: 6px; background: #f1f5f9; color: #0056b3; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.m-text { display: none; }
+/* Widget */
+.widget-card {
+background: var(--white); border-radius: var(--radius-lg); border: 1px solid rgba(15,23,42,0.05);
+box-shadow: var(--shadow-lg); padding: 36px;
+position: sticky; top: 110px; overflow: hidden; z-index: 10;
+}
+.health-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.health-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.15rem; color: #1e293b; }
+.health-sub { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-top: 4px; }
+.health-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
+.insight-box { border: 1px solid transparent; border-radius: 12px; padding: 16px; margin-bottom: 24px; transition: all 0.3s ease; }
+.insight-box.mode-good { background: var(--good-bg); border-color: var(--good-border); }
+.insight-box.mode-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+.insight-box.mode-bad { background: var(--bad-bg); border-color: var(--bad-border); }
+.insight-box.mode-mid { background: var(--mid-bg); border-color: var(--mid-border); }
+.insight-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+.mode-good .insight-label { color: var(--good-text); }
+.mode-warn .insight-label { color: var(--warn-text); }
+.mode-bad .insight-label { color: var(--bad-text); }
+.mode-mid .insight-label { color: var(--mid-text); }
+.insight-title { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; font-family: Inter, sans-serif; }
+.mode-good .insight-title { color: #14532d; }
+.mode-warn .insight-title { color: #78350f; }
+.mode-bad .insight-title { color: #7f1d1d; }
+.mode-mid .insight-title { color: #0c4a6e; }
+.insight-text { font-size: 0.85rem; color: #334155; line-height: 1.5; min-height: 3.2em; }
+.widget-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: center; }
+.controls-col { min-width: 0; }
+.control-group { margin-bottom: 18px; }
+.control-label { display: flex; justify-content: space-between; font-family: Inter, sans-serif; font-weight: 700; font-size: 0.9rem; color: #475569; margin-bottom: 8px; }
+.slider-wrap { padding-right: 10px; }
+input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 4px; background: #e2e8f0; border-radius: 10px; outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 3px solid var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); margin-top: -6px; transition: background 0.2s ease; }
+input.range-warn::-webkit-slider-thumb { background: #d97706; }
+input.range-bad::-webkit-slider-thumb { background: #dc2626; }
+.chart-box { width: 100%; height: 200px; display: flex; justify-content: center; }
+.widget-caption { text-align: center; margin-top: 20px; color: #94a3b8; font-weight: 600; font-size: 0.8rem; }
+/* Content Cards */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 38px; }
+.mini-card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); }
+.mini-card h4 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 10px; }
+.mini-card p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-body); }
+/* Comparison Table */
+.comparison-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1000px; margin: 0 auto; }
+.comp-col-left { padding: 0 24px; opacity: 0.7; border-right: 1px solid var(--line); }
+.comp-col-right { background: white; padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid rgba(0,86,179,0.15); position: relative; overflow: hidden; }
+.comp-list { list-style: none; }
+.comp-item { padding: 16px 0; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+.comp-label { font-weight: 600; color: #334155; }
+.comp-val { font-weight: 700; color: #0f172a; text-align: right; }
+/* Report Section */
+.report-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 74px; align-items: center; }
+.check-list { margin-top: 18px; margin-bottom: 28px; padding: 0; }
+.report-visual { display: flex; align-items: center; justify-content: center; }
+/* Report Page Mockup */
+.report-page {
+width: 360px;
+background: #ffffff;
+border-radius: 8px;
+box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+overflow: hidden;
+transform: perspective(900px) rotateY(-3deg) rotateX(1.5deg);
+transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.report-page:hover {
+transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(1.02);
+}
+.rp-header { background: linear-gradient(135deg, #0056b3, #0073e6); padding: 16px 22px 14px; position: relative; }
+.rp-chapter { font-size: 0.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+.rp-title { font-family: Merriweather, serif; font-size: 0.95rem; font-weight: 900; color: #ffffff; line-height: 1.2; }
+.rp-subtitle { font-size: 0.52rem; color: rgba(255,255,255,0.5); margin-top: 3px; font-weight: 500; }
+.rp-logo { position: absolute; top: 14px; right: 18px; width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.rp-logo span { font-weight: 900; font-size: 0.65rem; color: #fff; }
+.rp-body { padding: 18px 22px 14px; }
+.rp-verdict-label { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
+.rp-verdict-text { font-size: 0.55rem; color: #475569; line-height: 1.55; margin-bottom: 16px; }
+.rp-section-title { font-size: 0.58rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+.rp-section-desc { font-size: 0.48rem; color: #94a3b8; margin-bottom: 12px; }
+.rp-score-row { margin-bottom: 10px; }
+.rp-score-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.rp-score-label { font-size: 0.6rem; font-weight: 700; color: #0f172a; }
+.rp-score-val { font-size: 0.65rem; font-weight: 800; color: #0f172a; }
+.rp-score-delta { font-size: 0.5rem; font-weight: 700; margin-left: 3px; }
+.delta-neg { color: #dc2626; }
+.delta-pos { color: #16a34a; }
+.rp-bar-track { height: 7px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative; }
+.rp-bar-fill { height: 100%; border-radius: 4px; }
+.rp-bar-track::after { content: ""; position: absolute; top: 0; left: 70%; width: 1.5px; height: 100%; background: #1e293b; opacity: 0.3; }
+.bar-strong { background: linear-gradient(90deg, #0056b3, #3b82f6); }
+.bar-dev { background: linear-gradient(90deg, #d97706, #fbbf24); }
+.bar-crit { background: linear-gradient(90deg, #dc2626, #f87171); }
+.rp-score-sub { font-size: 0.45rem; color: #94a3b8; margin-top: 2px; }
+.rp-score-sub .status-text { font-weight: 700; }
+.status-strong { color: #16a34a; }
+.status-dev { color: #d97706; }
+.status-crit { color: #dc2626; }
+.rp-divider { height: 1px; background: #e2e8f0; margin: 14px 0; }
+.rp-pattern { background: #fff7ed; border: 1px solid #fed7aa; border-left: 3px solid #f59e0b; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; }
+.rp-pattern-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; margin-bottom: 2px; }
+.rp-pattern-title { font-size: 0.7rem; font-weight: 800; color: #78350f; margin-bottom: 3px; }
+.rp-pattern-text { font-size: 0.5rem; color: #92400e; line-height: 1.45; }
+.rp-priority { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #0056b3; border-radius: 6px; padding: 10px 12px; }
+.rp-priority-label { font-size: 0.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #0056b3; margin-bottom: 2px; }
+.rp-priority-title { font-size: 0.62rem; font-weight: 800; color: #1e3a5f; margin-bottom: 3px; }
+.rp-priority-text { font-size: 0.5rem; color: #334155; line-height: 1.45; }
+.rp-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 8px 22px; display: flex; justify-content: space-between; align-items: center; }
+.rp-footer-left { font-size: 0.42rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
+.rp-footer-right { font-size: 0.42rem; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.06em; }
+/* --- MOBILE RESPONSIVENESS (Page Specific) --- */
+@media (max-width: 980px) {
+.hero {
+padding-top: 30px !important;
+padding-bottom: 50px !important;
+gap: 40px !important;
+text-align: center;
+grid-template-columns: 1fr !important;
+}
+.hero > div:first-child { padding-left: 12px; padding-right: 12px; }
+.hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; margin-bottom: 16px; }
+.hero-desc { font-size: 1.05rem; line-height: 1.5; }
+.hero > div:first-child > div[style*="display:flex"] { justify-content: center; }
+.pillars-card { padding: 24px 20px; margin-top: 30px; text-align: left; }
+.pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+.pillar-grid > div { display: contents; }
+.pillar-item { font-size: 0.75rem; align-items: center; }
+.pillar-num { font-size: 0.7rem; }
+.d-text { display: none; }
+.m-text { display: inline; }
+.widget-card { margin-top: 0; padding: 24px 20px; box-shadow: none; border: 1px solid var(--line); }
+.health-score { font-size: 3rem; }
+.slider-wrap { padding: 10px 0; }
+input[type=range] { height: 6px; }
+input[type=range]::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -9px; }
+.widget-layout { display: grid !important; grid-template-columns: 1fr !important; gap: 30px !important; }
+.chart-col { margin-top: 0; }
+.comparison-wrapper { gap: 24px !important; grid-template-columns: 1fr !important; }
+.comp-col-left { background: #f1f5f9; padding: 24px; border-radius: 16px !important; border: 1px solid var(--line); opacity: 1; }
+.comp-col-left h4 { font-size: 0.9rem; margin-bottom: 12px; }
+.comp-col-left .comp-item { padding: 8px 0; border-color: rgba(0,0,0,0.05); }
+.comp-col-left .comp-val { font-size: 0.85rem; }
+.comp-col-right { padding: 30px 24px; border-radius: 16px !important; border: 1px solid rgba(0,86,179,0.15) !important; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); z-index: 2; }
+.report-layout { gap: 40px !important; grid-template-columns: 1fr !important; }
+.report-page { width: 100%; max-width: 360px; }
+.grid-3 { grid-template-columns: 1fr !important; }
+}
+</style>
 </head>
-
 <body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="index.html">
-        <img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
-        <span>CAUGIA CONSULTING</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gtm-assessment.html">GTM Score</a></li>
-        <li><a href="resources.html">Resources</a></li>
-      </ul>
-      
-      <div class="nav-actions">
-        <a href="contact.html" class="btn btn-secondary">Contact</a>
-        <button class="menu-toggle" id="menuToggle">Menu</button>
-      </div>
-    </div>
-    
-    <div class="container mobile-nav" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="gtm-assessment.html">GTM Score</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="container hero">
-      <div>
-        <span class="eyebrow">One GTM system for B2B SaaS</span>
-        <h1>Stop revenue leakage by aligning your GTM system.</h1>
-        
-        <p class="hero-desc">
-          <strong>Replace weeks of expensive discovery with one intelligent assessment.</strong>
-          The Caugia Intelligence Engine analyzes your revenue architecture against 30+ growth archetypes and reveals your primary constraint instantly.
-        </p>
-        <p class="hero-desc" style="margin-bottom:0; font-size:1rem; color:#64748b; font-weight:500;">
-          No workshops. No billable hours. Just pure, algorithmic GTM strategy.
-        </p>
-
-        <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:24px; margin-bottom:40px;">
-          <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-          <a href="services.html" class="btn btn-outline">Explore the report</a>
-        </div>
-
-        <div class="pillars-card">
-          <h3>The 12 System Pillars</h3>
-          <div class="pillar-grid">
-            <div>
-              <div class="pillar-item">
-                  <span class="pillar-num">1</span>
-                  <span>
-                      <span class="d-text">GTM Strategy & Leadership</span>
-                      <span class="m-text">GTM Strategy</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">2</span>
-                  <span>
-                      <span class="d-text">Market Intelligence</span>
-                      <span class="m-text">Market Intel</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">3</span>
-                  <span>
-                      <span class="d-text">Product Marketing</span>
-                      <span class="m-text">Product Mktg</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">4</span>
-                  <span>
-                      <span class="d-text">Demand Generation</span>
-                      <span class="m-text">Demand Gen</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">5</span>
-                  <span>
-                      <span class="d-text">Sales Execution</span>
-                      <span class="m-text">Sales Exec</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">6</span>
-                  <span>
-                      <span class="d-text">Customer Success & Expansion</span>
-                      <span class="m-text">CS & Expansion</span>
-                  </span>
-              </div>
-            </div>
-            <div>
-              <div class="pillar-item">
-                  <span class="pillar-num">7</span>
-                  <span>
-                      <span class="d-text">Revenue Operations & Systems</span>
-                      <span class="m-text">RevOps</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">8</span>
-                  <span>
-                      <span class="d-text">Pricing & Packaging</span>
-                      <span class="m-text">Pricing</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">9</span>
-                  <span>
-                      <span class="d-text">Product Readiness</span>
-                      <span class="m-text">Product Ready</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">10</span>
-                  <span>
-                      <span class="d-text">Data & Insights</span>
-                      <span class="m-text">Data</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">11</span>
-                  <span>
-                      <span class="d-text">Enablement</span>
-                      <span class="m-text">Enablement</span>
-                  </span>
-              </div>
-              <div class="pillar-item">
-                  <span class="pillar-num">12</span>
-                  <span>
-                      <span class="d-text">Alignment & Governance</span>
-                      <span class="m-text">Governance</span>
-                  </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="widget-card" id="score">
-        <div class="health-header">
-          <div>
-            <div class="health-title">Your GRIP Health</div>
-            <div class="health-sub">Current maturity</div>
-          </div>
-          <div class="health-score" id="totalScore">58</div>
-        </div>
-
-        <div class="insight-box" id="archetypeBox">
-          <span class="insight-label" id="archetypeLabel">System Pattern</span>
-          <div class="insight-title" id="archetypeTitle">The Foundation Builder</div>
-          <div class="insight-text" id="archetypeBody">Multiple constraints exist. Build clarity first, then strengthen infrastructure.</div>
-        </div>
-
-        <div class="widget-layout">
-          <div class="controls-col">
-            <div class="control-group">
-              <div class="control-label">
-                <span class="name">Guidance</span>
-                <span class="value" id="val-g">45</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-g" min="0" max="100" value="45" />
-              </div>
-            </div>
-
-            <div class="control-group">
-              <div class="control-label">
-                <span class="name">Resources</span>
-                <span class="value" id="val-r">60</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-r" min="0" max="100" value="60" />
-              </div>
-            </div>
-
-            <div class="control-group">
-              <div class="control-label">
-                <span class="name">Implementation</span>
-                <span class="value" id="val-i">85</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-i" min="0" max="100" value="85" />
-              </div>
-            </div>
-
-            <div class="control-group">
-              <div class="control-label">
-                <span class="name">Performance</span>
-                <span class="value" id="val-p">43</span>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="input-p" min="0" max="100" value="43" />
-              </div>
-            </div>
-          </div>
-
-          <div class="chart-col">
-            <div class="chart-box">
-              <canvas id="radarChart"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <div class="widget-caption">The system shape across four forces</div>
-      </aside>
-    </section>
-
-    <section class="section-white">
-      <div class="container">
-        <div style="max-width:820px;">
-          <h2>Why GTM feels heavy even when everyone works hard</h2>
-          <p>
-            Most GTM teams are not constrained by effort. They are constrained by misalignment.
-            Strategy, execution, and measurement drift. The system gets heavier each quarter, even when the team is strong.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="mini-card">
-            <h4>Misaligned priorities</h4>
-            <p>Teams optimise local metrics instead of the full revenue system. Pipeline grows, conversion does not.</p>
-          </div>
-          <div class="mini-card">
-            <h4>No shared model</h4>
-            <p>Leadership debates symptoms because the system is not visible. Decisions become slow and reactive.</p>
-          </div>
-          <div class="mini-card">
-            <h4>Execution without sequence</h4>
-            <p>Strong initiatives arrive in the wrong order. The real constraint stays untouched, so effort does not compound.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-gray">
-      <div class="container">
-        <div style="text-align:center; max-width:700px; margin:0 auto 56px;">
-          <span class="eyebrow">Productized Consulting</span>
-          <h2>Consulting grade strategy.<br>Zero billable hours.</h2>
-          <p>
-            We codified the intuition of a seasoned CRO into a digital engine. 
-            Get the same board-level insights you'd expect from a Tier-1 firm, but without the timeline.
-          </p>
-        </div>
-
-        <div class="comparison-wrapper">
-          
-          <div class="comp-col-left">
-            <h4 style="margin-bottom:24px; color:#64748b; font-size:1.2rem;">Traditional Consulting</h4>
-            <ul class="comp-list">
-              <li class="comp-item">
-                <span class="comp-label">Timeline</span> <span class="comp-val" style="color:#64748b;">6-8 Weeks</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Method</span> <span class="comp-val" style="color:#64748b;">Subjective Interviews</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
-              </li>
-              <li class="comp-item">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;"><span class="curr">$</span>25k - <span class="curr">$</span>50k+</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="comp-col-right">
-            <div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
-            
-            <h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.1rem; font-family:Inter, sans-serif; font-weight:900; letter-spacing:0.02em; text-transform:uppercase;">
-              <img src="assets/logo-final.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
-            </h4>
-            <ul class="comp-list">
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Timeline</span> 
-                <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Method</span> <span class="comp-val">Algorithmic Diagnostic</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Bias</span> <span class="comp-val">Zero (Data-Driven)</span>
-              </li>
-              <li class="comp-item" style="border-bottom-color:#f1f5f9;">
-                <span class="comp-label">Cost</span> <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">From €1,249</span>
-              </li>
-            </ul>
-            <div style="margin-top:32px; text-align:center;">
-                <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get Your Intelligence Report</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section id="report" class="section-dark">
-      <div class="container report-layout">
-        <div>
-          <span class="eyebrow" style="color:#60a5fa;">Instant Deliverable</span>
-          <h2>Your Strategy Roadmap.<br>Generated Instantly.</h2>
-          <p style="color:#94a3b8; font-size:1.1rem; margin-bottom:32px;">
-            The Engine processes 300 data points across your revenue system and compiles 
-            a Board-Level Diagnostic PDF automatically. No waiting for slides.
-          </p>
-
-          <ul class="check-list">
-            <li>Benchmarked against 30+ SaaS Growth Archetypes</li>
-            <li>Identifies your #1 Constraint mathematically</li>
-            <li>Provides a quarter-by-quarter execution plan</li>
-          </ul>
-
-          <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the report</a>
-            <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#ffffff;">Free GTM Score</a>
-          </div>
-        </div>
-
-        <div class="report-visual">
-          <div class="report-page">
-            <div class="rp-header">
-              <div class="rp-chapter">Chapter 2</div>
-              <div class="rp-title">GRIP Dimension Scores</div>
-              <div class="rp-subtitle">Guidance · Resources · Implementation · Performance</div>
-              <div class="rp-logo"><span>C</span></div>
-            </div>
-            <div class="rp-body">
-              <div class="rp-verdict-label">Executive Verdict</div>
-              <div class="rp-verdict-text">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs. The system cannot convert intent into repeatable outcomes. Fixing this unlocks the existing investment.</div>
-              <div class="rp-section-title">The GRIP View</div>
-              <div class="rp-section-desc">Benchmark target: 70+ per dimension</div>
-              <div class="rp-score-row">
-                <div class="rp-score-top"><span class="rp-score-label">Guidance</span><span><span class="rp-score-val">74</span><span class="rp-score-delta delta-pos">+4</span></span></div>
-                <div class="rp-bar-track"><div class="rp-bar-fill bar-strong" style="width:74%"></div></div>
-                <div class="rp-score-sub">Strategic direction and ICP clarity · <span class="status-text status-strong">On track</span></div>
-              </div>
-              <div class="rp-score-row">
-                <div class="rp-score-top"><span class="rp-score-label">Resources</span><span><span class="rp-score-val">66</span><span class="rp-score-delta delta-neg">-4</span></span></div>
-                <div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:66%"></div></div>
-                <div class="rp-score-sub">Team capacity and investment allocation · <span class="status-text status-dev">Below target</span></div>
-              </div>
-              <div class="rp-score-row">
-                <div class="rp-score-top"><span class="rp-score-label">Implementation</span><span><span class="rp-score-val">41</span><span class="rp-score-delta delta-neg">-29</span></span></div>
-                <div class="rp-bar-track"><div class="rp-bar-fill bar-crit" style="width:41%"></div></div>
-                <div class="rp-score-sub">Sales execution and conversion efficiency · <span class="status-text status-crit">Critical</span></div>
-              </div>
-              <div class="rp-score-row">
-                <div class="rp-score-top"><span class="rp-score-label">Performance</span><span><span class="rp-score-val">62</span><span class="rp-score-delta delta-neg">-8</span></span></div>
-                <div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:62%"></div></div>
-                <div class="rp-score-sub">Revenue outcomes and growth trajectory · <span class="status-text status-dev">Below target</span></div>
-              </div>
-              <div class="rp-divider"></div>
-              <div class="rp-pattern">
-                <div class="rp-pattern-label">System Pattern</div>
-                <div class="rp-pattern-title">The Ivory Tower</div>
-                <div class="rp-pattern-text">Strategy is strong but execution breaks down at handoffs. Plans remain correct on paper but non-operational in the field.</div>
-              </div>
-              <div class="rp-priority">
-                <div class="rp-priority-label">Your #1 Priority Fix</div>
-                <div class="rp-priority-title">Build execution mechanics before adding strategy layers</div>
-                <div class="rp-priority-text">Install playbooks, ownership contracts, and an operating cadence. Map where intent fails to become behavior. This single move typically recovers 15-25% of leaked pipeline value.</div>
-              </div>
-            </div>
-            <div class="rp-footer">
-              <span class="rp-footer-left">Confidential Analysis · February 2026</span>
-              <span class="rp-footer-right">Page 8 of 41</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section>
-      <div class="container" style="max-width:860px; text-align:center;">
-        <span class="eyebrow">Next step</span>
-        <h2>Your GTM System is speaking.<br>Are you listening?</h2>
-        <p style="font-size:1.1rem; max-width:600px; margin:0 auto 24px auto;">
-          Opinion-based strategy is slow. Data-driven architecture is scalable. See exactly which constraints are holding back your revenue today.
-        </p>
-        <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
-          <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-          <a href="contact.html" class="btn btn-outline">Contact</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="assets/caugia-base.js"></script>
-  <script src="assets/grip-archetypes.js"></script>
-
-  <script>
-    (function () {
-      const canvas = document.getElementById("radarChart");
-      if (!canvas) return;
-
-      const ctx = canvas.getContext("2d");
-
-      const myChart = new Chart(ctx, {
-        type: "radar",
-        data: {
-          labels: ["G", "R", "I", "P"],
-          datasets: [{
-            data: [45, 60, 85, 43],
-            backgroundColor: "rgba(0, 86, 179, 0.15)",
-            borderColor: "#0056b3",
-            pointBackgroundColor: "#0056b3",
-            borderWidth: 2,
-            pointRadius: 3,
-            pointHoverRadius: 5
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
-          },
-          scales: {
-            r: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              ticks: { display: false, count: 5 },
-              angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
-              grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
-              pointLabels: {
-                color: "#0056b3",
-                font: { size: 14, weight: "800", family: "Inter" },
-                padding: 10
-              }
-            }
-          },
-          elements: { line: { tension: 0.2 } }
-        }
-      });
-
-      function updateSliderColor(id, val) {
-        const el = document.getElementById(id);
-        el.className = "";
-        if (val < 50) el.classList.add("range-bad");
-        else if (val < 70) el.classList.add("range-warn");
-      }
-
-      function getFallbackArchetype() {
-        return {
-          title: "The Developing Engine",
-          short: "The system shows potential, but coherence is still forming. Outcomes depend on local strengths rather than a unified engine.",
-          mode: "mode-mid"
-        };
-      }
-
-      function updateChart() {
-        const g = parseInt(document.getElementById("input-g").value, 10);
-        const r = parseInt(document.getElementById("input-r").value, 10);
-        const i = parseInt(document.getElementById("input-i").value, 10);
-        const p = parseInt(document.getElementById("input-p").value, 10);
-
-        document.getElementById("val-g").textContent = g;
-        document.getElementById("val-r").textContent = r;
-        document.getElementById("val-i").textContent = i;
-        document.getElementById("val-p").textContent = p;
-
-        updateSliderColor("input-g", g);
-        updateSliderColor("input-r", r);
-        updateSliderColor("input-i", i);
-        updateSliderColor("input-p", p);
-
-        document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
-
-        myChart.data.datasets[0].data = [g, r, i, p];
-        myChart.update();
-
-        const arch = (window.GRIP && typeof window.GRIP.getArchetype === "function")
-          ? window.GRIP.getArchetype(g, r, i, p)
-          : getFallbackArchetype();
-
-        const boxEl = document.getElementById("archetypeBox");
-
-        document.getElementById("archetypeTitle").textContent = arch.title || "";
-        document.getElementById("archetypeBody").textContent = arch.short || "";
-
-        boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
-        boxEl.classList.add(arch.mode || "mode-mid");
-      }
-
-      ["input-g","input-r","input-i","input-p"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("input", updateChart);
-      });
-
-      updateChart();
-    })();
-  </script>
-
+<header>
+<div class="container nav">
+<a class="brand" href="index.html">
+<img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />
+<span>CAUGIA CONSULTING</span>
+</a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="gtm-assessment.html">GTM Score</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<div class="nav-actions">
+<a href="contact.html" class="btn btn-secondary">Contact</a>
+<button class="menu-toggle" id="menuToggle">Menu</button>
+</div>
+</div>
+<div class="container mobile-nav" id="mobileNav">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="gtm-assessment.html">GTM Score</a>
+<a href="resources.html">Resources</a>
+<a href="contact.html">Contact</a>
+</div>
+</header>
+<main>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="container hero">
+<div>
+<span class="eyebrow">The GTM Intelligence Engine for B2B SaaS</span>
+<h1>Your GTM team is working hard.<br>Your revenue isn't keeping up.</h1>
+<p class="hero-desc">
+<strong>See exactly which constraints are holding back your growth.</strong>
+The Caugia Intelligence Engine analyzes your revenue architecture against 30+ growth archetypes and reveals your primary constraint in under an hour.
+</p>
+<p class="hero-desc" style="margin-bottom:0; font-size:1rem; color:#64748b; font-weight:500;">
+No workshops. No billable hours. Just pure, algorithmic GTM strategy.
+</p>
+<div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:24px; margin-bottom:40px;">
+<a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+<a href="gtm-intelligence-report.html" class="btn btn-outline">See a Sample Report</a>
+</div>
+<div class="pillars-card">
+<h3>The 12 System Pillars</h3>
+<div class="pillar-grid">
+<div>
+<div class="pillar-item">
+<span class="pillar-num">1</span>
+<span>
+<span class="d-text">GTM Strategy & Leadership</span>
+<span class="m-text">GTM Strategy</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">2</span>
+<span>
+<span class="d-text">Market Intelligence</span>
+<span class="m-text">Market Intel</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">3</span>
+<span>
+<span class="d-text">Product Marketing</span>
+<span class="m-text">Product Mktg</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">4</span>
+<span>
+<span class="d-text">Demand Generation</span>
+<span class="m-text">Demand Gen</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">5</span>
+<span>
+<span class="d-text">Sales Execution</span>
+<span class="m-text">Sales Exec</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">6</span>
+<span>
+<span class="d-text">Customer Success & Expansion</span>
+<span class="m-text">CS & Expansion</span>
+</span>
+</div>
+</div>
+<div>
+<div class="pillar-item">
+<span class="pillar-num">7</span>
+<span>
+<span class="d-text">Revenue Operations & Systems</span>
+<span class="m-text">RevOps</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">8</span>
+<span>
+<span class="d-text">Pricing & Packaging</span>
+<span class="m-text">Pricing</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">9</span>
+<span>
+<span class="d-text">Product Readiness</span>
+<span class="m-text">Product Ready</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">10</span>
+<span>
+<span class="d-text">Data & Insights</span>
+<span class="m-text">Data</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">11</span>
+<span>
+<span class="d-text">Enablement</span>
+<span class="m-text">Enablement</span>
+</span>
+</div>
+<div class="pillar-item">
+<span class="pillar-num">12</span>
+<span>
+<span class="d-text">Alignment & Governance</span>
+<span class="m-text">Governance</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="widget-card" id="score">
+<div class="health-header">
+<div>
+<div class="health-title">Your GRIP Health</div>
+<div class="health-sub">Current maturity</div>
+</div>
+<div class="health-score" id="totalScore">58</div>
+</div>
+<div class="insight-box" id="archetypeBox">
+<span class="insight-label" id="archetypeLabel">System Pattern</span>
+<div class="insight-title" id="archetypeTitle">The Foundation Builder</div>
+<div class="insight-text" id="archetypeBody">Multiple constraints exist. Build clarity first, then strengthen infrastructure.</div>
+</div>
+<div class="widget-layout">
+<div class="controls-col">
+<div class="control-group">
+<div class="control-label">
+<span class="name">Guidance</span>
+<span class="value" id="val-g">45</span>
+</div>
+<div class="slider-wrap">
+<input type="range" id="input-g" min="0" max="100" value="45" />
+</div>
+</div>
+<div class="control-group">
+<div class="control-label">
+<span class="name">Resources</span>
+<span class="value" id="val-r">60</span>
+</div>
+<div class="slider-wrap">
+<input type="range" id="input-r" min="0" max="100" value="60" />
+</div>
+</div>
+<div class="control-group">
+<div class="control-label">
+<span class="name">Implementation</span>
+<span class="value" id="val-i">85</span>
+</div>
+<div class="slider-wrap">
+<input type="range" id="input-i" min="0" max="100" value="85" />
+</div>
+</div>
+<div class="control-group">
+<div class="control-label">
+<span class="name">Performance</span>
+<span class="value" id="val-p">43</span>
+</div>
+<div class="slider-wrap">
+<input type="range" id="input-p" min="0" max="100" value="43" />
+</div>
+</div>
+</div>
+<div class="chart-col">
+<div class="chart-box">
+<canvas id="radarChart"></canvas>
+</div>
+</div>
+</div>
+<div class="widget-caption">The system shape across four forces</div>
+</aside>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PAIN SECTION -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section-white">
+<div class="container">
+<div style="max-width:820px;">
+<h2>Why GTM feels heavy even when everyone works hard</h2>
+<p>
+Most GTM teams are not constrained by effort. They are constrained by misalignment.
+Strategy, execution, and measurement drift. The system gets heavier each quarter, even when the team is strong.
+</p>
+</div>
+<div class="grid-3">
+<div class="mini-card">
+<h4>Misaligned priorities</h4>
+<p>Marketing optimizes for MQLs. Sales optimizes for activity. Revenue stays flat. Everyone is busy, but nothing compounds.</p>
+</div>
+<div class="mini-card">
+<h4>No shared model</h4>
+<p>The board asks why growth is slowing. Sales blames marketing. Marketing blames product. Nobody has the same picture of the system.</p>
+</div>
+<div class="mini-card">
+<h4>Execution without sequence</h4>
+<p>You launched ABM, revamped onboarding, and hired a new AE. All good moves. But the real bottleneck hasn't been touched, so nothing moved.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- WHO THIS IS FOR (NEW SECTION) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section-gray">
+<div class="container" style="max-width:820px;">
+<span class="eyebrow">Built For</span>
+<h2>Is this you?</h2>
+<p style="font-size:1.1rem; color:var(--text-body); margin-bottom:32px;">
+Caugia is built for B2B SaaS teams between €2M–€30M ARR who feel like their GTM should be performing better than it is.
+</p>
+<div class="grid-3">
+<div class="mini-card">
+<h4>Series A – C</h4>
+<p>You have product-market fit and paying customers. Growth should be compounding, but it isn't.</p>
+</div>
+<div class="mini-card">
+<h4>Hybrid GTM Motion</h4>
+<p>Outbound, inbound, PLG, sales-led — you do it all. But the motions don't reinforce each other.</p>
+</div>
+<div class="mini-card">
+<h4>Revenue Team of 5–40</h4>
+<p>Big enough to have systemic GTM problems. Small enough that one diagnostic can shift the trajectory.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- COMPARISON TABLE -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section-white">
+<div class="container">
+<div style="text-align:center; max-width:700px; margin:0 auto 56px;">
+<span class="eyebrow">Productized Consulting</span>
+<h2>Consulting grade strategy.<br>Zero billable hours.</h2>
+<p>
+We codified the intuition of a seasoned CRO into a digital engine.
+Get the same board-level insights you'd expect from a Tier-1 firm, but without the timeline.
+</p>
+</div>
+<div class="comparison-wrapper">
+<div class="comp-col-left">
+<h4 style="margin-bottom:24px; color:#64748b; font-size:1.2rem;">Traditional Consulting</h4>
+<ul class="comp-list">
+<li class="comp-item">
+<span class="comp-label">Timeline</span> <span class="comp-val" style="color:#64748b;">6-8 Weeks</span>
+</li>
+<li class="comp-item">
+<span class="comp-label">Method</span> <span class="comp-val" style="color:#64748b;">Subjective Interviews</span>
+</li>
+<li class="comp-item">
+<span class="comp-label">Bias</span> <span class="comp-val" style="color:#64748b;">High (Opinion based)</span>
+</li>
+<li class="comp-item">
+<span class="comp-label">Cost</span> <span class="comp-val" style="color:#64748b;"><span class="curr">€</span><span data-price-key="compCost">25k – 50k+</span></span>
+</li>
+</ul>
+</div>
+<div class="comp-col-right">
+<div style="position:absolute; top:0; right:0; background:#dcfce7; color:#166534; font-size:0.7rem; font-weight:800; padding:6px 12px; border-bottom-left-radius:12px; letter-spacing:0.05em;">RECOMMENDED</div>
+<h4 style="margin-bottom:24px; color:var(--primary); display:flex; align-items:center; gap:12px; font-size:1.1rem; font-family:Inter, sans-serif; font-weight:900; letter-spacing:0.02em; text-transform:uppercase;">
+<img src="assets/logo-final.png" style="width:28px;height:28px;" alt="Caugia Logo"> Caugia Intelligence
+</h4>
+<ul class="comp-list">
+<li class="comp-item" style="border-bottom-color:#f1f5f9;">
+<span class="comp-label">Timeline</span>
+<span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">~45 Minutes</span>
+</li>
+<li class="comp-item" style="border-bottom-color:#f1f5f9;">
+<span class="comp-label">Method</span> <span class="comp-val">Algorithmic Diagnostic</span>
+</li>
+<li class="comp-item" style="border-bottom-color:#f1f5f9;">
+<span class="comp-label">Bias</span> <span class="comp-val">Zero (Data-Driven)</span>
+</li>
+<li class="comp-item" style="border-bottom-color:#f1f5f9;">
+<span class="comp-label">Cost</span> <span class="comp-val" style="color:#16a34a; background:#dcfce7; padding:4px 10px; border-radius:6px; font-size:0.9rem;">From <span class="curr">€</span><span data-price-key="report">2,495</span></span>
+</li>
+</ul>
+<div style="margin-top:32px; text-align:center;">
+<a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get Your Intelligence Report</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- REPORT PREVIEW -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="report" class="section-dark">
+<div class="container report-layout">
+<div>
+<span class="eyebrow" style="color:#60a5fa;">Instant Deliverable</span>
+<h2>Your Strategy Roadmap.<br>Generated Instantly.</h2>
+<p style="color:#94a3b8; font-size:1.1rem; margin-bottom:32px;">
+The Engine processes 300 data points across your revenue system and compiles
+a Board-Level Diagnostic PDF automatically. No waiting for slides.
+</p>
+<ul class="check-list">
+<li>Benchmarked against 30+ SaaS Growth Archetypes</li>
+<li>Identifies your #1 Constraint mathematically</li>
+<li>Provides a quarter-by-quarter execution plan</li>
+</ul>
+<div style="display:flex; gap:14px; flex-wrap:wrap;">
+<a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#ffffff; color:#0f172a;">Explore the report</a>
+<a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.28); color:#ffffff;">Free GTM Score</a>
+</div>
+</div>
+<div class="report-visual">
+<div class="report-page">
+<div class="rp-header">
+<div class="rp-chapter">Chapter 2</div>
+<div class="rp-title">GRIP Dimension Scores</div>
+<div class="rp-subtitle">Guidance · Resources · Implementation · Performance</div>
+<div class="rp-logo"><span>C</span></div>
+</div>
+<div class="rp-body">
+<div class="rp-verdict-label">Executive Verdict</div>
+<div class="rp-verdict-text">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs. The system cannot convert intent into repeatable outcomes. Fixing this unlocks the existing investment.</div>
+<div class="rp-section-title">The GRIP View</div>
+<div class="rp-section-desc">Benchmark target: 70+ per dimension</div>
+<div class="rp-score-row">
+<div class="rp-score-top"><span class="rp-score-label">Guidance</span><span><span class="rp-score-val">74</span><span class="rp-score-delta delta-pos">+4</span></span></div>
+<div class="rp-bar-track"><div class="rp-bar-fill bar-strong" style="width:74%"></div></div>
+<div class="rp-score-sub">Strategic direction and ICP clarity · <span class="status-text status-strong">On track</span></div>
+</div>
+<div class="rp-score-row">
+<div class="rp-score-top"><span class="rp-score-label">Resources</span><span><span class="rp-score-val">66</span><span class="rp-score-delta delta-neg">-4</span></span></div>
+<div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:66%"></div></div>
+<div class="rp-score-sub">Team capacity and investment allocation · <span class="status-text status-dev">Below target</span></div>
+</div>
+<div class="rp-score-row">
+<div class="rp-score-top"><span class="rp-score-label">Implementation</span><span><span class="rp-score-val">41</span><span class="rp-score-delta delta-neg">-29</span></span></div>
+<div class="rp-bar-track"><div class="rp-bar-fill bar-crit" style="width:41%"></div></div>
+<div class="rp-score-sub">Sales execution and conversion efficiency · <span class="status-text status-crit">Critical</span></div>
+</div>
+<div class="rp-score-row">
+<div class="rp-score-top"><span class="rp-score-label">Performance</span><span><span class="rp-score-val">62</span><span class="rp-score-delta delta-neg">-8</span></span></div>
+<div class="rp-bar-track"><div class="rp-bar-fill bar-dev" style="width:62%"></div></div>
+<div class="rp-score-sub">Revenue outcomes and growth trajectory · <span class="status-text status-dev">Below target</span></div>
+</div>
+<div class="rp-divider"></div>
+<div class="rp-pattern">
+<div class="rp-pattern-label">System Pattern</div>
+<div class="rp-pattern-title">The Ivory Tower</div>
+<div class="rp-pattern-text">Strategy is strong but execution breaks down at handoffs. Plans remain correct on paper but non-operational in the field.</div>
+</div>
+<div class="rp-priority">
+<div class="rp-priority-label">Your #1 Priority Fix</div>
+<div class="rp-priority-title">Build execution mechanics before adding strategy layers</div>
+<div class="rp-priority-text">Install playbooks, ownership contracts, and an operating cadence. Map where intent fails to become behavior. This single move typically recovers 15-25% of leaked pipeline value.</div>
+</div>
+</div>
+<div class="rp-footer">
+<span class="rp-footer-left">Confidential Analysis · March 2026</span>
+<span class="rp-footer-right">Page 8 of 41</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- FINAL CTA -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section>
+<div class="container" style="max-width:860px; text-align:center;">
+<span class="eyebrow">Next step</span>
+<h2>Your GTM System is speaking.<br>Are you listening?</h2>
+<p style="font-size:1.1rem; max-width:600px; margin:0 auto 24px auto;">
+Opinion-based strategy is slow. Data-driven architecture is scalable. See exactly which constraints are holding back your revenue today.
+</p>
+<div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+<a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+<a href="gtm-intelligence-report.html" class="btn btn-outline">See the Intelligence Report</a>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="container">
+<p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
+</div>
+</footer>
+<script src="assets/caugia-base.js"></script>
+<script src="assets/grip-archetypes.js"></script>
+<script>
+(function () {
+const canvas = document.getElementById("radarChart");
+if (!canvas) return;
+const ctx = canvas.getContext("2d");
+const myChart = new Chart(ctx, {
+type: "radar",
+data: {
+labels: ["G", "R", "I", "P"],
+datasets: [{
+data: [45, 60, 85, 43],
+backgroundColor: "rgba(0, 86, 179, 0.15)",
+borderColor: "#0056b3",
+pointBackgroundColor: "#0056b3",
+borderWidth: 2,
+pointRadius: 3,
+pointHoverRadius: 5
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { display: false },
+tooltip: { enabled: true }
+},
+scales: {
+r: {
+suggestedMin: 0,
+suggestedMax: 100,
+ticks: { display: false, count: 5 },
+angleLines: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
+grid: { color: "rgba(0,0,0,0.05)", lineWidth: 1 },
+pointLabels: {
+color: "#0056b3",
+font: { size: 14, weight: "800", family: "Inter" },
+padding: 10
+}
+}
+},
+elements: { line: { tension: 0.2 } }
+}
+});
+function updateSliderColor(id, val) {
+const el = document.getElementById(id);
+el.className = "";
+if (val < 50) el.classList.add("range-bad");
+else if (val < 70) el.classList.add("range-warn");
+}
+function getFallbackArchetype() {
+return {
+title: "The Developing Engine",
+short: "The system shows potential, but coherence is still forming. Outcomes depend on local strengths rather than a unified engine.",
+mode: "mode-mid"
+};
+}
+function updateChart() {
+const g = parseInt(document.getElementById("input-g").value, 10);
+const r = parseInt(document.getElementById("input-r").value, 10);
+const i = parseInt(document.getElementById("input-i").value, 10);
+const p = parseInt(document.getElementById("input-p").value, 10);
+document.getElementById("val-g").textContent = g;
+document.getElementById("val-r").textContent = r;
+document.getElementById("val-i").textContent = i;
+document.getElementById("val-p").textContent = p;
+updateSliderColor("input-g", g);
+updateSliderColor("input-r", r);
+updateSliderColor("input-i", i);
+updateSliderColor("input-p", p);
+document.getElementById("totalScore").textContent = Math.round((g + r + i + p) / 4);
+myChart.data.datasets[0].data = [g, r, i, p];
+myChart.update();
+const arch = (window.GRIP && typeof window.GRIP.getArchetype === "function")
+? window.GRIP.getArchetype(g, r, i, p)
+: getFallbackArchetype();
+const boxEl = document.getElementById("archetypeBox");
+document.getElementById("archetypeTitle").textContent = arch.title || "";
+document.getElementById("archetypeBody").textContent = arch.short || "";
+boxEl.classList.remove("mode-good", "mode-warn", "mode-bad", "mode-mid");
+boxEl.classList.add(arch.mode || "mode-mid");
+}
+["input-g","input-r","input-i","input-p"].forEach(id => {
+const el = document.getElementById(id);
+if (el) el.addEventListener("input", updateChart);
+});
+updateChart();
+})();
+</script>
 </body>
 </html>
