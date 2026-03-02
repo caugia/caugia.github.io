@@ -34,210 +34,144 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-/* ═══════════════════════════════════════════════════════
-   INDEX — UNIFIED VISUAL LANGUAGE
-   One white canvas. One flow. Minimal section breaks.
-   ═══════════════════════════════════════════════════════ */
-
-/* ── Hero ── */
-.hero {
-  padding: 72px 0 0;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
-}
-.hero h1 { font-size: 3.25rem; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.02em; }
-.hero-sub {
-  font-size: 1.15rem; line-height: 1.6; color: var(--text-body); margin-bottom: 24px;
-}
-.hero-sub strong { color: var(--text-dark); }
-.hero-muted { font-size: 0.95rem; color: #94a3b8; font-weight: 500; margin-bottom: 0; }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
-
-/* ── GRIP Demo (hero right) ── */
-.grip-demo {
-  background: #ffffff; border-radius: 16px;
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-  padding: 28px; position: sticky; top: 100px;
-}
-.grip-demo-head {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;
-}
-.grip-demo-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; }
-.grip-demo-title { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; color: #0f172a; margin-top: 2px; }
-.grip-demo-score { font-size: 2.75rem; font-weight: 800; color: var(--primary); line-height: 1; font-variant-numeric: tabular-nums; }
-
-.demo-pattern {
-  background: #fff7ed; border: 1px solid #fed7aa; border-left: 3px solid #f59e0b;
-  border-radius: 8px; padding: 12px 14px; margin-bottom: 20px;
-  opacity: 0; transform: translateY(6px); transition: all 0.5s ease;
-}
-.demo-pattern.visible { opacity: 1; transform: translateY(0); }
-.demo-pattern-tag { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; margin-bottom: 2px; }
-.demo-pattern-name { font-weight: 800; font-size: 0.85rem; color: #78350f; margin-bottom: 2px; }
-.demo-pattern-desc { font-size: 0.78rem; color: #92400e; line-height: 1.45; }
-
-.demo-scores { display: flex; flex-direction: column; gap: 14px; }
-.demo-row-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-.demo-row-label { font-family: Inter, sans-serif; font-weight: 600; font-size: 0.82rem; color: #64748b; }
-.demo-row-val { font-family: Inter, sans-serif; font-weight: 800; font-size: 0.85rem; color: #0f172a; font-variant-numeric: tabular-nums; }
-.demo-bar { height: 5px; background: #f1f5f9; border-radius: 10px; overflow: hidden; position: relative; }
-.demo-bar::after { content: ""; position: absolute; top: 0; left: 70%; width: 1px; height: 100%; background: #1e293b; opacity: 0.15; }
-.demo-bar-fill { height: 100%; border-radius: 10px; width: 0; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.fill-strong { background: linear-gradient(90deg, #0056b3, #3b82f6); }
-.fill-warn { background: linear-gradient(90deg, #d97706, #fbbf24); }
-.fill-crit { background: linear-gradient(90deg, #dc2626, #f87171); }
-
-.demo-row.is-constraint .demo-row-label { color: #dc2626; font-weight: 700; }
-.demo-row.is-constraint .demo-row-val { color: #dc2626; }
-@keyframes pulse-constraint { 0%,100% { box-shadow: none; } 50% { box-shadow: 0 0 0 3px rgba(220,38,38,0.12); } }
-.demo-row.is-constraint .demo-bar { animation: pulse-constraint 2.5s ease-in-out infinite; animation-delay: 2.2s; border-radius: 10px; }
-
-.demo-foot { text-align: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid #f1f5f9; }
-.demo-foot a { color: var(--primary); font-weight: 700; font-size: 0.82rem; text-decoration: none; }
-.demo-foot a:hover { text-decoration: underline; }
-
-/* ── Unified content blocks (no bg switches) ── */
-.block { padding: 64px 0; }
-.block + .block { border-top: 1px solid #f1f5f9; }
-.block + .block-tight { border-top: 1px solid #f1f5f9; }
-.block-tight { padding: 48px 0; }
-.block-tight + .block { border-top: 1px solid #f1f5f9; }
-
-/* ── Pillars (inline under hero) ── */
-.pillars {
-  margin-top: 48px; padding: 28px;
-  background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 14px;
-  border-left: 3px solid var(--primary);
-}
-.pillars h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 0.95rem; margin-bottom: 16px; color: #0f172a; }
-.pill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
-.pill-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 0.8rem; color: #475569; border-bottom: 1px solid #f8fafc; }
-.pill-item:last-child { border-bottom: none; }
-.pill-num { width: 20px; height: 20px; border-radius: 5px; background: #eff6ff; color: var(--primary); font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.m-text { display: none; }
-
-/* ── Pain + ICP cards ── */
-.card-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
-.card {
-  background: #ffffff; border: 1px solid #e8ecf1; border-radius: 14px;
-  padding: 24px; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.card:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-.card h4 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 8px; color: #0f172a; }
-.card p { margin: 0; font-size: 0.92rem; line-height: 1.5; color: #64748b; }
-
-/* ── Comparison ── */
-.comp-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 960px; margin: 0 auto; }
-.comp-old { padding: 0 20px; opacity: 0.65; }
-.comp-old h4 { margin-bottom: 20px; color: #94a3b8; font-size: 1rem; }
-.comp-new {
-  background: #fff; padding: 36px; border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.07); border: 1px solid rgba(0,86,179,0.12);
-  position: relative; overflow: hidden;
-}
-.comp-badge { position: absolute; top: 0; right: 0; background: #dcfce7; color: #166534; font-size: 0.65rem; font-weight: 800; padding: 5px 10px; border-bottom-left-radius: 10px; letter-spacing: 0.04em; }
-.comp-new h4 {
-  margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px;
-  font-size: 0.95rem; font-family: Inter, sans-serif; font-weight: 900;
-  letter-spacing: 0.02em; text-transform: uppercase;
-}
-.comp-list { list-style: none; padding: 0; margin: 0; }
-.comp-item { padding: 14px 0; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
-.comp-item:last-child { border-bottom: none; }
-.comp-label { font-weight: 600; font-size: 0.92rem; color: #475569; }
-.comp-val { font-weight: 700; font-size: 0.92rem; color: #0f172a; text-align: right; }
-.comp-val-green { color: #16a34a; background: #dcfce7; padding: 3px 8px; border-radius: 5px; font-size: 0.85rem; }
-
-/* ── Report (dark) ── */
-.report-block {
-  background: #0f172a; padding: 96px 0;
-}
-.report-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-.report-block h2 { color: #ffffff; }
-.report-block .eyebrow { color: #60a5fa; }
-.report-text { color: #cbd5e1; font-size: 1.05rem; margin-bottom: 28px; line-height: 1.6; }
-.report-checks { margin-bottom: 28px; padding: 0; list-style: none; }
-.report-checks li { color: #e2e8f0; padding: 6px 0; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-.report-checks li::before { content: "✓"; color: #60a5fa; font-weight: 800; }
-.report-visual { display: flex; align-items: center; justify-content: center; }
-
-/* Report page mockup */
-.rp { width: 340px; background: #fff; border-radius: 8px; box-shadow: 0 25px 60px rgba(0,0,0,0.5); overflow: hidden; transform: perspective(900px) rotateY(-3deg) rotateX(1.5deg); transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-.rp:hover { transform: perspective(900px) rotateY(0) rotateX(0) scale(1.02); }
-.rp-head { background: linear-gradient(135deg,#0056b3,#0073e6); padding: 14px 20px 12px; position: relative; }
-.rp-ch { font-size: 0.48rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); margin-bottom: 2px; }
-.rp-t { font-family: Merriweather,serif; font-size: 0.9rem; font-weight: 900; color: #fff; line-height: 1.2; }
-.rp-st { font-size: 0.48rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
-.rp-logo { position: absolute; top: 12px; right: 16px; width: 26px; height: 26px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.rp-logo span { font-weight: 900; font-size: 0.6rem; color: #fff; }
-.rp-body { padding: 16px 20px 12px; }
-.rp-vlabel { font-size: 0.55rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-.rp-vtext { font-size: 0.52rem; color: #475569; line-height: 1.5; margin-bottom: 14px; }
-.rp-slabel { font-size: 0.55rem; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
-.rp-sdesc { font-size: 0.45rem; color: #94a3b8; margin-bottom: 10px; }
-.rp-sr { margin-bottom: 9px; }
-.rp-sr-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
-.rp-sr-l { font-size: 0.57rem; font-weight: 700; color: #0f172a; }
-.rp-sr-v { font-size: 0.6rem; font-weight: 800; color: #0f172a; }
-.rp-sr-d { font-size: 0.47rem; font-weight: 700; margin-left: 2px; }
-.d-pos { color: #16a34a; } .d-neg { color: #dc2626; }
-.rp-bar { height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden; position: relative; }
-.rp-bar::after { content: ""; position: absolute; top: 0; left: 70%; width: 1px; height: 100%; background: #1e293b; opacity: 0.25; }
-.rp-bf { height: 100%; border-radius: 3px; }
-.bf-s { background: linear-gradient(90deg,#0056b3,#3b82f6); }
-.bf-w { background: linear-gradient(90deg,#d97706,#fbbf24); }
-.bf-c { background: linear-gradient(90deg,#dc2626,#f87171); }
-.rp-sub { font-size: 0.42rem; color: #94a3b8; margin-top: 2px; }
-.rp-sub .st { font-weight: 700; }
-.st-g { color: #16a34a; } .st-w { color: #d97706; } .st-c { color: #dc2626; }
-.rp-div { height: 1px; background: #e2e8f0; margin: 12px 0; }
-.rp-pat { background: #fff7ed; border: 1px solid #fed7aa; border-left: 3px solid #f59e0b; border-radius: 5px; padding: 9px 11px; margin-bottom: 12px; }
-.rp-pat-t { font-size: 0.42rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; margin-bottom: 1px; }
-.rp-pat-n { font-size: 0.65rem; font-weight: 800; color: #78350f; margin-bottom: 2px; }
-.rp-pat-d { font-size: 0.47rem; color: #92400e; line-height: 1.4; }
-.rp-pri { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #0056b3; border-radius: 5px; padding: 9px 11px; }
-.rp-pri-t { font-size: 0.42rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #0056b3; margin-bottom: 1px; }
-.rp-pri-n { font-size: 0.58rem; font-weight: 800; color: #1e3a5f; margin-bottom: 2px; }
-.rp-pri-d { font-size: 0.47rem; color: #334155; line-height: 1.4; }
-.rp-foot { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 7px 20px; display: flex; justify-content: space-between; }
-.rp-foot span { font-size: 0.4rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* ── Final CTA ── */
-.cta-block { padding: 80px 0; text-align: center; }
-
-/* ═══ MOBILE ═══ */
-@media (max-width: 980px) {
-  .hero { padding-top: 28px; gap: 36px; text-align: center; grid-template-columns: 1fr !important; }
-  .hero > div:first-child { padding: 0 8px; }
-  .hero h1 { font-size: 2rem !important; letter-spacing: -0.03em; }
-  .hero-sub { font-size: 1.02rem; }
-  .hero-actions { justify-content: center; }
-  .pillars { padding: 20px 18px; margin-top: 32px; text-align: left; }
-  .pill-grid > div { display: contents; }
-  .pill-item { font-size: 0.75rem; }
-  .d-text { display: none; }
-  .m-text { display: inline; }
-  .grip-demo { position: static; margin-top: 0; padding: 22px 18px; box-shadow: none; border: 1px solid var(--line); }
-  .grip-demo-score { font-size: 2.5rem; }
-  .card-row { grid-template-columns: 1fr !important; gap: 16px; }
-  .block [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
-  .comp-wrap { grid-template-columns: 1fr !important; gap: 20px; }
-  .comp-old { background: #f8fafc; padding: 20px; border-radius: 14px; border: 1px solid #f1f5f9; opacity: 1; }
-  .comp-new { padding: 28px 22px; }
-  .report-inner { grid-template-columns: 1fr !important; gap: 40px; }
-  .rp { width: 100%; max-width: 340px; }
-  .block { padding: 56px 0; }
+.hero{padding:72px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.hero h1{font-size:3.25rem;line-height:1.08;margin-bottom:20px;letter-spacing:-0.02em}
+.hero-sub{font-size:1.15rem;line-height:1.6;color:var(--text-body);margin-bottom:24px}
+.hero-sub strong{color:var(--text-dark)}
+.hero-muted{font-size:0.95rem;color:#94a3b8;font-weight:500;margin-bottom:0}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.grip-demo{background:#fff;border-radius:16px;border:1px solid rgba(15,23,42,0.06);box-shadow:0 4px 24px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);padding:28px;position:sticky;top:100px}
+.grip-demo-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f1f5f9}
+.grip-demo-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8}
+.grip-demo-title{font-family:Inter,sans-serif;font-weight:800;font-size:1rem;color:#0f172a;margin-top:2px}
+.grip-demo-score{font-size:2.75rem;font-weight:800;color:var(--primary);line-height:1;font-variant-numeric:tabular-nums}
+.demo-pattern{background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-bottom:20px;opacity:0;transform:translateY(6px);transition:all 0.5s ease}
+.demo-pattern.visible{opacity:1;transform:translateY(0)}
+.demo-pattern-tag{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#b45309;margin-bottom:2px}
+.demo-pattern-name{font-weight:800;font-size:0.85rem;color:#78350f;margin-bottom:2px}
+.demo-pattern-desc{font-size:0.78rem;color:#92400e;line-height:1.45}
+.demo-scores{display:flex;flex-direction:column;gap:14px}
+.demo-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.demo-row-label{font-family:Inter,sans-serif;font-weight:600;font-size:0.82rem;color:#64748b}
+.demo-row-val{font-family:Inter,sans-serif;font-weight:800;font-size:0.85rem;color:#0f172a;font-variant-numeric:tabular-nums}
+.demo-bar{height:5px;background:#f1f5f9;border-radius:10px;overflow:hidden;position:relative}
+.demo-bar::after{content:"";position:absolute;top:0;left:70%;width:1px;height:100%;background:#1e293b;opacity:0.15}
+.demo-bar-fill{height:100%;border-radius:10px;width:0;transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1)}
+.fill-strong{background:linear-gradient(90deg,#0056b3,#3b82f6)}
+.fill-warn{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.fill-crit{background:linear-gradient(90deg,#dc2626,#f87171)}
+.demo-row.is-constraint .demo-row-label{color:#dc2626;font-weight:700}
+.demo-row.is-constraint .demo-row-val{color:#dc2626}
+@keyframes pulse-constraint{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 3px rgba(220,38,38,0.12)}}
+.demo-row.is-constraint .demo-bar{animation:pulse-constraint 2.5s ease-in-out infinite;animation-delay:2.2s;border-radius:10px}
+.demo-foot{text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid #f1f5f9}
+.demo-foot a{color:var(--primary);font-weight:700;font-size:0.82rem;text-decoration:none}
+.demo-foot a:hover{text-decoration:underline}
+.block{padding:64px 0}
+.block+.block{border-top:1px solid #f1f5f9}
+.block+.block-tight{border-top:1px solid #f1f5f9}
+.block-tight{padding:48px 0}
+.block-tight+.block{border-top:1px solid #f1f5f9}
+.pillars{margin-top:48px;padding:28px;background:#fafbfc;border:1px solid #f1f5f9;border-radius:14px;border-left:3px solid var(--primary)}
+.pillars h3{font-family:Inter,sans-serif;font-weight:800;font-size:0.95rem;margin-bottom:16px;color:#0f172a}
+.pill-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.pill-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:0.8rem;color:#475569;border-bottom:1px solid #f8fafc}
+.pill-item:last-child{border-bottom:none}
+.pill-num{width:20px;height:20px;border-radius:5px;background:#eff6ff;color:var(--primary);font-weight:800;font-size:0.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.m-text{display:none}
+.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;transition:border-color 0.2s,box-shadow 0.2s}
+.card:hover{border-color:#cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.card h4{font-family:Inter,sans-serif;font-weight:800;font-size:1rem;margin-bottom:8px;color:#0f172a}
+.card p{margin:0;font-size:0.92rem;line-height:1.5;color:#64748b}
+.comp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;max-width:960px;margin:0 auto}
+.comp-old{padding:0 20px;opacity:0.65}
+.comp-old h4{margin-bottom:20px;color:#94a3b8;font-size:1rem}
+.comp-new{background:#fff;padding:36px;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.07);border:1px solid rgba(0,86,179,0.12);position:relative;overflow:hidden}
+.comp-badge{position:absolute;top:0;right:0;background:#dcfce7;color:#166534;font-size:0.65rem;font-weight:800;padding:5px 10px;border-bottom-left-radius:10px;letter-spacing:0.04em}
+.comp-new h4{margin-bottom:20px;color:var(--primary);display:flex;align-items:center;gap:10px;font-size:0.95rem;font-family:Inter,sans-serif;font-weight:900;letter-spacing:0.02em;text-transform:uppercase}
+.comp-list{list-style:none;padding:0;margin:0}
+.comp-item{padding:14px 0;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
+.comp-item:last-child{border-bottom:none}
+.comp-label{font-weight:600;font-size:0.92rem;color:#475569}
+.comp-val{font-weight:700;font-size:0.92rem;color:#0f172a;text-align:right}
+.comp-val-green{color:#16a34a;background:#dcfce7;padding:3px 8px;border-radius:5px;font-size:0.85rem}
+.report-block{background:#0f172a;padding:96px 0}
+.report-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.report-block h2{color:#fff}
+.report-block .eyebrow{color:#60a5fa}
+.report-text{color:#cbd5e1;font-size:1.05rem;margin-bottom:28px;line-height:1.6}
+.report-checks{margin-bottom:28px;padding:0;list-style:none}
+.report-checks li{color:#e2e8f0;padding:6px 0;font-size:0.95rem;display:flex;align-items:center;gap:8px}
+.report-checks li::before{content:"✓";color:#60a5fa;font-weight:800}
+.report-visual{display:flex;align-items:center;justify-content:center}
+.rp{width:340px;background:#fff;border-radius:8px;box-shadow:0 25px 60px rgba(0,0,0,0.5);overflow:hidden;transform:perspective(900px) rotateY(-3deg) rotateX(1.5deg);transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+.rp:hover{transform:perspective(900px) rotateY(0) rotateX(0) scale(1.02)}
+.rp-head{background:linear-gradient(135deg,#0056b3,#0073e6);padding:14px 20px 12px;position:relative}
+.rp-ch{font-size:0.48rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:2px}
+.rp-t{font-family:Merriweather,serif;font-size:0.9rem;font-weight:900;color:#fff;line-height:1.2}
+.rp-st{font-size:0.48rem;color:rgba(255,255,255,0.45);margin-top:2px}
+.rp-logo{position:absolute;top:12px;right:16px;width:26px;height:26px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.rp-logo span{font-weight:900;font-size:0.6rem;color:#fff}
+.rp-body{padding:16px 20px 12px}
+.rp-vlabel{font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:4px}
+.rp-vtext{font-size:0.52rem;color:#475569;line-height:1.5;margin-bottom:14px}
+.rp-slabel{font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:3px}
+.rp-sdesc{font-size:0.45rem;color:#94a3b8;margin-bottom:10px}
+.rp-sr{margin-bottom:9px}
+.rp-sr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.rp-sr-l{font-size:0.57rem;font-weight:700;color:#0f172a}
+.rp-sr-v{font-size:0.6rem;font-weight:800;color:#0f172a}
+.rp-sr-d{font-size:0.47rem;font-weight:700;margin-left:2px}
+.d-pos{color:#16a34a}.d-neg{color:#dc2626}
+.rp-bar{height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;position:relative}
+.rp-bar::after{content:"";position:absolute;top:0;left:70%;width:1px;height:100%;background:#1e293b;opacity:0.25}
+.rp-bf{height:100%;border-radius:3px}
+.bf-s{background:linear-gradient(90deg,#0056b3,#3b82f6)}
+.bf-w{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.bf-c{background:linear-gradient(90deg,#dc2626,#f87171)}
+.rp-sub{font-size:0.42rem;color:#94a3b8;margin-top:2px}
+.rp-sub .st{font-weight:700}
+.st-g{color:#16a34a}.st-w{color:#d97706}.st-c{color:#dc2626}
+.rp-div{height:1px;background:#e2e8f0;margin:12px 0}
+.rp-pat{background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:5px;padding:9px 11px;margin-bottom:12px}
+.rp-pat-t{font-size:0.42rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#b45309;margin-bottom:1px}
+.rp-pat-n{font-size:0.65rem;font-weight:800;color:#78350f;margin-bottom:2px}
+.rp-pat-d{font-size:0.47rem;color:#92400e;line-height:1.4}
+.rp-pri{background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:5px;padding:9px 11px}
+.rp-pri-t{font-size:0.42rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#0056b3;margin-bottom:1px}
+.rp-pri-n{font-size:0.58rem;font-weight:800;color:#1e3a5f;margin-bottom:2px}
+.rp-pri-d{font-size:0.47rem;color:#334155;line-height:1.4}
+.rp-foot{background:#f8fafc;border-top:1px solid #e2e8f0;padding:7px 20px;display:flex;justify-content:space-between}
+.rp-foot span{font-size:0.4rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em}
+.cta-block{padding:80px 0;text-align:center}
+@media(max-width:980px){
+.hero{padding-top:28px;gap:36px;text-align:center;grid-template-columns:1fr!important}
+.hero>div:first-child{padding:0 8px}
+.hero h1{font-size:2rem!important;letter-spacing:-0.03em}
+.hero-sub{font-size:1.02rem}
+.hero-actions{justify-content:center}
+.pillars{padding:20px 18px;margin-top:32px;text-align:left}
+.pill-grid>div{display:contents}
+.pill-item{font-size:0.75rem}
+.d-text{display:none}
+.m-text{display:inline}
+.grip-demo{position:static;margin-top:0;padding:22px 18px;box-shadow:none;border:1px solid var(--line)}
+.grip-demo-score{font-size:2.5rem}
+.card-row{grid-template-columns:1fr!important;gap:16px}
+.block [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+.comp-wrap{grid-template-columns:1fr!important;gap:20px}
+.comp-old{background:#f8fafc;padding:20px;border-radius:14px;border:1px solid #f1f5f9;opacity:1}
+.comp-new{padding:28px 22px}
+.report-inner{grid-template-columns:1fr!important;gap:40px}
+.rp{width:100%;max-width:340px}
+.block{padding:56px 0}
 }
 </style>
 </head>
 <body>
-<script src="assets/header.js"></script>
-<main>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- HERO + GRIP DEMO -->
-<!-- ═══════════════════════════════════════════════════ -->
+<main>
 <section class="container hero">
   <div>
     <span class="eyebrow">The GTM Intelligence Engine for B2B SaaS</span>
@@ -249,38 +183,37 @@
     <p class="hero-muted">No workshops. No billable hours. Just pure, algorithmic GTM strategy.</p>
     <div class="hero-actions">
       <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-      <a href="gtm-intelligence-report.html" class="btn btn-outline">See a Sample Report</a>
+      <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline">Skip to the full diagnosis</a>
     </div>
     <div class="pillars">
       <h3>The 12 System Pillars</h3>
       <div class="pill-grid">
         <div>
-          <div class="pill-item"><span class="pill-num">1</span><span><span class="d-text">GTM Strategy & Leadership</span><span class="m-text">GTM Strategy</span></span></div>
+          <div class="pill-item"><span class="pill-num">1</span><span><span class="d-text">GTM Strategy &amp; Leadership</span><span class="m-text">GTM Strategy</span></span></div>
           <div class="pill-item"><span class="pill-num">2</span><span><span class="d-text">Market Intelligence</span><span class="m-text">Market Intel</span></span></div>
           <div class="pill-item"><span class="pill-num">3</span><span><span class="d-text">Product Marketing</span><span class="m-text">Product Mktg</span></span></div>
           <div class="pill-item"><span class="pill-num">4</span><span><span class="d-text">Demand Generation</span><span class="m-text">Demand Gen</span></span></div>
           <div class="pill-item"><span class="pill-num">5</span><span><span class="d-text">Sales Execution</span><span class="m-text">Sales Exec</span></span></div>
-          <div class="pill-item"><span class="pill-num">6</span><span><span class="d-text">Customer Success & Expansion</span><span class="m-text">CS & Expansion</span></span></div>
+          <div class="pill-item"><span class="pill-num">6</span><span><span class="d-text">Customer Success &amp; Expansion</span><span class="m-text">CS &amp; Expansion</span></span></div>
         </div>
         <div>
-          <div class="pill-item"><span class="pill-num">7</span><span><span class="d-text">Revenue Operations & Systems</span><span class="m-text">RevOps</span></span></div>
-          <div class="pill-item"><span class="pill-num">8</span><span><span class="d-text">Pricing & Packaging</span><span class="m-text">Pricing</span></span></div>
+          <div class="pill-item"><span class="pill-num">7</span><span><span class="d-text">Revenue Operations &amp; Systems</span><span class="m-text">RevOps</span></span></div>
+          <div class="pill-item"><span class="pill-num">8</span><span><span class="d-text">Pricing &amp; Packaging</span><span class="m-text">Pricing</span></span></div>
           <div class="pill-item"><span class="pill-num">9</span><span><span class="d-text">Product Readiness</span><span class="m-text">Product Ready</span></span></div>
-          <div class="pill-item"><span class="pill-num">10</span><span><span class="d-text">Data & Insights</span><span class="m-text">Data</span></span></div>
+          <div class="pill-item"><span class="pill-num">10</span><span><span class="d-text">Data &amp; Insights</span><span class="m-text">Data</span></span></div>
           <div class="pill-item"><span class="pill-num">11</span><span><span class="d-text">Enablement</span><span class="m-text">Enablement</span></span></div>
-          <div class="pill-item"><span class="pill-num">12</span><span><span class="d-text">Alignment & Governance</span><span class="m-text">Governance</span></span></div>
+          <div class="pill-item"><span class="pill-num">12</span><span><span class="d-text">Alignment &amp; Governance</span><span class="m-text">Governance</span></span></div>
         </div>
       </div>
     </div>
   </div>
-
   <aside class="grip-demo" id="gripDemo">
     <div class="grip-demo-head">
       <div>
         <div class="grip-demo-label">Sample Output</div>
         <div class="grip-demo-title">GRIP Health Diagnostic</div>
       </div>
-      <div class="grip-demo-score" id="demoTotal">—</div>
+      <div class="grip-demo-score" id="demoTotal">&mdash;</div>
     </div>
     <div class="demo-pattern" id="demoPattern">
       <div class="demo-pattern-tag">System Pattern Detected</div>
@@ -289,29 +222,26 @@
     </div>
     <div class="demo-scores">
       <div class="demo-row" id="row-g">
-        <div class="demo-row-top"><span class="demo-row-label">Guidance</span><span class="demo-row-val" id="dv-g">—</span></div>
+        <div class="demo-row-top"><span class="demo-row-label">Guidance</span><span class="demo-row-val" id="dv-g">&mdash;</span></div>
         <div class="demo-bar"><div class="demo-bar-fill fill-strong" id="db-g"></div></div>
       </div>
       <div class="demo-row" id="row-r">
-        <div class="demo-row-top"><span class="demo-row-label">Resources</span><span class="demo-row-val" id="dv-r">—</span></div>
+        <div class="demo-row-top"><span class="demo-row-label">Resources</span><span class="demo-row-val" id="dv-r">&mdash;</span></div>
         <div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-r"></div></div>
       </div>
       <div class="demo-row is-constraint" id="row-i">
-        <div class="demo-row-top"><span class="demo-row-label">Implementation ← primary constraint</span><span class="demo-row-val" id="dv-i">—</span></div>
+        <div class="demo-row-top"><span class="demo-row-label">Implementation &larr; primary constraint</span><span class="demo-row-val" id="dv-i">&mdash;</span></div>
         <div class="demo-bar"><div class="demo-bar-fill fill-crit" id="db-i"></div></div>
       </div>
       <div class="demo-row" id="row-p">
-        <div class="demo-row-top"><span class="demo-row-label">Performance</span><span class="demo-row-val" id="dv-p">—</span></div>
+        <div class="demo-row-top"><span class="demo-row-label">Performance</span><span class="demo-row-val" id="dv-p">&mdash;</span></div>
         <div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-p"></div></div>
       </div>
     </div>
-    <div class="demo-foot"><a href="gtm-assessment.html">See what the engine finds for you →</a></div>
+    <div class="demo-foot"><a href="gtm-assessment.html">See what the engine finds for you &rarr;</a></div>
   </aside>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAIN -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block">
   <div class="container">
     <div style="max-width:780px;">
@@ -319,50 +249,33 @@
       <p style="color:var(--text-body); margin-bottom:0;">Most GTM teams are not constrained by effort. They are constrained by misalignment. Strategy, execution, and measurement drift apart. The system gets heavier each quarter.</p>
     </div>
     <div class="card-row">
-      <div class="card">
-        <h4>Misaligned priorities</h4>
-        <p>Marketing optimizes for MQLs. Sales optimizes for activity. Revenue stays flat. Everyone is busy, but nothing compounds.</p>
-      </div>
-      <div class="card">
-        <h4>No shared model</h4>
-        <p>The board asks why growth is slowing. Sales blames marketing. Marketing blames product. Nobody has the same picture of the system.</p>
-      </div>
-      <div class="card">
-        <h4>Execution without sequence</h4>
-        <p>You launched ABM, revamped onboarding, and hired a new AE. All good moves. But the real bottleneck hasn't been touched, so nothing moved.</p>
-      </div>
+      <div class="card"><h4>Misaligned priorities</h4><p>Marketing optimizes for MQLs. Sales optimizes for activity. Revenue stays flat. Everyone is busy, but nothing compounds.</p></div>
+      <div class="card"><h4>No shared model</h4><p>The board asks why growth is slowing. Sales blames marketing. Marketing blames product. Nobody has the same picture of the system.</p></div>
+      <div class="card"><h4>Execution without sequence</h4><p>You launched ABM, revamped onboarding, and hired a new AE. All good moves. But the real bottleneck hasn't been touched, so nothing moved.</p></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WHO THIS IS FOR -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block-tight">
   <div class="container" style="max-width:780px;">
     <span class="eyebrow">Built For</span>
     <h2>Is this you?</h2>
-    <p style="font-size:1.05rem; color:var(--text-body); line-height:1.7; margin-bottom:24px;">
-      Caugia is built for the person in the room who knows the GTM system has friction but can't get everyone to agree on where it is. You see the misalignment. You feel the drag. You just need the data to prove it.
-    </p>
+    <p style="font-size:1.05rem; color:var(--text-body); line-height:1.7; margin-bottom:24px;">Caugia is built for the person in the room who knows the GTM system has friction but can't get everyone to agree on where it is. You see the misalignment. You feel the drag. You just need the data to prove it.</p>
     <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
       <div style="padding:18px 22px; background:#fafbfc; border:1px solid #f1f5f9; border-left:3px solid var(--primary); border-radius:8px;">
-        <p style="margin:0; font-size:0.95rem; color:#334155; line-height:1.6;"><strong style="color:#0f172a;">The CRO at a €20M ARR SaaS</strong> who just missed target for the second quarter. Pipeline looks healthy, but conversion is dropping and nobody can explain why. The board wants answers, not opinions.</p>
+        <p style="margin:0; font-size:0.95rem; color:#334155; line-height:1.6;"><strong style="color:#0f172a;">The CRO at a &euro;20M ARR SaaS</strong> who just missed target for the second quarter. Pipeline looks healthy, but conversion is dropping and nobody can explain why. The board wants answers, not opinions.</p>
       </div>
       <div style="padding:18px 22px; background:#fafbfc; border:1px solid #f1f5f9; border-left:3px solid var(--primary); border-radius:8px;">
         <p style="margin:0; font-size:0.95rem; color:#334155; line-height:1.6;"><strong style="color:#0f172a;">The VP of Marketing at a Series B</strong> who knows demand gen is working, but deals stall after handoff. She suspects a sales execution gap but needs the data to make the case without starting a turf war.</p>
       </div>
       <div style="padding:18px 22px; background:#fafbfc; border:1px solid #f1f5f9; border-left:3px solid var(--primary); border-radius:8px;">
-        <p style="margin:0; font-size:0.95rem; color:#334155; line-height:1.6;"><strong style="color:#0f172a;">The CEO of a €5M ARR company</strong> scaling from founder-led sales to a real GTM team. Everything worked when it was just her closing deals. Now there are 30 people and the system feels heavier every month.</p>
+        <p style="margin:0; font-size:0.95rem; color:#334155; line-height:1.6;"><strong style="color:#0f172a;">The CEO of a &euro;5M ARR company</strong> scaling from founder-led sales to a real GTM team. Everything worked when it was just her closing deals. Now there are 30 people and the system feels heavier every month.</p>
       </div>
     </div>
-    <p style="font-size:0.95rem; color:#94a3b8; margin:0;">B2B SaaS · €2M–€150M ARR · 10–500 person revenue teams</p>
+    <p style="font-size:0.95rem; color:#94a3b8; margin:0;">B2B SaaS &middot; &euro;2M&ndash;&euro;150M ARR &middot; 10&ndash;500 person revenue teams</p>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- COMPARISON -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="block">
   <div class="container">
     <div style="text-align:center; max-width:660px; margin:0 auto 48px;">
@@ -374,10 +287,10 @@
       <div class="comp-old">
         <h4>Traditional Consulting</h4>
         <ul class="comp-list">
-          <li class="comp-item"><span class="comp-label">Timeline</span><span class="comp-val" style="color:#94a3b8;">6–8 Weeks</span></li>
+          <li class="comp-item"><span class="comp-label">Timeline</span><span class="comp-val" style="color:#94a3b8;">6&ndash;8 Weeks</span></li>
           <li class="comp-item"><span class="comp-label">Method</span><span class="comp-val" style="color:#94a3b8;">Subjective Interviews</span></li>
           <li class="comp-item"><span class="comp-label">Bias</span><span class="comp-val" style="color:#94a3b8;">High (Opinion based)</span></li>
-          <li class="comp-item"><span class="comp-label">Cost</span><span class="comp-val" style="color:#94a3b8;"><span class="curr">€</span><span data-price-key="compCost">25k – 50k+</span></span></li>
+          <li class="comp-item"><span class="comp-label">Cost</span><span class="comp-val" style="color:#94a3b8;"><span class="curr">&euro;</span><span data-price-key="compCost">25k &ndash; 50k+</span></span></li>
         </ul>
       </div>
       <div class="comp-new">
@@ -387,25 +300,22 @@
           <li class="comp-item"><span class="comp-label">Timeline</span><span class="comp-val comp-val-green">~45 Minutes</span></li>
           <li class="comp-item"><span class="comp-label">Method</span><span class="comp-val">Algorithmic Diagnostic</span></li>
           <li class="comp-item"><span class="comp-label">Bias</span><span class="comp-val">Zero (Data-Driven)</span></li>
-          <li class="comp-item"><span class="comp-label">Cost</span><span class="comp-val comp-val-green">From <span class="curr">€</span><span data-price-key="report">2,495</span></span></li>
+          <li class="comp-item"><span class="comp-label">Cost</span><span class="comp-val comp-val-green">From <span class="curr">&euro;</span><span data-price-key="report">2,495</span></span></li>
         </ul>
         <div style="margin-top:28px; text-align:center;">
-          <a href="gtm-intelligence-report.html" class="btn btn-primary" style="width:100%;">Get Your Intelligence Report</a>
+          <a href="grip-marketplace.html#intelligence-report" class="btn btn-primary" style="width:100%;">Get Your Intelligence Report</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- REPORT PREVIEW (dark break) -->
-<!-- ═══════════════════════════════════════════════════ -->
 <section class="report-block">
   <div class="container report-inner">
     <div>
       <span class="eyebrow" style="color:#60a5fa;">Instant Deliverable</span>
       <h2>44 pages of board-level intelligence.<br>Delivered in minutes, not months.</h2>
-      <p class="report-text">The Engine doesn't just collect answers. It runs deterministic constraint analysis across 12 pillars, models your revenue leakage mathematically, identifies the exact system pattern holding you back, and builds a prioritized action plan — all without a single consultant touching it.</p>
+      <p class="report-text">The Engine doesn't just collect answers. It runs deterministic constraint analysis across 12 pillars, models your revenue leakage mathematically, identifies the exact system pattern holding you back, and builds a prioritized action plan, all without a single consultant touching it.</p>
       <ul class="report-checks">
         <li>Constraint Priority Scoring across 72 diagnostic engines</li>
         <li>Revenue leakage modelling tied to your actual ARR</li>
@@ -414,7 +324,7 @@
         <li>Board-ready executive summary with GRIP dimension scores</li>
       </ul>
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a href="gtm-intelligence-report.html" class="btn btn-primary" style="background:#fff; color:#0f172a;">Explore the report</a>
+        <a href="grip-marketplace.html#intelligence-report" class="btn btn-primary" style="background:#fff; color:#0f172a;">Explore the report</a>
         <a href="gtm-assessment.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.35); color:#fff;">Free GTM Score</a>
       </div>
     </div>
@@ -423,7 +333,7 @@
         <div class="rp-head">
           <div class="rp-ch">Chapter 2</div>
           <div class="rp-t">GRIP Dimension Scores</div>
-          <div class="rp-st">Guidance · Resources · Implementation · Performance</div>
+          <div class="rp-st">Guidance &middot; Resources &middot; Implementation &middot; Performance</div>
           <div class="rp-logo"><span>C</span></div>
         </div>
         <div class="rp-body">
@@ -431,60 +341,28 @@
           <div class="rp-vtext">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs. The system cannot convert intent into repeatable outcomes.</div>
           <div class="rp-slabel">The GRIP View</div>
           <div class="rp-sdesc">Benchmark target: 70+ per dimension</div>
-          <div class="rp-sr">
-            <div class="rp-sr-top"><span class="rp-sr-l">Guidance</span><span><span class="rp-sr-v">74</span><span class="rp-sr-d d-pos">+4</span></span></div>
-            <div class="rp-bar"><div class="rp-bf bf-s" style="width:74%"></div></div>
-            <div class="rp-sub">Strategic direction · <span class="st st-g">On track</span></div>
-          </div>
-          <div class="rp-sr">
-            <div class="rp-sr-top"><span class="rp-sr-l">Resources</span><span><span class="rp-sr-v">66</span><span class="rp-sr-d d-neg">-4</span></span></div>
-            <div class="rp-bar"><div class="rp-bf bf-w" style="width:66%"></div></div>
-            <div class="rp-sub">Capacity & investment · <span class="st st-w">Below target</span></div>
-          </div>
-          <div class="rp-sr">
-            <div class="rp-sr-top"><span class="rp-sr-l">Implementation</span><span><span class="rp-sr-v">41</span><span class="rp-sr-d d-neg">-29</span></span></div>
-            <div class="rp-bar"><div class="rp-bf bf-c" style="width:41%"></div></div>
-            <div class="rp-sub">Execution efficiency · <span class="st st-c">Critical</span></div>
-          </div>
-          <div class="rp-sr">
-            <div class="rp-sr-top"><span class="rp-sr-l">Performance</span><span><span class="rp-sr-v">62</span><span class="rp-sr-d d-neg">-8</span></span></div>
-            <div class="rp-bar"><div class="rp-bf bf-w" style="width:62%"></div></div>
-            <div class="rp-sub">Growth trajectory · <span class="st st-w">Below target</span></div>
-          </div>
+          <div class="rp-sr"><div class="rp-sr-top"><span class="rp-sr-l">Guidance</span><span><span class="rp-sr-v">74</span><span class="rp-sr-d d-pos">+4</span></span></div><div class="rp-bar"><div class="rp-bf bf-s" style="width:74%"></div></div><div class="rp-sub">Strategic direction &middot; <span class="st st-g">On track</span></div></div>
+          <div class="rp-sr"><div class="rp-sr-top"><span class="rp-sr-l">Resources</span><span><span class="rp-sr-v">66</span><span class="rp-sr-d d-neg">-4</span></span></div><div class="rp-bar"><div class="rp-bf bf-w" style="width:66%"></div></div><div class="rp-sub">Capacity &amp; investment &middot; <span class="st st-w">Below target</span></div></div>
+          <div class="rp-sr"><div class="rp-sr-top"><span class="rp-sr-l">Implementation</span><span><span class="rp-sr-v">41</span><span class="rp-sr-d d-neg">-29</span></span></div><div class="rp-bar"><div class="rp-bf bf-c" style="width:41%"></div></div><div class="rp-sub">Execution efficiency &middot; <span class="st st-c">Critical</span></div></div>
+          <div class="rp-sr"><div class="rp-sr-top"><span class="rp-sr-l">Performance</span><span><span class="rp-sr-v">62</span><span class="rp-sr-d d-neg">-8</span></span></div><div class="rp-bar"><div class="rp-bf bf-w" style="width:62%"></div></div><div class="rp-sub">Growth trajectory &middot; <span class="st st-w">Below target</span></div></div>
           <div class="rp-div"></div>
-          <div class="rp-pat">
-            <div class="rp-pat-t">System Pattern</div>
-            <div class="rp-pat-n">The Ivory Tower</div>
-            <div class="rp-pat-d">Strategy is strong but execution breaks down at handoffs.</div>
-          </div>
-          <div class="rp-pri">
-            <div class="rp-pri-t">Your #1 Priority Fix</div>
-            <div class="rp-pri-n">Build execution mechanics before adding strategy layers</div>
-            <div class="rp-pri-d">Install playbooks and an operating cadence. This single move typically recovers 15-25% of leaked pipeline value.</div>
-          </div>
+          <div class="rp-pat"><div class="rp-pat-t">System Pattern</div><div class="rp-pat-n">The Ivory Tower</div><div class="rp-pat-d">Strategy is strong but execution breaks down at handoffs.</div></div>
+          <div class="rp-pri"><div class="rp-pri-t">Your #1 Priority Fix</div><div class="rp-pri-n">Build execution mechanics before adding strategy layers</div><div class="rp-pri-d">Install playbooks and an operating cadence. This single move typically recovers 15-25% of leaked pipeline value.</div></div>
         </div>
-        <div class="rp-foot">
-          <span>Confidential · March 2026</span>
-          <span>Page 8 of 41</span>
-        </div>
+        <div class="rp-foot"><span>Confidential &middot; March 2026</span><span>Page 8 of 41</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- FINAL CTA -->
-<!-- ═══════════════════════════════════════════════════ -->
 <section class="cta-block">
   <div class="container" style="max-width:820px;">
     <span class="eyebrow">Next step</span>
     <h2>Your GTM System is speaking.<br>Are you listening?</h2>
-    <p style="font-size:1.05rem; max-width:580px; margin:0 auto 24px; color:var(--text-body);">
-      Opinion-based strategy is slow. Data-driven architecture is scalable. See exactly which constraints are holding back your revenue today.
-    </p>
+    <p style="font-size:1.05rem; max-width:580px; margin:0 auto 24px; color:var(--text-body);">Opinion-based strategy is slow. Data-driven architecture is scalable. See exactly which constraints are holding back your revenue today.</p>
     <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
       <a href="gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
-      <a href="gtm-intelligence-report.html" class="btn btn-outline">See the Intelligence Report</a>
+      <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline">Skip to the full diagnosis</a>
     </div>
   </div>
 </section>
@@ -492,48 +370,14 @@
 
 <footer>
   <div class="container">
-    <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
+    <p>&copy; <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
   </div>
 </footer>
 
+<script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
 <script>
-(function () {
-  var targets = { g: 74, r: 66, i: 41, p: 62 };
-  var total = Math.round((targets.g + targets.r + targets.i + targets.p) / 4);
-  var done = false;
-
-  function countUp(el, to, ms) {
-    var t0 = null;
-    (function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min((ts - t0) / ms, 1);
-      el.textContent = Math.round(p * p * (3 - 2 * p) * to);
-      if (p < 1) requestAnimationFrame(step);
-    })(performance.now());
-  }
-
-  function run() {
-    if (done) return; done = true;
-    var delays = { g: 150, r: 300, i: 450, p: 600 };
-    ['g','r','i','p'].forEach(function(d) {
-      setTimeout(function() {
-        countUp(document.getElementById('dv-' + d), targets[d], 900);
-        document.getElementById('db-' + d).style.width = targets[d] + '%';
-      }, delays[d]);
-    });
-    setTimeout(function() { countUp(document.getElementById('demoTotal'), total, 700); }, 200);
-    setTimeout(function() { document.getElementById('demoPattern').classList.add('visible'); }, 1200);
-  }
-
-  var el = document.getElementById('gripDemo');
-  if (!el) return;
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(entries, obs) {
-      if (entries[0].isIntersecting) { run(); obs.unobserve(el); }
-    }, { threshold: 0.25 }).observe(el);
-  } else { setTimeout(run, 400); }
-})();
+(function(){var targets={g:74,r:66,i:41,p:62};var total=Math.round((targets.g+targets.r+targets.i+targets.p)/4);var done=false;function countUp(el,to,ms){var t0=null;(function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);el.textContent=Math.round(p*p*(3-2*p)*to);if(p<1)requestAnimationFrame(step)})(performance.now())}function run(){if(done)return;done=true;var delays={g:150,r:300,i:450,p:600};['g','r','i','p'].forEach(function(d){setTimeout(function(){countUp(document.getElementById('dv-'+d),targets[d],900);document.getElementById('db-'+d).style.width=targets[d]+'%'},delays[d])});setTimeout(function(){countUp(document.getElementById('demoTotal'),total,700)},200);setTimeout(function(){document.getElementById('demoPattern').classList.add('visible')},1200)}var el=document.getElementById('gripDemo');if(!el)return;if('IntersectionObserver' in window){new IntersectionObserver(function(entries,obs){if(entries[0].isIntersecting){run();obs.unobserve(el)}},{threshold:0.25}).observe(el)}else{setTimeout(run,400)}})();
 </script>
 </body>
 </html>
