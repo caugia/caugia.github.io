@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════
-   CAUGIA — header.js v1.3
+   CAUGIA — header.js v1.4
    Single source of truth for site header & mobile nav.
+   Nav: Home | About | GTM Score | Contact + CTA Marketplace
    Place <script src="assets/header.js"></script> anywhere.
    ═══════════════════════════════════════════════════ */
 
@@ -50,9 +51,7 @@
           '<ul class="nav-links">' +
             '<li>' + a('index.html','Home') + '</li>' +
             '<li>' + a('about.html','About') + '</li>' +
-            '<li>' + a('services.html','Services') + '</li>' +
             '<li>' + a('gtm-assessment.html','GTM Score') + '</li>' +
-            '<li>' + a('resources.html','Resources') + '</li>' +
             '<li>' + a('contact.html','Contact') + '</li>' +
           '</ul>' +
           '<div class="nav-actions">' +
@@ -63,9 +62,7 @@
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
           a('index.html','Home') +
           a('about.html','About') +
-          a('services.html','Services') +
           a('gtm-assessment.html','GTM Score') +
-          a('resources.html','Resources') +
           a('contact.html','Contact') +
           a('grip-marketplace.html','GRIP Marketplace') +
         '</div>' +
