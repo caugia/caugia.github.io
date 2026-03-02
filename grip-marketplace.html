@@ -50,10 +50,46 @@
 .mk-ir-price-context strong { color:#64748b; font-weight:700; }
 .mk-ir-actions { margin-bottom:10px; }
 .mk-ir-secure { font-size:0.78rem; color:#94a3b8; }
-.mk-ir-visual { display:flex; justify-content:center; }
-.mk-ir-rp { width:320px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,0.1),0 0 0 1px rgba(0,0,0,0.03); display:flex; flex-direction:column; }
+.mk-ir-visual { display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+/* ═══ STACKED CARDS ═══ */
+.mk-ir-stack { position:relative; width:320px; height:440px; }
+.mk-ir-stack-card {
+  position:absolute; top:0; left:0; width:100%; cursor:pointer;
+  transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1), opacity 0.4s ease, box-shadow 0.4s ease;
+}
+/* Active card: front */
+.mk-ir-stack-card.active { transform:translateX(0) translateY(0) scale(1); opacity:1; z-index:3; box-shadow:0 16px 48px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.03); }
+/* Second card: peek behind right */
+.mk-ir-stack-card.behind-1 { transform:translateX(16px) translateY(8px) scale(0.96); opacity:0.7; z-index:2; box-shadow:0 8px 24px rgba(0,0,0,0.06); }
+/* Third card: peek further behind */
+.mk-ir-stack-card.behind-2 { transform:translateX(32px) translateY(16px) scale(0.92); opacity:0.4; z-index:1; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+
+/* Dot navigation */
+.mk-ir-dots { display:flex; gap:8px; justify-content:center; }
+.mk-ir-dot { width:8px; height:8px; border-radius:50%; border:none; background:#cbd5e1; cursor:pointer; padding:0; transition:all 0.2s; }
+.mk-ir-dot.active { background:var(--primary); width:24px; border-radius:4px; }
+
+/* ═══ TOC CARD STYLES ═══ */
+.mk-toc-item { display:flex; align-items:baseline; gap:8px; padding:5px 0; border-bottom:1px solid #f1f5f9; }
+.mk-toc-num { font-size:0.42rem; font-weight:800; color:#94a3b8; width:14px; flex-shrink:0; }
+.mk-toc-label { font-size:0.52rem; font-weight:700; color:#0f172a; flex:1; }
+.mk-toc-page { font-size:0.42rem; font-weight:600; color:#94a3b8; }
+
+/* ═══ EXECUTION PLAN CARD STYLES ═══ */
+.mk-exec-phase { margin-bottom:10px; }
+.mk-exec-phase:last-child { margin-bottom:0; }
+.mk-exec-phase-head { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.mk-exec-badge { font-size:0.36rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; padding:2px 6px; border-radius:3px; }
+.mk-exec-now { background:#dcfce7; color:#15803d; }
+.mk-exec-next { background:#dbeafe; color:#1d4ed8; }
+.mk-exec-later { background:#f3e8ff; color:#7c3aed; }
+.mk-exec-phase-title { font-size:0.52rem; font-weight:800; color:#0f172a; }
+.mk-exec-item { font-size:0.44rem; color:#475569; line-height:1.5; padding:2px 0 2px 22px; position:relative; }
+.mk-exec-item::before { content:"→"; position:absolute; left:8px; color:#94a3b8; font-size:0.4rem; }
 
 /* Inside cards */
+.mk-ir-rp { width:100%; height:100%; background:#fff; border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
 .mk-ir-inside { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
 .mk-ir-inside-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:24px; }
 .mk-ir-inside-card h3 { font-size:0.95rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
@@ -220,6 +256,7 @@
   .mk-hero h1{font-size:1.7rem;}
   .mk-ir-hero{grid-template-columns:1fr;gap:24px;}
   .mk-ir-visual{order:-1;}
+  .mk-ir-stack{width:280px;height:400px;}
   .mk-ir-rp{width:100%;max-width:280px;}
   .mk-ir-title{font-size:1.5rem;}
   .mk-ir-inside{grid-template-columns:1fr;}
@@ -282,26 +319,82 @@
         <p class="mk-ir-secure">✓ Secure Stripe payment. Invoice generated automatically.</p>
       </div>
       <div class="mk-ir-visual">
-        <div class="mk-ir-rp">
-          <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 2</div><div class="mk-rp-title">GRIP Dimension Scores</div><div class="mk-rp-subtitle">Guidance · Resources · Implementation · Performance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
-          <div class="mk-rp-body" style="flex:1;">
-            <div style="font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Executive Verdict</div>
-            <div style="font-size:0.48rem;color:#475569;line-height:1.5;margin-bottom:12px;">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs.</div>
-            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Guidance</span><span class="mk-rp-bar-v">74</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:74%"></div></div></div>
-            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Resources</span><span class="mk-rp-bar-v">66</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:66%"></div></div></div>
-            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Implementation</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div>
-            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Performance</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div>
-            <div style="height:1px;background:#e2e8f0;margin:10px 0;"></div>
-            <div style="background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:6px;padding:7px 10px;margin-bottom:8px;">
-              <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#b45309;">System Pattern</div>
-              <div style="font-size:0.52rem;font-weight:800;color:#78350f;">The Ivory Tower</div>
+        <div class="mk-ir-stack" id="irStack">
+
+          <!-- Card 1: GRIP Dimension Scores (active by default) -->
+          <div class="mk-ir-rp mk-ir-stack-card active" data-card="0">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 2</div><div class="mk-rp-title">GRIP Dimension Scores</div><div class="mk-rp-subtitle">Guidance · Resources · Implementation · Performance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div style="font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Executive Verdict</div>
+              <div style="font-size:0.48rem;color:#475569;line-height:1.5;margin-bottom:12px;">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs.</div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Guidance</span><span class="mk-rp-bar-v">74</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:74%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Resources</span><span class="mk-rp-bar-v">66</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:66%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Implementation</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Performance</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div>
+              <div style="height:1px;background:#e2e8f0;margin:10px 0;"></div>
+              <div style="background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:6px;padding:7px 10px;margin-bottom:8px;">
+                <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#b45309;">System Pattern</div>
+                <div style="font-size:0.52rem;font-weight:800;color:#78350f;">The Ivory Tower</div>
+              </div>
+              <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:6px;padding:7px 10px;">
+                <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0056b3;">Priority Fix</div>
+                <div style="font-size:0.48rem;font-weight:700;color:#1e3a5f;">Build execution mechanics before adding strategy layers.</div>
+              </div>
             </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:6px;padding:7px 10px;">
-              <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0056b3;">Priority Fix</div>
-              <div style="font-size:0.48rem;font-weight:700;color:#1e3a5f;">Build execution mechanics before adding strategy layers.</div>
-            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential · Sample</span><span>Page 8 of 44</span></div>
           </div>
-          <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential · Sample</span><span>Page 8 of 44</span></div>
+
+          <!-- Card 2: Table of Contents -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="1">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Report Structure</div><div class="mk-rp-title">Table of Contents</div><div class="mk-rp-subtitle">GTM Intelligence Report · 44 Pages</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div class="mk-toc-item"><span class="mk-toc-num">01</span><span class="mk-toc-label">Executive Summary</span><span class="mk-toc-page">3</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">02</span><span class="mk-toc-label">GRIP Dimension Scores</span><span class="mk-toc-page">6</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">03</span><span class="mk-toc-label">12-Pillar Constraint Analysis</span><span class="mk-toc-page">10</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">04</span><span class="mk-toc-label">Revenue Leakage Model</span><span class="mk-toc-page">22</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">05</span><span class="mk-toc-label">System Pattern Analysis</span><span class="mk-toc-page">28</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">06</span><span class="mk-toc-label">Constraint Priority Scoring</span><span class="mk-toc-page">32</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">07</span><span class="mk-toc-label">90-Day Execution Plan</span><span class="mk-toc-page">36</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">08</span><span class="mk-toc-label">Board-Ready Summary</span><span class="mk-toc-page">42</span></div>
+              <div style="margin-top:12px;padding-top:8px;border-top:1px solid #e2e8f0;">
+                <div style="font-size:0.42rem;color:#94a3b8;font-weight:600;">+ Appendix: Methodology, Scoring Definitions, Glossary</div>
+              </div>
+            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential · Sample</span><span>Page 2 of 44</span></div>
+          </div>
+
+          <!-- Card 3: 90-Day Execution Plan -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="2">
+            <div class="mk-rp-head" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 7</div><div class="mk-rp-title">90-Day Execution Plan</div><div class="mk-rp-subtitle">Immediate Priority Sequence</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div class="mk-exec-phase">
+                <div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-now">Days 1-30</span><span class="mk-exec-phase-title">Foundation</span></div>
+                <div class="mk-exec-item">Install sales execution playbook with stage-gated criteria</div>
+                <div class="mk-exec-item">Define handoff protocols between Marketing and Sales</div>
+                <div class="mk-exec-item">Establish weekly pipeline review cadence with shared metrics</div>
+              </div>
+              <div class="mk-exec-phase">
+                <div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-next">Days 31-60</span><span class="mk-exec-phase-title">Acceleration</span></div>
+                <div class="mk-exec-item">Deploy competitive intelligence system for active deals</div>
+                <div class="mk-exec-item">Rebuild forecast model on leading indicators</div>
+                <div class="mk-exec-item">Launch enablement program tied to conversion metrics</div>
+              </div>
+              <div class="mk-exec-phase">
+                <div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-later">Days 61-90</span><span class="mk-exec-phase-title">Scale</span></div>
+                <div class="mk-exec-item">Implement cross-functional operating rhythm</div>
+                <div class="mk-exec-item">Align expansion playbook with CS health scoring</div>
+                <div class="mk-exec-item">Baseline all 12 pillar KPIs for quarterly re-assessment</div>
+              </div>
+            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential · Sample</span><span>Page 37 of 44</span></div>
+          </div>
+
+        </div>
+        <!-- Card indicators -->
+        <div class="mk-ir-dots" id="irDots">
+          <button class="mk-ir-dot active" data-dot="0"></button>
+          <button class="mk-ir-dot" data-dot="1"></button>
+          <button class="mk-ir-dot" data-dot="2"></button>
         </div>
       </div>
     </div>
@@ -574,6 +667,46 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
+<script>
+(function(){
+  // ═══ STACKED REPORT CARDS ═══
+  var stackCards=document.querySelectorAll('.mk-ir-stack-card');
+  var stackDots=document.querySelectorAll('.mk-ir-dot');
+  var currentCard=0;
+
+  function setActiveCard(idx){
+    currentCard=idx;
+    stackCards.forEach(function(c,i){
+      c.classList.remove('active','behind-1','behind-2');
+      var offset=(i-idx+stackCards.length)%stackCards.length;
+      if(offset===0) c.classList.add('active');
+      else if(offset===1) c.classList.add('behind-1');
+      else c.classList.add('behind-2');
+    });
+    stackDots.forEach(function(d,i){d.classList.toggle('active',i===idx);});
+  }
+
+  stackCards.forEach(function(c){
+    c.addEventListener('click',function(){
+      if(!c.classList.contains('active')){
+        setActiveCard(parseInt(c.getAttribute('data-card')));
+      }
+    });
+  });
+  stackDots.forEach(function(d){
+    d.addEventListener('click',function(){setActiveCard(parseInt(d.getAttribute('data-dot')));});
+  });
+
+  // Auto-rotate every 5s, pause on hover
+  var stackInterval=setInterval(function(){setActiveCard((currentCard+1)%stackCards.length);},5000);
+  var stackEl=document.getElementById('irStack');
+  if(stackEl){
+    stackEl.addEventListener('mouseenter',function(){clearInterval(stackInterval);});
+    stackEl.addEventListener('mouseleave',function(){stackInterval=setInterval(function(){setActiveCard((currentCard+1)%stackCards.length);},5000);});
+  }
+  setActiveCard(0);
+})();
+</script>
 <script>
 (function(){
   var dimCards=document.querySelectorAll('.mk-dim-card');
