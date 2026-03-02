@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GRIP Marketplace | Caugia Consulting</title>
+<meta name="description" content="Choose your Deep Dive. 12 GTM diagnostic modules across 4 GRIP dimensions. 60 questions, 6 engines, one constraint — fully resolved." />
+<link rel="canonical" href="https://www.caugia.com/grip-marketplace.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/grip-marketplace.html" />
+<meta property="og:title" content="GRIP Marketplace | Caugia Consulting" />
+<meta property="og:description" content="12 Deep Dive modules. Pick the pillar that matters most — or bundle an entire GRIP dimension." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+<link rel="apple-touch-icon" href="assets/logo-final.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/caugia-base.css">
+<style>
+:root { --g:#0056b3; --r:#b45309; --i:#059669; --p:#7c3aed; --gs:#eff6ff; --rs:#fffbeb; --is:#ecfdf5; --ps:#f5f3ff; }
+
+/* HERO */
+.mk-hero { padding:56px 0 0; text-align:center; max-width:720px; margin:0 auto; }
+.mk-hero h1 { font-family:Merriweather,serif; font-size:2.6rem; font-weight:900; line-height:1.15; color:#0f172a; margin-bottom:14px; letter-spacing:-0.02em; }
+.mk-hero-sub { font-size:1.08rem; color:#475569; line-height:1.6; max-width:560px; margin:0 auto; }
+
+/* REPORT UPSELL */
+.mk-report { margin:40px auto 0; max-width:720px; background:linear-gradient(135deg,#0f172a,#1e293b); border-radius:16px; padding:28px 32px; display:flex; align-items:center; gap:20px; color:#fff; }
+.mk-report-logo { width:48px;height:48px;flex-shrink:0; }
+.mk-report-logo img { width:48px;height:48px;border-radius:10px; }
+.mk-report-body { flex:1; }
+.mk-report-body h3 { font-size:0.95rem; font-weight:800; margin-bottom:3px; color:#fff; }
+.mk-report-body p { font-size:0.82rem; color:#94a3b8; line-height:1.5; margin:0; }
+.mk-report-right { text-align:center; flex-shrink:0; }
+.mk-report-cta { display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#fff;color:#0f172a;border-radius:10px;font-weight:800;font-size:0.82rem;text-decoration:none;transition:all 0.2s;white-space:nowrap; }
+.mk-report-cta:hover { background:#f1f5f9; }
+.mk-report-price { font-size:0.7rem;color:#64748b;font-weight:600;margin-top:4px; }
+
+/* INTELLIGENCE REPORT SECTION */
+.mk-ir { margin:40px auto 0; max-width:1080px; }
+.mk-ir-hero { display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:start; }
+.mk-ir-copy {}
+.mk-ir-title { font-family:Merriweather,serif; font-size:2rem; font-weight:900; color:#0f172a; margin-bottom:12px; line-height:1.15; }
+.mk-ir-lead { font-size:0.95rem; color:#475569; line-height:1.6; margin-bottom:20px; }
+.mk-ir-price-row { display:flex; align-items:center; gap:20px; padding:14px 0; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; margin-bottom:20px; }
+.mk-ir-price { font-size:2rem; font-weight:900; color:#0f172a; }
+.mk-ir-price-context { font-size:0.8rem; color:#94a3b8; line-height:1.4; }
+.mk-ir-price-context strong { color:#64748b; font-weight:700; }
+.mk-ir-actions { margin-bottom:10px; }
+.mk-ir-secure { font-size:0.78rem; color:#94a3b8; }
+.mk-ir-visual { display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+/* STACKED CARDS */
+.mk-ir-stack { position:relative; width:320px; height:440px; }
+.mk-ir-stack-card {
+  position:absolute; top:0; left:0; width:100%; cursor:pointer;
+  transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1), opacity 0.4s ease, box-shadow 0.4s ease;
+}
+.mk-ir-stack-card.active { transform:translateX(0) translateY(0) scale(1); opacity:1; z-index:3; box-shadow:0 16px 48px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.03); }
+.mk-ir-stack-card.behind-1 { transform:translateX(16px) translateY(8px) scale(0.96); opacity:0.7; z-index:2; box-shadow:0 8px 24px rgba(0,0,0,0.06); }
+.mk-ir-stack-card.behind-2 { transform:translateX(32px) translateY(16px) scale(0.92); opacity:0.4; z-index:1; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+
+.mk-ir-dots { display:flex; gap:8px; justify-content:center; }
+.mk-ir-dot { width:8px; height:8px; border-radius:50%; border:none; background:#cbd5e1; cursor:pointer; padding:0; transition:all 0.2s; }
+.mk-ir-dot.active { background:var(--primary); width:24px; border-radius:4px; }
+
+/* TOC CARD */
+.mk-toc-item { display:flex; align-items:baseline; gap:8px; padding:5px 0; border-bottom:1px solid #f1f5f9; }
+.mk-toc-num { font-size:0.42rem; font-weight:800; color:#94a3b8; width:14px; flex-shrink:0; }
+.mk-toc-label { font-size:0.52rem; font-weight:700; color:#0f172a; flex:1; }
+.mk-toc-page { font-size:0.42rem; font-weight:600; color:#94a3b8; }
+
+/* EXECUTION PLAN CARD */
+.mk-exec-phase { margin-bottom:10px; }
+.mk-exec-phase:last-child { margin-bottom:0; }
+.mk-exec-phase-head { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.mk-exec-badge { font-size:0.36rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; padding:2px 6px; border-radius:3px; }
+.mk-exec-now { background:#dcfce7; color:#15803d; }
+.mk-exec-next { background:#dbeafe; color:#1d4ed8; }
+.mk-exec-later { background:#f3e8ff; color:#7c3aed; }
+.mk-exec-phase-title { font-size:0.52rem; font-weight:800; color:#0f172a; }
+.mk-exec-item { font-size:0.44rem; color:#475569; line-height:1.5; padding:2px 0 2px 22px; position:relative; }
+.mk-exec-item::before { content:"\2192"; position:absolute; left:8px; color:#94a3b8; font-size:0.4rem; }
+
+/* Inside cards */
+.mk-ir-rp { width:100%; height:100%; background:#fff; border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
+.mk-ir-inside { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.mk-ir-inside-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:24px; }
+.mk-ir-inside-card h3 { font-size:0.95rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
+.mk-ir-inside-card p { font-size:0.82rem; color:#475569; line-height:1.55; margin:0; }
+
+/* Comparison table — 3 columns: AI | Traditional | Caugia */
+.mk-ir-comp { margin-top:24px; background:#0f172a; border-radius:12px; padding:24px; overflow-x:auto; }
+.mk-ir-table { width:100%; border-collapse:collapse; }
+.mk-ir-table th { text-align:left; padding:10px 14px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; border-bottom:1px solid rgba(255,255,255,0.1); }
+.mk-ir-table th:nth-child(4) { color:#fff; background:rgba(59,130,246,0.15); border-bottom:1px solid rgba(59,130,246,0.3); }
+.mk-ir-table td { padding:10px 14px; font-size:0.82rem; color:#64748b; border-bottom:1px solid rgba(255,255,255,0.06); }
+.mk-ir-table td:nth-child(4) { color:#fff; font-weight:700; background:rgba(59,130,246,0.08); }
+.mk-ir-table tr:last-child td { border-bottom:none; }
+
+/* Numbers */
+.mk-ir-nums { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; padding-top:24px; border-top:1px solid #f1f5f9; text-align:center; }
+.mk-ir-num { font-size:2rem; font-weight:900; color:var(--primary); line-height:1; margin-bottom:2px; }
+.mk-ir-num-label { font-size:0.72rem; color:#64748b; font-weight:600; }
+
+/* Bottom CTA */
+.mk-ir-bottom-cta { text-align:center; margin-top:24px; padding-top:24px; border-top:1px solid #f1f5f9; }
+
+/* DIMENSION CHOOSER */
+.mk-chooser { margin:48px auto 0; max-width:1080px; }
+.mk-chooser-label { text-align:center;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:20px; }
+.mk-chooser-label a { color:var(--primary);text-decoration:underline; }
+.mk-dim-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.mk-dim-card { position:relative;background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:24px 20px 20px;cursor:pointer;transition:all 0.25s;overflow:hidden; }
+.mk-dim-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--dc);opacity:0;transition:opacity 0.2s; }
+.mk-dim-card:hover { border-color:var(--dc); }
+.mk-dim-card:hover::before,.mk-dim-card.active::before { opacity:1; }
+.mk-dim-card.active { border-color:var(--dc);box-shadow:0 8px 28px rgba(0,0,0,0.08); }
+.mk-dim-letter { font-size:1.8rem;font-weight:900;color:var(--dc);line-height:1;margin-bottom:8px; }
+.mk-dim-name { font-weight:800;font-size:0.9rem;color:#0f172a;margin-bottom:6px; }
+.mk-dim-pain { font-size:0.78rem;color:#64748b;line-height:1.5; }
+.mk-dim-count { margin-top:12px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#94a3b8; }
+
+/* DETAIL SECTIONS */
+.mk-detail { margin:0 auto;max-width:1080px;padding:40px 0 0;display:none; }
+.mk-detail.active { display:block; }
+.mk-detail-head { margin-bottom:28px; }
+.mk-detail-head h2 { font-family:Merriweather,serif; font-size:1.5rem; font-weight:900; color:#0f172a; margin-bottom:6px; }
+.mk-detail-head p { font-size:0.9rem; color:#64748b; max-width:600px; line-height:1.55; }
+
+/* Module cards */
+.mk-modules { display:grid;grid-template-columns:repeat(3,1fr);gap:18px; }
+.mk-mod { background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;transition:all 0.2s; }
+.mk-mod:hover { border-color:var(--dc); }
+.mk-mod-tag { display:inline-flex;width:fit-content;font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:3px 8px;border-radius:4px;margin-bottom:12px;background:var(--ds);color:var(--dc); }
+.mk-mod h3 { font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:8px;line-height:1.3; }
+.mk-mod-q { font-size:0.84rem;color:#64748b;line-height:1.55;font-style:italic;margin-bottom:16px;flex-grow:1; }
+.mk-mod-meta { font-size:0.72rem;color:#94a3b8;margin-bottom:16px; }
+.mk-mod-foot { display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid #f1f5f9; }
+.mk-mod-price { font-size:1.2rem;font-weight:900;color:#0f172a; }
+.mk-buy { display:inline-flex;padding:9px 18px;background:var(--dc);color:#fff;border-radius:10px;border:none;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s;text-decoration:none; }
+.mk-buy:hover { filter:brightness(0.9); }
+
+/* Bundle */
+.mk-bundle { margin-top:24px;background:var(--ds);border:2px solid var(--dc);border-radius:14px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px; }
+.mk-bundle-left { flex:1; }
+.mk-bundle-left h4 { font-weight:800;font-size:1rem;color:#0f172a;margin-bottom:3px; }
+.mk-bundle-left p { font-size:0.82rem;color:#64748b;margin:0; }
+.mk-bundle-right { display:flex;align-items:center;gap:18px;flex-shrink:0; }
+.mk-bundle-pricing { text-align:right; }
+.mk-bundle-price { font-size:1.4rem;font-weight:900;color:#0f172a; }
+.mk-bundle-save { font-size:0.72rem;color:#16a34a;font-weight:700; }
+.mk-bundle-buy { padding:12px 24px;background:#0f172a;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;text-decoration:none;white-space:nowrap; }
+.mk-bundle-buy:hover { background:#1e293b; }
+
+/* REPORT MOCK-UPS */
+.mk-preview { margin-top:36px; }
+.mk-preview-label { font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:16px; }
+.mk-rp-wrap { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.mk-rp { background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); display:flex; flex-direction:column; }
+.mk-rp-head { background:linear-gradient(135deg,#0056b3,#0073e6); padding:14px 18px 12px; display:flex; align-items:flex-start; justify-content:space-between; }
+.mk-rp-head-left { flex:1; }
+.mk-rp-ch { font-size:0.42rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.5); }
+.mk-rp-title { font-family:Merriweather,serif;font-size:0.78rem;font-weight:900;color:#fff;line-height:1.3;margin-top:2px; }
+.mk-rp-subtitle { font-size:0.42rem;color:rgba(255,255,255,0.4);margin-top:2px; }
+.mk-rp-head-logo { width:28px;height:28px;flex-shrink:0;margin-left:12px;background:#fff;border-radius:6px;padding:3px;display:flex;align-items:center;justify-content:center; }
+.mk-rp-head-logo img { width:22px;height:22px; }
+.mk-rp-body { padding:16px 18px 14px; flex:1; }
+.mk-rp-scores { display:flex; gap:6px; margin-bottom:12px; }
+.mk-rp-sc { flex:1; text-align:center; padding:8px 4px 6px; border-radius:8px; }
+.mk-rp-sc-val { font-size:0.9rem; font-weight:900; line-height:1; }
+.mk-rp-sc-lbl { font-size:0.4rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px; }
+.mk-rp-bar-row { margin-bottom:7px; }
+.mk-rp-bar-label { display:flex; justify-content:space-between; margin-bottom:2px; }
+.mk-rp-bar-l { font-size:0.52rem; font-weight:600; color:#334155; }
+.mk-rp-bar-v { font-size:0.52rem; font-weight:800; color:#0f172a; }
+.mk-rp-bar { height:5px; background:#f1f5f9; border-radius:3px; overflow:hidden; position:relative; }
+.mk-rp-bar::after { content:'';position:absolute;top:0;left:70%;width:1px;height:100%;background:#0f172a;opacity:0.1; }
+.mk-rp-bf { height:100%; border-radius:3px; }
+.bf-b{background:linear-gradient(90deg,#0056b3,#3b82f6);} .bf-w{background:linear-gradient(90deg,#d97706,#fbbf24);} .bf-r{background:linear-gradient(90deg,#dc2626,#f87171);}
+.mk-rp-alert { background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;border-radius:6px;padding:8px 10px;margin-top:10px; }
+.mk-rp-alert-tag { font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#dc2626; }
+.mk-rp-alert-text { font-size:0.5rem;font-weight:700;color:#7f1d1d;margin-top:2px;line-height:1.4; }
+.mk-rp-pattern { background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:6px;padding:8px 10px;margin-top:8px; }
+.mk-rp-pattern-tag { font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#b45309; }
+.mk-rp-pattern-text { font-size:0.5rem;font-weight:700;color:#78350f;margin-top:2px;line-height:1.4; }
+.mk-rp-priority { background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:6px;padding:8px 10px;margin-top:10px; }
+.mk-rp-priority-tag { font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0056b3; }
+.mk-rp-priority-text { font-size:0.5rem;font-weight:700;color:#1e3a5f;margin-top:2px;line-height:1.4; }
+.mk-rp-foot { background:#f8fafc;border-top:1px solid #f1f5f9;padding:6px 18px;display:flex;justify-content:space-between;align-items:center; }
+.mk-rp-foot span { font-size:0.38rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em; }
+.mk-rp-foot-logo { display:flex;align-items:center;gap:4px; }
+.mk-rp-foot-logo img { width:12px;height:12px; }
+.mk-rp-foot-logo span { font-size:0.38rem;font-weight:800;color:#94a3b8; }
+
+/* ALL 12 */
+.mk-all { margin:0 auto;max-width:1080px;padding:40px 0 80px;display:none; }
+.mk-all.active { display:block; }
+.mk-all h2 { font-family:Merriweather,serif;font-size:1.3rem;font-weight:900;margin-bottom:20px; }
+.mk-all-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:12px; }
+.mk-all-card { background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:16px 14px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block; }
+.mk-all-card:hover { border-color:var(--primary); }
+.mk-all-dim { font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:6px; }
+.mk-all-card h4 { font-weight:800;font-size:0.82rem;color:#0f172a;margin-bottom:3px;line-height:1.3; }
+.mk-all-card-sub { font-size:0.7rem;color:#94a3b8; }
+.d-g{background:#eff6ff;color:#0056b3;} .d-r{background:#fffbeb;color:#b45309;} .d-i{background:#ecfdf5;color:#059669;} .d-p{background:#f5f3ff;color:#7c3aed;}
+
+/* BOTTOM */
+.mk-bottom { padding-bottom:80px; }
+
+/* MOBILE STICKY */
+.mk-sticky { display:none;position:sticky;bottom:0;z-index:30;background:#0f172a;color:#fff;padding:10px 0;border-top:1px solid rgba(255,255,255,0.1); }
+.mk-sticky-inner { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+.mk-sticky-text { font-size:0.75rem;color:#cbd5e1; }
+.mk-sticky-text strong { color:#fff; }
+.mk-sticky-btn { padding:8px 16px;background:#fff;color:#0f172a;border-radius:8px;font-weight:700;font-size:0.72rem;text-decoration:none;white-space:nowrap; }
+
+/* RESPONSIVE */
+@media(max-width:1024px) {
+  .mk-dim-grid{grid-template-columns:repeat(2,1fr);}
+  .mk-modules{grid-template-columns:repeat(2,1fr);}
+  .mk-rp-wrap{grid-template-columns:1fr 1fr;}
+  .mk-all-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:768px) {
+  .mk-hero h1{font-size:1.7rem;}
+  .mk-ir-hero{grid-template-columns:1fr;gap:24px;}
+  .mk-ir-visual{order:-1;}
+  .mk-ir-stack{width:280px;height:400px;}
+  .mk-ir-rp{width:100%;max-width:280px;}
+  .mk-ir-title{font-size:1.5rem;}
+  .mk-ir-inside{grid-template-columns:1fr;}
+  .mk-ir-nums{grid-template-columns:1fr 1fr;}
+  .mk-ir-price-row{flex-direction:column;align-items:flex-start;gap:8px;}
+  .mk-report{flex-direction:column;text-align:center;padding:22px 20px;gap:14px;}
+  .mk-report-logo{display:none;}
+  .mk-report-cta{width:100%;justify-content:center;}
+  .mk-dim-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .mk-dim-card{padding:18px 14px 14px;}
+  .mk-dim-letter{font-size:1.4rem;}
+  .mk-dim-pain{font-size:0.72rem;}
+  .mk-modules{grid-template-columns:1fr;gap:14px;}
+  .mk-detail-head p{max-width:100%;}
+  .mk-bundle{flex-direction:column;text-align:center;padding:20px;}
+  .mk-bundle-right{flex-direction:column;width:100%;}
+  .mk-bundle-pricing{text-align:center;}
+  .mk-bundle-buy{width:100%;text-align:center;}
+  .mk-rp-wrap{grid-template-columns:1fr;gap:14px;}
+  .mk-all-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .mk-sticky{display:block;}
+  .mk-sticky-inner{flex-direction:column;text-align:center;gap:8px;}
+  .mk-sticky-btn{width:100%;text-align:center;}
+}
+@media(max-width:480px) {
+  .mk-dim-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .mk-dim-pain{display:none;}
+  .mk-all-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<main>
+
+<!-- HERO -->
+<section class="container mk-hero">
+  <span class="eyebrow">GRIP Marketplace</span>
+  <h1>Every GTM system has a constraint.<br>Find yours.</h1>
+  <p class="mk-hero-sub">Each Deep Dive isolates exactly where a specific GTM pillar leaks revenue. 60 questions, 6 diagnostic engines, one definitive report.</p>
+</section>
+
+<!-- INTELLIGENCE REPORT SECTION -->
+<section class="container" id="intelligence-report">
+  <div class="mk-ir">
+    <div class="mk-ir-hero">
+      <div class="mk-ir-copy">
+        <span class="eyebrow" style="color:#60a5fa;">The Full Diagnosis</span>
+        <h2 class="mk-ir-title">Start with the complete picture.</h2>
+        <p class="mk-ir-lead">A 44-page board-level diagnostic of your revenue engine. 265 questions scored by 72 deterministic engines. Constraint analysis, revenue leakage modelling, and a 90-day execution plan.</p>
+        <div class="mk-ir-price-row">
+          <div class="mk-ir-price">&euro;2,495</div>
+          <div class="mk-ir-price-context">One-time assessment.<br><strong>Replaces a &euro;25k+ consulting engagement.</strong></div>
+        </div>
+        <div class="mk-ir-actions">
+          <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR" style="padding:14px 32px;font-size:1rem;">Get the Intelligence Report</button>
+        </div>
+        <p class="mk-ir-secure">&check; Secure Stripe payment. Invoice generated automatically.</p>
+      </div>
+      <div class="mk-ir-visual">
+        <div class="mk-ir-stack" id="irStack">
+          <!-- Card 1: GRIP Dimension Scores -->
+          <div class="mk-ir-rp mk-ir-stack-card active" data-card="0">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 2</div><div class="mk-rp-title">GRIP Dimension Scores</div><div class="mk-rp-subtitle">Guidance &middot; Resources &middot; Implementation &middot; Performance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div style="font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Executive Verdict</div>
+              <div style="font-size:0.48rem;color:#475569;line-height:1.5;margin-bottom:12px;">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs.</div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Guidance</span><span class="mk-rp-bar-v">74</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:74%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Resources</span><span class="mk-rp-bar-v">66</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:66%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Implementation</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div>
+              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Performance</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div>
+              <div style="height:1px;background:#e2e8f0;margin:10px 0;"></div>
+              <div style="background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:6px;padding:7px 10px;margin-bottom:8px;">
+                <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#b45309;">System Pattern</div>
+                <div style="font-size:0.52rem;font-weight:800;color:#78350f;">The Ivory Tower</div>
+              </div>
+              <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:6px;padding:7px 10px;">
+                <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0056b3;">Priority Fix</div>
+                <div style="font-size:0.48rem;font-weight:700;color:#1e3a5f;">Build execution mechanics before adding strategy layers.</div>
+              </div>
+            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 8 of 44</span></div>
+          </div>
+          <!-- Card 2: Table of Contents -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="1">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Report Structure</div><div class="mk-rp-title">Table of Contents</div><div class="mk-rp-subtitle">GTM Intelligence Report &middot; 44 Pages</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div class="mk-toc-item"><span class="mk-toc-num">01</span><span class="mk-toc-label">Executive Summary</span><span class="mk-toc-page">3</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">02</span><span class="mk-toc-label">GRIP Dimension Scores</span><span class="mk-toc-page">6</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">03</span><span class="mk-toc-label">12-Pillar Constraint Analysis</span><span class="mk-toc-page">10</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">04</span><span class="mk-toc-label">Revenue Leakage Model</span><span class="mk-toc-page">22</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">05</span><span class="mk-toc-label">System Pattern Analysis</span><span class="mk-toc-page">28</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">06</span><span class="mk-toc-label">Constraint Priority Scoring</span><span class="mk-toc-page">32</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">07</span><span class="mk-toc-label">90-Day Execution Plan</span><span class="mk-toc-page">36</span></div>
+              <div class="mk-toc-item"><span class="mk-toc-num">08</span><span class="mk-toc-label">Board-Ready Summary</span><span class="mk-toc-page">42</span></div>
+              <div style="margin-top:12px;padding-top:8px;border-top:1px solid #e2e8f0;">
+                <div style="font-size:0.42rem;color:#94a3b8;font-weight:600;">+ Appendix: Methodology, Scoring Definitions, Glossary</div>
+              </div>
+            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 2 of 44</span></div>
+          </div>
+          <!-- Card 3: 90-Day Execution Plan -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="2">
+            <div class="mk-rp-head" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 7</div><div class="mk-rp-title">90-Day Execution Plan</div><div class="mk-rp-subtitle">Immediate Priority Sequence</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-body" style="flex:1;">
+              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-now">Days 1-30</span><span class="mk-exec-phase-title">Foundation</span></div><div class="mk-exec-item">Install sales execution playbook with stage-gated criteria</div><div class="mk-exec-item">Define handoff protocols between Marketing and Sales</div><div class="mk-exec-item">Establish weekly pipeline review cadence with shared metrics</div></div>
+              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-next">Days 31-60</span><span class="mk-exec-phase-title">Acceleration</span></div><div class="mk-exec-item">Deploy competitive intelligence system for active deals</div><div class="mk-exec-item">Rebuild forecast model on leading indicators</div><div class="mk-exec-item">Launch enablement program tied to conversion metrics</div></div>
+              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-later">Days 61-90</span><span class="mk-exec-phase-title">Scale</span></div><div class="mk-exec-item">Implement cross-functional operating rhythm</div><div class="mk-exec-item">Align expansion playbook with CS health scoring</div><div class="mk-exec-item">Baseline all 12 pillar KPIs for quarterly re-assessment</div></div>
+            </div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 37 of 44</span></div>
+          </div>
+        </div>
+        <div class="mk-ir-dots" id="irDots">
+          <button class="mk-ir-dot active" data-dot="0"></button>
+          <button class="mk-ir-dot" data-dot="1"></button>
+          <button class="mk-ir-dot" data-dot="2"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- What's inside -->
+    <div class="mk-ir-inside">
+      <div class="mk-ir-inside-card"><h3>System Diagnosis</h3><p>Overall GTM Score (0-100) with maturity classification. 12 individual pillar scores with constraint severity. GRIP Dimension analysis across 4 forces. System pattern matched against 30+ archetypes. Revenue leakage model separating Growth Suppression from Margin Erosion.</p></div>
+      <div class="mk-ir-inside-card"><h3>Priority Roadmap</h3><p>Constraint Priority Scoring ranked by severity and impact. Recommendations calibrated to your GTM motion and stage. Quick wins separated from structural improvements. 90-day execution plan with named owners and timelines. Board-ready executive summary.</p></div>
+    </div>
+
+    <!-- 3-COLUMN COMPARISON TABLE: AI vs Traditional vs Caugia -->
+    <div class="mk-ir-comp">
+      <div style="margin-bottom:20px;">
+        <div style="font-family:Merriweather,serif;font-size:1.3rem;font-weight:900;color:#fff;line-height:1.3;">Consulting takes weeks. AI guesses. Caugia diagnoses.</div>
+      </div>
+      <table class="mk-ir-table">
+        <thead><tr><th></th><th>AI Tools</th><th>Traditional Consulting</th><th>Caugia Deterministic Engine</th></tr></thead>
+        <tbody>
+          <tr><td>Time to insight</td><td>5 minutes</td><td>4&ndash;6 weeks</td><td>Under 1 hour</td></tr>
+          <tr><td>Cost</td><td>Free &ndash; $20/mo</td><td>&euro;25k &ndash; &euro;50k+</td><td>&euro;2,495 fixed</td></tr>
+          <tr><td>Input depth</td><td>Generic prompts</td><td>Interviews + workshops</td><td>265 structured company inputs</td></tr>
+          <tr><td>Decision logic</td><td>Probabilistic output</td><td>Consultant interpretation</td><td>Deterministic GTM architecture engines</td></tr>
+          <tr><td>Output</td><td>Chat response</td><td>Slide deck</td><td>44-page quantified diagnostic</td></tr>
+          <tr><td>Repeatability</td><td>Different answer every time</td><td>Depends on consultant</td><td>Deterministic scoring core</td></tr>
+          <tr><td>Revenue leakage</td><td>Not modeled</td><td>Roughly estimated</td><td>Dollarized per constraint</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;font-size:0.82rem;color:#94a3b8;line-height:1.55;">Top-tier consultants apply frameworks manually. Caugia encodes them into deterministic engines. Same logic. Radically faster. Radically cheaper.</div>
+    </div>
+
+    <!-- Numbers -->
+    <div class="mk-ir-nums">
+      <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Questions scored</div></div>
+      <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Diagnostic engines</div></div>
+      <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Growth archetypes</div></div>
+      <div><div class="mk-ir-num">44</div><div class="mk-ir-num-label">Pages of analysis</div></div>
+    </div>
+
+    <div class="mk-ir-bottom-cta">
+      <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Get the Intelligence Report &rarr; &euro;2,495</button>
+      <p class="mk-ir-secure">&check; Secure Stripe checkout. One-time payment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIMENSION CHOOSER -->
+<section class="container mk-chooser" id="deep-dives">
+  <div class="mk-chooser-label">Go deeper on a specific dimension, or <a href="#" id="showAllLink">browse all 12 modules</a></div>
+  <div class="mk-dim-grid" id="dimGrid">
+    <div class="mk-dim-card active" data-dim="g" style="--dc:var(--g);"><div class="mk-dim-letter">G</div><div class="mk-dim-name">Guidance</div><div class="mk-dim-pain">Strategy is set, but the market isn't responding. Positioning doesn't land. ICP feels fuzzy.</div><div class="mk-dim-count">3 modules &middot; &euro;749 each</div></div>
+    <div class="mk-dim-card" data-dim="r" style="--dc:var(--r);"><div class="mk-dim-letter">R</div><div class="mk-dim-name">Resources</div><div class="mk-dim-pain">Pricing feels off. Product can't keep up with sales promises. Reps aren't enabled to sell.</div><div class="mk-dim-count">3 modules &middot; &euro;749 each</div></div>
+    <div class="mk-dim-card" data-dim="i" style="--dc:var(--i);"><div class="mk-dim-letter">I</div><div class="mk-dim-name">Implementation</div><div class="mk-dim-pain">Pipeline looks healthy but deals stall. Handoffs break. RevOps can't scale fast enough.</div><div class="mk-dim-count">3 modules &middot; &euro;749 each</div></div>
+    <div class="mk-dim-card" data-dim="p" style="--dc:var(--p);"><div class="mk-dim-letter">P</div><div class="mk-dim-name">Performance</div><div class="mk-dim-pain">Churn is creeping up. Data is unreliable. Teams are busy but misaligned on what matters.</div><div class="mk-dim-count">3 modules &middot; &euro;749 each</div></div>
+  </div>
+</section>
+
+<div class="container mk-bottom">
+
+<!-- G: GUIDANCE -->
+<div class="mk-detail active" id="guidance" data-detail="g" style="--dc:var(--g);--ds:var(--gs);">
+  <div class="mk-detail-head"><h2>Guidance Dimension</h2><p>The decisions that shape everything downstream: strategy, market understanding, and how you articulate value to the market.</p></div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="gsl"><span class="mk-mod-tag">G &middot; Guidance</span><h3>GTM Strategy &amp; Leadership</h3><p class="mk-mod-q">Does leadership have a shared model for how we grow, or is everyone optimizing their own silo?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="gsl">Buy Now</a></div></div>
+    <div class="mk-mod" id="mi"><span class="mk-mod-tag">G &middot; Guidance</span><h3>Market Intelligence</h3><p class="mk-mod-q">Are we targeting the right segments with the right assumptions, or building on blind spots?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="mi">Buy Now</a></div></div>
+    <div class="mk-mod" id="pmm"><span class="mk-mod-tag">G &middot; Guidance</span><h3>Product Marketing</h3><p class="mk-mod-q">Why doesn't the market understand our value, and where does positioning break down?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="pmm">Buy Now</a></div></div>
+  </div>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Guidance Bundle: all 3 Deep Dives</h4><p>Strategy &amp; Leadership + Market Intelligence + Product Marketing. Diagnose the full strategic layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">&euro;1,795</div><div class="mk-bundle-save">Save &euro;452</div></div><a href="#" class="mk-bundle-buy" data-bundle="g">Buy Guidance Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">&darr; Sample output from your Deep Dive report</div><div class="mk-rp-wrap">
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-subtitle">The single constraint shaping everything</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-scores"><div class="mk-rp-sc" style="background:#fef2f2;"><div class="mk-rp-sc-val" style="color:#dc2626;">Positioning</div><div class="mk-rp-sc-lbl">Weakest Pillar</div></div><div class="mk-rp-sc" style="background:#eff6ff;"><div class="mk-rp-sc-val" style="color:#0056b3;">78%</div><div class="mk-rp-sc-lbl">NRR Target</div></div><div class="mk-rp-sc" style="background:#fef3c7;"><div class="mk-rp-sc-val" style="color:#b45309;">31%</div><div class="mk-rp-sc-lbl">Win Rate</div></div></div><div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Positioning framework absent. Messaging inconsistent across channels, sales decks, and website.</div></div><div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Scattered Signal: strong product, weak narrative. The market doesn't understand the value.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 7 of 44</span></div></div>
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-subtitle">How this constraint propagates through the system</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Strategic Narrative</span><span class="mk-rp-bar-v">72</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:72%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">ICP Definition</span><span class="mk-rp-bar-v">68</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:68%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Competitive Positioning</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Content &amp; Messaging</span><span class="mk-rp-bar-v">38</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:38%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Channel Strategy</span><span class="mk-rp-bar-v">55</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:55%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">PMM Enablement</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div><div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Build a unified positioning framework before adding demand generation spend.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 12 of 44</span></div></div>
+  </div></div>
+</div>
+
+<!-- R: RESOURCES -->
+<div class="mk-detail" id="resources" data-detail="r" style="--dc:var(--r);--ds:var(--rs);">
+  <div class="mk-detail-head"><h2>Resources Dimension</h2><p>Pricing, product readiness, and team enablement. The assets and capabilities your GTM motion depends on every single day.</p></div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="pp"><span class="mk-mod-tag">R &middot; Resources</span><h3>Pricing &amp; Packaging</h3><p class="mk-mod-q">Is our pricing aligned with how customers perceive value, or are we leaving money on the table?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="pp">Buy Now</a></div></div>
+    <div class="mk-mod" id="pr"><span class="mk-mod-tag">R &middot; Resources</span><h3>Product Readiness</h3><p class="mk-mod-q">Does our product actually support the GTM motion we're running, or is it holding us back?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="pr">Buy Now</a></div></div>
+    <div class="mk-mod" id="en"><span class="mk-mod-tag">R &middot; Resources</span><h3>Enablement</h3><p class="mk-mod-q">Do our teams have the skills, content, and coaching to execute, or are they set up to fail?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="en">Buy Now</a></div></div>
+  </div>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Resources Bundle: all 3 Deep Dives</h4><p>Pricing &amp; Packaging + Product Readiness + Enablement. Diagnose the full capability layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">&euro;1,795</div><div class="mk-bundle-save">Save &euro;452</div></div><a href="#" class="mk-bundle-buy" data-bundle="r">Buy Resources Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">&darr; Sample output from your Deep Dive report</div><div class="mk-rp-wrap">
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-subtitle">The single constraint shaping everything</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-scores"><div class="mk-rp-sc" style="background:#fef2f2;"><div class="mk-rp-sc-val" style="color:#dc2626;">Pricing</div><div class="mk-rp-sc-lbl">Weakest Pillar</div></div><div class="mk-rp-sc" style="background:#fef3c7;"><div class="mk-rp-sc-val" style="color:#b45309;">-12%</div><div class="mk-rp-sc-lbl">Margin Erosion</div></div><div class="mk-rp-sc" style="background:#eff6ff;"><div class="mk-rp-sc-val" style="color:#0056b3;">26%</div><div class="mk-rp-sc-lbl">Avg Discount</div></div></div><div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Pricing disconnected from value perception. Discounting compensates for weak packaging.</div></div><div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Race to the Bottom: every deal requires discounts because value isn't proven upfront.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 7 of 44</span></div></div>
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-subtitle">How this constraint propagates through the system</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Value Metric Clarity</span><span class="mk-rp-bar-v">38</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:38%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Package Design</span><span class="mk-rp-bar-v">45</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:45%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Competitive Pricing</span><span class="mk-rp-bar-v">61</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:61%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Discount Governance</span><span class="mk-rp-bar-v">33</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:33%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Expansion Pricing</span><span class="mk-rp-bar-v">52</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:52%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Price-to-Value Ratio</span><span class="mk-rp-bar-v">48</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:48%"></div></div></div><div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Redefine value metric and restructure packages before adjusting price points.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 12 of 44</span></div></div>
+  </div></div>
+</div>
+
+<!-- I: IMPLEMENTATION -->
+<div class="mk-detail" id="implementation" data-detail="i" style="--dc:var(--i);--ds:var(--is);">
+  <div class="mk-detail-head"><h2>Implementation Dimension</h2><p>The engine that converts strategy into revenue: demand generation, sales execution, and RevOps at scale.</p></div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="dg"><span class="mk-mod-tag">I &middot; Implementation</span><h3>Demand Generation</h3><p class="mk-mod-q">Why is pipeline not converting into qualified opportunities, and where exactly does it leak?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="dg">Buy Now</a></div></div>
+    <div class="mk-mod" id="se"><span class="mk-mod-tag">I &middot; Implementation</span><h3>Sales Execution</h3><p class="mk-mod-q">Why are deals stalling or closing below potential? Is it people, process, or system?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="se">Buy Now</a></div></div>
+    <div class="mk-mod" id="revops"><span class="mk-mod-tag">I &middot; Implementation</span><h3>Revenue Operations &amp; Systems</h3><p class="mk-mod-q">Is our operational infrastructure keeping pace with growth, or creating friction at scale?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="revops">Buy Now</a></div></div>
+  </div>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Implementation Bundle: all 3 Deep Dives</h4><p>Demand Generation + Sales Execution + Revenue Operations. Diagnose the full execution layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">&euro;1,795</div><div class="mk-bundle-save">Save &euro;452</div></div><a href="#" class="mk-bundle-buy" data-bundle="i">Buy Implementation Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">&darr; Sample output from your Deep Dive report</div><div class="mk-rp-wrap">
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-subtitle">The single constraint shaping everything</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-scores"><div class="mk-rp-sc" style="background:#fef2f2;"><div class="mk-rp-sc-val" style="color:#dc2626;">Sales Exec</div><div class="mk-rp-sc-lbl">Weakest Pillar</div></div><div class="mk-rp-sc" style="background:#fef3c7;"><div class="mk-rp-sc-val" style="color:#b45309;">22%</div><div class="mk-rp-sc-lbl">Win Rate</div></div><div class="mk-rp-sc" style="background:#eff6ff;"><div class="mk-rp-sc-val" style="color:#0056b3;">103d</div><div class="mk-rp-sc-lbl">Avg Cycle</div></div></div><div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Sales execution failure at 22% win rate with 103-day average cycles. Engineering dependency on 60% of deals.</div></div><div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Leaky Funnel: pipeline enters strong but conversion breaks at every stage transition.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 7 of 44</span></div></div>
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-subtitle">How this constraint propagates through the system</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Deal Qualification</span><span class="mk-rp-bar-v">42</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:42%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Sales Methodology</span><span class="mk-rp-bar-v">35</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:35%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Pipeline Velocity</span><span class="mk-rp-bar-v">48</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:48%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Forecast Accuracy</span><span class="mk-rp-bar-v">55</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:55%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Multi-threading</span><span class="mk-rp-bar-v">29</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:29%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Technical Selling</span><span class="mk-rp-bar-v">61</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:61%"></div></div></div><div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Install deal qualification framework and multi-threading playbook before adding headcount.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 12 of 44</span></div></div>
+  </div></div>
+</div>
+
+<!-- P: PERFORMANCE -->
+<div class="mk-detail" id="performance" data-detail="p" style="--dc:var(--p);--ds:var(--ps);">
+  <div class="mk-detail-head"><h2>Performance Dimension</h2><p>Customer success, data quality, and organizational alignment. The forces that sustain growth and make it compound.</p></div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="cse"><span class="mk-mod-tag">P &middot; Performance</span><h3>Customer Success &amp; Expansion</h3><p class="mk-mod-q">Are we retaining and growing the revenue we already won, or slowly leaking it?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="cse">Buy Now</a></div></div>
+    <div class="mk-mod" id="di"><span class="mk-mod-tag">P &middot; Performance</span><h3>Data &amp; Insights</h3><p class="mk-mod-q">Can leadership trust the numbers they're making decisions on, or is the data lying?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="di">Buy Now</a></div></div>
+    <div class="mk-mod" id="ag"><span class="mk-mod-tag">P &middot; Performance</span><h3>Alignment &amp; Governance</h3><p class="mk-mod-q">Do teams have the structure and cadence to stay aligned, or is the org working against itself?</p><div class="mk-mod-meta">60 questions &middot; 6 engines &middot; ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">&euro;749</div><a href="#" class="mk-buy" data-module="ag">Buy Now</a></div></div>
+  </div>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Performance Bundle: all 3 Deep Dives</h4><p>Customer Success + Data &amp; Insights + Alignment &amp; Governance. Diagnose the full outcomes layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">&euro;1,795</div><div class="mk-bundle-save">Save &euro;452</div></div><a href="#" class="mk-bundle-buy" data-bundle="p">Buy Performance Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">&darr; Sample output from your Deep Dive report</div><div class="mk-rp-wrap">
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-subtitle">The single constraint shaping everything</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-scores"><div class="mk-rp-sc" style="background:#fef2f2;"><div class="mk-rp-sc-val" style="color:#dc2626;">Data</div><div class="mk-rp-sc-lbl">Weakest Pillar</div></div><div class="mk-rp-sc" style="background:#fef3c7;"><div class="mk-rp-sc-val" style="color:#b45309;">16%</div><div class="mk-rp-sc-lbl">Churn Rate</div></div><div class="mk-rp-sc" style="background:#f5f3ff;"><div class="mk-rp-sc-val" style="color:#7c3aed;">0.81</div><div class="mk-rp-sc-lbl">NRR Actual</div></div></div><div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Data infrastructure unreliable. Leadership decisions based on incomplete and conflicting metrics.</div></div><div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Blind Spot: teams work hard but nobody trusts the numbers they're steering by.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 7 of 44</span></div></div>
+    <div class="mk-rp"><div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-subtitle">How this constraint propagates through the system</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div><div class="mk-rp-body"><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Health Scoring</span><span class="mk-rp-bar-v">34</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:34%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Churn Prediction</span><span class="mk-rp-bar-v">28</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:28%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Expansion Signals</span><span class="mk-rp-bar-v">45</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:45%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Metric Integrity</span><span class="mk-rp-bar-v">52</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:52%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Cross-team Cadence</span><span class="mk-rp-bar-v">58</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:58%"></div></div></div><div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Decision Latency</span><span class="mk-rp-bar-v">64</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:64%"></div></div></div><div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Implement health scoring and churn prediction before expanding CS headcount.</div></div></div><div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 12 of 44</span></div></div>
+  </div></div>
+</div>
+
+<!-- ALL 12 -->
+<div class="mk-all" data-detail="all">
+  <h2>All 12 Deep Dive Modules</h2>
+  <div class="mk-all-grid">
+    <a class="mk-all-card" data-goto="g" data-target="gsl"><span class="mk-all-dim d-g">G</span><h4>GTM Strategy &amp; Leadership</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="mi"><span class="mk-all-dim d-g">G</span><h4>Market Intelligence</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="pmm"><span class="mk-all-dim d-g">G</span><h4>Product Marketing</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pp"><span class="mk-all-dim d-r">R</span><h4>Pricing &amp; Packaging</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pr"><span class="mk-all-dim d-r">R</span><h4>Product Readiness</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="en"><span class="mk-all-dim d-r">R</span><h4>Enablement</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="dg"><span class="mk-all-dim d-i">I</span><h4>Demand Generation</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="se"><span class="mk-all-dim d-i">I</span><h4>Sales Execution</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="revops"><span class="mk-all-dim d-i">I</span><h4>Revenue Operations</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="cse"><span class="mk-all-dim d-p">P</span><h4>Customer Success</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="di"><span class="mk-all-dim d-p">P</span><h4>Data &amp; Insights</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="ag"><span class="mk-all-dim d-p">P</span><h4>Alignment &amp; Governance</h4><div class="mk-all-card-sub">&euro;749 &middot; 60q &middot; 6 engines</div></a>
+  </div>
+</div>
+
+</div>
+
+<!-- Mobile sticky -->
+<div class="mk-sticky">
+  <div class="container mk-sticky-inner">
+    <div class="mk-sticky-text"><strong>Not sure?</strong> Intelligence Report: all 12 pillars. &euro;2,495</div>
+    <a href="#intelligence-report" class="mk-sticky-btn">See the Report &uarr;</a>
+  </div>
+</div>
+
+<footer><div class="container"><p>&copy; <span id="year">2026</span> Caugia Consulting. All rights reserved.</p></div></footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="assets/header.js"></script>
+<script src="assets/caugia-base.js"></script>
+<script>
+(function(){
+  var stackCards=document.querySelectorAll('.mk-ir-stack-card');
+  var stackDots=document.querySelectorAll('.mk-ir-dot');
+  var currentCard=0;
+  function setActiveCard(idx){
+    currentCard=idx;
+    stackCards.forEach(function(c,i){
+      c.classList.remove('active','behind-1','behind-2');
+      var offset=(i-idx+stackCards.length)%stackCards.length;
+      if(offset===0) c.classList.add('active');
+      else if(offset===1) c.classList.add('behind-1');
+      else c.classList.add('behind-2');
+    });
+    stackDots.forEach(function(d,i){d.classList.toggle('active',i===idx);});
+  }
+  stackCards.forEach(function(c){c.addEventListener('click',function(){if(!c.classList.contains('active')){setActiveCard(parseInt(c.getAttribute('data-card')));}});});
+  stackDots.forEach(function(d){d.addEventListener('click',function(){setActiveCard(parseInt(d.getAttribute('data-dot')));});});
+  var stackInterval=setInterval(function(){setActiveCard((currentCard+1)%stackCards.length);},5000);
+  var stackEl=document.getElementById('irStack');
+  if(stackEl){stackEl.addEventListener('mouseenter',function(){clearInterval(stackInterval);});stackEl.addEventListener('mouseleave',function(){stackInterval=setInterval(function(){setActiveCard((currentCard+1)%stackCards.length);},5000);});}
+  setActiveCard(0);
+})();
+</script>
+<script>
+(function(){
+  var dimCards=document.querySelectorAll('.mk-dim-card');
+  var details=document.querySelectorAll('.mk-detail');
+  var allView=document.querySelector('.mk-all');
+  var showAll=document.getElementById('showAllLink');
+  function activate(d){
+    dimCards.forEach(function(c){c.classList.toggle('active',c.getAttribute('data-dim')===d);});
+    details.forEach(function(s){s.classList.toggle('active',s.getAttribute('data-detail')===d);});
+    if(allView)allView.classList.toggle('active',d==='all');
+  }
+  dimCards.forEach(function(c){c.addEventListener('click',function(){activate(c.getAttribute('data-dim'));});});
+  if(showAll)showAll.addEventListener('click',function(e){e.preventDefault();activate('all');dimCards.forEach(function(c){c.classList.remove('active');});});
+  document.querySelectorAll('.mk-all-card').forEach(function(c){
+    c.addEventListener('click',function(e){
+      e.preventDefault();
+      var dim=c.getAttribute('data-goto'),tid=c.getAttribute('data-target');
+      activate(dim);
+      setTimeout(function(){var el=document.getElementById(tid);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px rgba(0,86,179,0.2)';setTimeout(function(){el.style.boxShadow='';},2000);}},100);
+    });
+  });
+  var hash=window.location.hash.replace('#','');
+  if(hash){
+    var dimMap={'guidance':'g','resources':'r','implementation':'i','performance':'p'};
+    if(dimMap[hash]){activate(dimMap[hash]);setTimeout(function(){var el=document.getElementById(hash);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},100);}
+    else if(hash==='intelligence-report'){var el=document.getElementById(hash);if(el)setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'center'});},100);}
+    else{var t=document.getElementById(hash);if(t){var d=t.closest('.mk-detail');if(d){activate(d.getAttribute('data-detail'));setTimeout(function(){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.boxShadow='0 0 0 3px rgba(0,86,179,0.2)';setTimeout(function(){t.style.boxShadow='';},2000);},300);}}}
+  }
+  document.querySelectorAll('.mk-buy,.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();var m=b.getAttribute('data-module'),bu=b.getAttribute('data-bundle');alert('Payment integration coming soon. '+(m?'Module: '+m.toUpperCase():'Bundle: '+bu.toUpperCase()));});});
+  function startReportCheckout(){
+    if(typeof Stripe!=='undefined'){
+      var stripe=Stripe("pk_live_51Sco4oDZAazoTP0s5aF0J3t8e1XGq1XGq1XGq1XGq1XGq1XGq1XGq");
+      var priceId=(window.CAUGIA_STRIPE&&window.CAUGIA_STRIPE.report)?window.CAUGIA_STRIPE.report:"price_1Qim5eDZAazoTP0szK5sV78C";
+      stripe.redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:"payment",successUrl:"https://www.caugia.com/gtm-intelligence-thank-you.html",cancelUrl:"https://www.caugia.com/grip-marketplace.html#intelligence-report"});
+    }
+  }
+  document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
+})();
+</script>
+</body>
+</html>
