@@ -19,345 +19,206 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-:root {
-  --g-accent: #0056b3;
-  --r-accent: #b45309;
-  --i-accent: #059669;
-  --p-accent: #7c3aed;
-  --g-soft: #eff6ff;
-  --r-soft: #fffbeb;
-  --i-soft: #ecfdf5;
-  --p-soft: #f5f3ff;
-}
+:root { --g:#0056b3; --r:#b45309; --i:#059669; --p:#7c3aed; --gs:#eff6ff; --rs:#fffbeb; --is:#ecfdf5; --ps:#f5f3ff; }
 
-/* ═══════════════════════════════════════
-   HERO — The problem, not the product
-   ═══════════════════════════════════════ */
+/* ═══ HERO ═══ */
+.mk-hero { padding:56px 0 0; text-align:center; max-width:720px; margin:0 auto; }
+.mk-hero h1 { font-family:Merriweather,serif; font-size:2.6rem; font-weight:900; line-height:1.15; color:#0f172a; margin-bottom:14px; letter-spacing:-0.02em; }
+.mk-hero-sub { font-size:1.08rem; color:#475569; line-height:1.6; max-width:560px; margin:0 auto; }
 
-.mk-hero {
-  padding: 56px 0 0;
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto;
-}
-.mk-hero h1 {
-  font-family: Merriweather, serif;
-  font-size: 2.6rem;
-  font-weight: 900;
-  line-height: 1.15;
-  color: #0f172a;
-  margin-bottom: 14px;
-  letter-spacing: -0.02em;
-}
-.mk-hero-sub {
-  font-size: 1.08rem;
-  color: #475569;
-  line-height: 1.6;
-  max-width: 560px;
-  margin: 0 auto;
-}
+/* ═══ REPORT UPSELL ═══ */
+.mk-report { margin:40px auto 0; max-width:680px; background:linear-gradient(135deg,#0f172a,#1e293b); border-radius:16px; padding:28px 32px; display:flex; align-items:center; gap:24px; color:#fff; }
+.mk-report-icon { width:56px;height:56px;flex-shrink:0;background:rgba(255,255,255,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem; }
+.mk-report-body { flex:1; }
+.mk-report-body h3 { font-size:0.95rem; font-weight:800; margin-bottom:3px; color:#fff; }
+.mk-report-body p { font-size:0.82rem; color:#94a3b8; line-height:1.5; margin:0; }
+.mk-report-cta { display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:10px 22px;background:#fff;color:#0f172a;border-radius:10px;font-weight:800;font-size:0.82rem;text-decoration:none;transition:all 0.2s;white-space:nowrap; }
+.mk-report-cta:hover { background:#f1f5f9;transform:translateY(-1px); }
+.mk-report-price { font-size:0.7rem;color:#64748b;font-weight:600; }
 
-/* ═══════════════════════════════════════
-   INTELLIGENCE REPORT — strategic upsell
-   ═══════════════════════════════════════ */
+/* ═══ DIMENSION CHOOSER ═══ */
+.mk-chooser { margin:48px auto 0; max-width:1080px; }
+.mk-chooser-label { text-align:center;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:20px; }
+.mk-chooser-label a { color:var(--primary);text-decoration:underline; }
+.mk-dim-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.mk-dim-card { position:relative;background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:24px 20px 20px;cursor:pointer;transition:all 0.25s;overflow:hidden; }
+.mk-dim-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--dc);opacity:0;transition:opacity 0.2s; }
+.mk-dim-card:hover { border-color:var(--dc);box-shadow:0 8px 28px rgba(0,0,0,0.06); }
+.mk-dim-card:hover::before,.mk-dim-card.active::before { opacity:1; }
+.mk-dim-card.active { border-color:var(--dc);box-shadow:0 8px 28px rgba(0,0,0,0.08); }
+.mk-dim-letter { font-size:1.8rem;font-weight:900;color:var(--dc);line-height:1;margin-bottom:8px; }
+.mk-dim-name { font-weight:800;font-size:0.9rem;color:#0f172a;margin-bottom:6px; }
+.mk-dim-pain { font-size:0.78rem;color:#64748b;line-height:1.5; }
+.mk-dim-count { margin-top:12px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#94a3b8; }
 
-.mk-report {
-  margin: 40px auto 0;
-  max-width: 680px;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  border-radius: 16px;
-  padding: 28px 32px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  color: #fff;
-}
-.mk-report-icon {
-  width: 56px; height: 56px; flex-shrink: 0;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.6rem;
-}
-.mk-report-body { flex: 1; }
-.mk-report-body h3 {
-  font-size: 0.95rem; font-weight: 800; margin-bottom: 3px; color: #fff;
-}
-.mk-report-body p {
-  font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin: 0;
-}
-.mk-report-cta {
-  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
-  padding: 10px 22px; background: #fff; color: #0f172a; border-radius: 10px;
-  font-weight: 800; font-size: 0.82rem; text-decoration: none; transition: all 0.2s;
-  white-space: nowrap;
-}
-.mk-report-cta:hover { background: #f1f5f9; transform: translateY(-1px); }
-.mk-report-price { font-size: 0.7rem; color: #64748b; font-weight: 600; }
-
-/* ═══════════════════════════════════════
-   DIMENSION CHOOSER — 4 pain-based cards
-   ═══════════════════════════════════════ */
-
-.mk-chooser {
-  margin: 48px auto 0;
-  max-width: 1080px;
-}
-.mk-chooser-label {
-  text-align: center;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #94a3b8;
-  margin-bottom: 20px;
-}
-.mk-dim-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-.mk-dim-card {
-  position: relative;
-  background: #fff;
-  border: 2px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 24px 20px 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  overflow: hidden;
-}
-.mk-dim-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--dim-color);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.mk-dim-card:hover { border-color: var(--dim-color); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
-.mk-dim-card:hover::before { opacity: 1; }
-.mk-dim-card.active { border-color: var(--dim-color); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
-.mk-dim-card.active::before { opacity: 1; }
-
-.mk-dim-letter {
-  font-size: 1.8rem; font-weight: 900; color: var(--dim-color);
-  line-height: 1; margin-bottom: 8px;
-}
-.mk-dim-name { font-weight: 800; font-size: 0.9rem; color: #0f172a; margin-bottom: 6px; }
-.mk-dim-pain { font-size: 0.78rem; color: #64748b; line-height: 1.5; }
-.mk-dim-count {
-  margin-top: 12px; font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8;
-}
-
-/* ═══════════════════════════════════════
-   DIMENSION DETAIL — modules + bundle
-   ═══════════════════════════════════════ */
-
-.mk-detail {
-  margin: 0 auto;
-  max-width: 1080px;
-  padding: 40px 0 80px;
-  display: none;
-}
-.mk-detail.active { display: block; }
-
-.mk-detail-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f1f5f9;
-}
-.mk-detail-head h2 { font-family: Merriweather, serif; font-size: 1.5rem; font-weight: 900; color: #0f172a; }
-.mk-detail-head p { font-size: 0.85rem; color: #64748b; max-width: 440px; text-align: right; }
+/* ═══ DETAIL SECTIONS ═══ */
+.mk-detail { margin:0 auto;max-width:1080px;padding:40px 0 0;display:none; }
+.mk-detail.active { display:block; }
+.mk-detail-head { display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f1f5f9; }
+.mk-detail-head h2 { font-family:Merriweather,serif;font-size:1.5rem;font-weight:900;color:#0f172a; }
+.mk-detail-head p { font-size:0.85rem;color:#64748b;max-width:440px;text-align:right; }
 
 /* Module cards */
-.mk-modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.mk-modules { display:grid;grid-template-columns:repeat(3,1fr);gap:18px; }
+.mk-mod { background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;transition:all 0.2s; }
+.mk-mod:hover { border-color:var(--dc);box-shadow:0 6px 20px rgba(0,0,0,0.05); }
+.mk-mod-tag { display:inline-flex;width:fit-content;font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:3px 8px;border-radius:4px;margin-bottom:12px;background:var(--ds);color:var(--dc); }
+.mk-mod h3 { font-weight:800;font-size:1.05rem;color:#0f172a;margin-bottom:8px;line-height:1.3; }
+.mk-mod-q { font-size:0.84rem;color:#64748b;line-height:1.55;font-style:italic;margin-bottom:16px;flex-grow:1; }
+.mk-mod-meta { font-size:0.72rem;color:#94a3b8;margin-bottom:16px; }
+.mk-mod-foot { display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid #f1f5f9; }
+.mk-mod-price { font-size:1.2rem;font-weight:900;color:#0f172a; }
+.mk-buy { display:inline-flex;padding:9px 18px;background:var(--dc);color:#fff;border-radius:10px;border:none;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s;text-decoration:none; }
+.mk-buy:hover { filter:brightness(0.9);transform:translateY(-1px); }
 
-.mk-mod {
-  background: #fff;
-  border: 1px solid #e8ecf1;
-  border-radius: 14px;
-  padding: 24px 22px;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.2s;
-  position: relative;
+/* Bundle inline */
+.mk-bundle { margin-top:24px;background:var(--ds);border:2px solid var(--dc);border-radius:14px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px; }
+.mk-bundle-left { flex:1; }
+.mk-bundle-left h4 { font-weight:800;font-size:1rem;color:#0f172a;margin-bottom:3px; }
+.mk-bundle-left p { font-size:0.82rem;color:#64748b;margin:0; }
+.mk-bundle-right { display:flex;align-items:center;gap:18px;flex-shrink:0; }
+.mk-bundle-pricing { text-align:right; }
+.mk-bundle-price { font-size:1.4rem;font-weight:900;color:#0f172a; }
+.mk-bundle-save { font-size:0.72rem;color:#16a34a;font-weight:700; }
+.mk-bundle-buy { padding:12px 24px;background:#0f172a;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;text-decoration:none;white-space:nowrap; }
+.mk-bundle-buy:hover { background:#1e293b;transform:translateY(-1px); }
+
+/* ═══ REPORT PREVIEW MOCK-UP ═══ */
+.mk-preview { margin-top:32px; }
+.mk-preview-label { font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:14px; }
+
+.mk-rp-wrap {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
 }
-.mk-mod:hover { border-color: var(--dim-color); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
-
-.mk-mod-tag {
-  display: inline-flex; width: fit-content;
-  font-size: 0.58rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
-  background: var(--dim-soft); color: var(--dim-color);
+.mk-rp {
+  background:#fff; border:1px solid #e2e8f0; border-radius:12px;
+  overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.04);
+  transition:transform 0.3s, box-shadow 0.3s;
 }
-.mk-mod h3 { font-weight: 800; font-size: 1.05rem; color: #0f172a; margin-bottom: 8px; line-height: 1.3; }
-.mk-mod-q {
-  font-size: 0.84rem; color: #64748b; line-height: 1.55; font-style: italic;
-  margin-bottom: 16px; flex-grow: 1;
+.mk-rp:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,0,0,0.08); }
+
+/* Mini report header */
+.mk-rp-head {
+  background:linear-gradient(135deg,#0056b3,#0073e6);
+  padding:12px 16px; position:relative;
 }
-.mk-mod-meta { font-size: 0.72rem; color: #94a3b8; margin-bottom: 16px; }
+.mk-rp-ch { font-size:0.45rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.5); }
+.mk-rp-title { font-family:Merriweather,serif;font-size:0.72rem;font-weight:900;color:#fff;line-height:1.3;margin-top:2px; }
+.mk-rp-logo { position:absolute;top:10px;right:14px;width:22px;height:22px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center; }
+.mk-rp-logo span { font-weight:900;font-size:0.5rem;color:#fff; }
 
-.mk-mod-foot {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 16px; border-top: 1px solid #f1f5f9;
+/* Report body content */
+.mk-rp-body { padding:14px 16px 12px; }
+
+/* Score row */
+.mk-rp-scores { display:flex; gap:8px; margin-bottom:10px; }
+.mk-rp-sc { flex:1; text-align:center; padding:6px 4px; background:#f8fafc; border-radius:6px; }
+.mk-rp-sc-val { font-size:0.85rem; font-weight:900; color:#0f172a; }
+.mk-rp-sc-lbl { font-size:0.4rem; color:#94a3b8; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+
+/* Bar chart rows */
+.mk-rp-bar-row { margin-bottom:6px; }
+.mk-rp-bar-label { display:flex; justify-content:space-between; margin-bottom:2px; }
+.mk-rp-bar-l { font-size:0.5rem; font-weight:700; color:#334155; }
+.mk-rp-bar-v { font-size:0.5rem; font-weight:800; color:#0f172a; }
+.mk-rp-bar { height:4px; background:#f1f5f9; border-radius:3px; overflow:hidden; }
+.mk-rp-bf { height:100%; border-radius:3px; }
+.bf-b { background:linear-gradient(90deg,#0056b3,#3b82f6); }
+.bf-a { background:linear-gradient(90deg,#b45309,#fbbf24); }
+.bf-g { background:linear-gradient(90deg,#059669,#34d399); }
+.bf-p { background:linear-gradient(90deg,#7c3aed,#a78bfa); }
+.bf-r { background:linear-gradient(90deg,#dc2626,#f87171); }
+.bf-w { background:linear-gradient(90deg,#d97706,#fbbf24); }
+
+/* Constraint alert */
+.mk-rp-alert { background:#fef2f2; border:1px solid #fecaca; border-left:3px solid #dc2626; border-radius:6px; padding:8px 10px; margin-top:8px; }
+.mk-rp-alert-tag { font-size:0.38rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#dc2626; }
+.mk-rp-alert-text { font-size:0.48rem; font-weight:700; color:#7f1d1d; margin-top:1px; }
+
+/* Pattern box */
+.mk-rp-pattern { background:#fff7ed; border:1px solid #fed7aa; border-left:3px solid #f59e0b; border-radius:6px; padding:8px 10px; margin-top:8px; }
+.mk-rp-pattern-tag { font-size:0.38rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#b45309; }
+.mk-rp-pattern-text { font-size:0.48rem; font-weight:700; color:#78350f; margin-top:1px; }
+
+/* Priority box */
+.mk-rp-priority { background:#eff6ff; border:1px solid #bfdbfe; border-left:3px solid #0056b3; border-radius:6px; padding:8px 10px; margin-top:8px; }
+.mk-rp-priority-tag { font-size:0.38rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#0056b3; }
+.mk-rp-priority-text { font-size:0.48rem; font-weight:700; color:#1e3a5f; margin-top:1px; }
+
+/* Pillar table */
+.mk-rp-table { width:100%; border-collapse:collapse; margin-top:8px; }
+.mk-rp-table th { font-size:0.4rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#94a3b8; text-align:left; padding:3px 4px; border-bottom:1px solid #f1f5f9; }
+.mk-rp-table td { font-size:0.48rem; padding:4px; border-bottom:1px solid #f8fafc; color:#334155; }
+.mk-rp-table .sc { font-weight:800; }
+.mk-rp-tag-s { background:#dcfce7;color:#166534;padding:1px 4px;border-radius:3px;font-size:0.38rem;font-weight:700; }
+.mk-rp-tag-m { background:#fef3c7;color:#92400e;padding:1px 4px;border-radius:3px;font-size:0.38rem;font-weight:700; }
+.mk-rp-tag-c { background:#fef2f2;color:#991b1b;padding:1px 4px;border-radius:3px;font-size:0.38rem;font-weight:700; }
+
+/* Report page footer */
+.mk-rp-foot { background:#f8fafc;border-top:1px solid #f1f5f9;padding:5px 16px;display:flex;justify-content:space-between; }
+.mk-rp-foot span { font-size:0.38rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em; }
+
+/* Cascade metric boxes */
+.mk-rp-metrics { display:flex; gap:6px; margin-bottom:8px; }
+.mk-rp-metric { flex:1; text-align:center; padding:6px 4px; border-radius:6px; }
+.mk-rp-metric-val { font-size:0.7rem; font-weight:900; }
+.mk-rp-metric-lbl { font-size:0.38rem; color:#64748b; font-weight:600; }
+
+/* ═══ ALL 12 VIEW ═══ */
+.mk-all { margin:0 auto;max-width:1080px;padding:40px 0 80px;display:none; }
+.mk-all.active { display:block; }
+.mk-all h2 { font-family:Merriweather,serif;font-size:1.3rem;font-weight:900;margin-bottom:20px; }
+.mk-all-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:12px; }
+.mk-all-card { background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:16px 14px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block; }
+.mk-all-card:hover { border-color:var(--primary);box-shadow:0 4px 14px rgba(0,0,0,0.04); }
+.mk-all-dim { font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:6px; }
+.mk-all-card h4 { font-weight:800;font-size:0.82rem;color:#0f172a;margin-bottom:3px;line-height:1.3; }
+.mk-all-card-sub { font-size:0.7rem;color:#94a3b8; }
+.d-g{background:#eff6ff;color:#0056b3;} .d-r{background:#fffbeb;color:#b45309;} .d-i{background:#ecfdf5;color:#059669;} .d-p{background:#f5f3ff;color:#7c3aed;}
+
+/* ═══ BOTTOM SPACING ═══ */
+.mk-bottom { padding-bottom:80px; }
+
+/* ═══ MOBILE STICKY ═══ */
+.mk-sticky { display:none;position:sticky;bottom:0;z-index:30;background:#0f172a;color:#fff;padding:10px 0;border-top:1px solid rgba(255,255,255,0.1); }
+.mk-sticky-inner { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+.mk-sticky-text { font-size:0.75rem;color:#cbd5e1; }
+.mk-sticky-text strong { color:#fff; }
+.mk-sticky-btn { padding:8px 16px;background:#fff;color:#0f172a;border-radius:8px;font-weight:700;font-size:0.72rem;text-decoration:none;white-space:nowrap; }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px) {
+  .mk-dim-grid{grid-template-columns:repeat(2,1fr);}
+  .mk-modules{grid-template-columns:repeat(2,1fr);}
+  .mk-rp-wrap{grid-template-columns:1fr 1fr;}
+  .mk-all-grid{grid-template-columns:repeat(3,1fr);}
 }
-.mk-mod-price { font-size: 1.2rem; font-weight: 900; color: #0f172a; }
-.mk-buy {
-  display: inline-flex; align-items: center; padding: 9px 18px;
-  background: var(--dim-color); color: #fff; border-radius: 10px; border: none;
-  font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
-  text-decoration: none;
+@media(max-width:768px) {
+  .mk-hero h1{font-size:1.7rem;}
+  .mk-report{flex-direction:column;text-align:center;padding:22px 20px;gap:14px;}
+  .mk-report-icon{display:none;}
+  .mk-report-cta{width:100%;justify-content:center;}
+  .mk-dim-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .mk-dim-card{padding:18px 14px 14px;}
+  .mk-dim-letter{font-size:1.4rem;}
+  .mk-dim-pain{font-size:0.72rem;}
+  .mk-modules{grid-template-columns:1fr;gap:14px;}
+  .mk-detail-head{flex-direction:column;gap:6px;}
+  .mk-detail-head p{text-align:left;}
+  .mk-bundle{flex-direction:column;text-align:center;padding:20px;}
+  .mk-bundle-right{flex-direction:column;width:100%;}
+  .mk-bundle-pricing{text-align:center;}
+  .mk-bundle-buy{width:100%;text-align:center;}
+  .mk-rp-wrap{grid-template-columns:1fr;gap:12px;}
+  .mk-all-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .mk-sticky{display:block;}
+  .mk-sticky-inner{flex-direction:column;text-align:center;gap:8px;}
+  .mk-sticky-btn{width:100%;text-align:center;}
 }
-.mk-buy:hover { filter: brightness(0.9); transform: translateY(-1px); }
-
-/* ── Bundle inline ── */
-.mk-bundle {
-  margin-top: 24px;
-  background: var(--dim-soft);
-  border: 2px solid var(--dim-color);
-  border-radius: 14px;
-  padding: 24px 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-.mk-bundle-left { flex: 1; }
-.mk-bundle-left h4 { font-weight: 800; font-size: 1rem; color: #0f172a; margin-bottom: 3px; }
-.mk-bundle-left p { font-size: 0.82rem; color: #64748b; margin: 0; }
-.mk-bundle-right { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
-.mk-bundle-pricing { text-align: right; }
-.mk-bundle-price { font-size: 1.4rem; font-weight: 900; color: #0f172a; }
-.mk-bundle-save { font-size: 0.72rem; color: #16a34a; font-weight: 700; }
-.mk-bundle-buy {
-  padding: 12px 24px; background: #0f172a; color: #fff; border: none;
-  border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;
-  transition: all 0.2s; text-decoration: none; white-space: nowrap;
-}
-.mk-bundle-buy:hover { background: #1e293b; transform: translateY(-1px); }
-
-/* ── What you get ── */
-.mk-deliverable {
-  margin-top: 28px;
-  padding: 20px 24px;
-  background: #fafbfc;
-  border: 1px solid #f1f5f9;
-  border-radius: 12px;
-  display: flex;
-  gap: 32px;
-  align-items: center;
-}
-.mk-deliverable-icon {
-  width: 48px; height: 48px; flex-shrink: 0;
-  background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-}
-.mk-deliverable-text h5 { font-weight: 800; font-size: 0.82rem; color: #0f172a; margin-bottom: 2px; }
-.mk-deliverable-text p { font-size: 0.75rem; color: #94a3b8; margin: 0; line-height: 1.5; }
-.mk-deliverable-items { display: flex; gap: 24px; flex: 1; }
-.mk-deliverable-item { flex: 1; }
-
-/* ═══════════════════════════════════════
-   ALL 12 — compact browse
-   ═══════════════════════════════════════ */
-
-.mk-all {
-  margin: 0 auto;
-  max-width: 1080px;
-  padding: 40px 0 80px;
-  display: none;
-}
-.mk-all.active { display: block; }
-.mk-all h2 { font-family: Merriweather, serif; font-size: 1.3rem; font-weight: 900; margin-bottom: 20px; }
-
-.mk-all-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.mk-all-card {
-  background: #fff; border: 1px solid #e8ecf1; border-radius: 12px;
-  padding: 16px 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; display: block;
-}
-.mk-all-card:hover { border-color: var(--primary); box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
-.mk-all-dim {
-  font-size: 0.55rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
-  padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 6px;
-}
-.mk-all-card h4 { font-weight: 800; font-size: 0.82rem; color: #0f172a; margin-bottom: 3px; line-height: 1.3; }
-.mk-all-card-sub { font-size: 0.7rem; color: #94a3b8; }
-
-/* ═══════════════════════════════════════
-   STICKY REPORT BAR (mobile)
-   ═══════════════════════════════════════ */
-
-.mk-sticky-report {
-  display: none;
-  position: sticky; bottom: 0; z-index: 30;
-  background: #0f172a; color: #fff; padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.mk-sticky-inner {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-}
-.mk-sticky-text { font-size: 0.75rem; color: #cbd5e1; }
-.mk-sticky-text strong { color: #fff; }
-.mk-sticky-btn {
-  padding: 8px 16px; background: #fff; color: #0f172a; border-radius: 8px;
-  font-weight: 700; font-size: 0.72rem; text-decoration: none; white-space: nowrap;
-}
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════ */
-
-@media (max-width: 1024px) {
-  .mk-dim-grid { grid-template-columns: repeat(2, 1fr); }
-  .mk-modules { grid-template-columns: repeat(2, 1fr); }
-  .mk-all-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .mk-hero h1 { font-size: 1.7rem; }
-  .mk-hero-sub { font-size: 0.92rem; }
-
-  .mk-report { flex-direction: column; text-align: center; padding: 22px 20px; gap: 14px; }
-  .mk-report-icon { display: none; }
-  .mk-report-cta { width: 100%; justify-content: center; }
-
-  .mk-dim-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .mk-dim-card { padding: 18px 14px 14px; }
-  .mk-dim-letter { font-size: 1.4rem; }
-  .mk-dim-pain { font-size: 0.72rem; }
-
-  .mk-modules { grid-template-columns: 1fr; gap: 14px; }
-
-  .mk-detail-head { flex-direction: column; gap: 6px; }
-  .mk-detail-head p { text-align: left; }
-
-  .mk-bundle { flex-direction: column; text-align: center; padding: 20px; }
-  .mk-bundle-right { flex-direction: column; width: 100%; }
-  .mk-bundle-pricing { text-align: center; }
-  .mk-bundle-buy { width: 100%; text-align: center; }
-
-  .mk-deliverable { flex-direction: column; gap: 14px; }
-  .mk-deliverable-items { flex-direction: column; gap: 12px; }
-
-  .mk-all-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-
-  .mk-sticky-report { display: block; }
-
-  .mk-chooser-label { font-size: 0.65rem; }
-}
-
-@media (max-width: 480px) {
-  .mk-dim-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .mk-dim-pain { display: none; }
-  .mk-dim-card { padding: 14px 12px; }
-  .mk-all-grid { grid-template-columns: 1fr; }
+@media(max-width:480px) {
+  .mk-dim-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .mk-dim-pain{display:none;}
+  .mk-all-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -372,13 +233,13 @@
   <p class="mk-hero-sub">Each Deep Dive isolates exactly where a specific GTM pillar leaks revenue. 60 questions, 6 diagnostic engines, one definitive report.</p>
 </section>
 
-<!-- ═══ INTELLIGENCE REPORT UPSELL ═══ -->
+<!-- ═══ REPORT UPSELL ═══ -->
 <section class="container">
   <div class="mk-report">
     <div class="mk-report-icon">🔬</div>
     <div class="mk-report-body">
       <h3>Not sure which pillar to start with?</h3>
-      <p>The Intelligence Report diagnoses all 12 pillars at once and tells you exactly where your biggest constraint lives. 44 pages of board-level intelligence.</p>
+      <p>The Intelligence Report diagnoses all 12 pillars at once. 44 pages of board-level intelligence including constraint cascades, leakage modelling, and a 90-day execution plan.</p>
     </div>
     <div style="text-align:center;">
       <a href="gtm-intelligence-report.html" class="mk-report-cta">Get the Intelligence Report →</a>
@@ -389,329 +250,261 @@
 
 <!-- ═══ DIMENSION CHOOSER ═══ -->
 <section class="container mk-chooser">
-  <div class="mk-chooser-label">Choose a dimension — or <a href="#" id="showAllLink" style="color:var(--primary);text-decoration:underline;">browse all 12</a></div>
+  <div class="mk-chooser-label">Choose a dimension — or <a href="#" id="showAllLink">browse all 12</a></div>
   <div class="mk-dim-grid" id="dimGrid">
-
-    <div class="mk-dim-card active" data-dim="g" style="--dim-color:var(--g-accent);">
+    <div class="mk-dim-card active" data-dim="g" style="--dc:var(--g);">
       <div class="mk-dim-letter">G</div>
       <div class="mk-dim-name">Guidance</div>
       <div class="mk-dim-pain">Strategy is set, but the market isn't responding. Positioning doesn't land. ICP feels fuzzy.</div>
       <div class="mk-dim-count">3 modules · €749 each</div>
     </div>
-
-    <div class="mk-dim-card" data-dim="r" style="--dim-color:var(--r-accent);">
+    <div class="mk-dim-card" data-dim="r" style="--dc:var(--r);">
       <div class="mk-dim-letter">R</div>
       <div class="mk-dim-name">Resources</div>
       <div class="mk-dim-pain">Pricing feels off. Product can't keep up with sales promises. Reps aren't enabled.</div>
       <div class="mk-dim-count">3 modules · €749 each</div>
     </div>
-
-    <div class="mk-dim-card" data-dim="i" style="--dim-color:var(--i-accent);">
+    <div class="mk-dim-card" data-dim="i" style="--dc:var(--i);">
       <div class="mk-dim-letter">I</div>
       <div class="mk-dim-name">Implementation</div>
       <div class="mk-dim-pain">Pipeline looks healthy but deals stall. Handoffs break. RevOps can't scale fast enough.</div>
       <div class="mk-dim-count">3 modules · €749 each</div>
     </div>
-
-    <div class="mk-dim-card" data-dim="p" style="--dim-color:var(--p-accent);">
+    <div class="mk-dim-card" data-dim="p" style="--dc:var(--p);">
       <div class="mk-dim-letter">P</div>
       <div class="mk-dim-name">Performance</div>
       <div class="mk-dim-pain">Churn is creeping up. Data is unreliable. Teams are busy but misaligned on priorities.</div>
       <div class="mk-dim-count">3 modules · €749 each</div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ DETAIL SECTIONS ═══ -->
-<div class="container">
+<div class="container mk-bottom">
 
-<!-- G: GUIDANCE -->
-<div class="mk-detail active" data-detail="g" style="--dim-color:var(--g-accent);--dim-soft:var(--g-soft);">
+<!-- ═══ G: GUIDANCE ═══ -->
+<div class="mk-detail active" data-detail="g" style="--dc:var(--g);--ds:var(--gs);">
   <div class="mk-detail-head">
     <h2>Guidance Dimension</h2>
-    <p>The decisions that shape everything downstream — strategy, market understanding, and how you articulate value.</p>
+    <p>Strategy, market understanding, and how you articulate value — the decisions that shape everything downstream.</p>
   </div>
   <div class="mk-modules">
-    <div class="mk-mod" id="gsl">
-      <span class="mk-mod-tag">G · Guidance</span>
-      <h3>GTM Strategy & Leadership</h3>
-      <p class="mk-mod-q">Does leadership have a shared model for how we grow — or is everyone optimizing their own silo?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot">
-        <div class="mk-mod-price">€749</div>
-        <a href="#" class="mk-buy" data-module="gsl">Buy Now</a>
-      </div>
-    </div>
-    <div class="mk-mod" id="mi">
-      <span class="mk-mod-tag">G · Guidance</span>
-      <h3>Market Intelligence</h3>
-      <p class="mk-mod-q">Are we targeting the right segments with the right assumptions — or building on blind spots?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot">
-        <div class="mk-mod-price">€749</div>
-        <a href="#" class="mk-buy" data-module="mi">Buy Now</a>
-      </div>
-    </div>
-    <div class="mk-mod" id="pmm">
-      <span class="mk-mod-tag">G · Guidance</span>
-      <h3>Product Marketing</h3>
-      <p class="mk-mod-q">Why doesn't the market understand our value — and where does positioning break down?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot">
-        <div class="mk-mod-price">€749</div>
-        <a href="#" class="mk-buy" data-module="pmm">Buy Now</a>
-      </div>
-    </div>
+    <div class="mk-mod" id="gsl"><span class="mk-mod-tag">G · Guidance</span><h3>GTM Strategy & Leadership</h3><p class="mk-mod-q">Does leadership have a shared model for how we grow — or is everyone optimizing their own silo?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="gsl">Buy Now</a></div></div>
+    <div class="mk-mod" id="mi"><span class="mk-mod-tag">G · Guidance</span><h3>Market Intelligence</h3><p class="mk-mod-q">Are we targeting the right segments with the right assumptions — or building on blind spots?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="mi">Buy Now</a></div></div>
+    <div class="mk-mod" id="pmm"><span class="mk-mod-tag">G · Guidance</span><h3>Product Marketing</h3><p class="mk-mod-q">Why doesn't the market understand our value — and where does positioning break down?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pmm">Buy Now</a></div></div>
   </div>
-  <div class="mk-bundle">
-    <div class="mk-bundle-left">
-      <h4>Guidance Bundle — all 3 Deep Dives</h4>
-      <p>Strategy & Leadership + Market Intelligence + Product Marketing. Diagnose the full strategic layer.</p>
-    </div>
-    <div class="mk-bundle-right">
-      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
-      <a href="#" class="mk-bundle-buy" data-bundle="g">Buy Guidance Bundle</a>
-    </div>
-  </div>
-  <div class="mk-deliverable">
-    <div class="mk-deliverable-icon">📄</div>
-    <div class="mk-deliverable-items">
-      <div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Guidance Bundle — all 3 Deep Dives</h4><p>Strategy & Leadership + Market Intelligence + Product Marketing. Diagnose the full strategic layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452</div></div><a href="#" class="mk-bundle-buy" data-bundle="g">Buy Guidance Bundle</a></div></div>
+
+  <!-- Report preview -->
+  <div class="mk-preview">
+    <div class="mk-preview-label">↓ What your report looks like</div>
+    <div class="mk-rp-wrap">
+      <!-- Page 1: Primary Diagnosis -->
+      <div class="mk-rp">
+        <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-logo"><span>C</span></div></div>
+        <div class="mk-rp-body">
+          <div class="mk-rp-metrics">
+            <div class="mk-rp-metric" style="background:#fef2f2;"><div class="mk-rp-metric-val" style="color:#dc2626;">Positioning</div><div class="mk-rp-metric-lbl">Weakest Pillar</div></div>
+            <div class="mk-rp-metric" style="background:#eff6ff;"><div class="mk-rp-metric-val" style="color:#0056b3;">78%</div><div class="mk-rp-metric-lbl">NRR Target</div></div>
+            <div class="mk-rp-metric" style="background:#fef3c7;"><div class="mk-rp-metric-val" style="color:#b45309;">31%</div><div class="mk-rp-metric-lbl">Win Rate</div></div>
+          </div>
+          <div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Positioning framework absent — messaging inconsistent across channels and sales decks</div></div>
+          <div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Scattered Signal — strong product, weak narrative. Market doesn't understand the value.</div></div>
+        </div>
+        <div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 7 of 44</span></div>
+      </div>
+      <!-- Page 2: Constraint Mechanics -->
+      <div class="mk-rp">
+        <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-logo"><span>C</span></div></div>
+        <div class="mk-rp-body">
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Strategic Narrative</span><span class="mk-rp-bar-v">72</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:72%"></div></div></div>
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">ICP Definition</span><span class="mk-rp-bar-v">68</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:68%"></div></div></div>
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Competitive Positioning</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div>
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Content & Messaging</span><span class="mk-rp-bar-v">38</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:38%"></div></div></div>
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Channel Strategy</span><span class="mk-rp-bar-v">55</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:55%"></div></div></div>
+          <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">PMM Enablement</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div>
+          <div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Build a unified positioning framework before adding demand generation spend.</div></div>
+        </div>
+        <div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 12 of 44</span></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- R: RESOURCES -->
-<div class="mk-detail" data-detail="r" style="--dim-color:var(--r-accent);--dim-soft:var(--r-soft);">
-  <div class="mk-detail-head">
-    <h2>Resources Dimension</h2>
-    <p>The assets and capabilities your GTM motion depends on — pricing, product readiness, and team enablement.</p>
-  </div>
+<!-- ═══ R: RESOURCES ═══ -->
+<div class="mk-detail" data-detail="r" style="--dc:var(--r);--ds:var(--rs);">
+  <div class="mk-detail-head"><h2>Resources Dimension</h2><p>Pricing, product readiness, and team enablement — the assets your GTM motion depends on.</p></div>
   <div class="mk-modules">
-    <div class="mk-mod" id="pp">
-      <span class="mk-mod-tag">R · Resources</span>
-      <h3>Pricing & Packaging</h3>
-      <p class="mk-mod-q">Is our pricing aligned with how customers perceive value — or are we leaving money on the table?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pp">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="pr">
-      <span class="mk-mod-tag">R · Resources</span>
-      <h3>Product Readiness</h3>
-      <p class="mk-mod-q">Does our product actually support the GTM motion we're running — or is it holding us back?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pr">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="en">
-      <span class="mk-mod-tag">R · Resources</span>
-      <h3>Enablement</h3>
-      <p class="mk-mod-q">Do our teams have the skills, content, and coaching to execute — or are they set up to fail?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="en">Buy Now</a></div>
-    </div>
+    <div class="mk-mod" id="pp"><span class="mk-mod-tag">R · Resources</span><h3>Pricing & Packaging</h3><p class="mk-mod-q">Is our pricing aligned with how customers perceive value — or are we leaving money on the table?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pp">Buy Now</a></div></div>
+    <div class="mk-mod" id="pr"><span class="mk-mod-tag">R · Resources</span><h3>Product Readiness</h3><p class="mk-mod-q">Does our product actually support the GTM motion we're running — or is it holding us back?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pr">Buy Now</a></div></div>
+    <div class="mk-mod" id="en"><span class="mk-mod-tag">R · Resources</span><h3>Enablement</h3><p class="mk-mod-q">Do our teams have the skills, content, and coaching to execute — or are they set up to fail?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="en">Buy Now</a></div></div>
   </div>
-  <div class="mk-bundle">
-    <div class="mk-bundle-left"><h4>Resources Bundle — all 3 Deep Dives</h4><p>Pricing & Packaging + Product Readiness + Enablement. Diagnose the full capability layer.</p></div>
-    <div class="mk-bundle-right">
-      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
-      <a href="#" class="mk-bundle-buy" data-bundle="r">Buy Resources Bundle</a>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Resources Bundle — all 3 Deep Dives</h4><p>Pricing & Packaging + Product Readiness + Enablement. Diagnose the full capability layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452</div></div><a href="#" class="mk-bundle-buy" data-bundle="r">Buy Resources Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">↓ What your report looks like</div><div class="mk-rp-wrap">
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-metrics">
+          <div class="mk-rp-metric" style="background:#fef2f2;"><div class="mk-rp-metric-val" style="color:#dc2626;">Pricing</div><div class="mk-rp-metric-lbl">Weakest Pillar</div></div>
+          <div class="mk-rp-metric" style="background:#fef3c7;"><div class="mk-rp-metric-val" style="color:#b45309;">-12%</div><div class="mk-rp-metric-lbl">Margin Erosion</div></div>
+          <div class="mk-rp-metric" style="background:#eff6ff;"><div class="mk-rp-metric-val" style="color:#0056b3;">26%</div><div class="mk-rp-metric-lbl">Avg Discount</div></div>
+        </div>
+        <div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Pricing disconnected from value perception — discounting compensates for weak packaging</div></div>
+        <div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Race to the Bottom — every deal requires discounts because value isn't proven upfront.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 7 of 44</span></div>
     </div>
-  </div>
-  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Value Metric Clarity</span><span class="mk-rp-bar-v">38</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:38%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Package Design</span><span class="mk-rp-bar-v">45</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:45%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Competitive Pricing</span><span class="mk-rp-bar-v">61</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:61%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Discount Governance</span><span class="mk-rp-bar-v">33</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:33%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Expansion Pricing</span><span class="mk-rp-bar-v">52</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:52%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Price-to-Value Ratio</span><span class="mk-rp-bar-v">48</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:48%"></div></div></div>
+        <div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Redefine value metric and restructure packages before adjusting price points.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 12 of 44</span></div>
+    </div>
+  </div></div>
 </div>
 
-<!-- I: IMPLEMENTATION -->
-<div class="mk-detail" data-detail="i" style="--dim-color:var(--i-accent);--dim-soft:var(--i-soft);">
-  <div class="mk-detail-head">
-    <h2>Implementation Dimension</h2>
-    <p>The engine that converts strategy into revenue — demand generation, sales execution, and RevOps.</p>
-  </div>
+<!-- ═══ I: IMPLEMENTATION ═══ -->
+<div class="mk-detail" data-detail="i" style="--dc:var(--i);--ds:var(--is);">
+  <div class="mk-detail-head"><h2>Implementation Dimension</h2><p>Demand generation, sales execution, and RevOps — the engine that converts strategy into revenue.</p></div>
   <div class="mk-modules">
-    <div class="mk-mod" id="dg">
-      <span class="mk-mod-tag">I · Implementation</span>
-      <h3>Demand Generation</h3>
-      <p class="mk-mod-q">Why is pipeline not converting into qualified opportunities — and where exactly does it leak?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="dg">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="se">
-      <span class="mk-mod-tag">I · Implementation</span>
-      <h3>Sales Execution</h3>
-      <p class="mk-mod-q">Why are deals stalling or closing below potential — and is it people, process, or system?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="se">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="revops">
-      <span class="mk-mod-tag">I · Implementation</span>
-      <h3>Revenue Operations & Systems</h3>
-      <p class="mk-mod-q">Is our operational infrastructure keeping pace with growth — or creating friction at scale?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="revops">Buy Now</a></div>
-    </div>
+    <div class="mk-mod" id="dg"><span class="mk-mod-tag">I · Implementation</span><h3>Demand Generation</h3><p class="mk-mod-q">Why is pipeline not converting into qualified opportunities — and where exactly does it leak?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="dg">Buy Now</a></div></div>
+    <div class="mk-mod" id="se"><span class="mk-mod-tag">I · Implementation</span><h3>Sales Execution</h3><p class="mk-mod-q">Why are deals stalling or closing below potential — and is it people, process, or system?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="se">Buy Now</a></div></div>
+    <div class="mk-mod" id="revops"><span class="mk-mod-tag">I · Implementation</span><h3>Revenue Operations & Systems</h3><p class="mk-mod-q">Is our operational infrastructure keeping pace with growth — or creating friction at scale?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="revops">Buy Now</a></div></div>
   </div>
-  <div class="mk-bundle">
-    <div class="mk-bundle-left"><h4>Implementation Bundle — all 3 Deep Dives</h4><p>Demand Generation + Sales Execution + Revenue Operations. Diagnose the full execution layer.</p></div>
-    <div class="mk-bundle-right">
-      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
-      <a href="#" class="mk-bundle-buy" data-bundle="i">Buy Implementation Bundle</a>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Implementation Bundle — all 3 Deep Dives</h4><p>Demand Generation + Sales Execution + Revenue Operations. Diagnose the full execution layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452</div></div><a href="#" class="mk-bundle-buy" data-bundle="i">Buy Implementation Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">↓ What your report looks like</div><div class="mk-rp-wrap">
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-metrics">
+          <div class="mk-rp-metric" style="background:#fef2f2;"><div class="mk-rp-metric-val" style="color:#dc2626;">Sales Exec</div><div class="mk-rp-metric-lbl">Weakest Pillar</div></div>
+          <div class="mk-rp-metric" style="background:#fef3c7;"><div class="mk-rp-metric-val" style="color:#b45309;">22%</div><div class="mk-rp-metric-lbl">Win Rate</div></div>
+          <div class="mk-rp-metric" style="background:#eff6ff;"><div class="mk-rp-metric-val" style="color:#0056b3;">105%</div><div class="mk-rp-metric-lbl">NRR Target</div></div>
+        </div>
+        <div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Sales execution failure — 22% win rate, 103 days avg cycle, engineering dependency on 60% of deals</div></div>
+        <div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Leaky Funnel — pipeline enters strong but conversion breaks at every stage transition.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 7 of 44</span></div>
     </div>
-  </div>
-  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Deal Qualification</span><span class="mk-rp-bar-v">42</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:42%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Sales Methodology</span><span class="mk-rp-bar-v">35</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:35%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Pipeline Velocity</span><span class="mk-rp-bar-v">48</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:48%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Forecast Accuracy</span><span class="mk-rp-bar-v">55</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:55%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Multi-threading</span><span class="mk-rp-bar-v">29</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:29%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Technical Selling</span><span class="mk-rp-bar-v">61</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:61%"></div></div></div>
+        <div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Install deal qualification framework and multi-threading playbook before adding headcount.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 12 of 44</span></div>
+    </div>
+  </div></div>
 </div>
 
-<!-- P: PERFORMANCE -->
-<div class="mk-detail" data-detail="p" style="--dim-color:var(--p-accent);--dim-soft:var(--p-soft);">
-  <div class="mk-detail-head">
-    <h2>Performance Dimension</h2>
-    <p>The forces that sustain and compound growth — customer success, data quality, and organizational alignment.</p>
-  </div>
+<!-- ═══ P: PERFORMANCE ═══ -->
+<div class="mk-detail" data-detail="p" style="--dc:var(--p);--ds:var(--ps);">
+  <div class="mk-detail-head"><h2>Performance Dimension</h2><p>Customer success, data quality, and organizational alignment — the forces that sustain and compound growth.</p></div>
   <div class="mk-modules">
-    <div class="mk-mod" id="cse">
-      <span class="mk-mod-tag">P · Performance</span>
-      <h3>Customer Success & Expansion</h3>
-      <p class="mk-mod-q">Are we retaining and growing the revenue we already won — or slowly leaking it?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="cse">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="di">
-      <span class="mk-mod-tag">P · Performance</span>
-      <h3>Data & Insights</h3>
-      <p class="mk-mod-q">Can leadership trust the numbers they're making decisions on — or is the data lying?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="di">Buy Now</a></div>
-    </div>
-    <div class="mk-mod" id="ag">
-      <span class="mk-mod-tag">P · Performance</span>
-      <h3>Alignment & Governance</h3>
-      <p class="mk-mod-q">Do teams have the structure and cadence to stay aligned — or is the org working against itself?</p>
-      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="ag">Buy Now</a></div>
-    </div>
+    <div class="mk-mod" id="cse"><span class="mk-mod-tag">P · Performance</span><h3>Customer Success & Expansion</h3><p class="mk-mod-q">Are we retaining and growing the revenue we already won — or slowly leaking it?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="cse">Buy Now</a></div></div>
+    <div class="mk-mod" id="di"><span class="mk-mod-tag">P · Performance</span><h3>Data & Insights</h3><p class="mk-mod-q">Can leadership trust the numbers they're making decisions on — or is the data lying?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="di">Buy Now</a></div></div>
+    <div class="mk-mod" id="ag"><span class="mk-mod-tag">P · Performance</span><h3>Alignment & Governance</h3><p class="mk-mod-q">Do teams have the structure and cadence to stay aligned — or is the org working against itself?</p><div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div><div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="ag">Buy Now</a></div></div>
   </div>
-  <div class="mk-bundle">
-    <div class="mk-bundle-left"><h4>Performance Bundle — all 3 Deep Dives</h4><p>Customer Success + Data & Insights + Alignment & Governance. Diagnose the full outcomes layer.</p></div>
-    <div class="mk-bundle-right">
-      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
-      <a href="#" class="mk-bundle-buy" data-bundle="p">Buy Performance Bundle</a>
+  <div class="mk-bundle"><div class="mk-bundle-left"><h4>Performance Bundle — all 3 Deep Dives</h4><p>Customer Success + Data & Insights + Alignment & Governance. Diagnose the full outcomes layer.</p></div><div class="mk-bundle-right"><div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452</div></div><a href="#" class="mk-bundle-buy" data-bundle="p">Buy Performance Bundle</a></div></div>
+  <div class="mk-preview"><div class="mk-preview-label">↓ What your report looks like</div><div class="mk-rp-wrap">
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Primary Diagnosis</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-metrics">
+          <div class="mk-rp-metric" style="background:#fef2f2;"><div class="mk-rp-metric-val" style="color:#dc2626;">Data</div><div class="mk-rp-metric-lbl">Weakest Pillar</div></div>
+          <div class="mk-rp-metric" style="background:#fef3c7;"><div class="mk-rp-metric-val" style="color:#b45309;">16%</div><div class="mk-rp-metric-lbl">Churn Rate</div></div>
+          <div class="mk-rp-metric" style="background:#f5f3ff;"><div class="mk-rp-metric-val" style="color:#7c3aed;">0.81</div><div class="mk-rp-metric-lbl">NRR Actual</div></div>
+        </div>
+        <div class="mk-rp-alert"><div class="mk-rp-alert-tag">Constraint Identified</div><div class="mk-rp-alert-text">Data infrastructure unreliable — leadership decisions based on incomplete and conflicting metrics</div></div>
+        <div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">The Blind Spot — teams work hard but nobody trusts the numbers they're steering by.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 7 of 44</span></div>
     </div>
-  </div>
-  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+    <div class="mk-rp">
+      <div class="mk-rp-head"><div class="mk-rp-ch">Chapter 4</div><div class="mk-rp-title">Constraint Mechanics</div><div class="mk-rp-logo"><span>C</span></div></div>
+      <div class="mk-rp-body">
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Health Scoring</span><span class="mk-rp-bar-v">34</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:34%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Churn Prediction</span><span class="mk-rp-bar-v">28</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:28%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Expansion Signals</span><span class="mk-rp-bar-v">45</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:45%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Metric Integrity</span><span class="mk-rp-bar-v">52</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:52%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Cross-team Cadence</span><span class="mk-rp-bar-v">58</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:58%"></div></div></div>
+        <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Decision Latency</span><span class="mk-rp-bar-v">64</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:64%"></div></div></div>
+        <div class="mk-rp-priority"><div class="mk-rp-priority-tag">Priority Fix</div><div class="mk-rp-priority-text">Implement health scoring and churn prediction before expanding CS headcount.</div></div>
+      </div><div class="mk-rp-foot"><span>Confidential · Sample</span><span>Page 12 of 44</span></div>
+    </div>
+  </div></div>
 </div>
 
 <!-- ALL 12 -->
 <div class="mk-all" data-detail="all">
   <h2>All 12 Deep Dive Modules</h2>
   <div class="mk-all-grid">
-    <a class="mk-all-card" data-goto="g" data-target="gsl"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>GTM Strategy & Leadership</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="g" data-target="mi"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>Market Intelligence</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="g" data-target="pmm"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>Product Marketing</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="r" data-target="pp"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Pricing & Packaging</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="r" data-target="pr"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Product Readiness</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="r" data-target="en"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Enablement</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="i" data-target="dg"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Demand Generation</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="i" data-target="se"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Sales Execution</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="i" data-target="revops"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Revenue Operations</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="p" data-target="cse"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Customer Success</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="p" data-target="di"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Data & Insights</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
-    <a class="mk-all-card" data-goto="p" data-target="ag"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Alignment & Governance</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="gsl"><span class="mk-all-dim d-g">G</span><h4>GTM Strategy & Leadership</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="mi"><span class="mk-all-dim d-g">G</span><h4>Market Intelligence</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="pmm"><span class="mk-all-dim d-g">G</span><h4>Product Marketing</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pp"><span class="mk-all-dim d-r">R</span><h4>Pricing & Packaging</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pr"><span class="mk-all-dim d-r">R</span><h4>Product Readiness</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="en"><span class="mk-all-dim d-r">R</span><h4>Enablement</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="dg"><span class="mk-all-dim d-i">I</span><h4>Demand Generation</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="se"><span class="mk-all-dim d-i">I</span><h4>Sales Execution</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="revops"><span class="mk-all-dim d-i">I</span><h4>Revenue Operations</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="cse"><span class="mk-all-dim d-p">P</span><h4>Customer Success</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="di"><span class="mk-all-dim d-p">P</span><h4>Data & Insights</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="ag"><span class="mk-all-dim d-p">P</span><h4>Alignment & Governance</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
   </div>
 </div>
 
 </div><!-- /container -->
 </main>
 
-<!-- Mobile sticky report bar -->
-<div class="mk-sticky-report">
+<!-- Mobile sticky -->
+<div class="mk-sticky">
   <div class="container mk-sticky-inner">
     <div class="mk-sticky-text"><strong>Not sure?</strong> Intelligence Report — all 12 pillars. €2,495</div>
     <a href="gtm-intelligence-report.html" class="mk-sticky-btn">Learn more →</a>
   </div>
 </div>
 
-<footer>
-  <div class="container">
-    <p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p>
-  </div>
-</footer>
+<footer><div class="container"><p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p></div></footer>
 
 <script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
 <script>
-(function() {
-  var dimCards = document.querySelectorAll('.mk-dim-card');
-  var details = document.querySelectorAll('.mk-detail');
-  var allView = document.querySelector('.mk-all');
-  var showAllLink = document.getElementById('showAllLink');
+(function(){
+  var dimCards=document.querySelectorAll('.mk-dim-card');
+  var details=document.querySelectorAll('.mk-detail');
+  var allView=document.querySelector('.mk-all');
+  var showAll=document.getElementById('showAllLink');
 
-  function activate(dim) {
-    // Dim cards
-    dimCards.forEach(function(c) { c.classList.toggle('active', c.getAttribute('data-dim') === dim); });
-    // Detail sections
-    details.forEach(function(d) { d.classList.toggle('active', d.getAttribute('data-detail') === dim); });
-    // All view
-    if (allView) allView.classList.toggle('active', dim === 'all');
+  function activate(d){
+    dimCards.forEach(function(c){c.classList.toggle('active',c.getAttribute('data-dim')===d);});
+    details.forEach(function(s){s.classList.toggle('active',s.getAttribute('data-detail')===d);});
+    if(allView)allView.classList.toggle('active',d==='all');
   }
 
-  // Dim card clicks
-  dimCards.forEach(function(card) {
-    card.addEventListener('click', function() {
-      activate(card.getAttribute('data-dim'));
-    });
-  });
+  dimCards.forEach(function(c){c.addEventListener('click',function(){activate(c.getAttribute('data-dim'));});});
+  if(showAll)showAll.addEventListener('click',function(e){e.preventDefault();activate('all');dimCards.forEach(function(c){c.classList.remove('active');});});
 
-  // "Browse all 12" link
-  if (showAllLink) {
-    showAllLink.addEventListener('click', function(e) {
+  document.querySelectorAll('.mk-all-card').forEach(function(c){
+    c.addEventListener('click',function(e){
       e.preventDefault();
-      activate('all');
-      dimCards.forEach(function(c) { c.classList.remove('active'); });
-    });
-  }
-
-  // All-view cards → jump to dimension
-  document.querySelectorAll('.mk-all-card').forEach(function(card) {
-    card.addEventListener('click', function(e) {
-      e.preventDefault();
-      var dim = card.getAttribute('data-goto');
-      var targetId = card.getAttribute('data-target');
+      var dim=c.getAttribute('data-goto'),tid=c.getAttribute('data-target');
       activate(dim);
-      setTimeout(function() {
-        var el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.style.boxShadow = '0 0 0 3px rgba(0,86,179,0.2)';
-          setTimeout(function() { el.style.boxShadow = ''; }, 2000);
-        }
-      }, 100);
+      setTimeout(function(){var el=document.getElementById(tid);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px rgba(0,86,179,0.2)';setTimeout(function(){el.style.boxShadow='';},2000);}},100);
     });
   });
 
-  // Deep link
-  var hash = window.location.hash.replace('#', '');
-  if (hash) {
-    var target = document.getElementById(hash);
-    if (target) {
-      var detail = target.closest('.mk-detail');
-      if (detail) {
-        activate(detail.getAttribute('data-detail'));
-        setTimeout(function() {
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          target.style.boxShadow = '0 0 0 3px rgba(0,86,179,0.2)';
-          setTimeout(function() { target.style.boxShadow = ''; }, 2000);
-        }, 300);
-      }
-    }
-  }
+  var hash=window.location.hash.replace('#','');
+  if(hash){var t=document.getElementById(hash);if(t){var d=t.closest('.mk-detail');if(d){activate(d.getAttribute('data-detail'));setTimeout(function(){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.boxShadow='0 0 0 3px rgba(0,86,179,0.2)';setTimeout(function(){t.style.boxShadow='';},2000);},300);}}}
 
-  // Buy buttons (Stripe placeholder)
-  document.querySelectorAll('.mk-buy, .mk-bundle-buy').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      var m = btn.getAttribute('data-module');
-      var b = btn.getAttribute('data-bundle');
-      alert('Payment integration coming soon. ' + (m ? 'Module: ' + m.toUpperCase() : 'Bundle: ' + b.toUpperCase()));
-    });
+  document.querySelectorAll('.mk-buy,.mk-bundle-buy').forEach(function(b){
+    b.addEventListener('click',function(e){e.preventDefault();var m=b.getAttribute('data-module'),bu=b.getAttribute('data-bundle');alert('Payment integration coming soon. '+(m?'Module: '+m.toUpperCase():'Bundle: '+bu.toUpperCase()));});
   });
 })();
 </script>
