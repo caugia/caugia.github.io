@@ -38,6 +38,44 @@
 .mk-report-cta:hover { background:#f1f5f9; }
 .mk-report-price { font-size:0.7rem;color:#64748b;font-weight:600;margin-top:4px; }
 
+/* ═══ INTELLIGENCE REPORT SECTION ═══ */
+.mk-ir { margin:40px auto 0; max-width:1080px; }
+.mk-ir-hero { display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:start; }
+.mk-ir-copy {}
+.mk-ir-title { font-family:Merriweather,serif; font-size:2rem; font-weight:900; color:#0f172a; margin-bottom:12px; line-height:1.15; }
+.mk-ir-lead { font-size:0.95rem; color:#475569; line-height:1.6; margin-bottom:20px; }
+.mk-ir-price-row { display:flex; align-items:center; gap:20px; padding:14px 0; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; margin-bottom:20px; }
+.mk-ir-price { font-size:2rem; font-weight:900; color:#0f172a; }
+.mk-ir-price-context { font-size:0.8rem; color:#94a3b8; line-height:1.4; }
+.mk-ir-price-context strong { color:#64748b; font-weight:700; }
+.mk-ir-actions { margin-bottom:10px; }
+.mk-ir-secure { font-size:0.78rem; color:#94a3b8; }
+.mk-ir-visual { display:flex; justify-content:center; }
+.mk-ir-rp { width:320px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,0.1),0 0 0 1px rgba(0,0,0,0.03); display:flex; flex-direction:column; }
+
+/* Inside cards */
+.mk-ir-inside { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.mk-ir-inside-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:24px; }
+.mk-ir-inside-card h3 { font-size:0.95rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
+.mk-ir-inside-card p { font-size:0.82rem; color:#475569; line-height:1.55; margin:0; }
+
+/* Comparison table */
+.mk-ir-comp { margin-top:24px; background:#0f172a; border-radius:12px; padding:24px; overflow-x:auto; }
+.mk-ir-table { width:100%; border-collapse:collapse; }
+.mk-ir-table th { text-align:left; padding:10px 14px; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; border-bottom:1px solid rgba(255,255,255,0.1); }
+.mk-ir-table th:nth-child(3) { color:#60a5fa; }
+.mk-ir-table td { padding:10px 14px; font-size:0.82rem; color:#cbd5e1; border-bottom:1px solid rgba(255,255,255,0.06); }
+.mk-ir-table td:nth-child(3) { color:#fff; font-weight:700; }
+.mk-ir-table tr:last-child td { border-bottom:none; }
+
+/* Numbers */
+.mk-ir-nums { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; padding-top:24px; border-top:1px solid #f1f5f9; text-align:center; }
+.mk-ir-num { font-size:2rem; font-weight:900; color:var(--primary); line-height:1; margin-bottom:2px; }
+.mk-ir-num-label { font-size:0.72rem; color:#64748b; font-weight:600; }
+
+/* Bottom CTA */
+.mk-ir-bottom-cta { text-align:center; margin-top:24px; padding-top:24px; border-top:1px solid #f1f5f9; }
+
 /* ═══ DIMENSION CHOOSER ═══ */
 .mk-chooser { margin:48px auto 0; max-width:1080px; }
 .mk-chooser-label { text-align:center;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:20px; }
@@ -180,6 +218,13 @@
 }
 @media(max-width:768px) {
   .mk-hero h1{font-size:1.7rem;}
+  .mk-ir-hero{grid-template-columns:1fr;gap:24px;}
+  .mk-ir-visual{order:-1;}
+  .mk-ir-rp{width:100%;max-width:280px;}
+  .mk-ir-title{font-size:1.5rem;}
+  .mk-ir-inside{grid-template-columns:1fr;}
+  .mk-ir-nums{grid-template-columns:1fr 1fr;}
+  .mk-ir-price-row{flex-direction:column;align-items:flex-start;gap:8px;}
   .mk-report{flex-direction:column;text-align:center;padding:22px 20px;gap:14px;}
   .mk-report-logo{display:none;}
   .mk-report-cta{width:100%;justify-content:center;}
@@ -217,18 +262,91 @@
   <p class="mk-hero-sub">Each Deep Dive isolates exactly where a specific GTM pillar leaks revenue. 60 questions, 6 diagnostic engines, one definitive report.</p>
 </section>
 
-<!-- ═══ REPORT UPSELL ═══ -->
+<!-- ═══ INTELLIGENCE REPORT SECTION ═══ -->
 <section class="container" id="intelligence-report">
-  <div class="mk-report">
-    <div class="mk-report-logo"><img src="assets/logo-final.png" alt="Caugia"></div>
-    <div class="mk-report-body">
-      <h3>Start with the full diagnosis</h3>
-      <p>The Intelligence Report diagnoses all 12 pillars at once. 44 pages of board-level intelligence including constraint cascades, leakage modelling, and a 90-day execution plan.</p>
+  <div class="mk-ir">
+
+    <!-- Hero row: left = copy, right = mockup -->
+    <div class="mk-ir-hero">
+      <div class="mk-ir-copy">
+        <span class="eyebrow" style="color:#60a5fa;">The Full Diagnosis</span>
+        <h2 class="mk-ir-title">Start with the complete picture.</h2>
+        <p class="mk-ir-lead">A 44-page board-level diagnostic of your revenue engine. 265 questions scored by 72 deterministic engines. Constraint analysis, revenue leakage modelling, and a 90-day execution plan.</p>
+        <div class="mk-ir-price-row">
+          <div class="mk-ir-price">€2,495</div>
+          <div class="mk-ir-price-context">One-time assessment.<br><strong>Replaces a €25k+ consulting engagement.</strong></div>
+        </div>
+        <div class="mk-ir-actions">
+          <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR" style="padding:14px 32px;font-size:1rem;">Get the Intelligence Report</button>
+        </div>
+        <p class="mk-ir-secure">✓ Secure Stripe payment. Invoice generated automatically.</p>
+      </div>
+      <div class="mk-ir-visual">
+        <div class="mk-ir-rp">
+          <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 2</div><div class="mk-rp-title">GRIP Dimension Scores</div><div class="mk-rp-subtitle">Guidance · Resources · Implementation · Performance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+          <div class="mk-rp-body" style="flex:1;">
+            <div style="font-size:0.55rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Executive Verdict</div>
+            <div style="font-size:0.48rem;color:#475569;line-height:1.5;margin-bottom:12px;">Implementation is the primary constraint. Strategy and resources are present, but execution mechanics break down at handoffs.</div>
+            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Guidance</span><span class="mk-rp-bar-v">74</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:74%"></div></div></div>
+            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Resources</span><span class="mk-rp-bar-v">66</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:66%"></div></div></div>
+            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Implementation</span><span class="mk-rp-bar-v">41</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:41%"></div></div></div>
+            <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Performance</span><span class="mk-rp-bar-v">62</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:62%"></div></div></div>
+            <div style="height:1px;background:#e2e8f0;margin:10px 0;"></div>
+            <div style="background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:6px;padding:7px 10px;margin-bottom:8px;">
+              <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#b45309;">System Pattern</div>
+              <div style="font-size:0.52rem;font-weight:800;color:#78350f;">The Ivory Tower</div>
+            </div>
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #0056b3;border-radius:6px;padding:7px 10px;">
+              <div style="font-size:0.38rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#0056b3;">Priority Fix</div>
+              <div style="font-size:0.48rem;font-weight:700;color:#1e3a5f;">Build execution mechanics before adding strategy layers.</div>
+            </div>
+          </div>
+          <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential · Sample</span><span>Page 8 of 44</span></div>
+        </div>
+      </div>
     </div>
-    <div class="mk-report-right">
-      <a href="#" class="mk-report-cta" id="reportStripeLink">Get the Intelligence Report →</a>
-      <div class="mk-report-price">€2,495</div>
+
+    <!-- What's inside -->
+    <div class="mk-ir-inside">
+      <div class="mk-ir-inside-card">
+        <h3>System Diagnosis</h3>
+        <p>Overall GTM Score (0-100) with maturity classification. 12 individual pillar scores with constraint severity. GRIP Dimension analysis across 4 forces. System pattern matched against 30+ archetypes. Revenue leakage model separating Growth Suppression from Margin Erosion.</p>
+      </div>
+      <div class="mk-ir-inside-card">
+        <h3>Priority Roadmap</h3>
+        <p>Constraint Priority Scoring ranked by severity and impact. Recommendations calibrated to your GTM motion and stage. Quick wins separated from structural improvements. 90-day execution plan with named owners and timelines. Board-ready executive summary.</p>
+      </div>
     </div>
+
+    <!-- Comparison row -->
+    <div class="mk-ir-comp">
+      <table class="mk-ir-table">
+        <thead><tr><th></th><th>Traditional Consulting</th><th>Caugia Intelligence Report</th></tr></thead>
+        <tbody>
+          <tr><td>Timeline</td><td>4-6 weeks</td><td>Under 1 hour</td></tr>
+          <tr><td>Cost</td><td>€25k - €50k+</td><td>€2,495</td></tr>
+          <tr><td>Methodology</td><td>Subjective interviews</td><td>72 deterministic engines</td></tr>
+          <tr><td>Bias</td><td>High (opinion-based)</td><td>Zero (algorithmic)</td></tr>
+          <tr><td>Deliverable</td><td>PowerPoint deck</td><td>44-page diagnostic PDF</td></tr>
+          <tr><td>Repeatability</td><td>Varies by consultant</td><td>Identical inputs = identical outputs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Numbers -->
+    <div class="mk-ir-nums">
+      <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Questions scored</div></div>
+      <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Diagnostic engines</div></div>
+      <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Growth archetypes</div></div>
+      <div><div class="mk-ir-num">44</div><div class="mk-ir-num-label">Pages of analysis</div></div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="mk-ir-bottom-cta">
+      <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Get the Intelligence Report → €2,495</button>
+      <p class="mk-ir-secure">✓ Secure Stripe checkout. One-time payment.</p>
+    </div>
+
   </div>
 </section>
 
@@ -447,12 +565,13 @@
 <div class="mk-sticky">
   <div class="container mk-sticky-inner">
     <div class="mk-sticky-text"><strong>Not sure?</strong> Intelligence Report: all 12 pillars. €2,495</div>
-    <a href="#" class="mk-sticky-btn" id="reportStripeMobile">Learn more →</a>
+    <a href="#intelligence-report" class="mk-sticky-btn">See the Report ↑</a>
   </div>
 </div>
 
 <footer><div class="container"><p>© <span id="year">2026</span> Caugia Consulting. All rights reserved.</p></div></footer>
 
+<script src="https://js.stripe.com/v3/"></script>
 <script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
 <script>
@@ -497,14 +616,20 @@
     }
   }
 
-  // Buy buttons (Stripe placeholder)
+  // Buy buttons (Stripe placeholder for modules)
   document.querySelectorAll('.mk-buy,.mk-bundle-buy').forEach(function(b){
     b.addEventListener('click',function(e){e.preventDefault();var m=b.getAttribute('data-module'),bu=b.getAttribute('data-bundle');alert('Payment integration coming soon. '+(m?'Module: '+m.toUpperCase():'Bundle: '+bu.toUpperCase()));});
   });
 
-  // Report Stripe link placeholder
-  // TODO: Replace '#' with actual Stripe Payment Link for Intelligence Report
-  // Example: https://buy.stripe.com/YOUR_REPORT_LINK
+  // Intelligence Report Stripe checkout
+  function startReportCheckout(){
+    if(typeof Stripe!=='undefined'){
+      var stripe=Stripe("pk_live_51Sco4oDZAazoTP0s5aF0J3t8e1XGq1XGq1XGq1XGq1XGq1XGq1XGq");
+      var priceId=(window.CAUGIA_STRIPE&&window.CAUGIA_STRIPE.report)?window.CAUGIA_STRIPE.report:"price_1Qim5eDZAazoTP0szK5sV78C";
+      stripe.redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:"payment",successUrl:"https://www.caugia.com/gtm-intelligence-thank-you.html",cancelUrl:"https://www.caugia.com/grip-marketplace.html#intelligence-report"});
+    }
+  }
+  document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 })();
 </script>
 </body>
