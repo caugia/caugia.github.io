@@ -16,355 +16,618 @@
 <link rel="apple-touch-icon" href="assets/logo-final.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/caugia-base.css?v=1.1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-/* ── Hero ── */
-.mp-hero { padding: 40px 0 0; max-width: 780px; margin: 0 auto; text-align: center; }
-.mp-hero h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.02em; }
-.mp-hero p { font-size: 1.05rem; color: var(--text-body); line-height: 1.55; }
-.mp-hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px 20px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; font-size: 0.85rem; color: #92400e; }
-.mp-hero-note a { color: #92400e; font-weight: 700; text-decoration: underline; }
-
-/* ── Dimension tabs ── */
-.dim-nav { display: flex; justify-content: center; gap: 6px; margin: 40px 0 8px; flex-wrap: wrap; }
-.dim-tab {
-  padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;
-  cursor: pointer; border: 2px solid #e2e8f0; background: #fff; color: #64748b;
-  transition: all 0.2s ease; letter-spacing: 0.01em;
+:root {
+  --g-accent: #0056b3;
+  --r-accent: #b45309;
+  --i-accent: #059669;
+  --p-accent: #7c3aed;
+  --g-soft: #eff6ff;
+  --r-soft: #fffbeb;
+  --i-soft: #ecfdf5;
+  --p-soft: #f5f3ff;
 }
-.dim-tab:hover { border-color: #94a3b8; color: #0f172a; }
-.dim-tab.active { border-color: var(--primary); background: var(--primary); color: #fff; }
-.dim-tab .dim-letter { font-weight: 900; margin-right: 4px; }
-.dim-tab-all { border-color: #0f172a; color: #0f172a; }
-.dim-tab-all.active { background: #0f172a; border-color: #0f172a; color: #fff; }
 
-/* ── Module cards ── */
-.mp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 24px; }
+/* ═══════════════════════════════════════
+   HERO — The problem, not the product
+   ═══════════════════════════════════════ */
 
-.mp-card {
-  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
-  padding: 28px 24px; display: flex; flex-direction: column;
-  transition: all 0.25s ease; position: relative; overflow: hidden;
+.mk-hero {
+  padding: 56px 0 0;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
 }
-.mp-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--primary); opacity: 0; transition: opacity 0.2s;
+.mk-hero h1 {
+  font-family: Merriweather, serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #0f172a;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
 }
-.mp-card:hover { border-color: var(--primary); box-shadow: 0 8px 24px rgba(0,86,179,0.08); transform: translateY(-2px); }
-.mp-card:hover::before { opacity: 1; }
-
-.mp-dim-tag {
-  display: inline-flex; align-items: center; gap: 6px; width: fit-content;
-  font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 4px 10px; border-radius: 4px; margin-bottom: 12px;
+.mk-hero-sub {
+  font-size: 1.08rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
 }
-.mp-dim-g { background: #eff6ff; color: var(--primary); }
-.mp-dim-r { background: #fef3c7; color: #92400e; }
-.mp-dim-i { background: #ecfdf5; color: #065f46; }
-.mp-dim-p { background: #fae8ff; color: #86198f; }
 
-.mp-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.1rem; color: #0f172a; margin-bottom: 6px; line-height: 1.3; }
-.mp-card-q { font-size: 0.85rem; color: #64748b; line-height: 1.5; font-style: italic; margin-bottom: 16px; flex-grow: 1; }
-.mp-card-meta { font-size: 0.75rem; color: #94a3b8; margin-bottom: 16px; }
+/* ═══════════════════════════════════════
+   INTELLIGENCE REPORT — strategic upsell
+   ═══════════════════════════════════════ */
 
-.mp-card-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #f1f5f9; }
-.mp-card-price { font-size: 1.2rem; font-weight: 900; color: #0f172a; }
-.mp-card-btn {
-  display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
-  background: var(--primary); color: #fff; border-radius: 8px; border: none;
+.mk-report {
+  margin: 40px auto 0;
+  max-width: 680px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #fff;
+}
+.mk-report-icon {
+  width: 56px; height: 56px; flex-shrink: 0;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+.mk-report-body { flex: 1; }
+.mk-report-body h3 {
+  font-size: 0.95rem; font-weight: 800; margin-bottom: 3px; color: #fff;
+}
+.mk-report-body p {
+  font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin: 0;
+}
+.mk-report-cta {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  padding: 10px 22px; background: #fff; color: #0f172a; border-radius: 10px;
+  font-weight: 800; font-size: 0.82rem; text-decoration: none; transition: all 0.2s;
+  white-space: nowrap;
+}
+.mk-report-cta:hover { background: #f1f5f9; transform: translateY(-1px); }
+.mk-report-price { font-size: 0.7rem; color: #64748b; font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   DIMENSION CHOOSER — 4 pain-based cards
+   ═══════════════════════════════════════ */
+
+.mk-chooser {
+  margin: 48px auto 0;
+  max-width: 1080px;
+}
+.mk-chooser-label {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+.mk-dim-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.mk-dim-card {
+  position: relative;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px 20px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+.mk-dim-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--dim-color);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.mk-dim-card:hover { border-color: var(--dim-color); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
+.mk-dim-card:hover::before { opacity: 1; }
+.mk-dim-card.active { border-color: var(--dim-color); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
+.mk-dim-card.active::before { opacity: 1; }
+
+.mk-dim-letter {
+  font-size: 1.8rem; font-weight: 900; color: var(--dim-color);
+  line-height: 1; margin-bottom: 8px;
+}
+.mk-dim-name { font-weight: 800; font-size: 0.9rem; color: #0f172a; margin-bottom: 6px; }
+.mk-dim-pain { font-size: 0.78rem; color: #64748b; line-height: 1.5; }
+.mk-dim-count {
+  margin-top: 12px; font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8;
+}
+
+/* ═══════════════════════════════════════
+   DIMENSION DETAIL — modules + bundle
+   ═══════════════════════════════════════ */
+
+.mk-detail {
+  margin: 0 auto;
+  max-width: 1080px;
+  padding: 40px 0 80px;
+  display: none;
+}
+.mk-detail.active { display: block; }
+
+.mk-detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.mk-detail-head h2 { font-family: Merriweather, serif; font-size: 1.5rem; font-weight: 900; color: #0f172a; }
+.mk-detail-head p { font-size: 0.85rem; color: #64748b; max-width: 440px; text-align: right; }
+
+/* Module cards */
+.mk-modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+.mk-mod {
+  background: #fff;
+  border: 1px solid #e8ecf1;
+  border-radius: 14px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+  position: relative;
+}
+.mk-mod:hover { border-color: var(--dim-color); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+
+.mk-mod-tag {
+  display: inline-flex; width: fit-content;
+  font-size: 0.58rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
+  background: var(--dim-soft); color: var(--dim-color);
+}
+.mk-mod h3 { font-weight: 800; font-size: 1.05rem; color: #0f172a; margin-bottom: 8px; line-height: 1.3; }
+.mk-mod-q {
+  font-size: 0.84rem; color: #64748b; line-height: 1.55; font-style: italic;
+  margin-bottom: 16px; flex-grow: 1;
+}
+.mk-mod-meta { font-size: 0.72rem; color: #94a3b8; margin-bottom: 16px; }
+
+.mk-mod-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid #f1f5f9;
+}
+.mk-mod-price { font-size: 1.2rem; font-weight: 900; color: #0f172a; }
+.mk-buy {
+  display: inline-flex; align-items: center; padding: 9px 18px;
+  background: var(--dim-color); color: #fff; border-radius: 10px; border: none;
   font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
   text-decoration: none;
 }
-.mp-card-btn:hover { background: #004a9e; transform: scale(1.02); }
+.mk-buy:hover { filter: brightness(0.9); transform: translateY(-1px); }
 
-/* ── Bundle section ── */
-.mp-bundles { margin-top: 64px; padding-top: 64px; border-top: 1px solid #f1f5f9; }
-.mp-bundles-head { max-width: 580px; margin-bottom: 32px; }
-
-.mp-bundle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-
-.mp-bundle {
-  background: #fff; border: 2px solid #e2e8f0; border-radius: 16px;
-  padding: 24px 20px; text-align: center; transition: all 0.2s;
-  display: flex; flex-direction: column;
+/* ── Bundle inline ── */
+.mk-bundle {
+  margin-top: 24px;
+  background: var(--dim-soft);
+  border: 2px solid var(--dim-color);
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
-.mp-bundle:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(0,86,179,0.08); }
-.mp-bundle-letter { font-weight: 900; font-size: 2rem; margin-bottom: 4px; }
-.mp-bundle-g .mp-bundle-letter { color: var(--primary); }
-.mp-bundle-r .mp-bundle-letter { color: #b45309; }
-.mp-bundle-i .mp-bundle-letter { color: #059669; }
-.mp-bundle-p .mp-bundle-letter { color: #a21caf; }
-.mp-bundle-name { font-weight: 800; font-size: 0.85rem; color: #0f172a; margin-bottom: 4px; }
-.mp-bundle-modules { font-size: 0.75rem; color: #94a3b8; line-height: 1.5; margin-bottom: 16px; flex-grow: 1; }
-.mp-bundle-price { font-size: 1.3rem; font-weight: 900; color: #0f172a; }
-.mp-bundle-save { font-size: 0.75rem; color: #16a34a; font-weight: 700; margin-top: 2px; margin-bottom: 12px; }
-.mp-bundle-btn {
-  display: block; width: 100%; padding: 10px; background: #0f172a; color: #fff;
-  border: none; border-radius: 8px; font-weight: 700; font-size: 0.8rem;
-  cursor: pointer; transition: all 0.2s; text-decoration: none; text-align: center;
+.mk-bundle-left { flex: 1; }
+.mk-bundle-left h4 { font-weight: 800; font-size: 1rem; color: #0f172a; margin-bottom: 3px; }
+.mk-bundle-left p { font-size: 0.82rem; color: #64748b; margin: 0; }
+.mk-bundle-right { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+.mk-bundle-pricing { text-align: right; }
+.mk-bundle-price { font-size: 1.4rem; font-weight: 900; color: #0f172a; }
+.mk-bundle-save { font-size: 0.72rem; color: #16a34a; font-weight: 700; }
+.mk-bundle-buy {
+  padding: 12px 24px; background: #0f172a; color: #fff; border: none;
+  border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer;
+  transition: all 0.2s; text-decoration: none; white-space: nowrap;
 }
-.mp-bundle-btn:hover { background: #1e293b; }
+.mk-bundle-buy:hover { background: #1e293b; transform: translateY(-1px); }
 
-/* ── Report upsell ── */
-.mp-upsell {
-  margin-top: 48px; padding: 32px; background: #f8faff; border: 1px solid #dbeafe;
-  border-radius: 16px; display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; flex-wrap: wrap;
+/* ── What you get ── */
+.mk-deliverable {
+  margin-top: 28px;
+  padding: 20px 24px;
+  background: #fafbfc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
 }
-.mp-upsell-text { max-width: 520px; }
-.mp-upsell-text h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.1rem; color: #0f172a; margin-bottom: 6px; }
-.mp-upsell-text p { font-size: 0.9rem; color: #64748b; line-height: 1.55; }
-.mp-upsell-cta { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
-.mp-upsell-price { font-size: 1.3rem; font-weight: 900; color: #0f172a; }
-
-/* ── Empty state for filter ── */
-.mp-empty { display: none; text-align: center; padding: 48px 0; color: #94a3b8; font-size: 0.95rem; }
-
-/* ── Mobile ── */
-@media (max-width: 980px) {
-  .mp-hero h1 { font-size: 1.75rem; }
-  .mp-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .mp-bundle-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .mp-upsell { flex-direction: column; text-align: center; }
-  .mp-upsell-cta { flex-direction: column; }
+.mk-deliverable-icon {
+  width: 48px; height: 48px; flex-shrink: 0;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
 }
-@media (max-width: 520px) {
-  .mp-grid { grid-template-columns: 1fr; }
-  .mp-bundle-grid { grid-template-columns: 1fr 1fr; }
-  .dim-nav { gap: 4px; }
-  .dim-tab { padding: 8px 12px; font-size: 0.78rem; }
+.mk-deliverable-text h5 { font-weight: 800; font-size: 0.82rem; color: #0f172a; margin-bottom: 2px; }
+.mk-deliverable-text p { font-size: 0.75rem; color: #94a3b8; margin: 0; line-height: 1.5; }
+.mk-deliverable-items { display: flex; gap: 24px; flex: 1; }
+.mk-deliverable-item { flex: 1; }
+
+/* ═══════════════════════════════════════
+   ALL 12 — compact browse
+   ═══════════════════════════════════════ */
+
+.mk-all {
+  margin: 0 auto;
+  max-width: 1080px;
+  padding: 40px 0 80px;
+  display: none;
+}
+.mk-all.active { display: block; }
+.mk-all h2 { font-family: Merriweather, serif; font-size: 1.3rem; font-weight: 900; margin-bottom: 20px; }
+
+.mk-all-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.mk-all-card {
+  background: #fff; border: 1px solid #e8ecf1; border-radius: 12px;
+  padding: 16px 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; display: block;
+}
+.mk-all-card:hover { border-color: var(--primary); box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+.mk-all-dim {
+  font-size: 0.55rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 6px;
+}
+.mk-all-card h4 { font-weight: 800; font-size: 0.82rem; color: #0f172a; margin-bottom: 3px; line-height: 1.3; }
+.mk-all-card-sub { font-size: 0.7rem; color: #94a3b8; }
+
+/* ═══════════════════════════════════════
+   STICKY REPORT BAR (mobile)
+   ═══════════════════════════════════════ */
+
+.mk-sticky-report {
+  display: none;
+  position: sticky; bottom: 0; z-index: 30;
+  background: #0f172a; color: #fff; padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.mk-sticky-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.mk-sticky-text { font-size: 0.75rem; color: #cbd5e1; }
+.mk-sticky-text strong { color: #fff; }
+.mk-sticky-btn {
+  padding: 8px 16px; background: #fff; color: #0f172a; border-radius: 8px;
+  font-weight: 700; font-size: 0.72rem; text-decoration: none; white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .mk-dim-grid { grid-template-columns: repeat(2, 1fr); }
+  .mk-modules { grid-template-columns: repeat(2, 1fr); }
+  .mk-all-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .mk-hero h1 { font-size: 1.7rem; }
+  .mk-hero-sub { font-size: 0.92rem; }
+
+  .mk-report { flex-direction: column; text-align: center; padding: 22px 20px; gap: 14px; }
+  .mk-report-icon { display: none; }
+  .mk-report-cta { width: 100%; justify-content: center; }
+
+  .mk-dim-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .mk-dim-card { padding: 18px 14px 14px; }
+  .mk-dim-letter { font-size: 1.4rem; }
+  .mk-dim-pain { font-size: 0.72rem; }
+
+  .mk-modules { grid-template-columns: 1fr; gap: 14px; }
+
+  .mk-detail-head { flex-direction: column; gap: 6px; }
+  .mk-detail-head p { text-align: left; }
+
+  .mk-bundle { flex-direction: column; text-align: center; padding: 20px; }
+  .mk-bundle-right { flex-direction: column; width: 100%; }
+  .mk-bundle-pricing { text-align: center; }
+  .mk-bundle-buy { width: 100%; text-align: center; }
+
+  .mk-deliverable { flex-direction: column; gap: 14px; }
+  .mk-deliverable-items { flex-direction: column; gap: 12px; }
+
+  .mk-all-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .mk-sticky-report { display: block; }
+
+  .mk-chooser-label { font-size: 0.65rem; }
+}
+
+@media (max-width: 480px) {
+  .mk-dim-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mk-dim-pain { display: none; }
+  .mk-dim-card { padding: 14px 12px; }
+  .mk-all-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
 <main>
-<section class="container mp-hero">
+
+<!-- ═══ HERO ═══ -->
+<section class="container mk-hero">
   <span class="eyebrow">GRIP Marketplace</span>
-  <h1>Pick your constraint.<br>We'll diagnose it.</h1>
-  <p>Each Deep Dive is a 60-question diagnostic with 6 engines that isolates exactly where a specific GTM pillar leaks revenue. Pick one, or bundle an entire GRIP dimension.</p>
-  <div class="mp-hero-note">
-    💡 Not sure where to start? The <a href="gtm-intelligence-report.html">Intelligence Report</a> tells you which pillar to prioritize.
+  <h1>Every GTM system has a constraint.<br>Find yours.</h1>
+  <p class="mk-hero-sub">Each Deep Dive isolates exactly where a specific GTM pillar leaks revenue. 60 questions, 6 diagnostic engines, one definitive report.</p>
+</section>
+
+<!-- ═══ INTELLIGENCE REPORT UPSELL ═══ -->
+<section class="container">
+  <div class="mk-report">
+    <div class="mk-report-icon">🔬</div>
+    <div class="mk-report-body">
+      <h3>Not sure which pillar to start with?</h3>
+      <p>The Intelligence Report diagnoses all 12 pillars at once and tells you exactly where your biggest constraint lives. 44 pages of board-level intelligence.</p>
+    </div>
+    <div style="text-align:center;">
+      <a href="gtm-intelligence-report.html" class="mk-report-cta">Get the Intelligence Report →</a>
+      <div class="mk-report-price" style="margin-top:4px;">€2,495</div>
+    </div>
   </div>
 </section>
 
-<!-- Dimension filter tabs -->
-<section class="container">
-  <div class="dim-nav">
-    <button class="dim-tab dim-tab-all active" data-dim="all">All 12 modules</button>
-    <button class="dim-tab" data-dim="g"><span class="dim-letter">G</span> Guidance</button>
-    <button class="dim-tab" data-dim="r"><span class="dim-letter">R</span> Resources</button>
-    <button class="dim-tab" data-dim="i"><span class="dim-letter">I</span> Implementation</button>
-    <button class="dim-tab" data-dim="p"><span class="dim-letter">P</span> Performance</button>
+<!-- ═══ DIMENSION CHOOSER ═══ -->
+<section class="container mk-chooser">
+  <div class="mk-chooser-label">Choose a dimension — or <a href="#" id="showAllLink" style="color:var(--primary);text-decoration:underline;">browse all 12</a></div>
+  <div class="mk-dim-grid" id="dimGrid">
+
+    <div class="mk-dim-card active" data-dim="g" style="--dim-color:var(--g-accent);">
+      <div class="mk-dim-letter">G</div>
+      <div class="mk-dim-name">Guidance</div>
+      <div class="mk-dim-pain">Strategy is set, but the market isn't responding. Positioning doesn't land. ICP feels fuzzy.</div>
+      <div class="mk-dim-count">3 modules · €749 each</div>
+    </div>
+
+    <div class="mk-dim-card" data-dim="r" style="--dim-color:var(--r-accent);">
+      <div class="mk-dim-letter">R</div>
+      <div class="mk-dim-name">Resources</div>
+      <div class="mk-dim-pain">Pricing feels off. Product can't keep up with sales promises. Reps aren't enabled.</div>
+      <div class="mk-dim-count">3 modules · €749 each</div>
+    </div>
+
+    <div class="mk-dim-card" data-dim="i" style="--dim-color:var(--i-accent);">
+      <div class="mk-dim-letter">I</div>
+      <div class="mk-dim-name">Implementation</div>
+      <div class="mk-dim-pain">Pipeline looks healthy but deals stall. Handoffs break. RevOps can't scale fast enough.</div>
+      <div class="mk-dim-count">3 modules · €749 each</div>
+    </div>
+
+    <div class="mk-dim-card" data-dim="p" style="--dim-color:var(--p-accent);">
+      <div class="mk-dim-letter">P</div>
+      <div class="mk-dim-name">Performance</div>
+      <div class="mk-dim-pain">Churn is creeping up. Data is unreliable. Teams are busy but misaligned on priorities.</div>
+      <div class="mk-dim-count">3 modules · €749 each</div>
+    </div>
+
   </div>
 </section>
 
-<!-- Module cards -->
-<section class="container">
-  <div class="mp-grid" id="mpGrid">
+<!-- ═══ DETAIL SECTIONS ═══ -->
+<div class="container">
 
-    <!-- G: Guidance -->
-    <div class="mp-card" data-dim="g" id="gsl">
-      <span class="mp-dim-tag mp-dim-g"><span class="dim-letter">G</span> Guidance</span>
+<!-- G: GUIDANCE -->
+<div class="mk-detail active" data-detail="g" style="--dim-color:var(--g-accent);--dim-soft:var(--g-soft);">
+  <div class="mk-detail-head">
+    <h2>Guidance Dimension</h2>
+    <p>The decisions that shape everything downstream — strategy, market understanding, and how you articulate value.</p>
+  </div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="gsl">
+      <span class="mk-mod-tag">G · Guidance</span>
       <h3>GTM Strategy & Leadership</h3>
-      <p class="mp-card-q">Does leadership have a shared model for how we grow — or is everyone optimizing their own silo?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="gsl">Buy Now</a>
+      <p class="mk-mod-q">Does leadership have a shared model for how we grow — or is everyone optimizing their own silo?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot">
+        <div class="mk-mod-price">€749</div>
+        <a href="#" class="mk-buy" data-module="gsl">Buy Now</a>
       </div>
     </div>
-
-    <div class="mp-card" data-dim="g" id="mi">
-      <span class="mp-dim-tag mp-dim-g"><span class="dim-letter">G</span> Guidance</span>
+    <div class="mk-mod" id="mi">
+      <span class="mk-mod-tag">G · Guidance</span>
       <h3>Market Intelligence</h3>
-      <p class="mp-card-q">Are we targeting the right segments with the right assumptions — or building on blind spots?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="mi">Buy Now</a>
+      <p class="mk-mod-q">Are we targeting the right segments with the right assumptions — or building on blind spots?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot">
+        <div class="mk-mod-price">€749</div>
+        <a href="#" class="mk-buy" data-module="mi">Buy Now</a>
       </div>
     </div>
-
-    <div class="mp-card" data-dim="g" id="pmm">
-      <span class="mp-dim-tag mp-dim-g"><span class="dim-letter">G</span> Guidance</span>
+    <div class="mk-mod" id="pmm">
+      <span class="mk-mod-tag">G · Guidance</span>
       <h3>Product Marketing</h3>
-      <p class="mp-card-q">Why doesn't the market understand our value — and where does positioning break down?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="pmm">Buy Now</a>
+      <p class="mk-mod-q">Why doesn't the market understand our value — and where does positioning break down?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot">
+        <div class="mk-mod-price">€749</div>
+        <a href="#" class="mk-buy" data-module="pmm">Buy Now</a>
       </div>
     </div>
+  </div>
+  <div class="mk-bundle">
+    <div class="mk-bundle-left">
+      <h4>Guidance Bundle — all 3 Deep Dives</h4>
+      <p>Strategy & Leadership + Market Intelligence + Product Marketing. Diagnose the full strategic layer.</p>
+    </div>
+    <div class="mk-bundle-right">
+      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
+      <a href="#" class="mk-bundle-buy" data-bundle="g">Buy Guidance Bundle</a>
+    </div>
+  </div>
+  <div class="mk-deliverable">
+    <div class="mk-deliverable-icon">📄</div>
+    <div class="mk-deliverable-items">
+      <div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div>
+    </div>
+  </div>
+</div>
 
-    <!-- R: Resources -->
-    <div class="mp-card" data-dim="r" id="pp">
-      <span class="mp-dim-tag mp-dim-r"><span class="dim-letter">R</span> Resources</span>
+<!-- R: RESOURCES -->
+<div class="mk-detail" data-detail="r" style="--dim-color:var(--r-accent);--dim-soft:var(--r-soft);">
+  <div class="mk-detail-head">
+    <h2>Resources Dimension</h2>
+    <p>The assets and capabilities your GTM motion depends on — pricing, product readiness, and team enablement.</p>
+  </div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="pp">
+      <span class="mk-mod-tag">R · Resources</span>
       <h3>Pricing & Packaging</h3>
-      <p class="mp-card-q">Is our pricing aligned with how customers perceive value — or are we leaving money on the table?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="pp">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Is our pricing aligned with how customers perceive value — or are we leaving money on the table?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pp">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="r" id="pr">
-      <span class="mp-dim-tag mp-dim-r"><span class="dim-letter">R</span> Resources</span>
+    <div class="mk-mod" id="pr">
+      <span class="mk-mod-tag">R · Resources</span>
       <h3>Product Readiness</h3>
-      <p class="mp-card-q">Does our product actually support the GTM motion we're running — or is it holding us back?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="pr">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Does our product actually support the GTM motion we're running — or is it holding us back?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="pr">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="r" id="en">
-      <span class="mp-dim-tag mp-dim-r"><span class="dim-letter">R</span> Resources</span>
+    <div class="mk-mod" id="en">
+      <span class="mk-mod-tag">R · Resources</span>
       <h3>Enablement</h3>
-      <p class="mp-card-q">Do our teams have the skills, content, and coaching to execute — or are they set up to fail?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="en">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Do our teams have the skills, content, and coaching to execute — or are they set up to fail?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="en">Buy Now</a></div>
     </div>
+  </div>
+  <div class="mk-bundle">
+    <div class="mk-bundle-left"><h4>Resources Bundle — all 3 Deep Dives</h4><p>Pricing & Packaging + Product Readiness + Enablement. Diagnose the full capability layer.</p></div>
+    <div class="mk-bundle-right">
+      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
+      <a href="#" class="mk-bundle-buy" data-bundle="r">Buy Resources Bundle</a>
+    </div>
+  </div>
+  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+</div>
 
-    <!-- I: Implementation -->
-    <div class="mp-card" data-dim="i" id="dg">
-      <span class="mp-dim-tag mp-dim-i"><span class="dim-letter">I</span> Implementation</span>
+<!-- I: IMPLEMENTATION -->
+<div class="mk-detail" data-detail="i" style="--dim-color:var(--i-accent);--dim-soft:var(--i-soft);">
+  <div class="mk-detail-head">
+    <h2>Implementation Dimension</h2>
+    <p>The engine that converts strategy into revenue — demand generation, sales execution, and RevOps.</p>
+  </div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="dg">
+      <span class="mk-mod-tag">I · Implementation</span>
       <h3>Demand Generation</h3>
-      <p class="mp-card-q">Why is pipeline not converting into qualified opportunities — and where exactly does it leak?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="dg">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Why is pipeline not converting into qualified opportunities — and where exactly does it leak?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="dg">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="i" id="se">
-      <span class="mp-dim-tag mp-dim-i"><span class="dim-letter">I</span> Implementation</span>
+    <div class="mk-mod" id="se">
+      <span class="mk-mod-tag">I · Implementation</span>
       <h3>Sales Execution</h3>
-      <p class="mp-card-q">Why are deals stalling or closing below potential — and is it people, process, or system?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="se">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Why are deals stalling or closing below potential — and is it people, process, or system?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="se">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="i" id="revops">
-      <span class="mp-dim-tag mp-dim-i"><span class="dim-letter">I</span> Implementation</span>
+    <div class="mk-mod" id="revops">
+      <span class="mk-mod-tag">I · Implementation</span>
       <h3>Revenue Operations & Systems</h3>
-      <p class="mp-card-q">Is our operational infrastructure keeping pace with growth — or creating friction at scale?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="revops">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Is our operational infrastructure keeping pace with growth — or creating friction at scale?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="revops">Buy Now</a></div>
     </div>
+  </div>
+  <div class="mk-bundle">
+    <div class="mk-bundle-left"><h4>Implementation Bundle — all 3 Deep Dives</h4><p>Demand Generation + Sales Execution + Revenue Operations. Diagnose the full execution layer.</p></div>
+    <div class="mk-bundle-right">
+      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
+      <a href="#" class="mk-bundle-buy" data-bundle="i">Buy Implementation Bundle</a>
+    </div>
+  </div>
+  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+</div>
 
-    <!-- P: Performance -->
-    <div class="mp-card" data-dim="p" id="cse">
-      <span class="mp-dim-tag mp-dim-p"><span class="dim-letter">P</span> Performance</span>
+<!-- P: PERFORMANCE -->
+<div class="mk-detail" data-detail="p" style="--dim-color:var(--p-accent);--dim-soft:var(--p-soft);">
+  <div class="mk-detail-head">
+    <h2>Performance Dimension</h2>
+    <p>The forces that sustain and compound growth — customer success, data quality, and organizational alignment.</p>
+  </div>
+  <div class="mk-modules">
+    <div class="mk-mod" id="cse">
+      <span class="mk-mod-tag">P · Performance</span>
       <h3>Customer Success & Expansion</h3>
-      <p class="mp-card-q">Are we retaining and growing the revenue we already won — or slowly leaking it?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="cse">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Are we retaining and growing the revenue we already won — or slowly leaking it?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="cse">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="p" id="di">
-      <span class="mp-dim-tag mp-dim-p"><span class="dim-letter">P</span> Performance</span>
+    <div class="mk-mod" id="di">
+      <span class="mk-mod-tag">P · Performance</span>
       <h3>Data & Insights</h3>
-      <p class="mp-card-q">Can leadership trust the numbers they're making decisions on — or is the data lying?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="di">Buy Now</a>
-      </div>
+      <p class="mk-mod-q">Can leadership trust the numbers they're making decisions on — or is the data lying?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="di">Buy Now</a></div>
     </div>
-
-    <div class="mp-card" data-dim="p" id="ag">
-      <span class="mp-dim-tag mp-dim-p"><span class="dim-letter">P</span> Performance</span>
+    <div class="mk-mod" id="ag">
+      <span class="mk-mod-tag">P · Performance</span>
       <h3>Alignment & Governance</h3>
-      <p class="mp-card-q">Do teams have the structure and cadence to stay aligned — or is the org working against itself?</p>
-      <div class="mp-card-meta">60 questions · 6 engines · ~25 min</div>
-      <div class="mp-card-foot">
-        <div class="mp-card-price"><span class="curr">€</span><span data-price-key="module">749</span></div>
-        <a href="#" class="mp-card-btn" data-module="ag">Buy Now</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- Dimension Bundles -->
-<section class="container">
-  <div class="mp-bundles">
-    <div class="mp-bundles-head">
-      <span class="eyebrow">Dimension Bundles</span>
-      <h2>Go wider. Resolve an entire layer.</h2>
-      <p style="color:var(--text-body); font-size:0.95rem; line-height:1.6;">Each GRIP dimension contains 3 pillars. Bundle all 3 Deep Dives and diagnose the full constraint layer instead of a single symptom.</p>
-    </div>
-
-    <div class="mp-bundle-grid">
-      <div class="mp-bundle mp-bundle-g">
-        <div class="mp-bundle-letter">G</div>
-        <div class="mp-bundle-name">Guidance Bundle</div>
-        <div class="mp-bundle-modules">Strategy & Leadership + Market Intelligence + Product Marketing</div>
-        <div class="mp-bundle-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
-        <div class="mp-bundle-save">Save €452</div>
-        <a href="#" class="mp-bundle-btn" data-bundle="g">Buy Guidance Bundle</a>
-      </div>
-
-      <div class="mp-bundle mp-bundle-r">
-        <div class="mp-bundle-letter">R</div>
-        <div class="mp-bundle-name">Resources Bundle</div>
-        <div class="mp-bundle-modules">Pricing & Packaging + Product Readiness + Enablement</div>
-        <div class="mp-bundle-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
-        <div class="mp-bundle-save">Save €452</div>
-        <a href="#" class="mp-bundle-btn" data-bundle="r">Buy Resources Bundle</a>
-      </div>
-
-      <div class="mp-bundle mp-bundle-i">
-        <div class="mp-bundle-letter">I</div>
-        <div class="mp-bundle-name">Implementation Bundle</div>
-        <div class="mp-bundle-modules">Demand Generation + Sales Execution + Revenue Operations</div>
-        <div class="mp-bundle-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
-        <div class="mp-bundle-save">Save €452</div>
-        <a href="#" class="mp-bundle-btn" data-bundle="i">Buy Implementation Bundle</a>
-      </div>
-
-      <div class="mp-bundle mp-bundle-p">
-        <div class="mp-bundle-letter">P</div>
-        <div class="mp-bundle-name">Performance Bundle</div>
-        <div class="mp-bundle-modules">Customer Success + Data & Insights + Alignment & Governance</div>
-        <div class="mp-bundle-price"><span class="curr">€</span><span data-price-key="bundle">1,795</span></div>
-        <div class="mp-bundle-save">Save €452</div>
-        <a href="#" class="mp-bundle-btn" data-bundle="p">Buy Performance Bundle</a>
-      </div>
+      <p class="mk-mod-q">Do teams have the structure and cadence to stay aligned — or is the org working against itself?</p>
+      <div class="mk-mod-meta">60 questions · 6 engines · ~25 min</div>
+      <div class="mk-mod-foot"><div class="mk-mod-price">€749</div><a href="#" class="mk-buy" data-module="ag">Buy Now</a></div>
     </div>
   </div>
-</section>
-
-<!-- Report upsell -->
-<section class="container" style="padding-bottom: 80px;">
-  <div class="mp-upsell">
-    <div class="mp-upsell-text">
-      <h3>Don't guess which pillar to start with.</h3>
-      <p>The Intelligence Report diagnoses all 12 pillars at once and tells you exactly where your biggest constraint lives. 44 pages of board-level intelligence, delivered in minutes.</p>
-    </div>
-    <div class="mp-upsell-cta">
-      <div class="mp-upsell-price"><span class="curr">€</span><span data-price-key="report">2,495</span></div>
-      <a href="gtm-intelligence-report.html" class="btn btn-primary">Get the Intelligence Report</a>
+  <div class="mk-bundle">
+    <div class="mk-bundle-left"><h4>Performance Bundle — all 3 Deep Dives</h4><p>Customer Success + Data & Insights + Alignment & Governance. Diagnose the full outcomes layer.</p></div>
+    <div class="mk-bundle-right">
+      <div class="mk-bundle-pricing"><div class="mk-bundle-price">€1,795</div><div class="mk-bundle-save">Save €452 vs. individual</div></div>
+      <a href="#" class="mk-bundle-buy" data-bundle="p">Buy Performance Bundle</a>
     </div>
   </div>
-</section>
+  <div class="mk-deliverable"><div class="mk-deliverable-icon">📄</div><div class="mk-deliverable-items"><div class="mk-deliverable-item"><h5>Per module you get</h5><p>Board-ready diagnostic report with constraint scoring, leakage modelling, and a prioritized action plan — delivered instantly after completing the assessment.</p></div></div></div>
+</div>
+
+<!-- ALL 12 -->
+<div class="mk-all" data-detail="all">
+  <h2>All 12 Deep Dive Modules</h2>
+  <div class="mk-all-grid">
+    <a class="mk-all-card" data-goto="g" data-target="gsl"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>GTM Strategy & Leadership</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="mi"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>Market Intelligence</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="g" data-target="pmm"><span class="mk-all-dim mp-dim-g" style="display:inline-block;padding:2px 6px;border-radius:3px;">G</span><h4>Product Marketing</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pp"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Pricing & Packaging</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="pr"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Product Readiness</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="r" data-target="en"><span class="mk-all-dim mp-dim-r" style="display:inline-block;padding:2px 6px;border-radius:3px;">R</span><h4>Enablement</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="dg"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Demand Generation</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="se"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Sales Execution</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="i" data-target="revops"><span class="mk-all-dim mp-dim-i" style="display:inline-block;padding:2px 6px;border-radius:3px;">I</span><h4>Revenue Operations</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="cse"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Customer Success</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="di"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Data & Insights</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+    <a class="mk-all-card" data-goto="p" data-target="ag"><span class="mk-all-dim mp-dim-p" style="display:inline-block;padding:2px 6px;border-radius:3px;">P</span><h4>Alignment & Governance</h4><div class="mk-all-card-sub">€749 · 60q · 6 engines</div></a>
+  </div>
+</div>
+
+</div><!-- /container -->
 </main>
+
+<!-- Mobile sticky report bar -->
+<div class="mk-sticky-report">
+  <div class="container mk-sticky-inner">
+    <div class="mk-sticky-text"><strong>Not sure?</strong> Intelligence Report — all 12 pillars. €2,495</div>
+    <a href="gtm-intelligence-report.html" class="mk-sticky-btn">Learn more →</a>
+  </div>
+</div>
 
 <footer>
   <div class="container">
@@ -372,67 +635,85 @@
   </div>
 </footer>
 
+<script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
-<script src="assets/currency.js"></script>
 <script>
 (function() {
-  // Dimension filter
-  var tabs = document.querySelectorAll('.dim-tab');
-  var cards = document.querySelectorAll('.mp-card');
+  var dimCards = document.querySelectorAll('.mk-dim-card');
+  var details = document.querySelectorAll('.mk-detail');
+  var allView = document.querySelector('.mk-all');
+  var showAllLink = document.getElementById('showAllLink');
 
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var dim = tab.getAttribute('data-dim');
+  function activate(dim) {
+    // Dim cards
+    dimCards.forEach(function(c) { c.classList.toggle('active', c.getAttribute('data-dim') === dim); });
+    // Detail sections
+    details.forEach(function(d) { d.classList.toggle('active', d.getAttribute('data-detail') === dim); });
+    // All view
+    if (allView) allView.classList.toggle('active', dim === 'all');
+  }
 
-      cards.forEach(function(card) {
-        if (dim === 'all' || card.getAttribute('data-dim') === dim) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+  // Dim card clicks
+  dimCards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      activate(card.getAttribute('data-dim'));
     });
   });
 
-  // Deep link: scroll to module if hash present
+  // "Browse all 12" link
+  if (showAllLink) {
+    showAllLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      activate('all');
+      dimCards.forEach(function(c) { c.classList.remove('active'); });
+    });
+  }
+
+  // All-view cards → jump to dimension
+  document.querySelectorAll('.mk-all-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      var dim = card.getAttribute('data-goto');
+      var targetId = card.getAttribute('data-target');
+      activate(dim);
+      setTimeout(function() {
+        var el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.boxShadow = '0 0 0 3px rgba(0,86,179,0.2)';
+          setTimeout(function() { el.style.boxShadow = ''; }, 2000);
+        }
+      }, 100);
+    });
+  });
+
+  // Deep link
   var hash = window.location.hash.replace('#', '');
   if (hash) {
     var target = document.getElementById(hash);
     if (target) {
-      // Activate the right dimension tab
-      var dim = target.getAttribute('data-dim');
-      if (dim) {
-        tabs.forEach(function(t) { t.classList.remove('active'); });
-        var matchTab = document.querySelector('.dim-tab[data-dim="' + dim + '"]');
-        if (matchTab) matchTab.classList.add('active');
-        // Show only that dimension
-        cards.forEach(function(card) {
-          card.style.display = card.getAttribute('data-dim') === dim ? '' : 'none';
-        });
+      var detail = target.closest('.mk-detail');
+      if (detail) {
+        activate(detail.getAttribute('data-detail'));
+        setTimeout(function() {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.style.boxShadow = '0 0 0 3px rgba(0,86,179,0.2)';
+          setTimeout(function() { target.style.boxShadow = ''; }, 2000);
+        }, 300);
       }
-      setTimeout(function() {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        target.style.boxShadow = '0 0 0 3px rgba(0,86,179,0.25)';
-        setTimeout(function() { target.style.boxShadow = ''; }, 2000);
-      }, 300);
     }
   }
 
-  // Buy buttons → Stripe (placeholder)
-  document.querySelectorAll('.mp-card-btn, .mp-bundle-btn').forEach(function(btn) {
+  // Buy buttons (Stripe placeholder)
+  document.querySelectorAll('.mk-buy, .mk-bundle-buy').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
-      var module = btn.getAttribute('data-module');
-      var bundle = btn.getAttribute('data-bundle');
-      // TODO: Replace with Stripe checkout links
-      // window.location.href = 'https://buy.stripe.com/REPLACE_' + (module || 'bundle_' + bundle);
-      alert('Payment integration coming soon. Module: ' + (module || 'Bundle ' + bundle.toUpperCase()));
+      var m = btn.getAttribute('data-module');
+      var b = btn.getAttribute('data-bundle');
+      alert('Payment integration coming soon. ' + (m ? 'Module: ' + m.toUpperCase() : 'Bundle: ' + b.toUpperCase()));
     });
   });
 })();
 </script>
-<script src="assets/header.js"></script>
 </body>
 </html>
