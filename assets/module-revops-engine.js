@@ -16,7 +16,7 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_REVOPS_WEBHOOK",
+    webhookUrl: "https://hook.eu1.make.com/jiig7lu7ieacpfduxv2zk207g0k9nzwn",
     storageKey: "caugia_revops_v1_state",
     autoSaveInterval: 1000,
     schemaVersion: "revops-1.0"
