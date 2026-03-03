@@ -608,7 +608,7 @@ var QUESTIONS = [
       "Slight advantage",
       "Moderate advantage",
       "Strong advantage",
-      "Decisive intelligence advantage **Engine 5: Customer Insight & VoC**"
+      "Decisive intelligence advantage"
     ]
   },
   {
@@ -764,7 +764,7 @@ var QUESTIONS = [
       "Flat",
       "Slightly improving",
       "Improving",
-      "Consistently improving with data **Engine 6: Market Intelligence Operations & Infrastructure**"
+      "Consistently improving with data"
     ]
   },
   {
@@ -920,7 +920,7 @@ var QUESTIONS = [
       "Behind peers",
       "At parity",
       "Ahead of peers",
-      "Industry-leading intelligence **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  14 numeric questions. Mix of universal and stage/segment-adjusted.  ----------------------------------------------------------------------- **4.1 ICP Segments Defined MI-1003**"
+      "Industry-leading intelligence"
     ]
   }
 ];
