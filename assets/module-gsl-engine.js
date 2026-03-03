@@ -16,7 +16,7 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_GSL_WEBHOOK",
+    webhookUrl: "https://hook.eu1.make.com/6qav3shh573neaxkt3h3dxah67jye5ow",
     storageKey: "caugia_gsl_v1_state",
     autoSaveInterval: 1000,
     schemaVersion: "gsl-1.0"
