@@ -587,7 +587,7 @@ var QUESTIONS = [
       "Low confidence",
       "Moderate",
       "High confidence",
-      "Complete confidence backed by attribution data **Engine 5: Predictive Analytics & AI Readiness**"
+      "Complete confidence backed by attribution data"
     ]
   },
   {
@@ -743,7 +743,7 @@ var QUESTIONS = [
       "Behind peers",
       "At parity",
       "Ahead",
-      "Industry-leading predictive intelligence **Engine 6: Data Culture & Literacy**"
+      "Industry-leading predictive intelligence"
     ]
   },
   {
@@ -899,7 +899,7 @@ var QUESTIONS = [
       "Behind peers",
       "At parity",
       "Ahead",
-      "Significant competitive moat built on data **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  17 numeric questions. Mix of universal, stage-adjusted, inverted, and  context-dependent.  ----------------------------------------------------------------------- **4.1 Data Dictionary Coverage % DI-1003**"
+      "Significant competitive moat built on data"
     ]
   }
 ];
