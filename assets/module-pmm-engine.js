@@ -16,7 +16,7 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_PMM_WEBHOOK",
+    webhookUrl: "https://hook.eu1.make.com/wsiyih4f3mgosr3dlqwwovslanitfm7a",
     storageKey: "caugia_pmm_v1_state",
     autoSaveInterval: 1000,
     schemaVersion: "pmm-1.0"
