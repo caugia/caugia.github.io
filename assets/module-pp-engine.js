@@ -16,7 +16,7 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_PP_WEBHOOK",
+    webhookUrl: "https://hook.eu1.make.com/mhrdqx9we8ipbygkj0zo8vnydxnyn3yh",
     storageKey: "caugia_pp_v1_state",
     autoSaveInterval: 1000,
     schemaVersion: "pp-1.0"
