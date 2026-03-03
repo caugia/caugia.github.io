@@ -298,7 +298,7 @@ var QUESTIONS = [
       "Highly variable",
       "Some predictability",
       "Predictable",
-      "Highly predictable **Engine 3: Deal Execution & Progression**"
+      "Highly predictable"
     ]
   },
   {
@@ -440,7 +440,7 @@ var QUESTIONS = [
       "Occasionally on big losses",
       "On most losses",
       "On all losses and wins",
-      "Structured program with third-party interviews **Engine 4: Pipeline Management & Forecasting**"
+      "Structured program with third-party interviews"
     ]
   },
   {
@@ -589,7 +589,7 @@ var QUESTIONS = [
       "\\>40% (hockey stick)",
       "30-40%",
       "20-30%",
-      "\\<20% (even distribution) **Engine 5: Sales Enablement & Coaching**"
+      "\\<20% (even distribution)"
     ]
   },
   {
@@ -744,7 +744,7 @@ var QUESTIONS = [
       "No change",
       "Slight improvement",
       "Measurable improvement",
-      "Significantly faster **Engine 6: Sales Operations & Infrastructure**"
+      "Significantly faster"
     ]
   },
   {
@@ -903,7 +903,7 @@ var QUESTIONS = [
       "Low trust",
       "Moderate trust",
       "High trust",
-      "Full confidence **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  These tables convert raw numeric inputs to 1-5 scores. The scoring  engine uses segment/stage to select the correct row.  ----------------------------------------------------------------------- **4.1 Win Rate SE-1008 --- By Segment**  -------------------------------------------------------------------------  **Segment**  **Score 1** **Score 2** **Score 3** **Score 4** **Score 5**  ------------- ----------- ----------- ----------- ----------- -----------  SMB      \\<10%    10-20%   20-30%   30-40%   \\>40%  Mid-Market  \\<8%    8-16%    16-25%   25-35%   \\>35%  Enterprise  \\<5%    5-12%    12-20%   20-30%   \\>30%  Strategic   \\<3%    3-8%    8-15%    15-25%   \\>25%  ------------------------------------------------------------------------- **4.2 Sales Cycle SE-1009 / SE-4009 --- By Deal Type**"
+      "Full confidence"
     ]
   }
 ];
