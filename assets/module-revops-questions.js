@@ -289,7 +289,7 @@ var QUESTIONS = [
       "Mostly friction",
       "Neutral",
       "Mostly enables",
-      "Clear accelerator **Engine 3: Process Design & Automation**"
+      "Clear accelerator"
     ]
   },
   {
@@ -438,7 +438,7 @@ var QUESTIONS = [
       "Frequent",
       "Occasional",
       "Rare",
-      "Exceptional --- near-zero breakdowns **Engine 4: Reporting & Analytics**"
+      "Exceptional --- near-zero breakdowns"
     ]
   },
   {
@@ -594,7 +594,7 @@ var QUESTIONS = [
       "Mostly lagging",
       "Mix but mostly lagging",
       "Good leading indicators",
-      "Strong predictive capability **Engine 5: Forecasting & Pipeline Management**"
+      "Strong predictive capability"
     ]
   },
   {
@@ -736,7 +736,7 @@ var QUESTIONS = [
       "Directional only",
       "Used with heavy buffer",
       "Trusted with minor adjustments",
-      "Primary planning input **Engine 6: RevOps Governance & Enablement**"
+      "Primary planning input"
     ]
   },
   {
@@ -865,7 +865,7 @@ var QUESTIONS = [
       "Seen as overhead",
       "Neutral",
       "Valued enabler",
-      "Strategic partner --- GTM teams advocate for RevOps investment"
+      "Strategic partner - GTM teams advocate for RevOps investment"
     ]
   },
   {
@@ -892,7 +892,7 @@ var QUESTIONS = [
       "Anecdotal",
       "Some metrics",
       "Strong impact measurement",
-      "Quantified ROI reported to leadership **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  18 numeric questions. Mix of universal, stage-adjusted, and inverted  scales."
+      "Quantified ROI reported to leadership"
     ]
   }
 ];
