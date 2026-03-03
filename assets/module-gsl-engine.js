@@ -1,14 +1,10 @@
 /* ===========================================================
-   CAUGIA GSL MODULE ENGINE v1.0 (DETERMINISTIC + SCORES)
-   Based on Intelligence Engine v9.0
-   Adapted for: GTM Strategy & Leadership Deep Dive (60 questions, 6 engines)
-   
-   Key differences from v9:
-   - Storage key: caugia_gsl_v1_state
-   - No group questions (all scale or text/numeric)
-   - 6 engines instead of 12 pillars
-   - GRIP mapping per question (from tags), not per pillar
-   - Module-specific webhook
+   CAUGIA GSL MODULE ENGINE v1.1 (PATCHED FOR GAS COMPAT)
+   Patch goals:
+   - Send deterministic numeric scale scores: q####_score (1..5)
+   - Keep raw text/numeric metric inputs: q####_raw
+   - Send explicit context fields (email/company/stage/motion/segment/arr)
+   - Prevent missing metadata that caused null/0 behavior in GAS
    =========================================================== */
 
 (function () {
@@ -19,7 +15,18 @@
     webhookUrl: "https://hook.eu1.make.com/6qav3shh573neaxkt3h3dxah67jye5ow",
     storageKey: "caugia_gsl_v1_state",
     autoSaveInterval: 1000,
-    schemaVersion: "gsl-1.0"
+    schemaVersion: "gsl-1.1"
+  };
+
+  // Context input selectors (optional, safe if not present)
+  const CONTEXT_SELECTORS = {
+    email: ["#gi-email", "#email", "input[name='email']"],
+    company: ["#gi-company", "#company", "input[name='company']"],
+    grip_report_id: ["#gi-grip-report-id", "#grip_report_id", "input[name='grip_report_id']"],
+    stage: ["#gi-stage", "#stage", "select[name='stage']", "input[name='stage']"],
+    motion: ["#gi-motion", "#motion", "select[name='motion']", "input[name='motion']"],
+    segment: ["#gi-segment", "#segment", "select[name='segment']", "input[name='segment']"],
+    arr: ["#gi-arr", "#arr", "input[name='arr']"]
   };
 
   // --- 2. STATE ---
@@ -55,12 +62,12 @@
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
+    1: "Strategic Clarity & Market Focus",
+    2: "Leadership Alignment & Decision-Making",
+    3: "Resource Allocation & Investment",
+    4: "GTM Operating Rhythm & Governance",
+    5: "Cross-Functional Alignment",
+    6: "Strategic Adaptability & Innovation"
   };
 
   function engineNameByIndex(i) {
@@ -111,6 +118,65 @@
     var idx = opts.indexOf(answerValue);
     if (idx === -1) return null;
     return idx + 1;
+  }
+
+  function firstQueryParam(keys) {
+    try {
+      var p = new URLSearchParams(window.location.search || "");
+      for (var i = 0; i < keys.length; i++) {
+        var v = p.get(keys[i]);
+        if (isNonEmpty(v)) return String(v).trim();
+      }
+    } catch (_) {}
+    return "";
+  }
+
+  function firstDomValue(selectors) {
+    for (var i = 0; i < selectors.length; i++) {
+      var el = document.querySelector(selectors[i]);
+      if (el && isNonEmpty(el.value)) return String(el.value).trim();
+      if (el && isNonEmpty(el.textContent) && (el.tagName === "DIV" || el.tagName === "SPAN")) {
+        return String(el.textContent).trim();
+      }
+    }
+    return "";
+  }
+
+  function safeJsonParse(s) {
+    try { return JSON.parse(s); } catch (_) { return null; }
+  }
+
+  function collectContext() {
+    // DOM first
+    var out = {
+      email: firstDomValue(CONTEXT_SELECTORS.email),
+      company: firstDomValue(CONTEXT_SELECTORS.company),
+      grip_report_id: firstDomValue(CONTEXT_SELECTORS.grip_report_id),
+      stage: firstDomValue(CONTEXT_SELECTORS.stage),
+      motion: firstDomValue(CONTEXT_SELECTORS.motion),
+      segment: firstDomValue(CONTEXT_SELECTORS.segment),
+      arr: firstDomValue(CONTEXT_SELECTORS.arr)
+    };
+
+    // URL fallback
+    if (!isNonEmpty(out.email)) out.email = firstQueryParam(["email", "q1__email"]);
+    if (!isNonEmpty(out.company)) out.company = firstQueryParam(["company", "q1__company"]);
+    if (!isNonEmpty(out.grip_report_id)) out.grip_report_id = firstQueryParam(["grip_report_id", "report_id"]);
+    if (!isNonEmpty(out.stage)) out.stage = firstQueryParam(["stage", "q7"]);
+    if (!isNonEmpty(out.motion)) out.motion = firstQueryParam(["motion", "q6"]);
+    if (!isNonEmpty(out.segment)) out.segment = firstQueryParam(["segment", "q8"]);
+    if (!isNonEmpty(out.arr)) out.arr = firstQueryParam(["arr", "q2__arr"]);
+
+    // localStorage fallback (optional profile objects)
+    var profile = safeJsonParse(localStorage.getItem("caugia_profile") || "") || {};
+    if (!isNonEmpty(out.email) && isNonEmpty(profile.email)) out.email = String(profile.email).trim();
+    if (!isNonEmpty(out.company) && isNonEmpty(profile.company)) out.company = String(profile.company).trim();
+    if (!isNonEmpty(out.stage) && isNonEmpty(profile.stage)) out.stage = String(profile.stage).trim();
+    if (!isNonEmpty(out.motion) && isNonEmpty(profile.motion)) out.motion = String(profile.motion).trim();
+    if (!isNonEmpty(out.segment) && isNonEmpty(profile.segment)) out.segment = String(profile.segment).trim();
+    if (!isNonEmpty(out.arr) && isNonEmpty(profile.arr)) out.arr = String(profile.arr).trim();
+
+    return out;
   }
 
   // --- 5. INITIALIZATION ---
@@ -209,7 +275,6 @@
       wrapper.appendChild(label);
     });
 
-    // N/A option for questions that support it
     if (q.has_na) {
       var naLabel = document.createElement("label");
       naLabel.className = "gi-option-card";
@@ -273,7 +338,6 @@
 
     UI.body.appendChild(input);
 
-    // N/A button for numeric questions that support it
     if (q.has_na) {
       var naWrapper = document.createElement("div");
       naWrapper.style.marginTop = "16px";
@@ -293,11 +357,8 @@
       }
 
       naBtn.addEventListener("click", function() {
-        if (STATE.answers[key] === "N/A") {
-          delete STATE.answers[key];
-        } else {
-          STATE.answers[key] = "N/A";
-        }
+        if (STATE.answers[key] === "N/A") delete STATE.answers[key];
+        else STATE.answers[key] = "N/A";
         if (UI.body) UI.body.innerHTML = "";
         renderText(q);
       });
@@ -365,12 +426,9 @@
     var items = UI.pillarList.querySelectorAll("li");
 
     items.forEach(function(item) {
-      var p = parseInt(item.getAttribute("data-p"));
-      if (p === currentEngine) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
+      var p = parseInt(item.getAttribute("data-p"), 10);
+      if (p === currentEngine) item.classList.add("active");
+      else item.classList.remove("active");
     });
   }
 
@@ -399,7 +457,7 @@
         answers: parsed.answers || {},
         completed: !!parsed.completed
       };
-    } catch (e) {
+    } catch (_) {
       console.log("State corrupted, resetting.");
     }
   }
@@ -410,9 +468,8 @@
 
     window.QUESTIONS.forEach(function(q) {
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 6) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
-      if (opts.length !== 5) return;
+      if (opts.length !== 5) return; // only scale questions
 
       var key = qKey(q.id);
       var val = answersRaw[key];
@@ -450,7 +507,6 @@
 
     window.QUESTIONS.forEach(function(q) {
       if (!q.grip || !buckets[q.grip]) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -497,14 +553,44 @@
     };
   }
 
+  // Build GAS-friendly answer object (PATCH)
+  function buildAnswersForGas(answersRaw) {
+    var out = {};
+
+    window.QUESTIONS.forEach(function(q) {
+      var key = qKey(q.id);
+      var val = answersRaw[key];
+
+      // Base answer key always present (string or empty)
+      out[key] = isNonEmpty(val) ? String(val) : "";
+
+      // Scale question: add deterministic numeric score
+      var opts = Array.isArray(q.options) ? q.options : [];
+      if (opts.length === 5 && isNonEmpty(val) && val !== "N/A") {
+        var score = optionsIndex1to5(q, val);
+        if (score) out[key + "_score"] = score;
+      }
+
+      // Text/numeric question: also send _raw for explicit metric consumption
+      if (q.type === "text" && isNonEmpty(val) && val !== "N/A") {
+        out[key + "_raw"] = String(val);
+      }
+    });
+
+    return out;
+  }
+
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw = STATE.answers || {};
+    var ctx = collectContext();
 
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
     var gripScores = computeGripScores(answersRaw);
     var coverage = buildCoverage(answersRaw);
+
+    var answersForGas = buildAnswersForGas(answersRaw);
 
     var fullReport = [];
     window.QUESTIONS.forEach(function(q) {
@@ -532,16 +618,28 @@
         source: "GSL Engine v" + CONFIG.schemaVersion,
         is_test: !!isTest
       },
+
+      // Explicit top-level respondent/context fields (PATCH)
+      email: ctx.email || "",
+      company: ctx.company || "",
+      grip_report_id: ctx.grip_report_id || "",
+      stage: ctx.stage || "",
+      motion: ctx.motion || "",
+      segment: ctx.segment || "",
+      arr: ctx.arr || "",
+
       message: message,
-      answers: answersRaw,
-      answers_raw: answersRaw,
+      answers: answersForGas,
+      answers_raw: answersForGas,
       full_report: fullReport,
       coverage: coverage,
+
       scoring: {
         engine_scores: engineScores,
         overall_score: overallScore,
         grip_scores: gripScores
       },
+
       engine_scores: engineScores,
       overall_score: overallScore,
       grip_g: gripScores.G,
@@ -573,6 +671,7 @@
         }
         lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
+        lines.push("Context: stage=" + (ctx.stage || "-") + ", motion=" + (ctx.motion || "-") + ", company=" + (ctx.company || "-"));
         alert("✅ GSL TEST SUCCESS!\n\n" + lines.join("\n"));
       } else {
         STATE.completed = true;
@@ -597,7 +696,7 @@
 
   function resetAll() {
     if (!confirm("Reset all GSL answers?")) return;
-    STATE.completed = true;  // stops autosave
+    STATE.completed = true;
     STATE.answers = {};
     STATE.currentStep = 0;
     localStorage.removeItem(CONFIG.storageKey);
