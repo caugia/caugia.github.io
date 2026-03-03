@@ -431,7 +431,7 @@ var QUESTIONS = [
       "Behind",
       "At parity",
       "Faster",
-      "Significantly faster --- velocity is a competitive advantage **Engine 4: Platform Reliability & Technical Readiness**"
+      "Significantly faster --- velocity is a competitive advantage"
     ]
   },
   {
@@ -580,7 +580,7 @@ var QUESTIONS = [
       "Several times",
       "Once or twice",
       "Never for deals, rarely for churn",
-      "Never --- performance is a non-issue **Engine 5: Integration & Ecosystem Readiness**"
+      "Never --- performance is a non-issue"
     ]
   },
   {
@@ -885,7 +885,7 @@ var QUESTIONS = [
       "Behind peers",
       "At parity",
       "Ahead",
-      "Industry-leading product intelligence **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  19 numeric questions. Highest in suite tied with CSE. Mix of universal,  stage-adjusted, and inverted."
+      "Industry-leading product intelligence"
     ]
   }
 ];
