@@ -533,6 +533,7 @@
         is_test: !!isTest
       },
       message: message,
+      answers: answersRaw,
       answers_raw: answersRaw,
       full_report: fullReport,
       coverage: coverage,
