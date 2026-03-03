@@ -91,22 +91,21 @@
 .mk-ir-inside-card h3 { font-size:0.95rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
 .mk-ir-inside-card p { font-size:0.82rem; color:#475569; line-height:1.55; margin:0; }
 
-/* Comparison table — 3 columns: AI | Traditional | Caugia */
-.mk-ir-comp { margin-top:32px; background:#0f172a; border-radius:16px; padding:36px 32px; overflow-x:auto; }
-.mk-ir-comp-headline { font-family:Merriweather,serif; font-size:1.3rem; font-weight:900; color:#fff; line-height:1.3; margin-bottom:24px; }
-.mk-ir-table { width:100%; border-collapse:separate; border-spacing:0 4px; }
-.mk-ir-table th { text-align:left; padding:14px 22px; font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.07em; color:#475569; }
-.mk-ir-table th:first-child { width:16%; }
-.mk-ir-table th:nth-child(2), .mk-ir-table th:nth-child(3) { width:24%; }
-.mk-ir-table th:nth-child(4) { width:36%; color:#fff; background:rgba(59,130,246,0.2); border-radius:8px 8px 0 0; }
-.mk-ir-table td { padding:16px 22px; font-size:0.88rem; color:#cbd5e1; line-height:1.45; }
-.mk-ir-table td:first-child { color:#64748b; font-weight:700; font-size:0.8rem; letter-spacing:0.01em; }
-.mk-ir-table tr:nth-child(odd) td { background:rgba(255,255,255,0.03); }
-.mk-ir-table tr:nth-child(odd) td:nth-child(4) { background:rgba(59,130,246,0.12); }
-.mk-ir-table tr:nth-child(even) td:nth-child(4) { background:rgba(59,130,246,0.06); }
-.mk-ir-table td:nth-child(4) { color:#fff; font-weight:700; }
+/* Comparison section — light, clean, readable */
+.mk-ir-comp { margin-top:32px; background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:36px 32px; overflow:hidden; }
+.mk-ir-comp-headline { font-family:Merriweather,serif; font-size:1.3rem; font-weight:900; color:#0f172a; line-height:1.3; margin-bottom:24px; }
+.mk-ir-table { width:100%; border-collapse:collapse; }
+.mk-ir-table th { text-align:left; padding:12px 18px; font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; border-bottom:2px solid #e2e8f0; }
+.mk-ir-table th:first-child { width:15%; }
+.mk-ir-table th:nth-child(2), .mk-ir-table th:nth-child(3) { width:23%; }
+.mk-ir-table th:nth-child(4) { width:39%; color:#0056b3; background:#eff6ff; border-radius:8px 8px 0 0; border-bottom:2px solid #bfdbfe; }
+.mk-ir-table td { padding:14px 18px; font-size:0.88rem; color:#475569; line-height:1.45; border-bottom:1px solid #f1f5f9; }
+.mk-ir-table td:first-child { color:#94a3b8; font-weight:700; font-size:0.78rem; }
+.mk-ir-table td:nth-child(4) { color:#0f172a; font-weight:700; background:#f8fbff; }
+.mk-ir-table tr:last-child td { border-bottom:none; }
 .mk-ir-table tr:last-child td:nth-child(4) { border-radius:0 0 8px 8px; }
 .mk-ir-comp-footer { margin-top:20px; font-size:0.84rem; color:#64748b; line-height:1.6; max-width:720px; }
+.mk-comp-cards { display:none; }
 
 /* Numbers */
 .mk-ir-nums { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; padding-top:24px; border-top:1px solid #f1f5f9; text-align:center; }
@@ -234,6 +233,20 @@
 }
 @media(max-width:768px) {
   .mk-hero h1{font-size:1.7rem;}
+  .mk-ir-comp { padding:24px 20px; }
+  .mk-ir-comp-headline { font-size:1.1rem; }
+  .mk-ir-table { display:none; }
+  .mk-comp-cards { display:flex; flex-direction:column; gap:10px; }
+  .mk-comp-row { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px; }
+  .mk-comp-row-label { font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#94a3b8; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid #e2e8f0; }
+  .mk-comp-row-items { display:flex; flex-direction:column; gap:6px; }
+  .mk-comp-row-item { display:flex; justify-content:space-between; align-items:center; }
+  .mk-comp-row-who { font-size:0.75rem; color:#94a3b8; font-weight:600; }
+  .mk-comp-row-val { font-size:0.85rem; color:#475569; font-weight:600; text-align:right; }
+  .mk-comp-row-caugia { background:#eff6ff; border:1.5px solid #93c5fd; }
+  .mk-comp-row-caugia .mk-comp-row-label { color:#0056b3; border-bottom-color:#bfdbfe; }
+  .mk-comp-row-caugia .mk-comp-row-val { color:#0f172a; font-weight:800; }
+  .mk-ir-comp-footer { font-size:0.78rem; }
   .mk-ir-hero{grid-template-columns:1fr;gap:24px;}
   .mk-ir-visual{order:-1;}
   .mk-ir-stack{width:280px;height:400px;}
@@ -384,6 +397,16 @@
           <tr><td>Revenue leakage</td><td>Not modeled</td><td>Roughly estimated</td><td>Dollarized per constraint</td></tr>
         </tbody>
       </table>
+      <!-- Mobile: card layout per row -->
+      <div class="mk-comp-cards">
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Time to insight</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">5 minutes</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">4&ndash;6 weeks</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Under 1 hour</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Cost</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Free &ndash; $20/mo</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">&euro;25k &ndash; &euro;50k+</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">&euro;2,495 fixed</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Input depth</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Generic prompts</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">Interviews + workshops</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">265 structured inputs</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Decision logic</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Probabilistic output</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">Consultant interpretation</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministic engines</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Output</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Chat response</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">Slide deck</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">44-page diagnostic</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Repeatability</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Different every time</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">Depends on consultant</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministic scoring core</span></div></div></div>
+        <div class="mk-comp-row"><div class="mk-comp-row-label">Revenue leakage</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI Tools</span><span class="mk-comp-row-val">Not modeled</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consulting</span><span class="mk-comp-row-val">Roughly estimated</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Dollarized per constraint</span></div></div></div>
+      </div>
       <div class="mk-ir-comp-footer">Top-tier consultants apply frameworks manually. Caugia encodes them into deterministic engines. Same logic. Radically faster. Radically cheaper.</div>
     </div>
 
