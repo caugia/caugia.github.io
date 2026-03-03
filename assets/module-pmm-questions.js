@@ -310,7 +310,7 @@ var QUESTIONS = [
       "Weak",
       "Some",
       "Strong",
-      "Market recognizes us for this **Engine 3: Competitive Intelligence**"
+      "Market recognizes us for this"
     ]
   },
   {
@@ -618,7 +618,7 @@ var QUESTIONS = [
       "Underinformed",
       "Moderate",
       "Well prepared",
-      "Fully equipped **Engine 5: Sales & Marketing Enablement (PMM)**"
+      "Fully equipped"
     ]
   },
   {
@@ -774,7 +774,7 @@ var QUESTIONS = [
       "Anecdotal",
       "Some evidence",
       "Strong evidence",
-      "Quantified impact on revenue **Engine 6: Messaging Performance & Iteration**"
+      "Quantified impact on revenue"
     ]
   },
   {
