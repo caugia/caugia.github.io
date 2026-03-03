@@ -722,7 +722,7 @@ var QUESTIONS = [
       "Behind peers",
       "At parity",
       "Ahead",
-      "Clear competitive advantage from technology enablement **Engine 6: Coaching & Performance Management**"
+      "Clear competitive advantage from technology enablement"
     ]
   },
   {
