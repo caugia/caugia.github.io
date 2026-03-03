@@ -53,7 +53,7 @@
 .mk-ir-visual { display:flex; flex-direction:column; align-items:center; gap:14px; }
 
 /* STACKED CARDS */
-.mk-ir-stack { position:relative; width:320px; height:440px; }
+.mk-ir-stack { position:relative; width:380px; height:520px; }
 .mk-ir-stack-card {
   position:absolute; top:0; left:0; width:100%; cursor:pointer;
   transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1), opacity 0.4s ease, box-shadow 0.4s ease;
@@ -61,6 +61,22 @@
 .mk-ir-stack-card.active { transform:translateX(0) translateY(0) scale(1); opacity:1; z-index:3; box-shadow:0 16px 48px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.03); }
 .mk-ir-stack-card.behind-1 { transform:translateX(16px) translateY(8px) scale(0.96); opacity:0.7; z-index:2; box-shadow:0 8px 24px rgba(0,0,0,0.06); }
 .mk-ir-stack-card.behind-2 { transform:translateX(32px) translateY(16px) scale(0.92); opacity:0.4; z-index:1; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+
+/* Screenshot card frame */
+.mk-ir-rp { background:#fff; border-radius:12px; overflow:hidden; border:1px solid #e2e8f0; display:flex; flex-direction:column; }
+.mk-rp-head { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
+.mk-rp-head-left { flex:1; }
+.mk-rp-ch { font-size:0.55rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#dc2626; }
+.mk-rp-title { font-size:0.85rem; font-weight:900; color:#0f172a; margin-top:1px; }
+.mk-rp-subtitle { font-size:0.55rem; color:#94a3b8; margin-top:1px; }
+.mk-rp-head-logo img { width:32px; height:32px; }
+.mk-rp-screenshot { flex:1; overflow:hidden; }
+.mk-rp-screenshot img { width:100%; height:auto; display:block; }
+.mk-rp-foot { background:#f8fafc; border-top:1px solid #e2e8f0; padding:8px 18px; display:flex; justify-content:space-between; align-items:center; }
+.mk-rp-foot span { font-size:0.42rem; font-weight:600; color:#94a3b8; text-transform:uppercase; letter-spacing:0.04em; }
+.mk-rp-foot-logo { display:flex; align-items:center; gap:4px; }
+.mk-rp-foot-logo img { width:14px; height:14px; }
+.mk-rp-foot-logo span { font-size:0.42rem; font-weight:800; color:#94a3b8; }
 
 .mk-ir-dots { display:flex; gap:8px; justify-content:center; }
 .mk-ir-dot { width:8px; height:8px; border-radius:50%; border:none; background:#cbd5e1; cursor:pointer; padding:0; transition:all 0.2s; }
@@ -85,7 +101,6 @@
 .mk-exec-item::before { content:"\2192"; position:absolute; left:8px; color:#94a3b8; font-size:0.4rem; }
 
 /* Inside cards */
-.mk-ir-rp { width:100%; height:100%; background:#fff; border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
 .mk-ir-inside { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
 .mk-ir-inside-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:24px; }
 .mk-ir-inside-card h3 { font-size:0.95rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
@@ -249,8 +264,8 @@
   .mk-ir-comp-footer { font-size:0.78rem; }
   .mk-ir-hero{grid-template-columns:1fr;gap:24px;}
   .mk-ir-visual{order:-1;}
-  .mk-ir-stack{width:280px;height:400px;}
-  .mk-ir-rp{width:100%;max-width:280px;}
+  .mk-ir-stack{width:300px;height:440px;}
+  .mk-ir-rp{width:100%;max-width:300px;}
   .mk-ir-title{font-size:1.5rem;}
   .mk-ir-inside{grid-template-columns:1fr;}
   .mk-ir-nums{grid-template-columns:1fr 1fr;}
@@ -314,57 +329,31 @@
           <!-- Card 1: Executive Snapshot -->
           <div class="mk-ir-rp mk-ir-stack-card active" data-card="0">
             <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 1</div><div class="mk-rp-title">Executive Snapshot</div><div class="mk-rp-subtitle">The GTM System at a Glance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
-            <div class="mk-rp-body" style="flex:1;">
-              <div class="mk-rp-scores">
-                <div class="mk-rp-sc" style="background:#0f172a;"><div class="mk-rp-sc-val" style="color:#fff;">59<span style="font-size:0.45rem;color:#94a3b8;">/100</span></div><div class="mk-rp-sc-lbl" style="color:#f97316;">GRIP Score</div></div>
-                <div class="mk-rp-sc" style="background:#fef3c7;"><div class="mk-rp-sc-val" style="color:#b45309;">Moderate</div><div class="mk-rp-sc-lbl">Band</div></div>
-                <div class="mk-rp-sc" style="background:#fef2f2;"><div class="mk-rp-sc-val" style="color:#dc2626;">$15M</div><div class="mk-rp-sc-lbl">Value Leakage</div></div>
-              </div>
-              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Guidance</span><span class="mk-rp-bar-v" style="color:#dc2626;">49</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-r" style="width:49%"></div></div></div>
-              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Resources</span><span class="mk-rp-bar-v" style="color:#b45309;">55</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:55%"></div></div></div>
-              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Implementation</span><span class="mk-rp-bar-v" style="color:#b45309;">53</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-w" style="width:53%"></div></div></div>
-              <div class="mk-rp-bar-row"><div class="mk-rp-bar-label"><span class="mk-rp-bar-l">Performance</span><span class="mk-rp-bar-v" style="color:#16a34a;">77</span></div><div class="mk-rp-bar"><div class="mk-rp-bf bf-b" style="width:77%"></div></div></div>
-              <div class="mk-rp-pattern"><div class="mk-rp-pattern-tag">System Pattern</div><div class="mk-rp-pattern-text">Accidental Growth. The system produces results without understanding WHY.</div></div>
-              <div class="mk-rp-alert"><div class="mk-rp-alert-tag">Primary Diagnosis</div><div class="mk-rp-alert-text">Root constraint: conversion-capacity bottleneck driving 36% discount erosion and 20% annual churn.</div></div>
-            </div>
+            <div class="mk-rp-screenshot"><img src="assets/sample-exec.png" alt="Executive Snapshot — GRIP Score, KPIs, Revenue Leakage, Primary Diagnosis"></div>
             <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 6 of 44</span></div>
           </div>
           <!-- Card 2: Table of Contents -->
           <div class="mk-ir-rp mk-ir-stack-card" data-card="1">
-            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Report Navigation</div><div class="mk-rp-title">Table of Contents</div><div class="mk-rp-subtitle">GTM Intelligence Report &middot; 44 Pages</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
-            <div class="mk-rp-body" style="flex:1;padding:12px 16px 10px;">
-              <!-- Executive Brief highlight -->
-              <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-left:3px solid #0056b3;border-radius:0 6px 6px 0;padding:7px 10px;margin-bottom:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:0.54rem;font-weight:900;color:#0056b3;">Executive Brief</span><span style="font-size:0.42rem;font-weight:800;color:#0056b3;">p. 5</span></div>
-                <div style="font-size:0.38rem;color:#dc2626;font-weight:700;margin-top:2px;">Retention failure (89% NRR vs 110% target) &middot; $15M annual value leakage</div>
-              </div>
-              <!-- Chapter list -->
-              <div style="display:flex;flex-direction:column;gap:1px;">
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 0</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Executive Context</div><div style="font-size:0.36rem;color:#94a3b8;">How to read this report &middot; Assessment methodology</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">3 &ndash; 5</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 1</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Executive Summary</div><div style="font-size:0.36rem;color:#94a3b8;">Win rate 22% &middot; NRR 89% &middot; R40 Proxy: 70</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">6 &ndash; 8</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 2</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">The GTM Score</div><div style="font-size:0.36rem;color:#94a3b8;">Score: 59/100 (Moderate) &middot; GRIP spread: 28pts</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">9 &ndash; 12</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 3</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Guidance</div><div style="font-size:0.36rem;color:#94a3b8;">GRIP-G: 49/100 &middot; ICP: Enterprise (50k&ndash;250k ACV)</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">13 &ndash; 16</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 4</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Resources</div><div style="font-size:0.36rem;color:#94a3b8;">GRIP-R: 55/100 &middot; Product:GTM ratio: 0.27</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">17 &ndash; 20</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 5</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Implementation</div><div style="font-size:0.36rem;color:#94a3b8;">GRIP-I: 53/100 &middot; Quota: 60% &middot; Churn driver: Competition</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">21 &ndash; 24</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 6</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Performance</div><div style="font-size:0.36rem;color:#94a3b8;">GRIP-P: 77/100 &middot; Pipeline: 7x &middot; Quality-adj: 0.99x</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">25 &ndash; 28</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 7</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Risk Exposure</div><div style="font-size:0.36rem;color:#94a3b8;">Churn: 20% &middot; Concentration: 14% &middot; Burn: 8.4x</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">29 &ndash; 32</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 8</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Synthesis</div><div style="font-size:0.36rem;color:#94a3b8;">Cross-pillar interactions &middot; System Fragility Index: 66.4</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">33 &ndash; 36</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 9</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Strategy</div><div style="font-size:0.36rem;color:#94a3b8;">Resolution paths &middot; Strategic Priority Stack &middot; EP: 40.7%</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">37 &ndash; 40</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="font-size:0.4rem;font-weight:900;color:#dc2626;width:26px;flex-shrink:0;">Ch 10</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Action Plan</div><div style="font-size:0.36rem;color:#94a3b8;">90-day execution sequence with owners and deliverables</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">41</span></div>
-                <div style="display:flex;align-items:baseline;gap:6px;padding:4px 0;"><span style="font-size:0.4rem;font-weight:900;color:#94a3b8;width:26px;flex-shrink:0;">App</span><div style="flex:1;"><div style="font-size:0.5rem;font-weight:800;color:#0f172a;">Appendix</div><div style="font-size:0.36rem;color:#94a3b8;">Pillar scores &middot; Next steps &middot; Methodology &amp; definitions</div></div><span style="font-size:0.4rem;font-weight:700;color:#94a3b8;flex-shrink:0;">42 &ndash; 44</span></div>
-              </div>
-            </div>
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Report Navigation</div><div class="mk-rp-title">Table of Contents</div><div class="mk-rp-subtitle">10 Chapters &middot; 44 Pages</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-screenshot"><img src="assets/sample-toc.png" alt="Table of Contents — Full report structure from Executive Context to Appendix"></div>
             <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 2 of 44</span></div>
           </div>
-          <!-- Card 3: 90-Day Execution Sequence -->
+          <!-- Card 3: GRIP Dimension Scores -->
           <div class="mk-ir-rp mk-ir-stack-card" data-card="2">
-            <div class="mk-rp-head" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 10</div><div class="mk-rp-title">90-Day Execution Sequence</div><div class="mk-rp-subtitle">From Stabilization to Embedded Rhythm</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
-            <div class="mk-rp-body" style="flex:1;">
-              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-now">Month 1</span><span class="mk-exec-phase-title">Stabilize &amp; Diagnose</span></div><div class="mk-exec-item">Emergency Engineering Recruitment</div><div class="mk-exec-item">Churn Root-Cause Analysis</div><div class="mk-exec-item">Forecast &amp; Pipeline Integrity Audit</div></div>
-              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-next">Month 2</span><span class="mk-exec-phase-title">Restructure &amp; Redesign</span></div><div class="mk-exec-item">Sales Methodology Redesign</div><div class="mk-exec-item">Customer Value Realization Program</div></div>
-              <div class="mk-exec-phase"><div class="mk-exec-phase-head"><span class="mk-exec-badge mk-exec-later">Month 3</span><span class="mk-exec-phase-title">Embed &amp; Measure</span></div><div class="mk-exec-item">Competitive Positioning Refresh</div><div class="mk-exec-item">Governance &amp; Reporting Cadence</div></div>
-              <div class="mk-rp-priority"><div class="mk-rp-priority-tag">Expected 90-Day Outcomes</div><div class="mk-rp-priority-text">Win rate: process live &middot; Quota: 60% &rarr; tracking &middot; NRR: health scoring deployed &middot; Discount: 36% &rarr; &lt;20% cap</div></div>
-            </div>
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 2</div><div class="mk-rp-title">GRIP Dimension Scores</div><div class="mk-rp-subtitle">Guidance &middot; Resources &middot; Implementation &middot; Performance</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-screenshot"><img src="assets/sample-grip.png" alt="GRIP Dimension Scores — System balance, pattern detection, priority fix"></div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 10 of 44</span></div>
+          </div>
+          <!-- Card 4: Sales Execution -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="3">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 5</div><div class="mk-rp-title">Sales Execution</div><div class="mk-rp-subtitle">Deal Flow, Progression, and Friction</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-screenshot"><img src="assets/sample-sales.png" alt="Sales Execution — Pipeline decomposition, conversion analysis, revenue impact"></div>
+            <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 23 of 44</span></div>
+          </div>
+          <!-- Card 5: 90-Day Execution Sequence -->
+          <div class="mk-ir-rp mk-ir-stack-card" data-card="4">
+            <div class="mk-rp-head"><div class="mk-rp-head-left"><div class="mk-rp-ch">Chapter 10</div><div class="mk-rp-title">90-Day Execution Sequence</div><div class="mk-rp-subtitle">From Stabilization to Embedded Rhythm</div></div><div class="mk-rp-head-logo"><img src="assets/logo-final.png" alt="Caugia"></div></div>
+            <div class="mk-rp-screenshot"><img src="assets/sample-action.png" alt="90-Day Execution Sequence — 7 actions across 3 months with owners"></div>
             <div class="mk-rp-foot"><div class="mk-rp-foot-logo"><img src="assets/logo-final.png" alt="C"><span>Caugia Consulting</span></div><span>Confidential &middot; Sample</span><span>Page 41 of 44</span></div>
           </div>
         </div>
@@ -372,6 +361,8 @@
           <button class="mk-ir-dot active" data-dot="0"></button>
           <button class="mk-ir-dot" data-dot="1"></button>
           <button class="mk-ir-dot" data-dot="2"></button>
+          <button class="mk-ir-dot" data-dot="3"></button>
+          <button class="mk-ir-dot" data-dot="4"></button>
         </div>
       </div>
     </div>
