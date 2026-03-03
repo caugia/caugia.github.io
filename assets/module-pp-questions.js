@@ -147,7 +147,7 @@ var QUESTIONS = [
       "Frequently cited",
       "Sometimes cited",
       "Rarely cited",
-      "Almost never --- strong value perception **Engine 2: Packaging & Plan Design**"
+      "Almost never --- strong value perception"
     ]
   },
   {
@@ -296,7 +296,7 @@ var QUESTIONS = [
       "Mostly confusing",
       "Acceptable",
       "Clear",
-      "Praised for clarity **Engine 3: Revenue Model & Unit Economics**"
+      "Praised for clarity"
     ]
   },
   {
@@ -438,7 +438,7 @@ var QUESTIONS = [
       "Concerning",
       "Uncertain",
       "Confident",
-      "Highly confident with data backing **Engine 4: Competitive Pricing & Market Position**"
+      "Highly confident with data backing"
     ]
   },
   {
@@ -594,7 +594,7 @@ var QUESTIONS = [
       "Inconsistent",
       "Somewhat consistent",
       "Consistent",
-      "Deeply embedded in all GTM messaging and behavior **Engine 5: Monetization & Expansion Revenue**"
+      "Deeply embedded in all GTM messaging and behavior"
     ]
   },
   {
@@ -743,7 +743,7 @@ var QUESTIONS = [
       "Volatile",
       "Somewhat predictable",
       "Predictable and growing",
-      "Highly predictable --- core growth engine **Engine 6: Pricing Operations & Governance**"
+      "Highly predictable --- core growth engine"
     ]
   },
   {
@@ -899,7 +899,7 @@ var QUESTIONS = [
       "Frequent bottleneck",
       "Neutral",
       "Mostly enables",
-      "Clear accelerator --- pricing is a competitive advantage **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------"
+      "Clear accelerator --- pricing is a competitive advantage"
     ]
   }
 ];
