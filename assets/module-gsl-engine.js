@@ -1,9 +1,10 @@
 /* ===========================================================
-   CAUGIA GSL MODULE ENGINE v1.1 (PATCHED FOR GAS COMPAT)
-   - Context step (not part of 60 questions)
+   CAUGIA GSL MODULE ENGINE v1.2 (FULL)
+   - Context step split into 2 pages (not part of 60 questions)
+   - Always scrollable form area (no hidden fields on smaller screens)
    - Deterministic q####_score for all scale questions
    - q####_raw for numeric/text questions
-   - Explicit context in payload: email/company/stage/motion/segment/arr
+   - Explicit context payload: email/company/stage/motion/segment/arr
    =========================================================== */
 
 (function () {
@@ -14,7 +15,7 @@
     webhookUrl: "https://hook.eu1.make.com/6qav3shh573neaxkt3h3dxah67jye5ow",
     storageKey: "caugia_gsl_v1_state",
     autoSaveInterval: 1000,
-    schemaVersion: "gsl-1.1"
+    schemaVersion: "gsl-1.2"
   };
 
   // Optional context source selectors (if fields exist elsewhere on page)
@@ -31,7 +32,8 @@
   // --- 2. STATE ---
   let STATE = {
     schemaVersion: CONFIG.schemaVersion,
-    currentStep: 0, // 0=context, 1..N=questions
+    currentStep: 0,    // 0=context, 1..N=questions
+    contextPage: 1,    // context subpage: 1 or 2
     context: {
       fullname: "",
       role: "",
@@ -103,6 +105,10 @@
 
   function totalSteps() {
     return 1 + (window.QUESTIONS ? window.QUESTIONS.length : 0);
+  }
+
+  function totalContextPages() {
+    return 2;
   }
 
   function isContextStep() {
@@ -224,6 +230,9 @@
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > totalSteps() - 1) STATE.currentStep = totalSteps() - 1;
 
+    if (typeof STATE.contextPage !== "number" || STATE.contextPage < 1) STATE.contextPage = 1;
+    if (STATE.contextPage > totalContextPages()) STATE.contextPage = totalContextPages();
+
     console.log("GSL Engine v" + CONFIG.schemaVersion + " started. " + window.QUESTIONS.length + " questions.");
     renderQuestion();
     updateSidebar();
@@ -250,7 +259,12 @@
     if (UI.title) UI.title.innerText = safeText(q.title);
     if (UI.sub) UI.sub.innerText = safeText(q.sub || "");
 
-    if (UI.body) UI.body.innerHTML = "";
+    if (UI.body) {
+      UI.body.style.overflowY = "auto";
+      UI.body.style.maxHeight = "calc(100vh - 320px)";
+      UI.body.style.paddingRight = "8px";
+      UI.body.innerHTML = "";
+    }
 
     switch (q.type) {
       case "scale":
@@ -274,53 +288,46 @@
 
     UI.kicker.innerText = "CONTEXT";
     UI.title.innerText = "Tell us about you and your company";
-    UI.sub.innerText = "This context is not part of the 60-question score.";
+    UI.sub.innerText = "Context " + STATE.contextPage + " / " + totalContextPages() + " — not part of the 60-question score.";
 
-    UI.body.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <label style="display:flex;flex-direction:column;gap:6px;">Your full name
-          <input id="ctx_fullname" class="gi-input" value="${safeText(STATE.context.fullname)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Your role or job title
-          <input id="ctx_role" class="gi-input" value="${safeText(STATE.context.role)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Email address
-          <input id="ctx_email" class="gi-input" value="${safeText(STATE.context.email)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Company name
-          <input id="ctx_company" class="gi-input" value="${safeText(STATE.context.company)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Industry
-          <input id="ctx_industry" class="gi-input" value="${safeText(STATE.context.industry)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Total Employees (FTE equivalent)
-          <input id="ctx_total_employees" class="gi-input" type="number" value="${safeText(STATE.context.total_employees)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Year Founded (YYYY)
-          <input id="ctx_year_founded" class="gi-input" type="number" value="${safeText(STATE.context.year_founded)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">HQ Region
-          <input id="ctx_hq_region" class="gi-input" value="${safeText(STATE.context.hq_region)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Stage (seed/seria/serib/seric)
-          <input id="ctx_stage" class="gi-input" value="${safeText(STATE.context.stage)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Motion (inbound/outbound/plg/enterprise/hybrid)
-          <input id="ctx_motion" class="gi-input" value="${safeText(STATE.context.motion)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">Segment
-          <input id="ctx_segment" class="gi-input" value="${safeText(STATE.context.segment)}">
-        </label>
-        <label style="display:flex;flex-direction:column;gap:6px;">ARR
-          <input id="ctx_arr" class="gi-input" type="number" value="${safeText(STATE.context.arr)}">
-        </label>
-      </div>
-    `;
+    UI.body.style.overflowY = "auto";
+    UI.body.style.maxHeight = "calc(100vh - 320px)";
+    UI.body.style.paddingRight = "8px";
 
-    [
-      "fullname", "role", "email", "company", "industry", "total_employees",
-      "year_founded", "hq_region", "stage", "motion", "segment", "arr"
-    ].forEach(function (key) {
+    var p1 = STATE.contextPage === 1;
+    var fields = p1 ? [
+      ["fullname", "Your full name", "text"],
+      ["role", "Your role or job title", "text"],
+      ["email", "Email address", "email"],
+      ["company", "Company name", "text"],
+      ["industry", "Industry", "text"],
+      ["total_employees", "Total Employees (FTE equivalent)", "number"]
+    ] : [
+      ["year_founded", "Year Founded (YYYY)", "number"],
+      ["hq_region", "HQ Region", "text"],
+      ["stage", "Stage (seed/seria/serib/seric)", "text"],
+      ["motion", "Motion (inbound/outbound/plg/partner/enterprise/hybrid)", "text"],
+      ["segment", "Segment", "text"],
+      ["arr", "ARR", "number"]
+    ];
+
+    var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">';
+    for (var i = 0; i < fields.length; i++) {
+      var key = fields[i][0];
+      var label = fields[i][1];
+      var type = fields[i][2];
+      html +=
+        '<label style="display:flex;flex-direction:column;gap:6px;">' +
+          label +
+          '<input id="ctx_' + key + '" type="' + type + '" class="gi-input" value="' + safeText(STATE.context[key]).replace(/"/g, '&quot;') + '">' +
+        '</label>';
+    }
+    html += "</div>";
+
+    UI.body.innerHTML = html;
+
+    fields.forEach(function (f) {
+      var key = f[0];
       var el = document.getElementById("ctx_" + key);
       if (!el) return;
       el.addEventListener("input", function () {
@@ -457,11 +464,8 @@
       }
 
       naBtn.addEventListener("click", function () {
-        if (STATE.answers[key] === "N/A") {
-          delete STATE.answers[key];
-        } else {
-          STATE.answers[key] = "N/A";
-        }
+        if (STATE.answers[key] === "N/A") delete STATE.answers[key];
+        else STATE.answers[key] = "N/A";
         if (UI.body) UI.body.innerHTML = "";
         renderText(q);
       });
@@ -474,9 +478,16 @@
   // --- 8. NAVIGATION / VALIDATION ---
   function validateCurrent() {
     if (isContextStep()) {
-      if (!isNonEmpty(STATE.context.email) || !isNonEmpty(STATE.context.company)) {
-        alert("Please fill at least Email and Company.");
-        return false;
+      if (STATE.contextPage === 1) {
+        if (!isNonEmpty(STATE.context.email) || !isNonEmpty(STATE.context.company)) {
+          alert("Please fill at least Email and Company.");
+          return false;
+        }
+      } else {
+        if (!isNonEmpty(STATE.context.stage) || !isNonEmpty(STATE.context.motion) || !isNonEmpty(STATE.context.arr)) {
+          alert("Please fill at least Stage, Motion and ARR.");
+          return false;
+        }
       }
       return true;
     }
@@ -495,6 +506,19 @@
   function goNext() {
     if (!validateCurrent()) return;
 
+    if (isContextStep()) {
+      if (STATE.contextPage < totalContextPages()) {
+        STATE.contextPage++;
+        renderQuestion();
+        scrollQuestionCardTop();
+        return;
+      }
+      STATE.currentStep = 1;
+      renderQuestion();
+      scrollQuestionCardTop();
+      return;
+    }
+
     if (STATE.currentStep < totalSteps() - 1) {
       STATE.currentStep++;
       renderQuestion();
@@ -505,16 +529,40 @@
   }
 
   function goPrev() {
-    if (STATE.currentStep > 0) {
+    if (isContextStep()) {
+      if (STATE.contextPage > 1) {
+        STATE.contextPage--;
+        renderQuestion();
+        scrollQuestionCardTop();
+      }
+      return;
+    }
+
+    if (STATE.currentStep > 1) {
       STATE.currentStep--;
+      renderQuestion();
+      scrollQuestionCardTop();
+    } else if (STATE.currentStep === 1) {
+      STATE.currentStep = 0;
+      STATE.contextPage = totalContextPages();
       renderQuestion();
       scrollQuestionCardTop();
     }
   }
 
   function updateNavState() {
-    if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
+    if (UI.prevBtn) {
+      var hidePrev = isContextStep() && STATE.contextPage === 1;
+      UI.prevBtn.style.display = hidePrev ? "none" : "inline-block";
+    }
+
+    if (UI.nextBtn) {
+      if (isContextStep()) {
+        UI.nextBtn.innerText = STATE.contextPage === 1 ? "Next (Context 2/2)" : "Start Assessment";
+      } else {
+        UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
+      }
+    }
   }
 
   // Progress bar shows 60-question completion only (context excluded)
@@ -576,6 +624,7 @@
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
+        contextPage: typeof parsed.contextPage === "number" ? parsed.contextPage : 1,
         context: parsed.context && typeof parsed.context === "object" ? parsed.context : {
           fullname: "", role: "", email: "", company: "", industry: "",
           total_employees: "", year_founded: "", hq_region: "",
@@ -595,7 +644,6 @@
 
     window.QUESTIONS.forEach(function (q) {
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 6) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -635,7 +683,6 @@
 
     window.QUESTIONS.forEach(function (q) {
       if (!q.grip || !buckets[q.grip]) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -682,7 +729,6 @@
     };
   }
 
-  // GAS-friendly answers: include q####_score for scale and q####_raw for text metrics
   function buildAnswersForGas(answersRaw) {
     var out = {};
 
@@ -703,7 +749,7 @@
       }
     });
 
-    // Include context aliases (not part of 60)
+    // Context aliases expected by GAS
     out.q1__fullname = STATE.context.fullname || "";
     out.q1__role = STATE.context.role || "";
     out.q1__email = STATE.context.email || "";
@@ -828,7 +874,26 @@
 
   // --- 12. CLEAR / RESET / SAVE ---
   function clearCurrentAnswer() {
-    if (isContextStep()) return;
+    if (isContextStep()) {
+      if (STATE.contextPage === 1) {
+        STATE.context.fullname = "";
+        STATE.context.role = "";
+        STATE.context.email = "";
+        STATE.context.company = "";
+        STATE.context.industry = "";
+        STATE.context.total_employees = "";
+      } else {
+        STATE.context.year_founded = "";
+        STATE.context.hq_region = "";
+        STATE.context.stage = "";
+        STATE.context.motion = "";
+        STATE.context.segment = "";
+        STATE.context.arr = "";
+      }
+      renderQuestion();
+      return;
+    }
+
     var q = getCurrentQuestion();
     if (!q) return;
     delete STATE.answers[qKey(q.id)];
@@ -855,6 +920,7 @@
       grip_report_id: ""
     };
     STATE.currentStep = 0;
+    STATE.contextPage = 1;
     localStorage.removeItem(CONFIG.storageKey);
     location.reload();
   }
