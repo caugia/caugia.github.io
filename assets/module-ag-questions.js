@@ -594,7 +594,7 @@ var QUESTIONS = [
       "Often blocking",
       "Neutral",
       "Mostly enabling",
-      "Clear accelerator --- governance is a competitive advantage **Engine 5: Communication & Transparency**"
+      "Clear accelerator --- governance is a competitive advantage"
     ]
   },
   {
@@ -750,7 +750,7 @@ var QUESTIONS = [
       "Frequent misinformation",
       "Some issues",
       "Mostly accurate",
-      "Official channels are the trusted source --- rumors are non-existent **Engine 6: Culture, Accountability & Continuous Improvement**"
+      "Official channels are the trusted source --- rumors are non-existent"
     ]
   },
   {
