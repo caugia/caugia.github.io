@@ -1,10 +1,9 @@
 /* ===========================================================
    CAUGIA GSL MODULE ENGINE v1.1 (PATCHED FOR GAS COMPAT)
-   Patch goals:
-   - Send deterministic numeric scale scores: q####_score (1..5)
-   - Keep raw text/numeric metric inputs: q####_raw
-   - Send explicit context fields (email/company/stage/motion/segment/arr)
-   - Prevent missing metadata that caused null/0 behavior in GAS
+   - Context step (not part of 60 questions)
+   - Deterministic q####_score for all scale questions
+   - q####_raw for numeric/text questions
+   - Explicit context in payload: email/company/stage/motion/segment/arr
    =========================================================== */
 
 (function () {
@@ -18,7 +17,7 @@
     schemaVersion: "gsl-1.1"
   };
 
-  // Context input selectors (optional, safe if not present)
+  // Optional context source selectors (if fields exist elsewhere on page)
   const CONTEXT_SELECTORS = {
     email: ["#gi-email", "#email", "input[name='email']"],
     company: ["#gi-company", "#company", "input[name='company']"],
@@ -32,7 +31,22 @@
   // --- 2. STATE ---
   let STATE = {
     schemaVersion: CONFIG.schemaVersion,
-    currentStep: 0,
+    currentStep: 0, // 0=context, 1..N=questions
+    context: {
+      fullname: "",
+      role: "",
+      email: "",
+      company: "",
+      industry: "",
+      total_employees: "",
+      year_founded: "",
+      hq_region: "",
+      stage: "",
+      motion: "",
+      segment: "",
+      arr: "",
+      grip_report_id: ""
+    },
     answers: {},
     completed: false
   };
@@ -87,8 +101,22 @@
     return safeText(v).trim().length > 0;
   }
 
+  function totalSteps() {
+    return 1 + (window.QUESTIONS ? window.QUESTIONS.length : 0);
+  }
+
+  function isContextStep() {
+    return STATE.currentStep === 0;
+  }
+
+  function currentQuestionIndex() {
+    return STATE.currentStep - 1;
+  }
+
   function getCurrentQuestion() {
-    return window.QUESTIONS && window.QUESTIONS[STATE.currentStep];
+    if (isContextStep()) return null;
+    if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS)) return null;
+    return window.QUESTIONS[currentQuestionIndex()] || null;
   }
 
   function setButtonState(btn, label, disabled) {
@@ -146,8 +174,7 @@
     try { return JSON.parse(s); } catch (_) { return null; }
   }
 
-  function collectContext() {
-    // DOM first
+  function collectContextFallbacks() {
     var out = {
       email: firstDomValue(CONTEXT_SELECTORS.email),
       company: firstDomValue(CONTEXT_SELECTORS.company),
@@ -158,7 +185,6 @@
       arr: firstDomValue(CONTEXT_SELECTORS.arr)
     };
 
-    // URL fallback
     if (!isNonEmpty(out.email)) out.email = firstQueryParam(["email", "q1__email"]);
     if (!isNonEmpty(out.company)) out.company = firstQueryParam(["company", "q1__company"]);
     if (!isNonEmpty(out.grip_report_id)) out.grip_report_id = firstQueryParam(["grip_report_id", "report_id"]);
@@ -167,7 +193,6 @@
     if (!isNonEmpty(out.segment)) out.segment = firstQueryParam(["segment", "q8"]);
     if (!isNonEmpty(out.arr)) out.arr = firstQueryParam(["arr", "q2__arr"]);
 
-    // localStorage fallback (optional profile objects)
     var profile = safeJsonParse(localStorage.getItem("caugia_profile") || "") || {};
     if (!isNonEmpty(out.email) && isNonEmpty(profile.email)) out.email = String(profile.email).trim();
     if (!isNonEmpty(out.company) && isNonEmpty(profile.company)) out.company = String(profile.company).trim();
@@ -182,15 +207,22 @@
   // --- 5. INITIALIZATION ---
   function init() {
     if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
-      console.error("❌ GSL_QUESTIONS.js not loaded or empty.");
+      console.error("❌ QUESTIONS.js not loaded or empty.");
       if (UI.title) UI.title.innerText = "Error: Questions File Missing";
       return;
     }
 
     loadState();
 
+    var fallbackCtx = collectContextFallbacks();
+    Object.keys(fallbackCtx).forEach(function (k) {
+      if (!isNonEmpty(STATE.context[k]) && isNonEmpty(fallbackCtx[k])) {
+        STATE.context[k] = fallbackCtx[k];
+      }
+    });
+
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
-    if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
+    if (STATE.currentStep > totalSteps() - 1) STATE.currentStep = totalSteps() - 1;
 
     console.log("GSL Engine v" + CONFIG.schemaVersion + " started. " + window.QUESTIONS.length + " questions.");
     renderQuestion();
@@ -201,6 +233,14 @@
 
   // --- 6. RENDER LOGIC ---
   function renderQuestion() {
+    if (isContextStep()) {
+      renderContextForm();
+      updateNavState();
+      updateProgress();
+      updateSidebar();
+      return;
+    }
+
     var q = getCurrentQuestion();
     if (!q) return;
 
@@ -229,6 +269,66 @@
     updateSidebar();
   }
 
+  function renderContextForm() {
+    if (!UI.kicker || !UI.title || !UI.sub || !UI.body) return;
+
+    UI.kicker.innerText = "CONTEXT";
+    UI.title.innerText = "Tell us about you and your company";
+    UI.sub.innerText = "This context is not part of the 60-question score.";
+
+    UI.body.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <label style="display:flex;flex-direction:column;gap:6px;">Your full name
+          <input id="ctx_fullname" class="gi-input" value="${safeText(STATE.context.fullname)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Your role or job title
+          <input id="ctx_role" class="gi-input" value="${safeText(STATE.context.role)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Email address
+          <input id="ctx_email" class="gi-input" value="${safeText(STATE.context.email)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Company name
+          <input id="ctx_company" class="gi-input" value="${safeText(STATE.context.company)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Industry
+          <input id="ctx_industry" class="gi-input" value="${safeText(STATE.context.industry)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Total Employees (FTE equivalent)
+          <input id="ctx_total_employees" class="gi-input" type="number" value="${safeText(STATE.context.total_employees)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Year Founded (YYYY)
+          <input id="ctx_year_founded" class="gi-input" type="number" value="${safeText(STATE.context.year_founded)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">HQ Region
+          <input id="ctx_hq_region" class="gi-input" value="${safeText(STATE.context.hq_region)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Stage (seed/seria/serib/seric)
+          <input id="ctx_stage" class="gi-input" value="${safeText(STATE.context.stage)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Motion (inbound/outbound/plg/enterprise/hybrid)
+          <input id="ctx_motion" class="gi-input" value="${safeText(STATE.context.motion)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">Segment
+          <input id="ctx_segment" class="gi-input" value="${safeText(STATE.context.segment)}">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">ARR
+          <input id="ctx_arr" class="gi-input" type="number" value="${safeText(STATE.context.arr)}">
+        </label>
+      </div>
+    `;
+
+    [
+      "fullname", "role", "email", "company", "industry", "total_employees",
+      "year_founded", "hq_region", "stage", "motion", "segment", "arr"
+    ].forEach(function (key) {
+      var el = document.getElementById("ctx_" + key);
+      if (!el) return;
+      el.addEventListener("input", function () {
+        STATE.context[key] = el.value;
+      });
+    });
+  }
+
   // --- 7. INPUT BUILDERS ---
   function renderRadio(q) {
     if (!UI.body) return;
@@ -241,7 +341,7 @@
 
     var key = qKey(q.id);
 
-    (q.options || []).forEach(function(opt) {
+    (q.options || []).forEach(function (opt) {
       var label = document.createElement("label");
       label.className = "gi-option-card";
       label.style.display = "flex";
@@ -264,7 +364,7 @@
         label.style.backgroundColor = "#eff6ff";
       }
 
-      input.addEventListener("change", function() {
+      input.addEventListener("change", function () {
         STATE.answers[key] = opt;
         if (UI.body) UI.body.innerHTML = "";
         renderRadio(q);
@@ -299,7 +399,7 @@
         naLabel.style.backgroundColor = "#f1f5f9";
       }
 
-      naInput.addEventListener("change", function() {
+      naInput.addEventListener("change", function () {
         STATE.answers[key] = "N/A";
         if (UI.body) UI.body.innerHTML = "";
         renderRadio(q);
@@ -332,7 +432,7 @@
 
     if (STATE.answers[key]) input.value = STATE.answers[key];
 
-    input.addEventListener("input", function(e) {
+    input.addEventListener("input", function (e) {
       STATE.answers[key] = e.target.value;
     });
 
@@ -356,9 +456,12 @@
         input.disabled = true;
       }
 
-      naBtn.addEventListener("click", function() {
-        if (STATE.answers[key] === "N/A") delete STATE.answers[key];
-        else STATE.answers[key] = "N/A";
+      naBtn.addEventListener("click", function () {
+        if (STATE.answers[key] === "N/A") {
+          delete STATE.answers[key];
+        } else {
+          STATE.answers[key] = "N/A";
+        }
         if (UI.body) UI.body.innerHTML = "";
         renderText(q);
       });
@@ -370,6 +473,14 @@
 
   // --- 8. NAVIGATION / VALIDATION ---
   function validateCurrent() {
+    if (isContextStep()) {
+      if (!isNonEmpty(STATE.context.email) || !isNonEmpty(STATE.context.company)) {
+        alert("Please fill at least Email and Company.");
+        return false;
+      }
+      return true;
+    }
+
     var q = getCurrentQuestion();
     if (!q) return false;
 
@@ -384,7 +495,7 @@
   function goNext() {
     if (!validateCurrent()) return;
 
-    if (STATE.currentStep < window.QUESTIONS.length - 1) {
+    if (STATE.currentStep < totalSteps() - 1) {
       STATE.currentStep++;
       renderQuestion();
       scrollQuestionCardTop();
@@ -403,21 +514,32 @@
 
   function updateNavState() {
     if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
   }
 
+  // Progress bar shows 60-question completion only (context excluded)
   function updateProgress() {
     var total = window.QUESTIONS.length;
-    var current = STATE.currentStep + 1;
-    var pct = Math.round((current / total) * 100);
+    var answered = 0;
 
-    if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
+    window.QUESTIONS.forEach(function (q) {
+      var k = qKey(q.id);
+      if (isNonEmpty(STATE.answers[k])) answered++;
+    });
+
+    var pct = total ? Math.round((answered / total) * 100) : 0;
+    if (UI.progressCount) UI.progressCount.innerText = answered + " / " + total;
     if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
     if (UI.progressBar) UI.progressBar.style.width = pct + "%";
   }
 
   function updateSidebar() {
     if (!UI.pillarList) return;
+    if (isContextStep()) {
+      var items0 = UI.pillarList.querySelectorAll("li");
+      items0.forEach(function (item) { item.classList.remove("active"); });
+      return;
+    }
 
     var q = getCurrentQuestion();
     if (!q) return;
@@ -425,7 +547,7 @@
     var currentEngine = q.pillar;
     var items = UI.pillarList.querySelectorAll("li");
 
-    items.forEach(function(item) {
+    items.forEach(function (item) {
       var p = parseInt(item.getAttribute("data-p"), 10);
       if (p === currentEngine) item.classList.add("active");
       else item.classList.remove("active");
@@ -454,10 +576,15 @@
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
+        context: parsed.context && typeof parsed.context === "object" ? parsed.context : {
+          fullname: "", role: "", email: "", company: "", industry: "",
+          total_employees: "", year_founded: "", hq_region: "",
+          stage: "", motion: "", segment: "", arr: "", grip_report_id: ""
+        },
         answers: parsed.answers || {},
         completed: !!parsed.completed
       };
-    } catch (_) {
+    } catch (e) {
       console.log("State corrupted, resetting.");
     }
   }
@@ -466,10 +593,11 @@
   function computeEngineScores(answersRaw) {
     var buckets = {};
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 6) return;
+
       var opts = Array.isArray(q.options) ? q.options : [];
-      if (opts.length !== 5) return; // only scale questions
+      if (opts.length !== 5) return;
 
       var key = qKey(q.id);
       var val = answersRaw[key];
@@ -498,15 +626,16 @@
       if (Number.isFinite(v)) vals.push(v);
     }
     if (!vals.length) return null;
-    var avg = vals.reduce(function(a, b) { return a + b; }, 0) / vals.length;
+    var avg = vals.reduce(function (a, b) { return a + b; }, 0) / vals.length;
     return clamp0to100(Math.round(avg));
   }
 
   function computeGripScores(answersRaw) {
     var buckets = { G: [], R: [], I: [], P: [] };
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       if (!q.grip || !buckets[q.grip]) return;
+
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -522,7 +651,7 @@
 
     function avgOrNull(arr) {
       if (!arr.length) return null;
-      return clamp0to100(Math.round(arr.reduce(function(a, b) { return a + b; }, 0) / arr.length));
+      return clamp0to100(Math.round(arr.reduce(function (a, b) { return a + b; }, 0) / arr.length));
     }
 
     return {
@@ -538,7 +667,7 @@
     var answered = 0;
     var missing = [];
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       total++;
       var k = qKey(q.id);
       if (isNonEmpty(answersRaw[k])) answered++;
@@ -553,29 +682,41 @@
     };
   }
 
-  // Build GAS-friendly answer object (PATCH)
+  // GAS-friendly answers: include q####_score for scale and q####_raw for text metrics
   function buildAnswersForGas(answersRaw) {
     var out = {};
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       var key = qKey(q.id);
       var val = answersRaw[key];
 
-      // Base answer key always present (string or empty)
       out[key] = isNonEmpty(val) ? String(val) : "";
 
-      // Scale question: add deterministic numeric score
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length === 5 && isNonEmpty(val) && val !== "N/A") {
         var score = optionsIndex1to5(q, val);
         if (score) out[key + "_score"] = score;
       }
 
-      // Text/numeric question: also send _raw for explicit metric consumption
       if (q.type === "text" && isNonEmpty(val) && val !== "N/A") {
         out[key + "_raw"] = String(val);
       }
     });
+
+    // Include context aliases (not part of 60)
+    out.q1__fullname = STATE.context.fullname || "";
+    out.q1__role = STATE.context.role || "";
+    out.q1__email = STATE.context.email || "";
+    out.q1__company = STATE.context.company || "";
+    out.q1__industry = STATE.context.industry || "";
+    out.q1__total_employees = STATE.context.total_employees || "";
+    out.q1__year_founded = STATE.context.year_founded || "";
+    out.q1__hq_region = STATE.context.hq_region || "";
+
+    out.q7 = STATE.context.stage || "";
+    out.q6 = STATE.context.motion || "";
+    out.q8 = STATE.context.segment || "";
+    out.q2__arr = STATE.context.arr || "";
 
     return out;
   }
@@ -583,7 +724,6 @@
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw = STATE.answers || {};
-    var ctx = collectContext();
 
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
@@ -593,7 +733,7 @@
     var answersForGas = buildAnswersForGas(answersRaw);
 
     var fullReport = [];
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       var k = qKey(q.id);
       fullReport.push({
         id: k,
@@ -618,17 +758,18 @@
         source: "GSL Engine v" + CONFIG.schemaVersion,
         is_test: !!isTest
       },
-
-      // Explicit top-level respondent/context fields (PATCH)
-      email: ctx.email || "",
-      company: ctx.company || "",
-      grip_report_id: ctx.grip_report_id || "",
-      stage: ctx.stage || "",
-      motion: ctx.motion || "",
-      segment: ctx.segment || "",
-      arr: ctx.arr || "",
-
       message: message,
+
+      // Top-level context
+      email: STATE.context.email || "",
+      company: STATE.context.company || "",
+      grip_report_id: STATE.context.grip_report_id || "",
+      stage: STATE.context.stage || "",
+      motion: STATE.context.motion || "",
+      segment: STATE.context.segment || "",
+      arr: STATE.context.arr || "",
+      context: STATE.context,
+
       answers: answersForGas,
       answers_raw: answersForGas,
       full_report: fullReport,
@@ -639,7 +780,6 @@
         overall_score: overallScore,
         grip_scores: gripScores
       },
-
       engine_scores: engineScores,
       overall_score: overallScore,
       grip_g: gripScores.G,
@@ -671,7 +811,7 @@
         }
         lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
-        lines.push("Context: stage=" + (ctx.stage || "-") + ", motion=" + (ctx.motion || "-") + ", company=" + (ctx.company || "-"));
+        lines.push("Context: stage=" + (STATE.context.stage || "-") + ", motion=" + (STATE.context.motion || "-") + ", company=" + (STATE.context.company || "-"));
         alert("✅ GSL TEST SUCCESS!\n\n" + lines.join("\n"));
       } else {
         STATE.completed = true;
@@ -688,6 +828,7 @@
 
   // --- 12. CLEAR / RESET / SAVE ---
   function clearCurrentAnswer() {
+    if (isContextStep()) return;
     var q = getCurrentQuestion();
     if (!q) return;
     delete STATE.answers[qKey(q.id)];
@@ -698,6 +839,21 @@
     if (!confirm("Reset all GSL answers?")) return;
     STATE.completed = true;
     STATE.answers = {};
+    STATE.context = {
+      fullname: "",
+      role: "",
+      email: "",
+      company: "",
+      industry: "",
+      total_employees: "",
+      year_founded: "",
+      hq_region: "",
+      stage: "",
+      motion: "",
+      segment: "",
+      arr: "",
+      grip_report_id: ""
+    };
     STATE.currentStep = 0;
     localStorage.removeItem(CONFIG.storageKey);
     location.reload();
@@ -712,10 +868,10 @@
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
 
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { submitData(false); });
+  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function () { submitData(false); });
   if (UI.testBtn) {
     console.log("✅ GSL Test Button Bound");
-    UI.testBtn.addEventListener("click", function(e) {
+    UI.testBtn.addEventListener("click", function (e) {
       e.preventDefault();
       submitData(true);
     });
