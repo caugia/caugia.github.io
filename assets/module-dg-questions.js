@@ -147,7 +147,7 @@ var QUESTIONS = [
       "Sometimes",
       "Usually meets",
       "Consistently meets",
-      "Exceeds with predictability **Engine 2: Channel Mix & Optimization --- Questions**"
+      "Exceeds with predictability"
     ]
   },
   {
@@ -303,7 +303,7 @@ var QUESTIONS = [
       "Single better",
       "Similar",
       "Multi moderately better",
-      "Multi significantly better **Engine 3: Funnel Operations & Conversion --- Questions**"
+      "Multi significantly better"
     ]
   },
   {
@@ -452,7 +452,7 @@ var QUESTIONS = [
       "Flat",
       "Slightly improving",
       "Improving",
-      "Strong sustained improvement **Engine 4: Content Engine & Thought Leadership --- Questions**"
+      "Strong sustained improvement"
     ]
   },
   {
@@ -608,7 +608,7 @@ var QUESTIONS = [
       "Some recognition",
       "Growing reputation",
       "Established authority",
-      "Category-defining thought leader **Engine 5: Marketing Analytics & Attribution --- Questions**"
+      "Category-defining thought leader"
     ]
   },
   {
@@ -764,7 +764,7 @@ var QUESTIONS = [
       "Break-even",
       "Slightly positive",
       "Strong positive",
-      "Best-in-class ROI with trends **Engine 6: MarTech & Infrastructure --- Questions**"
+      "Best-in-class ROI with trends"
     ]
   },
   {
@@ -920,7 +920,7 @@ var QUESTIONS = [
       "Unclear ROI",
       "Moderate value",
       "Good ROI",
-      "Exceptional ROI with evidence **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  16 numeric questions. 3 stage-adjusted, 2 inverted, 2 currency.  ----------------------------------------------------------------------- **4.1 Monthly Budget DG-1003 --- By Stage**  -----------------------------------------------------------------------  **Stage**  **S1**   **S2**   **S3**   **S4**   **S5**  ----------- ----------- ----------- ----------- ----------- -----------  Seed    \\<2K    2-5K    5-10K    10-20K   \\>20K"
+      "Exceptional ROI with evidence"
     ]
   }
 ];
