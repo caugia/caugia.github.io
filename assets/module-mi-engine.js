@@ -1,87 +1,85 @@
 /* ===========================================================
-   CAUGIA MI MODULE ENGINE v1.0 (DETERMINISTIC + SCORES)
-   Based on Intelligence Engine v9.0
-   Adapted for: Market Intelligence Deep Dive (60 questions, 6 engines)
-   
-   Key differences from v9:
-   - Storage key: caugia_mi_v1_state
-   - No group questions (all scale or text/numeric)
-   - 6 engines instead of 12 pillars
-   - GRIP mapping per question (from tags), not per pillar
-   - Module-specific webhook
+   CAUGIA MI MODULE ENGINE v1.2 (CONTEXT + DETERMINISTIC PAYLOAD)
+   - Context step (2 pages) BEFORE 60 questions
+   - Context is NOT part of 60-question scoring/progress
+   - Emits q#### + q####_score (scale) and q####_raw (text)
+   - Emits context aliases for GAS: q1__*, q2__arr, q6/q7/q8
    =========================================================== */
 
 (function () {
   "use strict";
 
-  // --- 1. CONFIGURATION ---
   const CONFIG = {
     webhookUrl: "https://hook.eu1.make.com/54l7hjs1qv1o8ivvpu7covt51tfpizuq",
     storageKey: "caugia_mi_v1_state",
     autoSaveInterval: 1000,
-    schemaVersion: "mi-1.0"
+    schemaVersion: "mi-1.2"
   };
 
-  // --- 2. STATE ---
+  const CONTEXT_PAGES = [
+    [
+      { key: "q1__fullname", label: "Your full name", type: "text", required: true },
+      { key: "q1__role", label: "Your role or job title", type: "text", required: true },
+      { key: "q1__email", label: "Email address", type: "email", required: true },
+      { key: "q1__company", label: "Company name", type: "text", required: true },
+      { key: "q1__industry", label: "Industry", type: "text", required: true },
+      { key: "q1__total_employees", label: "Total Employees (FTE equivalent)", type: "number", required: true },
+      { key: "q1__year_founded", label: "Year Founded (YYYY)", type: "number", required: true },
+      { key: "q1__hq_region", label: "HQ Region", type: "text", required: true }
+    ],
+    [
+      { key: "q2__arr", label: "Current ARR (annual recurring revenue)", type: "number", required: true },
+      { key: "q6", label: "Motion (inbound/outbound/partner/plg/hybrid)", type: "text", required: true },
+      { key: "q7", label: "Stage (seed/A/B/C/bootstrapped/public)", type: "text", required: true },
+      { key: "q8", label: "Target segment", type: "text", required: true }
+    ]
+  ];
+
+  const ENGINE_NAMES = {
+    1: "ICP & Segmentation Intelligence",
+    2: "Buyer Intelligence & Decision Mapping",
+    3: "Competitive Intelligence",
+    4: "Market Trends & Macro Intelligence",
+    5: "Customer Insight & VoC",
+    6: "MI Operations & Infrastructure"
+  };
+
   let STATE = {
     schemaVersion: CONFIG.schemaVersion,
-    currentStep: 0,
+    currentStep: 0, // 0..(CONTEXT_PAGES + QUESTIONS.length - 1)
     answers: {},
     completed: false
   };
 
-  // --- 3. DOM ELEMENTS ---
   const UI = {
     kicker: document.getElementById("gi-question-kicker"),
     title: document.getElementById("gi-question-title"),
     sub: document.getElementById("gi-question-sub"),
     body: document.getElementById("gi-question-body"),
-
     pillarList: document.getElementById("gi-left-pillar-list"),
     progressCount: document.getElementById("gi-progress-count"),
     progressPercent: document.getElementById("gi-progress-percent"),
     progressBar: document.getElementById("gi-progress-bar"),
-
     prevBtn: document.getElementById("gi-prev-btn"),
     nextBtn: document.getElementById("gi-next-btn"),
-
     submitBtn: document.getElementById("gi-submit-btn"),
     testBtn: document.getElementById("gi-test-submit-btn"),
-
     clearBtn: document.getElementById("gi-clear-btn"),
     saveBtn: document.getElementById("gi-save-btn"),
     resetBtn: document.getElementById("gi-reset-btn")
   };
 
-  // --- 4. ENGINE NAMES ---
-  const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
-  };
-
-  function engineNameByIndex(i) {
-    return ENGINE_NAMES[i] || "Engine " + i;
-  }
-
-  function qKey(qId) {
-    return "q" + qId;
-  }
-
-  function safeText(v) {
-    if (v === null || v === undefined) return "";
-    return String(v);
-  }
-
-  function isNonEmpty(v) {
-    return safeText(v).trim().length > 0;
-  }
-
+  function qKey(id) { return "q" + id; }
+  function safeText(v) { return v === null || v === undefined ? "" : String(v); }
+  function isNonEmpty(v) { return safeText(v).trim().length > 0; }
+  function clamp0to100(n) { return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : null; }
+  function toScore100(avg1to5) { return Number.isFinite(avg1to5) ? clamp0to100(Math.round(((avg1to5 - 1) / 4) * 100)) : null; }
+  function engineNameByIndex(i) { return ENGINE_NAMES[i] || ("Engine " + i); }
+  function isContextStep() { return STATE.currentStep < CONTEXT_PAGES.length; }
+  function questionIndex() { return STATE.currentStep - CONTEXT_PAGES.length; }
   function getCurrentQuestion() {
-    return window.QUESTIONS && window.QUESTIONS[STATE.currentStep];
+    var idx = questionIndex();
+    return (window.QUESTIONS && idx >= 0 && idx < window.QUESTIONS.length) ? window.QUESTIONS[idx] : null;
   }
 
   function setButtonState(btn, label, disabled) {
@@ -95,78 +93,110 @@
     if (card) card.scrollTop = 0;
   }
 
-  function clamp0to100(n) {
-    if (!Number.isFinite(n)) return null;
-    return Math.max(0, Math.min(100, n));
-  }
-
-  function toScore100(avg1to5) {
-    if (!Number.isFinite(avg1to5)) return null;
-    return clamp0to100(Math.round(((avg1to5 - 1) / 4) * 100));
+  function ensureScrollSafety() {
+    var card = document.getElementById("gi-question-card");
+    if (!card) return;
+    card.style.maxHeight = "calc(100vh - 220px)";
+    card.style.overflowY = "auto";
+    card.style.overflowX = "hidden";
+    if (UI.body) UI.body.style.paddingBottom = "24px";
   }
 
   function optionsIndex1to5(question, answerValue) {
     var opts = Array.isArray(question.options) ? question.options : [];
     if (opts.length !== 5) return null;
     var idx = opts.indexOf(answerValue);
-    if (idx === -1) return null;
-    return idx + 1;
+    return idx === -1 ? null : (idx + 1);
   }
 
-  // --- 5. INITIALIZATION ---
   function init() {
-    if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
-      console.error("❌ MI_QUESTIONS.js not loaded or empty.");
+    if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length !== 60) {
+      console.error("MI questions missing/invalid.");
       if (UI.title) UI.title.innerText = "Error: Questions File Missing";
       return;
     }
 
     loadState();
-
+    var maxStep = CONTEXT_PAGES.length + window.QUESTIONS.length - 1;
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
-    if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
+    if (STATE.currentStep > maxStep) STATE.currentStep = maxStep;
 
-    console.log("MI Engine v" + CONFIG.schemaVersion + " started. " + window.QUESTIONS.length + " questions.");
-    renderQuestion();
+    ensureScrollSafety();
+    renderStep();
     updateSidebar();
-
     setInterval(saveState, CONFIG.autoSaveInterval);
   }
 
-  // --- 6. RENDER LOGIC ---
-  function renderQuestion() {
-    var q = getCurrentQuestion();
-    if (!q) return;
-
-    var engineName = engineNameByIndex(q.pillar);
-
-    if (UI.kicker) UI.kicker.innerText = ("ENGINE " + q.pillar + ": " + engineName).toUpperCase();
-    if (UI.title) UI.title.innerText = safeText(q.title);
-    if (UI.sub) UI.sub.innerText = safeText(q.sub || "");
-
-    if (UI.body) UI.body.innerHTML = "";
-
-    switch (q.type) {
-      case "scale":
-        renderRadio(q);
-        break;
-      case "text":
-        renderText(q);
-        break;
-      default:
-        renderRadio(q);
-        break;
-    }
-
+  function renderStep() {
+    if (isContextStep()) renderContextPage();
+    else renderQuestion();
     updateNavState();
     updateProgress();
     updateSidebar();
   }
 
-  // --- 7. INPUT BUILDERS ---
-  function renderRadio(q) {
+  function renderContextPage() {
+    var pageIdx = STATE.currentStep;
+    var fields = CONTEXT_PAGES[pageIdx];
+
+    if (UI.kicker) UI.kicker.innerText = "CONTEXT";
+    if (UI.title) UI.title.innerText = "Tell us about you and your company";
+    if (UI.sub) UI.sub.innerText = "This context is not part of the 60-question score.";
+    if (UI.body) UI.body.innerHTML = "";
+
     if (!UI.body) return;
 
+    var grid = document.createElement("div");
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = window.innerWidth < 980 ? "1fr" : "1fr 1fr";
+    grid.style.gap = "18px 20px";
+
+    fields.forEach(function (f) {
+      var wrap = document.createElement("div");
+      var label = document.createElement("label");
+      label.innerText = f.label;
+      label.style.display = "block";
+      label.style.fontWeight = "600";
+      label.style.marginBottom = "8px";
+
+      var input = document.createElement("input");
+      input.type = f.type || "text";
+      input.name = f.key;
+      input.value = safeText(STATE.answers[f.key]);
+      input.className = "gi-input";
+      input.style.width = "100%";
+      input.style.padding = "12px";
+      input.style.border = "1px solid #cbd5e1";
+      input.style.borderRadius = "10px";
+
+      input.addEventListener("input", function (e) {
+        STATE.answers[f.key] = e.target.value;
+      });
+
+      wrap.appendChild(label);
+      wrap.appendChild(input);
+      grid.appendChild(wrap);
+    });
+
+    UI.body.appendChild(grid);
+  }
+
+  function renderQuestion() {
+    var q = getCurrentQuestion();
+    if (!q) return;
+
+    var engineName = engineNameByIndex(q.pillar);
+    if (UI.kicker) UI.kicker.innerText = ("ENGINE " + q.pillar + ": " + engineName).toUpperCase();
+    if (UI.title) UI.title.innerText = safeText(q.title);
+    if (UI.sub) UI.sub.innerText = safeText(q.sub || "");
+    if (UI.body) UI.body.innerHTML = "";
+
+    if (q.type === "text") renderText(q);
+    else renderRadio(q);
+  }
+
+  function renderRadio(q) {
+    if (!UI.body) return;
     var wrapper = document.createElement("div");
     wrapper.className = "gi-options-grid";
     wrapper.style.display = "grid";
@@ -174,8 +204,7 @@
     wrapper.style.gap = "12px";
 
     var key = qKey(q.id);
-
-    (q.options || []).forEach(function(opt) {
+    (q.options || []).forEach(function (opt) {
       var label = document.createElement("label");
       label.className = "gi-option-card";
       label.style.display = "flex";
@@ -198,7 +227,7 @@
         label.style.backgroundColor = "#eff6ff";
       }
 
-      input.addEventListener("change", function() {
+      input.addEventListener("change", function () {
         STATE.answers[key] = opt;
         if (UI.body) UI.body.innerHTML = "";
         renderRadio(q);
@@ -209,109 +238,48 @@
       wrapper.appendChild(label);
     });
 
-    // N/A option for questions that support it
-    if (q.has_na) {
-      var naLabel = document.createElement("label");
-      naLabel.className = "gi-option-card";
-      naLabel.style.display = "flex";
-      naLabel.style.alignItems = "center";
-      naLabel.style.padding = "14px";
-      naLabel.style.border = "1px solid #e2e8f0";
-      naLabel.style.borderRadius = "8px";
-      naLabel.style.cursor = "pointer";
-      naLabel.style.backgroundColor = "#fafafa";
-      naLabel.style.fontStyle = "italic";
-
-      var naInput = document.createElement("input");
-      naInput.type = "radio";
-      naInput.name = key;
-      naInput.value = "N/A";
-      naInput.style.marginRight = "10px";
-
-      if (STATE.answers[key] === "N/A") {
-        naInput.checked = true;
-        naLabel.style.borderColor = "#94a3b8";
-        naLabel.style.backgroundColor = "#f1f5f9";
-      }
-
-      naInput.addEventListener("change", function() {
-        STATE.answers[key] = "N/A";
-        if (UI.body) UI.body.innerHTML = "";
-        renderRadio(q);
-      });
-
-      naLabel.appendChild(naInput);
-      naLabel.appendChild(document.createTextNode("Not applicable to our stage"));
-      wrapper.appendChild(naLabel);
-    }
-
     UI.body.appendChild(wrapper);
   }
 
   function renderText(q) {
     if (!UI.body) return;
-
     var key = qKey(q.id);
 
     var input = document.createElement("input");
     input.type = "number";
     input.className = "gi-input";
     input.style.width = "100%";
-    input.style.maxWidth = "320px";
+    input.style.maxWidth = "360px";
     input.style.padding = "12px";
     input.style.border = "1px solid #e2e8f0";
     input.style.borderRadius = "8px";
-    input.style.fontSize = "1.1rem";
+    input.style.fontSize = "1.05rem";
     input.name = key;
     input.placeholder = "Enter a number";
+    if (isNonEmpty(STATE.answers[key])) input.value = STATE.answers[key];
 
-    if (STATE.answers[key]) input.value = STATE.answers[key];
-
-    input.addEventListener("input", function(e) {
+    input.addEventListener("input", function (e) {
       STATE.answers[key] = e.target.value;
     });
 
     UI.body.appendChild(input);
-
-    // N/A button for numeric questions that support it
-    if (q.has_na) {
-      var naWrapper = document.createElement("div");
-      naWrapper.style.marginTop = "16px";
-
-      var naBtn = document.createElement("button");
-      naBtn.className = "gi-btn";
-      naBtn.style.fontSize = "0.85rem";
-      naBtn.style.fontStyle = "italic";
-      naBtn.innerText = "Not applicable to our stage";
-
-      if (STATE.answers[key] === "N/A") {
-        naBtn.style.borderColor = "#94a3b8";
-        naBtn.style.backgroundColor = "#f1f5f9";
-        naBtn.style.fontWeight = "600";
-        input.value = "";
-        input.disabled = true;
-      }
-
-      naBtn.addEventListener("click", function() {
-        if (STATE.answers[key] === "N/A") {
-          delete STATE.answers[key];
-        } else {
-          STATE.answers[key] = "N/A";
-        }
-        if (UI.body) UI.body.innerHTML = "";
-        renderText(q);
-      });
-
-      naWrapper.appendChild(naBtn);
-      UI.body.appendChild(naWrapper);
-    }
   }
 
-  // --- 8. NAVIGATION / VALIDATION ---
   function validateCurrent() {
+    if (isContextStep()) {
+      var fields = CONTEXT_PAGES[STATE.currentStep];
+      for (var i = 0; i < fields.length; i++) {
+        var f = fields[i];
+        if (f.required && !isNonEmpty(STATE.answers[f.key])) {
+          alert("Please complete: " + f.label);
+          return false;
+        }
+      }
+      return true;
+    }
+
     var q = getCurrentQuestion();
     if (!q) return false;
-
     var k = qKey(q.id);
     if (!isNonEmpty(STATE.answers[k])) {
       alert("Please answer the question.");
@@ -323,31 +291,45 @@
   function goNext() {
     if (!validateCurrent()) return;
 
-    if (STATE.currentStep < window.QUESTIONS.length - 1) {
+    var maxStep = CONTEXT_PAGES.length + window.QUESTIONS.length - 1;
+    if (STATE.currentStep < maxStep) {
       STATE.currentStep++;
-      renderQuestion();
+      renderStep();
       scrollQuestionCardTop();
-    } else {
-      alert("Assessment complete. Use the Test Submit button to send.");
+      return;
     }
+    alert("Assessment complete. Use the Test Submit button to send.");
   }
 
   function goPrev() {
     if (STATE.currentStep > 0) {
       STATE.currentStep--;
-      renderQuestion();
+      renderStep();
       scrollQuestionCardTop();
     }
   }
 
   function updateNavState() {
     if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+
+    if (!UI.nextBtn) return;
+    var maxStep = CONTEXT_PAGES.length + window.QUESTIONS.length - 1;
+    if (STATE.currentStep < CONTEXT_PAGES.length - 1) UI.nextBtn.innerText = "Next";
+    else if (STATE.currentStep < maxStep) UI.nextBtn.innerText = "Next";
+    else UI.nextBtn.innerText = "Finish";
+  }
+
+  function countAnsweredQuestions() {
+    var answered = 0;
+    window.QUESTIONS.forEach(function (q) {
+      if (isNonEmpty(STATE.answers[qKey(q.id)])) answered++;
+    });
+    return answered;
   }
 
   function updateProgress() {
     var total = window.QUESTIONS.length;
-    var current = STATE.currentStep + 1;
+    var current = isContextStep() ? 0 : (questionIndex() + 1);
     var pct = Math.round((current / total) * 100);
 
     if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
@@ -357,42 +339,39 @@
 
   function updateSidebar() {
     if (!UI.pillarList) return;
+    var items = UI.pillarList.querySelectorAll("li");
+
+    if (isContextStep()) {
+      items.forEach(function (item) { item.classList.remove("active"); });
+      return;
+    }
 
     var q = getCurrentQuestion();
     if (!q) return;
-
     var currentEngine = q.pillar;
-    var items = UI.pillarList.querySelectorAll("li");
 
-    items.forEach(function(item) {
-      var p = parseInt(item.getAttribute("data-p"));
-      if (p === currentEngine) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
+    items.forEach(function (item) {
+      var p = parseInt(item.getAttribute("data-p"), 10);
+      if (p === currentEngine) item.classList.add("active");
+      else item.classList.remove("active");
     });
   }
 
-  // --- 9. PERSISTENCE ---
   function saveState() {
     if (STATE.completed) return;
     try {
       localStorage.setItem(CONFIG.storageKey, JSON.stringify(STATE));
     } catch (e) {
-      console.warn("⚠️ Could not save state:", e);
+      console.warn("Could not save state:", e);
     }
   }
 
   function loadState() {
     var raw = localStorage.getItem(CONFIG.storageKey);
     if (!raw) return;
-
     try {
       var parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== "object") return;
-      if (!parsed.answers || typeof parsed.answers !== "object") return;
-
+      if (!parsed || typeof parsed !== "object" || !parsed.answers) return;
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep: typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
@@ -404,18 +383,14 @@
     }
   }
 
-  // --- 10. SCORING ---
   function computeEngineScores(answersRaw) {
     var buckets = {};
-
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 6) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
-      var key = qKey(q.id);
-      var val = answersRaw[key];
+      var val = answersRaw[qKey(q.id)];
       if (!isNonEmpty(val) || val === "N/A") return;
 
       var score1to5 = optionsIndex1to5(q, val);
@@ -441,40 +416,31 @@
       if (Number.isFinite(v)) vals.push(v);
     }
     if (!vals.length) return null;
-    var avg = vals.reduce(function(a, b) { return a + b; }, 0) / vals.length;
-    return clamp0to100(Math.round(avg));
+    return clamp0to100(Math.round(vals.reduce(function (a, b) { return a + b; }, 0) / vals.length));
   }
 
   function computeGripScores(answersRaw) {
     var buckets = { G: [], R: [], I: [], P: [] };
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       if (!q.grip || !buckets[q.grip]) return;
-
       var opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
-      var key = qKey(q.id);
-      var val = answersRaw[key];
+      var val = answersRaw[qKey(q.id)];
       if (!isNonEmpty(val) || val === "N/A") return;
 
       var score1to5 = optionsIndex1to5(q, val);
       if (!score1to5) return;
-
       buckets[q.grip].push(toScore100(score1to5));
     });
 
     function avgOrNull(arr) {
       if (!arr.length) return null;
-      return clamp0to100(Math.round(arr.reduce(function(a, b) { return a + b; }, 0) / arr.length));
+      return clamp0to100(Math.round(arr.reduce(function (a, b) { return a + b; }, 0) / arr.length));
     }
 
-    return {
-      G: avgOrNull(buckets.G),
-      R: avgOrNull(buckets.R),
-      I: avgOrNull(buckets.I),
-      P: avgOrNull(buckets.P)
-    };
+    return { G: avgOrNull(buckets.G), R: avgOrNull(buckets.R), I: avgOrNull(buckets.I), P: avgOrNull(buckets.P) };
   }
 
   function buildCoverage(answersRaw) {
@@ -482,7 +448,7 @@
     var answered = 0;
     var missing = [];
 
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       total++;
       var k = qKey(q.id);
       if (isNonEmpty(answersRaw[k])) answered++;
@@ -497,9 +463,31 @@
     };
   }
 
-  // --- 11. SUBMISSION ---
+  function buildDeterministicAnswers(rawAnswers) {
+    var out = {};
+    for (var k in rawAnswers) out[k] = rawAnswers[k];
+
+    window.QUESTIONS.forEach(function (q) {
+      var k = qKey(q.id);
+      var v = rawAnswers[k];
+
+      if (!isNonEmpty(v)) return;
+      out[k] = v;
+
+      if (q.type === "scale") {
+        var score1to5 = optionsIndex1to5(q, v);
+        if (score1to5) out[k + "_score"] = score1to5;
+      } else {
+        out[k + "_raw"] = v;
+      }
+    });
+
+    return out;
+  }
+
   async function submitData(isTest) {
     var answersRaw = STATE.answers || {};
+    var deterministicAnswers = buildDeterministicAnswers(answersRaw);
 
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
@@ -507,7 +495,7 @@
     var coverage = buildCoverage(answersRaw);
 
     var fullReport = [];
-    window.QUESTIONS.forEach(function(q) {
+    window.QUESTIONS.forEach(function (q) {
       var k = qKey(q.id);
       fullReport.push({
         id: k,
@@ -533,7 +521,8 @@
         is_test: !!isTest
       },
       message: message,
-      answers_raw: answersRaw,
+      answers: deterministicAnswers,
+      answers_raw: deterministicAnswers,
       full_report: fullReport,
       coverage: coverage,
       scoring: {
@@ -543,14 +532,29 @@
       },
       engine_scores: engineScores,
       overall_score: overallScore,
+      grip_scores: gripScores,
       grip_g: gripScores.G,
       grip_r: gripScores.R,
       grip_i: gripScores.I,
       grip_p: gripScores.P,
-      completion_rate: coverage.completion_rate
+      completion_rate: coverage.completion_rate,
+
+      // Context aliases for GAS fallback mapping
+      q1__fullname: safeText(answersRaw.q1__fullname),
+      q1__role: safeText(answersRaw.q1__role),
+      q1__email: safeText(answersRaw.q1__email),
+      q1__company: safeText(answersRaw.q1__company),
+      q1__industry: safeText(answersRaw.q1__industry),
+      q1__total_employees: safeText(answersRaw.q1__total_employees),
+      q1__year_founded: safeText(answersRaw.q1__year_founded),
+      q1__hq_region: safeText(answersRaw.q1__hq_region),
+      q2__arr: safeText(answersRaw.q2__arr),
+      q6: safeText(answersRaw.q6),
+      q7: safeText(answersRaw.q7),
+      q8: safeText(answersRaw.q8)
     };
 
-    console.log("🚀 MI Payload:", payload);
+    console.log("MI Payload:", payload);
 
     var btn = isTest ? UI.testBtn : UI.submitBtn;
     setButtonState(btn, "Sending...", true);
@@ -567,9 +571,7 @@
       if (isTest) {
         var lines = [];
         lines.push("MI Overall: " + overallScore);
-        for (var e = 1; e <= 6; e++) {
-          lines.push("  E" + e + " " + engineNameByIndex(e) + ": " + engineScores["engine_" + e]);
-        }
+        for (var e = 1; e <= 6; e++) lines.push("  E" + e + " " + engineNameByIndex(e) + ": " + engineScores["engine_" + e]);
         lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
         alert("✅ MI TEST SUCCESS!\n\n" + lines.join("\n"));
@@ -586,17 +588,21 @@
     }
   }
 
-  // --- 12. CLEAR / RESET / SAVE ---
   function clearCurrentAnswer() {
+    if (isContextStep()) {
+      CONTEXT_PAGES[STATE.currentStep].forEach(function (f) { delete STATE.answers[f.key]; });
+      renderStep();
+      return;
+    }
     var q = getCurrentQuestion();
     if (!q) return;
     delete STATE.answers[qKey(q.id)];
-    renderQuestion();
+    renderStep();
   }
 
   function resetAll() {
     if (!confirm("Reset all MI answers?")) return;
-    STATE.completed = true;  // stops autosave
+    STATE.completed = true;
     STATE.answers = {};
     STATE.currentStep = 0;
     localStorage.removeItem(CONFIG.storageKey);
@@ -608,23 +614,13 @@
     alert("✅ Saved.");
   }
 
-  // --- 13. EVENT BINDING ---
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
-
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { submitData(false); });
-  if (UI.testBtn) {
-    console.log("✅ MI Test Button Bound");
-    UI.testBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-      submitData(true);
-    });
-  }
-
+  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function () { submitData(false); });
+  if (UI.testBtn) UI.testBtn.addEventListener("click", function (e) { e.preventDefault(); submitData(true); });
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
-  // --- 14. START ---
   init();
 })();
