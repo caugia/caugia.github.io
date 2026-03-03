@@ -147,7 +147,7 @@ var QUESTIONS = [
       "Poor scores",
       "Average",
       "Good",
-      "Consistently excellent **Engine 2: Customer Health & Risk Management**"
+      "Consistently excellent"
     ]
   },
   {
@@ -296,7 +296,7 @@ var QUESTIONS = [
       "Declining",
       "Flat",
       "Improving",
-      "Consistently improving with data **Engine 3: Adoption & Engagement**"
+      "Consistently improving with data"
     ]
   },
   {
@@ -445,7 +445,7 @@ var QUESTIONS = [
       "No correlation",
       "Some correlation",
       "Strong correlation",
-      "Quantified and used for prioritization **Engine 4: Renewal & Retention**"
+      "Quantified and used for prioritization"
     ]
   },
   {
@@ -736,7 +736,7 @@ var QUESTIONS = [
       "Mixed",
       "Neutral",
       "Positive",
-      "Customers proactively ask about expansion **Engine 6: CS Operations & Infrastructure**"
+      "Customers proactively ask about expansion"
     ]
   },
   {
@@ -885,7 +885,7 @@ var QUESTIONS = [
       "Support function",
       "Emerging strategic",
       "Strategic partner",
-      "Revenue driver with board visibility **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  19 numeric questions converted to 1-5. Segment/stage used where  applicable.  ----------------------------------------------------------------------- **4.1 Time-to-Value CS-1004 (days, lower=better)**  --------------------------------------------------------------------------  **S5**     **S4**     **S3**     **S2**     **S1**  -------------- -------------- -------------- -------------- --------------  \\<14d     14-30d     30-60d     60-90d     \\>90d  -------------------------------------------------------------------------- **4.2 Value Milestone CS-1008**"
+      "Revenue driver with board visibility"
     ]
   }
 ];
