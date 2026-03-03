@@ -16,7 +16,7 @@
 
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/REPLACE_WITH_MI_WEBHOOK",
+    webhookUrl: "https://hook.eu1.make.com/54l7hjs1qv1o8ivvpu7covt51tfpizuq",
     storageKey: "caugia_mi_v1_state",
     autoSaveInterval: 1000,
     schemaVersion: "mi-1.0"
