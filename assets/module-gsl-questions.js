@@ -452,7 +452,7 @@ var QUESTIONS = [
       "Significantly stretched",
       "Adequate",
       "Well-resourced",
-      "Strategically resourced with buffer **Engine 4: GTM Operating Rhythm & Governance**"
+      "Strategically resourced with buffer"
     ]
   },
   {
@@ -608,7 +608,7 @@ var QUESTIONS = [
       "Significant filtering",
       "Some filtering",
       "Mostly transparent",
-      "Radical transparency **Engine 5: Cross-Functional Alignment**"
+      "Radical transparency"
     ]
   },
   {
