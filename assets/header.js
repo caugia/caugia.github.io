@@ -45,7 +45,7 @@
         '<div class="container nav">' +
           '<a class="brand" href="index.html">' +
             '<img src="assets/logo-final.png" alt="Caugia" width="32" height="32" />' +
-            '<span class="brand-full">CAUGIA CONSULTING</span>' +
+            '<span class="brand-full">CAUGIA</span>' +
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
           '<ul class="nav-links">' +
