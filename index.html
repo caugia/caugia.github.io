@@ -464,10 +464,10 @@
   function detectCurrency(){
     try {
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      if (/America|US|Canada|Mexico/.test(tz)) return 'USD';
       if (/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP';
-      return 'EUR';
-    } catch(e){ return 'EUR'; }
+      if (/Europe\//.test(tz)) return 'EUR';
+      return 'USD';
+    } catch(e){ return 'USD'; }
   }
 
   var curr = detectCurrency();
