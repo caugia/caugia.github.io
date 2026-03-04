@@ -390,11 +390,11 @@
     <p style="font-size:0.88rem; max-width:540px; margin:0 auto 28px; color:#64748b; font-style:italic;">If your revenue engine leaks even 5% of ARR, the cost of not knowing is typically 10&ndash;50x the cost of diagnosis.</p>
     <div style="max-width:480px; margin:0 auto 28px; padding:24px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; text-align:left;">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
-        <span style="font-size:0.85rem; color:#94a3b8; text-decoration:line-through;">Traditional consulting: &euro;25k&ndash;50k</span>
+        <span style="font-size:0.85rem; color:#94a3b8; text-decoration:line-through;">Traditional consulting: <span class="curr">&euro;</span>25k&ndash;50k</span>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
         <span style="font-size:1.1rem; font-weight:800; color:#0f172a;">Full System Diagnostic</span>
-        <span style="font-size:1.4rem; font-weight:900; color:var(--primary);">&euro;2,495</span>
+        <span style="font-size:1.4rem; font-weight:900; color:var(--primary);"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
       </div>
       <p style="font-size:0.8rem; color:#94a3b8; margin:8px 0 0;">12 pillars &middot; 265 inputs &middot; 72 engines &middot; 45 pages<br>Secure payment via Stripe &middot; Automated PDF delivery by email</p>
     </div>
@@ -452,6 +452,35 @@
 
 <script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
+<script>
+/* Multi-currency pricing — timezone-based detection */
+(function(){
+  var prices = {
+    EUR: { sym:'€', report:'2,495', compCost:'25k – 50k+' },
+    USD: { sym:'$', report:'2,949', compCost:'$30k – $60k+' },
+    GBP: { sym:'£', report:'2,195', compCost:'£20k – £40k+' }
+  };
+
+  function detectCurrency(){
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (/America|US|Canada|Mexico/.test(tz)) return 'USD';
+      if (/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP';
+      return 'EUR';
+    } catch(e){ return 'EUR'; }
+  }
+
+  var curr = detectCurrency();
+  var p = prices[curr];
+  if (!p) return;
+
+  document.querySelectorAll('.curr').forEach(function(el){ el.textContent = p.sym; });
+  document.querySelectorAll('[data-price-key]').forEach(function(el){
+    var key = el.getAttribute('data-price-key');
+    if (p[key]) el.textContent = p[key];
+  });
+})();
+</script>
 <script>
 (function(){var targets={g:74,r:66,i:41,p:62};var total=Math.round((targets.g+targets.r+targets.i+targets.p)/4);var done=false;function countUp(el,to,ms){var t0=null;(function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);el.textContent=Math.round(p*p*(3-2*p)*to);if(p<1)requestAnimationFrame(step)})(performance.now())}function run(){if(done)return;done=true;var delays={g:150,r:300,i:450,p:600};['g','r','i','p'].forEach(function(d){setTimeout(function(){countUp(document.getElementById('dv-'+d),targets[d],900);document.getElementById('db-'+d).style.width=targets[d]+'%'},delays[d])});setTimeout(function(){countUp(document.getElementById('demoTotal'),total,700)},200);setTimeout(function(){document.getElementById('demoPattern').classList.add('visible')},1200)}var el=document.getElementById('gripDemo');if(!el)return;if('IntersectionObserver' in window){new IntersectionObserver(function(entries,obs){if(entries[0].isIntersecting){run();obs.unobserve(el)}},{threshold:0.25}).observe(el)}else{setTimeout(run,400)}})();
 </script>
