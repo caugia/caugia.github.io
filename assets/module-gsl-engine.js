@@ -225,9 +225,6 @@
     if (UI.title)  UI.title.innerText  = safeText(q.title);
     if (UI.sub)    UI.sub.innerText    = safeText(q.sub || "");
     if (UI.body) {
-      UI.body.style.overflowY  = "auto";
-      UI.body.style.maxHeight  = "calc(100vh - 320px)";
-      UI.body.style.paddingRight = "8px";
       UI.body.innerHTML = "";
     }
     switch (q.type) {
@@ -247,9 +244,7 @@
     UI.title.innerText  = "Tell us about you and your company";
     UI.sub.innerText    = "Context " + STATE.contextPage + " / " + totalContextPages() + " — not part of the 60-question score.";
 
-    UI.body.style.overflowY   = "auto";
-    UI.body.style.maxHeight   = "calc(100vh - 320px)";
-    UI.body.style.paddingRight = "8px";
+
 
     // ── FIELD DEFINITIONS ──────────────────────────────────────────────────
     // Each entry: [key, label, type, options?]
@@ -264,7 +259,7 @@
       ["company",   "Company name",         "text"],
       ["arr",       "ARR",                  "number"],
       ["segment",   "Target segment",       "text"],
-      ["language",  "Report language",      "select", ["EN","NL","FR","DE"]],
+      ["language",  "Preferred language",   "select", ["EN","NL","FR","DE","ES","IT"]],
       ["currency",  "Preferred currency",   "select", ["EUR (€)","USD ($)","GBP (£)","AUD (A$)","CAD (C$)"]]
     ] : [
       ["industry",        "Industry",                "text"],
