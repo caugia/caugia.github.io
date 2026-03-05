@@ -934,10 +934,10 @@ var QUESTIONS = [
     "sub": "Do you MEASURE and IMPROVE?",
     "options": [
       "Unknown",
-      "\\>6mo",
+      ">6mo",
       "3-6mo",
       "1-3mo",
-      "\\<1mo (rapid)"
+      "<1mo (rapid)"
     ]
   }
 ];
