@@ -427,11 +427,11 @@ var QUESTIONS = [
     "sub": "Can your team EXECUTE deals or do they rely on heroics?"
   },
   {
-    "id": 3011,
+    "id": 3006,
     "pillar": 3,
     "pillar_name": "Deal Execution & Progression",
     "grip": "P",
-    "qid": "SE-3011",
+    "qid": "SE-3006",
     "type": "scale",
     "title": "Do you systematically collect and analyze win/loss feedback directly from buyers (not just internal post-mortems)?",
     "sub": "Can your team EXECUTE deals or do they rely on heroics?",
@@ -907,3 +907,4 @@ var QUESTIONS = [
     ]
   }
 ];
+
