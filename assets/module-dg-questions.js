@@ -377,11 +377,11 @@ var QUESTIONS = [
     "title": "How quickly are MQLs followed up by Sales?",
     "sub": "Where is the funnel LEAKING?",
     "options": [
-      "\\>5 days",
+      ">5 days",
       "3-5 days",
       "1-3 days",
-      "\\<24 hours",
-      "\\<4 hours with automated routing"
+      "<24 hours",
+      "<4 hours with automated routing"
     ]
   },
   {
