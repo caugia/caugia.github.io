@@ -586,10 +586,10 @@ var QUESTIONS = [
     "sub": "Can you PREDICT revenue or just report on it?",
     "options": [
       "Unknown",
-      "\\>40% (hockey stick)",
+      ">40% (hockey stick)",
       "30-40%",
       "20-30%",
-      "\\<20% (even distribution)"
+      "<20% (even distribution)"
     ]
   },
   {
@@ -826,7 +826,7 @@ var QUESTIONS = [
     "title": "CRM data entry compliance --- what percentage of deals have all key fields populated?",
     "sub": "Does your infrastructure ENABLE scale or CREATE friction?",
     "options": [
-      "\\<30%",
+      "<30%",
       "30-50%",
       "50-70%",
       "70-90%",
