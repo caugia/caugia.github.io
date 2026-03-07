@@ -1,17 +1,11 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.0 (DETERMINISTIC + SCORES)
+   CAUGIA INTELLIGENCE ENGINE v9.1 (DETERMINISTIC + SCORES)
    - Single key standard: q{questionId} and q{questionId}__{fieldName}
-   - Always builds full_report with ALL questions (even unanswered)
-   - Sends V9 debug payload: metadata, message, answers_raw, full_report, questions_map
-   - ALSO sends legacy-friendly blocks (clean + fast in Make):
-       customer, context, answers (Q-keys), score_01..score_12, score_total, grip_g/r/i/p, confidence_range, coverage
-       question_map
-   - Safe loadState (schema guard) and autosave
-   - Fixes weak points:
-       * overall score always present (score_total) even with missing pillar scores
-       * GRIP scores always present (grip_scores + flat keys) even with partial data
-       * coverage + missing questions surfaced deterministically
-       * test payload is still structurally identical (no “fake report” that breaks Make mapping)
+   - Full report includes all questions (answered + unanswered)
+   - Sends V9 payload + legacy-friendly blocks
+   - Reliable state schema guard
+   - Robust sidebar mapping via data-p (with index fallback)
+   - Group validation supports optional fields via field.required
    =========================================================== */
 
 (function () {
@@ -22,7 +16,7 @@
     webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.0"
+    schemaVersion: "9.1"
   };
 
   // --- 2. STATE ---
@@ -57,10 +51,6 @@
   };
 
   // --- 4. CONSTANTS / HELPERS ---
-
-  // Pillar 0 is context wrapper in the UI. Pillars 1–12 are canonical.
-  // Decision applied:
-  // - Pillar 9 renamed to "Product Readiness" (replaces "Brand & Communications").
   const PILLAR_NAMES = [
     "Context",
     "GTM Strategy & Leadership",
@@ -77,9 +67,6 @@
     "Alignment & Governance"
   ];
 
-  // Pillar index -> GRIP dimension mapping (fixed, deterministic)
-  // Decision applied: exactly 3 pillars per letter.
-  // G: 1,2,3 | R: 8,9,11 | I: 4,5,7 | P: 6,10,12
   const PILLAR_TO_GRIP = {
     1: "G",
     2: "G",
@@ -96,15 +83,15 @@
   };
 
   function pillarNameByIndex(i) {
-    return PILLAR_NAMES[i] || `Pillar ${i}`;
+    return PILLAR_NAMES[i] || "Pillar " + i;
   }
 
   function qKey(qId) {
-    return `q${qId}`;
+    return "q" + qId;
   }
 
   function groupKey(qId, fieldName) {
-    return `q${qId}__${fieldName}`;
+    return "q" + qId + "__" + fieldName;
   }
 
   function safeText(v) {
@@ -140,13 +127,11 @@
     return Math.max(0, Math.min(100, n));
   }
 
-  // Converts a 1..5 average to 0..100
   function toScore100(avg1to5) {
     if (!Number.isFinite(avg1to5)) return null;
     return clamp0to100(Math.round(((avg1to5 - 1) / 4) * 100));
   }
 
-  // Returns 1..5 index for a 5-option scale question; otherwise null
   function optionsIndex1to5(question, answerValue) {
     const opts = Array.isArray(question.options) ? question.options : [];
     if (opts.length !== 5) return null;
@@ -155,27 +140,13 @@
     return idx + 1;
   }
 
-  function safeNumberFromInput(v) {
-    // Accept numbers, "12", "12%", "1,2", "$1.2M", "3.5x"
-    if (v === null || v === undefined) return null;
-    if (typeof v === "number" && Number.isFinite(v)) return v;
-
-    const s0 = String(v).trim();
-    if (!s0) return null;
-
-    // handle multiplier like 3.5x
-    const s1 = s0.replace(/x$/i, "");
-
-    const cleaned = s1
-      .replace(/\s/g, "")
-      .replace(/%/g, "")
-      .replace(/[€$£]/g, "")
-      .replace(/,/g, ".")
-      .replace(/[^0-9.\-]/g, "");
-
-    if (!cleaned) return null;
-    const n = Number(cleaned);
-    return Number.isFinite(n) ? n : null;
+  function normalizeAnswersRaw(raw) {
+    const out = {};
+    Object.keys(raw || {}).forEach((k) => {
+      const v = raw[k];
+      out[k] = typeof v === "string" ? v.trim() : v;
+    });
+    return out;
   }
 
   // --- 5. INITIALIZATION ---
@@ -191,7 +162,7 @@
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
 
-    console.log(`Engine v${CONFIG.schemaVersion} started. Loaded ${window.QUESTIONS.length} questions.`);
+    console.log("Engine v" + CONFIG.schemaVersion + " started. Loaded " + window.QUESTIONS.length + " questions.");
     renderQuestion();
     updateSidebar();
 
@@ -216,10 +187,8 @@
         renderGroup(q);
         break;
       case "radio":
-        renderRadio(q);
-        break;
       case "scale":
-        renderScale(q);
+        renderRadio(q);
         break;
       case "textarea":
         renderTextarea(q);
@@ -228,7 +197,7 @@
         renderText(q);
         break;
       default:
-        if (UI.body) UI.body.innerHTML = `<p style="color:red">Unknown type: ${safeText(q.type)}</p>`;
+        if (UI.body) UI.body.innerHTML = "<p style=\"color:red\">Unknown type: " + safeText(q.type) + "</p>";
         break;
     }
 
@@ -267,7 +236,6 @@
 
       const k = groupKey(q.id, f.name);
       input.name = k;
-
       if (STATE.answers[k]) input.value = STATE.answers[k];
 
       input.addEventListener("input", (e) => {
@@ -330,15 +298,10 @@
     UI.body.appendChild(wrapper);
   }
 
-  function renderScale(q) {
-    renderRadio(q);
-  }
-
   function renderTextarea(q) {
     if (!UI.body) return;
 
     const key = qKey(q.id);
-
     const input = document.createElement("textarea");
     input.className = "gi-textarea";
     input.style.width = "100%";
@@ -361,7 +324,6 @@
     if (!UI.body) return;
 
     const key = qKey(q.id);
-
     const input = document.createElement("input");
     input.type = "text";
     input.className = "gi-input";
@@ -385,18 +347,18 @@
     const q = getCurrentQuestion();
     if (!q) return false;
 
-    // Strict behavior: group requires all fields.
     if (q.type === "group") {
       const fields = q.fields || [];
-      let ok = true;
+      const hasRequiredFlags = fields.some((f) => Object.prototype.hasOwnProperty.call(f, "required"));
+      const requiredFields = hasRequiredFlags ? fields.filter((f) => !!f.required) : fields;
 
-      fields.forEach((f) => {
+      const missing = requiredFields.some((f) => {
         const k = groupKey(q.id, f.name);
-        if (!isNonEmpty(STATE.answers[k])) ok = false;
+        return !isNonEmpty(STATE.answers[k]);
       });
 
-      if (!ok) {
-        alert("Please fill in all fields.");
+      if (missing) {
+        alert("Please fill in all required fields.");
         return false;
       }
       return true;
@@ -440,9 +402,9 @@
     const current = STATE.currentStep + 1;
     const pct = Math.round((current / total) * 100);
 
-    if (UI.progressCount) UI.progressCount.innerText = `${current} / ${total}`;
-    if (UI.progressPercent) UI.progressPercent.innerText = `${pct}%`;
-    if (UI.progressBar) UI.progressBar.style.width = `${pct}%`;
+    if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
+    if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
+    if (UI.progressBar) UI.progressBar.style.width = pct + "%";
   }
 
   function updateSidebar() {
@@ -451,19 +413,17 @@
     const q = getCurrentQuestion();
     if (!q) return;
 
-    const currentPillar = q.pillar;
+    const currentPillar = Number(q.pillar);
     const items = UI.pillarList.querySelectorAll("li");
 
     items.forEach((item, index) => {
-      if (index === currentPillar) {
-        item.classList.add("active");
-        item.style.fontWeight = "bold";
-        item.style.color = "#0056b3";
-      } else {
-        item.classList.remove("active");
-        item.style.fontWeight = "normal";
-        item.style.color = "";
-      }
+      const dataP = Number(item.getAttribute("data-p"));
+      const itemPillar = Number.isFinite(dataP) ? dataP : index;
+      const active = itemPillar === currentPillar;
+
+      item.classList.toggle("active", active);
+      item.style.fontWeight = active ? "bold" : "normal";
+      item.style.color = active ? "#0056b3" : "";
     });
   }
 
@@ -483,9 +443,13 @@
 
     try {
       const parsed = JSON.parse(raw);
-
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
+
+      if (parsed.schemaVersion !== CONFIG.schemaVersion) {
+        console.warn("⚠️ Saved state schema mismatch. Ignoring old state.");
+        return;
+      }
 
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
@@ -498,7 +462,7 @@
     }
   }
 
-  // --- 10. PAYLOAD BUILDERS (V9) ---
+  // --- 10. PAYLOAD BUILDERS ---
   function buildQuestionsMap() {
     return window.QUESTIONS.map((q) => ({
       id: q.id,
@@ -526,7 +490,7 @@
             pillar: pName,
             pillar_index: q.pillar,
             question_id: q.id,
-            question: `${q.title} - ${field.label}`,
+            question: q.title + " - " + field.label,
             answer: answersRaw[k] ?? ""
           });
         });
@@ -569,16 +533,15 @@
       else missing.push(k);
     });
 
-    const completion_rate = total ? Math.round((answered / total) * 100) : 0;
     return {
       total_questions: total,
       answered_questions: answered,
-      completion_rate: completion_rate,
+      completion_rate: total ? Math.round((answered / total) * 100) : 0,
       missing_keys: missing.slice(0, 250)
     };
   }
 
-  // --- 11. LEGACY-FRIENDLY BUILDERS (customer/context/answers + scores) ---
+  // --- 11. LEGACY BUILDERS ---
   function buildLegacyCustomer(answersRaw) {
     return {
       fullname: answersRaw["q1__fullname"] || "",
@@ -586,7 +549,6 @@
       email: answersRaw["q1__email"] || "",
       company: answersRaw["q1__company"] || "",
       website: answersRaw["q1__website"] || "",
-
       total_employees: answersRaw["q1__total_employees"] || "",
       year_founded: answersRaw["q1__year_founded"] || "",
       hq_region: answersRaw["q1__hq_region"] || ""
@@ -595,7 +557,6 @@
 
   function buildLegacyContext(answersRaw) {
     return {
-      // Q2
       arr: answersRaw["q2__arr"] || "",
       growth_rate: answersRaw["q2__growth_rate"] || "",
       nrr: answersRaw["q2__nrr"] || "",
@@ -605,7 +566,6 @@
       pricing_model: answersRaw["q2__pricing_model"] || "",
       number_of_clients: answersRaw["q2__number_of_clients"] || "",
 
-      // Q3
       sales_headcount: answersRaw["q3__sales_headcount"] || "",
       sales_leadership_headcount: answersRaw["q3__sales_leadership_headcount"] || "",
       sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
@@ -615,7 +575,6 @@
       product_headcount: answersRaw["q3__product_headcount"] || "",
       gtm_other_headcount: answersRaw["q3__gtm_other_headcount"] || "",
 
-      // Q4
       arr_target: answersRaw["q4__arr_target"] || "",
       quota_attainment: answersRaw["q4__quota_attainment"] || "",
       cac_payback: answersRaw["q4__cac_payback"] || "",
@@ -625,7 +584,6 @@
       opex_includes_payroll: answersRaw["q4__opex_includes_payroll"] || "",
       sales_marketing_pct: answersRaw["q4__sales_marketing_pct"] || "",
 
-      // Q5
       win_rate: answersRaw["q5__win_rate"] || "",
       sales_cycle: answersRaw["q5__sales_cycle"] || "",
       pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "",
@@ -635,7 +593,6 @@
       revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
       primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
 
-      // Legacy passthrough for big Q ids (if present)
       Q6: answersRaw["q6"] || "",
       Q7: answersRaw["q7"] || "",
       Q8: answersRaw["q8"] || "",
@@ -666,17 +623,16 @@
       const idNum = Number(k.slice(1));
       if (!Number.isFinite(idNum)) return;
       if (idNum < 1000) return;
-      out[`Q${idNum}`] = answersRaw[k];
+      out["Q" + idNum] = answersRaw[k];
     });
     return out;
   }
 
   function computePillarScores(answersRaw) {
-    const buckets = {}; // pillar_index -> {sum,count}
+    const buckets = {};
 
     window.QUESTIONS.forEach((q) => {
       if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
-
       const opts = Array.isArray(q.options) ? q.options : [];
       if (opts.length !== 5) return;
 
@@ -695,7 +651,7 @@
     const out = {};
     for (let p = 1; p <= 12; p++) {
       const b = buckets[p];
-      out[`score_${pad2(p)}`] = b && b.count ? toScore100(b.sum / b.count) : null;
+      out["score_" + pad2(p)] = b && b.count ? toScore100(b.sum / b.count) : null;
     }
     return out;
   }
@@ -703,27 +659,27 @@
   function computeOverallScore(scores) {
     const vals = [];
     for (let p = 1; p <= 12; p++) {
-      const v = scores[`score_${pad2(p)}`];
+      const v = scores["score_" + pad2(p)];
       if (Number.isFinite(v)) vals.push(v);
     }
     if (!vals.length) return null;
-    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-    return clamp0to100(Math.round(avg));
+    return clamp0to100(Math.round(vals.reduce((a, b) => a + b, 0) / vals.length));
   }
 
   function computeConfidenceRange(scores, coverage) {
     const scored = [];
     for (let p = 1; p <= 12; p++) {
-      const v = scores[`score_${pad2(p)}`];
+      const v = scores["score_" + pad2(p)];
       if (Number.isFinite(v)) scored.push(v);
     }
-    const pillarScoreCoverage = scored.length / 12;
-    const completion = Number.isFinite(coverage?.completion_rate) ? coverage.completion_rate / 100 : 0;
 
+    const pillarScoreCoverage = scored.length / 12;
+    const completion = Number.isFinite(coverage && coverage.completion_rate) ? coverage.completion_rate / 100 : 0;
     const uncertainty = 1 - (0.6 * pillarScoreCoverage + 0.4 * completion);
-    const range = Math.round(8 + uncertainty * 20); // 8..28
+    const range = Math.round(8 + uncertainty * 20);
+
     return {
-      confidence_range: `±${range}`,
+      confidence_range: "±" + range,
       confidence_range_num: range,
       pillar_score_coverage_pct: Math.round(pillarScoreCoverage * 100)
     };
@@ -734,7 +690,7 @@
 
     for (let p = 1; p <= 12; p++) {
       const dim = PILLAR_TO_GRIP[p];
-      const v = scores[`score_${pad2(p)}`];
+      const v = scores["score_" + pad2(p)];
       if (!dim) continue;
       if (Number.isFinite(v)) buckets[dim].push(v);
     }
@@ -753,23 +709,32 @@
   }
 
   function buildQuestionMapLegacy() {
-    // Deterministic: avoid collisions for group field names.
     const map = {};
+
     window.QUESTIONS.forEach((q) => {
       if (q.type === "group" && Array.isArray(q.fields)) {
         q.fields.forEach((f) => {
-          map[groupKey(q.id, f.name)] = f.label;
+          const kRaw = groupKey(q.id, f.name);
+          const kLegacy = "Q" + q.id + "__" + f.name;
+          const label = q.title + " - " + f.label;
+          map[kRaw] = label;
+          map[kLegacy] = label;
         });
         return;
       }
-      map[`Q${q.id}`] = q.title;
+
+      const kRaw = qKey(q.id);
+      const kLegacy = "Q" + q.id;
+      map[kRaw] = q.title;
+      map[kLegacy] = q.title;
     });
+
     return map;
   }
 
   // --- 12. SUBMISSION ---
-  async function submitData(isTest = false) {
-    const answersRaw = STATE.answers || {};
+  async function submitData(isTest) {
+    const answersRaw = normalizeAnswersRaw(STATE.answers || {});
 
     const questionsMap = buildQuestionsMap();
     const fullReport = buildFullReport(answersRaw);
@@ -798,21 +763,21 @@
       pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
     });
 
-    const message = isTest ? "Test Submission" : "Official Submission";
-
     const payload = {
       metadata: {
         timestamp: new Date().toISOString(),
         schema_version: CONFIG.schemaVersion,
         questions_count: window.QUESTIONS.length,
-        source: `Engine v${CONFIG.schemaVersion}`,
+        source: "Engine v" + CONFIG.schemaVersion,
         is_test: !!isTest
       },
-      message: message,
+      message: isTest ? "Test Submission" : "Official Submission",
+
       answers_raw: answersRaw,
       questions_map: questionsMap,
       full_report: fullReport,
       coverage: coverage,
+
       grip_scores: gripScores,
       pillar_scores: pillarScores,
       overall_score: overallScore,
@@ -821,6 +786,7 @@
         overall_score: overallScore,
         confidence_range: confidence
       },
+
       customer: customer,
       context: context,
       answers: answers,
@@ -843,12 +809,12 @@
 
       if (isTest) {
         const lines = [];
-        lines.push(`score_total: ${overallScore}`);
-        lines.push(`confidence_range: ${confidence.confidence_range}`);
-        lines.push(`grip: G=${gripScores.G} R=${gripScores.R} I=${gripScores.I} P=${gripScores.P}`);
-        lines.push(`coverage: ${coverage.answered_questions}/${coverage.total_questions} (${coverage.completion_rate}%)`);
-        lines.push(`pillar score coverage: ${confidence.pillar_score_coverage_pct}%`);
-        alert(`✅ TEST SUCCESVOL!\n\n${lines.join("\n")}\n\nCheck Make.com mapping on payload.answers.*`);
+        lines.push("score_total: " + overallScore);
+        lines.push("confidence_range: " + confidence.confidence_range);
+        lines.push("grip: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
+        lines.push("coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
+        lines.push("pillar score coverage: " + confidence.pillar_score_coverage_pct + "%");
+        alert("✅ TEST SUCCESVOL!\n\n" + lines.join("\n") + "\n\nCheck Make.com mapping on payload.answers.*");
       } else {
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
@@ -869,17 +835,20 @@
 
     if (q.type === "group") {
       (q.fields || []).forEach((f) => {
-        const k = groupKey(q.id, f.name);
-        delete STATE.answers[k];
+        delete STATE.answers[groupKey(q.id, f.name)];
       });
     } else {
       delete STATE.answers[qKey(q.id)];
     }
+
     renderQuestion();
   }
 
   function resetAll() {
     if (!confirm("Reset everything?")) return;
+    STATE.completed = true;
+    STATE.answers = {};
+    STATE.currentStep = 0;
     localStorage.removeItem(CONFIG.storageKey);
     location.reload();
   }
