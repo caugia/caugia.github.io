@@ -48,7 +48,8 @@
     webhookSource: WEBHOOK_RUNTIME.source,
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.1"
+    schemaVersion: "9.1",
+    allowPartialTestSubmit: true
   };
 
   // --- 2. STATE ---
@@ -882,6 +883,10 @@
     const questionsMap = buildQuestionsMap();
     const fullReport = buildFullReport(answersRaw);
     const coverage = buildCoverage(answersRaw);
+    if (isTest && !CONFIG.allowPartialTestSubmit && coverage.completion_rate < 100) {
+      alert("Partial test submit is disabled. Complete all questions first.");
+      return;
+    }
 
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
@@ -918,6 +923,7 @@
         questions_count: window.QUESTIONS.length,
         source: "Engine v" + CONFIG.schemaVersion,
         webhook_source: CONFIG.webhookSource,
+        partial_test_submit: !!(isTest && coverage.completion_rate < 100),
         scoring_mode: scoringDiagnostics.scoring_mode,
         scoring_eligible_questions: scoringDiagnostics.eligible_questions,
         scoring_scored_answers: scoringDiagnostics.scored_answers,
@@ -947,6 +953,10 @@
       customer: customer,
       context: context,
       context_diagnostics: contextDiagnostics,
+      expected_web_contract: {
+        w7_expected_page_ids: ["2.2", "3.1", "4.1", "4.3", "5.1", "6.1", "7.1"],
+        w18_expected_page_ids: ["3.2", "3.3", "3.4", "4.2", "4.4", "5.2", "5.4", "6.2", "6.3", "6.4", "7.2", "7.3", "7.4", "8.1", "8.2", "8.3", "9.1", "9.3"]
+      },
       answers: answers,
       question_map: buildQuestionMapLegacy()
     };
@@ -971,6 +981,9 @@
         lines.push("confidence_range: " + confidence.confidence_range);
         lines.push("grip: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
+        if (coverage.completion_rate < 100) {
+          lines.push("partial test submit: YES");
+        }
         lines.push("pillar score coverage: " + confidence.pillar_score_coverage_pct + "%");
         lines.push("scoring eligible/scored: " + scoringDiagnostics.eligible_questions + "/" + scoringDiagnostics.scored_answers);
         if (scoringDiagnostics.non_five_option_questions > 0) {
