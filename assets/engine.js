@@ -11,45 +11,12 @@
 (function () {
   "use strict";
 
-  function resolveWebhookUrl_() {
-    const fallback = "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj";
-    try {
-      if (typeof window !== "undefined") {
-        if (window.__GTM_WEBHOOK_URL__ && String(window.__GTM_WEBHOOK_URL__).trim()) {
-          return { url: String(window.__GTM_WEBHOOK_URL__).trim(), source: "window.__GTM_WEBHOOK_URL__" };
-        }
-        if (window.GTM_WEBHOOK_URL && String(window.GTM_WEBHOOK_URL).trim()) {
-          return { url: String(window.GTM_WEBHOOK_URL).trim(), source: "window.GTM_WEBHOOK_URL" };
-        }
-      }
-      if (typeof document !== "undefined") {
-        const meta = document.querySelector('meta[name="gtm-webhook-url"]');
-        if (meta && meta.content && String(meta.content).trim()) {
-          return { url: String(meta.content).trim(), source: "meta[gtm-webhook-url]" };
-        }
-      }
-      if (typeof localStorage !== "undefined") {
-        const ls = localStorage.getItem("gtm_webhook_url");
-        if (ls && String(ls).trim()) {
-          return { url: String(ls).trim(), source: "localStorage.gtm_webhook_url" };
-        }
-      }
-    } catch (e) {
-      console.warn("⚠️ Webhook resolver error, using fallback:", e);
-    }
-    return { url: fallback, source: "engine_fallback_default" };
-  }
-
-  const WEBHOOK_RUNTIME = resolveWebhookUrl_();
-
   // --- 1. CONFIGURATION ---
   const CONFIG = {
-    webhookUrl: WEBHOOK_RUNTIME.url,
-    webhookSource: WEBHOOK_RUNTIME.source,
+    webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.1",
-    allowPartialTestSubmit: true
+    schemaVersion: "9.1.1"
   };
 
   // --- 2. STATE ---
@@ -182,12 +149,22 @@
     return out;
   }
 
-  function pickFirstNonEmpty(answersRaw, keys, fallback) {
-    for (let i = 0; i < keys.length; i++) {
-      const v = answersRaw[keys[i]];
-      if (isNonEmpty(v)) return v;
-    }
-    return fallback === undefined ? "" : fallback;
+  function resolveWebhookUrl() {
+    const fromWindow = (window && (window.__GTM_WEBHOOK_URL__ || window.GTM_WEBHOOK_URL)) || "";
+    if (isNonEmpty(fromWindow)) return { url: String(fromWindow).trim(), source: "window" };
+
+    const meta = document.querySelector('meta[name="gtm-webhook-url"]');
+    const fromMeta = meta ? meta.getAttribute("content") : "";
+    if (isNonEmpty(fromMeta)) return { url: String(fromMeta).trim(), source: "meta" };
+
+    let fromStorage = "";
+    try {
+      fromStorage = localStorage.getItem("gtm_webhook_url") || "";
+    } catch (e) {}
+    if (isNonEmpty(fromStorage)) return { url: String(fromStorage).trim(), source: "localStorage" };
+
+    if (isNonEmpty(CONFIG.webhookUrl)) return { url: String(CONFIG.webhookUrl).trim(), source: "config" };
+    return { url: "", source: "none" };
   }
 
   // --- 5. INITIALIZATION ---
@@ -204,7 +181,6 @@
     if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
 
     console.log("Engine v" + CONFIG.schemaVersion + " started. Loaded " + window.QUESTIONS.length + " questions.");
-    console.log("Webhook source:", CONFIG.webhookSource);
     renderQuestion();
     updateSidebar();
 
@@ -585,65 +561,55 @@
 
   // --- 11. LEGACY BUILDERS ---
   function buildLegacyCustomer(answersRaw) {
-    const geoMarket = pickFirstNonEmpty(answersRaw, ["q13"], "");
-    const website = pickFirstNonEmpty(answersRaw, ["q1__website"], "");
     return {
-      fullname: pickFirstNonEmpty(answersRaw, ["q1__fullname"], ""),
-      role: pickFirstNonEmpty(answersRaw, ["q1__role"], ""),
-      email: pickFirstNonEmpty(answersRaw, ["q1__email"], ""),
-      company: pickFirstNonEmpty(answersRaw, ["q1__company", "q2__company", "company"], ""),
-      website: website,
-      industry: pickFirstNonEmpty(answersRaw, ["q1__industry", "industry"], ""),
-      primary_geographic_market: geoMarket,
-      total_employees: pickFirstNonEmpty(answersRaw, ["q1__total_employees"], ""),
-      year_founded: pickFirstNonEmpty(answersRaw, ["q1__year_founded"], ""),
-      hq_region: pickFirstNonEmpty(answersRaw, ["q1__hq_region"], "")
+      fullname: answersRaw["q1__fullname"] || "",
+      role: answersRaw["q1__role"] || "",
+      email: answersRaw["q1__email"] || "",
+      company: answersRaw["q1__company"] || "",
+      website: "",
+      total_employees: answersRaw["q1__total_employees"] || "",
+      year_founded: answersRaw["q1__year_founded"] || "",
+      hq_region: answersRaw["q1__hq_region"] || ""
     };
   }
 
   function buildLegacyContext(answersRaw) {
-    const expansionPct = pickFirstNonEmpty(answersRaw, ["q4__expansion_pct", "q4__expansion_revenue_pct"], "");
-    const topCompetitors = pickFirstNonEmpty(answersRaw, ["q5__top_competitors", "q5__competitors"], "");
-    const primaryLossReason = pickFirstNonEmpty(answersRaw, ["q5__primary_loss_reason"], "");
-    const primaryChurnReason = pickFirstNonEmpty(answersRaw, ["q5__primary_churn_reason"], "");
-
     return {
-      arr: pickFirstNonEmpty(answersRaw, ["q2__arr"], ""),
-      growth_rate: pickFirstNonEmpty(answersRaw, ["q2__growth_rate"], ""),
-      nrr: pickFirstNonEmpty(answersRaw, ["q2__nrr"], ""),
-      gross_margin: pickFirstNonEmpty(answersRaw, ["q2__gross_margin"], ""),
-      monthly_burn: pickFirstNonEmpty(answersRaw, ["q2__monthly_burn"], ""),
-      cash_runway: pickFirstNonEmpty(answersRaw, ["q2__cash_runway"], ""),
-      pricing_model: pickFirstNonEmpty(answersRaw, ["q2__pricing_model"], ""),
-      number_of_clients: pickFirstNonEmpty(answersRaw, ["q2__number_of_clients"], ""),
+      arr: answersRaw["q2__arr"] || "",
+      growth_rate: answersRaw["q2__growth_rate"] || "",
+      nrr: answersRaw["q2__nrr"] || "",
+      gross_margin: answersRaw["q2__gross_margin"] || "",
+      monthly_burn: answersRaw["q2__monthly_burn"] || "",
+      cash_runway: answersRaw["q2__cash_runway"] || "",
+      pricing_model: answersRaw["q2__pricing_model"] || "",
+      number_of_clients: answersRaw["q2__number_of_clients"] || "",
 
-      sales_headcount: pickFirstNonEmpty(answersRaw, ["q3__sales_headcount"], ""),
-      sales_leadership_headcount: pickFirstNonEmpty(answersRaw, ["q3__sales_leadership_headcount"], ""),
-      sdr_headcount: pickFirstNonEmpty(answersRaw, ["q3__sdr_headcount"], ""),
-      marketing_headcount: pickFirstNonEmpty(answersRaw, ["q3__marketing_headcount"], ""),
-      cs_headcount: pickFirstNonEmpty(answersRaw, ["q3__cs_headcount"], ""),
-      revops_enablement_headcount: pickFirstNonEmpty(answersRaw, ["q3__revops_enablement_headcount"], ""),
-      product_headcount: pickFirstNonEmpty(answersRaw, ["q3__product_headcount"], ""),
-      gtm_other_headcount: pickFirstNonEmpty(answersRaw, ["q3__gtm_other_headcount"], ""),
+      sales_headcount: answersRaw["q3__sales_headcount"] || "",
+      sales_leadership_headcount: answersRaw["q3__sales_leadership_headcount"] || "",
+      sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
+      marketing_headcount: answersRaw["q3__marketing_headcount"] || "",
+      cs_headcount: answersRaw["q3__cs_headcount"] || "",
+      revops_enablement_headcount: answersRaw["q3__revops_enablement_headcount"] || "",
+      product_headcount: answersRaw["q3__product_headcount"] || "",
+      gtm_other_headcount: answersRaw["q3__gtm_other_headcount"] || "",
 
-      arr_target: pickFirstNonEmpty(answersRaw, ["q4__arr_target"], ""),
-      quota_attainment: pickFirstNonEmpty(answersRaw, ["q4__quota_attainment"], ""),
-      cac_payback: pickFirstNonEmpty(answersRaw, ["q4__cac_payback"], ""),
-      ltv_cac: pickFirstNonEmpty(answersRaw, ["q4__ltv_cac"], ""),
-      avg_discount: pickFirstNonEmpty(answersRaw, ["q4__avg_discount"], ""),
-      expansion_pct: expansionPct,
-      expansion_revenue_pct: expansionPct,
-      opex_includes_payroll: pickFirstNonEmpty(answersRaw, ["q4__opex_includes_payroll"], ""),
-      sales_marketing_pct: pickFirstNonEmpty(answersRaw, ["q4__sales_marketing_pct"], ""),
+      arr_target: answersRaw["q4__arr_target"] || "",
+      quota_attainment: answersRaw["q4__quota_attainment"] || "",
+      cac_payback: answersRaw["q4__cac_payback"] || "",
+      ltv_cac: answersRaw["q4__ltv_cac"] || "",
+      avg_discount: answersRaw["q4__avg_discount"] || "",
+      expansion_pct: answersRaw["q4__expansion_pct"] || "",
+      opex_includes_payroll: answersRaw["q4__opex_includes_payroll"] || "",
+      sales_marketing_pct: answersRaw["q4__sales_marketing_pct"] || "",
 
-      win_rate: pickFirstNonEmpty(answersRaw, ["q5__win_rate"], ""),
-      sales_cycle: pickFirstNonEmpty(answersRaw, ["q5__sales_cycle"], ""),
-      pipeline_coverage: pickFirstNonEmpty(answersRaw, ["q5__pipeline_coverage"], ""),
-      churn_rate: pickFirstNonEmpty(answersRaw, ["q5__churn_rate"], ""),
-      top_competitors: topCompetitors,
-      primary_loss_reason: primaryLossReason,
-      revenue_concentration: pickFirstNonEmpty(answersRaw, ["q5__revenue_concentration"], ""),
-      primary_churn_reason: primaryChurnReason,
+      win_rate: answersRaw["q5__win_rate"] || "",
+      sales_cycle: answersRaw["q5__sales_cycle"] || "",
+      pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "",
+      churn_rate: answersRaw["q5__churn_rate"] || "",
+      top_competitors: answersRaw["q5__top_competitors"] || "",
+      primary_loss_reason: answersRaw["q5__primary_loss_reason"] || "",
+      revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
+      primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
 
       Q6: answersRaw["q6"] || "",
       Q7: answersRaw["q7"] || "",
@@ -665,30 +631,6 @@
       Q23: answersRaw["q23"] || "",
       Q24: answersRaw["q24"] || "",
       Q25: answersRaw["q25"] || ""
-    };
-  }
-
-  function buildContextDiagnostics(customer, context) {
-    const critical = [
-      ["customer.email", customer.email],
-      ["customer.company", customer.company],
-      ["context.arr", context.arr],
-      ["context.arr_target", context.arr_target],
-      ["context.win_rate", context.win_rate],
-      ["context.pipeline_coverage", context.pipeline_coverage],
-      ["context.churn_rate", context.churn_rate],
-      ["context.nrr", context.nrr],
-      ["context.avg_discount", context.avg_discount]
-    ];
-
-    const missingCritical = critical
-      .filter((pair) => !isNonEmpty(pair[1]))
-      .map((pair) => pair[0]);
-
-    return {
-      missing_critical_keys: missingCritical,
-      missing_critical_count: missingCritical.length,
-      has_minimum_context: missingCritical.length === 0
     };
   }
 
@@ -730,74 +672,6 @@
       out["score_" + pad2(p)] = b && b.count ? toScore100(b.sum / b.count) : null;
     }
     return out;
-  }
-
-  function computePillarScoresAndDiagnostics(answersRaw) {
-    const buckets = {};
-    const diagnostics = {
-      scoring_mode: "five_option_scale_only",
-      total_pillar_questions_seen: 0,
-      eligible_questions: 0,
-      scored_answers: 0,
-      unanswered_eligible: 0,
-      invalid_answers: 0,
-      non_scoring_non_scale_radio: 0,
-      non_five_option_questions: 0,
-      invalid_answer_question_ids: [],
-      non_five_option_question_ids: []
-    };
-
-    window.QUESTIONS.forEach((q) => {
-      if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
-      diagnostics.total_pillar_questions_seen += 1;
-
-      if (q.type !== "scale" && q.type !== "radio") {
-        diagnostics.non_scoring_non_scale_radio += 1;
-        return;
-      }
-
-      const opts = Array.isArray(q.options) ? q.options : [];
-      if (opts.length !== 5) {
-        diagnostics.non_five_option_questions += 1;
-        if (diagnostics.non_five_option_question_ids.length < 100) {
-          diagnostics.non_five_option_question_ids.push(q.id);
-        }
-        return;
-      }
-
-      diagnostics.eligible_questions += 1;
-      const key = qKey(q.id);
-      const val = answersRaw[key];
-      if (!isNonEmpty(val)) {
-        diagnostics.unanswered_eligible += 1;
-        return;
-      }
-
-      const score1to5 = optionsIndex1to5(q, val);
-      if (!score1to5) {
-        diagnostics.invalid_answers += 1;
-        if (diagnostics.invalid_answer_question_ids.length < 100) {
-          diagnostics.invalid_answer_question_ids.push(q.id);
-        }
-        return;
-      }
-
-      diagnostics.scored_answers += 1;
-      if (!buckets[q.pillar]) buckets[q.pillar] = { sum: 0, count: 0 };
-      buckets[q.pillar].sum += score1to5;
-      buckets[q.pillar].count += 1;
-    });
-
-    const scores = {};
-    for (let p = 1; p <= 12; p++) {
-      const b = buckets[p];
-      scores["score_" + pad2(p)] = b && b.count ? toScore100(b.sum / b.count) : null;
-    }
-
-    diagnostics.ignored_questions =
-      diagnostics.non_scoring_non_scale_radio + diagnostics.non_five_option_questions;
-
-    return { scores, diagnostics };
   }
 
   function computeOverallScore(scores) {
@@ -852,6 +726,46 @@
     };
   }
 
+  function buildScoringDiagnostics(answersRaw) {
+    let eligible = 0;
+    let scored = 0;
+    let skipped_unanswered = 0;
+    let skipped_non5 = 0;
+    let skipped_unmatched_option = 0;
+
+    window.QUESTIONS.forEach((q) => {
+      if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
+      const opts = Array.isArray(q.options) ? q.options : [];
+      if (opts.length !== 5) {
+        skipped_non5 += 1;
+        return;
+      }
+
+      eligible += 1;
+      const key = qKey(q.id);
+      const val = answersRaw[key];
+      if (!isNonEmpty(val)) {
+        skipped_unanswered += 1;
+        return;
+      }
+
+      const score = optionsIndex1to5(q, val);
+      if (!score) {
+        skipped_unmatched_option += 1;
+        return;
+      }
+      scored += 1;
+    });
+
+    return {
+      eligible_questions: eligible,
+      scored_questions: scored,
+      skipped_unanswered: skipped_unanswered,
+      skipped_non5: skipped_non5,
+      skipped_unmatched_option: skipped_unmatched_option
+    };
+  }
+
   function buildQuestionMapLegacy() {
     const map = {};
 
@@ -879,26 +793,25 @@
   // --- 12. SUBMISSION ---
   async function submitData(isTest) {
     const answersRaw = normalizeAnswersRaw(STATE.answers || {});
+    const webhook = resolveWebhookUrl();
+    if (!isNonEmpty(webhook.url)) {
+      alert("❌ Geen webhook URL ingesteld. Configureer gtm-webhook-url.");
+      return;
+    }
 
     const questionsMap = buildQuestionsMap();
     const fullReport = buildFullReport(answersRaw);
     const coverage = buildCoverage(answersRaw);
-    if (isTest && !CONFIG.allowPartialTestSubmit && coverage.completion_rate < 100) {
-      alert("Partial test submit is disabled. Complete all questions first.");
-      return;
-    }
 
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
-    const contextDiagnostics = buildContextDiagnostics(customer, context);
 
     const answersQ = buildLegacyAnswersQOnly(answersRaw);
-    const scoringPack = computePillarScoresAndDiagnostics(answersRaw);
-    const pillarScores = scoringPack.scores;
-    const scoringDiagnostics = scoringPack.diagnostics;
+    const pillarScores = computePillarScores(answersRaw);
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
+    const scoringDiagnostics = buildScoringDiagnostics(answersRaw);
 
     const answers = Object.assign({}, answersQ, pillarScores, {
       score_total: overallScore,
@@ -911,9 +824,7 @@
       completion_rate: coverage.completion_rate,
       total_questions: coverage.total_questions,
       answered_questions: coverage.answered_questions,
-      pillar_score_coverage_pct: confidence.pillar_score_coverage_pct,
-      scoring_eligible_questions: scoringDiagnostics.eligible_questions,
-      scoring_scored_answers: scoringDiagnostics.scored_answers
+      pillar_score_coverage_pct: confidence.pillar_score_coverage_pct
     });
 
     const payload = {
@@ -922,15 +833,8 @@
         schema_version: CONFIG.schemaVersion,
         questions_count: window.QUESTIONS.length,
         source: "Engine v" + CONFIG.schemaVersion,
-        webhook_source: CONFIG.webhookSource,
-        partial_test_submit: !!(isTest && coverage.completion_rate < 100),
-        scoring_mode: scoringDiagnostics.scoring_mode,
-        scoring_eligible_questions: scoringDiagnostics.eligible_questions,
-        scoring_scored_answers: scoringDiagnostics.scored_answers,
-        non_five_option_questions: scoringDiagnostics.non_five_option_questions,
         is_test: !!isTest,
-        has_minimum_context: contextDiagnostics.has_minimum_context,
-        missing_critical_count: contextDiagnostics.missing_critical_count
+        webhook_source: webhook.source
       },
       message: isTest ? "Test Submission" : "Official Submission",
 
@@ -945,18 +849,12 @@
       scoring: {
         pillar_scores: pillarScores,
         overall_score: overallScore,
-        confidence_range: confidence,
-        diagnostics: scoringDiagnostics
+        confidence_range: confidence
       },
       scoring_diagnostics: scoringDiagnostics,
 
       customer: customer,
       context: context,
-      context_diagnostics: contextDiagnostics,
-      expected_web_contract: {
-        w7_expected_page_ids: ["2.2", "3.1", "4.1", "4.3", "5.1", "6.1", "7.1"],
-        w18_expected_page_ids: ["3.2", "3.3", "3.4", "4.2", "4.4", "5.2", "5.4", "6.2", "6.3", "6.4", "7.2", "7.3", "7.4", "8.1", "8.2", "8.3", "9.1", "9.3"]
-      },
       answers: answers,
       question_map: buildQuestionMapLegacy()
     };
@@ -967,7 +865,7 @@
     setButtonState(btn, "Sending...", true);
 
     try {
-      const res = await fetch(CONFIG.webhookUrl, {
+      const res = await fetch(webhook.url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -981,20 +879,7 @@
         lines.push("confidence_range: " + confidence.confidence_range);
         lines.push("grip: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
-        if (coverage.completion_rate < 100) {
-          lines.push("partial test submit: YES");
-        }
         lines.push("pillar score coverage: " + confidence.pillar_score_coverage_pct + "%");
-        lines.push("scoring eligible/scored: " + scoringDiagnostics.eligible_questions + "/" + scoringDiagnostics.scored_answers);
-        if (scoringDiagnostics.non_five_option_questions > 0) {
-          lines.push("non-5-option questions ignored in score: " + scoringDiagnostics.non_five_option_questions);
-        }
-        if (scoringDiagnostics.invalid_answers > 0) {
-          lines.push("invalid option answers skipped: " + scoringDiagnostics.invalid_answers);
-        }
-        if (!contextDiagnostics.has_minimum_context) {
-          lines.push("missing critical context keys: " + contextDiagnostics.missing_critical_keys.join(", "));
-        }
         alert("✅ TEST SUCCESVOL!\n\n" + lines.join("\n") + "\n\nCheck Make.com mapping on payload.answers.*");
       } else {
         STATE.completed = true;
