@@ -16,7 +16,7 @@
     webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.1.1"
+    schemaVersion: "9.1"
   };
 
   // --- 2. STATE ---
@@ -147,24 +147,6 @@
       out[k] = typeof v === "string" ? v.trim() : v;
     });
     return out;
-  }
-
-  function resolveWebhookUrl() {
-    const fromWindow = (window && (window.__GTM_WEBHOOK_URL__ || window.GTM_WEBHOOK_URL)) || "";
-    if (isNonEmpty(fromWindow)) return { url: String(fromWindow).trim(), source: "window" };
-
-    const meta = document.querySelector('meta[name="gtm-webhook-url"]');
-    const fromMeta = meta ? meta.getAttribute("content") : "";
-    if (isNonEmpty(fromMeta)) return { url: String(fromMeta).trim(), source: "meta" };
-
-    let fromStorage = "";
-    try {
-      fromStorage = localStorage.getItem("gtm_webhook_url") || "";
-    } catch (e) {}
-    if (isNonEmpty(fromStorage)) return { url: String(fromStorage).trim(), source: "localStorage" };
-
-    if (isNonEmpty(CONFIG.webhookUrl)) return { url: String(CONFIG.webhookUrl).trim(), source: "config" };
-    return { url: "", source: "none" };
   }
 
   // --- 5. INITIALIZATION ---
@@ -566,7 +548,7 @@
       role: answersRaw["q1__role"] || "",
       email: answersRaw["q1__email"] || "",
       company: answersRaw["q1__company"] || "",
-      website: "",
+      website: answersRaw["q1__website"] || "",
       total_employees: answersRaw["q1__total_employees"] || "",
       year_founded: answersRaw["q1__year_founded"] || "",
       hq_region: answersRaw["q1__hq_region"] || ""
@@ -726,46 +708,6 @@
     };
   }
 
-  function buildScoringDiagnostics(answersRaw) {
-    let eligible = 0;
-    let scored = 0;
-    let skipped_unanswered = 0;
-    let skipped_non5 = 0;
-    let skipped_unmatched_option = 0;
-
-    window.QUESTIONS.forEach((q) => {
-      if (typeof q.pillar !== "number" || q.pillar < 1 || q.pillar > 12) return;
-      const opts = Array.isArray(q.options) ? q.options : [];
-      if (opts.length !== 5) {
-        skipped_non5 += 1;
-        return;
-      }
-
-      eligible += 1;
-      const key = qKey(q.id);
-      const val = answersRaw[key];
-      if (!isNonEmpty(val)) {
-        skipped_unanswered += 1;
-        return;
-      }
-
-      const score = optionsIndex1to5(q, val);
-      if (!score) {
-        skipped_unmatched_option += 1;
-        return;
-      }
-      scored += 1;
-    });
-
-    return {
-      eligible_questions: eligible,
-      scored_questions: scored,
-      skipped_unanswered: skipped_unanswered,
-      skipped_non5: skipped_non5,
-      skipped_unmatched_option: skipped_unmatched_option
-    };
-  }
-
   function buildQuestionMapLegacy() {
     const map = {};
 
@@ -793,11 +735,6 @@
   // --- 12. SUBMISSION ---
   async function submitData(isTest) {
     const answersRaw = normalizeAnswersRaw(STATE.answers || {});
-    const webhook = resolveWebhookUrl();
-    if (!isNonEmpty(webhook.url)) {
-      alert("❌ Geen webhook URL ingesteld. Configureer gtm-webhook-url.");
-      return;
-    }
 
     const questionsMap = buildQuestionsMap();
     const fullReport = buildFullReport(answersRaw);
@@ -811,7 +748,6 @@
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
-    const scoringDiagnostics = buildScoringDiagnostics(answersRaw);
 
     const answers = Object.assign({}, answersQ, pillarScores, {
       score_total: overallScore,
@@ -833,8 +769,7 @@
         schema_version: CONFIG.schemaVersion,
         questions_count: window.QUESTIONS.length,
         source: "Engine v" + CONFIG.schemaVersion,
-        is_test: !!isTest,
-        webhook_source: webhook.source
+        is_test: !!isTest
       },
       message: isTest ? "Test Submission" : "Official Submission",
 
@@ -851,7 +786,6 @@
         overall_score: overallScore,
         confidence_range: confidence
       },
-      scoring_diagnostics: scoringDiagnostics,
 
       customer: customer,
       context: context,
@@ -865,7 +799,7 @@
     setButtonState(btn, "Sending...", true);
 
     try {
-      const res = await fetch(webhook.url, {
+      const res = await fetch(CONFIG.webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
