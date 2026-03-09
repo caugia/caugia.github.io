@@ -505,7 +505,6 @@
 
 <footer><div class="container"><p>&copy; <span id="year">2026</span> Caugia SASU. All rights reserved. &middot; <a href="privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacy Policy</a></p></div></footer>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script src="assets/header.js"></script>
 <script src="assets/caugia-base.js"></script>
 <script>
@@ -594,22 +593,13 @@
   }
   document.querySelectorAll('.mk-buy,.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();var m=b.getAttribute('data-module'),bu=b.getAttribute('data-bundle');var subj=encodeURIComponent('Interest in '+(m?'Deep Dive: '+m.toUpperCase():'Bundle: '+bu.toUpperCase()));window.location.href='mailto:tom@caugia.com?subject='+subj;});});
   function startReportCheckout(){
-    if(typeof Stripe==='undefined') return;
-
-    /* ─── STRIPE CONFIG ───
-       Fill in your Stripe publishable key and price IDs per currency.
-       Create 3 products in Stripe Dashboard → one Price each in EUR, USD, GBP.
-       Then paste the IDs below. */
-    var config = window.CAUGIA_STRIPE || {
-      pk: 'pk_test_51Sco4gDHRLaiWJTZpKFtiA3mqN2g2tGW9CPcGkY24vrk0HflMccEKR9RfkAMBu2WpmnN8qihmNZTtpCU9JQYjl3r00wK3cG2VG',
-      report: {
-        EUR: 'price_1T6qawDHRLaiWJTZobHye50W',
-        USD: 'price_1T6qawDHRLaiWJTZobHye50W',
-        GBP: 'price_1T6qawDHRLaiWJTZobHye50W'
-      }
+    /* Payment Links per currency */
+    var links = {
+      EUR: 'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00',
+      GBP: 'https://buy.stripe.com/fZu8wP7zxdaW7tK6DZ9MY01',
+      USD: 'https://buy.stripe.com/28E5kD7zxgn87tK7I39MY02'
     };
 
-    /* Detect currency (same logic as pricing display) */
     var curr = 'USD';
     try {
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
@@ -617,14 +607,7 @@
       else if (/Europe\//.test(tz)) curr = 'EUR';
     } catch(e){}
 
-    var priceId = (config.report && config.report[curr]) ? config.report[curr] : config.report.EUR;
-    var stripe = Stripe(config.pk);
-    stripe.redirectToCheckout({
-      lineItems:[{price:priceId, quantity:1}],
-      mode:'payment',
-      successUrl:'https://www.caugia.com/gtm-intelligence-thank-you.html',
-      cancelUrl:'https://www.caugia.com/grip-marketplace.html#intelligence-report'
-    });
+    window.location.href = links[curr];
   }
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 })();
