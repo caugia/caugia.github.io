@@ -1,16 +1,17 @@
+<!--email_off-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Assessment Support | Caugia</title>
-  <meta name="description" content="Technical support and FAQs for completing the GTM Intelligence Report assessment." />
+  <meta name="description" content="FAQs for completing the GTM Intelligence Report assessment. Save progress, understand questions, and troubleshoot issues." />
+  <meta name="robots" content="noindex, nofollow" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-final.png">
   <link rel="apple-touch-icon" href="assets/logo-final.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-final.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,144 +26,87 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Can I pause and resume later?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Your progress is saved automatically in your browser (Local Storage). You can close the page and return at any time to pick up exactly where you left off." }
+        "name": "How long does the assessment take?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Most people complete the assessment in 45 to 60 minutes. If you already know your core metrics, it may go faster. You can pause and resume at any time." }
       },
       {
         "@type": "Question",
-        "name": "Can I share the report with my team?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The report is designed to be shared with your leadership team and used as a foundation for strategic discussions." }
+        "name": "When will I receive my report?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Your 45-page Intelligence Report is generated and delivered to your inbox within one hour after submission." }
       },
       {
         "@type": "Question",
         "name": "What if I don't know an answer?",
-        "acceptedAnswer": { "@type": "Answer", "text": "You will never be forced to guess. Every question includes fallback options (e.g., 'We do not track this yet') that allow you to continue. These answers are diagnostically meaningful." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Every question includes fallback options such as 'We do not track this yet' that allow you to continue. These answers are diagnostically meaningful." }
       }
     ]
   }
   </script>
 
   <style>
-    .container-wide{ max-width:1200px; margin:0 auto; padding:0 24px; }
+    .faq-hero { text-align: center; padding: 60px 0 40px; }
+    .faq-hero h1 { font-size: 2.5rem; margin: 0 0 12px 0; }
+    .faq-hero p { font-size: 1.1rem; color: var(--text-body); max-width: 600px; margin: 0 auto; }
 
-    .nav-actions{ display:flex; gap:16px; align-items:center; }
-    .back-link{
-      font-weight:600;
-      font-size:0.9rem;
-      color:var(--text-body);
-      display:flex;
-      align-items:center;
-      gap:6px;
-      text-decoration:none;
+    .search-wrapper { position: relative; max-width: 500px; margin: 0 auto 40px; }
+    .search-input {
+      width: 100%; padding: 16px 20px; font-size: 1rem;
+      border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--shadow-sm); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: Inter, sans-serif;
     }
-    .back-link:hover{ color:var(--primary); }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
 
-    .faq-hero{ text-align:center; padding:60px 0 40px; }
-    .faq-hero h1{ font-size:2.5rem; margin:0 0 12px 0; }
-    .faq-hero p{ font-size:1.1rem; color:var(--text-body); max-width:600px; margin:0 auto; }
-
-    .search-wrapper{ position:relative; max-width:500px; margin:0 auto 40px; }
-    .search-input{
-      width:100%;
-      padding:16px 20px;
-      font-size:1rem;
-      border:1px solid var(--line);
-      border-radius:12px;
-      box-shadow:var(--shadow-sm);
-      outline:none;
-      transition:border-color 0.2s, box-shadow 0.2s;
-      font-family:Inter,sans-serif;
-    }
-    .search-input:focus{ border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,86,179,0.1); }
-
-    .faq-category-title{
-      font-size:1.25rem;
-      color:var(--text-dark);
-      margin:40px 0 20px;
-      padding-bottom:12px;
-      border-bottom:2px solid var(--line);
-      font-family:Inter,sans-serif;
-      font-weight:800;
+    .faq-category-title {
+      font-size: 1.25rem; color: var(--text-dark); margin: 40px 0 20px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--line);
+      font-family: Inter, sans-serif; font-weight: 800;
     }
 
-    details{
-      background:var(--white);
-      border:1px solid var(--line);
-      border-radius:12px;
-      margin-bottom:12px;
-      transition:all 0.2s ease;
-      overflow:hidden;
+    details {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 12px; margin-bottom: 12px;
+      transition: all 0.2s ease; overflow: hidden;
     }
-    details[open]{ box-shadow:var(--shadow-sm); border-color:#cbd5e1; }
+    details[open] { box-shadow: var(--shadow-sm); border-color: #cbd5e1; }
 
-    summary{
-      padding:18px 24px;
-      font-weight:600;
-      font-size:1rem;
-      cursor:pointer;
-      list-style:none;
-      color:var(--text-dark);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      transition:background 0.1s, color 0.1s;
+    summary {
+      padding: 18px 24px; font-weight: 600; font-size: 1rem;
+      cursor: pointer; list-style: none; color: var(--text-dark);
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.1s, color 0.1s;
     }
-    summary:hover{ background:#fcfcfc; color:var(--primary); }
-    summary::-webkit-details-marker{ display:none; }
+    summary:hover { background: #fcfcfc; color: var(--primary); }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-weight: 400; font-size: 1.5rem; color: var(--primary); line-height: 1; margin-left: 12px; }
+    details[open] summary::after { content: "\2212"; }
 
-    summary::after{
-      content:"+";
-      font-weight:400;
-      font-size:1.5rem;
-      color:var(--primary);
-      line-height:1;
-      margin-left:12px;
+    .faq-content {
+      padding: 0 24px 24px; font-size: 0.95rem;
+      color: var(--text-body); line-height: 1.6;
+      border-top: 1px solid transparent;
     }
-    details[open] summary::after{ content:"−"; }
+    details[open] .faq-content {
+      border-top-color: var(--line); padding-top: 16px;
+      animation: slideDown 0.2s ease-out;
+    }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-    .faq-content{
-      padding:0 24px 24px;
-      font-size:0.95rem;
-      color:var(--text-body);
-      line-height:1.6;
-      border-top:1px solid transparent;
-    }
-    details[open] .faq-content{
-      border-top-color:var(--line);
-      padding-top:16px;
-      animation:slideDown 0.2s ease-out;
-    }
+    .faq-content ul { list-style: disc; padding-left: 20px; margin: 12px 0; }
+    .faq-content li { margin-bottom: 6px; }
 
-    @keyframes slideDown{
-      from{ opacity:0; transform:translateY(-5px); }
-      to{ opacity:1; transform:translateY(0); }
-    }
+    .no-results { text-align: center; padding: 60px 20px; display: none; }
+    .no-results h3 { font-size: 1.2rem; margin: 0 0 8px 0; font-family: Inter, sans-serif; }
 
-    .faq-content ul{ list-style:disc; padding-left:20px; margin:12px 0; }
-    .faq-content li{ margin-bottom:6px; }
-
-    .no-results{ text-align:center; padding:60px 20px; display:none; }
-    .no-results h3{ font-size:1.2rem; margin:0 0 8px 0; font-family:Inter,sans-serif; }
-
-    .support-footer{
-      margin-top:60px;
-      padding:40px;
-      text-align:center;
-      background:#e0f2fe;
-      border-radius:var(--radius-lg);
-      border:1px solid #bae6fd;
+    .support-footer {
+      margin-top: 60px; padding: 40px; text-align: center;
+      background: #e0f2fe; border-radius: var(--radius-lg); border: 1px solid #bae6fd;
     }
-    .support-footer h3{
-      font-family:Inter,sans-serif;
-      color:#0c4a6e;
-      font-size:1.2rem;
-      margin:0 0 8px 0;
-    }
-    .support-footer p{ color:#0369a1; margin:0 0 20px 0; font-size:0.95rem; }
+    .support-footer h3 { font-family: Inter, sans-serif; color: #0c4a6e; font-size: 1.2rem; margin: 0 0 8px 0; }
+    .support-footer p { color: #0369a1; margin: 0 0 20px 0; font-size: 0.95rem; }
 
-    @media (max-width:768px){
-      .faq-hero h1{ font-size:2rem; }
-    }
+    @media (max-width: 768px) { .faq-hero h1 { font-size: 2rem; } }
   </style>
 </head>
 
@@ -186,45 +130,38 @@
           <h2 class="faq-category-title">1. Before You Begin</h2>
 
           <details>
-            <summary>How long does the assessment take to complete?</summary>
-            <div class="faq-content">
-              Most people complete the assessment in 45–60 minutes. If you already know your core metrics (CAC, NRR, win rates, pipeline coverage), it may go faster.
-            </div>
+            <summary>How long does the assessment take?</summary>
+            <div class="faq-content">Most people complete the assessment in 45 to 60 minutes. If you already know your core metrics (ARR, win rate, churn, NRR, burn rate), it may go faster. You can pause and resume at any time.</div>
           </details>
 
           <details>
             <summary>Can I complete it in multiple sessions?</summary>
-            <div class="faq-content">
-              Yes. Your progress is saved automatically in your browser as you answer questions. You can close the page and return at any time.
-            </div>
+            <div class="faq-content">Yes. Your progress is saved automatically in your browser as you answer questions. You can close the page and return at any time. Use your access code to get back to the assessment.</div>
           </details>
 
           <details>
             <summary>Do I need access to CRM or analytics tools?</summary>
-            <div class="faq-content">
-              Not necessarily, but it helps. Some questions ask for specific metrics, and having your CRM or analytics dashboard available will make the process faster and more accurate.
-            </div>
+            <div class="faq-content">Not necessarily, but it helps. Some questions ask for specific metrics, and having your CRM or analytics dashboard available will make the process faster and more accurate.</div>
           </details>
 
           <details>
             <summary>What information should I have ready?</summary>
             <div class="faq-content">
-              A simple cheat sheet makes the experience smoother. Recommended metrics include:
+              Having a few core metrics available makes the experience smoother:
               <ul>
-                <li>ARR, ACV and revenue targets</li>
+                <li>ARR, ACV, and revenue targets</li>
                 <li>CAC, LTV, NRR, churn rate</li>
                 <li>Win rate, sales cycle length, pipeline coverage</li>
-                <li>Team sizes across marketing, sales, CS and RevOps</li>
+                <li>Team sizes across marketing, sales, CS, and RevOps</li>
+                <li>Monthly burn rate and gross margin</li>
               </ul>
-              Directional numbers are fine; perfect precision is not required.
+              Directional numbers are fine. Perfect precision is not required.
             </div>
           </details>
 
           <details>
-            <summary>Should multiple people fill this in together?</summary>
-            <div class="faq-content">
-              Either works. Some leaders fill it in solo with data at hand. Others complete it with RevOps or the broader GTM leadership team to ensure full alignment.
-            </div>
+            <summary>Who should complete the assessment?</summary>
+            <div class="faq-content">Ideally a revenue leader with visibility into your Go-to-Market system and performance metrics. Many companies involve their CEO or Finance for specific inputs such as monthly burn, active customers, or gross margin. The assessment should be completed by one person to ensure consistency. You can share the final report with your team.</div>
           </details>
         </div>
 
@@ -233,37 +170,32 @@
 
           <details>
             <summary>How do I save my progress?</summary>
-            <div class="faq-content">
-              Your progress is saved automatically every few seconds using your browser's local storage. You do not need to press a save button.
-            </div>
+            <div class="faq-content">Your progress is saved automatically every few seconds using your browser's local storage. You do not need to press a save button. There is also a manual "Save Progress" button at the top of the assessment if you want to be sure.</div>
           </details>
 
           <details>
             <summary>Can I go back and change answers?</summary>
-            <div class="faq-content">
-              Yes. You can use the Back button to navigate to previous steps and update any answer before submitting the assessment.
-            </div>
+            <div class="faq-content">Yes. Use the "Previous" button to navigate to earlier questions and update any answer before submitting. You can also use the pillar navigation on the right to jump to any section.</div>
           </details>
 
           <details>
-            <summary>What if I don't know an answer?</summary>
-            <div class="faq-content">
-              You will never be forced to guess. Every question includes fallback options such as We do not track this yet or Limited visibility. Choosing these is diagnostically meaningful.
-            </div>
+            <summary>What if I do not know an answer?</summary>
+            <div class="faq-content">You will never be forced to guess. Every question includes fallback options such as "We do not track this yet" or "Limited visibility." Choosing these is diagnostically meaningful and helps the engine understand your maturity level.</div>
           </details>
 
           <details>
             <summary>How precise do my answers need to be?</summary>
-            <div class="faq-content">
-              They do not need to be perfect. Directional accuracy is enough (e.g. 5% churn vs 4.8%). If you cannot estimate, choose the fallback option.
-            </div>
+            <div class="faq-content">They do not need to be perfect. Directional accuracy is enough (e.g. "around 5% churn" rather than "4.8%"). If you cannot estimate at all, choose the fallback option.</div>
           </details>
 
           <details>
-            <summary>Why can't I leave questions blank?</summary>
-            <div class="faq-content">
-              Blank answers provide no diagnostic value. We need to know why the data is missing (e.g. not tracked vs not applicable) to build your maturity profile correctly.
-            </div>
+            <summary>Why can I not leave questions blank?</summary>
+            <div class="faq-content">Blank answers provide no diagnostic value. The engine needs to know why data is missing (e.g. not tracked vs not applicable) to build your maturity profile correctly. Every option, including "I don't know," carries diagnostic weight.</div>
+          </details>
+
+          <details>
+            <summary>What do the "First Unanswered" and "Last Answered" buttons do?</summary>
+            <div class="faq-content">"First Unanswered" jumps to the first question you have not answered yet. "Last Answered" jumps to the most recent question you completed. Both are useful when resuming after a break.</div>
           </details>
         </div>
 
@@ -272,22 +204,29 @@
 
           <details>
             <summary>What does a maturity level represent?</summary>
-            <div class="faq-content">
-              Maturity levels describe how structured, reliable and consistent a capability is. They range from reactive (hero-based) to predictable (system-based).
-            </div>
+            <div class="faq-content">Maturity levels describe how structured, reliable, and consistent a capability is. They range from reactive (dependent on individual effort) to predictable (system-driven and repeatable).</div>
           </details>
 
           <details>
             <summary>Are there right or wrong answers?</summary>
-            <div class="faq-content">
-              No. There is only an accurate reflection of your current state. Being honest about gaps is the only way to get a roadmap that actually solves them.
-            </div>
+            <div class="faq-content">No. There is only an accurate reflection of your current state. Being honest about gaps is the only way to get a diagnosis that actually identifies your real constraints.</div>
           </details>
 
           <details>
             <summary>What if none of the options describe our situation perfectly?</summary>
+            <div class="faq-content">Choose the option that best approximates your reality. GTM environments are complex. Pick the answer that is most true for your primary revenue motion.</div>
+          </details>
+
+          <details>
+            <summary>What are the 12 pillars?</summary>
             <div class="faq-content">
-              Choose the option that best approximates reality. GTM environments are complex; pick the answer that is most true for your primary revenue motion.
+              The assessment evaluates your GTM system across 12 pillars organized in the GRIP Framework:
+              <ul>
+                <li><strong>Guidance:</strong> GTM Strategy and Leadership, Market Intelligence, Product Marketing</li>
+                <li><strong>Resources:</strong> Pricing and Packaging, Product Readiness, Enablement</li>
+                <li><strong>Implementation:</strong> Demand Generation, Sales Execution, Revenue Operations</li>
+                <li><strong>Performance:</strong> Customer Success and Expansion, Data and Insights, Alignment and Governance</li>
+              </ul>
             </div>
           </details>
         </div>
@@ -296,24 +235,28 @@
           <h2 class="faq-category-title">4. Technical Issues</h2>
 
           <details>
-            <summary>My answers aren't saving.</summary>
-            <div class="faq-content">
-              Check that you are not in Private or Incognito mode, as this often blocks local storage. Switch to a regular window to ensure progress is saved.
-            </div>
+            <summary>My answers are not saving.</summary>
+            <div class="faq-content">Check that you are not in Private or Incognito mode, as this blocks local storage. Switch to a regular browser window to ensure progress is saved. Also make sure you are using a modern browser (Chrome, Firefox, Safari, or Edge).</div>
           </details>
 
           <details>
-            <summary>The page froze, will I lose progress?</summary>
-            <div class="faq-content">
-              Unlikely. Because progress saves continuously, you can refresh the page or close/reopen the tab without losing your work.
-            </div>
+            <summary>The page froze. Will I lose my progress?</summary>
+            <div class="faq-content">Unlikely. Because progress saves continuously, you can refresh the page or close and reopen the tab without losing your work.</div>
           </details>
 
           <details>
             <summary>Does this work on mobile?</summary>
-            <div class="faq-content">
-              Yes, but for the best experience (referencing data/metrics), we recommend completing the assessment on a desktop or tablet.
-            </div>
+            <div class="faq-content">Yes, but for the best experience we recommend completing the assessment on a desktop or tablet. You will need to reference metrics and data, which is easier on a larger screen.</div>
+          </details>
+
+          <details>
+            <summary>I cleared my browser data. Is my progress lost?</summary>
+            <div class="faq-content">Yes. Clearing browser data (cookies and local storage) removes saved progress. If this happens, you will need to start the assessment again. We recommend not clearing browser data until after you have submitted.</div>
+          </details>
+
+          <details>
+            <summary>The "Reset" button — what does it do?</summary>
+            <div class="faq-content">The Reset button clears all your answers and starts the assessment from the beginning. Use it only if you intentionally want to start over. This action cannot be undone.</div>
           </details>
         </div>
 
@@ -322,41 +265,65 @@
 
           <details>
             <summary>When will I receive my report?</summary>
-            <div class="faq-content">
-              Within 5–7 business days. The report involves an AI-assisted analysis and a quality review by our team.
-            </div>
+            <div class="faq-content">Your 45-page GTM Intelligence Report is generated and delivered to your inbox within one hour after submission. No scheduling, no consultant readout, no follow-up calls.</div>
           </details>
 
           <details>
-            <summary>Can I download my answers later?</summary>
-            <div class="faq-content">
-              After submission, the assessment is closed. If you need a copy of your raw data inputs, please contact support.
-            </div>
+            <summary>What format is the report?</summary>
+            <div class="faq-content">The report is delivered as a PDF document by email. It contains 45 pages of board-level analysis including GRIP scores, constraint analysis, revenue leakage modelling, a System Failure Map, and a 90-day execution sequence.</div>
           </details>
 
           <details>
-            <summary>Will I see my GTM Score immediately?</summary>
-            <div class="faq-content">
-              No. Unlike the free tool, the Intelligence Report calculates a deeper, weighted score that is delivered as part of the full PDF analysis.
-            </div>
+            <summary>Can I share the report with my team?</summary>
+            <div class="faq-content">Yes. The report is designed to be shared with your leadership team and used as a foundation for strategic decisions. It is a PDF that you can forward or present.</div>
+          </details>
+
+          <details>
+            <summary>Can I download my raw answers after submission?</summary>
+            <div class="faq-content">After submission, the assessment is closed and inputs are locked to preserve diagnostic integrity. If you need a copy of your raw inputs, email contact&#64;caugia&#46;com before submitting.</div>
+          </details>
+
+          <details>
+            <summary>Can I retake the assessment later?</summary>
+            <div class="faq-content">Each access code is valid for one assessment submission. If you want to run the diagnostic again (e.g. after 6 months), you would purchase a new Intelligence Report.</div>
           </details>
         </div>
 
         <div class="faq-group">
-          <h2 class="faq-category-title">6. Getting Help</h2>
+          <h2 class="faq-category-title">6. Access and Payment</h2>
 
           <details>
-            <summary>How do I contact support?</summary>
-            <div class="faq-content">
-              Email <strong>contact@caugia.com</strong>. We typically respond within 4–6 business hours (European time zone).
-            </div>
+            <summary>How do I access the assessment?</summary>
+            <div class="faq-content">After payment, you receive a personal access code by email. Enter this code on the thank-you page or click the link in the email to start directly.</div>
           </details>
 
           <details>
-            <summary>Can I schedule a clarification call?</summary>
-            <div class="faq-content">
-              Yes. If you are stuck on a specific section, you can request a brief clarification call via the contact page.
-            </div>
+            <summary>I lost my access code.</summary>
+            <div class="faq-content">Check your inbox and spam folder for an email from Caugia with the subject "Your Caugia Intelligence Report — Access Code." If you cannot find it, email contact&#64;caugia&#46;com with your payment confirmation.</div>
+          </details>
+
+          <details>
+            <summary>Is this a subscription?</summary>
+            <div class="faq-content">No. This is a one-time purchase. You complete the assessment, receive the report, and there are no recurring charges, contracts, or account management.</div>
+          </details>
+
+          <details>
+            <summary>Can I get a refund?</summary>
+            <div class="faq-content">If you have not yet submitted the assessment, contact contact&#64;caugia&#46;com to discuss your situation. Once the assessment is submitted and the report is generated, the diagnostic has been delivered and refunds are not available.</div>
+          </details>
+        </div>
+
+        <div class="faq-group">
+          <h2 class="faq-category-title">7. Getting Help</h2>
+
+          <details>
+            <summary>How do I contact support?</summary>
+            <div class="faq-content">Email contact&#64;caugia&#46;com. We respond to every message within one business day.</div>
+          </details>
+
+          <details>
+            <summary>I found a bug or error in the assessment.</summary>
+            <div class="faq-content">Please email contact&#64;caugia&#46;com with a description of what happened, which question you were on, and your browser (e.g. Chrome on Mac). We take quality seriously and will investigate promptly.</div>
           </details>
         </div>
 
@@ -368,63 +335,47 @@
       </div>
 
       <div class="support-footer">
-        <h3>Still blocked?</h3>
-        <p>We are here to help you complete your diagnostic.</p>
-        <a href="mailto:contact@caugia.com" class="btn btn-primary">Email Support</a>
+        <h3>Still need help?</h3>
+        <p>We respond to every message within one business day.</p>
+        <a href="mailto:&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#99;&#97;&#117;&#103;&#105;&#97;&#46;&#99;&#111;&#109;" class="btn btn-primary">Email Support</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>© <span id="year">2026</span> Caugia SASU. All rights reserved.</p>
+      <p>&copy; <span id="year">2026</span> Caugia SASU. All rights reserved. &middot; <a href="privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacy Policy</a></p>
     </div>
   </footer>
 
   <script src="assets/caugia-base.js"></script>
 
   <script>
-    (function () {
-      const a = document.getElementById("backToAssessment");
-      if (!a) return;
+    var searchInput = document.getElementById('faqSearch');
+    var groups = document.querySelectorAll('.faq-group');
+    var allDetails = document.querySelectorAll('details');
+    var noResults = document.getElementById('noResults');
 
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-        if (window.history.length > 1) window.history.back();
-        else window.location.href = "/gtm-intelligence-report-v2-test.html";
-      });
-    })();
-  </script>
+    searchInput.addEventListener('input', function(e) {
+      var term = e.target.value.toLowerCase().trim();
+      var totalMatches = 0;
 
-  <script>
-    const searchInput = document.getElementById('faqSearch');
-    const groups = document.querySelectorAll('.faq-group');
-    const details = document.querySelectorAll('details');
-    const noResults = document.getElementById('noResults');
-
-    searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      let totalMatches = 0;
-
-      if (term === "") {
-        groups.forEach(g => g.style.display = 'block');
-        details.forEach(d => {
-          d.style.display = 'block';
-          d.removeAttribute('open');
-        });
+      if (term === '') {
+        groups.forEach(function(g) { g.style.display = 'block'; });
+        allDetails.forEach(function(d) { d.style.display = 'block'; d.removeAttribute('open'); });
         noResults.style.display = 'none';
         return;
       }
 
-      groups.forEach(group => {
-        let groupHasMatch = false;
-        const groupItems = group.querySelectorAll('details');
+      groups.forEach(function(group) {
+        var groupHasMatch = false;
+        var groupItems = group.querySelectorAll('details');
 
-        groupItems.forEach(item => {
-          const question = item.querySelector('summary').textContent.toLowerCase();
-          const answer = item.querySelector('.faq-content').textContent.toLowerCase();
+        groupItems.forEach(function(item) {
+          var question = item.querySelector('summary').textContent.toLowerCase();
+          var answer = item.querySelector('.faq-content').textContent.toLowerCase();
 
-          if (question.includes(term) || answer.includes(term)) {
+          if (question.indexOf(term) !== -1 || answer.indexOf(term) !== -1) {
             item.style.display = 'block';
             item.setAttribute('open', true);
             groupHasMatch = true;
@@ -443,3 +394,4 @@
   </script>
 </body>
 </html>
+<!--/email_off-->
