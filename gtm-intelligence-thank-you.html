@@ -148,7 +148,7 @@
   <script src="assets/caugia-base.js"></script>
   <script>
   (function(){
-    var VALIDATE_WEBHOOK='https://hook.eu1.make.com/lclypc88u4yef12h1gbtp8u5b65i3qp9';
+    var VALIDATE_WEBHOOK='https://script.google.com/macros/s/AKfycbyKobAAPtAmSVxi7gxlISbskien0eVt-hz_mQwz19feF86Uq8j_M0vhrKvsCK59Hdo/exec';
     var btn=document.getElementById('accessBtn');
     var input=document.getElementById('accessCode');
     var errorEl=document.getElementById('accessError');
@@ -161,7 +161,7 @@
       var code=input.value.trim().toUpperCase();
       if(!code||code.length<8){errorEl.textContent='Please enter a valid access code.';errorEl.style.display='block';loadingEl.style.display='none';return;}
       errorEl.style.display='none';loadingEl.style.display='block';btn.disabled=true;btn.textContent='Validating...';
-      fetch(VALIDATE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:code})})
+      fetch(VALIDATE_WEBHOOK,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({code:code}),redirect:'follow'})
       .then(function(r){return r.json();})
       .then(function(data){
         if(data.valid&&data.assessment_url){loadingEl.textContent='Access confirmed. Redirecting...';input.style.borderColor='#16a34a';setTimeout(function(){window.location.href=data.assessment_url;},800);}
