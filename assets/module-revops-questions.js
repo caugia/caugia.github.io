@@ -708,7 +708,7 @@ var QUESTIONS = [
     "pillar_name": "Forecasting & Pipeline Management",
     "grip": "P",
     "qid": "RO-5008",
-    "type": "text",
+    "type": "number",
     "title": "Forecast accuracy over the last 4 quarters? (average absolute deviation from actual)",
     "sub": "Can you PREDICT revenue or just hope?"
   },
