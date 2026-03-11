@@ -79,12 +79,12 @@
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
+    1: "GTM Organizational Design & Structure",
+    2: "Strategic Planning & Goal Alignment",
+    3: "Cross-Functional Alignment & Handoffs",
+    4: "Governance & Decision-Making",
+    5: "Communication & Transparency",
+    6: "Culture, Accountability & Continuous Improvement"
   };
 
   function engineNameByIndex(i) { return ENGINE_NAMES[i] || "Engine " + i; }
@@ -663,6 +663,11 @@
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw   = STATE.answers || {};
+    var preCoverage  = buildCoverage(answersRaw);
+    if (preCoverage.answered_questions !== preCoverage.total_questions) {
+      alert("Please complete all questions before submit (" + preCoverage.answered_questions + "/" + preCoverage.total_questions + ").");
+      return;
+    }
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
     var gripScores   = computeGripScores(answersRaw);
@@ -689,11 +694,12 @@
         schema_version: CONFIG.schemaVersion,
         module: "ag",
         module_name: "Alignment & Governance Deep Dive",
+        module_dimension: "P",
         questions_count: window.QUESTIONS.length,
         source: "AG Engine v" + CONFIG.schemaVersion,
         is_test:        !!isTest
       },
-      message: isTest ? "GSL Test Submission" : "GSL Official Submission",
+      message: isTest ? "AG Test Submission" : "AG Official Submission",
 
       // Top-level context
       email:          STATE.context.email          || "",
