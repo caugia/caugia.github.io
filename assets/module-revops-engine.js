@@ -79,12 +79,12 @@
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
+    1: "CRM & Data Architecture",
+    2: "Tech Stack & Integration",
+    3: "Process Design & Automation",
+    4: "Reporting & Analytics",
+    5: "Forecasting & Pipeline Management",
+    6: "RevOps Governance & Enablement"
   };
 
   function engineNameByIndex(i) { return ENGINE_NAMES[i] || "Engine " + i; }
@@ -378,13 +378,15 @@
     if (!UI.body) return;
     var key   = qKey(q.id);
     var input = document.createElement("input");
-    input.type        = "number";
+    // Text input keeps locale/range forms (e.g. "12,5", "10-15%") intact for backend parsing.
+    input.type        = "text";
+    input.inputMode   = "decimal";
     input.className   = "gi-input";
     input.style.cssText = "width:100%;max-width:320px;padding:12px;border:1px solid #e2e8f0;border-radius:8px;font-size:1.1rem;";
     input.name        = key;
-    input.placeholder = "Enter a number";
+    input.placeholder = "Enter a value (e.g. 12.5 or 10-15)";
     if (STATE.answers[key]) input.value = STATE.answers[key];
-    input.addEventListener("input", function(e) { STATE.answers[key] = e.target.value; });
+    input.addEventListener("input", function(e) { STATE.answers[key] = String(e.target.value || "").trim(); });
     UI.body.appendChild(input);
 
     if (q.has_na) {
@@ -663,6 +665,11 @@
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw   = STATE.answers || {};
+    var preCoverage  = buildCoverage(answersRaw);
+    if (preCoverage.answered_questions !== preCoverage.total_questions) {
+      alert("Please complete all questions before submit (" + preCoverage.answered_questions + "/" + preCoverage.total_questions + ").");
+      return;
+    }
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
     var gripScores   = computeGripScores(answersRaw);
@@ -689,11 +696,12 @@
         schema_version: CONFIG.schemaVersion,
         module: "revops",
         module_name: "Revenue Operations Deep Dive",
+        module_dimension: "I",
         questions_count: window.QUESTIONS.length,
         source: "RevOps Engine v" + CONFIG.schemaVersion,
         is_test:        !!isTest
       },
-      message: isTest ? "GSL Test Submission" : "GSL Official Submission",
+      message: isTest ? "RevOps Test Submission" : "RevOps Official Submission",
 
       // Top-level context
       email:          STATE.context.email          || "",
