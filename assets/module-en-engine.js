@@ -79,12 +79,12 @@
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
+    1: "Sales Enablement Strategy & Alignment",
+    2: "Content & Knowledge Management",
+    3: "Training & Skill Development",
+    4: "Onboarding & New Hire Readiness",
+    5: "Tools & Technology Enablement",
+    6: "Coaching & Performance Management"
   };
 
   function engineNameByIndex(i) { return ENGINE_NAMES[i] || "Engine " + i; }
@@ -663,6 +663,11 @@
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw   = STATE.answers || {};
+    var preCoverage  = buildCoverage(answersRaw);
+    if (preCoverage.answered_questions !== preCoverage.total_questions) {
+      alert("Please complete all questions before submit (" + preCoverage.answered_questions + "/" + preCoverage.total_questions + ").");
+      return;
+    }
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
     var gripScores   = computeGripScores(answersRaw);
@@ -689,11 +694,12 @@
         schema_version: CONFIG.schemaVersion,
         module: "en",
         module_name: "Enablement Deep Dive",
+        module_dimension: "R",
         questions_count: window.QUESTIONS.length,
         source: "EN Engine v" + CONFIG.schemaVersion,
         is_test:        !!isTest
       },
-      message: isTest ? "GSL Test Submission" : "GSL Official Submission",
+      message: isTest ? "EN Test Submission" : "EN Official Submission",
 
       // Top-level context
       email:          STATE.context.email          || "",
