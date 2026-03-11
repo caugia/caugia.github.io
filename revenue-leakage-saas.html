@@ -1,0 +1,186 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Revenue Leakage in B2B SaaS: Where Your ARR Actually Disappears | Caugia</title>
+  <meta name="description" content="Most B2B SaaS companies lose 15 to 30 percent of potential ARR to structural leakage across pipeline, conversion, pricing, and expansion. Here is how to find it and quantify it." />
+  <link rel="canonical" href="https://www.caugia.com/intelligence/revenue-leakage-saas.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/intelligence/revenue-leakage-saas.html" />
+  <meta property="og:title" content="Revenue Leakage in B2B SaaS: Where Your ARR Actually Disappears" />
+  <meta property="og:description" content="Not churn. Structural leakage across pipeline, conversion, pricing, and expansion. Here is how to find it and quantify it." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #fef3c7; color: #92400e; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-callout { border-left: 3px solid #f59e0b; background: #fffbeb; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #78350f; line-height: 1.6; }
+    .leakage-model { background: #0f172a; border-radius: 14px; padding: 32px; margin: 32px 0; color: #fff; }
+    .leakage-model-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #f59e0b; margin-bottom: 20px; }
+    .leakage-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.95rem; }
+    .leakage-row:last-child { border-bottom: none; padding-top: 12px; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.2); font-weight: 800; }
+    .leakage-label { color: #cbd5e1; }
+    .leakage-value { color: #f87171; font-weight: 700; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+</head>
+
+<body>
+  <script src="../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Back to Intelligence</a>
+        <span class="article-tag">Diagnostic</span>
+        <h1>Revenue Leakage in B2B SaaS: Where Your ARR Actually Disappears</h1>
+        <p class="article-lead">Most SaaS companies track churn religiously but ignore the structural leakage that happens before a customer ever leaves. Pipeline inefficiency, conversion friction, pricing misalignment, and expansion failure cost more than churn. They are just harder to see.</p>
+        <div class="article-meta">By Tom Meijer, Founder of Caugia &middot; 9 min read &middot; March 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <h2>Churn Is Not Your Biggest Leak</h2>
+
+        <p>When a board asks about revenue health, the conversation usually starts with churn. It is the most visible form of revenue loss because it shows up in a single metric that everyone understands: customers left, revenue disappeared.</p>
+
+        <p>But churn is the last stage of leakage. By the time a customer cancels, the revenue was already compromised months or quarters earlier. The real leakage happens upstream, in places that do not have a dedicated metric on your dashboard.</p>
+
+        <p>Revenue leakage is the gap between the revenue your system could produce and the revenue it actually produces. It is structural, not accidental. And in most B2B SaaS companies operating between 5 and 120 million ARR, it accounts for 15 to 30 percent of potential revenue.</p>
+
+        <h2>The Five Engines of Leakage</h2>
+
+        <p>Revenue does not leak from one place. It leaks from five interconnected engines, each contributing a different type of loss.</p>
+
+        <h3>Engine 1: Pipeline Leakage</h3>
+
+        <p>Pipeline leakage occurs when your demand generation system does not produce enough qualified opportunities to support your revenue target at your current conversion rates. The gap is not always volume. It is often quality.</p>
+
+        <p>A company with 3x pipeline coverage sounds healthy until you realize that 40 percent of that pipeline is unqualified, stalled, or misattributed. Effective coverage might be 1.8x, which means the team is structurally short of target before the quarter even starts.</p>
+
+        <p>Pipeline leakage also includes timing misalignment: pipeline that exists but arrives too late in the quarter to close, forcing deals into the next period or into discounting to accelerate.</p>
+
+        <h3>Engine 2: Conversion Leakage</h3>
+
+        <p>Conversion leakage is revenue lost between qualified opportunity and closed deal. This is the win rate gap: the difference between your current win rate and the win rate your product and market position should support.</p>
+
+        <p>Common causes include inconsistent sales execution across reps, poor qualification that lets bad-fit deals into the pipeline, weak competitive positioning, and demo experiences that do not communicate value effectively.</p>
+
+        <p>The math is straightforward. If your win rate is 22 percent and a reasonable benchmark for your segment is 30 percent, then for every 100 qualified opportunities, you are losing 8 deals that should have closed. At your average ACV, that is quantifiable ARR that leaked through the conversion engine.</p>
+
+        <h3>Engine 3: Pricing Leakage</h3>
+
+        <p>Pricing leakage is the revenue lost to discounting, underpricing, and packaging misalignment. It is the most invisible form of leakage because the deal still closes. Revenue shows up on the dashboard. But it shows up at 64 percent of what it should have been.</p>
+
+        <p>If your average discount is 36 percent and your deal volume is 100 deals per year at a target ACV, the total discount concession is a line item that rarely appears in any board report. Yet it often exceeds the total cost of an entire GTM function.</p>
+
+        <p>Pricing leakage also includes packaging failures: customers who are on plans that do not scale with usage, forcing renegotiation instead of automatic expansion.</p>
+
+        <h3>Engine 4: Expansion Leakage</h3>
+
+        <p>Expansion leakage is revenue that should have materialized from existing customers but did not. It is the gap between your NRR and the NRR your customer base could support.</p>
+
+        <p>If your NRR is 89 percent and a healthy benchmark for your segment is 110 percent, the delta is not just a number. It is unrealized revenue from customers who are using your product but not expanding, either because the expansion motion does not exist, because the product does not support natural upsell, or because CS is structured for support instead of growth.</p>
+
+        <h3>Engine 5: Productivity Leakage</h3>
+
+        <p>Productivity leakage is the revenue lost to inefficiency in your revenue team. It includes: reps who take 12 months to ramp instead of 6, territory designs that leave pockets of market uncovered, and operational friction that forces sellers to spend time on administration instead of selling.</p>
+
+        <p>A simple calculation: if your average fully-loaded AE costs 200,000 per year and produces 400,000 in ARR, your revenue per AE is 2x. If the benchmark for your segment is 3x, then each AE represents a productivity gap of 200,000 in unrealized revenue. Multiply by headcount.</p>
+
+        <div class="leakage-model">
+          <div class="leakage-model-title">Revenue Leakage Model (Illustrative)</div>
+          <div class="leakage-row"><span class="leakage-label">Pipeline coverage gap</span><span class="leakage-value">$4.2M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Win rate deficit</span><span class="leakage-value">$6.1M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Discount concession</span><span class="leakage-value">$3.4M</span></div>
+          <div class="leakage-row"><span class="leakage-label">NRR gap (expansion failure)</span><span class="leakage-value">$4.8M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Sales productivity gap</span><span class="leakage-value">$2.7M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Total estimated leakage</span><span class="leakage-value">$21.2M</span></div>
+        </div>
+
+        <p>For a company at 30 million ARR, 21 million in leakage sounds dramatic. But when you decompose it across five engines over a full year, each individual gap is explainable and often normalized as "that's just how SaaS works." It is not. It is structural friction that can be identified and reduced.</p>
+
+        <h2>Why Leakage Is Hard to See</h2>
+
+        <p>Revenue leakage is invisible for three reasons.</p>
+
+        <p><strong>First, it does not appear in any single report.</strong> Pipeline leakage shows up in marketing dashboards. Conversion leakage shows up in sales reports. Pricing leakage is buried in deal data. Expansion leakage is a CS problem. Productivity leakage is a capacity planning question. No single function owns the full picture.</p>
+
+        <p><strong>Second, each leak is individually explainable.</strong> Win rates are low because the market is competitive. Discounting is high because enterprise deals require flexibility. NRR is below target because the product roadmap has not delivered expansion features yet. Each explanation is locally rational but globally catastrophic.</p>
+
+        <p><strong>Third, leakage is normalized.</strong> When every company in your peer group has a 25 percent win rate and 30 percent average discount, it feels like industry standard, not structural failure. The benchmark becomes the ceiling instead of the floor.</p>
+
+        <div class="article-callout">
+          <p><strong>The cost of not knowing is typically 10 to 50 times the cost of diagnosis.</strong> A 15 million leakage number does not mean you can recover all of it. But even a 10 percent improvement, 1.5 million in recovered ARR, pays for the diagnostic hundreds of times over.</p>
+        </div>
+
+        <h2>How to Diagnose Leakage</h2>
+
+        <p>Diagnosing leakage requires a system-level view. Not a marketing audit, not a sales assessment, not a CS review. A full-system diagnostic that evaluates all five engines simultaneously and quantifies the gap per engine.</p>
+
+        <p>For each engine, the diagnostic needs to answer three questions: what is the current performance, what is the achievable benchmark for your segment, and what is the dollar gap between the two.</p>
+
+        <p>The output is a leakage model: a quantified view of where your ARR is disappearing, how much is at risk per engine, and which engine, if fixed first, produces the largest recovery.</p>
+
+        <p>This is not a one-time exercise. Leakage patterns shift as companies scale. A company at 5 million ARR leaks differently than a company at 50 million ARR. The engines that matter most change with growth stage, GTM motion, and market dynamics.</p>
+
+        <h2>From Leakage to Recovery</h2>
+
+        <p>Identifying leakage is step one. Recovering it is step two. And recovery follows the constraint sequence: fix the engine with the highest leakage and the lowest intervention cost first.</p>
+
+        <p>In most cases, pricing leakage and expansion leakage are the fastest to recover because they do not require new pipeline or new customers. They require better monetization of the customers and deals you already have.</p>
+
+        <p>Pipeline and conversion leakage take longer to recover because they involve structural changes to demand generation, qualification, and sales execution. But they are also the largest sources of leakage in most growth-stage companies.</p>
+
+        <p>The key insight is that leakage is not a problem to solve once. It is a metric to track continuously. The healthiest GTM systems are the ones that measure leakage per engine every quarter and act on the trends before they compound.</p>
+
+        <div class="article-cta">
+          <h3>Quantify your revenue leakage</h3>
+          <p>The Caugia Constraint Engine models leakage across all five engines and dollarizes the gap per constraint. 45 pages of analysis, delivered within one hour.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Free GTM Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Unlock the Full Diagnostic</a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. All rights reserved. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script src="../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>
