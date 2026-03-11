@@ -230,6 +230,7 @@
     switch (q.type) {
       case "scale": renderRadio(q); break;
       case "text":  renderText(q);  break;
+      case "number": renderNumber(q); break;
       default:      renderRadio(q); break;
     }
     updateNavState();
@@ -408,6 +409,46 @@
         else STATE.answers[key] = "N/A";
         UI.body.innerHTML = "";
         renderText(q);
+      });
+      naWrapper.appendChild(naBtn);
+      UI.body.appendChild(naWrapper);
+    }
+  }
+
+  function renderNumber(q) {
+    if (!UI.body) return;
+    var key   = qKey(q.id);
+    var input = document.createElement("input");
+    input.type        = "number";
+    input.step        = "any";
+    input.inputMode   = "decimal";
+    input.className   = "gi-input";
+    input.style.cssText = "width:100%;max-width:320px;padding:12px;border:1px solid #e2e8f0;border-radius:8px;font-size:1.1rem;";
+    input.name        = key;
+    input.placeholder = "Enter a number";
+    if (STATE.answers[key]) input.value = STATE.answers[key];
+    input.addEventListener("input", function(e) { STATE.answers[key] = String(e.target.value || "").trim(); });
+    UI.body.appendChild(input);
+
+    if (q.has_na) {
+      var naWrapper = document.createElement("div");
+      naWrapper.style.marginTop = "16px";
+      var naBtn = document.createElement("button");
+      naBtn.className   = "gi-btn";
+      naBtn.style.cssText = "font-size:0.85rem;font-style:italic;";
+      naBtn.innerText   = "Not applicable to our stage";
+      if (STATE.answers[key] === "N/A") {
+        naBtn.style.borderColor     = "#94a3b8";
+        naBtn.style.backgroundColor = "#f1f5f9";
+        naBtn.style.fontWeight      = "600";
+        input.value    = "";
+        input.disabled = true;
+      }
+      naBtn.addEventListener("click", function() {
+        if (STATE.answers[key] === "N/A") delete STATE.answers[key];
+        else STATE.answers[key] = "N/A";
+        UI.body.innerHTML = "";
+        renderNumber(q);
       });
       naWrapper.appendChild(naBtn);
       UI.body.appendChild(naWrapper);
@@ -634,7 +675,7 @@
         var score = optionsIndex1to5(q, val);
         if (score) out[key + "_score"] = score;
       }
-      if (q.type === "text" && isNonEmpty(val) && val !== "N/A") {
+      if ((q.type === "text" || q.type === "number") && isNonEmpty(val) && val !== "N/A") {
         out[key + "_raw"] = String(val);
       }
     });
