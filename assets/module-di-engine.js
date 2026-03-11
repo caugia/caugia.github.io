@@ -79,12 +79,12 @@
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
-    1: "Market & Buyer Intelligence",
-    2: "Positioning & Messaging",
-    3: "Competitive Intelligence",
-    4: "Launch & GTM Execution",
-    5: "Sales/Marketing Enablement",
-    6: "Messaging Performance"
+    1: "Data Strategy & Governance",
+    2: "Customer & Account Intelligence",
+    3: "Pipeline & Revenue Analytics",
+    4: "Marketing & Demand Analytics",
+    5: "Predictive Analytics & AI Readiness",
+    6: "Data Culture & Literacy"
   };
 
   function engineNameByIndex(i) { return ENGINE_NAMES[i] || "Engine " + i; }
@@ -663,6 +663,11 @@
   // --- 11. SUBMISSION ---
   async function submitData(isTest) {
     var answersRaw   = STATE.answers || {};
+    var preCoverage  = buildCoverage(answersRaw);
+    if (preCoverage.answered_questions !== preCoverage.total_questions) {
+      alert("Please complete all questions before submit (" + preCoverage.answered_questions + "/" + preCoverage.total_questions + ").");
+      return;
+    }
     var engineScores = computeEngineScores(answersRaw);
     var overallScore = computeOverallScore(engineScores);
     var gripScores   = computeGripScores(answersRaw);
@@ -689,11 +694,12 @@
         schema_version: CONFIG.schemaVersion,
         module: "di",
         module_name: "Data & Insights Deep Dive",
+        module_dimension: "P",
         questions_count: window.QUESTIONS.length,
         source: "DI Engine v" + CONFIG.schemaVersion,
         is_test:        !!isTest
       },
-      message: isTest ? "GSL Test Submission" : "GSL Official Submission",
+      message: isTest ? "DI Test Submission" : "DI Official Submission",
 
       // Top-level context
       email:          STATE.context.email          || "",
