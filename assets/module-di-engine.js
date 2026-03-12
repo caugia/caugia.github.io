@@ -52,6 +52,11 @@
       motion:         "",
       gtm_market:     "",
       revenue_model:  "",
+      acv_band:       "",
+      buying_complexity: "",
+      implementation: "",
+      category_maturity: "",
+      self_reported_constraint: "",
       grip_report_id: ""
     },
     answers: {},
@@ -92,7 +97,7 @@
   function safeText(v) { if (v === null || v === undefined) return ""; return String(v); }
   function isNonEmpty(v) { return safeText(v).trim().length > 0; }
   function totalSteps() { return 1 + (window.QUESTIONS ? window.QUESTIONS.length : 0); }
-  function totalContextPages() { return 2; }
+  function totalContextPages() { return 3; }
   function isContextStep() { return STATE.currentStep === 0; }
   function currentQuestionIndex() { return STATE.currentStep - 1; }
 
@@ -157,6 +162,43 @@
     try { return JSON.parse(s); } catch (_) { return null; }
   }
 
+  function optionsFromMap(map) {
+    return Object.keys(map || {}).map(function(key) {
+      return { value: key, label: map[key] };
+    });
+  }
+
+  function normalizeSelectValue(value, options) {
+    if (!isNonEmpty(value)) return "";
+    var raw = safeText(value).trim();
+    for (var i = 0; i < options.length; i++) {
+      var opt = options[i];
+      if (typeof opt === "string") {
+        if (raw === opt) return opt;
+      } else if (opt && (raw === opt.value || raw === opt.label)) {
+        return opt.value;
+      }
+    }
+    return raw;
+  }
+
+  function normalizeCalibrationContext_() {
+    var defs = window.CALIBRATION_QUESTIONS || {};
+    [
+      "motion",
+      "stage",
+      "acv_band",
+      "buying_complexity",
+      "implementation",
+      "category_maturity",
+      "self_reported_constraint"
+    ].forEach(function(key) {
+      var def = defs["ctx." + key];
+      if (!def || !def.options) return;
+      STATE.context[key] = normalizeSelectValue(STATE.context[key], optionsFromMap(def.options));
+    });
+  }
+
   function collectContextFallbacks() {
     var out = {
       email:          firstDomValue(CONTEXT_SELECTORS.email),
@@ -199,6 +241,7 @@
         STATE.context[k] = fallbackCtx[k];
       }
     });
+    normalizeCalibrationContext_();
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > totalSteps() - 1) STATE.currentStep = totalSteps() - 1;
     if (typeof STATE.contextPage !== "number" || STATE.contextPage < 1) STATE.contextPage = 1;
@@ -241,36 +284,58 @@
     if (!UI.kicker || !UI.title || !UI.sub || !UI.body) return;
 
     UI.kicker.innerText = "CONTEXT";
-    UI.title.innerText  = "Tell us about you and your company";
-    UI.sub.innerText    = "Context " + STATE.contextPage + " / " + totalContextPages() + " — not part of the 60-question score.";
-
-
+    var pageTitle = STATE.contextPage === 1
+      ? "Tell us about you and your company"
+      : STATE.contextPage === 2
+      ? "Company context"
+      : (window.CALIBRATION_UI && window.CALIBRATION_UI.page_title) || "Diagnostic Calibration";
+    var pageSubtitle = STATE.contextPage === 1
+      ? "Context 1 / " + totalContextPages() + " — not part of the 60-question score."
+      : STATE.contextPage === 2
+      ? "Context 2 / " + totalContextPages() + " — not part of the 60-question score."
+      : ((window.CALIBRATION_UI && window.CALIBRATION_UI.page_subtitle) || "These questions calibrate the diagnostic to your operating model so scores and benchmarks are interpreted correctly.")
+        + " Context 3 / " + totalContextPages() + " — not part of the 60-question score.";
+    UI.title.innerText  = pageTitle;
+    UI.sub.innerText    = pageSubtitle;
 
     // ── FIELD DEFINITIONS ──────────────────────────────────────────────────
     // Each entry: [key, label, type, options?]
     // type: "text" | "email" | "number" | "select"
     // options: array of strings (select only)
 
-    var p1 = STATE.contextPage === 1;
-    var fields = p1 ? [
-      ["fullname",  "Your full name",       "text"],
-      ["role",      "Your role / job title","text"],
-      ["email",     "Email address",        "email"],
-      ["company",   "Company name",         "text"],
-      ["arr",       "ARR",                  "number"],
-      ["segment",   "Target segment",       "text"],
-      ["language",  "Preferred language",   "select", ["EN","NL","FR","DE","ES","IT"]],
-      ["currency",  "Preferred currency",   "select", ["EUR (€)","USD ($)","GBP (£)","AUD (A$)","CAD (C$)"]]
-    ] : [
-      ["industry",        "Industry",                "text"],
-      ["total_employees", "Total employees (FTE)",   "number"],
-      ["year_founded",    "Year founded (YYYY)",     "number"],
-      ["hq_region",       "HQ region",               "text"],
-      ["stage",           "Company stage",           "select", ["Seed","Series A","Series B","Series C+","Bootstrapped"]],
-      ["motion",          "Primary GTM motion",      "select", ["Inbound","Outbound","PLG","Partner","Enterprise","Hybrid"]],
-      ["gtm_market",      "Primary GTM market",      "select", ["Home market only","Regional (2–5 countries)","Global"]],
-      ["revenue_model",   "Revenue model",           "select", ["Subscription (SaaS)","Usage-based","Hybrid","Services"]]
-    ];
+    var calibrationDefs = window.CALIBRATION_QUESTIONS || {};
+    var fields;
+    if (STATE.contextPage === 1) {
+      fields = [
+        ["fullname",  "Your full name",       "text"],
+        ["role",      "Your role / job title","text"],
+        ["email",     "Email address",        "email"],
+        ["company",   "Company name",         "text"],
+        ["arr",       "ARR",                  "number"],
+        ["segment",   "Target segment",       "text"],
+        ["language",  "Preferred language",   "select", ["EN","NL","FR","DE","ES","IT"]],
+        ["currency",  "Preferred currency",   "select", ["EUR (€)","USD ($)","GBP (£)","AUD (A$)","CAD (C$)"]]
+      ];
+    } else if (STATE.contextPage === 2) {
+      fields = [
+        ["industry",        "Industry",                "text"],
+        ["total_employees", "Total employees (FTE)",   "number"],
+        ["year_founded",    "Year founded (YYYY)",     "number"],
+        ["hq_region",       "HQ region",               "text"],
+        ["stage",           calibrationDefs["ctx.stage"] ? calibrationDefs["ctx.stage"].label : "Company stage", "select", calibrationDefs["ctx.stage"] ? optionsFromMap(calibrationDefs["ctx.stage"].options) : [{ value: "series_a", label: "Series A (finding repeatability)" },{ value: "series_b", label: "Series B (scaling GTM)" },{ value: "series_c_plus", label: "Series C+ (optimizing and expanding)" },{ value: "growth", label: "Growth / Pre-IPO" },{ value: "established", label: "Established / Post-IPO" }]],
+        ["motion",          calibrationDefs["ctx.motion"] ? calibrationDefs["ctx.motion"].label : "Primary GTM motion", "select", calibrationDefs["ctx.motion"] ? optionsFromMap(calibrationDefs["ctx.motion"].options) : [{ value: "plg", label: "Product-Led Growth (self-serve, trial, freemium)" },{ value: "inbound", label: "Inbound Sales-Assisted" },{ value: "outbound", label: "Outbound / SDR-led" },{ value: "enterprise", label: "Enterprise / Field Sales" },{ value: "partner", label: "Partner / Channel-Led" }]],
+        ["gtm_market",      "Primary GTM market",      "select", ["Home market only","Regional (2-5 countries)","Global"]],
+        ["revenue_model",   "Revenue model",           "select", ["Subscription (SaaS)","Usage-based","Hybrid","Services"]]
+      ];
+    } else {
+      fields = [
+        ["acv_band", calibrationDefs["ctx.acv_band"].label, "select", optionsFromMap(calibrationDefs["ctx.acv_band"].options)],
+        ["buying_complexity", calibrationDefs["ctx.buying_complexity"].label, "select", optionsFromMap(calibrationDefs["ctx.buying_complexity"].options)],
+        ["implementation", calibrationDefs["ctx.implementation"].label, "select", optionsFromMap(calibrationDefs["ctx.implementation"].options)],
+        ["category_maturity", calibrationDefs["ctx.category_maturity"].label, "select", optionsFromMap(calibrationDefs["ctx.category_maturity"].options)],
+        ["self_reported_constraint", calibrationDefs["ctx.self_reported_constraint"].label, "select", optionsFromMap(calibrationDefs["ctx.self_reported_constraint"].options)]
+      ];
+    }
 
     // ── BUILD HTML ─────────────────────────────────────────────────────────
     var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">';
@@ -283,12 +348,16 @@
 
       var inputHtml;
       if (type === "select") {
+        var selectedValue = normalizeSelectValue(STATE.context[key], opts);
+        if (selectedValue !== STATE.context[key]) STATE.context[key] = selectedValue;
         inputHtml = '<select id="ctx_' + key + '" class="gi-input" style="background:#fff;cursor:pointer;">'
           + '<option value="">Select...</option>'
           + opts.map(function(o) {
-              return '<option value="' + o + '"'
-                + (STATE.context[key] === o ? ' selected' : '')
-                + '>' + o + '</option>';
+              var value = typeof o === "string" ? o : o.value;
+              var labelText = typeof o === "string" ? o : o.label;
+              return '<option value="' + safeText(value).replace(/"/g, '&quot;') + '"'
+                + (selectedValue === value ? ' selected' : '')
+                + '>' + safeText(labelText) + '</option>';
             }).join('')
           + '</select>';
       } else {
@@ -416,13 +485,18 @@
   function validateCurrent() {
     if (isContextStep()) {
       if (STATE.contextPage === 1) {
-        if (!isNonEmpty(STATE.context.email) || !isNonEmpty(STATE.context.company)) {
-          alert("Please fill at least Email and Company.");
+        if (!isNonEmpty(STATE.context.email) || !isNonEmpty(STATE.context.company) || !isNonEmpty(STATE.context.arr)) {
+          alert("Please fill at least Email, Company and ARR.");
+          return false;
+        }
+      } else if (STATE.contextPage === 2) {
+        if (!isNonEmpty(STATE.context.stage) || !isNonEmpty(STATE.context.motion)) {
+          alert("Please fill at least Company Stage and Primary GTM Motion.");
           return false;
         }
       } else {
-        if (!isNonEmpty(STATE.context.stage) || !isNonEmpty(STATE.context.motion) || !isNonEmpty(STATE.context.arr)) {
-          alert("Please fill at least Stage, Motion and ARR.");
+        if (!isNonEmpty(STATE.context.acv_band) || !isNonEmpty(STATE.context.buying_complexity) || !isNonEmpty(STATE.context.implementation) || !isNonEmpty(STATE.context.category_maturity) || !isNonEmpty(STATE.context.self_reported_constraint)) {
+          alert("Please complete all Diagnostic Calibration questions.");
           return false;
         }
       }
@@ -488,7 +562,7 @@
     }
     if (UI.nextBtn) {
       if (isContextStep()) {
-        UI.nextBtn.innerText = STATE.contextPage === 1 ? "Next (Context 2/2)" : "Start Assessment";
+        UI.nextBtn.innerText = STATE.contextPage === 1 ? "Next (Context 2/3)" : STATE.contextPage === 2 ? "Next (Calibration)" : "Start Assessment";
       } else {
         UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
       }
@@ -545,6 +619,8 @@
           arr: "", segment: "", language: "EN", currency: "EUR (€)",
           industry: "", total_employees: "", year_founded: "", hq_region: "",
           stage: "", motion: "", gtm_market: "", revenue_model: "",
+          acv_band: "", buying_complexity: "", implementation: "",
+          category_maturity: "", self_reported_constraint: "",
           grip_report_id: ""
         }, parsed.context || {}),
         answers:   parsed.answers || {},
@@ -650,6 +726,11 @@
     out.q1__currency        = STATE.context.currency        || "EUR (€)";
     out.q1__gtm_market      = STATE.context.gtm_market      || "";
     out.q1__revenue_model   = STATE.context.revenue_model   || "";
+    out.ctx__acv_band       = STATE.context.acv_band        || "";
+    out.ctx__buying_complexity = STATE.context.buying_complexity || "";
+    out.ctx__implementation = STATE.context.implementation  || "";
+    out.ctx__category_maturity = STATE.context.category_maturity || "";
+    out.ctx__self_reported_constraint = STATE.context.self_reported_constraint || "";
 
     // GAS legacy keys
     out.q7      = STATE.context.stage   || "";
@@ -713,6 +794,11 @@
       currency:       STATE.context.currency       || "EUR (€)",
       gtm_market:     STATE.context.gtm_market     || "",
       revenue_model:  STATE.context.revenue_model  || "",
+      acv_band:       STATE.context.acv_band       || "",
+      buying_complexity: STATE.context.buying_complexity || "",
+      implementation: STATE.context.implementation || "",
+      category_maturity: STATE.context.category_maturity || "",
+      self_reported_constraint: STATE.context.self_reported_constraint || "",
       context:        STATE.context,
 
       answers:      answersForGas,
@@ -755,6 +841,8 @@
         lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
         lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
         lines.push("Context: stage=" + (STATE.context.stage || "-") + ", motion=" + (STATE.context.motion || "-") + ", company=" + (STATE.context.company || "-"));
+        lines.push("Calibration: acv=" + (STATE.context.acv_band || "-") + ", buying=" + (STATE.context.buying_complexity || "-") + ", implementation=" + (STATE.context.implementation || "-"));
+        lines.push("Category maturity: " + (STATE.context.category_maturity || "-") + " | Self-reported constraint: " + (STATE.context.self_reported_constraint || "-"));
         lines.push("Currency: " + (STATE.context.currency || "-") + " | Language: " + (STATE.context.language || "-"));
         lines.push("GTM market: " + (STATE.context.gtm_market || "-") + " | Revenue model: " + (STATE.context.revenue_model || "-"));
         alert("✅ GSL TEST SUCCESS!\n\n" + lines.join("\n"));
@@ -776,7 +864,8 @@
     if (isContextStep()) {
       var keysP1 = ["fullname","role","email","company","arr","segment","language","currency"];
       var keysP2 = ["industry","total_employees","year_founded","hq_region","stage","motion","gtm_market","revenue_model"];
-      var keys   = STATE.contextPage === 1 ? keysP1 : keysP2;
+      var keysP3 = ["acv_band","buying_complexity","implementation","category_maturity","self_reported_constraint"];
+      var keys   = STATE.contextPage === 1 ? keysP1 : STATE.contextPage === 2 ? keysP2 : keysP3;
       keys.forEach(function(k) { STATE.context[k] = ""; });
       renderQuestion();
       return;
@@ -796,6 +885,8 @@
       arr: "", segment: "", language: "EN", currency: "EUR (€)",
       industry: "", total_employees: "", year_founded: "", hq_region: "",
       stage: "", motion: "", gtm_market: "", revenue_model: "",
+      acv_band: "", buying_complexity: "", implementation: "",
+      category_maturity: "", self_reported_constraint: "",
       grip_report_id: ""
     };
     STATE.currentStep = 0;
