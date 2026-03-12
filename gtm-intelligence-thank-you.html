@@ -267,6 +267,36 @@
       text-align: left;
     }
 
+    .resume-box {
+      display: none;
+      margin: 0 auto 24px;
+      max-width: 420px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .resume-box h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .resume-box p {
+      margin: 0 0 14px;
+      font-size: 0.9rem;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .resume-meta {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
     @media (max-width: 900px) {
       .timeline-grid {
         grid-template-columns: 1fr;
@@ -313,6 +343,15 @@
           <p>2. Enter your code below, or click the link in the email to start directly.</p>
           <p>3. Complete the 265-question assessment (45 to 60 minutes). You can pause and resume.</p>
           <p>4. Your 45-page Intelligence Report is generated and delivered within one hour after submission.</p>
+        </div>
+
+        <div id="resumeBox" class="resume-box">
+          <h3>Resume your assessment</h3>
+          <p>
+            A saved access session was found in this browser. You can continue where you left off.
+          </p>
+          <button id="resumeBtn" class="btn btn-primary" style="width:100%;">Resume Assessment</button>
+          <span id="resumeMeta" class="resume-meta"></span>
         </div>
 
         <div id="accessGate" class="access-gate">
@@ -386,7 +425,9 @@
 
         <details>
           <summary>Can I pause and resume the assessment?</summary>
-          <p>Yes. Your progress saves automatically. Resume anytime using your access code.</p>
+          <p>
+            Yes. Your progress saves automatically. To resume, use the same browser and device where you started the assessment.
+          </p>
         </details>
 
         <details>
@@ -399,7 +440,9 @@
 
         <details>
           <summary>I closed this page. How do I return?</summary>
-          <p>Bookmark this page or use the link in your confirmation email. Enter your access code to continue.</p>
+          <p>
+            Return to this page using the same browser and device. If a saved session is found, you can resume directly.
+          </p>
         </details>
       </div>
 
@@ -432,10 +475,17 @@
     (function () {
       var VALIDATE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbyKobAAPtAmSVxi7gxlISbskien0eVt-hz_mQwz19feF86Uq8j_M0vhrKvsCK59Hdo/exec';
 
+      var STORAGE_RESUME_URL = 'caugia_resume_url';
+      var STORAGE_RESUME_SAVED_AT = 'caugia_resume_saved_at';
+
       var btn = document.getElementById('accessBtn');
       var input = document.getElementById('accessCode');
       var errorEl = document.getElementById('accessError');
       var loadingEl = document.getElementById('accessLoading');
+      var resumeBox = document.getElementById('resumeBox');
+      var resumeBtn = document.getElementById('resumeBtn');
+      var resumeMeta = document.getElementById('resumeMeta');
+
       var params = new URLSearchParams(window.location.search);
       var urlCode = params.get('code');
 
@@ -468,6 +518,56 @@
           .replace(/[^A-Z0-9-]/g, '');
       }
 
+      function saveResumeUrl(url) {
+        try {
+          localStorage.setItem(STORAGE_RESUME_URL, url);
+          localStorage.setItem(STORAGE_RESUME_SAVED_AT, new Date().toISOString());
+        } catch (e) {}
+      }
+
+      function getResumeUrl() {
+        try {
+          return localStorage.getItem(STORAGE_RESUME_URL) || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function getResumeSavedAt() {
+        try {
+          return localStorage.getItem(STORAGE_RESUME_SAVED_AT) || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function clearResumeUrl() {
+        try {
+          localStorage.removeItem(STORAGE_RESUME_URL);
+          localStorage.removeItem(STORAGE_RESUME_SAVED_AT);
+        } catch (e) {}
+      }
+
+      function formatResumeSavedAt(value) {
+        if (!value) return '';
+        var d = new Date(value);
+        if (isNaN(d.getTime())) return '';
+        return 'Saved in this browser on ' + d.toLocaleString();
+      }
+
+      function updateResumeUi() {
+        var resumeUrl = getResumeUrl();
+        var savedAt = getResumeSavedAt();
+
+        if (resumeUrl) {
+          resumeBox.style.display = 'block';
+          resumeMeta.textContent = formatResumeSavedAt(savedAt);
+        } else {
+          resumeBox.style.display = 'none';
+          resumeMeta.textContent = '';
+        }
+      }
+
       function redeemCode() {
         var code = normalizeCode(input.value);
         input.value = code;
@@ -498,6 +598,9 @@
           })
           .then(function (data) {
             if (data && data.valid && data.assessment_url) {
+              saveResumeUrl(data.assessment_url);
+              updateResumeUi();
+
               loadingEl.textContent = 'Access confirmed. Redirecting...';
               input.style.borderColor = '#16a34a';
 
@@ -505,6 +608,16 @@
                 window.location.href = data.assessment_url;
               }, 700);
 
+              return;
+            }
+
+            if (data && data.error && data.error.indexOf('already been used') !== -1 && getResumeUrl()) {
+              errorEl.textContent = 'This code has already been used in this browser. Use Resume Assessment to continue.';
+              errorEl.style.display = 'block';
+              loadingEl.style.display = 'none';
+              btn.disabled = false;
+              btn.textContent = 'Start Assessment';
+              updateResumeUi();
               return;
             }
 
@@ -527,6 +640,18 @@
         redeemCode();
       });
 
+      resumeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var resumeUrl = getResumeUrl();
+        if (!resumeUrl) {
+          clearResumeUrl();
+          updateResumeUi();
+          showError('No saved session was found in this browser.');
+          return;
+        }
+        window.location.href = resumeUrl;
+      });
+
       input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
           e.preventDefault();
@@ -540,6 +665,7 @@
       });
 
       setIdleState();
+      updateResumeUi();
     })();
   </script>
 </body>
