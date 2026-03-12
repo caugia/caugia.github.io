@@ -419,8 +419,7 @@
         <img src="assets/logo-final.png" class="gi-logo" alt="Caugia logo" width="32" height="32">
         <span class="gi-header-brand">Caugia</span>
       </div>
-      <div class="gi-header-right">
-      </div>
+      <div class="gi-header-right"></div>
     </div>
   </header>
 
@@ -477,9 +476,7 @@
           <div class="gi-nav-row">
             <button class="gi-btn" id="gi-prev-btn">Previous</button>
             <button class="gi-btn gi-primary" id="gi-next-btn">Next</button>
-
             <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Submit Assessment</button>
-
             <button class="gi-btn" id="gi-clear-btn">Clear</button>
           </div>
 
@@ -516,6 +513,8 @@
     var VALIDATE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbyKobAAPtAmSVxi7gxlISbskien0eVt-hz_mQwz19feF86Uq8j_M0vhrKvsCK59Hdo/exec';
     var STORAGE_RESUME_URL = 'caugia_resume_url';
     var STORAGE_RESUME_SAVED_AT = 'caugia_resume_saved_at';
+    var STORAGE_ACTIVE_TOKEN = 'caugia_assessment_active_token';
+    var STORAGE_ASSESSMENT_STATE = 'caugia_assessment_v9_state';
 
     function clearResumeState() {
       try {
@@ -528,6 +527,25 @@
       try {
         localStorage.setItem(STORAGE_RESUME_URL, window.location.href);
         localStorage.setItem(STORAGE_RESUME_SAVED_AT, new Date().toISOString());
+      } catch (e) {}
+    }
+
+    function resetAssessmentStateForNewToken(currentToken) {
+      try {
+        var previousToken = localStorage.getItem(STORAGE_ACTIVE_TOKEN) || '';
+        if (previousToken && currentToken && previousToken !== currentToken) {
+          localStorage.removeItem(STORAGE_ASSESSMENT_STATE);
+        }
+        if (currentToken) {
+          localStorage.setItem(STORAGE_ACTIVE_TOKEN, currentToken);
+        }
+      } catch (e) {}
+    }
+
+    function clearAssessmentState() {
+      try {
+        localStorage.removeItem(STORAGE_ACTIVE_TOKEN);
+        localStorage.removeItem(STORAGE_ASSESSMENT_STATE);
       } catch (e) {}
     }
 
@@ -592,42 +610,69 @@
       });
     }
 
+    function markSubmitted(token) {
+      return fetch(VALIDATE_WEBHOOK, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: JSON.stringify({
+          action: 'mark_submitted',
+          token: token
+        }),
+        redirect: 'follow'
+      })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('HTTP_' + response.status);
+        }
+        return response.json();
+      });
+    }
+
     window.CAUGIA_ACCESS_GRANTED = false;
     window.CAUGIA_ACCESS_READY = (function () {
       var token = getToken();
 
       if (!token) {
         clearResumeState();
+        clearAssessmentState();
         showDenied('Your access token is missing. Please use the link from your email or enter your access code again.');
         return Promise.resolve(false);
       }
+
+      resetAssessmentStateForNewToken(token);
 
       return validateToken(token)
         .then(function (data) {
           if (!data || !data.valid) {
             clearResumeState();
+            clearAssessmentState();
             showDenied((data && data.error) || 'Your access token is invalid or expired.');
             return false;
           }
 
           window.CAUGIA_ACCESS_CONTEXT = data;
+          window.CAUGIA_ACCESS_TOKEN = token;
           saveResumeState();
           showApp();
           return true;
         })
         .catch(function () {
           clearResumeState();
+          clearAssessmentState();
           showDenied('We could not verify your access right now. Please try again or contact contact@caugia.com.');
           return false;
         });
     })();
+
+    window.CAUGIA_MARK_SUBMITTED = markSubmitted;
   })();
 </script>
 
 <script src="assets/QUESTIONS.js?v=1"></script>
 
 <script>
-// TEKSTEN INGEKORT VOOR VAST KADER
 const PILLAR_META = {
   0:{name:"Context", desc:"Context provides the foundation for interpreting the rest of the assessment. By capturing essential details about your company, the system adjusts recommendations to your specific reality."},
   1:{name:"GTM Strategy & Leadership", desc:"GTM Strategy measures how clearly direction and priorities are defined. It evaluates whether your long-term vision is translated into actionable roadmaps that guide resource allocation."},
@@ -647,7 +692,6 @@ const PILLAR_META = {
 
 <script src="assets/engine.js?v=8002"></script>
 
-<!-- ═══ WORLD CLASS UPGRADES (patches engine.js, does not modify it) ═══ -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   window.CAUGIA_ACCESS_READY.then(function(accessGranted) {
@@ -655,6 +699,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var jumpFirstBtn = document.getElementById("gi-jump-first");
     var jumpLastBtn = document.getElementById("gi-jump-last");
+    var submitBtn = document.getElementById("gi-submit-btn");
 
     if (jumpFirstBtn && window.QUESTIONS) {
       jumpFirstBtn.addEventListener("click", function() {
@@ -815,6 +860,14 @@ document.addEventListener("DOMContentLoaded", function() {
             descBox.style.opacity = "1";
           }, 150);
         }
+      });
+    }
+
+    if (submitBtn && window.CAUGIA_MARK_SUBMITTED && window.CAUGIA_ACCESS_TOKEN) {
+      submitBtn.addEventListener("click", function() {
+        setTimeout(function() {
+          window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN).catch(function() {});
+        }, 0);
       });
     }
 
