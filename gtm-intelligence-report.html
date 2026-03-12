@@ -514,6 +514,22 @@
 <script>
   (function () {
     var VALIDATE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbyKobAAPtAmSVxi7gxlISbskien0eVt-hz_mQwz19feF86Uq8j_M0vhrKvsCK59Hdo/exec';
+    var STORAGE_RESUME_URL = 'caugia_resume_url';
+    var STORAGE_RESUME_SAVED_AT = 'caugia_resume_saved_at';
+
+    function clearResumeState() {
+      try {
+        localStorage.removeItem(STORAGE_RESUME_URL);
+        localStorage.removeItem(STORAGE_RESUME_SAVED_AT);
+      } catch (e) {}
+    }
+
+    function saveResumeState() {
+      try {
+        localStorage.setItem(STORAGE_RESUME_URL, window.location.href);
+        localStorage.setItem(STORAGE_RESUME_SAVED_AT, new Date().toISOString());
+      } catch (e) {}
+    }
 
     function showDenied(message) {
       var denied = document.getElementById('access-denied');
@@ -581,6 +597,7 @@
       var token = getToken();
 
       if (!token) {
+        clearResumeState();
         showDenied('Your access token is missing. Please use the link from your email or enter your access code again.');
         return Promise.resolve(false);
       }
@@ -588,15 +605,18 @@
       return validateToken(token)
         .then(function (data) {
           if (!data || !data.valid) {
+            clearResumeState();
             showDenied((data && data.error) || 'Your access token is invalid or expired.');
             return false;
           }
 
           window.CAUGIA_ACCESS_CONTEXT = data;
+          saveResumeState();
           showApp();
           return true;
         })
         .catch(function () {
+          clearResumeState();
           showDenied('We could not verify your access right now. Please try again or contact contact@caugia.com.');
           return false;
         });
@@ -633,7 +653,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.CAUGIA_ACCESS_READY.then(function(accessGranted) {
     if (!accessGranted) return;
 
-    // ── 1. JUMP BUTTONS ──────────────────────────────────
     var jumpFirstBtn = document.getElementById("gi-jump-first");
     var jumpLastBtn = document.getElementById("gi-jump-last");
 
@@ -702,7 +721,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
-    // ── 2. VISUAL FEEDBACK ON OPTION SELECTION ───────────
     var body = document.getElementById("gi-question-body");
     if (body) {
       var observer = new MutationObserver(function() {
@@ -723,7 +741,6 @@ document.addEventListener("DOMContentLoaded", function() {
       observer.observe(body, { childList: true, subtree: true });
     }
 
-    // ── 3. PILLAR PROGRESS ON NAV ITEMS ──────────────────
     function updatePillarProgress() {
       var state = null;
       try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
@@ -779,7 +796,6 @@ document.addEventListener("DOMContentLoaded", function() {
     updatePillarProgress();
     setInterval(updatePillarProgress, 2000);
 
-    // ── 4. INTERACTIVE PILLAR INFO ───────────────────────
     var list = document.getElementById("gi-left-pillar-list");
     var titleBox = document.getElementById("gi-pillar-name");
     var descBox = document.getElementById("gi-pillar-desc");
@@ -802,7 +818,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
-    // ── 5. KEYBOARD NAVIGATION ───────────────────────────
     document.addEventListener("keydown", function(e) {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
 
