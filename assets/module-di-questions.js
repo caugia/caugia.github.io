@@ -1,5 +1,110 @@
 // DI Deep Dive Questions — 60 questions, 6 engines
 // Auto-generated from DI v1.1 spec
+var CALIBRATION_QUESTIONS = {
+  'ctx.motion': {
+    order: 1,
+    label: 'Primary GTM Motion',
+    prompt: 'What best describes your primary go-to-market motion?',
+    type: 'mc',
+    options: {
+      plg: 'Product-Led Growth (self-serve, trial, freemium)',
+      inbound: 'Inbound Sales-Assisted',
+      outbound: 'Outbound / SDR-led',
+      enterprise: 'Enterprise / Field Sales',
+      partner: 'Partner / Channel-Led'
+    }
+  },
+  'ctx.acv_band': {
+    order: 2,
+    label: 'Average Contract Value',
+    prompt: 'What is your average contract value (ACV)?',
+    type: 'mc',
+    options: {
+      sub_10k: 'Under $10K',
+      '10k_50k': '$10K - $50K',
+      '50k_150k': '$50K - $150K',
+      above_150k: 'Above $150K'
+    }
+  },
+  'ctx.stage': {
+    order: 3,
+    label: 'Company Stage',
+    prompt: 'What best describes your current growth stage?',
+    type: 'mc',
+    options: {
+      series_a: 'Series A (finding repeatability)',
+      series_b: 'Series B (scaling GTM)',
+      series_c_plus: 'Series C+ (optimizing and expanding)',
+      growth: 'Growth / Pre-IPO',
+      established: 'Established / Post-IPO'
+    }
+  },
+  'ctx.buying_complexity': {
+    order: 4,
+    label: 'Buying Process Complexity',
+    prompt: 'How would you describe your typical buying process?',
+    type: 'mc',
+    options: {
+      single: 'Single buyer / champion only',
+      small_committee: '2-3 stakeholders',
+      committee: '4-6 stakeholders',
+      enterprise_committee: '7+ stakeholders, formal procurement'
+    }
+  },
+  'ctx.implementation': {
+    order: 5,
+    label: 'Implementation Model',
+    prompt: 'How does your product get implemented after a sale?',
+    type: 'mc',
+    options: {
+      self_serve: 'Fully self-serve, no implementation required',
+      light_touch: 'Guided onboarding, under 2 weeks',
+      managed: 'Managed implementation, 2-8 weeks',
+      complex: 'Complex implementation, 2+ months'
+    }
+  },
+  'ctx.category_maturity': {
+    order: 6,
+    label: 'Category Maturity',
+    prompt: 'How would you describe awareness of your product category?',
+    type: 'mc',
+    options: {
+      creating: 'We are creating the category - buyers do not know they need this yet',
+      emerging: 'Category exists but is not well understood',
+      established: 'Buyers actively search for solutions like ours',
+      commoditized: 'Category is mature, differentiation is hard'
+    }
+  },
+  'ctx.self_reported_constraint': {
+    order: 7,
+    label: 'Self-Reported Primary Constraint',
+    prompt: 'Where do you feel the biggest growth constraint today?',
+    type: 'mc',
+    options: {
+      pipeline: 'Not enough qualified pipeline',
+      conversion: 'Pipeline exists but conversion is too low',
+      retention: 'We win but struggle to retain and expand',
+      execution: 'Strategy is clear but execution is inconsistent',
+      clarity: 'We lack strategic clarity on where to focus'
+    },
+    scope_note: 'INTEGRITY SIGNAL ONLY. Does not influence scoring, archetype, or benchmarks.'
+  }
+};
+
+var CALIBRATION_UI = {
+  page_title: 'Diagnostic Calibration',
+  page_subtitle: 'These questions calibrate the diagnostic to your operating model so scores and benchmarks are interpreted correctly.',
+  question_order: [
+    'ctx.motion',
+    'ctx.acv_band',
+    'ctx.stage',
+    'ctx.buying_complexity',
+    'ctx.implementation',
+    'ctx.category_maturity',
+    'ctx.self_reported_constraint'
+  ]
+};
+
 var QUESTIONS = [
   {
     "id": 1001,
