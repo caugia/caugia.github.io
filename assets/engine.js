@@ -761,7 +761,12 @@
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
-    const contradictionData = computeContradictions(pillarScores);
+    function computeContradictions() {
+  return {
+    contradiction_count: 0,
+    contradictions: []
+  };
+}
 
     const answersMerged = Object.assign({}, answers, pillarScores, {
       score_total: overallScore,
