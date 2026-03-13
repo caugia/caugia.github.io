@@ -373,89 +373,72 @@
   }
 
   async function goNext() {
-  if (!validateCurrent()) return;
+    if (!validateCurrent()) return;
 
-  if (STATE.currentStep < window.QUESTIONS.length - 1) {
-    STATE.currentStep++;
-    renderQuestion();
-    scrollQuestionCardTop();
-  } else {
-    await submitAssessmentFlow();
+    if (STATE.currentStep < window.QUESTIONS.length - 1) {
+      STATE.currentStep++;
+      renderQuestion();
+      scrollQuestionCardTop();
+    } else {
+      await submitAssessmentFlow();
+    }
   }
-}
 
   async function submitAssessmentFlow() {
-  try {
+    try {
+      if (typeof window.CAUGIA_MARK_SUBMITTED === "function" && window.CAUGIA_ACCESS_TOKEN) {
+        await window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN);
+      }
 
-    if (typeof window.CAUGIA_MARK_SUBMITTED === "function" && window.CAUGIA_ACCESS_TOKEN) {
-      await window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN);
+      await submitData(false);
+    } catch (err) {
+      console.error("Submit failed:", err);
+      alert("Submission failed. Please try again or contact contact@caugia.com.");
     }
-
-    if (typeof submitAssessment === "function") {
-      await submitAssessment();
-      return;
-    }
-
-    if (typeof sendAssessment === "function") {
-      await sendAssessment();
-      return;
-    }
-
-    if (typeof handleSubmit === "function") {
-      await handleSubmit();
-      return;
-    }
-
-    alert("Assessment submitted, but no production submit handler was found.");
-
-  } catch (err) {
-    console.error("Submit failed:", err);
-    alert("Submission failed. Please try again or contact contact@caugia.com.");
   }
-}
 
-function goPrev() {
-  if (STATE.currentStep > 0) {
-    STATE.currentStep--;
-    renderQuestion();
-    scrollQuestionCardTop();
+  function goPrev() {
+    if (STATE.currentStep > 0) {
+      STATE.currentStep--;
+      renderQuestion();
+      scrollQuestionCardTop();
+    }
   }
-}
 
-function updateNavState() {
-  if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-  if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
-}
+  function updateNavState() {
+    if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
+    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+  }
 
-function updateProgress() {
-  const total = window.QUESTIONS.length;
-  const current = STATE.currentStep + 1;
-  const pct = Math.round((current / total) * 100);
+  function updateProgress() {
+    const total = window.QUESTIONS.length;
+    const current = STATE.currentStep + 1;
+    const pct = Math.round((current / total) * 100);
 
-  if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
-  if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
-  if (UI.progressBar) UI.progressBar.style.width = pct + "%";
-}
+    if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
+    if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
+    if (UI.progressBar) UI.progressBar.style.width = pct + "%";
+  }
 
-function updateSidebar() {
-  if (!UI.pillarList) return;
+  function updateSidebar() {
+    if (!UI.pillarList) return;
 
-  const q = getCurrentQuestion();
-  if (!q) return;
+    const q = getCurrentQuestion();
+    if (!q) return;
 
-  const currentPillar = Number(q.pillar);
-  const items = UI.pillarList.querySelectorAll("li");
+    const currentPillar = Number(q.pillar);
+    const items = UI.pillarList.querySelectorAll("li");
 
-  items.forEach((item, index) => {
-    const dataP = Number(item.getAttribute("data-p"));
-    const itemPillar = Number.isFinite(dataP) ? dataP : index;
-    const active = itemPillar === currentPillar;
+    items.forEach((item, index) => {
+      const dataP = Number(item.getAttribute("data-p"));
+      const itemPillar = Number.isFinite(dataP) ? dataP : index;
+      const active = itemPillar === currentPillar;
 
-    item.classList.toggle("active", active);
-    item.style.fontWeight = active ? "bold" : "normal";
-    item.style.color = active ? "#0056b3" : "";
-  });
-}
+      item.classList.toggle("active", active);
+      item.style.fontWeight = active ? "bold" : "normal";
+      item.style.color = active ? "#0056b3" : "";
+    });
+  }
 
   // --- 9. PERSISTENCE ---
   function saveState() {
@@ -773,14 +756,14 @@ function updateSidebar() {
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
 
-    const answersQ = buildLegacyAnswersQOnly(answersRaw);
+    const answers = buildLegacyAnswersQOnly(answersRaw);
     const pillarScores = computePillarScores(answersRaw);
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
     const contradictionData = computeContradictions(pillarScores);
 
-    const answers = Object.assign({}, answersQ, pillarScores, {
+    const answersMerged = Object.assign({}, answers, pillarScores, {
       score_total: overallScore,
       grip_g: gripScores.G,
       grip_r: gripScores.R,
@@ -820,7 +803,7 @@ function updateSidebar() {
 
       customer: customer,
       context: context,
-      answers: answers,
+      answers: answersMerged,
       question_map: buildQuestionMapLegacy(),
       contradictions: contradictionData
     };
@@ -855,6 +838,7 @@ function updateSidebar() {
     } catch (e) {
       alert("❌ Fout bij versturen: " + e.message);
       console.error(e);
+      throw e;
     } finally {
       setButtonState(btn, isTest ? "TEST SUBMIT" : "Submit Assessment", false);
     }
@@ -894,12 +878,12 @@ function updateSidebar() {
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
 
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", () => submitData(false));
+  if (UI.submitBtn) UI.submitBtn.addEventListener("click", submitAssessmentFlow);
   if (UI.testBtn) {
     console.log("✅ Test Button Bound");
-    UI.testBtn.addEventListener("click", (e) => {
+    UI.testBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      submitData(true);
+      await submitData(true);
     });
   }
 
