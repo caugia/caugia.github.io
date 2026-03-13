@@ -372,7 +372,7 @@
     return true;
   }
 
-  async function goNext() {
+  function goNext() {
     if (!validateCurrent()) return;
 
     if (STATE.currentStep < window.QUESTIONS.length - 1) {
@@ -380,20 +380,7 @@
       renderQuestion();
       scrollQuestionCardTop();
     } else {
-      await submitAssessmentFlow();
-    }
-  }
-
-  async function submitAssessmentFlow() {
-    try {
-      if (typeof window.CAUGIA_MARK_SUBMITTED === "function" && window.CAUGIA_ACCESS_TOKEN) {
-        await window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN);
-      }
-
-      await submitData(false);
-    } catch (err) {
-      console.error("Submit failed:", err);
-      alert("Submission failed. Please try again or contact contact@caugia.com.");
+      alert("Assessment complete. Use the Test Submit button to send.");
     }
   }
 
@@ -756,19 +743,13 @@
     const customer = buildLegacyCustomer(answersRaw);
     const context = buildLegacyContext(answersRaw);
 
-    const answers = buildLegacyAnswersQOnly(answersRaw);
+    const answersQ = buildLegacyAnswersQOnly(answersRaw);
     const pillarScores = computePillarScores(answersRaw);
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
-    function computeContradictions() {
-  return {
-    contradiction_count: 0,
-    contradictions: []
-  };
-}
 
-    const answersMerged = Object.assign({}, answers, pillarScores, {
+    const answers = Object.assign({}, answersQ, pillarScores, {
       score_total: overallScore,
       grip_g: gripScores.G,
       grip_r: gripScores.R,
@@ -808,9 +789,8 @@
 
       customer: customer,
       context: context,
-      answers: answersMerged,
-      question_map: buildQuestionMapLegacy(),
-      contradictions: contradictionData
+      answers: answers,
+      question_map: buildQuestionMapLegacy()
     };
 
     console.log("🚀 Sending Payload to Make:", payload);
@@ -843,7 +823,6 @@
     } catch (e) {
       alert("❌ Fout bij versturen: " + e.message);
       console.error(e);
-      throw e;
     } finally {
       setButtonState(btn, isTest ? "TEST SUBMIT" : "Submit Assessment", false);
     }
@@ -883,12 +862,12 @@
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
 
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", submitAssessmentFlow);
+  if (UI.submitBtn) UI.submitBtn.addEventListener("click", () => submitData(false));
   if (UI.testBtn) {
     console.log("✅ Test Button Bound");
-    UI.testBtn.addEventListener("click", async (e) => {
+    UI.testBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      await submitData(true);
+      submitData(true);
     });
   }
 
