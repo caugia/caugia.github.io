@@ -1,11 +1,10 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.1 (DETERMINISTIC + SCORES)
-   - Single key standard: q{questionId} and q{questionId}__{fieldName}
-   - Full report includes all questions (answered + unanswered)
-   - Sends V9 payload + legacy-friendly blocks
-   - Reliable state schema guard
-   - Robust sidebar mapping via data-p (with index fallback)
-   - Group validation supports optional fields via field.required
+   CAUGIA INTELLIGENCE ENGINE v9.2
+   Changes vs v9.1:
+   - Finish button triggers direct submission (no alert blocker)
+   - Success shows popup: "Assessment submitted, report per email"
+   - Test Submit button fully removed
+   - Submit button hidden (submission now via Finish flow only)
    =========================================================== */
 
 (function () {
@@ -16,14 +15,14 @@
     webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.1"
+    schemaVersion: "9.2"
   };
 
   // --- 2. STATE ---
   let STATE = {
     schemaVersion: CONFIG.schemaVersion,
     currentStep: 0,
-    answers: {}, // keys: q{ID} or q{ID}__{fieldName}
+    answers: {},
     completed: false
   };
 
@@ -43,12 +42,14 @@
     nextBtn: document.getElementById("gi-next-btn"),
 
     submitBtn: document.getElementById("gi-submit-btn"),
-    testBtn: document.getElementById("gi-test-submit-btn"),
 
     clearBtn: document.getElementById("gi-clear-btn"),
     saveBtn: document.getElementById("gi-save-btn"),
     resetBtn: document.getElementById("gi-reset-btn")
   };
+
+  // Hide submit button — submission is handled via Finish flow
+  if (UI.submitBtn) UI.submitBtn.style.display = "none";
 
   // --- 4. CONSTANTS / HELPERS ---
   const PILLAR_NAMES = [
@@ -149,7 +150,81 @@
     return out;
   }
 
-  // --- 5. INITIALIZATION ---
+  // --- 5. SUCCESS POPUP ---
+  function showSuccessPopup() {
+    // Overlay
+    const overlay = document.createElement("div");
+    overlay.id = "gi-success-overlay";
+    overlay.style.cssText = [
+      "position:fixed",
+      "inset:0",
+      "background:rgba(0,0,0,0.55)",
+      "display:flex",
+      "align-items:center",
+      "justify-content:center",
+      "z-index:9999",
+      "font-family:inherit"
+    ].join(";");
+
+    // Card
+    const card = document.createElement("div");
+    card.style.cssText = [
+      "background:#fff",
+      "border-radius:12px",
+      "padding:40px 36px",
+      "max-width:480px",
+      "width:90%",
+      "text-align:center",
+      "box-shadow:0 20px 60px rgba(0,0,0,0.2)"
+    ].join(";");
+
+    // Checkmark icon
+    const icon = document.createElement("div");
+    icon.style.cssText = [
+      "width:64px",
+      "height:64px",
+      "border-radius:50%",
+      "background:#0056b3",
+      "display:flex",
+      "align-items:center",
+      "justify-content:center",
+      "margin:0 auto 24px"
+    ].join(";");
+    icon.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    const heading = document.createElement("h2");
+    heading.innerText = "Assessment submitted";
+    heading.style.cssText = "margin:0 0 12px;font-size:1.4rem;color:#0f172a;font-weight:700";
+
+    const body = document.createElement("p");
+    body.innerText = "Thank you. Your GTM Intelligence Report will be delivered to your email address within 24 hours.";
+    body.style.cssText = "margin:0 0 28px;font-size:0.97rem;color:#475569;line-height:1.6";
+
+    const closeBtn = document.createElement("button");
+    closeBtn.innerText = "Close";
+    closeBtn.style.cssText = [
+      "background:#0056b3",
+      "color:#fff",
+      "border:none",
+      "border-radius:6px",
+      "padding:12px 32px",
+      "font-size:0.95rem",
+      "font-weight:600",
+      "cursor:pointer"
+    ].join(";");
+    closeBtn.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+    });
+
+    card.appendChild(icon);
+    card.appendChild(heading);
+    card.appendChild(body);
+    card.appendChild(closeBtn);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+  }
+
+  // --- 6. INITIALIZATION ---
   function init() {
     if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
       console.error("❌ QUESTIONS.js not loaded or empty.");
@@ -169,7 +244,7 @@
     setInterval(saveState, CONFIG.autoSaveInterval);
   }
 
-  // --- 6. RENDER LOGIC ---
+  // --- 7. RENDER LOGIC ---
   function renderQuestion() {
     const q = getCurrentQuestion();
     if (!q) return;
@@ -206,7 +281,7 @@
     updateSidebar();
   }
 
-  // --- 7. INPUT BUILDERS ---
+  // --- 8. INPUT BUILDERS ---
   function renderGroup(q) {
     if (!UI.body) return;
 
@@ -342,7 +417,7 @@
     UI.body.appendChild(input);
   }
 
-  // --- 8. NAVIGATION / VALIDATION ---
+  // --- 9. NAVIGATION / VALIDATION ---
   function validateCurrent() {
     const q = getCurrentQuestion();
     if (!q) return false;
@@ -375,12 +450,15 @@
   function goNext() {
     if (!validateCurrent()) return;
 
-    if (STATE.currentStep < window.QUESTIONS.length - 1) {
+    const isLastQuestion = STATE.currentStep === window.QUESTIONS.length - 1;
+
+    if (isLastQuestion) {
+      // Last question answered — submit directly
+      submitData();
+    } else {
       STATE.currentStep++;
       renderQuestion();
       scrollQuestionCardTop();
-    } else {
-      alert("Assessment complete. Use the Test Submit button to send.");
     }
   }
 
@@ -393,8 +471,10 @@
   }
 
   function updateNavState() {
+    const isLastQuestion = STATE.currentStep === window.QUESTIONS.length - 1;
+
     if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+    if (UI.nextBtn) UI.nextBtn.innerText = isLastQuestion ? "Finish & Submit" : "Next";
   }
 
   function updateProgress() {
@@ -427,7 +507,7 @@
     });
   }
 
-  // --- 9. PERSISTENCE ---
+  // --- 10. PERSISTENCE ---
   function saveState() {
     if (STATE.completed) return;
     try {
@@ -462,7 +542,7 @@
     }
   }
 
-  // --- 10. PAYLOAD BUILDERS ---
+  // --- 11. PAYLOAD BUILDERS ---
   function buildQuestionsMap() {
     return window.QUESTIONS.map((q) => ({
       id: q.id,
@@ -541,7 +621,7 @@
     };
   }
 
-  // --- 11. LEGACY BUILDERS ---
+  // --- 12. LEGACY BUILDERS ---
   function buildLegacyCustomer(answersRaw) {
     return {
       fullname: answersRaw["q1__fullname"] || "",
@@ -732,8 +812,8 @@
     return map;
   }
 
-  // --- 12. SUBMISSION ---
-  async function submitData(isTest) {
+  // --- 13. SUBMISSION ---
+  async function submitData() {
     const answersRaw = normalizeAnswersRaw(STATE.answers || {});
 
     const questionsMap = buildQuestionsMap();
@@ -769,9 +849,9 @@
         schema_version: CONFIG.schemaVersion,
         questions_count: window.QUESTIONS.length,
         source: "Engine v" + CONFIG.schemaVersion,
-        is_test: !!isTest
+        is_test: false
       },
-      message: isTest ? "Test Submission" : "Official Submission",
+      message: "Official Submission",
 
       answers_raw: answersRaw,
       questions_map: questionsMap,
@@ -793,10 +873,13 @@
       question_map: buildQuestionMapLegacy()
     };
 
-    console.log("🚀 Sending Payload to Make:", payload);
+    console.log("Submitting payload to Make.com...");
 
-    const btn = isTest ? UI.testBtn : UI.submitBtn;
-    setButtonState(btn, "Sending...", true);
+    // Disable Finish button during submission
+    if (UI.nextBtn) {
+      UI.nextBtn.innerText = "Submitting...";
+      UI.nextBtn.disabled = true;
+    }
 
     try {
       const res = await fetch(CONFIG.webhookUrl, {
@@ -807,28 +890,24 @@
 
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
-      if (isTest) {
-        const lines = [];
-        lines.push("score_total: " + overallScore);
-        lines.push("confidence_range: " + confidence.confidence_range);
-        lines.push("grip: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
-        lines.push("coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
-        lines.push("pillar score coverage: " + confidence.pillar_score_coverage_pct + "%");
-        alert("✅ TEST SUCCESVOL!\n\n" + lines.join("\n") + "\n\nCheck Make.com mapping on payload.answers.*");
-      } else {
-        STATE.completed = true;
-        localStorage.removeItem(CONFIG.storageKey);
-        window.location.href = "gtm-intelligence-thank-you.html";
-      }
+      // Clear saved state and show success popup
+      STATE.completed = true;
+      localStorage.removeItem(CONFIG.storageKey);
+      showSuccessPopup();
+
     } catch (e) {
-      alert("❌ Fout bij versturen: " + e.message);
+      alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
       console.error(e);
-    } finally {
-      setButtonState(btn, isTest ? "TEST SUBMIT" : "Submit Assessment", false);
+
+      // Re-enable button so user can retry
+      if (UI.nextBtn) {
+        UI.nextBtn.innerText = "Finish & Submit";
+        UI.nextBtn.disabled = false;
+      }
     }
   }
 
-  // --- 13. CLEAR / RESET / MANUAL SAVE ---
+  // --- 14. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
     const q = getCurrentQuestion();
     if (!q) return;
@@ -855,26 +934,17 @@
 
   function manualSave() {
     saveState();
-    alert("✅ Saved.");
+    alert("Saved.");
   }
 
-  // --- 14. EVENT BINDING ---
+  // --- 15. EVENT BINDING ---
   if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
-
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", () => submitData(false));
-  if (UI.testBtn) {
-    console.log("✅ Test Button Bound");
-    UI.testBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      submitData(true);
-    });
-  }
 
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
-  // --- 15. START ---
+  // --- 16. START ---
   init();
 })();
