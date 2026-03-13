@@ -748,6 +748,7 @@
     const overallScore = computeOverallScore(pillarScores);
     const gripScores = computeGripScores(pillarScores);
     const confidence = computeConfidenceRange(pillarScores, coverage);
+    const contradictionData = computeContradictions(pillarScores);
 
     const answers = Object.assign({}, answersQ, pillarScores, {
       score_total: overallScore,
@@ -790,7 +791,8 @@
       customer: customer,
       context: context,
       answers: answers,
-      question_map: buildQuestionMapLegacy()
+      question_map: buildQuestionMapLegacy(),
+      contradictions: contradictionData
     };
 
     console.log("🚀 Sending Payload to Make:", payload);
