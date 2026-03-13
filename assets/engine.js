@@ -372,60 +372,90 @@
     return true;
   }
 
-  function goNext() {
-    if (!validateCurrent()) return;
+  async function goNext() {
+  if (!validateCurrent()) return;
 
-    if (STATE.currentStep < window.QUESTIONS.length - 1) {
-      STATE.currentStep++;
-      renderQuestion();
-      scrollQuestionCardTop();
-    } else {
-      alert("Assessment complete. Use the Test Submit button to send.");
+  if (STATE.currentStep < window.QUESTIONS.length - 1) {
+    STATE.currentStep++;
+    renderQuestion();
+    scrollQuestionCardTop();
+  } else {
+    await submitAssessmentFlow();
+  }
+}
+
+  async function submitAssessmentFlow() {
+  try {
+
+    if (typeof window.CAUGIA_MARK_SUBMITTED === "function" && window.CAUGIA_ACCESS_TOKEN) {
+      await window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN);
     }
-  }
 
-  function goPrev() {
-    if (STATE.currentStep > 0) {
-      STATE.currentStep--;
-      renderQuestion();
-      scrollQuestionCardTop();
+    if (typeof submitAssessment === "function") {
+      await submitAssessment();
+      return;
     }
+
+    if (typeof sendAssessment === "function") {
+      await sendAssessment();
+      return;
+    }
+
+    if (typeof handleSubmit === "function") {
+      await handleSubmit();
+      return;
+    }
+
+    alert("Assessment submitted, but no production submit handler was found.");
+
+  } catch (err) {
+    console.error("Submit failed:", err);
+    alert("Submission failed. Please try again or contact contact@caugia.com.");
   }
+}
 
-  function updateNavState() {
-    if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
-    if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+function goPrev() {
+  if (STATE.currentStep > 0) {
+    STATE.currentStep--;
+    renderQuestion();
+    scrollQuestionCardTop();
   }
+}
 
-  function updateProgress() {
-    const total = window.QUESTIONS.length;
-    const current = STATE.currentStep + 1;
-    const pct = Math.round((current / total) * 100);
+function updateNavState() {
+  if (UI.prevBtn) UI.prevBtn.style.display = STATE.currentStep === 0 ? "none" : "inline-block";
+  if (UI.nextBtn) UI.nextBtn.innerText = STATE.currentStep === window.QUESTIONS.length - 1 ? "Finish" : "Next";
+}
 
-    if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
-    if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
-    if (UI.progressBar) UI.progressBar.style.width = pct + "%";
-  }
+function updateProgress() {
+  const total = window.QUESTIONS.length;
+  const current = STATE.currentStep + 1;
+  const pct = Math.round((current / total) * 100);
 
-  function updateSidebar() {
-    if (!UI.pillarList) return;
+  if (UI.progressCount) UI.progressCount.innerText = current + " / " + total;
+  if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
+  if (UI.progressBar) UI.progressBar.style.width = pct + "%";
+}
 
-    const q = getCurrentQuestion();
-    if (!q) return;
+function updateSidebar() {
+  if (!UI.pillarList) return;
 
-    const currentPillar = Number(q.pillar);
-    const items = UI.pillarList.querySelectorAll("li");
+  const q = getCurrentQuestion();
+  if (!q) return;
 
-    items.forEach((item, index) => {
-      const dataP = Number(item.getAttribute("data-p"));
-      const itemPillar = Number.isFinite(dataP) ? dataP : index;
-      const active = itemPillar === currentPillar;
+  const currentPillar = Number(q.pillar);
+  const items = UI.pillarList.querySelectorAll("li");
 
-      item.classList.toggle("active", active);
-      item.style.fontWeight = active ? "bold" : "normal";
-      item.style.color = active ? "#0056b3" : "";
-    });
-  }
+  items.forEach((item, index) => {
+    const dataP = Number(item.getAttribute("data-p"));
+    const itemPillar = Number.isFinite(dataP) ? dataP : index;
+    const active = itemPillar === currentPillar;
+
+    item.classList.toggle("active", active);
+    item.style.fontWeight = active ? "bold" : "normal";
+    item.style.color = active ? "#0056b3" : "";
+  });
+}
 
   // --- 9. PERSISTENCE ---
   function saveState() {
