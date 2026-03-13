@@ -149,16 +149,6 @@
     return out;
   }
 
-  async function markSubmittedBestEffort() {
-    try {
-      if (typeof window.CAUGIA_MARK_SUBMITTED === "function" && window.CAUGIA_ACCESS_TOKEN) {
-        await window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN);
-      }
-    } catch (e) {
-      console.warn("mark_submitted failed but submit will continue:", e);
-    }
-  }
-
   // --- 5. INITIALIZATION ---
   function init() {
     if (!window.QUESTIONS || !Array.isArray(window.QUESTIONS) || window.QUESTIONS.length === 0) {
@@ -382,7 +372,7 @@
     return true;
   }
 
-  async function goNext() {
+  function goNext() {
     if (!validateCurrent()) return;
 
     if (STATE.currentStep < window.QUESTIONS.length - 1) {
@@ -390,7 +380,7 @@
       renderQuestion();
       scrollQuestionCardTop();
     } else {
-      await submitData(false);
+      alert("Assessment complete. Use the Test Submit button to send.");
     }
   }
 
@@ -826,7 +816,6 @@
         lines.push("pillar score coverage: " + confidence.pillar_score_coverage_pct + "%");
         alert("✅ TEST SUCCESVOL!\n\n" + lines.join("\n") + "\n\nCheck Make.com mapping on payload.answers.*");
       } else {
-        await markSubmittedBestEffort();
         STATE.completed = true;
         localStorage.removeItem(CONFIG.storageKey);
         window.location.href = "gtm-intelligence-thank-you.html";
