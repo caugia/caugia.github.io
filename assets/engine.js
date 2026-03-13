@@ -1,11 +1,9 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.3
-   Changes vs v9.2:
-   - Q11020 option E shortened in questions file (separate fix)
-   - Finish button appears on last question only; Next works normally on all others
-   - Finish → confirmation popup (Yes / Cancel) → submit → success popup
-   - Forward navigation (Next) restored — no longer auto-submits on last question
-   - Sidebar fix: works with data-p attribute AND index fallback (Pillar 0 = index 0)
+   CAUGIA INTELLIGENCE ENGINE v9.4
+   Changes vs v9.3:
+   - Schema version check removed from loadState: answers always
+     restored from localStorage regardless of engine version,
+     so Ctrl+R / redeployment never wipes saved progress
    =========================================================== */
 
 (function () {
@@ -16,7 +14,7 @@
     webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
     storageKey: "caugia_assessment_v9_state",
     autoSaveInterval: 1000,
-    schemaVersion: "9.3"
+    schemaVersion: "9.4"
   };
 
   // --- 2. STATE ---
@@ -511,10 +509,8 @@
       const parsed = JSON.parse(raw);
       if (!parsed || typeof parsed !== "object") return;
       if (!parsed.answers || typeof parsed.answers !== "object") return;
-      if (parsed.schemaVersion !== CONFIG.schemaVersion) {
-        console.warn("Saved state schema mismatch — ignoring.");
-        return;
-      }
+      // No schema version check: always restore saved answers so
+      // Ctrl+R and engine updates never wipe the user's progress.
       STATE = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep:   typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
