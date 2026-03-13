@@ -1,8 +1,7 @@
 /* ===========================================================
-   QUESTIONS — MASTER QUESTION ENGINE v3.1
-   Changes vs v3.0:
-   - Em-dashes ( — ) replaced throughout with colons or commas
-   - Questions 8017, 9011, 9020, 11020 option E shortened
+   QUESTIONS — MASTER QUESTION ENGINE v3.2
+   Changes vs v3.1:
+   - Q11020 option E further shortened to fit UI
    =========================================================== */
 
 const QUESTIONS = [
@@ -2829,7 +2828,7 @@ const QUESTIONS = [
     "Underperformers are eventually addressed but the process is inconsistent and slow",
     "A formal PIP process exists but activation is delayed and outcomes are unpredictable",
     "Underperformance is identified within a quarter and addressed through a documented improvement plan within 30 days",
-    "A high-performance culture: underperformance flagged via leading indicators, improvement plans activated within 30 days, outcomes tracked consistently"
+    "Leading indicators flag underperformance early, improvement plans activate within 30 days, and outcomes are tracked consistently"
   ]
 },
 
