@@ -608,13 +608,27 @@
       revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
       primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
 
-      Q6: answersRaw["q6"] || "", Q7: answersRaw["q7"] || "", Q8: answersRaw["q8"] || "",
-      Q9: answersRaw["q9"] || "", Q10: answersRaw["q10"] || "", Q11: answersRaw["q11"] || "",
-      Q12: answersRaw["q12"] || "", Q13: answersRaw["q13"] || "", Q14: answersRaw["q14"] || "",
-      Q15: answersRaw["q15"] || "", Q16: answersRaw["q16"] || "", Q17: answersRaw["q17"] || "",
-      Q18: answersRaw["q18"] || "", Q19: answersRaw["q19"] || "", Q20: answersRaw["q20"] || "",
-      Q21: answersRaw["q21"] || "", Q22: answersRaw["q22"] || "", Q23: answersRaw["q23"] || "",
-      Q24: answersRaw["q24"] || "", Q25: answersRaw["q25"] || ""
+      // Pipeline & Product Intelligence (Q6 — new group)
+      discovery_to_demo: answersRaw["q6__discovery_to_demo"] || "",
+      demo_to_poc: answersRaw["q6__demo_to_poc"] || "",
+      poc_to_close: answersRaw["q6__poc_to_close"] || "",
+      technical_validation_loss: answersRaw["q6__technical_validation_loss"] || "",
+      activation_30d: answersRaw["q6__activation_30d"] || "",
+      feature_penetration: answersRaw["q6__feature_penetration"] || "",
+      time_to_value: answersRaw["q6__time_to_value"] || "",
+      product_expansion_pct: answersRaw["q6__product_expansion_pct"] || "",
+
+      // MC context questions (hernummerd Q7–Q25)
+      Q7: answersRaw["q7"] || "", Q8: answersRaw["q8"] || "",
+      Q9: answersRaw["q9"] || "", Q10: answersRaw["q10"] || "",
+      Q11: answersRaw["q11"] || "", Q12: answersRaw["q12"] || "",
+      Q13: answersRaw["q13"] || "", Q14: answersRaw["q14"] || "",
+      Q15: answersRaw["q15"] || "", Q16: answersRaw["q16"] || "",
+      Q17: answersRaw["q17"] || "", Q18: answersRaw["q18"] || "",
+      Q19: answersRaw["q19"] || "", Q20: answersRaw["q20"] || "",
+      Q21: answersRaw["q21"] || "", Q22: answersRaw["q22"] || "",
+      Q23: answersRaw["q23"] || "", Q24: answersRaw["q24"] || "",
+      Q25: answersRaw["q25"] || ""
     };
   }
 
