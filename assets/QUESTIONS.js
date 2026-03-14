@@ -105,16 +105,16 @@ const QUESTIONS = [
   pillar: 0,
   type: "group",
   title: "Pipeline & Product Intelligence",
-  subtitle: "Stage conversion and product adoption — estimates are fine. Type 999 if a field does not apply to your business.",
+  subtitle: "Estimates are fine. Leave blank or enter 999 if a field does not apply.",
   fields: [
-    { name: "discovery_to_demo", label: "Discovery → Demo conversion % (typical: 30–70% | 999 = not applicable)" },
-    { name: "demo_to_poc", label: "Demo → POC / Trial conversion % (typical: 20–50% | 999 = not applicable)" },
-    { name: "poc_to_close", label: "POC → Close conversion % (typical: 40–70% | 999 = not applicable)" },
-    { name: "technical_validation_loss", label: "% deals lost at technical validation (typical: 5–30% | 999 = not applicable)" },
-    { name: "activation_30d", label: "% users active 30 days post-onboarding (typical: 40–80% | 999 = not applicable)" },
-    { name: "feature_penetration", label: "% accounts using 3+ core features (typical: 20–60% | 999 = not applicable)" },
-    { name: "time_to_value", label: "Avg days to first value moment (typical: 7–90 days | 999 = not applicable)" },
-    { name: "product_expansion_pct", label: "% expansion revenue driven by product usage (typical: 10–50% | 999 = not applicable)" }
+    { name: "discovery_to_demo", label: "Discovery → Demo conversion %" },
+    { name: "demo_to_poc", label: "Demo → POC / Trial conversion %" },
+    { name: "poc_to_close", label: "POC → Close conversion %" },
+    { name: "technical_validation_loss", label: "% deals lost at technical validation" },
+    { name: "activation_30d", label: "% users active 30 days post-onboarding" },
+    { name: "feature_penetration", label: "% accounts using 3+ core features" },
+    { name: "time_to_value", label: "Avg days to first value moment" },
+    { name: "product_expansion_pct", label: "% expansion revenue driven by product usage" }
   ]
 },
    
