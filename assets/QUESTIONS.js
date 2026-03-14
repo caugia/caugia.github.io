@@ -103,6 +103,24 @@ const QUESTIONS = [
 {
   id: 6,
   pillar: 0,
+  type: "group",
+  title: "Pipeline & Product Intelligence",
+  subtitle: "Stage conversion and product adoption — estimates are fine",
+  fields: [
+    { name: "discovery_to_demo", label: "Discovery → Demo conversion % (typical range: 30–70%)" },
+    { name: "demo_to_poc", label: "Demo → POC / Trial conversion % (typical range: 20–50%)" },
+    { name: "poc_to_close", label: "POC → Close conversion % (typical range: 40–70%)" },
+    { name: "technical_validation_loss", label: "% deals lost at technical validation (typical range: 5–30%)" },
+    { name: "activation_30d", label: "% users active 30 days post-onboarding (typical range: 40–80%)" },
+    { name: "feature_penetration", label: "% accounts using 3+ core features (typical range: 20–60%)" },
+    { name: "time_to_value", label: "Avg days to first value moment (typical range: 7–90 days)" },
+    { name: "product_expansion_pct", label: "% expansion revenue driven by product usage (typical range: 10–50%)" }
+  ]
+},
+   
+{
+  id: 7,
+  pillar: 0,
   type: "radio",
   title: "What best describes your primary GTM motion?",
   options: [
@@ -116,7 +134,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 7,
+  id: 8,
   pillar: 0,
   type: "radio",
   title: "Your primary revenue model",
@@ -130,7 +148,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 8,
+  id: 9,
   pillar: 0,
   type: "radio",
   title: "Primary Target Segment (ACV)",
@@ -143,7 +161,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 9,
+  id: 10,
   pillar: 0,
   type: "radio",
   title: "Who is your primary Economic Buyer?",
@@ -157,7 +175,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 10,
+  id: 11,
   pillar: 0,
   type: "radio",
   title: "Sales Cycle Complexity",
@@ -170,7 +188,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 11,
+  id: 12,
   pillar: 0,
   type: "radio",
   title: "Funding Stage",
@@ -185,7 +203,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 12,
+  id: 13,
   pillar: 0,
   type: "radio",
   title: "Product Maturity",
@@ -198,14 +216,14 @@ const QUESTIONS = [
 },
 
 {
-  id: 13,
+  id: 14,
   pillar: 0,
   type: "text",
   title: "Primary Geographic Market(s)"
 },
 
 {
-  id: 14,
+  id: 15,
   pillar: 0,
   type: "radio",
   title: "Product Category Type",
@@ -219,7 +237,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 15,
+  id: 16,
   pillar: 0,
   type: "radio",
   title: "Competitive Landscape",
@@ -232,7 +250,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 16,
+  id: 17,
   pillar: 0,
   type: "radio",
   title: "Strategic Focus for the next 12 months",
@@ -246,7 +264,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 17,
+  id: 18,
   pillar: 0,
   type: "radio",
   title: "Primary Friction Point (The Symptom)",
@@ -260,7 +278,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 18,
+  id: 19,
   pillar: 0,
   type: "radio",
   title: "Internal Bottleneck (The Cause)",
@@ -274,7 +292,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 19,
+  id: 20,
   pillar: 0,
   type: "radio",
   title: "Recent Trigger Event",
@@ -288,7 +306,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 20,
+  id: 21,
   pillar: 0,
   type: "radio",
   title: "Desired Assessment Outcome",
@@ -302,7 +320,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 21,
+  id: 22,
   pillar: 0,
   type: "radio",
   title: "How would you describe your product complexity?",
@@ -310,7 +328,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 22,
+  id: 23,
   pillar: 0,
   type: "radio",
   title: "Market Adoption Phase",
@@ -323,7 +341,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 23,
+  id: 24,
   pillar: 0,
   type: "radio",
   title: "Tech Stack Maturity",
@@ -336,7 +354,7 @@ const QUESTIONS = [
 },
 
 {
-  id: 24,
+  id: 25,
   pillar: 0,
   type: "radio",
   title: "Primary reporting currency",
@@ -348,13 +366,6 @@ const QUESTIONS = [
     "CAD ($)",
     "Other"
   ]
-},
-
-{
-  id: 25,
-  pillar: 0,
-  type: "textarea",
-  title: "Anything else specific we should know about your context?"
 },
 
 /* ===========================================================
