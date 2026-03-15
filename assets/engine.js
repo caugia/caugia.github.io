@@ -277,6 +277,12 @@ const CONFIG = {
   // --- 8. INPUT BUILDERS ---
   function renderGroup(q) {
     if (!UI.body) return;
+    if (q.subtitle) {
+      const sub = document.createElement("p");
+      sub.innerText = safeText(q.subtitle);
+      sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 16px 0;line-height:1.5;";
+      UI.body.appendChild(sub);
+    }
     const grid = document.createElement("div");
     grid.className = "gi-group-grid";
     grid.style.cssText = "display:grid;grid-template-columns:" + (window.innerWidth < 768 ? "1fr" : "1fr 1fr") + ";gap:20px";
