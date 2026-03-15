@@ -10,12 +10,12 @@
   "use strict";
 
   // --- 1. CONFIGURATION ---
-  const CONFIG = {
-    webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
-    storageKey: "caugia_assessment_v9_state",
-    autoSaveInterval: 1000,
-    schemaVersion: "9.4"
-  };
+const CONFIG = {
+  webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
+  storageKey: "caugia_assessment_v9_state",
+  autoSaveInterval: 1000,
+  schemaVersion: "10.0"
+};
 
   // --- 2. STATE ---
   let STATE = {
