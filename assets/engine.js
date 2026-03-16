@@ -791,6 +791,16 @@ const CONFIG = {
 
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
+      const result = await res.json();
+
+      if (result.status !== "ok") {
+        throw new Error(result.message || "GAS returned status=error");
+      }
+
+      if (!result.pdf) {
+        throw new Error("Report generation finished without a PDF URL");
+      }
+
       STATE.completed = true;
       localStorage.removeItem(CONFIG.storageKey);
       showSuccessPopup();
