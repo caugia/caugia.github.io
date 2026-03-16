@@ -931,7 +931,7 @@ var QUESTIONS = [
     "title": "CRM data entry compliance --- what percentage of deals have all key fields populated?",
     "sub": "Does your infrastructure ENABLE scale or CREATE friction?",
     "options": [
-      "\\<30%",
+      "<30%",
       "30-50%",
       "50-70%",
       "70-90%",
