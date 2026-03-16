@@ -11,7 +11,7 @@
 
   // --- 1. CONFIGURATION ---
 const CONFIG = {
-  webhookUrl: "https://script.google.com/macros/s/AKfycbzmq_pAkKwZi6leSKkZmZFMDG-C-heh2SWYZm_5ogR1AiAHwYnmVolGbiF3zQPiGds/exec",
+  webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
   storageKey: "caugia_assessment_v9_state",
   autoSaveInterval: 1000,
   schemaVersion: "10.0"
