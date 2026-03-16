@@ -150,7 +150,7 @@ var QUESTIONS = [
     "title": "What percentage of AEs can articulate the sales process stages and exit criteria?",
     "sub": "Is your sales process REAL or just a CRM stage list?",
     "options": [
-      "\\<25%",
+      "<25%",
       "25-50%",
       "50-75%",
       "75-90%",
