@@ -75,12 +75,16 @@
     progressBar:     document.getElementById("gi-progress-bar"),
     prevBtn:         document.getElementById("gi-prev-btn"),
     nextBtn:         document.getElementById("gi-next-btn"),
+    finishBtn:       document.getElementById("gi-finish-btn"),
     submitBtn:       document.getElementById("gi-submit-btn"),
     testBtn:         document.getElementById("gi-test-submit-btn"),
     clearBtn:        document.getElementById("gi-clear-btn"),
     saveBtn:         document.getElementById("gi-save-btn"),
     resetBtn:        document.getElementById("gi-reset-btn")
   };
+
+  // Hide legacy submit button - submission handled via Finish flow
+  if (UI.submitBtn) UI.submitBtn.style.display = "none";
 
   // --- 4. ENGINE NAMES ---
   const ENGINE_NAMES = {
@@ -112,6 +116,111 @@
     btn.innerText = label;
     btn.disabled = !!disabled;
   }
+
+  function showConfirmPopup(onConfirm) {
+    var overlay = document.createElement("div");
+    overlay.style.cssText = [
+      "position:fixed", "inset:0", "background:rgba(0,0,0,0.55)",
+      "display:flex", "align-items:center", "justify-content:center",
+      "z-index:9999", "font-family:inherit"
+    ].join(";");
+
+    var card = document.createElement("div");
+    card.style.cssText = [
+      "background:#fff", "border-radius:12px", "padding:36px 32px",
+      "max-width:440px", "width:90%", "text-align:center",
+      "box-shadow:0 20px 60px rgba(0,0,0,0.2)"
+    ].join(";");
+
+    var heading = document.createElement("h2");
+    heading.innerText = "Ready to submit?";
+    heading.style.cssText = "margin:0 0 12px;font-size:1.3rem;color:#0f172a;font-weight:700";
+
+    var body = document.createElement("p");
+    body.innerText = "You are about to submit your assessment. Once submitted, your answers cannot be changed.";
+    body.style.cssText = "margin:0 0 28px;font-size:0.95rem;color:#475569;line-height:1.6";
+
+    var btnRow = document.createElement("div");
+    btnRow.style.cssText = "display:flex;gap:12px;justify-content:center";
+
+    var cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "Go back";
+    cancelBtn.style.cssText = [
+      "background:#f1f5f9", "color:#334155", "border:none",
+      "border-radius:6px", "padding:12px 28px",
+      "font-size:0.95rem", "font-weight:600", "cursor:pointer"
+    ].join(";");
+    cancelBtn.addEventListener("click", function() { document.body.removeChild(overlay); });
+
+    var confirmBtn = document.createElement("button");
+    confirmBtn.innerText = "Yes, submit";
+    confirmBtn.style.cssText = [
+      "background:#0056b3", "color:#fff", "border:none",
+      "border-radius:6px", "padding:12px 28px",
+      "font-size:0.95rem", "font-weight:600", "cursor:pointer"
+    ].join(";");
+    confirmBtn.addEventListener("click", function() {
+      document.body.removeChild(overlay);
+      onConfirm();
+    });
+
+    btnRow.appendChild(cancelBtn);
+    btnRow.appendChild(confirmBtn);
+    card.appendChild(heading);
+    card.appendChild(body);
+    card.appendChild(btnRow);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+  }
+
+  function showSuccessPopup() {
+    var overlay = document.createElement("div");
+    overlay.style.cssText = [
+      "position:fixed", "inset:0", "background:rgba(0,0,0,0.55)",
+      "display:flex", "align-items:center", "justify-content:center",
+      "z-index:9999", "font-family:inherit"
+    ].join(";");
+
+    var card = document.createElement("div");
+    card.style.cssText = [
+      "background:#fff", "border-radius:12px", "padding:40px 36px",
+      "max-width:480px", "width:90%", "text-align:center",
+      "box-shadow:0 20px 60px rgba(0,0,0,0.2)"
+    ].join(";");
+
+    var icon = document.createElement("div");
+    icon.style.cssText = [
+      "width:64px", "height:64px", "border-radius:50%",
+      "background:#0056b3", "display:flex", "align-items:center",
+      "justify-content:center", "margin:0 auto 24px"
+    ].join(";");
+    icon.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    var heading = document.createElement("h2");
+    heading.innerText = "Assessment submitted";
+    heading.style.cssText = "margin:0 0 12px;font-size:1.4rem;color:#0f172a;font-weight:700";
+
+    var body = document.createElement("p");
+    body.innerText = "Thank you. Your report will be delivered to your email address within 24 hours.";
+    body.style.cssText = "margin:0 0 28px;font-size:0.97rem;color:#475569;line-height:1.6";
+
+    var closeBtn = document.createElement("button");
+    closeBtn.innerText = "Close";
+    closeBtn.style.cssText = [
+      "background:#0056b3", "color:#fff", "border:none",
+      "border-radius:6px", "padding:12px 32px",
+      "font-size:0.95rem", "font-weight:600", "cursor:pointer"
+    ].join(";");
+    closeBtn.addEventListener("click", function() { document.body.removeChild(overlay); });
+
+    card.appendChild(icon);
+    card.appendChild(heading);
+    card.appendChild(body);
+    card.appendChild(closeBtn);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+  }
+
 
   function scrollQuestionCardTop() {
     var card = document.getElementById("gi-question-card");
@@ -529,8 +638,6 @@
       STATE.currentStep++;
       renderQuestion();
       scrollQuestionCardTop();
-    } else {
-      alert("Assessment complete. Use the Test Submit button to send.");
     }
   }
 
@@ -555,19 +662,62 @@
     }
   }
 
+  function onFinishClick() {
+    if (!validateCurrent()) return;
+    showConfirmPopup(function() { submitData(); });
+  }
+
   function updateNavState() {
+    var last = !isContextStep() && STATE.currentStep === totalSteps() - 1;
+
     if (UI.prevBtn) {
       var hidePrev = isContextStep() && STATE.contextPage === 1;
       UI.prevBtn.style.display = hidePrev ? "none" : "inline-block";
     }
     if (UI.nextBtn) {
       if (isContextStep()) {
+        UI.nextBtn.style.display = "inline-block";
         UI.nextBtn.innerText = STATE.contextPage === 1 ? "Next (Context 2/3)" : STATE.contextPage === 2 ? "Next (Calibration)" : "Start Assessment";
       } else {
-        UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
+        UI.nextBtn.style.display = last ? "none" : "inline-block";
+        UI.nextBtn.innerText = "Next";
       }
     }
+    if (UI.finishBtn) {
+      UI.finishBtn.style.display = last ? "inline-block" : "none";
+    } else {
+      var dynFinish = document.getElementById("gi-dynamic-finish-btn");
+      if (last) {
+        if (!dynFinish) {
+          dynFinish = document.createElement("button");
+          dynFinish.id = "gi-dynamic-finish-btn";
+          dynFinish.innerText = "Finish";
+          if (UI.nextBtn) {
+            dynFinish.className = UI.nextBtn.className;
+            dynFinish.style.cssText = UI.nextBtn.style.cssText;
+          } else {
+            dynFinish.style.cssText = [
+              "background:#0056b3", "color:#fff", "border:none",
+              "border-radius:6px", "padding:12px 28px",
+              "font-size:0.95rem", "font-weight:600", "cursor:pointer"
+            ].join(";");
+          }
+          dynFinish.addEventListener("click", onFinishClick);
+          if (UI.nextBtn && UI.nextBtn.parentNode) {
+            UI.nextBtn.parentNode.insertBefore(dynFinish, UI.nextBtn.nextSibling);
+          } else if (UI.prevBtn && UI.prevBtn.parentNode) {
+            UI.prevBtn.parentNode.appendChild(dynFinish);
+          }
+        }
+        dynFinish.style.display = "inline-block";
+      } else if (dynFinish) {
+        dynFinish.style.display = "none";
+      }
+    }
+    if (UI.submitBtn) UI.submitBtn.style.display = "none";
+    if (UI.testBtn) UI.testBtn.style.display = "none";
   }
+
 
   function updateProgress() {
     var total    = window.QUESTIONS.length;
@@ -742,7 +892,7 @@
   }
 
   // --- 11. SUBMISSION ---
-  async function submitData(isTest) {
+  async function submitData() {
     var answersRaw   = STATE.answers || {};
     var preCoverage  = buildCoverage(answersRaw);
     if (preCoverage.answered_questions !== preCoverage.total_questions) {
@@ -778,9 +928,9 @@
         module_dimension: "P",
         questions_count: window.QUESTIONS.length,
         source: "DI Engine v" + CONFIG.schemaVersion,
-        is_test:        !!isTest
+        is_test: false
       },
-      message: isTest ? "DI Test Submission" : "DI Official Submission",
+      message: "DI Official Submission",
 
       // Top-level context
       email:          STATE.context.email          || "",
@@ -821,8 +971,8 @@
     };
 
     console.log("🚀 GSL Payload:", payload);
-    var btn = isTest ? UI.testBtn : UI.submitBtn;
-    setButtonState(btn, "Sending...", true);
+    var btn = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
+    setButtonState(btn, "Submitting...", true);
 
     try {
       var res = await fetch(CONFIG.webhookUrl, {
@@ -831,31 +981,14 @@
         body:    JSON.stringify(payload)
       });
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
-
-      if (isTest) {
-        var lines = [];
-        lines.push("GSL Overall: " + overallScore);
-        for (var e = 1; e <= 6; e++) {
-          lines.push("  E" + e + " " + engineNameByIndex(e) + ": " + engineScores["engine_" + e]);
-        }
-        lines.push("GRIP: G=" + gripScores.G + " R=" + gripScores.R + " I=" + gripScores.I + " P=" + gripScores.P);
-        lines.push("Coverage: " + coverage.answered_questions + "/" + coverage.total_questions + " (" + coverage.completion_rate + "%)");
-        lines.push("Context: stage=" + (STATE.context.stage || "-") + ", motion=" + (STATE.context.motion || "-") + ", company=" + (STATE.context.company || "-"));
-        lines.push("Calibration: acv=" + (STATE.context.acv_band || "-") + ", buying=" + (STATE.context.buying_complexity || "-") + ", implementation=" + (STATE.context.implementation || "-"));
-        lines.push("Category maturity: " + (STATE.context.category_maturity || "-") + " | Self-reported constraint: " + (STATE.context.self_reported_constraint || "-"));
-        lines.push("Currency: " + (STATE.context.currency || "-") + " | Language: " + (STATE.context.language || "-"));
-        lines.push("GTM market: " + (STATE.context.gtm_market || "-") + " | Revenue model: " + (STATE.context.revenue_model || "-"));
-        alert("✅ GSL TEST SUCCESS!\n\n" + lines.join("\n"));
-      } else {
-        STATE.completed = true;
-        localStorage.removeItem(CONFIG.storageKey);
-        window.location.href = "module-di-thank-you.html";
-      }
+      STATE.completed = true;
+      localStorage.removeItem(CONFIG.storageKey);
+      showSuccessPopup();
     } catch (e) {
       alert("❌ Error: " + e.message);
       console.error(e);
     } finally {
-      setButtonState(btn, isTest ? "TEST SUBMIT" : "Submit Assessment", false);
+      setButtonState(btn, "Finish", false);
     }
   }
 
@@ -903,11 +1036,7 @@
   // --- 13. EVENT BINDING ---
   if (UI.nextBtn)   UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn)   UI.prevBtn.addEventListener("click", goPrev);
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { submitData(false); });
-  if (UI.testBtn) {
-    console.log("✅ GSL Test Button Bound");
-    UI.testBtn.addEventListener("click", function(e) { e.preventDefault(); submitData(true); });
-  }
+  if (UI.finishBtn) UI.finishBtn.addEventListener("click", onFinishClick);
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn)  UI.saveBtn.addEventListener("click", manualSave);
