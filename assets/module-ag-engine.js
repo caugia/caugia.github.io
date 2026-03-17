@@ -113,6 +113,10 @@
     btn.disabled = !!disabled;
   }
 
+  function confirmFinalSubmission() {
+    return window.confirm("Are you sure you want to submit this assessment? You will be taken to the thank-you page after submission.");
+  }
+
   function scrollQuestionCardTop() {
     var card = document.getElementById("gi-question-card");
     if (card) card.scrollTop = 0;
@@ -530,7 +534,8 @@
       renderQuestion();
       scrollQuestionCardTop();
     } else {
-      alert("Assessment complete. Use the Test Submit button to send.");
+      if (!confirmFinalSubmission()) return;
+      submitData(false);
     }
   }
 
@@ -567,6 +572,8 @@
         UI.nextBtn.innerText = STATE.currentStep === totalSteps() - 1 ? "Finish" : "Next";
       }
     }
+    if (UI.submitBtn) UI.submitBtn.style.display = "none";
+    if (UI.testBtn) UI.testBtn.style.display = "none";
   }
 
   function updateProgress() {
@@ -821,7 +828,7 @@
     };
 
     console.log("🚀 GSL Payload:", payload);
-    var btn = isTest ? UI.testBtn : UI.submitBtn;
+    var btn = isTest ? UI.testBtn : (UI.nextBtn || UI.submitBtn);
     setButtonState(btn, "Sending...", true);
 
     try {
@@ -855,7 +862,7 @@
       alert("❌ Error: " + e.message);
       console.error(e);
     } finally {
-      setButtonState(btn, isTest ? "TEST SUBMIT" : "Submit Assessment", false);
+      setButtonState(btn, isTest ? "TEST SUBMIT" : "Finish", false);
     }
   }
 
@@ -903,11 +910,7 @@
   // --- 13. EVENT BINDING ---
   if (UI.nextBtn)   UI.nextBtn.addEventListener("click", goNext);
   if (UI.prevBtn)   UI.prevBtn.addEventListener("click", goPrev);
-  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { submitData(false); });
-  if (UI.testBtn) {
-    console.log("✅ GSL Test Button Bound");
-    UI.testBtn.addEventListener("click", function(e) { e.preventDefault(); submitData(true); });
-  }
+  if (UI.submitBtn) UI.submitBtn.addEventListener("click", function() { if (confirmFinalSubmission()) submitData(false); });
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn)  UI.saveBtn.addEventListener("click", manualSave);
