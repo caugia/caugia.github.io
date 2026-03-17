@@ -209,7 +209,7 @@ const CONFIG = {
     heading.style.cssText = "margin:0 0 12px;font-size:1.4rem;color:#0f172a;font-weight:700";
 
     const body = document.createElement("p");
-    body.innerText = "Thank you. Your GTM Intelligence Report will be delivered to your email address within 24 hours.";
+    body.innerText = "Thank you. Your GTM Intelligence Report will be delivered to your email address within a few minutes.";
     body.style.cssText = "margin:0 0 28px;font-size:0.97rem;color:#475569;line-height:1.6";
 
     const closeBtn = document.createElement("button");
