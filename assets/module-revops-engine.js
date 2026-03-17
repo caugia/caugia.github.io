@@ -201,7 +201,7 @@
     heading.style.cssText = "margin:0 0 12px;font-size:1.4rem;color:#0f172a;font-weight:700";
 
     var body = document.createElement("p");
-    body.innerText = "Thank you. Your report will be delivered to your email address within 24 hours.";
+    body.innerText = "Thank you. Your report will arrive in your inbox within a few minutes.";
     body.style.cssText = "margin:0 0 28px;font-size:0.97rem;color:#475569;line-height:1.6";
 
     var closeBtn = document.createElement("button");
@@ -1024,9 +1024,19 @@
         body:    JSON.stringify(payload)
       });
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
+
+      var result = await res.json();
+      if (result.status !== "ok") {
+        throw new Error(result.message || "GAS returned status=error");
+      }
+      if (!result.pdf) {
+        throw new Error("Report generation finished without a PDF URL");
+      }
+
       STATE.completed = true;
       localStorage.removeItem(CONFIG.storageKey);
       showSuccessPopup();
+
     } catch (e) {
       alert("❌ Error: " + e.message);
       console.error(e);
