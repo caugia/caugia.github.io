@@ -732,7 +732,7 @@ const CONFIG = {
     return map;
   }
 
-  // --- 13. SUBMISSION ---
+    // --- 13. SUBMISSION ---
   async function submitData() {
     const answersRaw   = normalizeAnswersRaw(STATE.answers || {});
     const questionsMap = buildQuestionsMap();
@@ -767,55 +767,68 @@ const CONFIG = {
         is_test: false
       },
       message: "Official Submission",
-      answers_raw: answersRaw, questions_map: questionsMap,
-      full_report: fullReport, coverage: coverage,
-      grip_scores: gripScores, pillar_scores: pillarScores,
+      answers_raw: answersRaw,
+      questions_map: questionsMap,
+      full_report: fullReport,
+      coverage: coverage,
+      grip_scores: gripScores,
+      pillar_scores: pillarScores,
       overall_score: overallScore,
-      scoring: { pillar_scores: pillarScores, overall_score: overallScore, confidence_range: confidence },
-      customer: customer, context: context, answers: answers,
+      scoring: {
+        pillar_scores: pillarScores,
+        overall_score: overallScore,
+        confidence_range: confidence
+      },
+      customer: customer,
+      context: context,
+      answers: answers,
       question_map: buildQuestionMapLegacy()
     };
 
     console.log("Submitting to Make.com...");
 
-   // Disable Finish button during network call
-const finishEl = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
-if (finishEl) { finishEl.innerText = "Submitting..."; finishEl.disabled = true; }
+    const finishEl = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
+    if (finishEl) {
+      finishEl.innerText = "Submitting...";
+      finishEl.disabled = true;
+    }
 
-try {
-  const res = await fetch(CONFIG.webhookUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+    try {
+      const res = await fetch(CONFIG.webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-  if (!res.ok) throw new Error("Server responded with status: " + res.status);
+      if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
-  // Make returns plain "Accepted" — parse defensively
-  const text = await res.text();
-  let result = {};
-  try { result = JSON.parse(text); } catch(e) { /* Make async ack, ignore */ }
+      const text = await res.text();
+      let result = {};
+      try {
+        result = JSON.parse(text);
+      } catch (e) {
+        result = {};
+      }
 
-  // Any 2xx from Make = queued successfully. PDF arrives via Brevo.
-  if (result.status === "error") {
-    throw new Error(result.message || "GAS returned status=error");
+      if (result.status === "error") {
+        throw new Error(result.message || "Submission failed");
+      }
+
+      STATE.completed = true;
+      localStorage.removeItem(CONFIG.storageKey);
+      showSuccessPopup();
+
+    } catch (e) {
+      alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
+      console.error(e);
+      if (finishEl) {
+        finishEl.innerText = "Finish";
+        finishEl.disabled = false;
+      }
+    }
   }
 
-  STATE.completed = true;
-  localStorage.removeItem(CONFIG.storageKey);
-  showSuccessPopup();
-
-} catch (e) {
-  alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
-  console.error(e);
-  // Re-enable so user can retry
-  if (finishEl) { finishEl.innerText = "Finish"; finishEl.disabled = false; }
-}
-}
- 
-// --- 14. CLEAR / RESET / MANUAL SAVE ---
-function clearCurrentAnswer() {
-
+  // --- 14. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
     const q = getCurrentQuestion();
     if (!q) return;
@@ -842,12 +855,12 @@ function clearCurrentAnswer() {
   }
 
   // --- 15. EVENT BINDING ---
-  if (UI.nextBtn)   UI.nextBtn.addEventListener("click", goNext);
-  if (UI.prevBtn)   UI.prevBtn.addEventListener("click", goPrev);
+  if (UI.nextBtn) UI.nextBtn.addEventListener("click", goNext);
+  if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
   if (UI.finishBtn) UI.finishBtn.addEventListener("click", onFinishClick);
-  if (UI.clearBtn)  UI.clearBtn.addEventListener("click", clearCurrentAnswer);
-  if (UI.resetBtn)  UI.resetBtn.addEventListener("click", resetAll);
-  if (UI.saveBtn)   UI.saveBtn.addEventListener("click", manualSave);
+  if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
+  if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
+  if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
   // --- 16. START ---
   init();
