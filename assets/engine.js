@@ -800,17 +800,19 @@ try {
   throw new Error("Non JSON response from webhook: " + raw);
 }
 
-      if (result.status !== "ok") {
-        throw new Error(result.message || "GAS returned status=error");
-      }
+      // Make returns plain "Accepted" — parse defensively
+const text = await res.text();
+let result = {};
+try { result = JSON.parse(text); } catch(e) { /* Make async ack */ }
 
-      if (!result.pdf) {
-        throw new Error("Report generation finished without a PDF URL");
-      }
+// Any 2xx from Make = queued successfully
+if (result.status === "error") {
+  throw new Error(result.message || "GAS returned status=error");
+}
 
-      STATE.completed = true;
-      localStorage.removeItem(CONFIG.storageKey);
-      showSuccessPopup();
+STATE.completed = true;
+localStorage.removeItem(CONFIG.storageKey);
+showSuccessPopup();
 
     } catch (e) {
       alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
