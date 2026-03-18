@@ -791,7 +791,14 @@ const CONFIG = {
 
       if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
-      const result = await res.json();
+      const raw = await res.text();
+let result;
+
+try {
+  result = JSON.parse(raw);
+} catch {
+  throw new Error("Non JSON response from webhook: " + raw);
+}
 
       if (result.status !== "ok") {
         throw new Error(result.message || "GAS returned status=error");
