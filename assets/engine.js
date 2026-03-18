@@ -811,8 +811,11 @@ try {
   // Re-enable so user can retry
   if (finishEl) { finishEl.innerText = "Finish"; finishEl.disabled = false; }
 }
+}
+ 
+// --- 14. CLEAR / RESET / MANUAL SAVE ---
+function clearCurrentAnswer() {
 
-  // --- 14. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
     const q = getCurrentQuestion();
     if (!q) return;
