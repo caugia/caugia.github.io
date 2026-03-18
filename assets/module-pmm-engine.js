@@ -965,7 +965,7 @@
       completion_rate: coverage.completion_rate
     };
 
-    console.log("🚀 GSL Payload:", payload);
+    console.log("🚀 PMM Payload:", payload);
     var btn = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
     setButtonState(btn, "Submitting...", true);
 
