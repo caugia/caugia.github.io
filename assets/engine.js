@@ -778,49 +778,39 @@ const CONFIG = {
 
     console.log("Submitting to Make.com...");
 
-    // Disable Finish button during network call
-    const finishEl = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
-    if (finishEl) { finishEl.innerText = "Submitting..."; finishEl.disabled = true; }
-
-    try {
-      const res = await fetch(CONFIG.webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) throw new Error("Server responded with status: " + res.status);
-
-      const raw = await res.text();
-let result;
+   // Disable Finish button during network call
+const finishEl = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
+if (finishEl) { finishEl.innerText = "Submitting..."; finishEl.disabled = true; }
 
 try {
-  result = JSON.parse(raw);
-} catch {
-  throw new Error("Non JSON response from webhook: " + raw);
-}
+  const res = await fetch(CONFIG.webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
 
-      // Make returns plain "Accepted" — parse defensively
-const text = await res.text();
-let result = {};
-try { result = JSON.parse(text); } catch(e) { /* Make async ack */ }
+  if (!res.ok) throw new Error("Server responded with status: " + res.status);
 
-// Any 2xx from Make = queued successfully
-if (result.status === "error") {
-  throw new Error(result.message || "GAS returned status=error");
-}
+  // Make returns plain "Accepted" — parse defensively
+  const text = await res.text();
+  let result = {};
+  try { result = JSON.parse(text); } catch(e) { /* Make async ack, ignore */ }
 
-STATE.completed = true;
-localStorage.removeItem(CONFIG.storageKey);
-showSuccessPopup();
-
-    } catch (e) {
-      alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
-      console.error(e);
-      // Re-enable so user can retry
-      if (finishEl) { finishEl.innerText = "Finish"; finishEl.disabled = false; }
-    }
+  // Any 2xx from Make = queued successfully. PDF arrives via Brevo.
+  if (result.status === "error") {
+    throw new Error(result.message || "GAS returned status=error");
   }
+
+  STATE.completed = true;
+  localStorage.removeItem(CONFIG.storageKey);
+  showSuccessPopup();
+
+} catch (e) {
+  alert("Something went wrong while submitting. Please try again.\n\nError: " + e.message);
+  console.error(e);
+  // Re-enable so user can retry
+  if (finishEl) { finishEl.innerText = "Finish"; finishEl.disabled = false; }
+}
 
   // --- 14. CLEAR / RESET / MANUAL SAVE ---
   function clearCurrentAnswer() {
