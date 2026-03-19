@@ -1519,14 +1519,6 @@ const CONFIG = {
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
   if (UI.finishBtn) UI.finishBtn.addEventListener("click", onFinishClick);
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
-  if (UI.clearBtn && UI.clearBtn.parentNode && !document.getElementById("gi-999-hint")) {
-    const hint = document.createElement("span");
-    hint.id = "gi-999-hint";
-    hint.innerText = "Enter 999 if not applicable";
-    hint.style.cssText = "font-size:0.72rem;color:var(--color-text-tertiary,#94a3b8);"
-      + "margin-left:10px;white-space:nowrap;align-self:center;";
-    UI.clearBtn.parentNode.insertBefore(hint, UI.clearBtn.nextSibling);
-  }
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
