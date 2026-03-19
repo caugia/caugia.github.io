@@ -1,5 +1,5 @@
 /* ===========================================================
-   MASTER QUESTION ENGINE v4.7 — CANONICAL
+   MASTER QUESTION ENGINE v4.8 — CANONICAL
    =========================================================== */
 
 const QUESTIONS = [
@@ -27,15 +27,15 @@ const QUESTIONS = [
 {
   id: 2, pillar: 0, type: "group",
   title: "Core SaaS Performance Metrics",
-  subtitle: "Financial and retention baseline. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Financial and retention baseline.",
   fields: [
     { name: "arr",              label: "Current ARR (Annual Recurring Revenue)" },
     { name: "growth_rate",      label: "Year-over-Year Growth Rate (%)" },
     { name: "nrr",              label: "Net Revenue Retention — NRR (%)" },
-    { name: "grr",              label: "Gross Revenue Retention — GRR (%, enter 999 if not tracked)" },
+    { name: "grr",              label: "Gross Revenue Retention — GRR (%)" },
     { name: "gross_margin",     label: "Gross Margin (%)" },
-    { name: "monthly_burn",     label: "Monthly Net Burn (enter 999 if profitable or breakeven)" },
-    { name: "cash_runway",      label: "Cash Runway — months remaining (enter 999 if profitable)" },
+    { name: "monthly_burn",     label: "Monthly Net Burn" },
+    { name: "cash_runway",      label: "Cash Runway (months)" },
     { name: "number_of_clients",label: "Number of Active Paying Customers" }
   ]
 },
@@ -43,28 +43,28 @@ const QUESTIONS = [
 {
   id: 3, pillar: 0, type: "group",
   title: "GTM Team Composition",
-  subtitle: "Full-time equivalents only. Enter 999 for roles that don't exist.",
+  subtitle: "Full-time equivalents only.",
   fields: [
     { name: "sales_headcount",             label: "# Sales — AEs / Closers" },
-    { name: "sdr_headcount",               label: "# SDR / BDR (enter 999 if none)" },
+    { name: "sdr_headcount",               label: "# SDR / BDR" },
     { name: "marketing_headcount",         label: "# Marketing — Demand + PMM + Brand" },
     { name: "cs_headcount",               label: "# Customer Success / Account Management" },
-    { name: "revops_enablement_headcount", label: "# RevOps / Enablement (enter 999 if none)" },
+    { name: "revops_enablement_headcount", label: "# RevOps / Enablement" },
     { name: "product_headcount",           label: "# Product — PM + Design only (not engineering)" },
     { name: "engineering_headcount",       label: "# Engineering / R&D — developers only" },
-    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" }
+    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs" }
   ]
 },
 
 {
   id: 4, pillar: 0, type: "group",
   title: "Targets & Efficiency",
-  subtitle: "Revenue efficiency and commercial performance. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Revenue efficiency and commercial performance.",
   fields: [
     { name: "arr_target",         label: "ARR Target for this Fiscal Year" },
     { name: "quota_attainment",   label: "% of Reps Hitting Quota — last full quarter" },
     { name: "cac_payback",        label: "CAC Payback Period (months)" },
-    { name: "magic_number",       label: "Magic Number — net new ARR ÷ prior quarter S&M spend (enter 999 if not tracked)" },
+    { name: "magic_number",       label: "Magic Number — net new ARR ÷ prior quarter S&M spend" },
     { name: "avg_discount",       label: "Average Discount % on New Logo Deals" },
     { name: "expansion_pct",      label: "% of New ARR from Upsell / Expansion" },
     { name: "avg_ramp_months",    label: "Average Ramp Time for New AE — months to full quota" },
@@ -75,7 +75,7 @@ const QUESTIONS = [
 {
   id: 5, pillar: 0, type: "group",
   title: "Funnel Velocity & Risk Context",
-  subtitle: "Where deals slow, break, or disappear. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Where deals slow, break, or disappear.",
   fields: [
     { name: "win_rate",             label: "Average Win Rate (%)" },
     { name: "sales_cycle",          label: "Average Sales Cycle (days)" },
@@ -91,16 +91,16 @@ const QUESTIONS = [
 {
   id: 6, pillar: 0, type: "group",
   title: "Pipeline & Product Intelligence",
-  subtitle: "Observed conversion and adoption mechanics. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Observed conversion and adoption mechanics.",
   fields: [
     { name: "discovery_to_demo",        label: "Discovery → Demo Conversion (%)" },
-    { name: "demo_to_poc",              label: "Demo → POC / Trial Conversion — % (enter 999 if no POC in your motion)" },
-    { name: "poc_to_close",             label: "POC → Close Conversion — % (enter 999 if no POC in your motion)" },
-    { name: "technical_validation_loss",label: "% Deals Lost at Technical Validation (enter 999 if not tracked)" },
-    { name: "activation_30d",           label: "% Users Active 30 Days Post-Onboarding (enter 999 if not tracked)" },
-    { name: "feature_penetration",      label: "% Accounts Using 3+ Core Features (enter 999 if not tracked)" },
-    { name: "time_to_value",            label: "Average Days to First Value Moment (enter 999 if not formally defined)" },
-    { name: "product_expansion_pct",    label: "% Expansion Revenue Driven by Product Usage Signals (enter 999 if not tracked)" }
+    { name: "demo_to_poc",              label: "Demo → POC / Trial Conversion (%)" },
+    { name: "poc_to_close",             label: "POC → Close Conversion (%)" },
+    { name: "technical_validation_loss",label: "% Deals Lost at Technical Validation" },
+    { name: "activation_30d",           label: "% Users Active 30 Days Post-Onboarding" },
+    { name: "feature_penetration",      label: "% Accounts Using 3+ Core Features" },
+    { name: "time_to_value",            label: "Average Days to First Value Moment" },
+    { name: "product_expansion_pct",    label: "% Expansion Revenue Driven by Product Usage Signals" }
   ]
 },
 
@@ -138,11 +138,11 @@ const QUESTIONS = [
 {
   id: 8, pillar: 0, type: "group",
   title: "Churn & Contract Detail",
-  subtitle: "Retention and commercial structure. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Retention and commercial structure.",
   fields: [
-    { name: "burn_multiple",       label: "Burn Multiple — net burn ÷ net new ARR (enter 999 if not tracked)" },
+    { name: "burn_multiple",       label: "Burn Multiple — net burn ÷ net new ARR" },
     { name: "logo_churn_rate",     label: "Annual Logo Churn Rate — % of customers lost" },
-    { name: "revenue_churn_rate",  label: "Annual Revenue Churn Rate — % of ARR lost (enter 999 if not tracked separately)" },
+    { name: "revenue_churn_rate",  label: "Annual Revenue Churn Rate — % of ARR lost" },
     { name: "avg_contract_length", label: "Average Contract Length (months)" }
   ]
 },
@@ -179,12 +179,12 @@ const QUESTIONS = [
 {
   id: 10, pillar: 0, type: "group",
   title: "Efficiency & Funnel Detail",
-  subtitle: "Secondary efficiency metrics. Enter 999 if a metric does not apply or is not currently tracked.",
+  subtitle: "Secondary efficiency metrics.",
   fields: [
-    { name: "ltv_cac",              label: "LTV to CAC Ratio (enter 999 if not calculated)" },
+    { name: "ltv_cac",              label: "LTV:CAC Ratio" },
     { name: "pct_deals_no_discount",label: "% of Deals Closed at Full List Price" },
     { name: "outbound_pipeline_pct",label: "% of Qualified Pipeline from Outbound" },
-    { name: "mql_to_sql_rate",      label: "MQL to SQL Conversion Rate — % (enter 999 if not tracked)" }
+    { name: "mql_to_sql_rate",      label: "MQL to SQL Conversion Rate (%)" }
   ]
 },
 
@@ -222,7 +222,7 @@ const QUESTIONS = [
 {
   id: 12, pillar: 0, type: "group",
   title: "Team Context & Pipeline Sources",
-  subtitle: "Geographic reach and pipeline channel distribution. Percentages must total 100.",
+  subtitle: "Geographic reach and pipeline channel distribution.",
   fields: [
     { name: "sales_leadership_headcount",label: "# Sales Leadership — VP / Head / Managers" },
     { name: "active_countries",          label: "Number of countries with active sales or customers" },
@@ -236,7 +236,7 @@ const QUESTIONS = [
 {
   id: 13, pillar: 0, type: "group",
   title: "Current Performance vs Goal",
-  subtitle: "What leadership tracks today and where the gap is. Enter 999 if a metric is not formally tracked.",
+  subtitle: "What leadership tracks today and where the gap is.",
   fields: [
     { name: "current_primary_metric",       label: "Primary metric leadership tracks today — e.g. ARR, NRR, EBITDA, Rule of 40, Win Rate, Burn Multiple" },
     { name: "current_primary_metric_value", label: "Current value of that metric" },
@@ -289,12 +289,12 @@ const QUESTIONS = [
 {
   id: 16, pillar: 0, type: "group",
   title: "12-Month Target State",
-  subtitle: "What the business must achieve in the next 12 months. Enter 999 if a secondary metric is not applicable.",
+  subtitle: "What the business must achieve in the next 12 months.",
   fields: [
     { name: "goal_12m_primary_metric",   label: "Primary success metric in 12 months — e.g. ARR, NRR, Rule of 40, EBITDA %" },
     { name: "goal_12m_primary_target",   label: "Target value in 12 months" },
-    { name: "goal_12m_secondary_metric", label: "Secondary metric in 12 months (enter 999 if none)" },
-    { name: "goal_12m_secondary_target", label: "Secondary target value (enter 999 if none)" }
+    { name: "goal_12m_secondary_metric", label: "Secondary metric (12 months)" },
+    { name: "goal_12m_secondary_target", label: "Secondary target value" }
   ]
 },
 
@@ -338,12 +338,12 @@ const QUESTIONS = [
 {
   id: 20, pillar: 0, type: "group",
   title: "24-Month Target State",
-  subtitle: "What the business must look like in 24 months. Enter 999 if a secondary metric is not applicable.",
+  subtitle: "What the business must look like in 24 months.",
   fields: [
     { name: "goal_24m_primary_metric",   label: "Primary success metric in 24 months" },
     { name: "goal_24m_primary_target",   label: "Target value in 24 months" },
-    { name: "goal_24m_secondary_metric", label: "Secondary metric in 24 months (enter 999 if none)" },
-    { name: "goal_24m_secondary_target", label: "Secondary target value (enter 999 if none)" },
+    { name: "goal_24m_secondary_metric", label: "Secondary metric (24 months)" },
+    { name: "goal_24m_secondary_target", label: "Secondary target value" },
     { name: "goal_24m_operating_model",  label: "Target operating model in 24 months — e.g. Rule of 40, EBITDA positive, exit-ready, IPO-ready" }
   ]
 },
@@ -363,13 +363,13 @@ const QUESTIONS = [
 {
   id: 22, pillar: 0, type: "group",
   title: "Segment 1 Performance",
-  subtitle: "Your primary or largest segment by ARR contribution. Enter 999 for any metric not tracked per segment.",
+  subtitle: "Your primary or largest segment by ARR contribution.",
   fields: [
     { name: "segment_1_name",     label: "Segment 1 — Name or description (e.g. Mid-Market SaaS)" },
     { name: "segment_1_arr_pct",  label: "Segment 1 — ARR contribution (%)" },
     { name: "segment_1_acv",      label: "Segment 1 — Average ACV" },
     { name: "segment_1_win_rate", label: "Segment 1 — Win Rate (%)" },
-    { name: "segment_1_nrr",      label: "Segment 1 — NRR (%, enter 999 if not tracked per segment)" },
+    { name: "segment_1_nrr",      label: "Segment 1 — NRR (%)" },
     { name: "segment_1_priority", label: "Segment 1 — Strategic priority: Core / Growth / Explore / Phase-out" }
   ]
 },
@@ -377,14 +377,14 @@ const QUESTIONS = [
 {
   id: 23, pillar: 0, type: "group",
   title: "Segment 2 Performance",
-  subtitle: "Your second segment. Enter 999 for any field that does not apply.",
+  subtitle: "Your second segment.",
   fields: [
-    { name: "segment_2_name",     label: "Segment 2 — Name (enter 999 if not applicable)" },
-    { name: "segment_2_arr_pct",  label: "Segment 2 — ARR contribution (%, enter 999 if not applicable)" },
-    { name: "segment_2_acv",      label: "Segment 2 — Average ACV (enter 999 if not applicable)" },
-    { name: "segment_2_win_rate", label: "Segment 2 — Win Rate (%, enter 999 if not applicable)" },
-    { name: "segment_2_nrr",      label: "Segment 2 — NRR (%, enter 999 if not applicable)" },
-    { name: "segment_2_priority", label: "Segment 2 — Priority: Core / Growth / Explore / Phase-out (enter 999 if not applicable)" }
+    { name: "segment_2_name",     label: "Segment 2 — Name" },
+    { name: "segment_2_arr_pct",  label: "Segment 2 — ARR contribution (%)" },
+    { name: "segment_2_acv",      label: "Segment 2 — Average ACV" },
+    { name: "segment_2_win_rate", label: "Segment 2 — Win Rate (%)" },
+    { name: "segment_2_nrr",      label: "Segment 2 — NRR (%)" },
+    { name: "segment_2_priority", label: "Segment 2 — Priority" }
   ]
 },
 
@@ -421,14 +421,14 @@ const QUESTIONS = [
 {
   id: 25, pillar: 0, type: "group",
   title: "Segment 3 Performance",
-  subtitle: "Your third segment. Enter 999 for any field that does not apply.",
+  subtitle: "Your third segment.",
   fields: [
-    { name: "segment_3_name",     label: "Segment 3 — Name (enter 999 if not applicable)" },
-    { name: "segment_3_arr_pct",  label: "Segment 3 — ARR contribution (%, enter 999 if not applicable)" },
-    { name: "segment_3_acv",      label: "Segment 3 — Average ACV (enter 999 if not applicable)" },
-    { name: "segment_3_win_rate", label: "Segment 3 — Win Rate (%, enter 999 if not applicable)" },
-    { name: "segment_3_nrr",      label: "Segment 3 — NRR (%, enter 999 if not applicable)" },
-    { name: "segment_3_priority", label: "Segment 3 — Priority: Core / Growth / Explore / Phase-out (enter 999 if not applicable)" }
+    { name: "segment_3_name",     label: "Segment 3 — Name" },
+    { name: "segment_3_arr_pct",  label: "Segment 3 — ARR contribution (%)" },
+    { name: "segment_3_acv",      label: "Segment 3 — Average ACV" },
+    { name: "segment_3_win_rate", label: "Segment 3 — Win Rate (%)" },
+    { name: "segment_3_nrr",      label: "Segment 3 — NRR (%)" },
+    { name: "segment_3_priority", label: "Segment 3 — Priority" }
   ]
 },
 
