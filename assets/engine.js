@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.7
+   CAUGIA INTELLIGENCE ENGINE v9.8
    Changes vs v9.6:
    - Added show_if conditional visibility with skipped-question tracking
    - Excluded skipped questions from coverage denominator and submission payload
@@ -13,7 +13,7 @@ const CONFIG = {
   webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
   storageKey: "caugia_assessment_v9_state",
   autoSaveInterval: 1000,
-  schemaVersion: "11.1"
+  schemaVersion: "11.2"
 };
 
   // --- 2. STATE ---
@@ -135,6 +135,10 @@ const CONFIG = {
 
     const condition = q.show_if;
     const fieldToQKey = {
+      inbound_pct: "q3__inbound_pct",
+      outbound_pct: "q3__outbound_pct",
+      plg_pct: "q3__plg_pct",
+      partner_pct: "q3__partner_pct",
       gtm_motion: "q7__gtm_motion",
       target_segment: "q9__target_segment",
       operating_phase: "q11__operating_phase",
@@ -158,6 +162,11 @@ const CONFIG = {
 
     if (condition.not_equals) {
       return fieldValue.indexOf(String(condition.not_equals).toLowerCase()) < 0;
+    }
+
+    if (condition.greater_than !== undefined) {
+      const numVal = parseFloat(fieldValue) || 0;
+      return numVal > condition.greater_than;
     }
 
     return true;
@@ -296,6 +305,10 @@ const CONFIG = {
     let q = getCurrentQuestion();
     if (!q) return;
 
+    if (STATE.skipped && STATE.skipped[q.id]) {
+      delete STATE.skipped[q.id];
+    }
+
     STATE.skipped = STATE.skipped || {};
 
     while (q && !shouldShowQuestion(q)) {
@@ -307,8 +320,15 @@ const CONFIG = {
 
     if (!q) return;
 
-    if (UI.kicker) UI.kicker.innerText = safeText(pillarNameByIndex(q.pillar)).toUpperCase();
-    if (UI.title)  UI.title.innerText  = safeText(q.title);
+    if (UI.kicker) UI.kicker.innerText = "";
+    const MAX_TITLE = 120;
+    const titleText = safeText(q.title || "");
+    if (UI.title) {
+      UI.title.innerText = titleText.length > MAX_TITLE
+        ? titleText.substring(0, MAX_TITLE - 1) + "…"
+        : titleText;
+      UI.title.title = titleText.length > MAX_TITLE ? titleText : "";
+    }
     if (UI.sub)    UI.sub.innerText    = safeText(q.subtitle || q.sub || "");
     if (UI.body)   UI.body.innerHTML   = "";
 
@@ -332,25 +352,37 @@ const CONFIG = {
   function renderGroup(q) {
     if (!UI.body) return;
     if (q.subtitle) {
-      const sub = document.createElement("p");
-      sub.innerText = safeText(q.subtitle);
-      sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 16px 0;line-height:1.5;";
-      UI.body.appendChild(sub);
+      const subtitleText = safeText(q.subtitle);
+      const is999Instruction = subtitleText.toLowerCase().indexOf("999") >= 0
+        && subtitleText.toLowerCase().indexOf("not exist") >= 0;
+      if (!is999Instruction) {
+        const sub = document.createElement("p");
+        sub.innerText = subtitleText;
+        sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 16px 0;line-height:1.5;";
+        UI.body.appendChild(sub);
+      }
     }
     const grid = document.createElement("div");
     grid.className = "gi-group-grid";
-    grid.style.cssText = "display:grid;grid-template-columns:" + (window.innerWidth < 768 ? "1fr" : "1fr 1fr") + ";gap:20px";
+    const fieldCount = (q.fields || []).length;
+    const cols = (window.innerWidth < 768 || fieldCount > 6) ? "1fr" : "1fr 1fr";
+    grid.style.cssText = "display:grid;grid-template-columns:" + cols + ";gap:14px";
 
     (q.fields || []).forEach((f) => {
       const wrapper = document.createElement("div");
       const label = document.createElement("label");
       label.innerText = safeText(f.label);
-      label.style.cssText = "display:block;font-weight:600;margin-bottom:6px;font-size:0.9rem";
+      label.style.cssText = "display:block;font-weight:500;margin-bottom:4px;font-size:0.82rem;color:#374151;";
 
       const input = document.createElement("input");
-      input.type = "text";
+      const fieldType = f.type || "text";
+      input.type = fieldType === "number" ? "number" : "text";
+      if (f.min !== undefined) input.min = f.min;
+      if (f.max !== undefined) input.max = f.max;
+      if (f.placeholder) input.placeholder = f.placeholder;
       input.className = "gi-input";
-      input.style.cssText = "width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:6px";
+      input.style.cssText = "width:100%;padding:7px 10px;border:1px solid #d1d5db;"
+        + "border-radius:5px;font-size:0.88rem;box-sizing:border-box;";
 
       const k = groupKey(q.id, f.name);
       input.name = k;
@@ -362,6 +394,47 @@ const CONFIG = {
       grid.appendChild(wrapper);
     });
     UI.body.appendChild(grid);
+
+    const hint999 = document.createElement("p");
+    hint999.innerText = "Enter 999 for any metric that does not apply to your organisation.";
+    hint999.style.cssText = "font-size:0.78rem;color:#94a3b8;margin:12px 0 0 0;"
+      + "padding-top:10px;border-top:1px solid #f1f5f9;";
+    UI.body.appendChild(hint999);
+
+    const channelFields = ["inbound_pct", "outbound_pct", "plg_pct", "partner_pct"];
+    const hasChannelMix = (q.fields || []).some((f) => channelFields.indexOf(f.name) >= 0);
+
+    if (hasChannelMix) {
+      const mixCounter = document.createElement("div");
+      mixCounter.id = "gi-channel-mix-counter";
+      mixCounter.style.cssText = "margin-top:14px;padding:10px 14px;border-radius:6px;"
+        + "background:#f8fafc;border:1px solid #e2e8f0;font-size:0.85rem;";
+      UI.body.appendChild(mixCounter);
+
+      const updateMixCounter = () => {
+        let total = 0;
+        channelFields.forEach((fn) => {
+          const k = groupKey(q.id, fn);
+          total += parseFloat(STATE.answers[k] || 0);
+        });
+        const roundedTotal = Math.round(total);
+        const remaining = 100 - roundedTotal;
+        const ok = roundedTotal === 100;
+        mixCounter.innerHTML = ok
+          ? '<span style="color:#16a34a;font-weight:600;">✓ Total: 100% — complete</span>'
+          : '<span style="color:' + (total > 100 ? "#dc2626" : "#64748b") + ';">Total: '
+            + roundedTotal + '% — '
+            + (total > 100 ? (Math.round(total - 100) + '% over limit') : (remaining + '% remaining'))
+            + "</span>";
+      };
+
+      channelFields.forEach((fn) => {
+        const k = groupKey(q.id, fn);
+        const inputEl = grid.querySelector('[name="' + k + '"]');
+        if (inputEl) inputEl.addEventListener("input", updateMixCounter);
+      });
+      updateMixCounter();
+    }
   }
 
   function renderRadio(q) {
@@ -372,6 +445,7 @@ const CONFIG = {
 
     const key = qKey(q.id);
 
+    const MAX_SCALE_OPT = 100;
     (q.options || []).forEach((opt) => {
       const label = document.createElement("label");
       label.className = "gi-option-card";
@@ -395,8 +469,11 @@ const CONFIG = {
         renderRadio(q);
       });
 
+      const MAX_OPT = q.type === "scale" ? MAX_SCALE_OPT : 90;
+      const displayOpt = opt.length > MAX_OPT ? opt.substring(0, MAX_OPT - 1) + "…" : opt;
       label.appendChild(input);
-      label.appendChild(document.createTextNode(opt));
+      label.appendChild(document.createTextNode(displayOpt));
+      label.title = opt;
       wrapper.appendChild(label);
     });
     UI.body.appendChild(wrapper);
@@ -453,8 +530,11 @@ const CONFIG = {
           renderMultiRadio(q);
         });
 
+        const MAX_OPT = 90;
+        const displayOpt = opt.length > MAX_OPT ? opt.substring(0, MAX_OPT - 1) + "…" : opt;
         label.appendChild(input);
-        label.appendChild(document.createTextNode(opt));
+        label.appendChild(document.createTextNode(displayOpt));
+        label.title = opt;
         grid.appendChild(label);
       });
 
@@ -506,6 +586,20 @@ const CONFIG = {
         (f) => !isNonEmpty(STATE.answers[groupKey(q.id, f.name)])
       );
       if (missing) { alert("Please fill in all required fields."); return false; }
+
+      if (q.id === 3) {
+        const _ib = parseFloat(STATE.answers["q3__inbound_pct"] || 0);
+        const _ob = parseFloat(STATE.answers["q3__outbound_pct"] || 0);
+        const _plg = parseFloat(STATE.answers["q3__plg_pct"] || 0);
+        const _par = parseFloat(STATE.answers["q3__partner_pct"] || 0);
+        const _total = _ib + _ob + _plg + _par;
+        if (_total > 0 && Math.round(_total) !== 100) {
+          alert("Channel percentages must add up to 100%. Current total: "
+            + Math.round(_total) + "%. Please adjust before continuing.");
+          return false;
+        }
+      }
+
       return true;
     }
 
@@ -542,11 +636,19 @@ const CONFIG = {
   }
 
   function goPrev() {
-    if (STATE.currentStep > 0) {
-      STATE.currentStep--;
-      renderQuestion();
-      scrollQuestionCardTop();
+    if (STATE.currentStep <= 0) return;
+    STATE.currentStep--;
+    while (STATE.currentStep > 0) {
+      const prevQ = window.QUESTIONS[STATE.currentStep];
+      if (prevQ && !shouldShowQuestion(prevQ)) {
+        STATE.currentStep--;
+      } else {
+        break;
+      }
     }
+    scrollQuestionCardTop();
+    renderQuestion();
+    saveState();
   }
 
   function onFinishClick() {
@@ -611,6 +713,15 @@ const CONFIG = {
     const pct     = Math.round((current / total) * 100);
 
     if (UI.progressCount)   UI.progressCount.innerText   = current + " / " + total;
+    const q_prog = getCurrentQuestion();
+    const pillarLabel = document.getElementById("gi-pillar-label");
+    if (pillarLabel && q_prog) {
+      if (q_prog.pillar === 0) {
+        pillarLabel.innerText = "Context";
+      } else {
+        pillarLabel.innerText = "Pillar " + q_prog.pillar + " — " + pillarNameByIndex(q_prog.pillar);
+      }
+    }
     if (UI.progressPercent) UI.progressPercent.innerText = pct + "%";
     if (UI.progressBar)     UI.progressBar.style.width   = pct + "%";
   }
@@ -771,7 +882,9 @@ const CONFIG = {
       total_questions:    total,
       answered_questions: answered,
       completion_rate:    total ? Math.round((answered / total) * 100) : 0,
-      missing_keys:       missing.slice(0, 250)
+      missing_keys:       missing.slice(0, 250),
+      skipped_count:      Object.keys(skipped).length,
+      skipped_ids:        Object.keys(skipped).map(Number)
     };
   }
 
@@ -815,6 +928,10 @@ const CONFIG = {
       product_headcount:           answersRaw["q3__product_headcount"] || "",
       engineering_headcount:       answersRaw["q3__engineering_headcount"] || "",
       gtm_other_headcount:         answersRaw["q3__gtm_other_headcount"] || "",
+      inbound_pct:                 answersRaw["q3__inbound_pct"] || "",
+      outbound_pct:                answersRaw["q3__outbound_pct"] || "",
+      plg_pct:                     answersRaw["q3__plg_pct"] || "",
+      partner_pct:                 answersRaw["q3__partner_pct"] || "",
 
       /* ── Q4: Targets & efficiency ── */
       arr_target:          answersRaw["q4__arr_target"] || "",
