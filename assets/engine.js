@@ -1,9 +1,8 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.4
-   Changes vs v9.3:
-   - Schema version check removed from loadState: answers always
-     restored from localStorage regardless of engine version,
-     so Ctrl+R / redeployment never wipes saved progress
+   CAUGIA INTELLIGENCE ENGINE v9.6
+   Changes vs v9.5:
+   - Added multi_radio options to questions map export
+   - Added subtitle fallback and priority normalization
    =========================================================== */
 
 (function () {
@@ -14,7 +13,7 @@ const CONFIG = {
   webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
   storageKey: "caugia_assessment_v9_state",
   autoSaveInterval: 1000,
-  schemaVersion: "10.0"
+  schemaVersion: "11.0"
 };
 
   // --- 2. STATE ---
@@ -81,6 +80,15 @@ const CONFIG = {
   function pillarNameByIndex(i)         { return PILLAR_NAMES[i] || "Pillar " + i; }
   function qKey(qId)                    { return "q" + qId; }
   function groupKey(qId, fieldName)     { return "q" + qId + "__" + fieldName; }
+  function multiRadioKey(qId, subKey)   { return "q" + qId + "__" + subKey; }
+  function normalizePriority(v) {
+    const s = String(v || "").trim().toLowerCase();
+    if (s === "core") return "Core";
+    if (s === "growth") return "Growth";
+    if (s === "explore") return "Explore";
+    if (s === "phase-out" || s === "phase out" || s === "phaseout") return "Phase-out";
+    return String(v || "").trim();
+  }
   function safeText(v)                  { return (v === null || v === undefined) ? "" : String(v); }
   function isNonEmpty(v)                { return safeText(v).trim().length > 0; }
   function getCurrentQuestion()         { return window.QUESTIONS && window.QUESTIONS[STATE.currentStep]; }
@@ -256,15 +264,16 @@ const CONFIG = {
 
     if (UI.kicker) UI.kicker.innerText = safeText(pillarNameByIndex(q.pillar)).toUpperCase();
     if (UI.title)  UI.title.innerText  = safeText(q.title);
-    if (UI.sub)    UI.sub.innerText    = safeText(q.sub || "");
+    if (UI.sub)    UI.sub.innerText    = safeText(q.subtitle || q.sub || "");
     if (UI.body)   UI.body.innerHTML   = "";
 
     switch (q.type) {
-      case "group":    renderGroup(q);    break;
+      case "group":       renderGroup(q);      break;
+      case "multi_radio": renderMultiRadio(q); break;
       case "radio":
-      case "scale":    renderRadio(q);    break;
-      case "textarea": renderTextarea(q); break;
-      case "text":     renderText(q);     break;
+      case "scale":       renderRadio(q);      break;
+      case "textarea":    renderTextarea(q);   break;
+      case "text":        renderText(q);       break;
       default:
         if (UI.body) UI.body.innerHTML = "<p style='color:red'>Unknown type: " + safeText(q.type) + "</p>";
     }
@@ -348,6 +357,67 @@ const CONFIG = {
     UI.body.appendChild(wrapper);
   }
 
+  function renderMultiRadio(q) {
+    if (!UI.body) return;
+
+    if (q.subtitle) {
+      const sub = document.createElement("p");
+      sub.innerText = safeText(q.subtitle);
+      sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 20px 0;line-height:1.5;";
+      UI.body.appendChild(sub);
+    }
+
+    (q.questions || []).forEach((subQ) => {
+      const block = document.createElement("div");
+      block.style.cssText = "margin-bottom:28px;";
+
+      const lbl = document.createElement("p");
+      lbl.innerText = safeText(subQ.label);
+      lbl.style.cssText = "font-weight:600;font-size:0.95rem;margin:0 0 12px 0;color:#1e293b;";
+      block.appendChild(lbl);
+
+      const grid = document.createElement("div");
+      grid.style.cssText = "display:grid;grid-template-columns:" +
+        (window.innerWidth < 768 ? "1fr" : "1fr 1fr") + ";gap:10px;";
+
+      const storeKey = multiRadioKey(q.id, subQ.key);
+
+      (subQ.options || []).forEach((opt) => {
+        const label = document.createElement("label");
+        label.className = "gi-option-card";
+        label.style.cssText =
+          "display:flex;align-items:center;padding:12px 14px;border:1px solid #e2e8f0;" +
+          "border-radius:8px;cursor:pointer;background:#fff;font-size:0.9rem;";
+
+        const input = document.createElement("input");
+        input.type  = "radio";
+        input.name  = storeKey;
+        input.value = opt;
+        input.style.marginRight = "10px";
+        input.style.flexShrink  = "0";
+
+        if (STATE.answers[storeKey] === opt) {
+          input.checked = true;
+          label.style.borderColor     = "#0056b3";
+          label.style.backgroundColor = "#eff6ff";
+        }
+
+        input.addEventListener("change", () => {
+          STATE.answers[storeKey] = opt;
+          if (UI.body) UI.body.innerHTML = "";
+          renderMultiRadio(q);
+        });
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(opt));
+        grid.appendChild(label);
+      });
+
+      block.appendChild(grid);
+      UI.body.appendChild(block);
+    });
+  }
+
   function renderTextarea(q) {
     if (!UI.body) return;
     const key = qKey(q.id);
@@ -380,15 +450,36 @@ const CONFIG = {
 
     if (q.type === "group") {
       const fields = q.fields || [];
-      const hasRequiredFlags = fields.some((f) => Object.prototype.hasOwnProperty.call(f, "required"));
-      const requiredFields = hasRequiredFlags ? fields.filter((f) => !!f.required) : fields;
-      const missing = requiredFields.some((f) => !isNonEmpty(STATE.answers[groupKey(q.id, f.name)]));
+      const hasRequiredFlags = fields.some((f) =>
+        Object.prototype.hasOwnProperty.call(f, "required")
+      );
+      const requiredFields = hasRequiredFlags
+        ? fields.filter((f) => !!f.required)
+        : fields;
+      const missing = requiredFields.some(
+        (f) => !isNonEmpty(STATE.answers[groupKey(q.id, f.name)])
+      );
       if (missing) { alert("Please fill in all required fields."); return false; }
       return true;
     }
 
+    if (q.type === "multi_radio") {
+      const unanswered = (q.questions || []).filter((subQ) => {
+        const k = multiRadioKey(q.id, subQ.key);
+        return !isNonEmpty(STATE.answers[k]);
+      });
+      if (unanswered.length > 0) {
+        alert("Please answer all questions on this screen.");
+        return false;
+      }
+      return true;
+    }
+
     const k = qKey(q.id);
-    if (!isNonEmpty(STATE.answers[k])) { alert("Please answer the question."); return false; }
+    if (!isNonEmpty(STATE.answers[k])) {
+      alert("Please answer the question.");
+      return false;
+    }
     return true;
   }
 
@@ -529,35 +620,66 @@ const CONFIG = {
   // --- 12. PAYLOAD BUILDERS ---
   function buildQuestionsMap() {
     return window.QUESTIONS.map((q) => ({
-      id: q.id, pillar_index: q.pillar, pillar: pillarNameByIndex(q.pillar),
-      type: q.type, title: q.title, sub: q.sub || "",
-      options: q.options || null,
-      fields: q.fields ? q.fields.map((f) => ({ name: f.name, label: f.label })) : null
+      id:           q.id,
+      pillar_index: q.pillar,
+      pillar:       pillarNameByIndex(q.pillar),
+      type:         q.type,
+      title:        q.title,
+      sub:          q.sub || "",
+      options:      q.options || null,
+      fields:       q.fields ? q.fields.map((f) => ({ name: f.name, label: f.label })) : null,
+      questions:    q.questions ? q.questions.map((sq) => ({ key: sq.key, label: sq.label, options: sq.options || [] })) : null
     }));
   }
 
   function buildFullReport(answersRaw) {
     const report = [];
+
     window.QUESTIONS.forEach((q) => {
       const pName = pillarNameByIndex(q.pillar);
+
       if (q.type === "group") {
         (q.fields || []).forEach((field) => {
           const k = groupKey(q.id, field.name);
-          report.push({ id: k, pillar: pName, pillar_index: q.pillar, question_id: q.id,
-            question: q.title + " - " + field.label, answer: answersRaw[k] ?? "" });
+          report.push({
+            id: k, pillar: pName, pillar_index: q.pillar,
+            question_id: q.id,
+            question: q.title + " - " + field.label,
+            answer: answersRaw[k] ?? ""
+          });
         });
         return;
       }
+
+      if (q.type === "multi_radio") {
+        (q.questions || []).forEach((sq) => {
+          const k = multiRadioKey(q.id, sq.key);
+          report.push({
+            id: k, pillar: pName, pillar_index: q.pillar,
+            question_id: q.id,
+            question: q.title + " - " + sq.label,
+            answer: answersRaw[k] ?? ""
+          });
+        });
+        return;
+      }
+
       const k = qKey(q.id);
-      report.push({ id: k, pillar: pName, pillar_index: q.pillar, question_id: q.id,
-        question: q.title, answer: answersRaw[k] ?? "" });
+      report.push({
+        id: k, pillar: pName, pillar_index: q.pillar,
+        question_id: q.id,
+        question: q.title,
+        answer: answersRaw[k] ?? ""
+      });
     });
+
     return report;
   }
 
   function buildCoverage(answersRaw) {
     let total = 0, answered = 0;
     const missing = [];
+
     window.QUESTIONS.forEach((q) => {
       if (q.type === "group") {
         (q.fields || []).forEach((f) => {
@@ -567,74 +689,246 @@ const CONFIG = {
         });
         return;
       }
+
+      if (q.type === "multi_radio") {
+        (q.questions || []).forEach((subQ) => {
+          total++;
+          const k = multiRadioKey(q.id, subQ.key);
+          if (isNonEmpty(answersRaw[k])) answered++; else missing.push(k);
+        });
+        return;
+      }
+
       total++;
       const k = qKey(q.id);
       if (isNonEmpty(answersRaw[k])) answered++; else missing.push(k);
     });
-    return { total_questions: total, answered_questions: answered,
-      completion_rate: total ? Math.round((answered / total) * 100) : 0,
-      missing_keys: missing.slice(0, 250) };
-  }
 
-  function buildLegacyCustomer(answersRaw) {
     return {
-      fullname: answersRaw["q1__fullname"] || "", role: answersRaw["q1__role"] || "",
-      email: answersRaw["q1__email"] || "", company: answersRaw["q1__company"] || "",
-      website: answersRaw["q1__website"] || "", total_employees: answersRaw["q1__total_employees"] || "",
-      year_founded: answersRaw["q1__year_founded"] || "", hq_region: answersRaw["q1__hq_region"] || ""
+      total_questions:    total,
+      answered_questions: answered,
+      completion_rate:    total ? Math.round((answered / total) * 100) : 0,
+      missing_keys:       missing.slice(0, 250)
     };
   }
 
+  // v4.5 schema — naam "legacy" is transitional, bevat nieuwe P0 structuur
+  // TODO na GAS-patch: rename naar buildCustomerContext()
+  function buildLegacyCustomer(answersRaw) {
+    return {
+      fullname:         answersRaw["q1__fullname"] || "",
+      role:             answersRaw["q1__role"] || "",
+      email:            answersRaw["q1__email"] || "",
+      company:          answersRaw["q1__company"] || "",
+      industry:         answersRaw["q1__industry"] || "",
+      total_employees:  answersRaw["q1__total_employees"] || "",
+      year_founded:     answersRaw["q1__year_founded"] || "",
+      hq_region:        answersRaw["q1__hq_region"] || "",
+      active_countries: answersRaw["q1__active_countries"] || ""
+    };
+  }
+
+  // v4.5 schema — naam "legacy" is transitional, bevat volledige nieuwe P0 context
+  // TODO na GAS-patch: rename naar buildP0Context()
   function buildLegacyContext(answersRaw) {
     return {
-      arr: answersRaw["q2__arr"] || "", growth_rate: answersRaw["q2__growth_rate"] || "",
-      nrr: answersRaw["q2__nrr"] || "", gross_margin: answersRaw["q2__gross_margin"] || "",
-      monthly_burn: answersRaw["q2__monthly_burn"] || "", cash_runway: answersRaw["q2__cash_runway"] || "",
-      pricing_model: answersRaw["q2__pricing_model"] || "", number_of_clients: answersRaw["q2__number_of_clients"] || "",
 
-      sales_headcount: answersRaw["q3__sales_headcount"] || "",
-      sales_leadership_headcount: answersRaw["q3__sales_leadership_headcount"] || "",
-      sdr_headcount: answersRaw["q3__sdr_headcount"] || "",
-      marketing_headcount: answersRaw["q3__marketing_headcount"] || "",
-      cs_headcount: answersRaw["q3__cs_headcount"] || "",
+      /* ── Q2: Core SaaS metrics ── */
+      arr:               answersRaw["q2__arr"] || "",
+      growth_rate:       answersRaw["q2__growth_rate"] || "",
+      nrr:               answersRaw["q2__nrr"] || "",
+      grr:               answersRaw["q2__grr"] || "",
+      gross_margin:      answersRaw["q2__gross_margin"] || "",
+      monthly_burn:      answersRaw["q2__monthly_burn"] || "",
+      cash_runway:       answersRaw["q2__cash_runway"] || "",
+      number_of_clients: answersRaw["q2__number_of_clients"] || "",
+
+      /* ── Q3: GTM team ── */
+      sales_headcount:             answersRaw["q3__sales_headcount"] || "",
+      sdr_headcount:               answersRaw["q3__sdr_headcount"] || "",
+      marketing_headcount:         answersRaw["q3__marketing_headcount"] || "",
+      cs_headcount:                answersRaw["q3__cs_headcount"] || "",
       revops_enablement_headcount: answersRaw["q3__revops_enablement_headcount"] || "",
-      product_headcount: answersRaw["q3__product_headcount"] || "",
-      gtm_other_headcount: answersRaw["q3__gtm_other_headcount"] || "",
+      product_headcount:           answersRaw["q3__product_headcount"] || "",
+      engineering_headcount:       answersRaw["q3__engineering_headcount"] || "",
+      gtm_other_headcount:         answersRaw["q3__gtm_other_headcount"] || "",
 
-      arr_target: answersRaw["q4__arr_target"] || "", quota_attainment: answersRaw["q4__quota_attainment"] || "",
-      cac_payback: answersRaw["q4__cac_payback"] || "", ltv_cac: answersRaw["q4__ltv_cac"] || "",
-      avg_discount: answersRaw["q4__avg_discount"] || "", expansion_pct: answersRaw["q4__expansion_pct"] || "",
-      opex_includes_payroll: answersRaw["q4__opex_includes_payroll"] || "",
+      /* ── Q4: Targets & efficiency ── */
+      arr_target:          answersRaw["q4__arr_target"] || "",
+      quota_attainment:    answersRaw["q4__quota_attainment"] || "",
+      cac_payback:         answersRaw["q4__cac_payback"] || "",
+      magic_number:        answersRaw["q4__magic_number"] || "",
+      avg_discount:        answersRaw["q4__avg_discount"] || "",
+      expansion_pct:       answersRaw["q4__expansion_pct"] || "",
+      avg_ramp_months:     answersRaw["q4__avg_ramp_months"] || "",
       sales_marketing_pct: answersRaw["q4__sales_marketing_pct"] || "",
 
-      win_rate: answersRaw["q5__win_rate"] || "", sales_cycle: answersRaw["q5__sales_cycle"] || "",
-      pipeline_coverage: answersRaw["q5__pipeline_coverage"] || "", churn_rate: answersRaw["q5__churn_rate"] || "",
-      top_competitors: answersRaw["q5__top_competitors"] || "",
-      primary_loss_reason: answersRaw["q5__primary_loss_reason"] || "",
+      /* ── Q5: Funnel velocity ── */
+      win_rate:              answersRaw["q5__win_rate"] || "",
+      sales_cycle:           answersRaw["q5__sales_cycle"] || "",
+      pipeline_coverage:     answersRaw["q5__pipeline_coverage"] || "",
+      inbound_pipeline_pct:  answersRaw["q5__inbound_pipeline_pct"] || "",
       revenue_concentration: answersRaw["q5__revenue_concentration"] || "",
-      primary_churn_reason: answersRaw["q5__primary_churn_reason"] || "",
+      top_competitors:       answersRaw["q5__top_competitors"] || "",
+      primary_loss_reason:   answersRaw["q5__primary_loss_reason"] || "",
+      primary_churn_reason:  answersRaw["q5__primary_churn_reason"] || "",
 
-      // Pipeline & Product Intelligence (Q6 — new group)
-      discovery_to_demo: answersRaw["q6__discovery_to_demo"] || "",
-      demo_to_poc: answersRaw["q6__demo_to_poc"] || "",
-      poc_to_close: answersRaw["q6__poc_to_close"] || "",
+      /* ── Q6: Pipeline & product intelligence ── */
+      discovery_to_demo:         answersRaw["q6__discovery_to_demo"] || "",
+      demo_to_poc:               answersRaw["q6__demo_to_poc"] || "",
+      poc_to_close:              answersRaw["q6__poc_to_close"] || "",
       technical_validation_loss: answersRaw["q6__technical_validation_loss"] || "",
-      activation_30d: answersRaw["q6__activation_30d"] || "",
-      feature_penetration: answersRaw["q6__feature_penetration"] || "",
-      time_to_value: answersRaw["q6__time_to_value"] || "",
-      product_expansion_pct: answersRaw["q6__product_expansion_pct"] || "",
+      activation_30d:            answersRaw["q6__activation_30d"] || "",
+      feature_penetration:       answersRaw["q6__feature_penetration"] || "",
+      time_to_value:             answersRaw["q6__time_to_value"] || "",
+      product_expansion_pct:     answersRaw["q6__product_expansion_pct"] || "",
 
-      // MC context questions (hernummerd Q7–Q25)
-      Q7: answersRaw["q7"] || "", Q8: answersRaw["q8"] || "",
-      Q9: answersRaw["q9"] || "", Q10: answersRaw["q10"] || "",
-      Q11: answersRaw["q11"] || "", Q12: answersRaw["q12"] || "",
-      Q13: answersRaw["q13"] || "", Q14: answersRaw["q14"] || "",
-      Q15: answersRaw["q15"] || "", Q16: answersRaw["q16"] || "",
-      Q17: answersRaw["q17"] || "", Q18: answersRaw["q18"] || "",
-      Q19: answersRaw["q19"] || "", Q20: answersRaw["q20"] || "",
-      Q21: answersRaw["q21"] || "", Q22: answersRaw["q22"] || "",
-      Q23: answersRaw["q23"] || "", Q24: answersRaw["q24"] || "",
-      Q25: answersRaw["q25"] || ""
+      /* ── Q7 multi_radio: GTM motion + revenue model ── */
+      gtm_motion:    answersRaw["q7__gtm_motion"] || "",
+      revenue_model: answersRaw["q7__revenue_model"] || "",
+
+      /* ── Q8: Churn & contract detail ── */
+      burn_multiple:       answersRaw["q8__burn_multiple"] || "",
+      logo_churn_rate:     answersRaw["q8__logo_churn_rate"] || "",
+      revenue_churn_rate:  answersRaw["q8__revenue_churn_rate"] || "",
+      avg_contract_length: answersRaw["q8__avg_contract_length"] || "",
+
+      /* ── Q9 multi_radio: target segment + economic buyer ── */
+      target_segment: answersRaw["q9__target_segment"] || "",
+      economic_buyer: answersRaw["q9__economic_buyer"] || "",
+
+      /* ── Q10: Efficiency & funnel detail ── */
+      ltv_cac:               answersRaw["q10__ltv_cac"] || "",
+      pct_deals_no_discount: answersRaw["q10__pct_deals_no_discount"] || "",
+      outbound_pipeline_pct: answersRaw["q10__outbound_pipeline_pct"] || "",
+      mql_to_sql_rate:       answersRaw["q10__mql_to_sql_rate"] || "",
+
+      /* ── Q11 multi_radio: operating phase + funding stage ── */
+      operating_phase: answersRaw["q11__operating_phase"] || "",
+      funding_stage:   answersRaw["q11__funding_stage"] || "",
+
+      /* ── Q12: Team & geographic context ── */
+      sales_leadership_headcount: answersRaw["q12__sales_leadership_headcount"] || "",
+      active_countries:           answersRaw["q12__active_countries"] || "",
+
+      /* ── Q13: Current performance vs goal ── */
+      current_primary_metric:       answersRaw["q13__current_primary_metric"] || "",
+      current_primary_metric_value: answersRaw["q13__current_primary_metric_value"] || "",
+      current_primary_metric_goal:  answersRaw["q13__current_primary_metric_goal"] || "",
+      leadership_bottleneck:        answersRaw["q13__leadership_bottleneck"] || "",
+
+      /* ── Q14: Urgency ── */
+      urgency: answersRaw["q14"] || "",
+
+      /* ── Q15 multi_radio: product category + product complexity ── */
+      product_category:   answersRaw["q15__product_category"] || "",
+      product_complexity: answersRaw["q15__product_complexity"] || "",
+
+      /* ── Q16: 12-month target state ── */
+      goal_12m_primary_metric:   answersRaw["q16__goal_12m_primary_metric"] || "",
+      goal_12m_primary_target:   answersRaw["q16__goal_12m_primary_target"] || "",
+      goal_12m_secondary_metric: answersRaw["q16__goal_12m_secondary_metric"] || "",
+      goal_12m_secondary_target: answersRaw["q16__goal_12m_secondary_target"] || "",
+
+      /* ── Q17-Q19: Strategic context ── */
+      strategic_focus: answersRaw["q17"] || "",
+      primary_symptom: answersRaw["q18"] || "",
+      perceived_cause: answersRaw["q19"] || "",
+
+      /* ── Q20: 24-month target state ── */
+      goal_24m_primary_metric:   answersRaw["q20__goal_24m_primary_metric"] || "",
+      goal_24m_primary_target:   answersRaw["q20__goal_24m_primary_target"] || "",
+      goal_24m_secondary_metric: answersRaw["q20__goal_24m_secondary_metric"] || "",
+      goal_24m_secondary_target: answersRaw["q20__goal_24m_secondary_target"] || "",
+      goal_24m_operating_model:  answersRaw["q20__goal_24m_operating_model"] || "",
+
+      /* ── Q21: Segment count ── */
+      segment_count: answersRaw["q21"] || "",
+
+      /* ── Q22: Segment 1 ── */
+      segment_1_name:     answersRaw["q22__segment_1_name"] || "",
+      segment_1_arr_pct:  answersRaw["q22__segment_1_arr_pct"] || "",
+      segment_1_acv:      answersRaw["q22__segment_1_acv"] || "",
+      segment_1_win_rate: answersRaw["q22__segment_1_win_rate"] || "",
+      segment_1_nrr:      answersRaw["q22__segment_1_nrr"] || "",
+      segment_1_priority: normalizePriority(answersRaw["q22__segment_1_priority"]),
+
+      /* ── Q23: Segment 2 ── */
+      segment_2_name:     answersRaw["q23__segment_2_name"] || "",
+      segment_2_arr_pct:  answersRaw["q23__segment_2_arr_pct"] || "",
+      segment_2_acv:      answersRaw["q23__segment_2_acv"] || "",
+      segment_2_win_rate: answersRaw["q23__segment_2_win_rate"] || "",
+      segment_2_nrr:      answersRaw["q23__segment_2_nrr"] || "",
+      segment_2_priority: normalizePriority(answersRaw["q23__segment_2_priority"]),
+
+      /* ── Q24 multi_radio: market adoption + currency ── */
+      market_adoption: answersRaw["q24__market_adoption"] || "",
+      currency:        answersRaw["q24__currency"] || "",
+
+      /* ── Q25: Segment 3 ── */
+      segment_3_name:     answersRaw["q25__segment_3_name"] || "",
+      segment_3_arr_pct:  answersRaw["q25__segment_3_arr_pct"] || "",
+      segment_3_acv:      answersRaw["q25__segment_3_acv"] || "",
+      segment_3_win_rate: answersRaw["q25__segment_3_win_rate"] || "",
+      segment_3_nrr:      answersRaw["q25__segment_3_nrr"] || "",
+      segment_3_priority: normalizePriority(answersRaw["q25__segment_3_priority"]),
+
+      /* ── Structured sub-objects (voor GAS canonical) ── */
+      goals: {
+        current: {
+          metric:     answersRaw["q13__current_primary_metric"] || "",
+          value:      answersRaw["q13__current_primary_metric_value"] || "",
+          target:     answersRaw["q13__current_primary_metric_goal"] || "",
+          bottleneck: answersRaw["q13__leadership_bottleneck"] || "",
+          urgency:    answersRaw["q14"] || ""
+        },
+        month_12: {
+          primary_metric:   answersRaw["q16__goal_12m_primary_metric"] || "",
+          primary_target:   answersRaw["q16__goal_12m_primary_target"] || "",
+          secondary_metric: answersRaw["q16__goal_12m_secondary_metric"] || "",
+          secondary_target: answersRaw["q16__goal_12m_secondary_target"] || "",
+          strategic_focus:  answersRaw["q17"] || ""
+        },
+        month_24: {
+          primary_metric:   answersRaw["q20__goal_24m_primary_metric"] || "",
+          primary_target:   answersRaw["q20__goal_24m_primary_target"] || "",
+          secondary_metric: answersRaw["q20__goal_24m_secondary_metric"] || "",
+          secondary_target: answersRaw["q20__goal_24m_secondary_target"] || "",
+          operating_model:  answersRaw["q20__goal_24m_operating_model"] || ""
+        }
+      },
+
+      segments: [
+        {
+          name:     answersRaw["q22__segment_1_name"] || "",
+          arr_pct:  answersRaw["q22__segment_1_arr_pct"] || "",
+          acv:      answersRaw["q22__segment_1_acv"] || "",
+          win_rate: answersRaw["q22__segment_1_win_rate"] || "",
+          nrr:      answersRaw["q22__segment_1_nrr"] || "",
+          priority: normalizePriority(answersRaw["q22__segment_1_priority"])
+        },
+        {
+          name:     answersRaw["q23__segment_2_name"] || "",
+          arr_pct:  answersRaw["q23__segment_2_arr_pct"] || "",
+          acv:      answersRaw["q23__segment_2_acv"] || "",
+          win_rate: answersRaw["q23__segment_2_win_rate"] || "",
+          nrr:      answersRaw["q23__segment_2_nrr"] || "",
+          priority: normalizePriority(answersRaw["q23__segment_2_priority"])
+        },
+        {
+          name:     answersRaw["q25__segment_3_name"] || "",
+          arr_pct:  answersRaw["q25__segment_3_arr_pct"] || "",
+          acv:      answersRaw["q25__segment_3_acv"] || "",
+          win_rate: answersRaw["q25__segment_3_win_rate"] || "",
+          nrr:      answersRaw["q25__segment_3_nrr"] || "",
+          priority: normalizePriority(answersRaw["q25__segment_3_priority"])
+        }
+      ],
+
+      /* ── GAS backward-compat aliases (temporary until GAS is patched) ── */
+      primary_buyer:         answersRaw["q9__economic_buyer"] || "",
+      market_adoption_phase: answersRaw["q24__market_adoption"] || ""
+
     };
   }
 
@@ -716,19 +1010,35 @@ const CONFIG = {
 
   function buildQuestionMapLegacy() {
     const map = {};
+
     window.QUESTIONS.forEach((q) => {
+
       if (q.type === "group" && Array.isArray(q.fields)) {
         q.fields.forEach((f) => {
           const kRaw    = groupKey(q.id, f.name);
           const kLegacy = "Q" + q.id + "__" + f.name;
           const label   = q.title + " - " + f.label;
-          map[kRaw] = label; map[kLegacy] = label;
+          map[kRaw]    = label;
+          map[kLegacy] = label;
         });
         return;
       }
-      map[qKey(q.id)]    = q.title;
-      map["Q" + q.id]    = q.title;
+
+      if (q.type === "multi_radio" && Array.isArray(q.questions)) {
+        q.questions.forEach((sq) => {
+          const kRaw    = multiRadioKey(q.id, sq.key);
+          const kLegacy = "Q" + q.id + "__" + sq.key;
+          const label   = q.title + " - " + sq.label;
+          map[kRaw]    = label;
+          map[kLegacy] = label;
+        });
+        return;
+      }
+
+      map[qKey(q.id)] = q.title;
+      map["Q" + q.id] = q.title;
     });
+
     return map;
   }
 
@@ -781,6 +1091,8 @@ const CONFIG = {
       },
       customer: customer,
       context: context,
+      segments: context.segments,
+      goals: context.goals,
       answers: answers,
       question_map: buildQuestionMapLegacy()
     };
@@ -834,6 +1146,10 @@ const CONFIG = {
     if (!q) return;
     if (q.type === "group") {
       (q.fields || []).forEach((f) => { delete STATE.answers[groupKey(q.id, f.name)]; });
+    } else if (q.type === "multi_radio") {
+      (q.questions || []).forEach((subQ) => {
+        delete STATE.answers[multiRadioKey(q.id, subQ.key)];
+      });
     } else {
       delete STATE.answers[qKey(q.id)];
     }
