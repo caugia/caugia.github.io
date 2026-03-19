@@ -1,8 +1,8 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.6
-   Changes vs v9.5:
-   - Added multi_radio options to questions map export
-   - Added subtitle fallback and priority normalization
+   CAUGIA INTELLIGENCE ENGINE v9.7
+   Changes vs v9.6:
+   - Added show_if conditional visibility with skipped-question tracking
+   - Excluded skipped questions from coverage denominator and submission payload
    =========================================================== */
 
 (function () {
@@ -13,7 +13,7 @@ const CONFIG = {
   webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
   storageKey: "caugia_assessment_v9_state",
   autoSaveInterval: 1000,
-  schemaVersion: "11.0"
+  schemaVersion: "11.1"
 };
 
   // --- 2. STATE ---
@@ -21,6 +21,7 @@ const CONFIG = {
     schemaVersion: CONFIG.schemaVersion,
     currentStep: 0,
     answers: {},
+    skipped: {},
     completed: false
   };
 
@@ -127,6 +128,39 @@ const CONFIG = {
       out[k] = typeof v === "string" ? v.trim() : v;
     });
     return out;
+  }
+
+  function shouldShowQuestion(q) {
+    if (!q || !q.show_if) return true;
+
+    const condition = q.show_if;
+    const fieldToQKey = {
+      gtm_motion: "q7__gtm_motion",
+      target_segment: "q9__target_segment",
+      operating_phase: "q11__operating_phase",
+      product_complexity: "q15__product_complexity"
+    };
+
+    const answerKey = fieldToQKey[condition.field];
+    const fieldValue = answerKey && STATE.answers && STATE.answers[answerKey]
+      ? String(STATE.answers[answerKey]).toLowerCase()
+      : "";
+
+    if (!fieldValue) return true;
+
+    if (Array.isArray(condition.contains_any)) {
+      return condition.contains_any.some((v) => fieldValue.indexOf(String(v).toLowerCase()) >= 0);
+    }
+
+    if (Array.isArray(condition.not_contains)) {
+      return !condition.not_contains.some((v) => fieldValue.indexOf(String(v).toLowerCase()) >= 0);
+    }
+
+    if (condition.not_equals) {
+      return fieldValue.indexOf(String(condition.not_equals).toLowerCase()) < 0;
+    }
+
+    return true;
   }
 
   // --- 5. POPUPS ---
@@ -259,7 +293,18 @@ const CONFIG = {
 
   // --- 7. RENDER LOGIC ---
   function renderQuestion() {
-    const q = getCurrentQuestion();
+    let q = getCurrentQuestion();
+    if (!q) return;
+
+    STATE.skipped = STATE.skipped || {};
+
+    while (q && !shouldShowQuestion(q)) {
+      STATE.skipped[q.id] = true;
+      if (isLastQuestion()) return;
+      STATE.currentStep++;
+      q = getCurrentQuestion();
+    }
+
     if (!q) return;
 
     if (UI.kicker) UI.kicker.innerText = safeText(pillarNameByIndex(q.pillar)).toUpperCase();
@@ -447,6 +492,7 @@ const CONFIG = {
   function validateCurrent() {
     const q = getCurrentQuestion();
     if (!q) return false;
+    if (STATE.skipped && STATE.skipped[q.id]) return true;
 
     if (q.type === "group") {
       const fields = q.fields || [];
@@ -612,6 +658,7 @@ const CONFIG = {
         schemaVersion: CONFIG.schemaVersion,
         currentStep:   typeof parsed.currentStep === "number" ? parsed.currentStep : 0,
         answers:       parsed.answers || {},
+        skipped:       parsed.skipped || {},
         completed:     !!parsed.completed
       };
     } catch (e) { console.log("State corrupted, resetting."); }
@@ -634,6 +681,7 @@ const CONFIG = {
 
   function buildFullReport(answersRaw) {
     const report = [];
+    const skipped = STATE.skipped || {};
 
     window.QUESTIONS.forEach((q) => {
       const pName = pillarNameByIndex(q.pillar);
@@ -664,6 +712,18 @@ const CONFIG = {
         return;
       }
 
+      if (skipped[q.id]) {
+        const k = qKey(q.id);
+        report.push({
+          id: k, pillar: pName, pillar_index: q.pillar,
+          question_id: q.id,
+          question: q.title,
+          answer: null,
+          skipped: true
+        });
+        return;
+      }
+
       const k = qKey(q.id);
       report.push({
         id: k, pillar: pName, pillar_index: q.pillar,
@@ -679,8 +739,11 @@ const CONFIG = {
   function buildCoverage(answersRaw) {
     let total = 0, answered = 0;
     const missing = [];
+    const skipped = STATE.skipped || {};
 
     window.QUESTIONS.forEach((q) => {
+      if (skipped[q.id]) return;
+
       if (q.type === "group") {
         (q.fields || []).forEach((f) => {
           total++;
@@ -1093,6 +1156,8 @@ const CONFIG = {
       context: context,
       segments: context.segments,
       goals: context.goals,
+      skipped_questions: STATE.skipped || {},
+      skipped_count: Object.keys(STATE.skipped || {}).length,
       answers: answers,
       question_map: buildQuestionMapLegacy()
     };
