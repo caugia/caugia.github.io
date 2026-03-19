@@ -628,11 +628,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
       window.QUESTIONS.forEach(function(q) {
         var p = q.pillar;
-        if (!pillarTotal[p])    { pillarTotal[p] = 0;    pillarAnswered[p] = 0; }
+        if (!pillarTotal[p]) { pillarTotal[p] = 0; pillarAnswered[p] = 0; }
         if (q.type === "group" && q.fields) {
           q.fields.forEach(function(f) {
             pillarTotal[p]++;
             var k = "q" + q.id + "__" + f.name;
+            if (state.answers[k] && String(state.answers[k]).trim().length > 0) pillarAnswered[p]++;
+          });
+        } else if (q.type === "multi_radio" && q.questions) {
+          q.questions.forEach(function(subQ) {
+            pillarTotal[p]++;
+            var k = "q" + q.id + "__" + subQ.key;
             if (state.answers[k] && String(state.answers[k]).trim().length > 0) pillarAnswered[p]++;
           });
         } else {
