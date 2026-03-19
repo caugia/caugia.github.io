@@ -1,7 +1,5 @@
 /* ===========================================================
-   QUESTIONS — MASTER QUESTION ENGINE v3.2
-   Changes vs v3.1:
-   - Q11020 option E further shortened to fit UI
+   MASTER QUESTION ENGINE v4.5 — CANONICAL
    =========================================================== */
 
 const QUESTIONS = [
@@ -11,360 +9,422 @@ const QUESTIONS = [
    =========================================================== */
 
 {
-  id: 1,
-  pillar: 0,
-  type: "group",
+  id: 1, pillar: 0, type: "group",
   title: "Tell us about you and your company",
-  subtitle: "Basic context to calibrate benchmarks and velocity",
+  subtitle: "Core company identity used to calibrate benchmarks and reporting context.",
   fields: [
-    { name: "fullname", label: "Your full name" },
-    { name: "role", label: "Your role or job title" },
-    { name: "email", label: "Email address" },
-    { name: "company", label: "Company name" },
-    { name: "industry", label: "Industry (e.g. FinTech, HRTech, DevTools)" },
+    { name: "fullname",        label: "Your full name" },
+    { name: "role",            label: "Your role or job title" },
+    { name: "email",           label: "Email address" },
+    { name: "company",         label: "Company name" },
+    { name: "industry",        label: "Industry (e.g. FinTech, HRTech, DevTools)" },
     { name: "total_employees", label: "Total Employees (FTE equivalent)" },
-    { name: "year_founded", label: "Year Founded (YYYY)" },
-    { name: "hq_region", label: "HQ Region (US, FR, UK, Other)" }
+    { name: "year_founded",    label: "Year Founded (YYYY)" },
+    { name: "hq_region",       label: "HQ Region (US, FR, UK, DACH, Benelux, Nordics, Other)" }
   ]
 },
 
 {
-  id: 2,
-  pillar: 0,
-  type: "group",
-  title: "Key SaaS Performance Metrics",
-  subtitle: "Core financial health indicators",
+  id: 2, pillar: 0, type: "group",
+  title: "Core SaaS Performance Metrics",
+  subtitle: "Financial and retention baseline. Enter 999 if a metric does not apply or is not currently tracked.",
   fields: [
-    { name: "arr", label: "Current ARR (Annual Recurring Revenue)" },
-    { name: "growth_rate", label: "Year-over-Year Growth Rate (%)" },
-    { name: "nrr", label: "Net Revenue Retention (NRR %)" },
-    { name: "gross_margin", label: "Gross Margin (%)" },
-    { name: "monthly_burn", label: "Monthly Net Burn ($)" },
-    { name: "cash_runway", label: "Cash Runway (Estimated months remaining)" },
-    { name: "pricing_model", label: "Pricing Model (e.g. Flat, Per Seat, Usage-based)" },
-    { name: "number_of_clients", label: "Number of Active Paying Customers" }
+    { name: "arr",              label: "Current ARR (Annual Recurring Revenue)" },
+    { name: "growth_rate",      label: "Year-over-Year Growth Rate (%)" },
+    { name: "nrr",              label: "Net Revenue Retention — NRR (%)" },
+    { name: "grr",              label: "Gross Revenue Retention — GRR (%, enter 999 if not tracked)" },
+    { name: "gross_margin",     label: "Gross Margin (%)" },
+    { name: "monthly_burn",     label: "Monthly Net Burn (enter 999 if profitable or breakeven)" },
+    { name: "cash_runway",      label: "Cash Runway — months remaining (enter 999 if profitable)" },
+    { name: "number_of_clients",label: "Number of Active Paying Customers" }
   ]
 },
 
 {
-  id: 3,
-  pillar: 0,
-  type: "group",
-  title: "GTM Team Composition (Full Time Employees)",
-  subtitle: "How your revenue engine is staffed today",
+  id: 3, pillar: 0, type: "group",
+  title: "GTM Team Composition",
+  subtitle: "Full-time equivalents only. Enter 999 if a function does not exist in your organisation.",
   fields: [
-    { name: "sales_headcount", label: "# Sales (AEs)" },
-    { name: "sales_leadership_headcount", label: "# Sales Leadership (VP/Head/Managers)" },
-    { name: "sdr_headcount", label: "# SDR / BDR" },
-    { name: "marketing_headcount", label: "# Marketing (Demand + PMM + Brand)" },
-    { name: "cs_headcount", label: "# Customer Success / Account Management" },
-    { name: "revops_enablement_headcount", label: "# RevOps / Enablement" },
-    { name: "product_headcount", label: "# Product (PM + Design)" },
-    { name: "gtm_other_headcount", label: "# Other GTM (Partners, Solutions, SEs)" }
+    { name: "sales_headcount",             label: "# Sales — AEs / Closers" },
+    { name: "sdr_headcount",               label: "# SDR / BDR (enter 999 if none)" },
+    { name: "marketing_headcount",         label: "# Marketing — Demand + PMM + Brand" },
+    { name: "cs_headcount",               label: "# Customer Success / Account Management" },
+    { name: "revops_enablement_headcount", label: "# RevOps / Enablement (enter 999 if none)" },
+    { name: "product_headcount",           label: "# Product — PM + Design only (not engineering)" },
+    { name: "engineering_headcount",       label: "# Engineering / R&D — developers only" },
+    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" }
   ]
 },
 
 {
-  id: 4,
-  pillar: 0,
-  type: "group",
+  id: 4, pillar: 0, type: "group",
   title: "Targets & Efficiency",
-  subtitle: "Revenue efficiency and pricing power",
+  subtitle: "Revenue efficiency and commercial performance. Enter 999 if a metric does not apply or is not currently tracked.",
   fields: [
-    { name: "arr_target", label: "ARR Target for this Fiscal Year" },
-    { name: "quota_attainment", label: "% of Reps Hitting Quota (Last Quarter)" },
-    { name: "cac_payback", label: "CAC Payback Period (Months)" },
-    { name: "ltv_cac", label: "LTV to CAC Ratio" },
-    { name: "avg_discount", label: "Average Discount % on New Logo Deals" },
-    { name: "expansion_pct", label: "% of New ARR from Upsell / Expansion" },
-    { name: "opex_includes_payroll", label: "Does the monthly burn include payroll? (Yes/No)" },
-    { name: "sales_marketing_pct", label: "Sales & Marketing spend as % of revenue" }
+    { name: "arr_target",         label: "ARR Target for this Fiscal Year" },
+    { name: "quota_attainment",   label: "% of Reps Hitting Quota — last full quarter" },
+    { name: "cac_payback",        label: "CAC Payback Period (months)" },
+    { name: "magic_number",       label: "Magic Number — net new ARR ÷ prior quarter S&M spend (enter 999 if not tracked)" },
+    { name: "avg_discount",       label: "Average Discount % on New Logo Deals" },
+    { name: "expansion_pct",      label: "% of New ARR from Upsell / Expansion" },
+    { name: "avg_ramp_months",    label: "Average Ramp Time for New AE — months to full quota" },
+    { name: "sales_marketing_pct",label: "Sales & Marketing Spend as % of Revenue" }
   ]
 },
 
 {
-  id: 5,
-  pillar: 0,
-  type: "group",
+  id: 5, pillar: 0, type: "group",
   title: "Funnel Velocity & Risk Context",
-  subtitle: "Where deals slow down, break, or disappear",
+  subtitle: "Where deals slow, break, or disappear. Enter 999 if a metric does not apply or is not currently tracked.",
   fields: [
-    { name: "win_rate", label: "Average Win Rate (%)" },
-    { name: "sales_cycle", label: "Average Sales Cycle (Days)" },
-    { name: "pipeline_coverage", label: "Pipeline Coverage Ratio (e.g. 3.5x)" },
-    { name: "churn_rate", label: "Annual Churn Rate (%)" },
-    { name: "top_competitors", label: "Top 3 Competitors (Comma separated)" },
-    { name: "primary_loss_reason", label: "Primary loss reason (e.g. Budget, Competition)" },
-    { name: "revenue_concentration", label: "% of Revenue from Top 10 Customers" },
-    { name: "primary_churn_reason", label: "Primary reason for churn (e.g. Price, Product)" }
+    { name: "win_rate",             label: "Average Win Rate (%)" },
+    { name: "sales_cycle",          label: "Average Sales Cycle (days)" },
+    { name: "pipeline_coverage",    label: "Pipeline Coverage Ratio (e.g. 3.5 for 3.5x)" },
+    { name: "inbound_pipeline_pct", label: "% of Qualified Pipeline from Inbound" },
+    { name: "revenue_concentration",label: "% of Revenue from Top 10 Customers" },
+    { name: "top_competitors",      label: "Top 3 Competitors (comma separated)" },
+    { name: "primary_loss_reason",  label: "Primary Loss Reason — one sentence" },
+    { name: "primary_churn_reason", label: "Primary Reason for Churn — one sentence" }
   ]
 },
 
 {
-  id: 6,
-  pillar: 0,
-  type: "group",
+  id: 6, pillar: 0, type: "group",
   title: "Pipeline & Product Intelligence",
-  subtitle: "Estimates are fine. Leave blank or enter 999 if a field does not apply.",
+  subtitle: "Observed conversion and adoption mechanics. Enter 999 if a metric does not apply or is not currently tracked.",
   fields: [
-    { name: "discovery_to_demo", label: "Discovery → Demo conversion %" },
-    { name: "demo_to_poc", label: "Demo → POC / Trial conversion %" },
-    { name: "poc_to_close", label: "POC → Close conversion %" },
-    { name: "technical_validation_loss", label: "% deals lost at technical validation" },
-    { name: "activation_30d", label: "% users active 30 days post-onboarding" },
-    { name: "feature_penetration", label: "% accounts using 3+ core features" },
-    { name: "time_to_value", label: "Avg days to first value moment" },
-    { name: "product_expansion_pct", label: "% expansion revenue driven by product usage" }
-  ]
-},
-   
-{
-  id: 7,
-  pillar: 0,
-  type: "radio",
-  title: "What best describes your primary GTM motion?",
-  options: [
-    "Inbound-led (Marketing driven)",
-    "Outbound-led (Sales driven)",
-    "Product-led (PLG / Self-serve)",
-    "Partner-led (Channel / Ecosystem)",
-    "Enterprise Field Sales (High touch)",
-    "Hybrid (Balanced mix)"
+    { name: "discovery_to_demo",        label: "Discovery → Demo Conversion (%)" },
+    { name: "demo_to_poc",              label: "Demo → POC / Trial Conversion — % (enter 999 if no POC in your motion)" },
+    { name: "poc_to_close",             label: "POC → Close Conversion — % (enter 999 if no POC in your motion)" },
+    { name: "technical_validation_loss",label: "% Deals Lost at Technical Validation (enter 999 if not tracked)" },
+    { name: "activation_30d",           label: "% Users Active 30 Days Post-Onboarding (enter 999 if not tracked)" },
+    { name: "feature_penetration",      label: "% Accounts Using 3+ Core Features (enter 999 if not tracked)" },
+    { name: "time_to_value",            label: "Average Days to First Value Moment (enter 999 if not formally defined)" },
+    { name: "product_expansion_pct",    label: "% Expansion Revenue Driven by Product Usage Signals (enter 999 if not tracked)" }
   ]
 },
 
 {
-  id: 8,
-  pillar: 0,
-  type: "radio",
-  title: "Your primary revenue model",
-  options: [
-    "SaaS Subscription (Recurring)",
-    "Usage-based / Consumption",
-    "Transactional / One-time",
-    "Marketplace / Take-rate",
-    "Managed Services / Hybrid"
+  id: 7, pillar: 0, type: "multi_radio",
+  title: "GTM Model",
+  subtitle: "Select one option for each question.",
+  questions: [
+    {
+      key: "gtm_motion",
+      label: "What best describes your primary GTM motion?",
+      options: [
+        "Inbound-led (Marketing driven)",
+        "Outbound-led (Sales driven)",
+        "Product-led (PLG / Self-serve)",
+        "Partner-led (Channel / Ecosystem)",
+        "Enterprise Field Sales (High touch)",
+        "Hybrid (Balanced mix)"
+      ]
+    },
+    {
+      key: "revenue_model",
+      label: "Your primary revenue model",
+      options: [
+        "SaaS Subscription (Recurring)",
+        "Usage-based / Consumption",
+        "Transactional / One-time",
+        "Marketplace / Take-rate",
+        "Managed Services / Hybrid"
+      ]
+    }
   ]
 },
 
 {
-  id: 9,
-  pillar: 0,
-  type: "radio",
-  title: "Primary Target Segment (ACV)",
-  options: [
-    "Rabbit / SMB (< 10k ACV)",
-    "Deer / Mid-Market (10k - 50k ACV)",
-    "Elephant / Enterprise (50k - 250k ACV)",
-    "Whale / Strategic (250k+ ACV)"
+  id: 8, pillar: 0, type: "group",
+  title: "Churn & Contract Detail",
+  subtitle: "Retention and commercial structure. Enter 999 if a metric does not apply or is not currently tracked.",
+  fields: [
+    { name: "burn_multiple",       label: "Burn Multiple — net burn ÷ net new ARR (enter 999 if not tracked)" },
+    { name: "logo_churn_rate",     label: "Annual Logo Churn Rate — % of customers lost" },
+    { name: "revenue_churn_rate",  label: "Annual Revenue Churn Rate — % of ARR lost (enter 999 if not tracked separately)" },
+    { name: "avg_contract_length", label: "Average Contract Length (months)" }
   ]
 },
 
 {
-  id: 10,
-  pillar: 0,
-  type: "radio",
-  title: "Who is your primary Economic Buyer?",
-  options: [
-    "C-Level Executive (CEO, CFO, CTO)",
-    "VP / Head of Department",
-    "Team Lead / Manager",
-    "Individual Contributor / End User",
-    "Technical / IT Procurement"
+  id: 9, pillar: 0, type: "multi_radio",
+  title: "Target Market",
+  subtitle: "Select one option for each question.",
+  questions: [
+    {
+      key: "target_segment",
+      label: "Primary Target Segment (declared strategy)",
+      options: [
+        "Rabbit / SMB (< $10k ACV)",
+        "Deer / Mid-Market ($10k – $50k ACV)",
+        "Elephant / Enterprise ($50k – $250k ACV)",
+        "Whale / Strategic ($250k+ ACV)"
+      ]
+    },
+    {
+      key: "economic_buyer",
+      label: "Who is your primary Economic Buyer?",
+      options: [
+        "C-Level Executive (CEO, CFO, CTO)",
+        "VP / Head of Department",
+        "Team Lead / Manager",
+        "Individual Contributor / End User",
+        "Technical / IT / Procurement"
+      ]
+    }
   ]
 },
 
 {
-  id: 11,
-  pillar: 0,
-  type: "radio",
-  title: "Sales Cycle Complexity",
-  options: [
-    "Transactional (< 30 days, 1-2 stakeholders)",
-    "Fast B2B (1-3 months, 2-4 stakeholders)",
-    "Complex (3-6 months, 4-8 stakeholders)",
-    "Strategic (6-12+ months, Committee decision)"
+  id: 10, pillar: 0, type: "group",
+  title: "Efficiency & Funnel Detail",
+  subtitle: "Secondary efficiency metrics. Enter 999 if a metric does not apply or is not currently tracked.",
+  fields: [
+    { name: "ltv_cac",              label: "LTV to CAC Ratio (enter 999 if not calculated)" },
+    { name: "pct_deals_no_discount",label: "% of Deals Closed at Full List Price" },
+    { name: "outbound_pipeline_pct",label: "% of Qualified Pipeline from Outbound" },
+    { name: "mql_to_sql_rate",      label: "MQL to SQL Conversion Rate — % (enter 999 if not tracked)" }
   ]
 },
 
 {
-  id: 12,
-  pillar: 0,
-  type: "radio",
-  title: "Funding Stage",
-  options: [
-    "Bootstrapped / Profitable",
-    "Pre-Seed / Seed",
-    "Series A",
-    "Series B",
-    "Series C+",
-    "Private Equity / Public"
+  id: 11, pillar: 0, type: "multi_radio",
+  title: "Company Stage",
+  subtitle: "Select one option for each question.",
+  questions: [
+    {
+      key: "operating_phase",
+      label: "Which operating phase best describes the business today?",
+      options: [
+        "Land & Expand — Growing fast, investing aggressively in new logos. Burn is intentional.",
+        "Grow & Optimize — Scaling revenue while improving efficiency. Rule of 40 is within reach.",
+        "Efficiency First — Profitability is the primary objective. New logos are secondary to NRR and margin.",
+        "Transition / Repositioning — Actively shifting segment, motion, product, or market.",
+        "Stabilization / Recovery — Protecting the revenue base and reducing risk before the next growth phase."
+      ]
+    },
+    {
+      key: "funding_stage",
+      label: "Funding Stage",
+      options: [
+        "Bootstrapped / Profitable",
+        "Pre-Seed / Seed",
+        "Series A",
+        "Series B",
+        "Series C+",
+        "Private Equity / Public"
+      ]
+    }
   ]
 },
 
 {
-  id: 13,
-  pillar: 0,
-  type: "radio",
-  title: "Product Maturity",
-  options: [
-    "MVP / Early Adopters",
-    "Product-Market Fit (Single Product)",
-    "Multi-Product Platform",
-    "Platform + Ecosystem"
+  id: 12, pillar: 0, type: "group",
+  title: "Team & Geographic Context",
+  subtitle: "Supplemental context for benchmark calibration. Enter 999 if not applicable.",
+  fields: [
+    { name: "sales_leadership_headcount",label: "# Sales Leadership — VP / Head / Managers" },
+    { name: "active_countries",          label: "Number of countries with active sales or customers" }
   ]
 },
 
 {
-  id: 14,
-  pillar: 0,
-  type: "text",
-  title: "Primary Geographic Market(s)"
-},
-
-{
-  id: 15,
-  pillar: 0,
-  type: "radio",
-  title: "Product Category Type",
-  options: [
-    "System of Record (e.g. CRM, ERP)",
-    "System of Engagement (e.g. Salesloft, Slack)",
-    "Point Solution / Tool",
-    "Infrastructure / API / DevTool",
-    "Data / Analytics / AI"
+  id: 13, pillar: 0, type: "group",
+  title: "Current Performance vs Goal",
+  subtitle: "What leadership tracks today and where the gap is. Enter 999 if a metric is not formally tracked.",
+  fields: [
+    { name: "current_primary_metric",       label: "Primary metric leadership tracks today — e.g. ARR, NRR, EBITDA, Rule of 40, Win Rate, Burn Multiple" },
+    { name: "current_primary_metric_value", label: "Current value of that metric" },
+    { name: "current_primary_metric_goal",  label: "Target value for this fiscal year" },
+    { name: "leadership_bottleneck",        label: "Leadership-perceived primary bottleneck today — one sentence" }
   ]
 },
 
 {
-  id: 16,
-  pillar: 0,
-  type: "radio",
-  title: "Competitive Landscape",
+  id: 14, pillar: 0, type: "radio",
+  title: "How urgent is resolving your primary GTM bottleneck?",
+  subtitle: "Select the option that reflects your current operational reality.",
   options: [
-    "Blue Ocean (Creating a new category)",
-    "Disruptor (Better/Cheaper than incumbent)",
-    "Niche Player (Specialized vertical)",
-    "Red Ocean (Highly saturated / Commodity)"
+    "Low — We have time to solve this properly",
+    "Moderate — This needs attention in the next two quarters",
+    "High — This is blocking growth right now",
+    "Critical — This threatens the business within 90 days"
   ]
 },
 
 {
-  id: 17,
-  pillar: 0,
-  type: "radio",
-  title: "Strategic Focus for the next 12 months",
-  options: [
-    "Aggressive Growth (New Logos)",
-    "Efficiency & Profitability (Cash flow)",
-    "Expansion & NRR (Upsell/Cross-sell)",
-    "New Market Entry (Geo or Segment)",
-    "Brand & Category Leadership"
+  id: 15, pillar: 0, type: "multi_radio",
+  title: "Product Profile",
+  subtitle: "Select one option for each question.",
+  questions: [
+    {
+      key: "product_category",
+      label: "Product Category Type",
+      options: [
+        "System of Record (e.g. CRM, ERP, HRIS)",
+        "System of Engagement (e.g. SEP, Collaboration, Messaging)",
+        "Point Solution / Workflow Tool",
+        "Infrastructure / API / Developer Tool",
+        "Data / Analytics / AI / BI"
+      ]
+    },
+    {
+      key: "product_complexity",
+      label: "How would you describe your product complexity for a typical buyer?",
+      options: [
+        "Simple / Plug & Play — Live in hours, no technical support needed",
+        "Moderately complex — Basic configuration, up and running in days",
+        "Complex / Configurable — Requires setup, training, and a defined onboarding process",
+        "Highly complex / Custom — Multi-month implementation, solutions engineering required"
+      ]
+    }
   ]
 },
 
 {
-  id: 18,
-  pillar: 0,
-  type: "radio",
-  title: "Primary Friction Point (The Symptom)",
-  options: [
-    "Not enough leads (Top of Funnel)",
-    "Low conversion rates (Mid Funnel)",
-    "Stalled deals / Long cycles (Sales Execution)",
-    "High Churn / Downsell (Retention)",
-    "Team misalignment / Chaos (Operations)"
+  id: 16, pillar: 0, type: "group",
+  title: "12-Month Target State",
+  subtitle: "What the business must achieve in the next 12 months. Enter 999 if a secondary metric is not applicable.",
+  fields: [
+    { name: "goal_12m_primary_metric",   label: "Primary success metric in 12 months — e.g. ARR, NRR, Rule of 40, EBITDA %" },
+    { name: "goal_12m_primary_target",   label: "Target value in 12 months" },
+    { name: "goal_12m_secondary_metric", label: "Secondary metric in 12 months (enter 999 if none)" },
+    { name: "goal_12m_secondary_target", label: "Secondary target value (enter 999 if none)" }
   ]
 },
 
 {
-  id: 19,
-  pillar: 0,
-  type: "radio",
-  title: "Internal Bottleneck (The Cause)",
+  id: 17, pillar: 0, type: "radio",
+  title: "What is your primary strategic focus for the next 12 months?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
-    "Talent / Hiring gaps",
-    "Technology / Data debt",
-    "Budget constraints",
-    "Strategic ambiguity / Leadership alignment",
-    "Product gaps / Feature parity"
+    "Aggressive New Logo Growth — Volume of new customers above all else",
+    "Efficiency & Profitability — Cash flow, margin improvement, burn reduction",
+    "Expansion & NRR — Upsell, cross-sell, and retention as the primary revenue engine",
+    "New Market Entry — New geography, segment, or GTM motion",
+    "Category Leadership — Brand, positioning, and long-term defensibility"
   ]
 },
 
 {
-  id: 20,
-  pillar: 0,
-  type: "radio",
-  title: "Recent Trigger Event",
+  id: 18, pillar: 0, type: "radio",
+  title: "What is your most visible GTM symptom right now?",
   options: [
-    "Business as usual",
-    "Just raised capital",
-    "New C-Level leadership installed",
-    "Missed revenue target significantly",
-    "Pivot in strategy or product"
+    "Not enough leads — Top of funnel is too thin",
+    "Low conversion — Pipeline exists but deals do not close",
+    "Stalled deals / Long cycles — Deals progress slowly or go dark",
+    "High churn or downsell — Customers leave or contract value shrinks",
+    "Team misalignment — Execution is inconsistent or coordination breaks down"
   ]
 },
 
 {
-  id: 21,
-  pillar: 0,
-  type: "radio",
-  title: "Desired Assessment Outcome",
+  id: 19, pillar: 0, type: "radio",
+  title: "What does leadership believe is the root cause?",
   options: [
-    "General Health Check",
-    "Preparation for Fundraising",
-    "Specific Problem Diagnosis",
-    "Annual Planning Input",
-    "Board Reporting Support"
+    "Talent or hiring gaps — We do not have the right people in the right roles",
+    "Technology or data debt — Systems are slow, broken, or absent",
+    "Budget constraints — We cannot invest what the strategy requires",
+    "Strategic ambiguity — Leadership is not fully aligned on direction or priorities",
+    "Product gaps — The product cannot support the GTM motion we need"
   ]
 },
 
 {
-  id: 22,
-  pillar: 0,
-  type: "radio",
-  title: "How would you describe your product complexity?",
-  options: ["Simple / Plug & Play", "Moderately complex", "Complex / Configurable", "Highly complex / Custom"]
-},
-
-{
-  id: 23,
-  pillar: 0,
-  type: "radio",
-  title: "Market Adoption Phase",
-  options: [
-    "Early Market (Visionaries)",
-    "Crossing the Chasm (Bowling Alley)",
-    "Mainstream (Pragmatists)",
-    "Late Market (Conservatives)"
+  id: 20, pillar: 0, type: "group",
+  title: "24-Month Target State",
+  subtitle: "What the business must look like in 24 months. Enter 999 if a secondary metric is not applicable.",
+  fields: [
+    { name: "goal_24m_primary_metric",   label: "Primary success metric in 24 months" },
+    { name: "goal_24m_primary_target",   label: "Target value in 24 months" },
+    { name: "goal_24m_secondary_metric", label: "Secondary metric in 24 months (enter 999 if none)" },
+    { name: "goal_24m_secondary_target", label: "Secondary target value (enter 999 if none)" },
+    { name: "goal_24m_operating_model",  label: "Target operating model in 24 months — e.g. Rule of 40, EBITDA positive, exit-ready, IPO-ready" }
   ]
 },
 
 {
-  id: 24,
-  pillar: 0,
-  type: "radio",
-  title: "Tech Stack Maturity",
+  id: 21, pillar: 0, type: "radio",
+  title: "How many commercial segments do you actively sell into today?",
+  subtitle: "A segment is a distinct buyer group with meaningfully different ACV, motion, or value proposition.",
   options: [
-    "Ad-hoc / Spreadsheets",
-    "Basic CRM setup",
-    "Integrated Stack (CRM + MAP + SEP)",
-    "Advanced / Custom Data Warehouse"
+    "1 segment — Single buyer type and motion",
+    "2 segments — Two distinct buyer groups",
+    "3 segments — Three distinct buyer groups",
+    "4 or more segments"
   ]
 },
 
 {
-  id: 25,
-  pillar: 0,
-  type: "radio",
-  title: "Primary reporting currency",
-  options: [
-    "USD ($)",
-    "EUR (€)",
-    "GBP (£)",
-    "AUD ($)",
-    "CAD ($)",
-    "Other"
+  id: 22, pillar: 0, type: "group",
+  title: "Segment 1 Performance",
+  subtitle: "Your primary or largest segment by ARR contribution. Enter 999 for any metric not tracked per segment.",
+  fields: [
+    { name: "segment_1_name",     label: "Segment 1 — Name or description (e.g. Mid-Market SaaS)" },
+    { name: "segment_1_arr_pct",  label: "Segment 1 — ARR contribution (%)" },
+    { name: "segment_1_acv",      label: "Segment 1 — Average ACV" },
+    { name: "segment_1_win_rate", label: "Segment 1 — Win Rate (%)" },
+    { name: "segment_1_nrr",      label: "Segment 1 — NRR (%, enter 999 if not tracked per segment)" },
+    { name: "segment_1_priority", label: "Segment 1 — Strategic priority: Core / Growth / Explore / Phase-out" }
+  ]
+},
+
+{
+  id: 23, pillar: 0, type: "group",
+  title: "Segment 2 Performance",
+  subtitle: "Your second segment. Enter 999 for any field that does not apply.",
+  fields: [
+    { name: "segment_2_name",     label: "Segment 2 — Name (enter 999 if not applicable)" },
+    { name: "segment_2_arr_pct",  label: "Segment 2 — ARR contribution (%, enter 999 if not applicable)" },
+    { name: "segment_2_acv",      label: "Segment 2 — Average ACV (enter 999 if not applicable)" },
+    { name: "segment_2_win_rate", label: "Segment 2 — Win Rate (%, enter 999 if not applicable)" },
+    { name: "segment_2_nrr",      label: "Segment 2 — NRR (%, enter 999 if not applicable)" },
+    { name: "segment_2_priority", label: "Segment 2 — Priority: Core / Growth / Explore / Phase-out (enter 999 if not applicable)" }
+  ]
+},
+
+{
+  id: 24, pillar: 0, type: "multi_radio",
+  title: "Market Context & Reporting",
+  subtitle: "Select one option for each question.",
+  questions: [
+    {
+      key: "market_adoption",
+      label: "Market Adoption Phase",
+      options: [
+        "Emerging — Category education is still required before selling",
+        "Early Growth — Category awareness exists, product differentiation is the primary battle",
+        "Established Growth — Multiple credible alternatives, competition is intensifying",
+        "Mature — Category is commoditizing, retention and efficiency matter more than acquisition"
+      ]
+    },
+    {
+      key: "currency",
+      label: "Primary Reporting Currency",
+      options: [
+        "USD ($)",
+        "EUR (€)",
+        "GBP (£)",
+        "AUD ($)",
+        "CAD ($)",
+        "Other"
+      ]
+    }
+  ]
+},
+
+{
+  id: 25, pillar: 0, type: "group",
+  title: "Segment 3 Performance",
+  subtitle: "Your third segment. Enter 999 for any field that does not apply.",
+  fields: [
+    { name: "segment_3_name",     label: "Segment 3 — Name (enter 999 if not applicable)" },
+    { name: "segment_3_arr_pct",  label: "Segment 3 — ARR contribution (%, enter 999 if not applicable)" },
+    { name: "segment_3_acv",      label: "Segment 3 — Average ACV (enter 999 if not applicable)" },
+    { name: "segment_3_win_rate", label: "Segment 3 — Win Rate (%, enter 999 if not applicable)" },
+    { name: "segment_3_nrr",      label: "Segment 3 — NRR (%, enter 999 if not applicable)" },
+    { name: "segment_3_priority", label: "Segment 3 — Priority: Core / Growth / Explore / Phase-out (enter 999 if not applicable)" }
   ]
 },
 
@@ -375,6 +435,7 @@ const QUESTIONS = [
 {
   id: 1001, pillar: 1, type: "scale",
   title: "In the last 12 months, how many GTM initiatives were formally stopped, deprioritized, or defunded after a quarterly review?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "We have not formally stopped any initiatives: everything we start continues",
     "One or two things were quietly dropped but without a formal review process",
@@ -451,7 +512,7 @@ const QUESTIONS = [
 },
 {
   id: 1008, pillar: 1, type: "scale",
-  title: "How are GTM budget and headcount decisions prioritized against strategic impact?",
+  title: "In your current budget, which motion or segment receives the most investment — and is that allocation explicitly documented and defended with performance data?",
   options: [
     "Budget decisions are made based on last year's spend with minimal strategic review",
     "Some prioritization happens but it is largely political or relationship-based",
@@ -462,7 +523,7 @@ const QUESTIONS = [
 },
 {
   id: 1009, pillar: 1, type: "scale",
-  title: "How clearly do you understand which GTM motions, inbound, outbound, PLG, channel, generate the most efficient revenue?",
+  title: "Which of your GTM motions — inbound, outbound, PLG, channel — generates the most efficient revenue, and what data confirms that?",
   options: [
     "No motion-level visibility: pipeline sources are not tracked",
     "Rough estimates based on rep intuition or marketing assumptions",
@@ -572,7 +633,7 @@ const QUESTIONS = [
 },
 {
   id: 1019, pillar: 1, type: "scale",
-  title: "How consistently does the GTM strategy drive day-to-day prioritization and resource decisions across teams?",
+  title: "In the last quarter, when two GTM teams competed for the same resource or priority, how was it resolved — and was the resolution tied to documented strategic criteria?",
   options: [
     "Strategy rarely influences daily decisions: execution is driven by urgency",
     "Strategy is referenced occasionally but does not govern resource calls",
@@ -583,13 +644,13 @@ const QUESTIONS = [
 },
 {
   id: 1020, pillar: 1, type: "scale",
-  title: "How consistently can your sales team charge full price without needing to discount to win deals?",
+  title: "Does your current GTM plan explicitly address both the 12-month execution targets and the operating model changes required to sustain performance at 24 months?",
   options: [
-    "Discounting is the norm: deals rarely close at list price",
-    "Significant discounts are required in most competitive situations",
-    "Discounts are common but capped with informal approval",
-    "Discounting is governed by a formal policy with documented approval tiers",
-    "List price is defended consistently: discounts are rare, time-bounded, and require VP-level sign-off"
+    "Strategy is focused entirely on short-term targets: no structured view of the 24-month operating model exists",
+    "A long-term direction exists informally but is not connected to current GTM decisions",
+    "12-month targets are defined but the 24-month operating model implications are not explicitly planned",
+    "Both near-term targets and the 24-month operating model are documented and reviewed in planning",
+    "A dual-horizon strategy governs GTM decisions: 12-month execution targets and 24-month capability requirements are maintained in parallel, and trade-offs between them are explicitly decided"
   ]
 },
 
@@ -600,6 +661,7 @@ const QUESTIONS = [
 {
   id: 2001, pillar: 2, type: "scale",
   title: "How precisely defined is your Ideal Customer Profile, and how recently was it validated against closed-won data?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No ICP defined: we pursue any company that expresses interest",
     "A rough ICP exists based on founder intuition, not validated",
@@ -632,13 +694,13 @@ const QUESTIONS = [
 },
 {
   id: 2004, pillar: 2, type: "scale",
-  title: "How systematically is your competitive landscape documented, updated, and activated across sales and marketing?",
+  title: "How consistently is your segmentation model applied across sales, marketing, and product?",
   options: [
-    "No competitive documentation: reps handle competitive situations independently",
-    "Informal awareness among senior sellers, nothing written or shared",
-    "A competitive battlecard set exists but is rarely updated or referenced",
-    "Competitive intelligence is updated quarterly and embedded in sales training",
-    "A competitive intelligence program: dedicated owner, monthly updates, win/loss integration, and rep certification"
+    "No segmentation: all accounts are treated the same regardless of size or fit",
+    "Segmentation exists conceptually but is not reflected in how we route, price, or message",
+    "Segments are defined but applied inconsistently — different teams use different definitions",
+    "Segmentation is codified in CRM, used in routing and campaign targeting, reviewed annually",
+    "A unified segmentation architecture governs CRM, pricing, campaign targeting, and capacity planning — reviewed quarterly and consistently applied"
   ]
 },
 {
@@ -654,7 +716,7 @@ const QUESTIONS = [
 },
 {
   id: 2006, pillar: 2, type: "scale",
-  title: "How well documented and validated are your buyers' actual decision criteria, not what they say, but what closes deals?",
+  title: "Name the top two barriers preventing your target buyers from adopting your product. Are those based on documented buyer interviews or inferred from sales feedback?",
   options: [
     "No documented understanding: reps assume they know what matters",
     "Anecdotal understanding from senior reps, not codified",
@@ -665,18 +727,18 @@ const QUESTIONS = [
 },
 {
   id: 2007, pillar: 2, type: "scale",
-  title: "How directly does customer and market research influence your product roadmap and GTM prioritization?",
+  title: "In your last 10 lost deals, how often did a blocker persona derail the decision — and is that pattern documented in a formal influence map?",
   options: [
-    "Research and roadmap are disconnected: product is built on internal assumptions",
-    "Customer input is collected but rarely drives concrete roadmap or GTM decisions",
-    "Occasional research inputs are referenced in planning but not systematically weighted",
-    "Research outputs are a defined input to quarterly roadmap and GTM planning reviews",
-    "A structured research-to-decision loop: findings are scored, prioritized, and tracked from input to outcome"
+    "No persona mapping: reps target whoever responds to outreach",
+    "Informal awareness of key personas exists among senior reps, but it is not documented",
+    "A primary buyer persona is documented, but champion and blocker roles are poorly understood",
+    "A multi-persona map exists by segment, validated through deal reviews and win/loss interviews",
+    "A validated influence map documents champion, economic buyer, and blocker roles by segment and deal size — updated quarterly and used in deal qualification"
   ]
 },
 {
   id: 2008, pillar: 2, type: "scale",
-  title: "How well do you understand the barriers preventing your target buyers from adopting your category or product?",
+  title: "Can you name the top two barriers preventing your target buyers from adopting your product — and are those based on buyer interviews or inferred from lost deals?",
   options: [
     "No insight: adoption barriers are not studied",
     "Assumptions exist based on sales objections, not validated externally",
@@ -687,7 +749,7 @@ const QUESTIONS = [
 },
 {
   id: 2009, pillar: 2, type: "scale",
-  title: "How clearly do you understand what causes customers to switch from competing tools to yours, or away from yours?",
+  title: "What causes customers to switch from competing tools to yours — or away from yours — and how precisely do you know?",
   options: [
     "No structured insight into switching dynamics",
     "Informal understanding from a few rep anecdotes",
@@ -698,7 +760,7 @@ const QUESTIONS = [
 },
 {
   id: 2010, pillar: 2, type: "scale",
-  title: "How well does your team understand macroeconomic and industry trends that are shaping your buyers' budgets and priorities?",
+  title: "Does your team track macroeconomic and industry trends that shape buyer budgets — and does that feed directly into your GTM priorities?",
   options: [
     "No awareness: macro trends are not part of GTM planning",
     "General awareness but not connected to deal or segment strategy",
@@ -731,13 +793,13 @@ const QUESTIONS = [
 },
 {
   id: 2013, pillar: 2, type: "scale",
-  title: "How clearly do you understand which personas influence, block, or accelerate deal decisions across deal sizes?",
+  title: "Which personas most consistently accelerate deal velocity in your top accounts — and is that pattern documented separately from your blocker analysis?",
   options: [
-    "No persona mapping: reps target whoever responds",
-    "Informal awareness of key personas, not documented",
-    "Primary buyer persona documented but champion and blocker roles are unclear",
-    "A multi-persona map exists by segment, validated through deal reviews",
-    "A validated influence map: champion, economic buyer, and blocker roles documented per segment and deal size, updated quarterly"
+    "No champion or accelerator mapping: all personas are treated the same in deal execution",
+    "Experienced reps informally know who to engage to speed deals, but it is not documented",
+    "A primary champion persona is documented, but the acceleration dynamic is not analyzed separately from blockers",
+    "Accelerator and blocker personas are documented by segment and used in deal qualification and coaching",
+    "A full influence architecture: champion accelerators and blocker profiles documented by segment and deal size, validated quarterly through win/loss analysis, and embedded in rep coaching and deal reviews"
   ]
 },
 {
@@ -753,7 +815,7 @@ const QUESTIONS = [
 },
 {
   id: 2015, pillar: 2, type: "scale",
-  title: "How clearly do you know which customer segments generate the highest lifetime value, and how does that inform your targeting?",
+  title: "Which customer segments generate your highest lifetime value — and does that finding directly drive your ICP prioritization and targeting decisions?",
   options: [
     "No LTV data: all customers are treated as equally valuable",
     "Rough awareness based on ARR size, not validated against retention or expansion data",
@@ -764,7 +826,7 @@ const QUESTIONS = [
 },
 {
   id: 2016, pillar: 2, type: "scale",
-  title: "How well do you understand the dynamics of your partner and channel ecosystem, who drives deals, who blocks them, and why?",
+  title: "How well do you understand your partner and channel ecosystem — who drives deals, who blocks them, and why?",
   options: [
     "No partner intelligence: ecosystem dynamics are unknown",
     "Informal relationships with a few partners, no systematic insight",
@@ -808,13 +870,13 @@ const QUESTIONS = [
 },
 {
   id: 2020, pillar: 2, type: "scale",
-  title: "How quickly does your organization identify and act on shifting buyer needs compared to your primary competitors?",
+  title: "In the last quarter, what percentage of your closed deals involved a partner — and do you know whether partner involvement accelerated or complicated each close?",
   options: [
-    "We typically discover buyer shifts after we have already lost deals",
-    "We notice changes at the same pace as competitors, often too late",
-    "We identify shifts within a quarter and begin adapting positioning",
-    "We identify shifts within weeks through a structured market sensing process",
-    "We detect buyer behavior shifts in real time and update messaging, content, and playbooks before competitors react"
+    "Partner involvement is not tracked: we do not know which deals involved partners or how they affected outcomes",
+    "We know roughly which deals had partner involvement but have not analyzed impact on close rate or cycle time",
+    "Partner-involved deals are tracked but win rate and cycle time differences have not been formally analyzed",
+    "Partner deal tracking exists and we have compared win rate and cycle time vs direct deals — reviewed quarterly",
+    "A live partner performance model: partner-sourced vs partner-influenced pipeline, win rate delta, and cycle time impact tracked monthly and reviewed in revenue meetings"
   ]
 },
 
@@ -825,6 +887,7 @@ const QUESTIONS = [
 {
   id: 3001, pillar: 3, type: "scale",
   title: "When a prospect asks 'what do you do and why does it matter to me?', how consistently do your reps and website deliver the same crisp answer?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "Every rep and page gives a different answer: no consistency",
     "A core message exists but reps frequently deviate or improvise",
@@ -835,7 +898,7 @@ const QUESTIONS = [
 },
 {
   id: 3002, pillar: 3, type: "scale",
-  title: "How clearly defined and operationally embedded is your market positioning, the specific category you own and why you win there?",
+  title: "In your last 10 sales calls reviewed, did reps deliver the same core differentiation message — or did the story vary by rep, channel, and day?",
   options: [
     "No formal positioning: the company describes itself differently depending on who you ask",
     "A positioning statement exists but is not consistently reflected in sales or marketing",
@@ -912,13 +975,13 @@ const QUESTIONS = [
 },
 {
   id: 3009, pillar: 3, type: "scale",
-  title: "How structured is your product launch process, do you have a tiered system that matches launch effort to business impact?",
+  title: "In your current demo, which capabilities are shown in the first 10 minutes — and is that sequence based on validated data about what drives next-step conversion?",
   options: [
-    "No process: launches are handled differently every time",
-    "Some launch coordination happens but without defined tiers or checklists",
-    "A basic launch checklist exists but is not consistently followed",
-    "A tiered launch framework (Tier 1/2/3) with defined criteria, owners, and readiness gates",
-    "A launch operating system: tier criteria, readiness scorecard, go/no-go reviews, and post-launch measurement embedded in every release"
+    "No systematic understanding: features are demoed based on what the rep likes to show",
+    "Experienced reps have informal awareness of what works, but it is not documented or shared",
+    "Feature resonance is tracked anecdotally through deal feedback but not systematized",
+    "Feature resonance by segment and deal stage is documented through win/loss and demo analysis",
+    "A feature-to-deal-stage map exists: validated through buyer interviews and progression data, updated quarterly, and used to govern demo structure"
   ]
 },
 {
@@ -934,13 +997,13 @@ const QUESTIONS = [
 },
 {
   id: 3011, pillar: 3, type: "scale",
-  title: "How clearly do you understand which product features resonate most with buyers at each stage of the deal?",
+  title: "After your last 10 demos, how many resulted in a documented next step — and do you track which demo elements drove that outcome?",
   options: [
-    "No systematic understanding: features are demoed based on rep preference",
-    "Informal awareness among experienced reps, not shared or documented",
-    "Feature resonance tracked anecdotally through deal feedback",
-    "Feature resonance by segment and deal stage documented through win/loss and demo analysis",
-    "A feature-to-deal-stage map: validated through structured buyer interviews and deal progression data, updated quarterly"
+    "Next steps after demos are informal: there is no tracking of conversion rate or what drove it",
+    "Some reps document next steps, but demo-to-outcome correlation is not tracked systematically",
+    "Demo-to-next-step conversion is tracked as a number, but which demo elements drove outcomes is unknown",
+    "Demo conversion rate is tracked by segment and reviewed in coaching, with some correlation to demo content and sequence",
+    "A governed demo performance system: conversion rate tracked by rep and segment, demo elements correlated with outcomes, and findings used to update the standard demo structure quarterly"
   ]
 },
 {
@@ -1033,13 +1096,13 @@ const QUESTIONS = [
 },
 {
   id: 3020, pillar: 3, type: "scale",
-  title: "After a first call with your sales team, how reliably do prospects understand what makes you different from alternatives they are evaluating?",
+  title: "Map your content against your buyer journey: which stage has the weakest coverage today — and do you have a documented plan to close that gap?",
   options: [
-    "Prospects regularly leave the first call confused about differentiation",
-    "Differentiation is communicated inconsistently: depends heavily on the rep",
-    "Most reps communicate differentiation but the messaging varies",
-    "Differentiation is clearly communicated in most first calls using a consistent framework",
-    "Differentiation is validated through post-call surveys: buyer-stated understanding tracked and used to improve messaging"
+    "Messaging exists for the sales stage only: awareness and post-sale content are absent",
+    "Some content covers multiple stages but it is fragmented and not connected to a buyer journey",
+    "Core stages are covered but gaps exist in late-stage proof content and post-sale value communication",
+    "A documented content map covers all primary buyer stages from awareness to renewal for main segments",
+    "A full buyer journey content architecture: each stage mapped by segment and persona, freshness tracked, gaps prioritized in quarterly PMM planning, and performance measured by stage conversion"
   ]
 },
 
@@ -1050,6 +1113,7 @@ const QUESTIONS = [
 {
   id: 4001, pillar: 4, type: "scale",
   title: "How explicitly defined is your demand generation strategy, channels, targets, budgets, and success metrics, and how recently was it reviewed?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No documented strategy: DG activities are chosen based on availability or habit",
     "A rough channel plan exists but lacks budget allocation or performance targets",
@@ -1082,7 +1146,7 @@ const QUESTIONS = [
 },
 {
   id: 4004, pillar: 4, type: "scale",
-  title: "How efficiently does your paid media spend convert to qualified pipeline, and how do you track that efficiency?",
+  title: "Name your top three pipeline sources ranked by cost-per-qualified-opportunity right now. Is that ranking based on tracked data or estimated from memory?",
   options: [
     "Paid media is not used or spend is tracked only at cost level",
     "Paid media runs but ROI and pipeline contribution are not measured",
@@ -1137,7 +1201,7 @@ const QUESTIONS = [
 },
 {
   id: 4009, pillar: 4, type: "scale",
-  title: "How clearly can you attribute pipeline and revenue back to specific DG channels, campaigns, and spend, and how often is that data reviewed?",
+  title: "Can you attribute pipeline and revenue back to specific DG channels, campaigns, and spend — and how often does that data drive a budget reallocation?",
   options: [
     "No attribution: all pipeline source is unknown or marked 'direct'",
     "First-touch attribution exists but multi-touch and spend ROI are not tracked",
@@ -1159,7 +1223,7 @@ const QUESTIONS = [
 },
 {
   id: 4011, pillar: 4, type: "scale",
-  title: "How clearly defined and consistently enforced are your lead follow-up SLAs between marketing and sales?",
+  title: "Are your lead follow-up SLAs between marketing and sales defined, tracked, and enforced — and what happens when a rep misses the window?",
   options: [
     "No SLAs: lead follow-up depends on individual rep behaviour",
     "An informal expectation exists but is not tracked or enforced",
@@ -1192,13 +1256,13 @@ const QUESTIONS = [
 },
 {
   id: 4014, pillar: 4, type: "scale",
-  title: "How predictably does your demand generation engine deliver the pipeline coverage needed to hit your revenue targets?",
+  title: "For your last three events or webinars: what was the pipeline generated, and what was the cost-per-qualified-opportunity per event?",
   options: [
-    "Pipeline coverage varies wildly: some quarters are strong, others are crises",
-    "Pipeline is generally adequate but coverage ratio fluctuates without clear cause",
-    "Pipeline coverage is tracked but predictability is limited to 30-60 days",
-    "Pipeline coverage is modeled 90 days out and reviewed in weekly pipeline meetings",
-    "A fully modeled pipeline engine: coverage by segment, motion, and rep capacity tracked 90-180 days out, reviewed weekly"
+    "Events are run with no pipeline or cost tracking: attendance is the only metric",
+    "Some pipeline is attributed to events after the fact, but cost-per-opportunity is not calculated",
+    "Pipeline generated is tracked per event, but cost data is incomplete or not linked to qualified opportunities",
+    "Pipeline generated and cost-per-qualified-opportunity are tracked per event and reviewed after each one",
+    "A governed event ROI model: pipeline generated, cost-per-opp, and influenced ARR tracked per event — results feed directly into future event investment decisions"
   ]
 },
 {
@@ -1225,7 +1289,7 @@ const QUESTIONS = [
 },
 {
   id: 4017, pillar: 4, type: "scale",
-  title: "How clearly defined is your event and webinar strategy, and how do you measure pipeline and revenue contribution from events?",
+  title: "Do you have a defined event and webinar strategy with pipeline targets per event — and can you show pipeline ROI from your last three events?",
   options: [
     "Events are chosen opportunistically with no defined strategy or measurement",
     "Events are planned but attendance is the primary success metric",
@@ -1247,7 +1311,7 @@ const QUESTIONS = [
 },
 {
   id: 4019, pillar: 4, type: "scale",
-  title: "How well does your demand generation engine scale, can you double pipeline without doubling budget?",
+  title: "Can you grow pipeline without proportionally growing DG budget — and do you have data from the last 12 months to demonstrate it?",
   options: [
     "Scaling pipeline requires proportional budget and headcount increases",
     "Some economies of scale exist but efficiency degrades as volume increases",
@@ -1274,7 +1338,8 @@ const QUESTIONS = [
 
 {
   id: 5001, pillar: 5, type: "scale",
-  title: "How clearly defined and consistently followed is your sales process, from first contact to signed contract?",
+  title: "Is your sales process documented, enforced at stage gates, and consistently followed — or does each rep effectively run their own version?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No documented process: each rep manages deals independently",
     "An informal process exists in the minds of senior reps but is not written or trained",
@@ -1329,39 +1394,28 @@ const QUESTIONS = [
 },
 {
   id: 5006, pillar: 5, type: "scale",
-  title: "How consistently do your reps deliver compelling, buyer-centric demos, and how is that quality assessed?",
+  title: "Is your sales process enforced at stage gates in CRM — and what percentage of deals in your pipeline last quarter had all required fields completed at each stage?",
   options: [
-    "Demos vary widely: no standard framework or quality control exists",
-    "A reference demo exists but rep delivery quality is not assessed",
-    "Most reps follow the reference demo but differentiation and storytelling vary",
-    "Demo delivery is certified, assessed in coaching sessions, and benchmarked against win/loss data",
-    "A demo excellence program: standardized framework, recorded delivery reviewed in coaching, and demo quality correlated with deal outcomes monthly"
+    "CRM stage gates are not enforced: required fields are often blank and deals progress anyway",
+    "Some required fields exist but reps can usually move deals forward without completing them",
+    "Stage-gate requirements exist and are reviewed by managers, but enforcement is inconsistent across teams",
+    "Required fields are enforced at key stages, and compliance is reviewed regularly in pipeline inspections",
+    "A governed stage-gate system: required fields enforced in CRM at each stage, compliance tracked weekly, and exceptions documented with manager accountability"
   ]
 },
 {
   id: 5007, pillar: 5, type: "scale",
-  title: "How consistently is a structured deal qualification methodology, MEDDIC, MEDDPICC, or equivalent, applied across all reps and deal sizes?",
+  title: "In your last 20 deals, what percentage had all qualification methodology fields completed — and does CRM enforce that before a deal progresses to the next stage?",
   options: [
-    "No methodology used: reps qualify using personal judgment",
-    "A methodology is referenced in training but not enforced in deals",
-    "Methodology is used by some reps but inconsistently: no CRM enforcement",
-    "Methodology fields are required in CRM for all deals above a defined threshold",
-    "Methodology is embedded in CRM stage gates, reviewed in deal reviews, and deviation is flagged and coached"
+    "No qualification methodology is used: reps qualify based on personal judgment with no shared framework",
+    "A methodology exists but fewer than 40% of deals have complete qualification fields in CRM",
+    "40–70% of deals have complete qualification fields, but enforcement is inconsistent across managers",
+    "Over 70% of deals have complete qualification fields — CRM stage gates enforce methodology for deals above a defined size",
+    "Qualification methodology is enforced at 90%+ across all deals above threshold: CRM gates are active, compliance tracked weekly, and deviation flagged in deal reviews"
   ]
 },
 {
   id: 5008, pillar: 5, type: "scale",
-  title: "How consistently and structurally does sales leadership coach reps, and how is coaching quality measured?",
-  options: [
-    "No formal coaching: managers provide feedback reactively when deals are lost",
-    "Coaching happens informally in 1:1s without a defined framework",
-    "Structured coaching sessions occur but cadence and quality are inconsistent across managers",
-    "A defined coaching framework applied consistently across all managers, with documented session outputs",
-    "A coaching operating system: weekly cadence, call review, skill scorecards, and coaching impact tracked against rep performance metrics"
-  ]
-},
-{
-  id: 5009, pillar: 5, type: "scale",
   title: "How systematically do you capture and use win/loss intelligence to improve how your reps sell?",
   options: [
     "Win/loss reasons are not documented: outcomes are celebrated or forgotten",
@@ -1372,7 +1426,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5010, pillar: 5, type: "scale",
+  id: 5009, pillar: 5, type: "scale",
   title: "How prepared are your reps to handle the most common objections, and how do you know the handling is working?",
   options: [
     "No objection handling framework: reps improvise responses",
@@ -1383,19 +1437,19 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5011, pillar: 5, type: "scale",
-  title: "How capable and disciplined is your team in managing enterprise or multi-stakeholder deals, and how is that capability built?",
+  id: 5010, pillar: 5, type: "scale",
+  title: "In the last 90 days, how many rep demos were reviewed against a defined quality rubric — and what was the average score?",
   options: [
-    "No enterprise sales capability: complex deals are handled without a framework",
-    "A few senior reps manage enterprise deals but there is no transferable process",
-    "An enterprise methodology is referenced in training but not embedded in deal execution",
-    "Enterprise deal management is trained, enforced in deal reviews, and supported by specialist resources",
-    "A governed enterprise selling system: stakeholder mapping, executive engagement, and procurement navigation embedded in stage gates"
+    "No demos are reviewed against a rubric: quality is unmanaged",
+    "A few demos are reviewed informally, but there is no consistent rubric or scoring method",
+    "Some demos are scored against a rubric, but coverage is partial and inconsistent across managers",
+    "Demo quality is reviewed regularly with a defined rubric and feedback is documented per rep",
+    "A governed demo quality system: demo reviews scored against a standard rubric, average scores tracked by rep and manager, and low scores trigger targeted coaching within the same month"
   ]
 },
 {
-  id: 5012, pillar: 5, type: "scale",
-  title: "How well does your sales compensation design incentivize the behaviors that drive long-term revenue, not just short-term closes?",
+  id: 5011, pillar: 5, type: "scale",
+  title: "Does your sales comp plan reward the behaviors that build long-term revenue — or does it incentivize short-term closes at the expense of deal quality and retention?",
   options: [
     "Comp is purely volume-based: behaviors like multithreading or ICP qualification are not rewarded",
     "Some qualitative elements exist but comp is primarily quota-based without behavioral guardrails",
@@ -1405,30 +1459,30 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5013, pillar: 5, type: "scale",
-  title: "How rationally and equitably are sales territories designed, and how often are they reviewed for coverage and capacity?",
+  id: 5012, pillar: 5, type: "scale",
+  title: "Does your current comp plan include a mechanism that penalizes deep discounts, non-ICP closes, or single-threaded deals — and has it changed rep behavior measurably?",
   options: [
-    "No formal territory design: reps own whatever accounts they sourced",
-    "Territories exist but are not based on data or reviewed for balance",
-    "Territories are designed annually but whitespace and coverage gaps persist",
-    "Territories are data-driven, balanced by account potential, and reviewed each planning cycle",
-    "A continuous territory optimization model: account potential, rep capacity, and coverage reviewed quarterly with documented rebalancing"
+    "Comp rewards closed revenue only: discounts, ICP quality, and deal hygiene have no consequence",
+    "Some behavioral guardrails exist informally, but they are not embedded in comp and behavior has not changed measurably",
+    "Comp includes one or two quality guardrails, but they are weakly enforced and impact is unclear",
+    "Comp includes explicit penalties or modifiers for discounting, ICP misses, or poor deal quality, and behavior is reviewed quarterly",
+    "A multi-factor comp model: discount discipline, ICP compliance, and deal quality directly affect payout, behavior is tracked monthly, and measurable improvement has been observed"
+  ]
+},
+{
+  id: 5013, pillar: 5, type: "scale",
+  title: "Name the single most impactful lever on your win rate right now — and identify the data source that confirms it is that lever and not something else.",
+  options: [
+    "We cannot name a specific lever: win rate is discussed in aggregate without root-cause evidence",
+    "Leadership has a view on the lever, but it is mostly anecdotal and not tied to a reliable data source",
+    "One or two likely levers have been identified, but evidence is partial or inconsistent across segments",
+    "A primary win-rate lever has been identified and is supported by segmented conversion, win/loss, or stage data",
+    "Win-rate causality is actively modeled: the primary lever is evidenced by segmented data, reviewed regularly, and linked to targeted interventions with measured impact"
   ]
 },
 {
   id: 5014, pillar: 5, type: "scale",
-  title: "How consistently do your reps defend price, and what governance exists to prevent unnecessary discounting?",
-  options: [
-    "Discounting is uncontrolled: reps offer discounts freely to accelerate closes",
-    "Informal norms exist but discounting is not tracked or governed",
-    "A discount policy exists but exceptions are common and poorly tracked",
-    "A tiered approval framework governs discounts above defined thresholds with documented rationale",
-    "Discount discipline is enforced in CRM: all discounts tracked, approval tiers active, and discount impact on margin reviewed monthly"
-  ]
-},
-{
-  id: 5015, pillar: 5, type: "scale",
-  title: "How effectively do your reps access and use sales enablement materials during live deal execution?",
+  title: "In your last pipeline review, for deals that stalled or were lost: how many had enablement materials been accessed in the 30 days prior — and is that tracked?",
   options: [
     "Enablement materials exist but are not used in active deals",
     "Reps are aware of materials but access is inconsistent and usage is not tracked",
@@ -1438,7 +1492,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5016, pillar: 5, type: "scale",
+  id: 5015, pillar: 5, type: "scale",
   title: "How strictly is CRM data hygiene enforced, and what are the consequences of incomplete deal records?",
   options: [
     "CRM data is voluntary: most deal records are incomplete or inaccurate",
@@ -1449,7 +1503,7 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5017, pillar: 5, type: "scale",
+  id: 5016, pillar: 5, type: "scale",
   title: "How granularly is individual rep performance tracked, and how quickly are underperformance patterns identified?",
   options: [
     "Rep performance is reviewed quarterly at quota attainment level only",
@@ -1460,8 +1514,8 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5018, pillar: 5, type: "scale",
-  title: "How clearly do you track and manage the four components of sales velocity, deals, win rate, deal size, and cycle time, across segments?",
+  id: 5017, pillar: 5, type: "scale",
+  title: "Do you track all four components of sales velocity — deal count, win rate, deal size, and cycle time — by segment, and act on the data monthly?",
   options: [
     "Sales velocity is not tracked: we focus only on total revenue",
     "One or two velocity components are tracked but not reviewed together",
@@ -1471,25 +1525,36 @@ const QUESTIONS = [
   ]
 },
 {
-  id: 5019, pillar: 5, type: "scale",
-  title: "How proactively does your organization identify and remove friction points in the sales process before they affect revenue?",
+  id: 5018, pillar: 5, type: "scale",
+  title: "In the last 90 days, what percentage of your reps handled a technical product question in a live deal without escalating to Product or Engineering?",
   options: [
-    "Friction is only identified after deals are lost",
-    "Reps surface friction informally but it is rarely systematically addressed",
-    "A quarterly process review identifies friction but implementation is slow",
-    "A structured friction audit conducted quarterly with documented actions and owners",
-    "A continuous friction removal motion: weekly deal reviews surface blockers, owners assigned, and resolution tracked to outcome"
+    "Very few or none: most technical questions trigger an escalation",
+    "A minority of reps can handle standard technical questions, but most require support",
+    "Most reps can handle common technical questions, but complex scenarios still escalate frequently",
+    "A large majority of reps can handle standard technical questions independently, with escalations limited to defined edge cases",
+    "Technical fluency is a managed capability: rep handling rate tracked, escalation reasons reviewed, and enablement continuously updated to reduce unnecessary escalations"
+  ]
+},
+{
+  id: 5019, pillar: 5, type: "scale",
+  title: "In your last full quarter, what percentage of closed deals included a discount that was not buyer-initiated — and does your comp plan create an incentive for that behavior?",
+  options: [
+    "We do not track whether discounts are rep-initiated or buyer-initiated: all discounts are treated the same",
+    "We know discounting is common but have not separated rep-initiated from buyer-initiated in our data",
+    "Rep-initiated discounting is known to exist but comp design does not address or penalize it",
+    "Rep-initiated discounts are tracked and comp includes guardrails — but behavioral change is not yet measurable",
+    "Rep-initiated vs buyer-initiated discounts are tracked monthly, comp penalizes rep-initiated discounting above a defined rate, and the rep-initiated discount rate has measurably declined"
   ]
 },
 {
   id: 5020, pillar: 5, type: "scale",
-  title: "How consistent is win rate across your rep population, and how dependent are results on a small number of top performers?",
+  title: "In your last quarter, what percentage of deals that entered pipeline were eventually disqualified — and how many of those were removed within 30 days of entering?",
   options: [
-    "Win rates vary dramatically: a few reps carry the team",
-    "Top performers significantly outperform the rest with no clear reason",
-    "Win rates vary but coaching is beginning to close the gap",
-    "Win rates are tracked by rep, variance is analyzed, and high performers' behaviors are systematically codified",
-    "A rep performance distribution actively managed: winning behaviors extracted, trained, and tracked to close the performance gap each quarter"
+    "Disqualification is rare: deals that enter pipeline tend to stay regardless of fit",
+    "Some deals are disqualified but the rate is unknown and timing is driven by rep discretion",
+    "Disqualification rate is tracked but not reviewed systematically — speed of removal is not measured",
+    "Disqualification rate and average time-in-pipeline before removal are tracked and reviewed in pipeline inspections",
+    "A fast-disqualification discipline: qualification criteria are enforced at stage entry, disqualification rate and speed are tracked weekly, and high-volume late disqualifications trigger a qualification process review"
   ]
 },
 
@@ -1500,6 +1565,7 @@ const QUESTIONS = [
 {
   id: 6001, pillar: 6, type: "scale",
   title: "How structured and time-bound is your customer onboarding motion, and how do you track whether customers reach first value on schedule?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No structured onboarding: each customer is handled differently",
     "An onboarding checklist exists but time-to-value is not tracked",
@@ -1521,7 +1587,7 @@ const QUESTIONS = [
 },
 {
   id: 6003, pillar: 6, type: "scale",
-  title: "How clearly and quantitatively do you understand what drives retention versus churn in your customer base?",
+  title: "Can you name the top two controllable drivers of churn in your base — and is that based on cohort analysis or inferred from a handful of lost accounts?",
   options: [
     "No retention analysis: churn is attributed to product or pricing without data",
     "Churn reasons are logged in CRM but not analyzed for patterns",
@@ -1543,7 +1609,7 @@ const QUESTIONS = [
 },
 {
   id: 6005, pillar: 6, type: "scale",
-  title: "How effectively do CS, Product, and Sales share customer intelligence, and how does that sharing drive decisions?",
+  title: "Does CS systematically surface customer intelligence to Product and Sales — and can you trace a specific decision in the last two quarters that changed because of it?",
   options: [
     "Teams operate in silos: customer intelligence is not systematically shared",
     "Some informal sharing happens but it does not drive cross-functional decisions",
@@ -1576,7 +1642,7 @@ const QUESTIONS = [
 },
 {
   id: 6008, pillar: 6, type: "scale",
-  title: "How precisely do you measure product adoption, and how do adoption signals feed into health scoring and CS interventions?",
+  title: "In your last onboarding cohort, what percentage of customers reached their defined first value milestone on schedule — and what blocked the ones that did not?",
   options: [
     "Product adoption is not measured: CS relies on anecdotal customer feedback",
     "Some usage data is available but it is not systematically connected to CS actions",
@@ -1609,7 +1675,7 @@ const QUESTIONS = [
 },
 {
   id: 6011, pillar: 6, type: "scale",
-  title: "How consistently do you communicate demonstrated business value to customers, and how do you document outcomes customers have achieved?",
+  title: "In the last quarter, what percentage of your accounts received a business review — and for each one, was a follow-up action documented and tracked?",
   options: [
     "Value communication is ad-hoc: customers are not routinely shown their ROI",
     "Some value reporting exists but it is inconsistent and not customer-specific",
@@ -1620,13 +1686,13 @@ const QUESTIONS = [
 },
 {
   id: 6012, pillar: 6, type: "scale",
-  title: "How consistently does customer feedback reach Product and GTM teams, and how do you track whether it drives change?",
+  title: "In the last quarter, how many accounts fell through the gap between CS and AM ownership — and would a clearer handoff rule have prevented it?",
   options: [
-    "Customer feedback is collected informally and rarely reaches Product or GTM",
-    "Feedback is collected in support tickets or NPS surveys but not synthesized",
-    "Periodic feedback synthesis happens but the link to roadmap or GTM decisions is weak",
-    "A structured feedback loop: NPS, support, and QBR inputs synthesized quarterly and presented to Product and GTM leadership",
-    "A continuous feedback-to-decision system: input tracked from collection to action, with outcome visibility across CS, Product, and GTM"
+    "No handoff rules exist: CS and AM ownership is informal and accounts frequently fall through gaps",
+    "Some accounts have defined owners, but the boundary between CS and AM is unclear and disputes are common",
+    "Handoff criteria exist in writing, but are applied inconsistently — gaps still occur and are handled reactively",
+    "CS and AM handoff rules are documented, embedded in CRM, and reviewed quarterly — gaps are rare",
+    "A zero-gap ownership model: every account has a single documented owner, transitions follow a defined protocol, and coverage gaps are tracked as a governance metric"
   ]
 },
 {
@@ -1653,29 +1719,29 @@ const QUESTIONS = [
 },
 {
   id: 6015, pillar: 6, type: "scale",
-  title: "How well-documented and consistently followed are your CS processes, from onboarding to renewal?",
+  title: "Name one Product or GTM decision in the last two quarters that changed because of CS intelligence — and how long did it take from signal to decision?",
   options: [
-    "No CS documentation: processes exist only in tribal knowledge",
-    "Basic documentation exists but is incomplete and not regularly used",
-    "Playbooks cover the major CS motions but are inconsistently followed",
-    "A comprehensive CS playbook covering all major motions, reviewed quarterly",
-    "A governed CS operating manual: versioned, adoption tracked per rep, and updated after each major process improvement or product change"
+    "We cannot name one: CS intelligence does not visibly drive Product or GTM decisions",
+    "CS signals occasionally influence decisions informally, but the connection is not documented",
+    "A few decisions have been linked to CS input, but the signal-to-decision path is inconsistent and slow",
+    "Multiple decisions per quarter are traceable to CS intelligence, with documented signal origin and timeline",
+    "A closed-loop CS intelligence system: signals logged, reviewed in structured forums, decisions linked to source, and time-from-signal-to-decision tracked as a performance metric"
   ]
 },
 {
   id: 6016, pillar: 6, type: "scale",
-  title: "How well does your CS operating model scale, can you grow the customer base without proportional CS headcount increases?",
+  title: "What is your current customers-per-CSM ratio — and has that ratio improved or declined over the last 12 months as your customer base grew?",
   options: [
-    "Every new customer requires dedicated CS capacity: no scale mechanisms exist",
-    "Some automation or pooled CS exists but the model is still largely 1:1",
-    "A tiered CS model exists but the low-touch tier is under-resourced and underperforming",
-    "A scaled CS model: tiered by ARR and health risk, with automation and self-service covering low-touch accounts",
-    "A leverage-optimized CS model: automation, community, and digital touchpoints scale low-touch efficiently, freeing high-touch CS for strategic accounts"
+    "We do not track customers-per-CSM: every account requires roughly dedicated CS time and the ratio has never been calculated",
+    "The ratio exists informally but has declined as we have grown — we have not been able to scale CS capacity ahead of customer growth",
+    "The ratio is tracked but roughly flat: we have added CS headcount proportionally without improving leverage",
+    "Customers-per-CSM has improved over the last 12 months through tiering, automation, or self-service — tracked quarterly",
+    "CS leverage is a managed metric: customers-per-CSM tracked monthly, improving quarter over quarter, and a target ratio is set in annual planning with a documented path to reach it"
   ]
 },
 {
   id: 6017, pillar: 6, type: "scale",
-  title: "How well integrated is your CS data across CRM, product analytics, and support tools, and can you get a single customer view?",
+  title: "Can your CS team pull a unified customer view — health, usage, support, and commercial data — without manually stitching data across systems?",
   options: [
     "CS data is fragmented across disconnected systems: no unified customer view",
     "Manual data stitching provides a partial view, reviewed infrequently",
@@ -1686,13 +1752,13 @@ const QUESTIONS = [
 },
 {
   id: 6018, pillar: 6, type: "scale",
-  title: "How directly does Customer Success contribute to measurable revenue outcomes, and how is that contribution tracked?",
+  title: "Do you track logo churn and revenue churn as separate metrics — and in the last two quarters, did they move differently?",
   options: [
-    "CS is viewed as a cost center: revenue contribution is not measured",
-    "CS influence on renewal and expansion is tracked informally",
-    "Renewal rates and CS-sourced expansion ARR are tracked but not integrated into revenue reporting",
-    "CS contributes a documented share of expansion pipeline and renewal ARR reviewed monthly",
-    "CS owns a revenue accountability model: expansion pipeline, renewal rate, NRR, and save rate tracked and reported in monthly revenue meetings"
+    "Only one churn metric is tracked: logo and revenue churn are not separated",
+    "Both metrics are calculated, but they are reviewed together without analysis of why they diverge",
+    "Logo and revenue churn are tracked separately, and divergences are noticed but not formally analyzed",
+    "Both metrics are tracked separately, reviewed monthly, and divergences are analyzed for root cause",
+    "A dual-churn diagnostic system: logo and revenue churn tracked and trended separately, divergence analyzed per cohort and segment, and insights fed into CS capacity and expansion planning"
   ]
 },
 {
@@ -1708,13 +1774,13 @@ const QUESTIONS = [
 },
 {
   id: 6020, pillar: 6, type: "scale",
-  title: "How frequently do existing customers refer new prospects, and do you have a structured program to generate and track referrals?",
+  title: "In the last quarter, how many cross-functional GTM decisions were directly informed by customer intelligence surfaced by CS — and is that tracked anywhere?",
   options: [
-    "No referrals: existing customers are not activated as a growth channel",
-    "Occasional informal referrals happen but there is no process or tracking",
-    "A referral program exists but participation is low and tracking is manual",
-    "A structured referral program with defined incentives, tracking, and quarterly review",
-    "Customer referrals are a measurable pipeline source: referral rate, sourced ARR, and win rate tracked monthly and reviewed in revenue meetings"
+    "None: CS intelligence is not systematically surfaced into cross-functional GTM decisions",
+    "Some customer signals reach other teams informally, but no decisions are tracked back to them",
+    "A few decisions have been influenced by CS insight, but the connection is not consistently documented",
+    "Customer intelligence from CS is reviewed in structured forums and can be linked to documented GTM or Product decisions",
+    "A closed-loop customer intelligence system: CS-originated signals are logged, reviewed cross-functionally, and decisions influenced by them are tracked with owners and outcomes"
   ]
 },
 
@@ -1725,6 +1791,7 @@ const QUESTIONS = [
 {
   id: 7001, pillar: 7, type: "scale",
   title: "How accurately and completely are CRM records maintained, and how do you measure and enforce data quality?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "CRM data is unreliable: records are incomplete, duplicated, or outdated",
     "Data quality is expected but not measured or enforced",
@@ -1735,7 +1802,7 @@ const QUESTIONS = [
 },
 {
   id: 7002, pillar: 7, type: "scale",
-  title: "How well does your CRM configuration mirror the actual sales process, from qualification to close?",
+  title: "When your last process change was made, how long did it take to reflect that change in CRM stage definitions and required fields — and who owned that update?",
   options: [
     "CRM is used for logging contacts but does not reflect the sales process",
     "CRM stages exist but do not match how deals actually progress",
@@ -1768,7 +1835,7 @@ const QUESTIONS = [
 },
 {
   id: 7005, pillar: 7, type: "scale",
-  title: "How well do your GTM systems share data with each other, and can you trace a prospect from first touch to closed-won without manual data stitching?",
+  title: "Can you trace a prospect from first touch to closed-won without manually stitching data across systems — and how long does that take right now?",
   options: [
     "Systems are siloed: data cannot be traced across tools without manual work",
     "Partial integrations exist but data gaps and sync failures are common",
@@ -1801,7 +1868,7 @@ const QUESTIONS = [
 },
 {
   id: 7008, pillar: 7, type: "scale",
-  title: "How effectively does RevOps translate GTM team needs into process, tooling, and data solutions, and how is RevOps prioritization governed?",
+  title: "Does RevOps function as a strategic partner to GTM teams — or primarily as a reactive request-fulfillment function?",
   options: [
     "RevOps is reactive: work is driven by whoever asks most loudly",
     "RevOps has a backlog but prioritization is inconsistent and not governed",
@@ -1812,13 +1879,13 @@ const QUESTIONS = [
 },
 {
   id: 7009, pillar: 7, type: "scale",
-  title: "How disciplined and consistently held are your GTM operating cadences, pipeline reviews, forecast calls, and planning rituals?",
+  title: "For your top three GTM tools by spend: what is the actual daily active usage rate versus licensed seats — and when did you last review that data?",
   options: [
-    "No formal cadence: meetings happen when something breaks",
-    "Cadences exist on paper but are frequently cancelled or poorly attended",
-    "A cadence runs but meeting quality is inconsistent and outputs are rarely documented",
-    "A standardized GTM cadence: meetings held consistently, outputs documented, and actions tracked week-over-week",
-    "A sacred operating rhythm: cadences governed, attendance required, pre-reads standardized, and action accountability reviewed at each subsequent meeting"
+    "Tool adoption is not tracked: licenses are purchased and we assume usage without data",
+    "We have a rough sense of which tools are underused but have not measured daily active usage vs licensed seats",
+    "Utilization is tracked for at least one major tool but the others are not measured or reviewed",
+    "Utilization tracked for all primary tools, reviewed quarterly, and underused licenses identified — but reallocation decisions are slow",
+    "A governed tool adoption program: daily active usage vs licensed seats tracked monthly per tool, underutilization triggers a consolidation review within 30 days, and cost-per-active-user is a managed metric"
   ]
 },
 {
@@ -1889,7 +1956,7 @@ const QUESTIONS = [
 },
 {
   id: 7016, pillar: 7, type: "scale",
-  title: "How consistently does RevOps drive process standardization across all GTM teams, and how is process adoption measured?",
+  title: "In the last quarter, what percentage of GTM teams followed the standard RevOps-defined processes without deviation — and how do you know?",
   options: [
     "No standardization: each team follows its own approach",
     "Some shared processes exist but adoption is uneven",
@@ -1911,13 +1978,13 @@ const QUESTIONS = [
 },
 {
   id: 7018, pillar: 7, type: "scale",
-  title: "How well adopted are your GTM tools, and how do you measure actual usage versus licensed seats?",
+  title: "In the last quarter, what percentage of RevOps requests were delivered on time — and for the major ones, can you show the business impact they produced?",
   options: [
-    "Tool adoption is unknown: licenses are purchased but usage is not tracked",
-    "Adoption is informally assessed but no data supports investment decisions",
-    "Utilization is tracked for major tools but is not reviewed against ROI",
-    "Tool utilization reviewed quarterly against license cost and business impact",
-    "A governed tool adoption program: utilization benchmarked, low-adoption tools reviewed for consolidation, and training triggered by usage drops"
+    "Request delivery timeliness is not tracked, and business impact is generally unknown",
+    "Some requests are delivered on time, but neither SLA adherence nor impact is reviewed systematically",
+    "Timeliness is tracked for some requests, but business impact is inconsistently documented",
+    "RevOps delivery timeliness is tracked and major requests include documented business impact after delivery",
+    "A governed RevOps delivery model: on-time delivery rate tracked monthly, major requests require impact documentation, and backlog prioritization is adjusted based on delivered business value"
   ]
 },
 {
@@ -1933,13 +2000,13 @@ const QUESTIONS = [
 },
 {
   id: 7020, pillar: 7, type: "scale",
-  title: "How quickly can your RevOps team implement and drive adoption of a new GTM tool or process change?",
+  title: "What percentage of your reps actively use your core GTM tools without prompting or enforcement — and how do you distinguish willing adoption from compliance?",
   options: [
-    "New tools and processes take six months or more to implement and adopt",
-    "Implementation typically takes three to six months with significant friction",
-    "New tools are live within one to three months but adoption lags implementation",
-    "New tools and processes are live and adopted within four to six weeks",
-    "An agile ops capability: new tools and processes implemented in weeks with adoption tracked from day one and reviewed at 30-60-90 days"
+    "Tools are used only because compliance is required: reps would not use them voluntarily and frequently work around them",
+    "Most reps tolerate the tools but workarounds are common — the stack creates more friction than it removes",
+    "Core tools are used adequately: adoption is acceptable but reps do not see them as genuinely helpful to their workflow",
+    "Most reps use the core tools willingly and see them as useful — feedback is collected and UX issues are addressed",
+    "Rep-centric stack with tracked voluntary adoption: usage data shows reps access tools before being prompted, workflow friction is reviewed quarterly, and tools that consistently score low are retired or redesigned"
   ]
 },
 
@@ -1950,6 +2017,7 @@ const QUESTIONS = [
 {
   id: 8001, pillar: 8, type: "scale",
   title: "How explicitly defined is your pricing strategy, and when was it last reviewed against market and cost data?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No pricing strategy: prices were set once and have not been reviewed",
     "An informal pricing philosophy exists but is not documented or governed",
@@ -1960,7 +2028,7 @@ const QUESTIONS = [
 },
 {
   id: 8002, pillar: 8, type: "scale",
-  title: "How well does your packaging structure reflect the way customers actually adopt and expand their use of your product?",
+  title: "Does your packaging structure reflect how customers actually adopt and expand — and have you validated it against real usage data in the last 12 months?",
   options: [
     "Packaging was designed internally: customer adoption patterns were not considered",
     "Packaging loosely aligns with usage patterns but creates friction at expansion points",
@@ -1982,7 +2050,7 @@ const QUESTIONS = [
 },
 {
   id: 8004, pillar: 8, type: "scale",
-  title: "How well do you understand willingness to pay across your key customer segments, and what evidence supports that understanding?",
+  title: "How rigorously do you test and validate willingness to pay across your key customer segments — and through what methodology?",
   options: [
     "Willingness to pay is unknown: pricing was set based on cost or gut feel",
     "Anecdotal awareness from deals lost on price, not validated",
@@ -1993,13 +2061,13 @@ const QUESTIONS = [
 },
 {
   id: 8005, pillar: 8, type: "scale",
-  title: "How well does your pricing and packaging architecture support upsell and expansion, without requiring contract renegotiation?",
+  title: "What is your evidence for your current pricing level — buyer interviews, close rate analysis by price band, or competitive benchmarking? When was that evidence last updated?",
   options: [
-    "Expansion requires a new commercial process: packaging does not accommodate it",
-    "Expansion is possible but creates friction due to packaging structure",
-    "Some expansion paths exist but not all upsell scenarios are well-served",
-    "Packaging includes defined expansion paths validated against common customer growth patterns",
-    "A modular packaging architecture: expansion paths by usage, seat, and feature tier are clearly defined and can be executed without renegotiation"
+    "Willingness to pay is unknown: pricing was set based on cost or internal assumption",
+    "Anecdotal awareness from deals lost on price, not validated through structured research",
+    "Some buyer interviews have informed pricing but research is not systematic or segmented",
+    "Willingness to pay validated through structured buyer research and close rate analysis per price band",
+    "A segment-level willingness-to-pay model: validated through controlled research, win/loss pricing data, and close rate by price tier — reviewed annually and driving packaging decisions"
   ]
 },
 {
@@ -2015,18 +2083,18 @@ const QUESTIONS = [
 },
 {
   id: 8007, pillar: 8, type: "scale",
-  title: "How well does your pricing model enable a fast initial purchase without creating barriers to adoption or time-to-value?",
+  title: "Is your packaging architecture based on how customers actually adopt and expand — or on what was easiest to build? When did you last validate it against real usage data?",
   options: [
-    "Entry pricing requires significant negotiation and slows deal closure",
-    "Starting packages are available but they do not reflect the buyer's initial use case",
-    "Entry-level pricing exists but time-to-value is delayed by packaging constraints",
-    "Entry packages designed for fast adoption and validated against time-to-value data",
-    "A fast-entry architecture: low-friction entry package, clear onboarding path, and expansion triggers built into the product experience"
+    "Packaging was designed internally without reference to customer adoption patterns",
+    "Packaging loosely aligns with usage patterns but creates friction at common expansion points",
+    "Packaging aligns with primary adoption patterns but secondary segments and expansion paths are poorly served",
+    "Packaging validated against adoption data and reviewed annually for alignment with usage reality",
+    "A packaging architecture designed from adoption and expansion data: upgrade paths, usage triggers, and value metric alignment validated through customer interviews and cohort analysis"
   ]
 },
 {
   id: 8008, pillar: 8, type: "scale",
-  title: "How clearly do you understand which features drive willingness to pay, and how does that inform packaging decisions?",
+  title: "How clearly do you understand which features drive willingness to pay — and does that understanding directly inform how you bundle and price them?",
   options: [
     "No feature-level pricing intelligence: features are bundled without value testing",
     "Intuitive assumptions drive feature bundling but no research supports them",
@@ -2037,24 +2105,24 @@ const QUESTIONS = [
 },
 {
   id: 8009, pillar: 8, type: "scale",
-  title: "How clearly informed is your pricing by competitive benchmarking, and how recently was your competitive pricing position reviewed?",
+  title: "In the last quarter, what percentage of expansion deals required a full contract renegotiation to complete — and is that percentage improving or worsening?",
   options: [
-    "No competitive pricing data: we do not know how we are positioned relative to alternatives",
-    "Rough awareness of competitor pricing from sales conversations",
-    "Periodic competitive pricing review but data quality and recency are limited",
-    "An annual competitive pricing review with documented positioning implications",
-    "A competitive pricing intelligence program: benchmarked semi-annually, deal-level competitive pricing data tracked in CRM, and positioning reviewed quarterly"
+    "All expansion requires a new commercial process: packaging does not accommodate growth",
+    "Expansion is possible but creates commercial friction due to packaging or contract structure",
+    "Some expansion paths exist but not all common growth scenarios are cleanly handled",
+    "Packaging includes defined expansion paths validated against common customer growth patterns",
+    "A modular expansion architecture: usage, seat, and feature triggers auto-invoice without renegotiation — expansion leakage tracked quarterly and packaging updated when leakage is detected"
   ]
 },
 {
   id: 8010, pillar: 8, type: "scale",
-  title: "How straightforward is your pricing for sales reps to quote and defend in a deal, without requiring specialist involvement?",
+  title: "In the last 10 deals, how many prospects asked for a pricing explanation that should have been self-evident from your published materials?",
   options: [
-    "Pricing requires RevOps or Finance involvement in most deals",
-    "Standard deals can be quoted but anything non-standard requires escalation",
-    "Most deals can be quoted independently but edge cases create delays",
-    "All standard deal configurations can be quoted independently with documented exception criteria",
-    "A self-service pricing model for reps: CPQ or equivalent, automated approvals for standard deals, and specialist escalation limited to defined exceptions"
+    "All or nearly all prospects needed significant pricing explanation: our pricing is not self-explanatory for any segment",
+    "Most prospects needed at least one follow-up call to understand what they would pay before they could evaluate",
+    "Half or more needed some clarification — pricing is roughly understandable for experienced buyers but confusing for others",
+    "Fewer than 3 in 10 prospects needed pricing explained — most primary segment buyers can self-select the right tier",
+    "Pricing clarity is tested: buyer comprehension validated in structured interviews — fewer than 1 in 10 primary segment prospects require a pricing explanation from a rep"
   ]
 },
 {
@@ -2070,18 +2138,18 @@ const QUESTIONS = [
 },
 {
   id: 8012, pillar: 8, type: "scale",
-  title: "How well does your pricing support both self-serve or PLG motions and high-touch enterprise sales, without creating internal channel conflict?",
+  title: "Is your packaging based on documented willingness-to-pay research — or on internal assumptions about which features are most valuable?",
   options: [
-    "Pricing is built for one motion only and creates friction in the other",
-    "Both motions exist but pricing creates conflict or confusion between them",
-    "Pricing supports both motions adequately but without explicit architecture",
-    "A documented pricing architecture that governs self-serve and enterprise tiers separately",
-    "A hybrid pricing model: self-serve and enterprise tiers are designed, priced, and governed independently to eliminate channel conflict"
+    "Packaging was designed internally: no buyer research on feature value has ever been conducted",
+    "Intuitive assumptions drive feature bundling — no structured research supports the current packaging decisions",
+    "Some feature-value testing has been done but findings are not systematically applied to packaging decisions",
+    "Feature-to-willingness-to-pay mapping has been validated through buyer research and close rate analysis by price band",
+    "A live feature value model exists: feature importance and willingness-to-pay tested through buyer interviews and usage data, reviewed annually, and directly driving packaging decisions — not assumptions"
   ]
 },
 {
   id: 8013, pillar: 8, type: "scale",
-  title: "How well tailored is your pricing and packaging to different personas, use cases, or verticals, beyond a single universal tier structure?",
+  title: "Does your pricing and packaging offer meaningfully different configurations for different personas, use cases, or verticals — or is it effectively one structure for everyone?",
   options: [
     "One universal price structure serves all personas and use cases",
     "Informal price adjustments are made for specific personas without documented rationale",
@@ -2092,24 +2160,24 @@ const QUESTIONS = [
 },
 {
   id: 8014, pillar: 8, type: "scale",
-  title: "How clearly can sales reps articulate and document the ROI and value justification for your pricing in a formal business case?",
+  title: "When did you last formally benchmark your pricing against competitors — and did that analysis change any pricing or packaging decision?",
   options: [
-    "No ROI framework: sales reps rely on feature benefits to justify price",
-    "An informal ROI narrative exists but it is not buyer-specific or quantified",
-    "A generic ROI model exists but is not consistently used in deal cycles",
-    "A standardized ROI calculator and case framework used in all deals above a defined size",
-    "A buyer-specific value justification system: ROI model tailored per segment, case templates used in enterprise deals, and win rate by business case quality tracked"
+    "No competitive pricing data: positioning relative to alternatives is unknown",
+    "Rough awareness of competitor pricing from sales calls, not structured or recent",
+    "Periodic competitive pricing review happens but data quality and recency are limited",
+    "An annual competitive pricing review with documented positioning implications and decisions",
+    "A competitive pricing intelligence program: benchmarked semi-annually, deal-level competitive pricing tracked in CRM, and position reviewed quarterly — with a documented response when position shifts"
   ]
 },
 {
   id: 8015, pillar: 8, type: "scale",
-  title: "How disciplined is your discounting governance, and do you have data on how discounting affects deal velocity and margin?",
+  title: "In the last quarter, how many deals created channel conflict between your self-serve and enterprise motions — and is there a documented rule that governs which motion owns which account?",
   options: [
-    "No discounting policy: reps and managers decide independently",
-    "An informal discount norm exists but it is not enforced or tracked",
-    "A discount approval process exists but compliance tracking is weak",
-    "A tiered discount approval framework tracked in CRM, reviewed monthly",
-    "A governed discount intelligence system: all discounts tracked, approval tiers enforced, and impact on win rate, cycle time, and margin reviewed quarterly"
+    "Channel conflict is unmanaged: self-serve and enterprise regularly compete for the same accounts without a resolution rule",
+    "Conflict exists and is known but handled case by case — no formal ownership rule exists",
+    "An informal rule governs most conflicts but edge cases still cause friction or internal disputes",
+    "A documented ownership rule defines which motion handles which accounts — most conflicts are resolved without escalation",
+    "Channel conflict is a tracked metric: ownership rules enforced in CRM, conflict rate monitored monthly, and rule gaps addressed in quarterly RevOps reviews"
   ]
 },
 {
@@ -2136,7 +2204,7 @@ const QUESTIONS = [
 },
 {
   id: 8018, pillar: 8, type: "scale",
-  title: "How well has your pricing been adapted for different geographies, and have you validated willingness to pay locally?",
+  title: "For each geography where you actively sell: is pricing validated against local willingness-to-pay, or is it a direct conversion of your primary market pricing?",
   options: [
     "One global price structure applied everywhere without geo consideration",
     "Informal geo adjustments made in negotiation without a documented rationale",
@@ -2174,13 +2242,14 @@ const QUESTIONS = [
 
 {
   id: 9001, pillar: 9, type: "scale",
-  title: "How precisely defined is the primary use case your product solves, and how consistently is that use case the reason customers buy?",
+  title: "How often do product gaps surface in late-stage deals — after the demo, during proof-of-concept or procurement?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
-    "The primary use case is poorly defined or contested internally",
-    "A primary use case is described informally but customers buy for various reasons",
-    "A defined use case exists but closed-won analysis shows significant variation",
-    "A documented primary use case validated against closed-won data from the last four quarters",
-    "The primary use case is unambiguous, validated through buyer interviews, and consistent across more than 80% of closed-won deals"
+    "Surprise product gaps in late-stage deals are a frequent occurrence: we lose deals because of them",
+    "Gaps surface regularly in late-stage deals and are handled case by case without a prevention process",
+    "Gaps occasionally surface late but an escalation process exists to manage them",
+    "A pre-deal technical validation step catches most gaps before they reach late stage",
+    "A zero-surprise model: solution fit is confirmed in discovery using a structured framework — late-stage gap frequency is tracked quarterly and drives sales process improvements"
   ]
 },
 {
@@ -2196,7 +2265,7 @@ const QUESTIONS = [
 },
 {
   id: 9003, pillar: 9, type: "scale",
-  title: "How effectively can your product be demonstrated in a standard sales cycle, and what percentage of demos result in a next step?",
+  title: "In a standard sales cycle, what percentage of demos result in a clear next step — and do you know which part of the demo drives that outcome?",
   options: [
     "The product cannot be effectively demonstrated without extensive preparation",
     "A demo exists but typically requires significant customisation or specialist involvement",
@@ -2207,13 +2276,13 @@ const QUESTIONS = [
 },
 {
   id: 9004, pillar: 9, type: "scale",
-  title: "Without explanation from a sales rep, how quickly do prospects understand what your product does and why it is valuable?",
+  title: "In the last quarter, how many customer escalations in the first 90 days were caused by a gap between what was sold and what was delivered — and is that tracked?",
   options: [
-    "Prospects rarely understand the value without significant rep explanation",
-    "Understanding typically requires multiple calls and a tailored demo",
-    "Most prospects understand value after a standard demo",
-    "Value is understood by most prospects during or immediately after the first demo",
-    "Value is immediately clear: validated through buyer comprehension testing post-demo"
+    "Post-sale reality frequently differs from what was sold: causing immediate friction and trust damage",
+    "Mismatches between sales promises and delivery reality are common and handled case by case",
+    "Mismatches occur occasionally but a process exists to manage expectations before handoff",
+    "Implementation experience matches sales expectations in most cases with documented exceptions",
+    "Sales and delivery expectations are aligned by contract: mismatches tracked, root-caused quarterly, and recurring patterns drive sales process or product changes"
   ]
 },
 {
@@ -2240,13 +2309,13 @@ const QUESTIONS = [
 },
 {
   id: 9007, pillar: 9, type: "scale",
-  title: "How cleanly does the product architecture support your pricing and packaging model, without requiring workarounds to enforce tiers or limits?",
+  title: "In your last 10 deals, how many times did a product limitation surface that was not in your documented constraint register — and what happened when it did?",
   options: [
-    "Packaging and product architecture are misaligned: tier enforcement is manual",
-    "Some packaging tiers are supported but others require workarounds",
-    "The product mostly supports packaging but technical debt creates enforcement friction",
-    "Product architecture supports all primary packaging tiers without workarounds",
-    "A fully aligned product-packaging architecture: tier enforcement automated, usage limits governed in-product, and packaging gaps reviewed with Product quarterly"
+    "Product limitations are not documented: teams learn about them during deals or onboarding",
+    "Some limitations are known informally but inconsistently communicated across Sales and CS",
+    "A limitations document exists but is not regularly updated or used in deal qualification",
+    "Product limitations are documented, updated with each release, and embedded in sales onboarding and qualification",
+    "An explicit product constraint register: maintained by Product, reviewed with Sales and CS quarterly, and embedded in deal qualification playbooks and onboarding scripts"
   ]
 },
 {
@@ -2262,7 +2331,7 @@ const QUESTIONS = [
 },
 {
   id: 9009, pillar: 9, type: "scale",
-  title: "How well documented are product limitations and constraints, and are they consistently known and applied by Sales and CS?",
+  title: "How well documented are your product limitations and constraints — and do Sales and CS consistently apply that knowledge in deals and during onboarding?",
   options: [
     "Product limitations are not documented: teams learn about them during deals or onboarding",
     "Some limitations are known but inconsistently communicated across Sales and CS",
@@ -2273,13 +2342,13 @@ const QUESTIONS = [
 },
 {
   id: 9010, pillar: 9, type: "scale",
-  title: "How often do previously unknown product gaps surface in late-stage deals, and what process is in place to prevent that?",
+  title: "When a product gap surfaces in a late-stage deal, what is the documented escalation path — and how often does following that path result in a closed deal versus a loss?",
   options: [
-    "Surprise product gaps in late-stage deals are a frequent occurrence",
-    "Gaps surface in late-stage deals regularly but are handled case by case",
-    "Gaps occasionally surface late but a process exists to escalate and resolve",
-    "A pre-deal technical validation process catches most gaps before late stage",
-    "A zero-surprise model: solution architecture review embedded in discovery, and late-stage gap frequency tracked and reported quarterly"
+    "No escalation path exists: late-stage product gaps are handled ad hoc by whoever is available",
+    "An informal escalation exists — reps know who to call — but outcomes vary widely and are not tracked",
+    "An escalation process is documented but inconsistently followed, and whether it improves outcomes is unknown",
+    "A documented escalation path exists, is followed in most cases, and win rates on escalated deals are reviewed quarterly",
+    "A governed gap escalation system: path documented, followed consistently, win rate on escalated deals tracked and benchmarked, and recurring gaps feed into a product constraint register update"
   ]
 },
 {
@@ -2295,13 +2364,13 @@ const QUESTIONS = [
 },
 {
   id: 9012, pillar: 9, type: "scale",
-  title: "How repeatable is your product delivery across customers, and can new customers be onboarded without rebuilding from scratch each time?",
+  title: "Ask a Sales rep and a CS manager independently to name the top three product limitations. Do their answers match — and when was the last time you tested that alignment?",
   options: [
-    "Every customer implementation is effectively custom-built from scratch",
-    "Some templates exist but implementation is largely bespoke",
-    "A partially repeatable model: some standardization but significant custom effort remains",
-    "A mostly repeatable delivery model with documented templates and configuration guides",
-    "A fully repeatable delivery playbook: standard configuration, templated setup, and exception tracking reviewed monthly"
+    "Sales, CS, and Product have meaningfully different views of product capabilities and limitations",
+    "High-level alignment exists but breaks down in edge cases and customer-facing conversations",
+    "A shared product document exists but is not consistently applied across teams",
+    "A unified product understanding maintained through regular cross-functional syncs and shared documentation",
+    "A single source of product truth: capability boundaries, known limitations, and positioning co-owned by Sales, CS, and Product — updated quarterly and tested for consistency"
   ]
 },
 {
@@ -2328,13 +2397,13 @@ const QUESTIONS = [
 },
 {
   id: 9015, pillar: 9, type: "scale",
-  title: "How well does the product architecture support expansion and upsell, and does adding more users, features, or modules require significant rework?",
+  title: "In the last quarter, what percentage of expansion deals required engineering work, custom configuration, or PS involvement to complete — and is that percentage improving?",
   options: [
-    "Expansion requires a near-complete reimplementation",
-    "Significant rework is typically required when customers expand",
-    "Expansion is possible but some rework is usually needed",
-    "Most expansion scenarios are supported with minimal rework",
-    "A designed-for-expansion architecture: upsell paths are frictionless, documented in the product, and tested against real customer expansion patterns"
+    "Over 80% of expansion deals required significant engineering or PS involvement: expansion is not self-service and never has been",
+    "50–80% of expansions required technical intervention: standard expansion paths are not reliably self-service",
+    "20–50% of expansions required some technical work — common expansion scenarios mostly work but edge cases still need support",
+    "Fewer than 20% of expansion deals required technical intervention — most common expansion scenarios are natively supported",
+    "Under 10% of expansions require engineering or PS involvement: expansion paths are frictionless, documented, and tested against real customer patterns — leakage reviewed quarterly"
   ]
 },
 {
@@ -2372,13 +2441,13 @@ const QUESTIONS = [
 },
 {
   id: 9019, pillar: 9, type: "scale",
-  title: "Does product readiness currently accelerate or constrain GTM execution, and how do you measure that impact?",
+  title: "In the last quarter, what percentage of new deals required a non-standard term, custom delivery commitment, or exception to your standard process — and is that rate tracked?",
   options: [
-    "Product readiness is a major, recurring constraint on GTM execution",
-    "Product gaps frequently surface as blockers in active deals or onboarding",
-    "Product occasionally constrains GTM but workarounds are generally available",
-    "Product readiness mostly enables GTM with constraints limited to documented edge cases",
-    "Product is a GTM accelerator: readiness is scored and tracked, and constraint reduction is a Product team KPI reviewed quarterly"
+    "Exceptions are the norm: most deals require some form of custom term or delivery accommodation",
+    "A significant minority of deals require exceptions, but the rate is not tracked and the drivers are unclear",
+    "Exception rate is tracked but not formally reviewed — whether it is improving or worsening is unknown",
+    "Exception rate is tracked quarterly, reviewed by leadership, and drivers are analyzed to reduce recurrence",
+    "A governed exception discipline: standard terms and delivery apply to the large majority of deals, exception rate is a managed KPI, and every exception is logged, approved, and root-caused"
   ]
 },
 {
@@ -2399,24 +2468,25 @@ const QUESTIONS = [
 
 {
   id: 10001, pillar: 10, type: "scale",
-  title: "How clearly defined and consistently applied are your GTM metric definitions, and how often do teams dispute what the numbers mean?",
+  title: "In the last 30 days, name one GTM decision that data changed. How easy was that to answer?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
-    "Metric definitions are absent: teams calculate the same metric differently",
-    "Some definitions exist but ambiguity causes regular data disputes in meetings",
-    "Core metrics are defined but secondary metrics are inconsistent across teams",
-    "A governed metric glossary covers all key GTM metrics and is referenced in reporting",
-    "A single-source metric registry: all definitions documented, owned, and versioned, with disputes resolved through a governance process rather than in meetings"
+    "We cannot name one: data is produced but does not influence decisions",
+    "Data is reviewed in meetings but rarely changes the conclusion — intuition dominates",
+    "Data influences decisions occasionally but we cannot point to a recent specific example",
+    "We can name two or three recent decisions directly influenced by data, with documented rationale",
+    "Data-driven decisions are the norm: every major GTM decision is documented with data backing, and cases where data overrode intuition are tracked as positive governance signals"
   ]
 },
 {
   id: 10002, pillar: 10, type: "scale",
-  title: "How much do you trust your CRM data, and would you be comfortable paying sales commissions based solely on CRM reports without manual reconciliation?",
+  title: "In your last three leadership reviews, how many minutes were spent debating metric definitions rather than acting on them — and does that number represent improvement?",
   options: [
-    "CRM data is too unreliable to use for commission calculations",
-    "Commissions require significant manual checking against CRM data",
-    "CRM data is mostly trusted but key exceptions require manual reconciliation",
-    "CRM data is trusted for commission calculations with a defined exception review process",
-    "Commission calculations are run automatically from CRM data: data quality is audited monthly and no manual reconciliation is required"
+    "Most of the review time is consumed by metric disputes: teams do not trust a shared definition set",
+    "Metric debates frequently slow decisions, and there is no evidence the situation is improving",
+    "Metric definitions are mostly aligned, but recurring disputes still consume meaningful review time",
+    "Metric definitions are governed, disputes are limited, and review time is mostly spent on interpretation and action",
+    "A single-source metric registry governs all leadership reviews: debate over definitions is rare, tracked when it occurs, and trending downward over time"
   ]
 },
 {
@@ -2432,24 +2502,24 @@ const QUESTIONS = [
 },
 {
   id: 10004, pillar: 10, type: "scale",
-  title: "How consistently do you track leading indicators, activity, engagement, pipeline stage velocity, before they become lagging revenue misses?",
+  title: "Right now, without a manual data pull: can you state your pipeline coverage ratio, weighted pipeline by stage, and the number of deals at risk this quarter?",
   options: [
-    "Only lagging metrics are tracked: revenue misses are the primary signal",
-    "Some leading indicators exist but they are reviewed too infrequently to be actionable",
-    "Leading indicators are tracked but not consistently reviewed in the weekly operating cadence",
-    "Leading indicators are reviewed weekly with documented thresholds and trigger actions",
-    "A predictive indicator system: leading metrics with defined thresholds trigger automated alerts and documented playbooks before revenue impact occurs"
+    "No: these numbers require manual assembly or are not available at all",
+    "Some numbers are available, but at least one requires manual work or is not trusted",
+    "Core pipeline metrics exist in dashboards, but confidence in accuracy or freshness is mixed",
+    "These metrics are available in near real time and used in weekly operating reviews",
+    "A governed pipeline intelligence layer: coverage, weighted stage value, and deals-at-risk available on demand, trusted by leadership, and linked to documented action thresholds"
   ]
 },
 {
   id: 10005, pillar: 10, type: "scale",
-  title: "How accurately can you attribute revenue to specific marketing channels, campaigns, and activities, and how often is attribution reviewed?",
+  title: "In the last two quarters, how many revenue misses were predicted by a leading indicator more than 60 days in advance — versus discovered only at quarter close?",
   options: [
-    "No attribution model: all pipeline is marked as direct or unknown",
-    "First-touch attribution exists but multi-touch and spend ROI are unmeasured",
-    "A basic multi-touch model is in place but accuracy is not validated",
-    "A validated multi-touch attribution model reviewed monthly with documented assumptions",
-    "A full attribution system: channel, campaign, and spend tracked to closed revenue with accuracy validated quarterly and model updated as needed"
+    "None were predicted early: misses were discovered when revenue was already missed",
+    "A few warning signs existed, but they were informal and not tied to a defined leading-indicator system",
+    "Some misses were predicted early, but signal quality and follow-through were inconsistent",
+    "Leading indicators predicted several misses early enough to act, and those cases were reviewed after the quarter",
+    "A predictive signal system exists: early warnings are logged, acted on, and reviewed against outcomes — with the ratio of early-detected vs late-detected misses tracked over time"
   ]
 },
 {
@@ -2476,7 +2546,7 @@ const QUESTIONS = [
 },
 {
   id: 10008, pillar: 10, type: "scale",
-  title: "How clearly can you see the composition, health, and stage distribution of your pipeline at any given moment?",
+  title: "Right now, without a manual data pull: can you see your pipeline stage distribution, health flags, and coverage ratio — and do you trust those numbers?",
   options: [
     "Pipeline visibility is limited: a real-time view requires manual data assembly",
     "Pipeline is visible in CRM but quality, health, and stage accuracy are not trusted",
@@ -2625,6 +2695,7 @@ const QUESTIONS = [
 {
   id: 11001, pillar: 11, type: "scale",
   title: "How structured and consistently delivered is your onboarding program for new GTM hires, and how is completion and quality tracked?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
     "No structured onboarding: new hires learn through observation and trial",
     "An informal onboarding process exists but coverage and quality vary by manager",
@@ -2756,13 +2827,13 @@ const QUESTIONS = [
 },
 {
   id: 11013, pillar: 11, type: "scale",
-  title: "How comprehensive and current is your competitive enablement, and can reps handle common competitive objections without specialist support?",
+  title: "After your last three product releases: how quickly were enablement materials updated — and was the update triggered proactively or only after reps raised gaps in deals?",
   options: [
-    "No competitive enablement: reps improvise competitive responses",
-    "Battlecards exist but are outdated and not consistently used",
-    "Competitive materials are updated occasionally but rep preparedness is inconsistent",
-    "A quarterly competitive enablement update with rep training and certification",
-    "A live competitive intelligence program: battlecards updated monthly, rep handling tested in coaching, and competitive win rate tracked quarterly"
+    "Enablement materials were not updated in time: reps discovered gaps in live deals",
+    "Updates happened reactively after field complaints, with no defined release-linked process",
+    "Materials were updated for some releases, but timing and completeness were inconsistent",
+    "Enablement updates are tied to product releases and usually completed before field exposure",
+    "A release-linked enablement system: materials updated proactively on a defined timeline, field readiness checked before release, and lag time tracked after every release"
   ]
 },
 {
@@ -2778,7 +2849,7 @@ const QUESTIONS = [
 },
 {
   id: 11015, pillar: 11, type: "scale",
-  title: "How directly does your enablement function support active deal execution, and can reps access relevant content at the deal stage where they need it?",
+  title: "In your last pipeline review, for deals that stalled or were lost: how many had enablement materials been accessed in the 30 days prior — and do you track that?",
   options: [
     "Enablement is entirely pre-sale: no support exists for in-flight deals",
     "Reps can access general materials but deal-specific guidance is not available",
@@ -2800,13 +2871,13 @@ const QUESTIONS = [
 },
 {
   id: 11017, pillar: 11, type: "scale",
-  title: "How closely does the Enablement function collaborate with Sales leadership to ensure content reflects real field needs?",
+  title: "In the last quarter, for each underperforming rep: was a specific skill gap identified and a targeted training prescribed — or was the same generic curriculum applied to everyone?",
   options: [
-    "Enablement and Sales leadership operate independently: content is produced without field validation",
-    "Some coordination happens but it is informal and not on a defined cadence",
-    "Enablement and Sales leadership meet occasionally to review content priorities",
-    "A monthly Enablement-Sales leadership review governs content priorities and usage feedback",
-    "A co-owned enablement program: Sales leadership reviews and signs off on all major content, and field feedback drives quarterly curriculum updates"
+    "Underperformance is not tied to specific skill-gap diagnosis: support is generic or absent",
+    "Managers sometimes identify likely gaps, but training remains mostly generic and inconsistent",
+    "Some underperformers receive targeted development, but the process is not systematic across managers",
+    "Underperforming reps receive skill-gap diagnosis and targeted training plans with manager follow-up",
+    "A performance-linked enablement system: each underperformer gets a diagnosed skill gap, prescribed targeted training, and outcome tracking against the diagnosed gap"
   ]
 },
 {
@@ -2849,13 +2920,14 @@ const QUESTIONS = [
 
 {
   id: 12001, pillar: 12, type: "scale",
-  title: "How clearly does GTM leadership communicate priorities, and when two teams have conflicting priorities, how is that resolved?",
+  title: "If you asked five frontline GTM reps right now to name the top three priorities for this quarter, how many would give the same answer?",
+  subtitle: "Answer for your primary revenue segment and GTM motion unless a question explicitly asks you to distinguish.",
   options: [
-    "Priorities are unclear or contradictory: teams frequently operate at cross-purposes",
-    "Leadership communicates direction broadly but conflicts are resolved ad-hoc",
-    "A priority framework exists but its application in conflict situations is inconsistent",
-    "A documented prioritization hierarchy used to resolve conflicts in leadership forums",
-    "A governed priority framework: explicit trade-off criteria, escalation path, and conflict resolution process reviewed quarterly by the GTM leadership team"
+    "Fewer than two would agree: priorities are unknown or contradictory at the frontline",
+    "Two or three might broadly align but with significant variation in wording and ranking",
+    "Most would name similar priorities but without precise language or consistent ordering",
+    "Four or five would give the same answer: priorities are communicated and tested in team meetings",
+    "All five would give identical answers: priority cascade is verified through a structured quarterly frontline comprehension check — and misalignment triggers an immediate communication intervention"
   ]
 },
 {
@@ -2882,13 +2954,13 @@ const QUESTIONS = [
 },
 {
   id: 12004, pillar: 12, type: "scale",
-  title: "How effectively does your GTM operating model enable cross-functional collaboration, and where do the biggest coordination breakdowns occur?",
+  title: "When a cross-functional GTM decision requires input from more than two teams, how long does it typically take to reach a documented conclusion — and is that tracked?",
   options: [
-    "Teams operate in silos: cross-functional coordination is the exception, not the rule",
-    "Some cross-functional meetings exist but they produce little coordination in practice",
-    "Collaboration works in structured forums but breaks down in day-to-day execution",
-    "Cross-functional coordination governed by defined interfaces and reviewed in monthly GTM forums",
-    "A fully integrated operating model: handoffs, interfaces, and collaboration protocols documented, owned, and reviewed quarterly with measurable coordination KPIs"
+    "Multi-team decisions have no defined process: they resolve when someone eventually forces a conclusion",
+    "These decisions happen informally in meetings, but time-to-resolution is not tracked and varies widely",
+    "Most multi-team decisions resolve within a few weeks, but there is no formal SLA and delays are common",
+    "A documented process exists for multi-team decisions with a defined timeline and accountable facilitator",
+    "A governed multi-team decision protocol: input deadlines, decision owner, and resolution SLA defined — time-to-decision tracked quarterly, and persistent delays escalate to leadership automatically"
   ]
 },
 {
@@ -2904,18 +2976,18 @@ const QUESTIONS = [
 },
 {
   id: 12006, pillar: 12, type: "scale",
-  title: "If you asked five frontline GTM reps right now to name the company's top three GTM priorities for this quarter, how many would give the same answer?",
+  title: "In the last quarter, how many GTM initiatives were formally stopped or deprioritized — and was that decision made proactively or only after resources had already been wasted?",
   options: [
-    "Fewer than two would agree: priorities are not known at the frontline",
-    "Two or three might align but with significant variation in how they describe them",
-    "Most would name similar priorities but without precise language or ranking",
-    "Four or five would give the same answer: priorities are communicated and tested in team meetings",
-    "All five would give identical answers: priority cascade is verified through a structured quarterly frontline comprehension check"
+    "Initiatives rarely stop: once started, GTM work tends to continue regardless of results",
+    "Some initiatives are quietly abandoned, but formal stop decisions are uncommon and undocumented",
+    "A few initiatives were stopped this quarter, but decisions were reactive and came after visible failure",
+    "Initiative stopping decisions are documented, reviewed in quarterly planning, and driven by pre-defined performance criteria",
+    "A governed initiative discipline: stop/deprioritize criteria defined at launch, performance reviewed at fixed checkpoints, and kill decisions made proactively — with a post-mortem to prevent similar waste"
   ]
 },
 {
   id: 12007, pillar: 12, type: "scale",
-  title: "How clearly owned are GTM initiatives, and does each initiative have a single accountable executive sponsor?",
+  title: "Of your current GTM initiatives: how many have a single named accountable owner with defined authority — and how many are owned by a committee or have no clear owner?",
   options: [
     "Initiatives have no formal owner: everyone and no one is responsible",
     "Ownership is assigned informally but authority and accountability are unclear",
@@ -2937,7 +3009,7 @@ const QUESTIONS = [
 },
 {
   id: 12009, pillar: 12, type: "scale",
-  title: "How consistently do your GTM governance meetings produce clear decisions, documented owners, and followed-through actions?",
+  title: "From your last three governance meetings: what percentage of documented actions were completed by the agreed owner, by the agreed deadline?",
   options: [
     "Meetings produce discussion but no documented decisions or owners",
     "Some decisions are made in meetings but follow-through is not systematically tracked",
@@ -3003,24 +3075,24 @@ const QUESTIONS = [
 },
 {
   id: 12015, pillar: 12, type: "scale",
-  title: "How effectively does your GTM operating rhythm create consistent planning, execution, and review loops across the year?",
+  title: "In the last quarter, how many decisions made in your weekly GTM meetings were directly traceable to a quarterly objective — and how many were reactive to issues not in the plan?",
   options: [
-    "No operating rhythm: planning, execution, and review happen inconsistently",
-    "A rhythm exists on paper but is frequently disrupted or ignored in practice",
-    "Planning and review loops mostly hold but execution consistency is variable",
-    "A defined annual GTM operating rhythm with quarterly planning, monthly reviews, and weekly execution cadences",
-    "A sacred operating calendar: annual, quarterly, monthly, and weekly cadences documented, upheld, and reviewed for effectiveness annually"
+    "Most weekly decisions are reactive: there is little visible link to quarterly objectives",
+    "Quarterly objectives exist, but weekly decisions frequently drift away from them without challenge",
+    "Some weekly decisions can be traced to quarterly objectives, but reactive work still consumes a large share of leadership attention",
+    "Most weekly decisions can be traced to quarterly objectives, with reactive work explicitly identified and contained",
+    "Weekly operating decisions are mapped to quarterly objectives by design: off-plan work is logged, quantified, and reviewed as a governance health signal"
   ]
 },
 {
   id: 12016, pillar: 12, type: "scale",
-  title: "How explicitly do your GTM governance mechanisms connect team-level priorities to company-level strategy?",
+  title: "In the last two quarters, how many significant GTM problems did executive leadership learn about from a frontline team member before it showed up in a metric — and how many did they only discover after a miss?",
   options: [
-    "No connection: team priorities are set independently of company strategy",
-    "A loose connection exists in theory but breaks down in practice",
-    "GTM priorities reference company strategy in planning but execution diverges",
-    "GTM priorities are mapped to company strategy objectives reviewed in quarterly governance",
-    "A fully integrated strategy cascade: company objectives, GTM priorities, team targets, and individual goals all linked and reviewed for alignment quarterly"
+    "Leadership typically learns about problems only after a metric miss or visible failure",
+    "A few issues are surfaced early, but mostly by senior leaders rather than frontline teams",
+    "Some frontline-originated early warnings reach leadership, but the pattern is inconsistent",
+    "Multiple material issues were surfaced early by frontline teams and addressed before revenue impact",
+    "Early warning is a governed signal: frontline-originated escalations are tracked, reviewed against later outcomes, and used as a transparency health metric"
   ]
 },
 {
@@ -3058,15 +3130,15 @@ const QUESTIONS = [
 },
 {
   id: 12020, pillar: 12, type: "scale",
-  title: "How clearly and accurately does frontline intelligence reach executive leadership, and what mechanisms prevent signal distortion between levels?",
+  title: "In the last quarter, how many GTM decisions were reversed or significantly changed after implementation — because the original decision was based on incomplete frontline intelligence?",
   options: [
-    "Frontline intelligence is heavily filtered: executives see a curated version of reality",
-    "Significant signal distortion occurs between frontline and executive level",
-    "Information flows reasonably well but some filtering and delay is common",
-    "Structured reporting and direct executive touchpoints with frontline ensure low distortion",
-    "A radical transparency architecture: structured skip-levels, direct frontline data feeds, and distortion checks built into the governance operating model"
+    "Decision reversals are common: we frequently discover field reality contradicts what drove the original decision",
+    "Some reversals happen, but they are not tracked and the connection to intelligence gaps is not analyzed",
+    "Occasional reversals occur and are discussed informally, but no formal tracking or root cause process exists",
+    "Decision reversals are tracked, and those linked to intelligence gaps are reviewed in quarterly governance",
+    "A decision quality system: reversals tracked with root cause, intelligence gap reversals reviewed monthly, and patterns feed back into how frontline data is collected and surfaced before decisions are made"
   ]
-}
+},
 
 ]; // END QUESTIONS ARRAY
 
