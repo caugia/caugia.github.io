@@ -329,7 +329,10 @@ const CONFIG = {
         : titleText;
       UI.title.title = titleText.length > MAX_TITLE ? titleText : "";
     }
-    if (UI.sub)    UI.sub.innerText    = safeText(q.subtitle || q.sub || "");
+    if (UI.sub) {
+      const showInHeader = (q.type !== "group" && q.type !== "multi_radio");
+      UI.sub.innerText = showInHeader ? safeText(q.subtitle || q.sub || "") : "";
+    }
     if (UI.body)   UI.body.innerHTML   = "";
 
     switch (q.type) {
