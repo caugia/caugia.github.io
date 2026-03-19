@@ -1,5 +1,5 @@
 /* ===========================================================
-   MASTER QUESTION ENGINE v4.5 — CANONICAL
+   MASTER QUESTION ENGINE v4.6 — CANONICAL
    =========================================================== */
 
 const QUESTIONS = [
@@ -1135,6 +1135,7 @@ const QUESTIONS = [
 },
 {
   id: 4003, pillar: 4, type: "scale",
+  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
   title: "How predictable and repeatable is your outbound motion in generating qualified pipeline, and how is that measured?",
   options: [
     "No structured outbound: reps prospect independently with no shared approach",
@@ -1168,6 +1169,7 @@ const QUESTIONS = [
 },
 {
   id: 4006, pillar: 4, type: "scale",
+  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
   title: "How systematically are you executing Account-Based Marketing against your highest-priority accounts, and how is impact measured?",
   options: [
     "No ABM motion: all accounts receive the same outreach",
@@ -1256,6 +1258,7 @@ const QUESTIONS = [
 },
 {
   id: 4014, pillar: 4, type: "scale",
+  show_if: { field: 'gtm_motion', not_contains: ['product-led'] },
   title: "For your last three events or webinars: what was the pipeline generated, and what was the cost-per-qualified-opportunity per event?",
   options: [
     "Events are run with no pipeline or cost tracking: attendance is the only metric",
@@ -1278,6 +1281,7 @@ const QUESTIONS = [
 },
 {
   id: 4016, pillar: 4, type: "scale",
+  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
   title: "How structured is the feedback loop between SDRs and Marketing on lead quality, and how often does that feedback drive changes?",
   options: [
     "No formal feedback loop: SDRs and Marketing operate independently",
@@ -1289,6 +1293,7 @@ const QUESTIONS = [
 },
 {
   id: 4017, pillar: 4, type: "scale",
+  show_if: { field: 'gtm_motion', not_contains: ['product-led', 'partner-led'] },
   title: "Do you have a defined event and webinar strategy with pipeline targets per event — and can you show pipeline ROI from your last three events?",
   options: [
     "Events are chosen opportunistically with no defined strategy or measurement",
@@ -1493,6 +1498,7 @@ const QUESTIONS = [
 },
 {
   id: 5015, pillar: 5, type: "scale",
+  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
   title: "How strictly is CRM data hygiene enforced, and what are the consequences of incomplete deal records?",
   options: [
     "CRM data is voluntary: most deal records are incomplete or inaccurate",
@@ -1526,6 +1532,7 @@ const QUESTIONS = [
 },
 {
   id: 5018, pillar: 5, type: "scale",
+  show_if: { field: 'product_complexity', contains_any: ['complex / configurable', 'highly complex'] },
   title: "In the last 90 days, what percentage of your reps handled a technical product question in a live deal without escalating to Product or Engineering?",
   options: [
     "Very few or none: most technical questions trigger an escalation",
@@ -1598,6 +1605,7 @@ const QUESTIONS = [
 },
 {
   id: 6004, pillar: 6, type: "scale",
+  show_if: { field: 'target_segment', contains_any: ['deer / mid-market', 'elephant / enterprise', 'whale / strategic'] },
   title: "How consistently and substantively do you run customer business reviews, and how are outcomes tracked?",
   options: [
     "No QBRs: customers only hear from us when there is a problem",
@@ -1675,6 +1683,7 @@ const QUESTIONS = [
 },
 {
   id: 6011, pillar: 6, type: "scale",
+  show_if: { field: 'target_segment', contains_any: ['deer / mid-market', 'elephant / enterprise', 'whale / strategic'] },
   title: "In the last quarter, what percentage of your accounts received a business review — and for each one, was a follow-up action documented and tracked?",
   options: [
     "Value communication is ad-hoc: customers are not routinely shown their ROI",
@@ -1686,6 +1695,7 @@ const QUESTIONS = [
 },
 {
   id: 6012, pillar: 6, type: "scale",
+  show_if: { field: 'target_segment', contains_any: ['elephant / enterprise', 'whale / strategic'] },
   title: "In the last quarter, how many accounts fell through the gap between CS and AM ownership — and would a clearer handoff rule have prevented it?",
   options: [
     "No handoff rules exist: CS and AM ownership is informal and accounts frequently fall through gaps",
@@ -1697,6 +1707,7 @@ const QUESTIONS = [
 },
 {
   id: 6013, pillar: 6, type: "scale",
+  show_if: { field: 'target_segment', contains_any: ['elephant / enterprise', 'whale / strategic'] },
   title: "How separately and consistently does your Account Management team run expansion pipeline reviews, distinct from CS health reviews?",
   options: [
     "No distinction: expansion is discussed in CS health calls without dedicated pipeline management",
