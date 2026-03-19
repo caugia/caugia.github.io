@@ -20,7 +20,7 @@ const QUESTIONS = [
     { name: "industry",        label: "Industry (e.g. FinTech, HRTech, DevTools)" },
     { name: "total_employees", label: "Total Employees (FTE equivalent)" },
     { name: "year_founded",    label: "Year Founded (YYYY)" },
-    { name: "hq_region",       label: "HQ Region (US, FR, UK, DACH, Benelux, Nordics, Other)" }
+    { name: "hq_region",       label: "HQ Region (e.g. US, CA, FR, UK, DE, AU, SG)" }
   ]
 },
 
