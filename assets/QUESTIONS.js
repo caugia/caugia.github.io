@@ -52,11 +52,7 @@ const QUESTIONS = [
     { name: "revops_enablement_headcount", label: "# RevOps / Enablement (enter 999 if none)" },
     { name: "product_headcount",           label: "# Product — PM + Design only (not engineering)" },
     { name: "engineering_headcount",       label: "# Engineering / R&D — developers only" },
-    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" },
-    { name: "inbound_pct",  label: "% Pipeline — Inbound (content, SEO, brand, events)", type: "number", min: 0, max: 100, placeholder: "e.g. 40" },
-    { name: "outbound_pct", label: "% Pipeline — Outbound (SDR, AE prospecting, cold)",  type: "number", min: 0, max: 100, placeholder: "e.g. 30" },
-    { name: "plg_pct",      label: "% Pipeline — Product-led (PLG, self-serve, trial)",   type: "number", min: 0, max: 100, placeholder: "e.g. 20" },
-    { name: "partner_pct",  label: "% Pipeline — Partners (channel, ecosystem, referral)",type: "number", min: 0, max: 100, placeholder: "e.g. 10" }
+    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" }
   ]
 },
 
@@ -225,11 +221,15 @@ const QUESTIONS = [
 
 {
   id: 12, pillar: 0, type: "group",
-  title: "Team & Geographic Context",
-  subtitle: "Supplemental context for benchmark calibration. Enter 999 if not applicable.",
+  title: "Team Context & Pipeline Sources",
+  subtitle: "Geographic reach and pipeline channel distribution. Percentages must total 100.",
   fields: [
     { name: "sales_leadership_headcount",label: "# Sales Leadership — VP / Head / Managers" },
-    { name: "active_countries",          label: "Number of countries with active sales or customers" }
+    { name: "active_countries",          label: "Number of countries with active sales or customers" },
+    { name: "inbound_pct",  label: "% Pipeline — Inbound (content, SEO, brand, events)", type: "number", min: 0, max: 100, placeholder: "e.g. 40" },
+    { name: "outbound_pct", label: "% Pipeline — Outbound (SDR, AE prospecting, cold)",  type: "number", min: 0, max: 100, placeholder: "e.g. 30" },
+    { name: "plg_pct",      label: "% Pipeline — Product-led (PLG, self-serve, trial)",   type: "number", min: 0, max: 100, placeholder: "e.g. 20" },
+    { name: "partner_pct",  label: "% Pipeline — Partners (channel, ecosystem, referral)",type: "number", min: 0, max: 100, placeholder: "e.g. 10" }
   ]
 },
 
