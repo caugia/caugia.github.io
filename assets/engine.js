@@ -361,7 +361,7 @@ const CONFIG = {
       if (!is999Instruction) {
         const sub = document.createElement("p");
         sub.innerText = subtitleText;
-        sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 16px 0;line-height:1.5;";
+        sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 24px 0;line-height:1.5;";
         UI.body.appendChild(sub);
       }
     }
@@ -404,12 +404,6 @@ const CONFIG = {
       grid.appendChild(wrapper);
     });
     UI.body.appendChild(grid);
-
-    const hint999 = document.createElement("p");
-    hint999.innerText = "Enter 999 for any metric that does not apply to your organisation.";
-    hint999.style.cssText = "font-size:0.78rem;color:#94a3b8;margin:12px 0 0 0;"
-      + "padding-top:10px;border-top:1px solid #f1f5f9;";
-    UI.body.appendChild(hint999);
 
   }
 
