@@ -456,7 +456,8 @@ const CONFIG = {
     const key = qKey(q.id);
     const avgLen = (q.options || []).reduce((s, o) => s + o.length, 0)
       / Math.max((q.options || []).length, 1);
-    const useSelect = avgLen > 50;
+    const hasSplitR = (q.options || []).some((o) => o.includes(" --- "));
+    const useSelect = hasSplitR && avgLen > 50;
 
     if (useSelect) {
       const sel = document.createElement("select");
@@ -538,9 +539,13 @@ const CONFIG = {
   function renderMultiRadio(q) {
     if (!UI.body) return;
 
-    (q.questions || []).forEach((subQ) => {
+    const subQs = q.questions || [];
+    subQs.forEach((subQ, idx) => {
       const block = document.createElement("div");
-      block.style.cssText = "margin-bottom:22px;";
+      block.style.cssText = "margin-bottom:36px;"
+        + (idx < subQs.length - 1
+          ? "padding-bottom:20px;border-bottom:0.5px solid var(--color-border-tertiary,#f1f5f9);"
+          : "");
 
       const lbl = document.createElement("p");
       lbl.innerText = safeText(subQ.label);
@@ -550,7 +555,8 @@ const CONFIG = {
 
       const avgLen = (subQ.options || []).reduce((s, o) => s + o.length, 0)
         / Math.max((subQ.options || []).length, 1);
-      const useSelect = avgLen > 40;
+      const hasSplit = (subQ.options || []).some((o) => o.includes(" --- "));
+      const useSelect = hasSplit && avgLen > 40;
       const storeKey = multiRadioKey(q.id, subQ.key);
 
       if (useSelect) {
@@ -680,6 +686,19 @@ const CONFIG = {
     const q = getCurrentQuestion();
     if (!q) return false;
     if (STATE.skipped && STATE.skipped[q.id]) return true;
+
+    if (q.id === 25) {
+      const segAnswer = STATE.answers[qKey(21)] || STATE.answers["q21"] || "";
+      const segCount = segAnswer.indexOf("1 segment") >= 0 ? 1
+        : segAnswer.indexOf("2 segment") >= 0 ? 2
+        : segAnswer.indexOf("3 segment") >= 0 ? 3 : 4;
+      if (segCount <= 2) return true;
+    }
+
+    if (q.id === 23) {
+      const segAnswer = STATE.answers[qKey(21)] || STATE.answers["q21"] || "";
+      if (segAnswer.indexOf("1 segment") >= 0) return true;
+    }
 
     if (q.type === "group") {
       const fields = q.fields || [];
@@ -840,70 +859,54 @@ const CONFIG = {
     if (!UI.pillarList) return;
     const q = getCurrentQuestion();
     if (!q) return;
-
     const currentPillar = Number(q.pillar);
-    const pillarCompletion = {};
-
+    const done = {};
+    const total = {};
     window.QUESTIONS.forEach((question) => {
       const p = Number(question.pillar);
       if (p === 0) return;
-
-      if (!pillarCompletion[p]) pillarCompletion[p] = { answered: 0, total: 0 };
-      pillarCompletion[p].total++;
-
+      if (!total[p]) { total[p] = 0; done[p] = 0; }
       const skipped = STATE.skipped || {};
-      if (skipped[question.id]) {
-        pillarCompletion[p].answered++;
-        return;
-      }
-
-      let isAnswered = false;
+      if (skipped[question.id]) { total[p]++; done[p]++; return; }
+      total[p]++;
+      let answered = false;
       if (question.type === "group") {
-        isAnswered = (question.fields || []).every((f) =>
-          isNonEmpty(STATE.answers[groupKey(question.id, f.name)])
-        );
+        answered = (question.fields || []).every((f) =>
+          isNonEmpty(STATE.answers[groupKey(question.id, f.name)]));
       } else if (question.type === "multi_radio") {
-        isAnswered = (question.questions || []).every((subQ) =>
-          isNonEmpty(STATE.answers[multiRadioKey(question.id, subQ.key)])
-        );
+        answered = (question.questions || []).every((subQ) =>
+          isNonEmpty(STATE.answers[multiRadioKey(question.id, subQ.key)]));
       } else {
-        isAnswered = isNonEmpty(STATE.answers[qKey(question.id)]);
+        answered = isNonEmpty(STATE.answers[qKey(question.id)]);
       }
-
-      if (isAnswered) pillarCompletion[p].answered++;
+      if (answered) done[p]++;
     });
 
     const items = UI.pillarList.querySelectorAll("li");
-
     items.forEach((item, index) => {
       const dataP = item.getAttribute("data-p");
       const itemPillar = (dataP !== null && dataP !== "") ? Number(dataP) : index;
-
-      if (itemPillar === 0) return;
-
       const active = itemPillar === currentPillar;
       item.classList.toggle("active", active);
-      item.style.fontWeight = active ? "600" : "400";
-      item.style.color = active ? "var(--color-text-info, #0056b3)" : "";
+      item.style.fontWeight = active ? "bold" : "normal";
+      item.style.color = active ? "#0056b3" : "";
 
-      const existingTick = item.querySelector(".pillar-tick");
-      const existingCount = item.querySelector(".pillar-count");
-      if (existingTick) existingTick.remove();
-      if (existingCount) existingCount.remove();
+      item.querySelectorAll("span, small, .count, .pillar-count").forEach((el) => {
+        const txt = el.innerText || el.textContent || "";
+        if (/^\d/.test(txt.trim()) || txt.includes("/")) {
+          el.style.display = "none";
+        }
+      });
 
-      const comp = pillarCompletion[itemPillar];
-      if (comp && comp.answered === comp.total && comp.total > 0) {
+      const oldTick = item.querySelector(".gi-tick");
+      if (oldTick) oldTick.remove();
+
+      if (total[itemPillar] > 0 && done[itemPillar] === total[itemPillar]) {
         const tick = document.createElement("span");
-        tick.className = "pillar-tick";
-        tick.innerText = "✓";
-        tick.style.cssText = "color:var(--color-text-success, #16a34a);"
-          + "font-size:0.85rem;margin-left:6px;flex-shrink:0;";
-        item.style.display = "flex";
-        item.style.alignItems = "center";
-        item.style.justifyContent = "space-between";
+        tick.className = "gi-tick";
+        tick.textContent = " ✓";
+        tick.style.cssText = "color:#16a34a;font-weight:bold;font-size:0.9rem;";
         item.appendChild(tick);
-      } else {
-        item.style.justifyContent = "";
       }
     });
   }
