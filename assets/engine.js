@@ -1,5 +1,5 @@
 /* ===========================================================
-   CAUGIA INTELLIGENCE ENGINE v9.8
+   CAUGIA INTELLIGENCE ENGINE v9.8.3
    Changes vs v9.6:
    - Added show_if conditional visibility with skipped-question tracking
    - Excluded skipped questions from coverage denominator and submission payload
@@ -289,6 +289,12 @@ const CONFIG = {
     }
 
     loadState();
+    if (UI.title) {
+      UI.title.style.whiteSpace = "normal";
+      UI.title.style.overflow = "visible";
+      UI.title.style.textOverflow = "clip";
+      UI.title.style.maxHeight = "none";
+    }
 
     if (typeof STATE.currentStep !== "number" || STATE.currentStep < 0) STATE.currentStep = 0;
     if (STATE.currentStep > window.QUESTIONS.length - 1) STATE.currentStep = window.QUESTIONS.length - 1;
@@ -321,13 +327,19 @@ const CONFIG = {
     if (!q) return;
 
     if (UI.kicker) UI.kicker.innerText = "";
-    const MAX_TITLE = 120;
     const titleText = safeText(q.title || "");
     if (UI.title) {
-      UI.title.innerText = titleText.length > MAX_TITLE
-        ? titleText.substring(0, MAX_TITLE - 1) + "…"
-        : titleText;
-      UI.title.title = titleText.length > MAX_TITLE ? titleText : "";
+      UI.title.innerText = titleText;
+      if (titleText.length > 160) {
+        UI.title.style.fontSize = "0.95rem";
+        UI.title.style.lineHeight = "1.45";
+      } else if (titleText.length > 120) {
+        UI.title.style.fontSize = "1.05rem";
+        UI.title.style.lineHeight = "1.5";
+      } else {
+        UI.title.style.fontSize = "";
+        UI.title.style.lineHeight = "";
+      }
     }
     if (UI.sub) {
       const showInHeader = (q.type !== "group" && q.type !== "multi_radio");
@@ -384,8 +396,42 @@ const CONFIG = {
         ? labelText.substring(0, MAX_LABEL - 1) + "…"
         : labelText;
 
-      const input = document.createElement("input");
+      const k = groupKey(q.id, f.name);
       const fieldType = f.type || "text";
+
+      if (fieldType === "select" && f.options) {
+        const sel = document.createElement("select");
+        sel.style.cssText = "width:100%;padding:7px 10px;border:1px solid #d1d5db;"
+          + "border-radius:5px;font-size:0.88rem;background:var(--color-background-primary,#fff);"
+          + "color:var(--color-text-primary,#1e293b);box-sizing:border-box;";
+        sel.name = k;
+
+        const ph = document.createElement("option");
+        ph.value = "";
+        ph.textContent = "Select…";
+        ph.disabled = true;
+        ph.selected = !STATE.answers[k];
+        sel.appendChild(ph);
+
+        f.options.forEach((opt) => {
+          const option = document.createElement("option");
+          option.value = opt;
+          option.textContent = opt;
+          if (STATE.answers[k] === opt) option.selected = true;
+          sel.appendChild(option);
+        });
+
+        sel.addEventListener("change", () => {
+          STATE.answers[k] = sel.value;
+        });
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(sel);
+        grid.appendChild(wrapper);
+        return;
+      }
+
+      const input = document.createElement("input");
       input.type = fieldType === "number" ? "number" : "text";
       if (f.min !== undefined) input.min = f.min;
       if (f.max !== undefined) input.max = f.max;
@@ -393,8 +439,6 @@ const CONFIG = {
       input.className = "gi-input";
       input.style.cssText = "width:100%;padding:7px 10px;border:1px solid #d1d5db;"
         + "border-radius:5px;font-size:0.88rem;box-sizing:border-box;";
-
-      const k = groupKey(q.id, f.name);
       input.name = k;
       if (STATE.answers[k]) input.value = STATE.answers[k];
       input.addEventListener("input", (e) => { STATE.answers[k] = e.target.value; });
@@ -409,106 +453,199 @@ const CONFIG = {
 
   function renderRadio(q) {
     if (!UI.body) return;
-    const wrapper = document.createElement("div");
-    wrapper.className = "gi-options-grid";
-    wrapper.style.cssText = "display:grid;grid-template-columns:" + (window.innerWidth < 768 ? "1fr" : "1fr 1fr") + ";gap:12px";
-
     const key = qKey(q.id);
+    const avgLen = (q.options || []).reduce((s, o) => s + o.length, 0)
+      / Math.max((q.options || []).length, 1);
+    const useSelect = avgLen > 50;
 
-    const MAX_SCALE_OPT = 100;
-    (q.options || []).forEach((opt) => {
-      const label = document.createElement("label");
-      label.className = "gi-option-card";
-      label.style.cssText = "display:flex;align-items:center;padding:14px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff";
+    if (useSelect) {
+      const sel = document.createElement("select");
+      sel.style.cssText = "width:100%;padding:9px 12px;border:1px solid #d1d5db;"
+        + "border-radius:6px;font-size:0.88rem;background:var(--color-background-primary,#fff);"
+        + "color:var(--color-text-primary,#1e293b);cursor:pointer;";
 
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = key;
-      input.value = opt;
-      input.style.marginRight = "10px";
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Select…";
+      placeholder.disabled = true;
+      placeholder.selected = !STATE.answers[key];
+      sel.appendChild(placeholder);
 
-      if (STATE.answers[key] === opt) {
-        input.checked = true;
-        label.style.borderColor = "#0056b3";
-        label.style.backgroundColor = "#eff6ff";
-      }
-
-      input.addEventListener("change", () => {
-        STATE.answers[key] = opt;
-        if (UI.body) UI.body.innerHTML = "";
-        renderRadio(q);
+      (q.options || []).forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt.split(" --- ")[0];
+        option.title = opt;
+        if (STATE.answers[key] === opt) option.selected = true;
+        sel.appendChild(option);
       });
 
-      const MAX_OPT = q.type === "scale" ? MAX_SCALE_OPT : 90;
-      const displayOpt = opt.length > MAX_OPT ? opt.substring(0, MAX_OPT - 1) + "…" : opt;
-      label.appendChild(input);
-      label.appendChild(document.createTextNode(displayOpt));
-      label.title = opt;
-      wrapper.appendChild(label);
-    });
-    UI.body.appendChild(wrapper);
+      sel.addEventListener("change", () => {
+        STATE.answers[key] = sel.value;
+      });
+
+      UI.body.appendChild(sel);
+
+      const subDetail = document.createElement("p");
+      subDetail.style.cssText = "font-size:0.78rem;color:#64748b;margin:6px 0 0 0;min-height:1em;";
+      if (STATE.answers[key]) {
+        const parts = STATE.answers[key].split(" --- ");
+        subDetail.innerText = parts[1] ? parts[1].substring(0, 100) : "";
+      }
+      UI.body.appendChild(subDetail);
+
+      sel.addEventListener("change", () => {
+        const parts = sel.value.split(" --- ");
+        subDetail.innerText = parts[1] ? parts[1].substring(0, 100) : "";
+      });
+    } else {
+      const wrapper = document.createElement("div");
+      wrapper.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:8px;";
+
+      (q.options || []).forEach((opt) => {
+        const label = document.createElement("label");
+        label.style.cssText = "display:flex;align-items:center;padding:10px 12px;"
+          + "border:0.5px solid #d1d5db;border-radius:6px;cursor:pointer;"
+          + "background:var(--color-background-primary,#fff);font-size:0.85rem;gap:8px;";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = key;
+        input.value = opt;
+        input.style.cssText = "flex-shrink:0;";
+
+        if (STATE.answers[key] === opt) {
+          input.checked = true;
+          label.style.borderColor = "#0056b3";
+          label.style.background = "#eff6ff";
+        }
+
+        input.addEventListener("change", () => {
+          STATE.answers[key] = opt;
+          if (UI.body) UI.body.innerHTML = "";
+          renderRadio(q);
+        });
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(opt));
+        wrapper.appendChild(label);
+      });
+
+      UI.body.appendChild(wrapper);
+    }
   }
 
   function renderMultiRadio(q) {
     if (!UI.body) return;
 
-    if (q.subtitle) {
-      const sub = document.createElement("p");
-      sub.innerText = safeText(q.subtitle);
-      sub.style.cssText = "font-size:0.85rem;color:#64748b;margin:0 0 20px 0;line-height:1.5;";
-      UI.body.appendChild(sub);
-    }
-
     (q.questions || []).forEach((subQ) => {
       const block = document.createElement("div");
-      block.style.cssText = "margin-bottom:28px;";
+      block.style.cssText = "margin-bottom:22px;";
 
       const lbl = document.createElement("p");
       lbl.innerText = safeText(subQ.label);
-      lbl.style.cssText = "font-weight:600;font-size:0.95rem;margin:0 0 12px 0;color:#1e293b;";
+      lbl.style.cssText = "font-weight:500;font-size:0.88rem;margin:0 0 10px 0;"
+        + "color:var(--color-text-primary, #1e293b);";
       block.appendChild(lbl);
 
-      const grid = document.createElement("div");
-      grid.style.cssText = "display:grid;grid-template-columns:" +
-        (window.innerWidth < 768 ? "1fr" : "1fr 1fr") + ";gap:10px;";
-
+      const avgLen = (subQ.options || []).reduce((s, o) => s + o.length, 0)
+        / Math.max((subQ.options || []).length, 1);
+      const useSelect = avgLen > 40;
       const storeKey = multiRadioKey(q.id, subQ.key);
 
-      (subQ.options || []).forEach((opt) => {
-        const label = document.createElement("label");
-        label.className = "gi-option-card";
-        label.style.cssText =
-          "display:flex;align-items:center;padding:12px 14px;border:1px solid #e2e8f0;" +
-          "border-radius:8px;cursor:pointer;background:#fff;font-size:0.9rem;";
+      if (useSelect) {
+        const sel = document.createElement("select");
+        sel.style.cssText = "width:100%;padding:9px 12px;border:1px solid #d1d5db;"
+          + "border-radius:6px;font-size:0.88rem;background:var(--color-background-primary,#fff);"
+          + "color:var(--color-text-primary,#1e293b);cursor:pointer;";
 
-        const input = document.createElement("input");
-        input.type  = "radio";
-        input.name  = storeKey;
-        input.value = opt;
-        input.style.marginRight = "10px";
-        input.style.flexShrink  = "0";
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "Select…";
+        placeholder.disabled = true;
+        placeholder.selected = !STATE.answers[storeKey];
+        sel.appendChild(placeholder);
 
-        if (STATE.answers[storeKey] === opt) {
-          input.checked = true;
-          label.style.borderColor     = "#0056b3";
-          label.style.backgroundColor = "#eff6ff";
-        }
-
-        input.addEventListener("change", () => {
-          STATE.answers[storeKey] = opt;
-          if (UI.body) UI.body.innerHTML = "";
-          renderMultiRadio(q);
+        (subQ.options || []).forEach((opt) => {
+          const option = document.createElement("option");
+          option.value = opt;
+          const displayParts = opt.split(" --- ");
+          option.textContent = displayParts[0];
+          option.title = opt;
+          if (STATE.answers[storeKey] === opt) option.selected = true;
+          sel.appendChild(option);
         });
 
-        const MAX_OPT = 90;
-        const displayOpt = opt.length > MAX_OPT ? opt.substring(0, MAX_OPT - 1) + "…" : opt;
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(displayOpt));
-        label.title = opt;
-        grid.appendChild(label);
-      });
+        sel.addEventListener("change", () => {
+          STATE.answers[storeKey] = sel.value;
+        });
 
-      block.appendChild(grid);
+        block.appendChild(sel);
+
+        const subDetail = document.createElement("p");
+        subDetail.id = "sub-detail-" + storeKey;
+        subDetail.style.cssText = "font-size:0.78rem;color:#64748b;margin:4px 0 0 0;min-height:1em;";
+        if (STATE.answers[storeKey]) {
+          const parts = STATE.answers[storeKey].split(" --- ");
+          subDetail.innerText = parts[1] ? parts[1].substring(0, 90) : "";
+        }
+        block.appendChild(subDetail);
+
+        sel.addEventListener("change", () => {
+          const parts = sel.value.split(" --- ");
+          subDetail.innerText = parts[1] ? parts[1].substring(0, 90) : "";
+        });
+      } else {
+        const grid = document.createElement("div");
+        grid.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:8px;";
+
+        (subQ.options || []).forEach((opt) => {
+          const label = document.createElement("label");
+          label.style.cssText = "display:flex;align-items:flex-start;padding:10px 12px;"
+            + "border:0.5px solid #d1d5db;border-radius:6px;cursor:pointer;"
+            + "background:var(--color-background-primary,#fff);font-size:0.84rem;gap:8px;";
+
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = storeKey;
+          input.value = opt;
+          input.style.cssText = "flex-shrink:0;margin-top:2px;";
+
+          if (STATE.answers[storeKey] === opt) {
+            input.checked = true;
+            label.style.borderColor = "#0056b3";
+            label.style.background = "#eff6ff";
+          }
+
+          const parts = opt.split(" --- ");
+          const textWrap = document.createElement("span");
+          if (parts.length > 1) {
+            const title = document.createElement("span");
+            title.style.cssText = "display:block;font-weight:500;";
+            title.innerText = parts[0];
+            const sub = document.createElement("span");
+            sub.style.cssText = "display:block;font-size:0.75rem;color:#64748b;margin-top:2px;";
+            sub.innerText = parts[1].substring(0, 70);
+            textWrap.appendChild(title);
+            textWrap.appendChild(sub);
+          } else {
+            textWrap.innerText = opt;
+          }
+
+          input.addEventListener("change", () => {
+            STATE.answers[storeKey] = opt;
+            if (UI.body) UI.body.innerHTML = "";
+            renderMultiRadio(q);
+          });
+
+          label.appendChild(input);
+          label.appendChild(textWrap);
+          grid.appendChild(label);
+        });
+
+        block.appendChild(grid);
+      }
+
       UI.body.appendChild(block);
     });
   }
@@ -705,17 +842,69 @@ const CONFIG = {
     if (!q) return;
 
     const currentPillar = Number(q.pillar);
+    const pillarCompletion = {};
+
+    window.QUESTIONS.forEach((question) => {
+      const p = Number(question.pillar);
+      if (p === 0) return;
+
+      if (!pillarCompletion[p]) pillarCompletion[p] = { answered: 0, total: 0 };
+      pillarCompletion[p].total++;
+
+      const skipped = STATE.skipped || {};
+      if (skipped[question.id]) {
+        pillarCompletion[p].answered++;
+        return;
+      }
+
+      let isAnswered = false;
+      if (question.type === "group") {
+        isAnswered = (question.fields || []).every((f) =>
+          isNonEmpty(STATE.answers[groupKey(question.id, f.name)])
+        );
+      } else if (question.type === "multi_radio") {
+        isAnswered = (question.questions || []).every((subQ) =>
+          isNonEmpty(STATE.answers[multiRadioKey(question.id, subQ.key)])
+        );
+      } else {
+        isAnswered = isNonEmpty(STATE.answers[qKey(question.id)]);
+      }
+
+      if (isAnswered) pillarCompletion[p].answered++;
+    });
+
     const items = UI.pillarList.querySelectorAll("li");
 
     items.forEach((item, index) => {
       const dataP = item.getAttribute("data-p");
-      // If data-p is present use it; otherwise treat DOM index as pillar index
       const itemPillar = (dataP !== null && dataP !== "") ? Number(dataP) : index;
-      const active = itemPillar === currentPillar;
 
+      if (itemPillar === 0) return;
+
+      const active = itemPillar === currentPillar;
       item.classList.toggle("active", active);
-      item.style.fontWeight = active ? "bold"    : "normal";
-      item.style.color      = active ? "#0056b3" : "";
+      item.style.fontWeight = active ? "600" : "400";
+      item.style.color = active ? "var(--color-text-info, #0056b3)" : "";
+
+      const existingTick = item.querySelector(".pillar-tick");
+      const existingCount = item.querySelector(".pillar-count");
+      if (existingTick) existingTick.remove();
+      if (existingCount) existingCount.remove();
+
+      const comp = pillarCompletion[itemPillar];
+      if (comp && comp.answered === comp.total && comp.total > 0) {
+        const tick = document.createElement("span");
+        tick.className = "pillar-tick";
+        tick.innerText = "✓";
+        tick.style.cssText = "color:var(--color-text-success, #16a34a);"
+          + "font-size:0.85rem;margin-left:6px;flex-shrink:0;";
+        item.style.display = "flex";
+        item.style.alignItems = "center";
+        item.style.justifyContent = "space-between";
+        item.appendChild(tick);
+      } else {
+        item.style.justifyContent = "";
+      }
     });
   }
 
@@ -1327,6 +1516,14 @@ const CONFIG = {
   if (UI.prevBtn) UI.prevBtn.addEventListener("click", goPrev);
   if (UI.finishBtn) UI.finishBtn.addEventListener("click", onFinishClick);
   if (UI.clearBtn) UI.clearBtn.addEventListener("click", clearCurrentAnswer);
+  if (UI.clearBtn && UI.clearBtn.parentNode && !document.getElementById("gi-999-hint")) {
+    const hint = document.createElement("span");
+    hint.id = "gi-999-hint";
+    hint.innerText = "Enter 999 if not applicable";
+    hint.style.cssText = "font-size:0.72rem;color:var(--color-text-tertiary,#94a3b8);"
+      + "margin-left:10px;white-space:nowrap;align-self:center;";
+    UI.clearBtn.parentNode.insertBefore(hint, UI.clearBtn.nextSibling);
+  }
   if (UI.resetBtn) UI.resetBtn.addEventListener("click", resetAll);
   if (UI.saveBtn) UI.saveBtn.addEventListener("click", manualSave);
 
