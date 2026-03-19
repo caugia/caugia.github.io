@@ -370,7 +370,8 @@ const QUESTIONS = [
     { name: "segment_1_acv",      label: "Segment 1 — Average ACV" },
     { name: "segment_1_win_rate", label: "Segment 1 — Win Rate (%)" },
     { name: "segment_1_nrr",      label: "Segment 1 — NRR (%)" },
-    { name: "segment_1_priority", label: "Segment 1 — Strategic priority: Core / Growth / Explore / Phase-out" }
+    { name: "segment_1_priority", label: "Segment 1 — Strategic priority",
+      type: "select", options: ["Core","Growth","Explore","Phase-out"] }
   ]
 },
 
@@ -384,7 +385,8 @@ const QUESTIONS = [
     { name: "segment_2_acv",      label: "Segment 2 — Average ACV" },
     { name: "segment_2_win_rate", label: "Segment 2 — Win Rate (%)" },
     { name: "segment_2_nrr",      label: "Segment 2 — NRR (%)" },
-    { name: "segment_2_priority", label: "Segment 2 — Priority" }
+    { name: "segment_2_priority", label: "Segment 2 — Priority",
+      type: "select", options: ["Core","Growth","Explore","Phase-out"] }
   ]
 },
 
@@ -428,7 +430,8 @@ const QUESTIONS = [
     { name: "segment_3_acv",      label: "Segment 3 — Average ACV" },
     { name: "segment_3_win_rate", label: "Segment 3 — Win Rate (%)" },
     { name: "segment_3_nrr",      label: "Segment 3 — NRR (%)" },
-    { name: "segment_3_priority", label: "Segment 3 — Priority" }
+    { name: "segment_3_priority", label: "Segment 3 — Priority",
+      type: "select", options: ["Core","Growth","Explore","Phase-out"] }
   ]
 },
 
