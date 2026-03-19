@@ -1,5 +1,5 @@
 /* ===========================================================
-   MASTER QUESTION ENGINE v4.6 — CANONICAL
+   MASTER QUESTION ENGINE v4.7 — CANONICAL
    =========================================================== */
 
 const QUESTIONS = [
@@ -43,7 +43,7 @@ const QUESTIONS = [
 {
   id: 3, pillar: 0, type: "group",
   title: "GTM Team Composition",
-  subtitle: "Full-time equivalents only. Enter 999 if a function does not exist in your organisation.",
+  subtitle: "Full-time equivalents only. Enter 999 for roles that don't exist.",
   fields: [
     { name: "sales_headcount",             label: "# Sales — AEs / Closers" },
     { name: "sdr_headcount",               label: "# SDR / BDR (enter 999 if none)" },
@@ -52,7 +52,11 @@ const QUESTIONS = [
     { name: "revops_enablement_headcount", label: "# RevOps / Enablement (enter 999 if none)" },
     { name: "product_headcount",           label: "# Product — PM + Design only (not engineering)" },
     { name: "engineering_headcount",       label: "# Engineering / R&D — developers only" },
-    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" }
+    { name: "gtm_other_headcount",         label: "# Other GTM — Partners, SEs (enter 999 if none)" },
+    { name: "inbound_pct",  label: "% Pipeline — Inbound (content, SEO, brand, events)", type: "number", min: 0, max: 100, placeholder: "e.g. 40" },
+    { name: "outbound_pct", label: "% Pipeline — Outbound (SDR, AE prospecting, cold)",  type: "number", min: 0, max: 100, placeholder: "e.g. 30" },
+    { name: "plg_pct",      label: "% Pipeline — Product-led (PLG, self-serve, trial)",   type: "number", min: 0, max: 100, placeholder: "e.g. 20" },
+    { name: "partner_pct",  label: "% Pipeline — Partners (channel, ecosystem, referral)",type: "number", min: 0, max: 100, placeholder: "e.g. 10" }
   ]
 },
 
@@ -1135,7 +1139,7 @@ const QUESTIONS = [
 },
 {
   id: 4003, pillar: 4, type: "scale",
-  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
+  show_if: { field: 'outbound_pct', greater_than: 0 },
   title: "How predictable and repeatable is your outbound motion in generating qualified pipeline, and how is that measured?",
   options: [
     "No structured outbound: reps prospect independently with no shared approach",
@@ -1169,7 +1173,7 @@ const QUESTIONS = [
 },
 {
   id: 4006, pillar: 4, type: "scale",
-  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
+  show_if: { field: 'outbound_pct', greater_than: 10 },
   title: "How systematically are you executing Account-Based Marketing against your highest-priority accounts, and how is impact measured?",
   options: [
     "No ABM motion: all accounts receive the same outreach",
@@ -1281,7 +1285,7 @@ const QUESTIONS = [
 },
 {
   id: 4016, pillar: 4, type: "scale",
-  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
+  show_if: { field: 'outbound_pct', greater_than: 0 },
   title: "How structured is the feedback loop between SDRs and Marketing on lead quality, and how often does that feedback drive changes?",
   options: [
     "No formal feedback loop: SDRs and Marketing operate independently",
@@ -1498,7 +1502,7 @@ const QUESTIONS = [
 },
 {
   id: 5015, pillar: 5, type: "scale",
-  show_if: { field: 'gtm_motion', contains_any: ['outbound-led', 'enterprise field sales', 'hybrid'] },
+  show_if: { field: 'outbound_pct', greater_than: 0 },
   title: "How strictly is CRM data hygiene enforced, and what are the consequences of incomplete deal records?",
   options: [
     "CRM data is voluntary: most deal records are incomplete or inaccurate",
