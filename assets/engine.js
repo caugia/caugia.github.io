@@ -135,10 +135,10 @@ const CONFIG = {
 
     const condition = q.show_if;
     const fieldToQKey = {
-      inbound_pct: "q3__inbound_pct",
-      outbound_pct: "q3__outbound_pct",
-      plg_pct: "q3__plg_pct",
-      partner_pct: "q3__partner_pct",
+      inbound_pct: "q12__inbound_pct",
+      outbound_pct: "q12__outbound_pct",
+      plg_pct: "q12__plg_pct",
+      partner_pct: "q12__partner_pct",
       gtm_motion: "q7__gtm_motion",
       target_segment: "q9__target_segment",
       operating_phase: "q11__operating_phase",
@@ -374,8 +374,15 @@ const CONFIG = {
     (q.fields || []).forEach((f) => {
       const wrapper = document.createElement("div");
       const label = document.createElement("label");
-      label.innerText = safeText(f.label);
-      label.style.cssText = "display:block;font-weight:500;margin-bottom:4px;font-size:0.82rem;color:#374151;";
+      label.style.cssText = "display:block;font-weight:500;margin-bottom:4px;"
+        + "font-size:0.82rem;color:#374151;"
+        + "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;";
+      label.title = safeText(f.label);
+      const MAX_LABEL = 52;
+      const labelText = safeText(f.label);
+      label.innerText = labelText.length > MAX_LABEL
+        ? labelText.substring(0, MAX_LABEL - 1) + "…"
+        : labelText;
 
       const input = document.createElement("input");
       const fieldType = f.type || "text";
@@ -404,40 +411,6 @@ const CONFIG = {
       + "padding-top:10px;border-top:1px solid #f1f5f9;";
     UI.body.appendChild(hint999);
 
-    const channelFields = ["inbound_pct", "outbound_pct", "plg_pct", "partner_pct"];
-    const hasChannelMix = (q.fields || []).some((f) => channelFields.indexOf(f.name) >= 0);
-
-    if (hasChannelMix) {
-      const mixCounter = document.createElement("div");
-      mixCounter.id = "gi-channel-mix-counter";
-      mixCounter.style.cssText = "margin-top:14px;padding:10px 14px;border-radius:6px;"
-        + "background:#f8fafc;border:1px solid #e2e8f0;font-size:0.85rem;";
-      UI.body.appendChild(mixCounter);
-
-      const updateMixCounter = () => {
-        let total = 0;
-        channelFields.forEach((fn) => {
-          const k = groupKey(q.id, fn);
-          total += parseFloat(STATE.answers[k] || 0);
-        });
-        const roundedTotal = Math.round(total);
-        const remaining = 100 - roundedTotal;
-        const ok = roundedTotal === 100;
-        mixCounter.innerHTML = ok
-          ? '<span style="color:#16a34a;font-weight:600;">✓ Total: 100% — complete</span>'
-          : '<span style="color:' + (total > 100 ? "#dc2626" : "#64748b") + ';">Total: '
-            + roundedTotal + '% — '
-            + (total > 100 ? (Math.round(total - 100) + '% over limit') : (remaining + '% remaining'))
-            + "</span>";
-      };
-
-      channelFields.forEach((fn) => {
-        const k = groupKey(q.id, fn);
-        const inputEl = grid.querySelector('[name="' + k + '"]');
-        if (inputEl) inputEl.addEventListener("input", updateMixCounter);
-      });
-      updateMixCounter();
-    }
   }
 
   function renderRadio(q) {
@@ -590,11 +563,11 @@ const CONFIG = {
       );
       if (missing) { alert("Please fill in all required fields."); return false; }
 
-      if (q.id === 3) {
-        const _ib = parseFloat(STATE.answers["q3__inbound_pct"] || 0);
-        const _ob = parseFloat(STATE.answers["q3__outbound_pct"] || 0);
-        const _plg = parseFloat(STATE.answers["q3__plg_pct"] || 0);
-        const _par = parseFloat(STATE.answers["q3__partner_pct"] || 0);
+      if (q.id === 12) {
+        const _ib = parseFloat(STATE.answers["q12__inbound_pct"] || 0);
+        const _ob = parseFloat(STATE.answers["q12__outbound_pct"] || 0);
+        const _plg = parseFloat(STATE.answers["q12__plg_pct"] || 0);
+        const _par = parseFloat(STATE.answers["q12__partner_pct"] || 0);
         const _total = _ib + _ob + _plg + _par;
         if (_total > 0 && Math.round(_total) !== 100) {
           alert("Channel percentages must add up to 100%. Current total: "
@@ -931,10 +904,6 @@ const CONFIG = {
       product_headcount:           answersRaw["q3__product_headcount"] || "",
       engineering_headcount:       answersRaw["q3__engineering_headcount"] || "",
       gtm_other_headcount:         answersRaw["q3__gtm_other_headcount"] || "",
-      inbound_pct:                 answersRaw["q3__inbound_pct"] || "",
-      outbound_pct:                answersRaw["q3__outbound_pct"] || "",
-      plg_pct:                     answersRaw["q3__plg_pct"] || "",
-      partner_pct:                 answersRaw["q3__partner_pct"] || "",
 
       /* ── Q4: Targets & efficiency ── */
       arr_target:          answersRaw["q4__arr_target"] || "",
@@ -993,6 +962,10 @@ const CONFIG = {
       /* ── Q12: Team & geographic context ── */
       sales_leadership_headcount: answersRaw["q12__sales_leadership_headcount"] || "",
       active_countries:           answersRaw["q12__active_countries"] || "",
+      inbound_pct:                answersRaw["q12__inbound_pct"] || "",
+      outbound_pct:               answersRaw["q12__outbound_pct"] || "",
+      plg_pct:                    answersRaw["q12__plg_pct"] || "",
+      partner_pct:                answersRaw["q12__partner_pct"] || "",
 
       /* ── Q13: Current performance vs goal ── */
       current_primary_metric:       answersRaw["q13__current_primary_metric"] || "",
