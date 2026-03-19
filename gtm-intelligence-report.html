@@ -648,27 +648,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       });
 
-      document.querySelectorAll(".gi-pillar-nav li").forEach(function(li) {
-        var p     = parseInt(li.getAttribute("data-p"), 10);
-        var total = pillarTotal[p]    || 0;
-        var done  = pillarAnswered[p] || 0;
-
-        var existing = li.querySelector(".pillar-progress");
-        if (existing) existing.remove();
-
-        if (total > 0) {
-          var indicator = document.createElement("span");
-          indicator.className = "pillar-progress";
-          indicator.style.cssText = "flex-shrink:0;margin-left:8px;font-size:0.85rem;";
-          if (done === total) {
-            indicator.textContent    = "✓";
-            indicator.style.color   = "#16a34a";
-            indicator.style.fontWeight = "bold";
-          }
-          // No counter — only show tick when complete
-          li.appendChild(indicator);
-        }
-      });
+      // Tick rendering handled by engine updateSidebar — no DOM changes here
     }
 
     updatePillarProgress();
