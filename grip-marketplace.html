@@ -629,11 +629,20 @@
     }
   });});
 
+  var bundleLinks = {
+    g: { EUR:'https://buy.stripe.com/cNibJ16vt6MycO4aUf9MY0F', GBP:'https://buy.stripe.com/8x200jcTRef0cO4gez9MY0G', USD:'https://buy.stripe.com/00w14naLJ5Iu29q5zV9MY0H' },
+    r: { EUR:'https://buy.stripe.com/5kQdR94nl1se15m5zV9MY0I', GBP:'https://buy.stripe.com/28EaEX2fd1se15m0fB9MY0J', USD:'https://buy.stripe.com/28EbJ16vt2wi9BS3rN9MY0K' },
+    i: { EUR:'https://buy.stripe.com/fZu28raLJ3Am6pG8M79MY0L', GBP:'https://buy.stripe.com/fZubJ17zxfj401i5zV9MY0M', USD:'https://buy.stripe.com/9B64gz6vtgn88xO1jF9MY0N' },
+    p: { EUR:'https://buy.stripe.com/eVq3cv2fd2wi29q1jF9MY0O', GBP:'https://buy.stripe.com/eVqfZhaLJ2wi6pG8M79MY0P', USD:'https://buy.stripe.com/7sY5kD5rp4Eq8xObYj9MY0Q' }
+  };
+
   document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){
     e.preventDefault();
     var bu = b.getAttribute('data-bundle');
-    var subj = encodeURIComponent('Interest in Bundle: ' + bu.toUpperCase());
-    window.location.href = 'mailto:tom@caugia.com?subject=' + subj;
+    if (bu && bundleLinks[bu]) {
+      var curr = getDetectedCurrency();
+      window.location.href = bundleLinks[bu][curr];
+    }
   });});
 
   function startReportCheckout(){
