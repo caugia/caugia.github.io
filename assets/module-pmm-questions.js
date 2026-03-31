@@ -1039,10 +1039,10 @@ var QUESTIONS = [
     "sub": "Do you MEASURE and IMPROVE?",
     "options": [
       "Unknown",
-      ">6mo",
+      "\\>6mo",
       "3-6mo",
       "1-3mo",
-      "<1mo (rapid)
+      "\\<1mo (rapid) **4. Numeric Input Calibration Tables**  -----------------------------------------------------------------------  12 numeric questions converted to 1-5 scores using segment/stage.  ----------------------------------------------------------------------- **4.1 Interviews PM-1003 --- By Stage**"
     ]
   }
 ];
