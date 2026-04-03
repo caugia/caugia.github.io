@@ -353,7 +353,7 @@
     <div class="mk-route-step" style="color:#E07830;">STEP 2: GOVERN</div>
     <div class="mk-route-title">Fix it in the right order</div>
     <div class="mk-route-desc">You have a completed diagnosis and need execution discipline. One constraint at a time.</div>
-    <span class="mk-route-cta" style="color:#E07830;">GRIP Copilot &darr;</span>
+    <span class="mk-route-cta" style="color:#E07830;">GRIP OS &darr;</span>
   </a>
   <a href="#deep-dives" class="mk-route-card" style="text-decoration:none;">
     <div class="mk-route-step" style="color:#0f172a;">STEP 3: DEEPEN</div>
@@ -494,12 +494,12 @@
 <section class="container" id="copilot" style="margin:72px auto;max-width:1080px;padding:0 20px;">
   <div style="text-align:center;margin-bottom:48px;">
     <div style="display:inline-block;background:#E07830;color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:16px;">STEP 2: GOVERN EXECUTION</div>
-    <h2 class="mk-copilot-h2" style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#0f172a;line-height:1.2;margin-bottom:16px;">Your diagnosis found the constraint.<br>Copilot makes sure you actually fix it.</h2>
+    <h2 class="mk-copilot-h2" style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#0f172a;line-height:1.2;margin-bottom:16px;">Your diagnosis found the constraint.<br>OS makes sure you actually fix it.</h2>
     <p style="font-size:1rem;color:#475569;max-width:640px;margin:0 auto;line-height:1.6;">Not a chatbot. Not a dashboard. A GTM execution system that enforces the right constraint in the right order.</p>
   </div>
 
   <div class="mk-copilot-grid">
-    <!-- Copilot Core -->
+    <!-- OS Core -->
     <div class="mk-copilot-card mk-copilot-card-core">
       <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;">GRIP COPILOT CORE</div>
       <p style="font-size:0.88rem;color:#475569;line-height:1.6;margin-bottom:20px;">Constraint engine, gates, weekly executive brief, and 3 connector integrations. The operating system for your GTM execution.</p>
@@ -523,14 +523,14 @@
       </div>
     </div>
 
-    <!-- Copilot Full -->
+    <!-- OS Full -->
     <div class="mk-copilot-card mk-copilot-card-full">
       <div style="position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;">RECOMMENDED</div>
       <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:12px;">GRIP COPILOT FULL</div>
       <p style="font-size:0.88rem;color:#94a3b8;line-height:1.6;margin-bottom:20px;">Everything in Core, plus all 28 integrations, AI-polished briefings, continuous scoring, priority drift detection, and monthly reassessment.</p>
       <ul class="mk-copilot-features" style="color:#94a3b8;">
         <li style="color:#fff;">&check; Everything in Core</li>
-        <li>&check; All 28 live integrations (HubSpot, SFDC, Gong, G2, Amplitude, Pendo&hellip;)</li>
+        <li>&check; All 28 live integrations (HubSpot, Salesforce, Gong, G2, Amplitude, Pendo&hellip;)</li>
         <li>&check; Continuous GRIP scoring from live signals</li>
         <li>&check; Priority drift detection &amp; alerts</li>
         <li>&check; AI-polished executive briefings</li>
@@ -555,7 +555,7 @@
     <p style="font-size:0.82rem;color:#64748b;margin:0;line-height:1.8;">
       <strong style="color:#0f172a;">The Caugia product ladder:</strong><br>
       <span style="color:#3B6CD8;font-weight:700;">GTM Intelligence Report</span> finds the constraint &rarr;
-      <span style="color:#E07830;font-weight:700;">GRIP Copilot</span> governs the sequence &rarr;
+      <span style="color:#E07830;font-weight:700;">GRIP OS</span> governs the sequence &rarr;
       <span style="color:#0f172a;font-weight:700;">Deep Dives</span> accelerate the fix
     </p>
   </div>
@@ -811,16 +811,16 @@
   }
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 
-  /* Copilot Payment Links */
+  /* OS Payment Links */
   var copilotLinks = {
     core: { EUR:'https://buy.stripe.com/00w7sL5rp4EqcO4fav9MY0U', GBP:'https://buy.stripe.com/cNi9AT1b94Eq01i7I39MY0X', USD:'https://buy.stripe.com/7sY9AT7zx1se01id2n9MY0Y' },
     full: { EUR:'https://buy.stripe.com/6oU7sL1b90oaeWc1jF9MY0T', GBP:'https://buy.stripe.com/dRm8wP8DB6My15m5zV9MY0V', USD:'https://buy.stripe.com/00waEX075c6S8xO4vR9MY0W' }
   };
 
-  /* Copilot activation with email validation */
+  /* OS activation with email validation */
   var copilotModal = null;
 
-  function showCopilotModal(tier) {
+  function showOSModal(tier) {
     if (copilotModal) copilotModal.remove();
     var overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
@@ -848,7 +848,7 @@
       if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
       btn.textContent = 'Verifying...'; btn.disabled = true; errEl.style.display = 'none';
 
-      fetch('https://copilot.caugia.com/api/validate-purchase', {
+      fetch('https://os.caugia.com/api/validate-purchase', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, tier: tier, currency: getDetectedCurrency() })
       }).then(function(r) { return r.json(); }).then(function(data) {
@@ -872,16 +872,16 @@
   document.querySelectorAll('.mk-copilot-activate').forEach(function(b){b.addEventListener('click',function(e){
     e.preventDefault();
     var tier = b.getAttribute('data-tier');
-    if (tier) showCopilotModal(tier);
+    if (tier) showOSModal(tier);
   });});
 
-  /* Copilot price switching */
+  /* OS price switching */
   var copilotPrices = {
     copilot_core: { EUR:'799', GBP:'695', USD:'895' },
     copilot_full: { EUR:'1,495', GBP:'1,295', USD:'1,695' }
   };
 
-  function updateCopilotPrices(curr) {
+  function updateOSPrices(curr) {
     document.querySelectorAll('[data-price-key]').forEach(function(el){
       var key = el.getAttribute('data-price-key');
       if (copilotPrices[key] && copilotPrices[key][curr]) {
@@ -889,7 +889,7 @@
       }
     });
   }
-  updateCopilotPrices(getDetectedCurrency());
+  updateOSPrices(getDetectedCurrency());
 })();
 </script>
 </body>
