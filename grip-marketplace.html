@@ -512,7 +512,7 @@
           </div>
           <p style="font-size:0.72rem;color:#94a3b8;margin:4px 0 0;">Min. 3 months. Requires a completed GTM Intelligence Report.</p>
         </div>
-        <a href="mailto:tom@caugia.com?subject=GRIP%20Copilot%20Core%20%E2%80%94%20Activation&amp;body=Company%3A%20%0AGIR%20completed%20on%3A%20%0AEmail%3A%20" class="mk-copilot-cta" style="background:#3B6CD8;color:#fff;">Request Activation</a>
+        <a href="#" class="mk-copilot-cta mk-copilot-activate" data-tier="core" style="background:#3B6CD8;color:#fff;">Activate Core</a>
       </div>
     </div>
 
@@ -538,7 +538,7 @@
           </div>
           <p style="font-size:0.72rem;color:#64748b;margin:4px 0 0;">Min. 3 months. Requires a completed GTM Intelligence Report.</p>
         </div>
-        <a href="mailto:tom@caugia.com?subject=GRIP%20Copilot%20Full%20%E2%80%94%20Activation&amp;body=Company%3A%20%0AGIR%20completed%20on%3A%20%0AEmail%3A%20" class="mk-copilot-cta" style="background:#E07830;color:#fff;">Request Activation</a>
+        <a href="#" class="mk-copilot-cta mk-copilot-activate" data-tier="full" style="background:#E07830;color:#fff;">Activate Full</a>
       </div>
     </div>
   </div>
@@ -810,13 +810,62 @@
     full: { EUR:'https://buy.stripe.com/6oU7sL1b90oaeWc1jF9MY0T', GBP:'https://buy.stripe.com/dRm8wP8DB6My15m5zV9MY0V', USD:'https://buy.stripe.com/00waEX075c6S8xO4vR9MY0W' }
   };
 
-  document.querySelectorAll('.mk-copilot-buy').forEach(function(b){b.addEventListener('click',function(e){
+  /* Copilot activation with email validation */
+  var copilotModal = null;
+
+  function showCopilotModal(tier) {
+    if (copilotModal) copilotModal.remove();
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    overlay.innerHTML = '<div style="background:#fff;border-radius:16px;max-width:440px;width:100%;padding:36px;text-align:center;">'
+      + '<div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:12px;">GRIP COPILOT ' + tier.toUpperCase() + '</div>'
+      + '<h3 style="font-size:1.2rem;font-weight:900;color:#0f172a;margin-bottom:8px;">Verify your GTM Intelligence Report</h3>'
+      + '<p style="font-size:0.85rem;color:#64748b;margin-bottom:20px;">Enter the email address used for your GTM Intelligence Report. We\'ll verify your eligibility instantly.</p>'
+      + '<input id="copilot-email" type="email" placeholder="you@company.com" style="width:100%;padding:14px 16px;border:2px solid #e2e8f0;border-radius:8px;font-size:0.95rem;margin-bottom:12px;box-sizing:border-box;outline:none;" />'
+      + '<div id="copilot-error" style="display:none;font-size:0.82rem;color:#DC2626;margin-bottom:12px;text-align:left;"></div>'
+      + '<button id="copilot-submit" style="width:100%;padding:14px;background:' + (tier === 'full' ? '#E07830' : '#3B6CD8') + ';color:#fff;border:none;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer;">Verify &amp; Continue to Payment</button>'
+      + '<p style="font-size:0.75rem;color:#94a3b8;margin-top:12px;">Don\'t have a report yet? <a href="#intelligence-report" style="color:#3B6CD8;font-weight:600;" onclick="document.querySelector(\'.copilot-overlay\').remove()">Get the GTM Intelligence Report first</a></p>'
+      + '<a href="#" id="copilot-close" style="display:inline-block;margin-top:8px;font-size:0.8rem;color:#94a3b8;text-decoration:none;">Cancel</a>'
+      + '</div>';
+    overlay.className = 'copilot-overlay';
+    document.body.appendChild(overlay);
+    copilotModal = overlay;
+
+    document.getElementById('copilot-close').addEventListener('click', function(e) { e.preventDefault(); overlay.remove(); copilotModal = null; });
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) { overlay.remove(); copilotModal = null; } });
+
+    document.getElementById('copilot-submit').addEventListener('click', function() {
+      var email = document.getElementById('copilot-email').value.trim();
+      var errEl = document.getElementById('copilot-error');
+      var btn = document.getElementById('copilot-submit');
+      if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
+      btn.textContent = 'Verifying...'; btn.disabled = true; errEl.style.display = 'none';
+
+      fetch('https://copilot.caugia.com/api/validate-purchase', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, tier: tier, currency: getDetectedCurrency() })
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.eligible) {
+          window.location.href = data.paymentUrl;
+        } else {
+          errEl.textContent = data.reason || 'Not eligible. Please complete a GTM Intelligence Report first.';
+          errEl.style.display = 'block';
+          btn.textContent = 'Verify & Continue to Payment'; btn.disabled = false;
+        }
+      }).catch(function() {
+        errEl.textContent = 'Connection error. Please try again.'; errEl.style.display = 'block';
+        btn.textContent = 'Verify & Continue to Payment'; btn.disabled = false;
+      });
+    });
+
+    document.getElementById('copilot-email').addEventListener('keypress', function(e) { if (e.key === 'Enter') document.getElementById('copilot-submit').click(); });
+    setTimeout(function() { document.getElementById('copilot-email').focus(); }, 100);
+  }
+
+  document.querySelectorAll('.mk-copilot-activate').forEach(function(b){b.addEventListener('click',function(e){
     e.preventDefault();
     var tier = b.getAttribute('data-tier');
-    if (tier && copilotLinks[tier]) {
-      var curr = getDetectedCurrency();
-      window.location.href = copilotLinks[tier][curr];
-    }
+    if (tier) showCopilotModal(tier);
   });});
 
   /* Copilot price switching */
