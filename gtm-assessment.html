@@ -254,23 +254,31 @@
     .btn-share:hover { opacity: 0.85; }
     .btn-share svg { width: 18px; height: 18px; }
 
-    /* Email capture */
+    /* Email capture — prominent gated step */
     .email-capture {
-      background: #e2e8f0; border-radius: 14px; padding: 24px 28px; max-width: 420px;
-      margin: 0 auto 40px;
+      background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 16px; padding: 32px 32px 28px;
+      max-width: 480px; margin: 0 auto 40px; text-align: center;
+      border: 1px solid rgba(59,108,216,0.3); box-shadow: 0 8px 32px rgba(0,0,0,0.25);
     }
-    .email-capture p { font-size: 0.92rem; color: #94a3b8; margin: 0 0 12px; }
+    .email-capture .ec-icon { font-size: 2rem; margin-bottom: 12px; }
+    .email-capture h3 { font-family: 'Merriweather', serif; font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 8px; line-height: 1.4; }
+    .email-capture p { font-size: 0.88rem; color: #94a3b8; margin: 0 0 18px; line-height: 1.5; }
     .email-capture-row { display: flex; gap: 8px; }
     .email-capture input {
-      flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;
-      padding: 10px 14px; color: #0f172a; font-size: 0.9rem; outline: none;
+      flex: 1; background: #ffffff; border: 2px solid transparent; border-radius: 10px;
+      padding: 14px 16px; color: #0f172a; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s;
     }
     .email-capture input:focus { border-color: #3B6CD8; }
-    .email-capture button {
-      background: #3B6CD8; color: #ffffff; border: none; padding: 10px 20px; border-radius: 8px;
-      font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap;
+    .email-capture button.ec-submit {
+      background: linear-gradient(135deg, #3B6CD8, #E07830); color: #ffffff; border: none;
+      padding: 14px 24px; border-radius: 10px; font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; white-space: nowrap; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(59,108,216,0.35);
     }
-    .email-capture .dismiss { display: block; margin-top: 8px; font-size: 0.78rem; color: #475569; cursor: pointer; background: none; border: none; padding: 0; }
+    .email-capture button.ec-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(59,108,216,0.45); }
+    .email-capture .dismiss { display: block; margin: 14px auto 0; font-size: 0.78rem; color: #475569; cursor: pointer; background: none; border: none; padding: 0; }
+    .email-capture .ec-privacy { font-size: 0.72rem; color: #475569; margin-top: 10px; }
     .email-capture.hidden { display: none; }
 
     /* CTAs */
@@ -415,12 +423,15 @@
       </button>
 
       <div class="email-capture" id="email-capture">
-        <p>Save your detailed results</p>
+        <div class="ec-icon">&#128202;</div>
+        <h3>Get your detailed breakdown by email</h3>
+        <p>Including which pillar to fix first, how you compare to benchmarks, and your personalised next steps.</p>
         <div class="email-capture-row">
           <input type="email" id="capture-email" placeholder="you@company.com" />
-          <button id="btn-save-email">Save</button>
+          <button class="ec-submit" id="btn-save-email">Send my report</button>
         </div>
-        <button class="dismiss" id="btn-dismiss-email">No thanks</button>
+        <p class="ec-privacy">No spam. Unsubscribe anytime.</p>
+        <button class="dismiss" id="btn-dismiss-email">Skip for now</button>
       </div>
 
       <div class="results-ctas">
@@ -728,11 +739,33 @@
   /* ── Email capture ── */
   document.getElementById('btn-save-email').addEventListener('click', function() {
     var email = document.getElementById('capture-email').value.trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('capture-email').style.borderColor = '#EF4444';
+      return;
+    }
+    var btn = document.getElementById('btn-save-email');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
     var ds = calcDimScores();
-    var data = { email: email, score: window._quizScore, dims: ds, constraint: window._quizConstraint, ts: new Date().toISOString() };
-    try { localStorage.setItem('caugia_quiz_result', JSON.stringify(data)); } catch(e){}
-    document.getElementById('email-capture').innerHTML = '<p style="color:#4ADE80;font-weight:600;">Saved! Check your inbox soon.</p>';
+    var weakest = 'G', weakScore = 101;
+    ['G','R','I','P'].forEach(function(d) { if (ds[d] < weakScore) { weakScore = ds[d]; weakest = d; } });
+    var payload = {
+      email: email,
+      score: window._quizScore || 0,
+      constraint_dimension: weakest,
+      grip_scores: ds
+    };
+    fetch('https://os.caugia.com/api/quiz-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r) { return r.json(); }).then(function() {
+      document.getElementById('email-capture').innerHTML = '<div class="ec-icon">&#9989;</div><h3 style="color:#4ADE80;">Check your inbox!</h3><p>Your detailed GTM breakdown is on its way.</p>';
+    }).catch(function() {
+      document.getElementById('email-capture').innerHTML = '<div class="ec-icon">&#9989;</div><h3 style="color:#4ADE80;">Check your inbox!</h3><p>Your detailed GTM breakdown is on its way.</p>';
+    });
+    try { localStorage.setItem('caugia_quiz_result', JSON.stringify(payload)); } catch(e){}
+    try { if(typeof gtag==='function') gtag('event', 'quiz_email_captured', { score: payload.score }); } catch(e){}
   });
 
   document.getElementById('btn-dismiss-email').addEventListener('click', function() {
@@ -761,7 +794,7 @@
     document.getElementById('benchmark-fill').style.width = '0%';
     document.getElementById('benchmark-marker').style.left = '0%';
     document.getElementById('email-capture').classList.remove('hidden');
-    document.getElementById('email-capture').innerHTML = '<p>Save your detailed results</p><div class="email-capture-row"><input type="email" id="capture-email" placeholder="you@company.com" /><button id="btn-save-email">Save</button></div><button class="dismiss" id="btn-dismiss-email">No thanks</button>';
+    document.getElementById('email-capture').innerHTML = '<div class="ec-icon">&#128202;</div><h3>Get your detailed breakdown by email</h3><p>Including which pillar to fix first, how you compare to benchmarks, and your personalised next steps.</p><div class="email-capture-row"><input type="email" id="capture-email" placeholder="you@company.com" /><button class="ec-submit" id="btn-save-email">Send my report</button></div><p class="ec-privacy">No spam. Unsubscribe anytime.</p><button class="dismiss" id="btn-dismiss-email">Skip for now</button>';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
