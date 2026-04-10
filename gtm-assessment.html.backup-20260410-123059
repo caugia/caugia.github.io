@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true") localStorage.setItem("analytics_optout","true");
+    if(p.get("analytics_optout")==="false") localStorage.removeItem("analytics_optout");
+    if(localStorage.getItem("analytics_optout")==="true") window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Free GTM Score | Caugia</title>
+  <meta name="description" content="Calculate your Go-to-Market maturity in under 5 minutes. Get a 0-100 score and see exactly where your revenue system breaks." />
+  <link rel="canonical" href="https://www.caugia.com/gtm-assessment.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.caugia.com/gtm-assessment.html" />
+  <meta property="og:title" content="Get Your Free GTM Score" />
+  <meta property="og:description" content="See where your GTM system breaks. 14 questions, instant results, zero cost." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
+  <link rel="apple-touch-icon" href="assets/logo-final.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Caugia GTM Score Calculator",
+    "url": "https://www.caugia.com/gtm-assessment.html",
+    "description": "An interactive tool to assess B2B SaaS go-to-market maturity across 12 pillars.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/caugia-base.css">
+
+  <style>
+    /* Hero */
+    .assessment-hero { padding: 64px 0 28px; text-align: center; max-width: 680px; margin: 0 auto; }
+    .assessment-hero h1 { font-size: 2.6rem; margin-bottom: 16px; line-height: 1.12; }
+    .assessment-hero p { font-size: 1.05rem; color: var(--text-body); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+
+    /* Meta bar — always horizontal with dividers */
+    .assessment-hero-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .assessment-hero-meta .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 16px;
+    }
+    .assessment-hero-meta .meta-item:not(:last-child) {
+      border-right: 1px solid #e2e8f0;
+    }
+    .meta-icon {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      color: var(--primary, #0056b3);
+      opacity: 0.65;
+    }
+
+    /* Card */
+    .assessment-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+      padding: 44px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      max-width: 800px; margin: 0 auto 64px; border-top: 5px solid var(--primary);
+    }
+
+    /* Progress */
+    .gtm-v2-progress { margin-bottom: 36px; }
+    .gtm-v2-progress-top { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .gtm-v2-progress-bar { width: 100%; height: 5px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+    .gtm-v2-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
+
+    /* Questions */
+    .gtm-step { display: none; }
+    .gtm-step.active { display: block; }
+    .gtm-question-label { font-family: Merriweather, serif; font-size: 1.35rem; font-weight: 900; color: var(--text-dark); margin-bottom: 6px; line-height: 1.3; }
+    .gtm-question-help { font-size: 0.9rem; color: #64748b; margin-bottom: 28px; }
+
+    /* Options */
+    .gtm-options { display: flex; flex-direction: column; gap: 10px; }
+    .gtm-option {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      border: 1px solid var(--line); border-radius: 10px; background: #fff;
+      cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .gtm-option:hover { background: #f8fafc; border-color: #94a3b8; }
+    .gtm-option input[type="radio"] { appearance: none; margin: 0; width: 0; height: 0; opacity: 0; position: absolute; }
+    .gtm-option.selected { background: #eff6ff; border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+    .gtm-option span.opt-text { font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
+    .gtm-option.selected span.opt-text { color: var(--primary); }
+
+    .m-text { display: none; }
+
+    /* Inputs */
+    .gtm-textarea { width: 100%; min-height: 110px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; font-family: Inter, sans-serif; font-size: 0.95rem; outline: none; resize: vertical; }
+    .gtm-textarea:focus, .gtm-text:focus, .gtm-email:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0,86,179,0.1); }
+    .gtm-field-row { display: grid; gap: 16px; margin-top: 16px; }
+    .two-cols { grid-template-columns: 1fr 1fr; }
+    .gtm-text, .gtm-email { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-family: Inter, sans-serif; font-size: 0.95rem; outline: none; }
+
+    /* Nav */
+    .gtm-v2-nav { margin-top: 36px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 20px; }
+    .gtm-step-hint { margin-top: 20px; font-size: 0.82rem; color: #64748b; text-align: center; }
+    .gtm-error { color: #dc2626; font-size: 0.82rem; margin-top: 6px; display: none; font-weight: 600; }
+    .gtm-error.visible { display: block; }
+
+    /* How it works */
+    .section-dark { background: #0f172a; color: var(--white); padding: 64px 0; }
+    .section-dark h2 { color: var(--white); text-align: center; margin-bottom: 48px; font-size: 1.8rem; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 960px; margin: 0 auto; }
+    .step-item { text-align: left; }
+    .step-num { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.15); line-height: 1; margin-bottom: 12px; display: block; }
+    .step-item h3 { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--white); }
+    .step-item p { color: #cbd5e1; font-size: 0.9rem; line-height: 1.55; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .assessment-hero { padding: 32px 24px 16px; }
+      .assessment-hero h1 { font-size: 1.75rem; }
+      .assessment-hero p { font-size: 0.95rem; }
+      .assessment-hero-meta { font-size: 0.72rem; }
+      .assessment-hero-meta .meta-item { padding: 0 10px; }
+      .assessment-card { padding: 28px 20px; margin-bottom: 40px; }
+      .gtm-question-label { font-size: 1.15rem; }
+      .gtm-option { padding: 14px; gap: 10px; }
+      .d-text { display: none; }
+      .m-text { display: inline; }
+      .two-cols { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+      .step-item { text-align: center; }
+    }
+
+    @media (max-width: 380px) {
+      .assessment-hero-meta .meta-item { padding: 0 7px; }
+      .assessment-hero-meta { font-size: 0.67rem; }
+      .meta-icon { width: 13px; height: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+<script src="assets/header.js"></script>
+<main>
+
+  <section class="assessment-hero">
+    <span class="eyebrow">Free diagnostic</span>
+    <h1>See where your GTM system breaks.</h1>
+    <p>14 questions. Instant results. You'll get a 0–100 score, a maturity band, and a pattern across all four GRIP dimensions.</p>
+    <div class="assessment-hero-meta">
+      <span class="meta-item">
+        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Under 5 min
+      </span>
+      <span class="meta-item">
+        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Data stays private
+      </span>
+      <span class="meta-item">
+        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Instant score
+      </span>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="assessment-card" id="start-assessment">
+
+      <div class="gtm-v2-progress">
+        <div class="gtm-v2-progress-top">
+          <span id="gtm-progress-label">Step 1 of 14</span>
+          <span id="gtm-progress-secondary">Context</span>
+        </div>
+        <div class="gtm-v2-progress-bar">
+          <div id="gtm-progress-fill" class="gtm-v2-progress-fill"></div>
+        </div>
+      </div>
+
+      <form id="gtm-assessment-form" novalidate>
+        <div id="gtm-form-error" class="gtm-error"></div>
+
+        <!-- Q1: Stage -->
+        <div class="gtm-step active" data-step="1">
+          <div class="gtm-question-label">Which stage best describes your revenue scale today?</div>
+          <div class="gtm-question-help">This anchors your score to the complexity typical for your size.</div>
+          <div class="gtm-options" data-question="q1">
+            <label class="gtm-option"><input type="radio" name="q1" value="Seed (< 1M ARR)"><span class="opt-text"><span class="d-text">Seed / Finding PMF (less than <span class="curr">$</span>1M ARR)</span><span class="m-text">Less than <span class="curr">$</span>1M ARR</span></span></label>
+            <label class="gtm-option"><input type="radio" name="q1" value="Early Scaling (1M – 10M ARR)"><span class="opt-text"><span class="d-text">Early Scaling (<span class="curr">$</span>1M to <span class="curr">$</span>10M ARR)</span><span class="m-text"><span class="curr">$</span>1M to <span class="curr">$</span>10M ARR</span></span></label>
+            <label class="gtm-option"><input type="radio" name="q1" value="High Growth (10M – 50M ARR)"><span class="opt-text"><span class="d-text">High Growth (<span class="curr">$</span>10M to <span class="curr">$</span>50M ARR)</span><span class="m-text"><span class="curr">$</span>10M to <span class="curr">$</span>50M ARR</span></span></label>
+            <label class="gtm-option"><input type="radio" name="q1" value="Expansion (50M – 150M ARR)"><span class="opt-text"><span class="d-text">Expansion (<span class="curr">$</span>50M to <span class="curr">$</span>150M ARR)</span><span class="m-text"><span class="curr">$</span>50M to <span class="curr">$</span>150M ARR</span></span></label>
+            <label class="gtm-option"><input type="radio" name="q1" value="Enterprise / Pre-Exit (150M+ ARR)"><span class="opt-text"><span class="d-text">Enterprise / Pre-Exit (more than <span class="curr">$</span>150M ARR)</span><span class="m-text">More than <span class="curr">$</span>150M ARR</span></span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q1"></div>
+        </div>
+
+        <!-- Q2: Motion -->
+        <div class="gtm-step" data-step="2">
+          <div class="gtm-question-label">What is your primary go-to-market motion?</div>
+          <div class="gtm-question-help">Choose the motion that drives most of your new revenue.</div>
+          <div class="gtm-options" data-question="q2">
+            <label class="gtm-option"><input type="radio" name="q2" value="Founder-led (early-stage driven)"><span class="opt-text">Founder-led (early stage)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Sales-led (outbound focus)"><span class="opt-text">Sales-led (outbound focus)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Marketing-led (inbound demand)"><span class="opt-text">Marketing-led (inbound demand)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Product-led (self-serve / PLG)"><span class="opt-text">Product-led (self-serve / PLG)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Partner-led (channel/ecosystem)"><span class="opt-text">Partner-led (channel / ecosystem)</span></label>
+            <label class="gtm-option"><input type="radio" name="q2" value="Hybrid"><span class="opt-text">Hybrid model</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q2"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="gtm-step" data-step="3">
+          <div class="gtm-question-label">How clearly defined is your ideal customer profile?</div>
+          <div class="gtm-question-help">Think about who you actively pursue, not just who you can technically sell to.</div>
+          <div class="gtm-options" data-question="q3">
+            <label class="gtm-option"><input type="radio" name="q3" value="A"><span class="opt-text">No ICP defined</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="B"><span class="opt-text">Rough idea, not documented</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="C"><span class="opt-text">Documented but inconsistent in use</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="D"><span class="opt-text">Clear and widely used in practice</span></label>
+            <label class="gtm-option"><input type="radio" name="q3" value="E"><span class="opt-text">Deeply defined and enforced across teams</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q3"></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="gtm-step" data-step="4">
+          <div class="gtm-question-label">How aligned are sales and marketing on lead quality?</div>
+          <div class="gtm-options" data-question="q4">
+            <label class="gtm-option"><input type="radio" name="q4" value="A"><span class="opt-text">No real alignment</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="B"><span class="opt-text">Partial and informal alignment</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="C"><span class="opt-text">Basic definitions exist on paper</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="D"><span class="opt-text">Shared definitions with a clear handoff</span></label>
+            <label class="gtm-option"><input type="radio" name="q4" value="E"><span class="opt-text">Automated process with enforced agreements</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q4"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="gtm-step" data-step="5">
+          <div class="gtm-question-label">How reliable is your pipeline visibility?</div>
+          <div class="gtm-options" data-question="q5">
+            <label class="gtm-option"><input type="radio" name="q5" value="A"><span class="opt-text">Minimal visibility across stages</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="B"><span class="opt-text">Some visibility, but unreliable data</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="C"><span class="opt-text">Clear visibility per stage in CRM</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="D"><span class="opt-text">Real-time dashboards for leadership</span></label>
+            <label class="gtm-option"><input type="radio" name="q5" value="E"><span class="opt-text">Predictive insights and proactive alerts</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q5"></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="gtm-step" data-step="6">
+          <div class="gtm-question-label">How consistent is your sales process in practice?</div>
+          <div class="gtm-options" data-question="q6">
+            <label class="gtm-option"><input type="radio" name="q6" value="A"><span class="opt-text">No defined process at all</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="B"><span class="opt-text">Some structure, mostly ignored</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="C"><span class="opt-text">Documented but unevenly followed</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="D"><span class="opt-text">Consistently followed by most of the team</span></label>
+            <label class="gtm-option"><input type="radio" name="q6" value="E"><span class="opt-text">Fully embedded, measured and improved</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q6"></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="gtm-step" data-step="7">
+          <div class="gtm-question-label">How effective is your retention and expansion motion?</div>
+          <div class="gtm-options" data-question="q7">
+            <label class="gtm-option"><input type="radio" name="q7" value="A"><span class="opt-text">High churn, little or no expansion</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="B"><span class="opt-text">Basic retention efforts, mostly reactive</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="C"><span class="opt-text">Stable retention with some upsell</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="D"><span class="opt-text">Strong retention with clear programs</span></label>
+            <label class="gtm-option"><input type="radio" name="q7" value="E"><span class="opt-text">Predictable retention and expansion engine</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q7"></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="gtm-step" data-step="8">
+          <div class="gtm-question-label">How strong is your competitive intelligence in real deals?</div>
+          <div class="gtm-options" data-question="q8">
+            <label class="gtm-option"><input type="radio" name="q8" value="A"><span class="opt-text">We mostly guess in competitive deals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="B"><span class="opt-text">Limited information, often outdated</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="C"><span class="opt-text">Basic battlecards exist for some rivals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="D"><span class="opt-text">Updated competitive material used in deals</span></label>
+            <label class="gtm-option"><input type="radio" name="q8" value="E"><span class="opt-text">Systematic intelligence with win/loss reviews</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q8"></div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="gtm-step" data-step="9">
+          <div class="gtm-question-label">How accurate are your revenue forecasts?</div>
+          <div class="gtm-options" data-question="q9">
+            <label class="gtm-option"><input type="radio" name="q9" value="A"><span class="opt-text">Very unpredictable quarter to quarter</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="B"><span class="opt-text">Highly variable and story-driven</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="C"><span class="opt-text">Mostly consistent with some swings</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="D"><span class="opt-text">Generally reliable and data-informed</span></label>
+            <label class="gtm-option"><input type="radio" name="q9" value="E"><span class="opt-text">Accurate, disciplined and data-driven</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q9"></div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="gtm-step" data-step="10">
+          <div class="gtm-question-label">How strong is your enablement foundation?</div>
+          <div class="gtm-options" data-question="q10">
+            <label class="gtm-option"><input type="radio" name="q10" value="A"><span class="opt-text">No structured enablement in place</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="B"><span class="opt-text">Basic content or documentation only</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="C"><span class="opt-text">Occasional training without clear follow-up</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="D"><span class="opt-text">Structured onboarding and enablement plans</span></label>
+            <label class="gtm-option"><input type="radio" name="q10" value="E"><span class="opt-text">Continuous enablement linked to performance</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q10"></div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="gtm-step" data-step="11">
+          <div class="gtm-question-label">How mature is your analytics layer?</div>
+          <div class="gtm-options" data-question="q11">
+            <label class="gtm-option"><input type="radio" name="q11" value="A"><span class="opt-text">Mostly ad-hoc reporting and exports</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="B"><span class="opt-text">Basic dashboards with limited adoption</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="C"><span class="opt-text">Regular reporting with agreed metrics</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="D"><span class="opt-text">Decisions often grounded in these insights</span></label>
+            <label class="gtm-option"><input type="radio" name="q11" value="E"><span class="opt-text">Predictive analytics with clear ownership</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q11"></div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="gtm-step" data-step="12">
+          <div class="gtm-question-label">How strong is your governance and alignment?</div>
+          <div class="gtm-options" data-question="q12">
+            <label class="gtm-option"><input type="radio" name="q12" value="A"><span class="opt-text">Silos dominate, goals differ</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="B"><span class="opt-text">Occasional coordination on key topics</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="C"><span class="opt-text">Basic alignment rituals in place</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="D"><span class="opt-text">Shared goals and shared processes</span></label>
+            <label class="gtm-option"><input type="radio" name="q12" value="E"><span class="opt-text">One unified rhythm across GTM teams</span></label>
+          </div>
+          <div class="gtm-error" data-error-for="q12"></div>
+        </div>
+
+        <!-- Q13: Qualitative -->
+        <div class="gtm-step" data-step="13">
+          <div class="gtm-question-label">What is your biggest GTM frustration today?</div>
+          <div class="gtm-question-help">Be specific. This helps surface the real constraint behind your current symptoms.</div>
+          <textarea class="gtm-textarea" name="frustration" placeholder="Example: pipeline looks healthy but deals keep stalling in late stages"></textarea>
+          <div class="gtm-error" data-error-for="frustration"></div>
+        </div>
+
+        <!-- Q14: Final + contact -->
+        <div class="gtm-step" data-step="14">
+          <div class="gtm-question-label">If you could fix one thing in your revenue system, what would it be?</div>
+          <div class="gtm-question-help">The single change that would unlock the most progress in the next twelve months.</div>
+          <textarea class="gtm-textarea" name="one_thing" placeholder="The one thing we need to fix is..."></textarea>
+          <div class="gtm-error" data-error-for="one_thing"></div>
+
+          <div class="gtm-field-row two-cols">
+            <div>
+              <div class="gtm-question-label" style="font-size:0.92rem; margin-top:18px;">Work email</div>
+              <input type="email" name="email" class="gtm-email" placeholder="you@company.com" />
+              <div class="gtm-error" data-error-for="email"></div>
+            </div>
+            <div>
+              <div class="gtm-question-label" style="font-size:0.92rem; margin-top:18px;">Company</div>
+              <input type="text" name="company" class="gtm-text" placeholder="Company name" />
+              <div class="gtm-error" data-error-for="company"></div>
+            </div>
+          </div>
+
+          <p class="gtm-step-hint">Your score, maturity band and pillar pattern will appear instantly after submission.</p>
+        </div>
+
+        <div class="gtm-v2-nav">
+          <button type="button" class="btn btn-secondary" id="gtm-prev-btn" disabled>Back</button>
+          <button type="button" class="btn btn-primary" id="gtm-next-btn">Next</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <section class="section-dark">
+    <div class="container">
+      <h2>How the GTM Score works</h2>
+      <div class="steps-grid">
+        <div class="step-item">
+          <span class="step-num">01</span>
+          <h3>Input</h3>
+          <p>Answer 14 structured questions about your revenue motion, alignment, and constraints.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">02</span>
+          <h3>Analysis</h3>
+          <p>The engine evaluates your answers across the four GRIP dimensions and twelve operational pillars.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">03</span>
+          <h3>Clarity</h3>
+          <p>Receive your score instantly with a pattern view that reveals where your revenue engine is blocked.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; <span id="year">2026</span> Caugia SASU. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/caugia-base.js"></script>
+<script>
+  const GTM_TOTAL_STEPS = 14;
+  const GTM_SCORE_MAP = { A: 0, B: 2, C: 5, D: 7, E: 10 };
+
+  function gtmGetMaturityLevel(totalScore) {
+    if (totalScore < 40) return "At Risk";
+    if (totalScore < 55) return "Unstable";
+    if (totalScore < 70) return "Developing";
+    if (totalScore < 80) return "Performing";
+    if (totalScore < 90) return "High Performing";
+    return "Best in Class";
+  }
+
+  function gtmComputePillarScores(letters) {
+    function avg(questionNames) {
+      if (!questionNames.length) return 0;
+      let sum = 0;
+      questionNames.forEach(name => { sum += (GTM_SCORE_MAP[letters[name]] ?? 0); });
+      return Math.round((sum / questionNames.length) * 10);
+    }
+    return [
+      avg(["q3", "q9", "q12"]),
+      avg(["q3", "q8"]),
+      avg(["q3", "q8", "q10"]),
+      avg(["q4", "q5"]),
+      avg(["q4", "q5"]),
+      avg(["q5", "q6", "q8", "q10"]),
+      avg(["q7", "q9"]),
+      avg(["q7", "q9"]),
+      avg(["q4", "q5", "q9", "q11", "q12"]),
+      avg(["q6", "q8", "q10", "q12"]),
+      avg(["q5", "q7", "q9", "q11"]),
+      avg(["q3", "q7"])
+    ];
+  }
+
+  const GTM_WEBHOOK_URL = "https://hook.eu1.make.com/t02wf80j5iygknnd0biplgjehfqkly2r";
+
+  const gtmForm = document.getElementById("gtm-assessment-form");
+  const gtmSteps = Array.from(document.querySelectorAll(".gtm-step"));
+  const gtmPrevBtn = document.getElementById("gtm-prev-btn");
+  const gtmNextBtn = document.getElementById("gtm-next-btn");
+  const gtmProgressLabel = document.getElementById("gtm-progress-label");
+  const gtmProgressSecondary = document.getElementById("gtm-progress-secondary");
+  const gtmProgressFill = document.getElementById("gtm-progress-fill");
+  const gtmFormError = document.getElementById("gtm-form-error");
+  let gtmCurrentStep = 0;
+
+  function gtmClearInlineErrors() {
+    document.querySelectorAll(".gtm-error").forEach(el => { el.classList.remove("visible"); el.textContent = ""; });
+  }
+
+  function gtmUpdateProgress() {
+    const n = gtmCurrentStep + 1;
+    gtmProgressLabel.textContent = "Step " + n + " of " + GTM_TOTAL_STEPS;
+    gtmProgressSecondary.textContent = n <= 2 ? "Context" : n <= 12 ? "GTM capabilities" : "Qualitative input";
+    gtmProgressFill.style.width = ((n / GTM_TOTAL_STEPS) * 100) + "%";
+    gtmPrevBtn.disabled = gtmCurrentStep === 0;
+    gtmNextBtn.textContent = gtmCurrentStep === GTM_TOTAL_STEPS - 1 ? "View my GTM Score" : "Next";
+  }
+
+  function gtmShowStep(index) {
+    gtmSteps.forEach((s, i) => s.classList.toggle("active", i === index));
+    gtmClearInlineErrors();
+    gtmFormError.textContent = ""; gtmFormError.classList.remove("visible");
+    gtmCurrentStep = index;
+    gtmUpdateProgress();
+  }
+
+  function gtmValidateStep(stepIndex) {
+    gtmClearInlineErrors();
+    gtmFormError.textContent = ""; gtmFormError.classList.remove("visible");
+    const step = gtmSteps[stepIndex], n = stepIndex + 1;
+
+    if (n >= 1 && n <= 12) {
+      const radios = step.querySelectorAll("input[type='radio']");
+      const name = radios[0]?.name;
+      if (name && !gtmForm.querySelector("input[name='" + name + "']:checked")) {
+        const e = document.querySelector('[data-error-for="' + name + '"]');
+        if (e) { e.textContent = "Please select an option to continue."; e.classList.add("visible"); }
+        return false;
+      }
+    }
+    if (n === 13) {
+      if (!gtmForm.elements["frustration"].value.trim()) {
+        const e = document.querySelector('[data-error-for="frustration"]');
+        if (e) { e.textContent = "Please describe your biggest GTM frustration."; e.classList.add("visible"); }
+        return false;
+      }
+    }
+    if (n === 14) {
+      let valid = true;
+      if (!gtmForm.elements["one_thing"].value.trim()) {
+        const e = document.querySelector('[data-error-for="one_thing"]');
+        if (e) { e.textContent = "Please describe the one thing you would fix."; e.classList.add("visible"); } valid = false;
+      }
+      const email = gtmForm.elements["email"].value.trim();
+      if (!email) {
+        const e = document.querySelector('[data-error-for="email"]');
+        if (e) { e.textContent = "Please enter your work email."; e.classList.add("visible"); } valid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        const e = document.querySelector('[data-error-for="email"]');
+        if (e) { e.textContent = "Please enter a valid email address."; e.classList.add("visible"); } valid = false;
+      }
+      if (!gtmForm.elements["company"].value.trim()) {
+        const e = document.querySelector('[data-error-for="company"]');
+        if (e) { e.textContent = "Please enter your company name."; e.classList.add("visible"); } valid = false;
+      }
+      return valid;
+    }
+    return true;
+  }
+
+  function gtmComputeScoreAndPayload() {
+    const stage = gtmForm.elements["q1"]?.value || "";
+    const motion = gtmForm.elements["q2"]?.value || "";
+    const letters = {};
+    for (let i = 3; i <= 12; i++) letters["q" + i] = gtmForm.elements["q" + i]?.value || "";
+
+    let totalScore = 0;
+    for (let i = 3; i <= 12; i++) totalScore += (GTM_SCORE_MAP[letters["q" + i]] ?? 0);
+
+    const pillarScores = gtmComputePillarScores(letters);
+    return {
+      totalScore,
+      maturityLevel: gtmGetMaturityLevel(totalScore),
+      pillarScores,
+      payload: {
+        stage, motion, scores: letters, total_score: totalScore,
+        maturity_level: gtmGetMaturityLevel(totalScore),
+        pillar_scores: Object.fromEntries(pillarScores.map((s, i) => ["score_" + String(i + 1).padStart(2, "0"), s])),
+        frustration: gtmForm.elements["frustration"]?.value || "",
+        one_thing: gtmForm.elements["one_thing"]?.value || "",
+        email: gtmForm.elements["email"]?.value || "",
+        company: gtmForm.elements["company"]?.value || "",
+        meta: { user_agent: navigator.userAgent, url: window.location.href, timestamp: new Date().toISOString() }
+      }
+    };
+  }
+
+  function gtmSendToWebhook(payload) {
+    if (!GTM_WEBHOOK_URL) return;
+    try { fetch(GTM_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(() => {}); } catch (e) {}
+  }
+
+  function gtmGoToResult(totalScore, pillarScores) {
+    const params = new URLSearchParams();
+    params.set("score", String(totalScore));
+    params.set("pillars", pillarScores.join(","));
+    window.location.href = "the-gtm-score.html?" + params.toString();
+  }
+
+  document.querySelectorAll(".gtm-options").forEach(group => {
+    group.addEventListener("change", e => {
+      if (e.target?.matches("input[type='radio']")) {
+        group.querySelectorAll(".gtm-option").forEach(opt => {
+          opt.classList.toggle("selected", opt.querySelector("input[type='radio']")?.checked);
+        });
+        const errEl = document.querySelector('[data-error-for="' + e.target.name + '"]');
+        if (errEl) { errEl.textContent = ""; errEl.classList.remove("visible"); }
+      }
+    });
+  });
+
+  gtmPrevBtn.addEventListener("click", () => { if (gtmCurrentStep > 0) gtmShowStep(gtmCurrentStep - 1); });
+
+  gtmNextBtn.addEventListener("click", () => {
+    if (!gtmValidateStep(gtmCurrentStep)) return;
+    if (gtmCurrentStep < GTM_TOTAL_STEPS - 1) { gtmShowStep(gtmCurrentStep + 1); }
+    else {
+      const { totalScore, payload, pillarScores } = gtmComputeScoreAndPayload();
+      gtmSendToWebhook(payload);
+      gtmGoToResult(totalScore, pillarScores);
+    }
+  });
+
+  gtmForm.addEventListener("submit", e => e.preventDefault());
+  gtmUpdateProgress();
+</script>
+</body>
+</html>
