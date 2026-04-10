@@ -33,14 +33,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Free GTM Score | Caugia</title>
-  <meta name="description" content="Calculate your Go-to-Market maturity in under 5 minutes. Get a 0-100 score and see exactly where your revenue system breaks." />
+  <title>GTM Score Quiz | Caugia</title>
+  <meta name="description" content="10 questions. 2 minutes. Find out where your B2B revenue system breaks with your free GTM Score." />
   <link rel="canonical" href="https://www.caugia.com/gtm-assessment.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.caugia.com/gtm-assessment.html" />
-  <meta property="og:title" content="Get Your Free GTM Score" />
-  <meta property="og:description" content="See where your GTM system breaks. 14 questions, instant results, zero cost." />
+  <meta property="og:title" content="What's Your GTM Score?" />
+  <meta property="og:description" content="10 questions. 2 minutes. Find out where your revenue system breaks." />
   <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -51,9 +51,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Caugia GTM Score Calculator",
+    "name": "Caugia GTM Score Quiz",
     "url": "https://www.caugia.com/gtm-assessment.html",
-    "description": "An interactive tool to assess B2B SaaS go-to-market maturity across 12 pillars.",
+    "description": "An interactive 2-minute quiz to assess B2B SaaS go-to-market maturity across the GRIP framework.",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "All",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
@@ -66,383 +66,325 @@
   <link rel="stylesheet" href="assets/caugia-base.css">
 
   <style>
-    /* Hero */
-    .assessment-hero { padding: 64px 0 28px; text-align: center; max-width: 680px; margin: 0 auto; }
-    .assessment-hero h1 { font-size: 2.6rem; margin-bottom: 16px; line-height: 1.12; }
-    .assessment-hero p { font-size: 1.05rem; color: var(--text-body); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+    /* ── Quiz Shell ── */
+    .quiz-shell { background: #0f172a; min-height: 100vh; color: #f1f5f9; position: relative; }
+    .quiz-inner { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
 
-    /* Meta bar — always horizontal with dividers */
-    .assessment-hero-meta {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0;
-      margin-top: 24px;
-      font-size: 0.78rem;
-      color: #64748b;
-      font-weight: 600;
-      letter-spacing: 0.01em;
+    /* ── Landing State ── */
+    .quiz-landing { text-align: center; padding: 80px 0 40px; animation: fadeUp 0.6s ease; }
+    .quiz-landing h1 { font-family: 'Merriweather', serif; font-size: 3rem; font-weight: 900; color: #fff; margin: 0 0 16px; line-height: 1.15; }
+    .quiz-landing .subline { font-size: 1.15rem; color: #94a3b8; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .quiz-landing .no-email { font-size: 0.82rem; color: #64748b; margin-top: 18px; }
+
+    .btn-start {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #3B6CD8, #E07830);
+      color: #fff; border: none; padding: 18px 48px; font-size: 1.15rem; font-weight: 700;
+      border-radius: 60px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(59,108,216,0.35);
     }
-    .assessment-hero-meta .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 16px;
+    .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59,108,216,0.45); }
+    .btn-start:active { transform: translateY(0); }
+    .btn-start .arrow { font-size: 1.3rem; transition: transform 0.2s; }
+    .btn-start:hover .arrow { transform: translateX(4px); }
+
+    /* Diamond preview */
+    .diamond-preview { margin: 48px auto 0; width: 200px; height: 200px; position: relative; }
+    .diamond-preview svg { width: 100%; height: 100%; }
+    .diamond-label { font-size: 0.7rem; fill: #64748b; text-anchor: middle; font-weight: 600; }
+    .diamond-outline { fill: none; stroke: #334155; stroke-width: 1.5; }
+    .diamond-filled { fill: rgba(59,108,216,0.1); stroke: #3B6CD8; stroke-width: 2; transition: all 0.6s ease; }
+
+    /* ── Progress Bar ── */
+    .quiz-progress { padding: 32px 0 8px; }
+    .quiz-progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .quiz-progress-step { font-size: 0.82rem; font-weight: 700; color: #94a3b8; }
+    .quiz-progress-track { height: 4px; background: #1e293b; border-radius: 4px; overflow: hidden; }
+    .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, #3B6CD8, #E07830); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+
+    /* ── Question State ── */
+    .quiz-question-wrap { position: relative; overflow: hidden; min-height: 420px; }
+    .quiz-question {
+      position: absolute; top: 0; left: 0; right: 0;
+      opacity: 0; transform: translateX(60px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
     }
-    .assessment-hero-meta .meta-item:not(:last-child) {
-      border-right: 1px solid #e2e8f0;
+    .quiz-question.active { opacity: 1; transform: translateX(0); pointer-events: all; position: relative; }
+    .quiz-question.exit-left { opacity: 0; transform: translateX(-60px); }
+
+    .quiz-question h2 {
+      font-family: 'Merriweather', serif; font-size: 1.45rem; font-weight: 700;
+      color: #fff; line-height: 1.4; margin: 24px 0 8px; text-align: center;
     }
-    .meta-icon {
-      flex-shrink: 0;
-      width: 15px;
-      height: 15px;
-      color: var(--primary, #0056b3);
-      opacity: 0.65;
+    .quiz-dimension-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin: 0 auto 4px;
+      text-align: center; display: block; width: fit-content; margin-left: auto; margin-right: auto;
+    }
+    .tag-G { background: rgba(59,108,216,0.15); color: #6B9AFF; }
+    .tag-R { background: rgba(224,120,48,0.15); color: #F0A060; }
+    .tag-I { background: rgba(22,163,74,0.15); color: #4ADE80; }
+    .tag-P { background: rgba(139,92,246,0.15); color: #A78BFA; }
+
+    .quiz-options { display: grid; gap: 12px; margin-top: 28px; }
+    .quiz-option {
+      background: #fff; color: #1e293b; border: 2px solid transparent;
+      border-radius: 14px; padding: 18px 22px; cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+      font-size: 0.95rem; line-height: 1.5; font-weight: 500;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .quiz-option:hover { border-color: #3B6CD8; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(59,108,216,0.15); }
+    .quiz-option.selected { border-color: #3B6CD8; background: #EFF6FF; box-shadow: 0 0 0 1px #3B6CD8; }
+    .quiz-option .opt-letter {
+      flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+      background: #f1f5f9; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.82rem; color: #64748b; transition: background 0.2s, color 0.2s;
+    }
+    .quiz-option.selected .opt-letter { background: #3B6CD8; color: #fff; }
+
+    /* ── Live Score Bar ── */
+    .quiz-score-bar { margin-top: 32px; }
+    .quiz-score-bar-label { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .quiz-score-bar-track { height: 6px; background: #1e293b; border-radius: 6px; overflow: hidden; }
+    .quiz-score-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease, background 0.5s ease; width: 0%; background: #3B6CD8; }
+
+    /* ── Results State ── */
+    .quiz-results { text-align: center; padding: 60px 0 20px; animation: fadeUp 0.6s ease; }
+
+    .score-reveal { margin-bottom: 40px; }
+    .score-number { font-family: 'Merriweather', serif; font-size: 6rem; font-weight: 900; line-height: 1; }
+    .score-out-of { font-size: 1.5rem; color: #64748b; font-weight: 500; margin-left: 4px; }
+    .score-label {
+      display: inline-block; font-size: 1rem; font-weight: 700; padding: 6px 20px;
+      border-radius: 30px; margin-top: 12px;
+    }
+    .score-green { color: #16A34A; }
+    .label-green { background: rgba(22,163,74,0.15); color: #4ADE80; }
+    .score-blue { color: #3B6CD8; }
+    .label-blue { background: rgba(59,108,216,0.15); color: #6B9AFF; }
+    .score-orange { color: #E07830; }
+    .label-orange { background: rgba(224,120,48,0.15); color: #F0A060; }
+    .score-red { color: #EF4444; }
+    .label-red { background: rgba(239,68,68,0.15); color: #FCA5A5; }
+
+    /* GRIP Bars */
+    .grip-bars { max-width: 480px; margin: 0 auto 40px; text-align: left; }
+    .grip-bar-row { margin-bottom: 16px; }
+    .grip-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .grip-bar-name { font-size: 0.85rem; font-weight: 700; }
+    .grip-bar-score { font-size: 0.85rem; font-weight: 700; color: #94a3b8; }
+    .grip-bar-track { height: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; }
+    .grip-bar-fill { height: 100%; border-radius: 10px; transition: width 1.2s ease; width: 0%; }
+    .fill-G { background: #3B6CD8; }
+    .fill-R { background: #E07830; }
+    .fill-I { background: #16A34A; }
+    .fill-P { background: #8B5CF6; }
+
+    /* Constraint */
+    .constraint-box {
+      background: #1e293b; border-radius: 16px; padding: 28px 32px; margin: 0 auto 40px;
+      max-width: 520px; text-align: left; border-left: 4px solid #E07830;
+    }
+    .constraint-box h3 { font-size: 1rem; font-weight: 700; color: #E07830; margin: 0 0 8px; }
+    .constraint-box p { font-size: 0.92rem; color: #94a3b8; line-height: 1.6; margin: 0; }
+
+    /* Benchmark */
+    .benchmark-box { margin: 0 auto 40px; max-width: 420px; }
+    .benchmark-text { font-size: 0.92rem; color: #94a3b8; margin-bottom: 10px; }
+    .benchmark-bar-track { height: 8px; background: #1e293b; border-radius: 8px; overflow: hidden; position: relative; }
+    .benchmark-bar-fill { height: 100%; background: linear-gradient(90deg, #3B6CD8, #E07830); border-radius: 8px; transition: width 1.5s ease; }
+    .benchmark-marker { position: absolute; top: -6px; width: 3px; height: 20px; background: #fff; border-radius: 2px; transition: left 1.5s ease; }
+
+    /* Share */
+    .btn-share {
+      display: inline-flex; align-items: center; gap: 8px; background: #0A66C2; color: #fff;
+      border: none; padding: 12px 28px; font-size: 0.9rem; font-weight: 600; border-radius: 8px;
+      cursor: pointer; transition: opacity 0.2s; margin-bottom: 32px;
+    }
+    .btn-share:hover { opacity: 0.85; }
+    .btn-share svg { width: 18px; height: 18px; }
+
+    /* Email capture */
+    .email-capture {
+      background: #1e293b; border-radius: 14px; padding: 24px 28px; max-width: 420px;
+      margin: 0 auto 40px;
+    }
+    .email-capture p { font-size: 0.92rem; color: #94a3b8; margin: 0 0 12px; }
+    .email-capture-row { display: flex; gap: 8px; }
+    .email-capture input {
+      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 8px;
+      padding: 10px 14px; color: #f1f5f9; font-size: 0.9rem; outline: none;
+    }
+    .email-capture input:focus { border-color: #3B6CD8; }
+    .email-capture button {
+      background: #3B6CD8; color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
+      font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap;
+    }
+    .email-capture .dismiss { display: block; margin-top: 8px; font-size: 0.78rem; color: #475569; cursor: pointer; background: none; border: none; padding: 0; }
+    .email-capture.hidden { display: none; }
+
+    /* CTAs */
+    .results-ctas { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; align-items: stretch; }
+    .cta-primary {
+      background: linear-gradient(135deg, #3B6CD8, #E07830); color: #fff; border: none;
+      padding: 16px 24px; font-size: 1rem; font-weight: 700; border-radius: 12px;
+      cursor: pointer; text-decoration: none; text-align: center; transition: transform 0.2s;
+    }
+    .cta-primary:hover { transform: translateY(-1px); }
+    .cta-secondary {
+      background: #1e293b; color: #f1f5f9; border: 1px solid #334155;
+      padding: 14px 24px; font-size: 0.92rem; font-weight: 600; border-radius: 12px;
+      cursor: pointer; text-decoration: none; text-align: center; transition: border-color 0.2s;
+    }
+    .cta-secondary:hover { border-color: #3B6CD8; }
+
+    /* Retake */
+    .retake-link {
+      display: inline-block; margin-top: 32px; font-size: 0.82rem; color: #64748b;
+      cursor: pointer; text-decoration: underline; background: none; border: none;
     }
 
-    /* Card */
-    .assessment-card {
-      background: var(--white); border: 1px solid var(--line); border-radius: 16px;
-      padding: 44px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-      max-width: 800px; margin: 0 auto 64px; border-top: 5px solid var(--primary);
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes countUp { from { opacity: 0.5; } to { opacity: 1; } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .quiz-landing h1 { font-size: 2rem; }
+      .quiz-landing .subline { font-size: 1rem; }
+      .score-number { font-size: 4rem; }
+      .quiz-question h2 { font-size: 1.2rem; }
+      .quiz-option { padding: 14px 16px; font-size: 0.88rem; }
+      .email-capture-row { flex-direction: column; }
+      .quiz-inner { padding: 0 16px 60px; }
+      .constraint-box { padding: 20px 20px; }
     }
 
-    /* Progress */
-    .gtm-v2-progress { margin-bottom: 36px; }
-    .gtm-v2-progress-top { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .gtm-v2-progress-bar { width: 100%; height: 5px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
-    .gtm-v2-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
-
-    /* Questions */
-    .gtm-step { display: none; }
-    .gtm-step.active { display: block; }
-    .gtm-question-label { font-family: Merriweather, serif; font-size: 1.35rem; font-weight: 900; color: var(--text-dark); margin-bottom: 6px; line-height: 1.3; }
-    .gtm-question-help { font-size: 0.9rem; color: #64748b; margin-bottom: 28px; }
-
-    /* Options */
-    .gtm-options { display: flex; flex-direction: column; gap: 10px; }
-    .gtm-option {
-      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
-      border: 1px solid var(--line); border-radius: 10px; background: #fff;
-      cursor: pointer; transition: border-color 0.15s, background 0.15s;
-    }
-    .gtm-option:hover { background: #f8fafc; border-color: #94a3b8; }
-    .gtm-option input[type="radio"] { appearance: none; margin: 0; width: 0; height: 0; opacity: 0; position: absolute; }
-    .gtm-option.selected { background: #eff6ff; border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
-    .gtm-option span.opt-text { font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
-    .gtm-option.selected span.opt-text { color: var(--primary); }
-
-    .m-text { display: none; }
-
-    /* Inputs */
-    .gtm-textarea { width: 100%; min-height: 110px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; font-family: Inter, sans-serif; font-size: 0.95rem; outline: none; resize: vertical; }
-    .gtm-textarea:focus, .gtm-text:focus, .gtm-email:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0,86,179,0.1); }
-    .gtm-field-row { display: grid; gap: 16px; margin-top: 16px; }
-    .two-cols { grid-template-columns: 1fr 1fr; }
-    .gtm-text, .gtm-email { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-family: Inter, sans-serif; font-size: 0.95rem; outline: none; }
-
-    /* Nav */
-    .gtm-v2-nav { margin-top: 36px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 20px; }
-    .gtm-step-hint { margin-top: 20px; font-size: 0.82rem; color: #64748b; text-align: center; }
-    .gtm-error { color: #dc2626; font-size: 0.82rem; margin-top: 6px; display: none; font-weight: 600; }
-    .gtm-error.visible { display: block; }
-
-    /* How it works */
-    .section-dark { background: #0f172a; color: var(--white); padding: 64px 0; }
-    .section-dark h2 { color: var(--white); text-align: center; margin-bottom: 48px; font-size: 1.8rem; }
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 960px; margin: 0 auto; }
-    .step-item { text-align: left; }
-    .step-num { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.15); line-height: 1; margin-bottom: 12px; display: block; }
-    .step-item h3 { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--white); }
-    .step-item p { color: #cbd5e1; font-size: 0.9rem; line-height: 1.55; }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .assessment-hero { padding: 32px 24px 16px; }
-      .assessment-hero h1 { font-size: 1.75rem; }
-      .assessment-hero p { font-size: 0.95rem; }
-      .assessment-hero-meta { font-size: 0.72rem; }
-      .assessment-hero-meta .meta-item { padding: 0 10px; }
-      .assessment-card { padding: 28px 20px; margin-bottom: 40px; }
-      .gtm-question-label { font-size: 1.15rem; }
-      .gtm-option { padding: 14px; gap: 10px; }
-      .d-text { display: none; }
-      .m-text { display: inline; }
-      .two-cols { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
-      .step-item { text-align: center; }
-    }
-
-    @media (max-width: 380px) {
-      .assessment-hero-meta .meta-item { padding: 0 7px; }
-      .assessment-hero-meta { font-size: 0.67rem; }
-      .meta-icon { width: 13px; height: 13px; }
-    }
+    /* Override dark bg for header area */
+    .quiz-shell header, .quiz-shell .site-header { background: transparent !important; }
   </style>
 </head>
 
 <body>
 <script src="assets/header.js"></script>
-<main>
 
-  <section class="assessment-hero">
-    <span class="eyebrow">Free diagnostic</span>
-    <h1>See where your GTM system breaks.</h1>
-    <p>14 questions. Instant results. You'll get a 0–100 score, a maturity band, and a pattern across all four GRIP dimensions.</p>
-    <div class="assessment-hero-meta">
-      <span class="meta-item">
-        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Under 5 min
-      </span>
-      <span class="meta-item">
-        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Data stays private
-      </span>
-      <span class="meta-item">
-        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Instant score
-      </span>
+<main class="quiz-shell">
+  <div class="quiz-inner">
+
+    <!-- ══════════ LANDING STATE ══════════ -->
+    <div id="quiz-landing" class="quiz-landing">
+      <h1>What's your GTM Score?</h1>
+      <p class="subline">10 questions. 2 minutes. Find out where your revenue system breaks.</p>
+      <button class="btn-start" id="btn-start">
+        Start the quiz <span class="arrow">&rarr;</span>
+      </button>
+      <p class="no-email">No email required. Results are instant.</p>
+
+      <div class="diamond-preview">
+        <svg viewBox="0 0 200 200">
+          <text x="100" y="22" class="diamond-label">G</text>
+          <text x="188" y="108" class="diamond-label">R</text>
+          <text x="100" y="192" class="diamond-label">I</text>
+          <text x="12" y="108" class="diamond-label">P</text>
+          <polygon class="diamond-outline" points="100,30 180,100 100,170 20,100" />
+          <polygon class="diamond-filled" id="diamond-shape" points="100,100 100,100 100,100 100,100" />
+        </svg>
+      </div>
     </div>
-  </section>
 
-  <div class="container">
-    <div class="assessment-card" id="start-assessment">
+    <!-- ══════════ QUIZ STATE ══════════ -->
+    <div id="quiz-state" style="display:none;">
 
-      <div class="gtm-v2-progress">
-        <div class="gtm-v2-progress-top">
-          <span id="gtm-progress-label">Step 1 of 14</span>
-          <span id="gtm-progress-secondary">Context</span>
+      <div class="quiz-progress">
+        <div class="quiz-progress-top">
+          <span class="quiz-progress-step" id="progress-label">1 / 10</span>
         </div>
-        <div class="gtm-v2-progress-bar">
-          <div id="gtm-progress-fill" class="gtm-v2-progress-fill"></div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="progress-fill"></div>
         </div>
       </div>
 
-      <form id="gtm-assessment-form" novalidate>
-        <div id="gtm-form-error" class="gtm-error"></div>
+      <div class="quiz-question-wrap" id="question-wrap">
+        <!-- Questions injected by JS -->
+      </div>
 
-        <!-- Q1: Stage -->
-        <div class="gtm-step active" data-step="1">
-          <div class="gtm-question-label">Which stage best describes your revenue scale today?</div>
-          <div class="gtm-question-help">This anchors your score to the complexity typical for your size.</div>
-          <div class="gtm-options" data-question="q1">
-            <label class="gtm-option"><input type="radio" name="q1" value="Seed (< 1M ARR)"><span class="opt-text"><span class="d-text">Seed / Finding PMF (less than <span class="curr">$</span>1M ARR)</span><span class="m-text">Less than <span class="curr">$</span>1M ARR</span></span></label>
-            <label class="gtm-option"><input type="radio" name="q1" value="Early Scaling (1M – 10M ARR)"><span class="opt-text"><span class="d-text">Early Scaling (<span class="curr">$</span>1M to <span class="curr">$</span>10M ARR)</span><span class="m-text"><span class="curr">$</span>1M to <span class="curr">$</span>10M ARR</span></span></label>
-            <label class="gtm-option"><input type="radio" name="q1" value="High Growth (10M – 50M ARR)"><span class="opt-text"><span class="d-text">High Growth (<span class="curr">$</span>10M to <span class="curr">$</span>50M ARR)</span><span class="m-text"><span class="curr">$</span>10M to <span class="curr">$</span>50M ARR</span></span></label>
-            <label class="gtm-option"><input type="radio" name="q1" value="Expansion (50M – 150M ARR)"><span class="opt-text"><span class="d-text">Expansion (<span class="curr">$</span>50M to <span class="curr">$</span>150M ARR)</span><span class="m-text"><span class="curr">$</span>50M to <span class="curr">$</span>150M ARR</span></span></label>
-            <label class="gtm-option"><input type="radio" name="q1" value="Enterprise / Pre-Exit (150M+ ARR)"><span class="opt-text"><span class="d-text">Enterprise / Pre-Exit (more than <span class="curr">$</span>150M ARR)</span><span class="m-text">More than <span class="curr">$</span>150M ARR</span></span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q1"></div>
+      <div class="quiz-score-bar">
+        <div class="quiz-score-bar-label">Your GTM Score</div>
+        <div class="quiz-score-bar-track">
+          <div class="quiz-score-bar-fill" id="live-score-fill"></div>
         </div>
-
-        <!-- Q2: Motion -->
-        <div class="gtm-step" data-step="2">
-          <div class="gtm-question-label">What is your primary go-to-market motion?</div>
-          <div class="gtm-question-help">Choose the motion that drives most of your new revenue.</div>
-          <div class="gtm-options" data-question="q2">
-            <label class="gtm-option"><input type="radio" name="q2" value="Founder-led (early-stage driven)"><span class="opt-text">Founder-led (early stage)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Sales-led (outbound focus)"><span class="opt-text">Sales-led (outbound focus)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Marketing-led (inbound demand)"><span class="opt-text">Marketing-led (inbound demand)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Product-led (self-serve / PLG)"><span class="opt-text">Product-led (self-serve / PLG)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Partner-led (channel/ecosystem)"><span class="opt-text">Partner-led (channel / ecosystem)</span></label>
-            <label class="gtm-option"><input type="radio" name="q2" value="Hybrid"><span class="opt-text">Hybrid model</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q2"></div>
-        </div>
-
-        <!-- Q3 -->
-        <div class="gtm-step" data-step="3">
-          <div class="gtm-question-label">How clearly defined is your ideal customer profile?</div>
-          <div class="gtm-question-help">Think about who you actively pursue, not just who you can technically sell to.</div>
-          <div class="gtm-options" data-question="q3">
-            <label class="gtm-option"><input type="radio" name="q3" value="A"><span class="opt-text">No ICP defined</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="B"><span class="opt-text">Rough idea, not documented</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="C"><span class="opt-text">Documented but inconsistent in use</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="D"><span class="opt-text">Clear and widely used in practice</span></label>
-            <label class="gtm-option"><input type="radio" name="q3" value="E"><span class="opt-text">Deeply defined and enforced across teams</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q3"></div>
-        </div>
-
-        <!-- Q4 -->
-        <div class="gtm-step" data-step="4">
-          <div class="gtm-question-label">How aligned are sales and marketing on lead quality?</div>
-          <div class="gtm-options" data-question="q4">
-            <label class="gtm-option"><input type="radio" name="q4" value="A"><span class="opt-text">No real alignment</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="B"><span class="opt-text">Partial and informal alignment</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="C"><span class="opt-text">Basic definitions exist on paper</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="D"><span class="opt-text">Shared definitions with a clear handoff</span></label>
-            <label class="gtm-option"><input type="radio" name="q4" value="E"><span class="opt-text">Automated process with enforced agreements</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q4"></div>
-        </div>
-
-        <!-- Q5 -->
-        <div class="gtm-step" data-step="5">
-          <div class="gtm-question-label">How reliable is your pipeline visibility?</div>
-          <div class="gtm-options" data-question="q5">
-            <label class="gtm-option"><input type="radio" name="q5" value="A"><span class="opt-text">Minimal visibility across stages</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="B"><span class="opt-text">Some visibility, but unreliable data</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="C"><span class="opt-text">Clear visibility per stage in CRM</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="D"><span class="opt-text">Real-time dashboards for leadership</span></label>
-            <label class="gtm-option"><input type="radio" name="q5" value="E"><span class="opt-text">Predictive insights and proactive alerts</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q5"></div>
-        </div>
-
-        <!-- Q6 -->
-        <div class="gtm-step" data-step="6">
-          <div class="gtm-question-label">How consistent is your sales process in practice?</div>
-          <div class="gtm-options" data-question="q6">
-            <label class="gtm-option"><input type="radio" name="q6" value="A"><span class="opt-text">No defined process at all</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="B"><span class="opt-text">Some structure, mostly ignored</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="C"><span class="opt-text">Documented but unevenly followed</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="D"><span class="opt-text">Consistently followed by most of the team</span></label>
-            <label class="gtm-option"><input type="radio" name="q6" value="E"><span class="opt-text">Fully embedded, measured and improved</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q6"></div>
-        </div>
-
-        <!-- Q7 -->
-        <div class="gtm-step" data-step="7">
-          <div class="gtm-question-label">How effective is your retention and expansion motion?</div>
-          <div class="gtm-options" data-question="q7">
-            <label class="gtm-option"><input type="radio" name="q7" value="A"><span class="opt-text">High churn, little or no expansion</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="B"><span class="opt-text">Basic retention efforts, mostly reactive</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="C"><span class="opt-text">Stable retention with some upsell</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="D"><span class="opt-text">Strong retention with clear programs</span></label>
-            <label class="gtm-option"><input type="radio" name="q7" value="E"><span class="opt-text">Predictable retention and expansion engine</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q7"></div>
-        </div>
-
-        <!-- Q8 -->
-        <div class="gtm-step" data-step="8">
-          <div class="gtm-question-label">How strong is your competitive intelligence in real deals?</div>
-          <div class="gtm-options" data-question="q8">
-            <label class="gtm-option"><input type="radio" name="q8" value="A"><span class="opt-text">We mostly guess in competitive deals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="B"><span class="opt-text">Limited information, often outdated</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="C"><span class="opt-text">Basic battlecards exist for some rivals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="D"><span class="opt-text">Updated competitive material used in deals</span></label>
-            <label class="gtm-option"><input type="radio" name="q8" value="E"><span class="opt-text">Systematic intelligence with win/loss reviews</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q8"></div>
-        </div>
-
-        <!-- Q9 -->
-        <div class="gtm-step" data-step="9">
-          <div class="gtm-question-label">How accurate are your revenue forecasts?</div>
-          <div class="gtm-options" data-question="q9">
-            <label class="gtm-option"><input type="radio" name="q9" value="A"><span class="opt-text">Very unpredictable quarter to quarter</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="B"><span class="opt-text">Highly variable and story-driven</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="C"><span class="opt-text">Mostly consistent with some swings</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="D"><span class="opt-text">Generally reliable and data-informed</span></label>
-            <label class="gtm-option"><input type="radio" name="q9" value="E"><span class="opt-text">Accurate, disciplined and data-driven</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q9"></div>
-        </div>
-
-        <!-- Q10 -->
-        <div class="gtm-step" data-step="10">
-          <div class="gtm-question-label">How strong is your enablement foundation?</div>
-          <div class="gtm-options" data-question="q10">
-            <label class="gtm-option"><input type="radio" name="q10" value="A"><span class="opt-text">No structured enablement in place</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="B"><span class="opt-text">Basic content or documentation only</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="C"><span class="opt-text">Occasional training without clear follow-up</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="D"><span class="opt-text">Structured onboarding and enablement plans</span></label>
-            <label class="gtm-option"><input type="radio" name="q10" value="E"><span class="opt-text">Continuous enablement linked to performance</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q10"></div>
-        </div>
-
-        <!-- Q11 -->
-        <div class="gtm-step" data-step="11">
-          <div class="gtm-question-label">How mature is your analytics layer?</div>
-          <div class="gtm-options" data-question="q11">
-            <label class="gtm-option"><input type="radio" name="q11" value="A"><span class="opt-text">Mostly ad-hoc reporting and exports</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="B"><span class="opt-text">Basic dashboards with limited adoption</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="C"><span class="opt-text">Regular reporting with agreed metrics</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="D"><span class="opt-text">Decisions often grounded in these insights</span></label>
-            <label class="gtm-option"><input type="radio" name="q11" value="E"><span class="opt-text">Predictive analytics with clear ownership</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q11"></div>
-        </div>
-
-        <!-- Q12 -->
-        <div class="gtm-step" data-step="12">
-          <div class="gtm-question-label">How strong is your governance and alignment?</div>
-          <div class="gtm-options" data-question="q12">
-            <label class="gtm-option"><input type="radio" name="q12" value="A"><span class="opt-text">Silos dominate, goals differ</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="B"><span class="opt-text">Occasional coordination on key topics</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="C"><span class="opt-text">Basic alignment rituals in place</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="D"><span class="opt-text">Shared goals and shared processes</span></label>
-            <label class="gtm-option"><input type="radio" name="q12" value="E"><span class="opt-text">One unified rhythm across GTM teams</span></label>
-          </div>
-          <div class="gtm-error" data-error-for="q12"></div>
-        </div>
-
-        <!-- Q13: Qualitative -->
-        <div class="gtm-step" data-step="13">
-          <div class="gtm-question-label">What is your biggest GTM frustration today?</div>
-          <div class="gtm-question-help">Be specific. This helps surface the real constraint behind your current symptoms.</div>
-          <textarea class="gtm-textarea" name="frustration" placeholder="Example: pipeline looks healthy but deals keep stalling in late stages"></textarea>
-          <div class="gtm-error" data-error-for="frustration"></div>
-        </div>
-
-        <!-- Q14: Final + contact -->
-        <div class="gtm-step" data-step="14">
-          <div class="gtm-question-label">If you could fix one thing in your revenue system, what would it be?</div>
-          <div class="gtm-question-help">The single change that would unlock the most progress in the next twelve months.</div>
-          <textarea class="gtm-textarea" name="one_thing" placeholder="The one thing we need to fix is..."></textarea>
-          <div class="gtm-error" data-error-for="one_thing"></div>
-
-          <div class="gtm-field-row two-cols">
-            <div>
-              <div class="gtm-question-label" style="font-size:0.92rem; margin-top:18px;">Work email</div>
-              <input type="email" name="email" class="gtm-email" placeholder="you@company.com" />
-              <div class="gtm-error" data-error-for="email"></div>
-            </div>
-            <div>
-              <div class="gtm-question-label" style="font-size:0.92rem; margin-top:18px;">Company</div>
-              <input type="text" name="company" class="gtm-text" placeholder="Company name" />
-              <div class="gtm-error" data-error-for="company"></div>
-            </div>
-          </div>
-
-          <p class="gtm-step-hint">Your score, maturity band and pillar pattern will appear instantly after submission.</p>
-        </div>
-
-        <div class="gtm-v2-nav">
-          <button type="button" class="btn btn-secondary" id="gtm-prev-btn" disabled>Back</button>
-          <button type="button" class="btn btn-primary" id="gtm-next-btn">Next</button>
-        </div>
-      </form>
+      </div>
     </div>
+
+    <!-- ══════════ RESULTS STATE ══════════ -->
+    <div id="quiz-results" class="quiz-results" style="display:none;">
+
+      <div class="score-reveal">
+        <div><span class="score-number" id="score-number">0</span><span class="score-out-of">/ 100</span></div>
+        <div><span class="score-label" id="score-label">--</span></div>
+      </div>
+
+      <div class="grip-bars" id="grip-bars">
+        <div class="grip-bar-row">
+          <div class="grip-bar-header"><span class="grip-bar-name" style="color:#3B6CD8;">G &mdash; Guidance</span><span class="grip-bar-score" id="bar-score-G">0</span></div>
+          <div class="grip-bar-track"><div class="grip-bar-fill fill-G" id="bar-fill-G"></div></div>
+        </div>
+        <div class="grip-bar-row">
+          <div class="grip-bar-header"><span class="grip-bar-name" style="color:#E07830;">R &mdash; Resources</span><span class="grip-bar-score" id="bar-score-R">0</span></div>
+          <div class="grip-bar-track"><div class="grip-bar-fill fill-R" id="bar-fill-R"></div></div>
+        </div>
+        <div class="grip-bar-row">
+          <div class="grip-bar-header"><span class="grip-bar-name" style="color:#16A34A;">I &mdash; Implementation</span><span class="grip-bar-score" id="bar-score-I">0</span></div>
+          <div class="grip-bar-track"><div class="grip-bar-fill fill-I" id="bar-fill-I"></div></div>
+        </div>
+        <div class="grip-bar-row">
+          <div class="grip-bar-header"><span class="grip-bar-name" style="color:#8B5CF6;">P &mdash; Performance</span><span class="grip-bar-score" id="bar-score-P">0</span></div>
+          <div class="grip-bar-track"><div class="grip-bar-fill fill-P" id="bar-fill-P"></div></div>
+        </div>
+      </div>
+
+      <div class="constraint-box" id="constraint-box">
+        <h3 id="constraint-title">Your binding constraint: --</h3>
+        <p id="constraint-text"></p>
+      </div>
+
+      <div class="benchmark-box">
+        <p class="benchmark-text" id="benchmark-text">You scored better than --% of B2B SaaS companies</p>
+        <div class="benchmark-bar-track">
+          <div class="benchmark-bar-fill" id="benchmark-fill"></div>
+          <div class="benchmark-marker" id="benchmark-marker"></div>
+        </div>
+      </div>
+
+      <button class="btn-share" id="btn-share">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.47 2H3.53a1.45 1.45 0 0 0-1.47 1.43v17.14A1.45 1.45 0 0 0 3.53 22h16.94a1.45 1.45 0 0 0 1.47-1.43V3.43A1.45 1.45 0 0 0 20.47 2ZM8.09 18.74h-3v-9h3v9ZM6.59 8.48a1.56 1.56 0 1 1 0-3.12 1.56 1.56 0 0 1 0 3.12Zm12.32 10.26h-3v-4.83c0-1.21-.43-2-1.52-2A1.65 1.65 0 0 0 12.85 13a2 2 0 0 0-.1.73v5h-3v-9h3v1.2a3 3 0 0 1 2.71-1.5c2 0 3.45 1.29 3.45 4.06v5.25Z"/></svg>
+        Share on LinkedIn
+      </button>
+
+      <div class="email-capture" id="email-capture">
+        <p>Save your detailed results</p>
+        <div class="email-capture-row">
+          <input type="email" id="capture-email" placeholder="you@company.com" />
+          <button id="btn-save-email">Save</button>
+        </div>
+        <button class="dismiss" id="btn-dismiss-email">No thanks</button>
+      </div>
+
+      <div class="results-ctas">
+        <a href="grip-marketplace.html#intelligence-report" class="cta-primary">Get the full 45-page diagnosis &rarr; &euro;2,495</a>
+        <a href="https://os.caugia.com/demo" class="cta-secondary">Try the GRIP OS demo &mdash; Free</a>
+        <a href="https://os.caugia.com/demo" class="cta-secondary">Ask Sophie about your score &rarr;</a>
+      </div>
+
+      <button class="retake-link" id="btn-retake">Retake quiz</button>
+    </div>
+
   </div>
-
-  <section class="section-dark">
-    <div class="container">
-      <h2>How the GTM Score works</h2>
-      <div class="steps-grid">
-        <div class="step-item">
-          <span class="step-num">01</span>
-          <h3>Input</h3>
-          <p>Answer 14 structured questions about your revenue motion, alignment, and constraints.</p>
-        </div>
-        <div class="step-item">
-          <span class="step-num">02</span>
-          <h3>Analysis</h3>
-          <p>The engine evaluates your answers across the four GRIP dimensions and twelve operational pillars.</p>
-        </div>
-        <div class="step-item">
-          <span class="step-num">03</span>
-          <h3>Clarity</h3>
-          <p>Receive your score instantly with a pattern view that reveals where your revenue engine is blocked.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
@@ -453,183 +395,329 @@
 
 <script src="assets/caugia-base.js"></script>
 <script>
-  const GTM_TOTAL_STEPS = 14;
-  const GTM_SCORE_MAP = { A: 0, B: 2, C: 5, D: 7, E: 10 };
+(function(){
+  /* ── Data ── */
+  const QUESTIONS = [
+    { dim: 'G', tag: 'Guidance / Strategy', q: 'How clear is your GTM strategy across the leadership team?',
+      opts: [
+        { letter: 'A', text: 'Everyone has a different version', score: 20 },
+        { letter: 'B', text: 'We have a strategy doc but it\'s not followed', score: 40 },
+        { letter: 'C', text: 'Mostly aligned, some gaps in execution', score: 65 },
+        { letter: 'D', text: 'Crystal clear and drives every decision', score: 90 }
+      ]},
+    { dim: 'G', tag: 'Guidance / Positioning', q: 'When a prospect asks "why you?" \u2014 does your team give the same answer?',
+      opts: [
+        { letter: 'A', text: 'Every rep has their own pitch', score: 20 },
+        { letter: 'B', text: 'We have messaging but it\'s outdated', score: 40 },
+        { letter: 'C', text: 'Generally consistent, varies by segment', score: 65 },
+        { letter: 'D', text: 'One clear narrative, validated by win data', score: 90 }
+      ]},
+    { dim: 'R', tag: 'Resources / Pricing', q: 'How confident are you in your pricing strategy?',
+      opts: [
+        { letter: 'A', text: 'We guess and discount heavily', score: 20 },
+        { letter: 'B', text: 'We have prices but no governance', score: 40 },
+        { letter: 'C', text: 'Structured pricing with some flexibility', score: 65 },
+        { letter: 'D', text: 'Value-based pricing with clear rules', score: 90 }
+      ]},
+    { dim: 'R', tag: 'Resources / Enablement', q: 'How quickly can a new rep close their first deal?',
+      opts: [
+        { letter: 'A', text: '6+ months, if they survive', score: 20 },
+        { letter: 'B', text: '3\u20136 months with heavy hand-holding', score: 40 },
+        { letter: 'C', text: '2\u20133 months with structured onboarding', score: 65 },
+        { letter: 'D', text: 'Under 60 days with a repeatable playbook', score: 90 }
+      ]},
+    { dim: 'I', tag: 'Implementation / Pipeline', q: 'How healthy is your pipeline right now?',
+      opts: [
+        { letter: 'A', text: 'We don\'t really know', score: 20 },
+        { letter: 'B', text: 'Enough to hit this quarter, barely', score: 40 },
+        { letter: 'C', text: '3x coverage but quality varies', score: 65 },
+        { letter: 'D', text: '4x+ with predictable conversion rates', score: 90 }
+      ]},
+    { dim: 'I', tag: 'Implementation / Sales Execution', q: 'What happens when a deal stalls?',
+      opts: [
+        { letter: 'A', text: 'It dies silently in the CRM', score: 20 },
+        { letter: 'B', text: 'Reps escalate randomly to leadership', score: 40 },
+        { letter: 'C', text: 'We have a process but it\'s inconsistent', score: 65 },
+        { letter: 'D', text: 'Automated alerts, playbooks, and escalation paths', score: 90 }
+      ]},
+    { dim: 'I', tag: 'Implementation / RevOps', q: 'How much do you trust your revenue forecast?',
+      opts: [
+        { letter: 'A', text: 'It\'s fiction', score: 20 },
+        { letter: 'B', text: 'Directionally correct, off by 20%+', score: 40 },
+        { letter: 'C', text: 'Within 10\u201315% most quarters', score: 65 },
+        { letter: 'D', text: 'Within 5%, backed by data', score: 90 }
+      ]},
+    { dim: 'P', tag: 'Performance / Churn', q: 'What\u2019s happening with your existing customers?',
+      opts: [
+        { letter: 'A', text: 'We lose customers and don\'t know why', score: 20 },
+        { letter: 'B', text: 'Churn is tracked but not managed', score: 40 },
+        { letter: 'C', text: 'CS team is proactive, churn is stable', score: 65 },
+        { letter: 'D', text: 'Net revenue retention above 110%', score: 90 }
+      ]},
+    { dim: 'P', tag: 'Performance / Data', q: 'Can your leadership team answer "why did we miss target?" with data?',
+      opts: [
+        { letter: 'A', text: 'We argue about whose numbers are right', score: 20 },
+        { letter: 'B', text: 'We have dashboards but they contradict', score: 40 },
+        { letter: 'C', text: 'Single source of truth, mostly trusted', score: 65 },
+        { letter: 'D', text: 'Real-time data, everyone uses the same metrics', score: 90 }
+      ]},
+    { dim: 'P', tag: 'Performance / Alignment', q: 'How aligned are Sales, Marketing, and CS?',
+      opts: [
+        { letter: 'A', text: 'They blame each other', score: 20 },
+        { letter: 'B', text: 'Quarterly planning together, then diverge', score: 40 },
+        { letter: 'C', text: 'Shared KPIs, regular syncs', score: 65 },
+        { letter: 'D', text: 'Fully integrated with shared accountability', score: 90 }
+      ]}
+  ];
 
-  function gtmGetMaturityLevel(totalScore) {
-    if (totalScore < 40) return "At Risk";
-    if (totalScore < 55) return "Unstable";
-    if (totalScore < 70) return "Developing";
-    if (totalScore < 80) return "Performing";
-    if (totalScore < 90) return "High Performing";
-    return "Best in Class";
-  }
+  const DIM_WEIGHTS = { G: 0.20, R: 0.20, I: 0.25, P: 0.35 };
+  const DIM_NAMES = { G: 'Guidance', R: 'Resources', I: 'Implementation', P: 'Performance' };
+  const CONSTRAINT_TEXT = {
+    G: 'Your strategic foundation needs work. Without clear direction, execution is wasted effort.',
+    R: 'Your resources aren\'t set up for success. Pricing, product, or enablement is holding you back.',
+    I: 'Your execution layer is the bottleneck. Pipeline, deals, or operations need attention.',
+    P: 'Your outcomes aren\'t compounding. Churn, data, or alignment is leaking value.'
+  };
 
-  function gtmComputePillarScores(letters) {
-    function avg(questionNames) {
-      if (!questionNames.length) return 0;
-      let sum = 0;
-      questionNames.forEach(name => { sum += (GTM_SCORE_MAP[letters[name]] ?? 0); });
-      return Math.round((sum / questionNames.length) * 10);
-    }
-    return [
-      avg(["q3", "q9", "q12"]),
-      avg(["q3", "q8"]),
-      avg(["q3", "q8", "q10"]),
-      avg(["q4", "q5"]),
-      avg(["q4", "q5"]),
-      avg(["q5", "q6", "q8", "q10"]),
-      avg(["q7", "q9"]),
-      avg(["q7", "q9"]),
-      avg(["q4", "q5", "q9", "q11", "q12"]),
-      avg(["q6", "q8", "q10", "q12"]),
-      avg(["q5", "q7", "q9", "q11"]),
-      avg(["q3", "q7"])
-    ];
-  }
+  let answers = new Array(10).fill(null);
+  let currentQ = 0;
 
-  const GTM_WEBHOOK_URL = "https://hook.eu1.make.com/t02wf80j5iygknnd0biplgjehfqkly2r";
+  /* ── Elements ── */
+  const elLanding = document.getElementById('quiz-landing');
+  const elState = document.getElementById('quiz-state');
+  const elResults = document.getElementById('quiz-results');
+  const elWrap = document.getElementById('question-wrap');
+  const elProgressLabel = document.getElementById('progress-label');
+  const elProgressFill = document.getElementById('progress-fill');
+  const elLiveScore = document.getElementById('live-score-fill');
+  const elDiamond = document.getElementById('diamond-shape');
 
-  const gtmForm = document.getElementById("gtm-assessment-form");
-  const gtmSteps = Array.from(document.querySelectorAll(".gtm-step"));
-  const gtmPrevBtn = document.getElementById("gtm-prev-btn");
-  const gtmNextBtn = document.getElementById("gtm-next-btn");
-  const gtmProgressLabel = document.getElementById("gtm-progress-label");
-  const gtmProgressSecondary = document.getElementById("gtm-progress-secondary");
-  const gtmProgressFill = document.getElementById("gtm-progress-fill");
-  const gtmFormError = document.getElementById("gtm-form-error");
-  let gtmCurrentStep = 0;
+  /* ── Build question DOM ── */
+  QUESTIONS.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question' + (i === 0 ? ' active' : '');
+    div.dataset.index = i;
+    div.innerHTML =
+      '<span class="quiz-dimension-tag tag-' + q.dim + '">' + q.tag + '</span>' +
+      '<h2>' + q.q + '</h2>' +
+      '<div class="quiz-options">' +
+      q.opts.map((o, oi) =>
+        '<div class="quiz-option" data-qi="' + i + '" data-oi="' + oi + '">' +
+        '<span class="opt-letter">' + o.letter + '</span>' +
+        '<span>' + o.text + '</span>' +
+        '</div>'
+      ).join('') +
+      '</div>';
+    elWrap.appendChild(div);
+  });
 
-  function gtmClearInlineErrors() {
-    document.querySelectorAll(".gtm-error").forEach(el => { el.classList.remove("visible"); el.textContent = ""; });
-  }
+  /* ── Event: Start ── */
+  document.getElementById('btn-start').addEventListener('click', function() {
+    elLanding.style.display = 'none';
+    elState.style.display = 'block';
+    elState.style.animation = 'fadeUp 0.4s ease';
+    try { if(typeof gtag==='function') gtag('event', 'quiz_start'); } catch(e){}
+  });
 
-  function gtmUpdateProgress() {
-    const n = gtmCurrentStep + 1;
-    gtmProgressLabel.textContent = "Step " + n + " of " + GTM_TOTAL_STEPS;
-    gtmProgressSecondary.textContent = n <= 2 ? "Context" : n <= 12 ? "GTM capabilities" : "Qualitative input";
-    gtmProgressFill.style.width = ((n / GTM_TOTAL_STEPS) * 100) + "%";
-    gtmPrevBtn.disabled = gtmCurrentStep === 0;
-    gtmNextBtn.textContent = gtmCurrentStep === GTM_TOTAL_STEPS - 1 ? "View my GTM Score" : "Next";
-  }
+  /* ── Event: Answer click ── */
+  elWrap.addEventListener('click', function(e) {
+    const card = e.target.closest('.quiz-option');
+    if (!card) return;
+    const qi = parseInt(card.dataset.qi);
+    const oi = parseInt(card.dataset.oi);
 
-  function gtmShowStep(index) {
-    gtmSteps.forEach((s, i) => s.classList.toggle("active", i === index));
-    gtmClearInlineErrors();
-    gtmFormError.textContent = ""; gtmFormError.classList.remove("visible");
-    gtmCurrentStep = index;
-    gtmUpdateProgress();
-  }
+    answers[qi] = QUESTIONS[qi].opts[oi].score;
 
-  function gtmValidateStep(stepIndex) {
-    gtmClearInlineErrors();
-    gtmFormError.textContent = ""; gtmFormError.classList.remove("visible");
-    const step = gtmSteps[stepIndex], n = stepIndex + 1;
+    /* Highlight selected */
+    const qDiv = card.closest('.quiz-question');
+    qDiv.querySelectorAll('.quiz-option').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
 
-    if (n >= 1 && n <= 12) {
-      const radios = step.querySelectorAll("input[type='radio']");
-      const name = radios[0]?.name;
-      if (name && !gtmForm.querySelector("input[name='" + name + "']:checked")) {
-        const e = document.querySelector('[data-error-for="' + name + '"]');
-        if (e) { e.textContent = "Please select an option to continue."; e.classList.add("visible"); }
-        return false;
+    updateLiveScore();
+    updateDiamond();
+
+    /* Advance after short delay */
+    setTimeout(function() {
+      if (qi < 9) {
+        goToQuestion(qi + 1);
+      } else {
+        showResults();
       }
-    }
-    if (n === 13) {
-      if (!gtmForm.elements["frustration"].value.trim()) {
-        const e = document.querySelector('[data-error-for="frustration"]');
-        if (e) { e.textContent = "Please describe your biggest GTM frustration."; e.classList.add("visible"); }
-        return false;
-      }
-    }
-    if (n === 14) {
-      let valid = true;
-      if (!gtmForm.elements["one_thing"].value.trim()) {
-        const e = document.querySelector('[data-error-for="one_thing"]');
-        if (e) { e.textContent = "Please describe the one thing you would fix."; e.classList.add("visible"); } valid = false;
-      }
-      const email = gtmForm.elements["email"].value.trim();
-      if (!email) {
-        const e = document.querySelector('[data-error-for="email"]');
-        if (e) { e.textContent = "Please enter your work email."; e.classList.add("visible"); } valid = false;
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        const e = document.querySelector('[data-error-for="email"]');
-        if (e) { e.textContent = "Please enter a valid email address."; e.classList.add("visible"); } valid = false;
-      }
-      if (!gtmForm.elements["company"].value.trim()) {
-        const e = document.querySelector('[data-error-for="company"]');
-        if (e) { e.textContent = "Please enter your company name."; e.classList.add("visible"); } valid = false;
-      }
-      return valid;
-    }
-    return true;
+    }, 350);
+  });
+
+  function goToQuestion(idx) {
+    const allQ = elWrap.querySelectorAll('.quiz-question');
+    allQ[currentQ].classList.remove('active');
+    allQ[currentQ].classList.add('exit-left');
+    setTimeout(function() { allQ[currentQ].classList.remove('exit-left'); currentQ = idx; }, 350);
+
+    currentQ = idx;
+    allQ[idx].classList.add('active');
+    elProgressLabel.textContent = (idx + 1) + ' / 10';
+    elProgressFill.style.width = ((idx + 1) / 10 * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function gtmComputeScoreAndPayload() {
-    const stage = gtmForm.elements["q1"]?.value || "";
-    const motion = gtmForm.elements["q2"]?.value || "";
-    const letters = {};
-    for (let i = 3; i <= 12; i++) letters["q" + i] = gtmForm.elements["q" + i]?.value || "";
-
-    let totalScore = 0;
-    for (let i = 3; i <= 12; i++) totalScore += (GTM_SCORE_MAP[letters["q" + i]] ?? 0);
-
-    const pillarScores = gtmComputePillarScores(letters);
-    return {
-      totalScore,
-      maturityLevel: gtmGetMaturityLevel(totalScore),
-      pillarScores,
-      payload: {
-        stage, motion, scores: letters, total_score: totalScore,
-        maturity_level: gtmGetMaturityLevel(totalScore),
-        pillar_scores: Object.fromEntries(pillarScores.map((s, i) => ["score_" + String(i + 1).padStart(2, "0"), s])),
-        frustration: gtmForm.elements["frustration"]?.value || "",
-        one_thing: gtmForm.elements["one_thing"]?.value || "",
-        email: gtmForm.elements["email"]?.value || "",
-        company: gtmForm.elements["company"]?.value || "",
-        meta: { user_agent: navigator.userAgent, url: window.location.href, timestamp: new Date().toISOString() }
-      }
-    };
-  }
-
-  function gtmSendToWebhook(payload) {
-    if (!GTM_WEBHOOK_URL) return;
-    try { fetch(GTM_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(() => {}); } catch (e) {}
-  }
-
-  function gtmGoToResult(totalScore, pillarScores) {
-    const params = new URLSearchParams();
-    params.set("score", String(totalScore));
-    params.set("pillars", pillarScores.join(","));
-    window.location.href = "the-gtm-score.html?" + params.toString();
-  }
-
-  document.querySelectorAll(".gtm-options").forEach(group => {
-    group.addEventListener("change", e => {
-      if (e.target?.matches("input[type='radio']")) {
-        group.querySelectorAll(".gtm-option").forEach(opt => {
-          opt.classList.toggle("selected", opt.querySelector("input[type='radio']")?.checked);
-        });
-        const errEl = document.querySelector('[data-error-for="' + e.target.name + '"]');
-        if (errEl) { errEl.textContent = ""; errEl.classList.remove("visible"); }
-      }
+  function calcDimScores() {
+    const dims = { G: [], R: [], I: [], P: [] };
+    QUESTIONS.forEach((q, i) => {
+      if (answers[i] !== null) dims[q.dim].push(answers[i]);
     });
+    const result = {};
+    ['G','R','I','P'].forEach(d => {
+      if (dims[d].length === 0) { result[d] = 0; return; }
+      result[d] = Math.round(dims[d].reduce((a,b) => a+b, 0) / dims[d].length);
+    });
+    return result;
+  }
+
+  function calcOverall(dimScores) {
+    let total = 0;
+    ['G','R','I','P'].forEach(d => { total += dimScores[d] * DIM_WEIGHTS[d]; });
+    return Math.round(total);
+  }
+
+  function updateLiveScore() {
+    const ds = calcDimScores();
+    const overall = calcOverall(ds);
+    elLiveScore.style.width = overall + '%';
+    if (overall >= 70) elLiveScore.style.background = '#16A34A';
+    else if (overall >= 50) elLiveScore.style.background = '#3B6CD8';
+    else if (overall >= 35) elLiveScore.style.background = '#E07830';
+    else elLiveScore.style.background = '#EF4444';
+  }
+
+  function updateDiamond() {
+    const ds = calcDimScores();
+    const cx = 100, cy = 100, maxR = 70;
+    const gR = ds.G / 100 * maxR;
+    const rR = ds.R / 100 * maxR;
+    const iR = ds.I / 100 * maxR;
+    const pR = ds.P / 100 * maxR;
+    const points = [
+      (cx) + ',' + (cy - Math.max(gR, 2)),
+      (cx + Math.max(rR, 2)) + ',' + cy,
+      cx + ',' + (cy + Math.max(iR, 2)),
+      (cx - Math.max(pR, 2)) + ',' + cy
+    ].join(' ');
+    elDiamond.setAttribute('points', points);
+  }
+
+  /* ── Results ── */
+  function showResults() {
+    elState.style.display = 'none';
+    elResults.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const ds = calcDimScores();
+    const overall = calcOverall(ds);
+
+    /* Animate score count-up */
+    const elNum = document.getElementById('score-number');
+    const elLabel = document.getElementById('score-label');
+    let current = 0;
+    const step = Math.max(1, Math.floor(overall / 60));
+    const interval = setInterval(function() {
+      current += step;
+      if (current >= overall) { current = overall; clearInterval(interval); }
+      elNum.textContent = current;
+    }, 30);
+
+    /* Color + label */
+    let colorClass, labelClass, labelText;
+    if (overall >= 70) { colorClass = 'score-green'; labelClass = 'label-green'; labelText = 'Strong'; }
+    else if (overall >= 50) { colorClass = 'score-blue'; labelClass = 'label-blue'; labelText = 'Moderate'; }
+    else if (overall >= 35) { colorClass = 'score-orange'; labelClass = 'label-orange'; labelText = 'Stressed'; }
+    else { colorClass = 'score-red'; labelClass = 'label-red'; labelText = 'Critical'; }
+    elNum.className = 'score-number ' + colorClass;
+    elLabel.className = 'score-label ' + labelClass;
+    elLabel.textContent = labelText;
+
+    /* GRIP bars */
+    setTimeout(function() {
+      ['G','R','I','P'].forEach(function(d) {
+        document.getElementById('bar-fill-' + d).style.width = ds[d] + '%';
+        document.getElementById('bar-score-' + d).textContent = ds[d];
+      });
+    }, 400);
+
+    /* Constraint */
+    let weakest = 'G', weakScore = 101;
+    ['G','R','I','P'].forEach(function(d) {
+      if (ds[d] < weakScore) { weakScore = ds[d]; weakest = d; }
+    });
+    document.getElementById('constraint-title').textContent = 'Your binding constraint: ' + DIM_NAMES[weakest];
+    document.getElementById('constraint-text').textContent = CONSTRAINT_TEXT[weakest];
+
+    /* Benchmark */
+    const percentile = Math.min(99, Math.round(overall * 0.8 + 10));
+    document.getElementById('benchmark-text').textContent = 'You scored better than ' + percentile + '% of B2B SaaS companies';
+    setTimeout(function() {
+      document.getElementById('benchmark-fill').style.width = percentile + '%';
+      document.getElementById('benchmark-marker').style.left = percentile + '%';
+    }, 600);
+
+    /* GA4 event */
+    try {
+      if (typeof gtag === 'function') {
+        gtag('event', 'quiz_complete', { score: overall, constraint: weakest });
+      }
+    } catch(e){}
+
+    /* Store for share */
+    window._quizScore = overall;
+    window._quizConstraint = DIM_NAMES[weakest];
+  }
+
+  /* ── Share ── */
+  document.getElementById('btn-share').addEventListener('click', function() {
+    var text = 'I just took the Caugia GTM Score quiz. My score: ' + (window._quizScore || 0) + '/100. My biggest constraint: ' + (window._quizConstraint || 'unknown') + '. Take yours: caugia.com/gtm-assessment.html';
+    var url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://www.caugia.com/gtm-assessment.html') + '&summary=' + encodeURIComponent(text);
+    window.open(url, '_blank', 'width=600,height=500');
   });
 
-  gtmPrevBtn.addEventListener("click", () => { if (gtmCurrentStep > 0) gtmShowStep(gtmCurrentStep - 1); });
-
-  gtmNextBtn.addEventListener("click", () => {
-    if (!gtmValidateStep(gtmCurrentStep)) return;
-    if (gtmCurrentStep < GTM_TOTAL_STEPS - 1) { gtmShowStep(gtmCurrentStep + 1); }
-    else {
-      const { totalScore, payload, pillarScores } = gtmComputeScoreAndPayload();
-      gtmSendToWebhook(payload);
-      gtmGoToResult(totalScore, pillarScores);
-    }
+  /* ── Email capture ── */
+  document.getElementById('btn-save-email').addEventListener('click', function() {
+    var email = document.getElementById('capture-email').value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    var ds = calcDimScores();
+    var data = { email: email, score: window._quizScore, dims: ds, constraint: window._quizConstraint, ts: new Date().toISOString() };
+    try { localStorage.setItem('caugia_quiz_result', JSON.stringify(data)); } catch(e){}
+    document.getElementById('email-capture').innerHTML = '<p style="color:#4ADE80;font-weight:600;">Saved! Check your inbox soon.</p>';
   });
 
-  gtmForm.addEventListener("submit", e => e.preventDefault());
-  gtmUpdateProgress();
+  document.getElementById('btn-dismiss-email').addEventListener('click', function() {
+    document.getElementById('email-capture').classList.add('hidden');
+  });
+
+  /* ── Retake ── */
+  document.getElementById('btn-retake').addEventListener('click', function() {
+    answers = new Array(10).fill(null);
+    currentQ = 0;
+    elResults.style.display = 'none';
+    elLanding.style.display = 'block';
+    /* Reset UI */
+    elWrap.querySelectorAll('.quiz-question').forEach(function(q, i) {
+      q.classList.toggle('active', i === 0);
+      q.querySelectorAll('.quiz-option').forEach(function(c) { c.classList.remove('selected'); });
+    });
+    elProgressLabel.textContent = '1 / 10';
+    elProgressFill.style.width = '0%';
+    elLiveScore.style.width = '0%';
+    elDiamond.setAttribute('points', '100,100 100,100 100,100 100,100');
+    ['G','R','I','P'].forEach(function(d) {
+      document.getElementById('bar-fill-' + d).style.width = '0%';
+      document.getElementById('bar-score-' + d).textContent = '0';
+    });
+    document.getElementById('benchmark-fill').style.width = '0%';
+    document.getElementById('benchmark-marker').style.left = '0%';
+    document.getElementById('email-capture').classList.remove('hidden');
+    document.getElementById('email-capture').innerHTML = '<p>Save your detailed results</p><div class="email-capture-row"><input type="email" id="capture-email" placeholder="you@company.com" /><button id="btn-save-email">Save</button></div><button class="dismiss" id="btn-dismiss-email">No thanks</button>';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+})();
 </script>
 </body>
 </html>
