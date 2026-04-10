@@ -67,19 +67,19 @@
 
   <style>
     /* ── Quiz Shell ── */
-    .quiz-shell { background: #0f172a; min-height: 100vh; color: #f1f5f9; position: relative; }
+    .quiz-shell { background: #f8fafc; min-height: 100vh; color: #0f172a; position: relative; }
     .quiz-inner { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
 
     /* ── Landing State ── */
     .quiz-landing { text-align: center; padding: 80px 0 40px; animation: fadeUp 0.6s ease; }
-    .quiz-landing h1 { font-family: 'Merriweather', serif; font-size: 3rem; font-weight: 900; color: #fff; margin: 0 0 16px; line-height: 1.15; }
-    .quiz-landing .subline { font-size: 1.15rem; color: #94a3b8; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .quiz-landing h1 { font-family: 'Merriweather', serif; font-size: 3rem; font-weight: 900; color: #0f172a; margin: 0 0 16px; line-height: 1.15; }
+    .quiz-landing .subline { font-size: 1.15rem; color: #475569; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
     .quiz-landing .no-email { font-size: 0.82rem; color: #64748b; margin-top: 18px; }
 
     .btn-start {
       display: inline-flex; align-items: center; gap: 10px;
       background: linear-gradient(135deg, #3B6CD8, #E07830);
-      color: #fff; border: none; padding: 18px 48px; font-size: 1.15rem; font-weight: 700;
+      color: #ffffff; border: none; padding: 18px 48px; font-size: 1.15rem; font-weight: 700;
       border-radius: 60px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 24px rgba(59,108,216,0.35);
     }
@@ -91,15 +91,15 @@
     /* Diamond preview */
     .diamond-preview { margin: 48px auto 0; width: 200px; height: 200px; position: relative; }
     .diamond-preview svg { width: 100%; height: 100%; }
-    .diamond-label { font-size: 0.7rem; fill: #64748b; text-anchor: middle; font-weight: 600; }
-    .diamond-outline { fill: none; stroke: #334155; stroke-width: 1.5; }
+    .diamond-label { font-size: 0.7rem; fill: #475569; text-anchor: middle; font-weight: 600; }
+    .diamond-outline { fill: none; stroke: #cbd5e1; stroke-width: 1.5; }
     .diamond-filled { fill: rgba(59,108,216,0.1); stroke: #3B6CD8; stroke-width: 2; transition: all 0.6s ease; }
 
     /* ── Progress Bar ── */
     .quiz-progress { padding: 32px 0 8px; }
     .quiz-progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .quiz-progress-step { font-size: 0.82rem; font-weight: 700; color: #94a3b8; }
-    .quiz-progress-track { height: 4px; background: #1e293b; border-radius: 4px; overflow: hidden; }
+    .quiz-progress-track { height: 4px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
     .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, #3B6CD8, #E07830); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
 
     /* ── Question State ── */
@@ -115,17 +115,17 @@
 
     .quiz-question h2 {
       font-family: 'Merriweather', serif; font-size: 1.45rem; font-weight: 700;
-      color: #fff; line-height: 1.4; margin: 24px 0 8px; text-align: center;
+      color: #0f172a; line-height: 1.4; margin: 24px 0 8px; text-align: center;
     }
     .quiz-dimension-tag {
       display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin: 0 auto 4px;
       text-align: center; display: block; width: fit-content; margin-left: auto; margin-right: auto;
     }
-    .tag-G { background: rgba(59,108,216,0.15); color: #6B9AFF; }
-    .tag-R { background: rgba(224,120,48,0.15); color: #F0A060; }
-    .tag-I { background: rgba(22,163,74,0.15); color: #4ADE80; }
-    .tag-P { background: rgba(139,92,246,0.15); color: #A78BFA; }
+    .tag-G { background: rgba(59,108,216,0.1); color: #3B6CD8; }
+    .tag-R { background: rgba(224,120,48,0.1); color: #E07830; }
+    .tag-I { background: rgba(22,163,74,0.1); color: #16A34A; }
+    .tag-P { background: rgba(139,92,246,0.1); color: #8B5CF6; }
 
     .quiz-options { display: grid; gap: 12px; margin-top: 28px; }
     .quiz-option {
@@ -142,12 +142,12 @@
       background: #f1f5f9; display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 0.82rem; color: #64748b; transition: background 0.2s, color 0.2s;
     }
-    .quiz-option.selected .opt-letter { background: #3B6CD8; color: #fff; }
+    .quiz-option.selected .opt-letter { background: #3B6CD8; color: #ffffff; }
 
     /* ── Live Score Bar ── */
     .quiz-score-bar { margin-top: 32px; }
     .quiz-score-bar-label { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .quiz-score-bar-track { height: 6px; background: #1e293b; border-radius: 6px; overflow: hidden; }
+    .quiz-score-bar-track { height: 6px; background: #e2e8f0; border-radius: 6px; overflow: hidden; }
     .quiz-score-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease, background 0.5s ease; width: 0%; background: #3B6CD8; }
 
     /* ── Results State ── */
@@ -175,7 +175,7 @@
     .grip-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .grip-bar-name { font-size: 0.85rem; font-weight: 700; }
     .grip-bar-score { font-size: 0.85rem; font-weight: 700; color: #94a3b8; }
-    .grip-bar-track { height: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; }
+    .grip-bar-track { height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
     .grip-bar-fill { height: 100%; border-radius: 10px; transition: width 1.2s ease; width: 0%; }
     .fill-G { background: #3B6CD8; }
     .fill-R { background: #E07830; }
@@ -184,7 +184,7 @@
 
     /* Constraint */
     .constraint-box {
-      background: #1e293b; border-radius: 16px; padding: 28px 32px; margin: 0 auto 40px;
+      background: #e2e8f0; border-radius: 16px; padding: 28px 32px; margin: 0 auto 40px;
       max-width: 520px; text-align: left; border-left: 4px solid #E07830;
     }
     .constraint-box h3 { font-size: 1rem; font-weight: 700; color: #E07830; margin: 0 0 8px; }
@@ -193,13 +193,13 @@
     /* Benchmark */
     .benchmark-box { margin: 0 auto 40px; max-width: 420px; }
     .benchmark-text { font-size: 0.92rem; color: #94a3b8; margin-bottom: 10px; }
-    .benchmark-bar-track { height: 8px; background: #1e293b; border-radius: 8px; overflow: hidden; position: relative; }
+    .benchmark-bar-track { height: 8px; background: #e2e8f0; border-radius: 8px; overflow: hidden; position: relative; }
     .benchmark-bar-fill { height: 100%; background: linear-gradient(90deg, #3B6CD8, #E07830); border-radius: 8px; transition: width 1.5s ease; }
     .benchmark-marker { position: absolute; top: -6px; width: 3px; height: 20px; background: #fff; border-radius: 2px; transition: left 1.5s ease; }
 
     /* Share */
     .btn-share {
-      display: inline-flex; align-items: center; gap: 8px; background: #0A66C2; color: #fff;
+      display: inline-flex; align-items: center; gap: 8px; background: #0A66C2; color: #ffffff;
       border: none; padding: 12px 28px; font-size: 0.9rem; font-weight: 600; border-radius: 8px;
       cursor: pointer; transition: opacity 0.2s; margin-bottom: 32px;
     }
@@ -208,18 +208,18 @@
 
     /* Email capture */
     .email-capture {
-      background: #1e293b; border-radius: 14px; padding: 24px 28px; max-width: 420px;
+      background: #e2e8f0; border-radius: 14px; padding: 24px 28px; max-width: 420px;
       margin: 0 auto 40px;
     }
     .email-capture p { font-size: 0.92rem; color: #94a3b8; margin: 0 0 12px; }
     .email-capture-row { display: flex; gap: 8px; }
     .email-capture input {
-      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 8px;
-      padding: 10px 14px; color: #f1f5f9; font-size: 0.9rem; outline: none;
+      flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 10px 14px; color: #0f172a; font-size: 0.9rem; outline: none;
     }
     .email-capture input:focus { border-color: #3B6CD8; }
     .email-capture button {
-      background: #3B6CD8; color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
+      background: #3B6CD8; color: #ffffff; border: none; padding: 10px 20px; border-radius: 8px;
       font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap;
     }
     .email-capture .dismiss { display: block; margin-top: 8px; font-size: 0.78rem; color: #475569; cursor: pointer; background: none; border: none; padding: 0; }
@@ -228,13 +228,13 @@
     /* CTAs */
     .results-ctas { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; align-items: stretch; }
     .cta-primary {
-      background: linear-gradient(135deg, #3B6CD8, #E07830); color: #fff; border: none;
+      background: linear-gradient(135deg, #3B6CD8, #E07830); color: #ffffff; border: none;
       padding: 16px 24px; font-size: 1rem; font-weight: 700; border-radius: 12px;
       cursor: pointer; text-decoration: none; text-align: center; transition: transform 0.2s;
     }
     .cta-primary:hover { transform: translateY(-1px); }
     .cta-secondary {
-      background: #1e293b; color: #f1f5f9; border: 1px solid #334155;
+      background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0;
       padding: 14px 24px; font-size: 0.92rem; font-weight: 600; border-radius: 12px;
       cursor: pointer; text-decoration: none; text-align: center; transition: border-color 0.2s;
     }
