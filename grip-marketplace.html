@@ -50,8 +50,8 @@
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
 :root { --g:#0056b3; --r:#b45309; --i:#059669; --p:#7c3aed; --gs:#eff6ff; --rs:#fffbeb; --is:#ecfdf5; --ps:#f5f3ff; }
-html { scroll-behavior:smooth; scroll-padding-top:100px; }
-section[id] { scroll-margin-top:100px; }
+html { scroll-behavior:smooth; scroll-padding-top:120px; }
+section[id] { scroll-margin-top:120px; }
 
 /* HERO */
 .mk-hero { padding:56px 0 0; text-align:center; max-width:720px; margin:0 auto; }
@@ -281,9 +281,9 @@ section[id] { scroll-margin-top:100px; }
 @media(max-width:768px) {
   .mk-hero h1{font-size:1.7rem;}
   .mk-hero{padding-bottom:16px !important;}
-  #copilot{margin-top:32px !important;margin-bottom:32px !important;}
-  #copilot .mk-copilot-h2{font-size:1.5rem !important;}
-  #copilot > div:first-child{margin-bottom:28px !important;}
+  #grip-os{margin-top:32px !important;margin-bottom:32px !important;}
+  #grip-os .mk-copilot-h2{font-size:1.5rem !important;}
+  #grip-os > div:first-child{margin-bottom:28px !important;}
   .mk-ir-bottom-cta{margin-bottom:0 !important;}
   .mk-chooser{margin-top:24px !important;}
   .mk-ir-nums{margin-top:16px !important;margin-bottom:16px !important;}
@@ -346,6 +346,24 @@ section[id] { scroll-margin-top:100px; }
   <p class="mk-hero-sub" style="margin-bottom:32px;">Three ways to take control of your GTM system &mdash; depending on where you are today.</p>
 </section>
 
+<!-- STICKY SUB-NAV (P14) -->
+<style>
+.mk-subnav{position:sticky;top:64px;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.04);z-index:100;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity 0.3s ease,transform 0.3s ease;}
+.mk-subnav.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+.mk-subnav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;padding:0 20px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.mk-subnav-link{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#64748b;text-decoration:none;white-space:nowrap;padding:10px 0;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
+.mk-subnav-link:hover{color:#3B6CD8;}
+.mk-subnav-link.active{color:#3B6CD8;border-bottom-color:#3B6CD8;}
+@media(max-width:600px){.mk-subnav-inner{justify-content:flex-start;gap:24px;}}
+</style>
+<nav class="mk-subnav" id="mkSubnav">
+  <div class="mk-subnav-inner">
+    <a href="#intelligence-report" class="mk-subnav-link" data-section="intelligence-report">Intelligence Report</a>
+    <a href="#grip-os" class="mk-subnav-link" data-section="grip-os">GRIP OS</a>
+    <a href="#modules" class="mk-subnav-link" data-section="modules">Deep Dive Modules</a>
+  </div>
+</nav>
+
 <!-- ROUTE SELECTOR -->
 <style>
 .mk-route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin:0 auto 60px;padding:0 20px;}
@@ -364,13 +382,13 @@ section[id] { scroll-margin-top:100px; }
     <div class="mk-route-desc">You need clarity on what is actually suppressing growth. Start with the full system diagnosis.</div>
     <span class="mk-route-cta" style="color:#3B6CD8;">GTM Intelligence Report &darr;</span>
   </a>
-  <a href="javascript:void(0)" onclick="scrollToSection('copilot')" class="mk-route-card" style="text-decoration:none;border-color:#E07830;">
+  <a href="javascript:void(0)" onclick="scrollToSection('grip-os')" class="mk-route-card" style="text-decoration:none;border-color:#E07830;">
     <div class="mk-route-step" style="color:#E07830;">STEP 2: GOVERN</div>
     <div class="mk-route-title">Fix it in the right order</div>
     <div class="mk-route-desc">You have a completed diagnosis and need execution discipline. One constraint at a time.</div>
     <span class="mk-route-cta" style="color:#E07830;">GRIP OS &darr;</span>
   </a>
-  <a href="javascript:void(0)" onclick="scrollToSection('deep-dives')" class="mk-route-card" style="text-decoration:none;">
+  <a href="javascript:void(0)" onclick="scrollToSection('modules')" class="mk-route-card" style="text-decoration:none;">
     <div class="mk-route-step" style="color:#0f172a;">STEP 3: DEEPEN</div>
     <div class="mk-route-title">Go deep on one layer</div>
     <div class="mk-route-desc">You already know which GTM dimension needs deeper analysis. Isolate it with a focused diagnostic.</div>
@@ -550,7 +568,7 @@ section[id] { scroll-margin-top:100px; }
   .mk-copilot-h2{font-size:1.6rem !important;}
 }
 </style>
-<section class="container" id="copilot" style="margin:72px auto;max-width:1080px;padding:0 20px;">
+<section class="container" id="grip-os" style="margin:72px auto;max-width:1080px;padding:0 20px;">
   <div style="text-align:center;margin-bottom:48px;">
     <div style="display:inline-block;background:#E07830;color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:16px;">STEP 2: GOVERN EXECUTION</div>
     <h2 class="mk-copilot-h2" style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#0f172a;line-height:1.2;margin-bottom:16px;">Your diagnosis found the constraint.<br>GRIP OS makes sure you actually fix it.</h2>
@@ -629,7 +647,7 @@ section[id] { scroll-margin-top:100px; }
 </section>
 
 <!-- DIMENSION CHOOSER -->
-<section class="container mk-chooser" id="deep-dives">
+<section class="container mk-chooser" id="modules">
   <div class="mk-chooser-label">Go deeper on a specific dimension, or <a href="#" id="showAllLink">browse all 12 modules</a></div>
   <div class="mk-dim-grid" id="dimGrid">
     <div class="mk-dim-card active" data-dim="g" style="--dc:var(--g);"><div class="mk-dim-letter">G</div><div class="mk-dim-name">Guidance</div><div class="mk-dim-pain">Strategy is set, but the market isn't responding. Positioning doesn't land. ICP feels fuzzy.</div><div class="mk-dim-count">3 modules &middot; <span class="curr">&euro;</span><span data-price-key="module">749</span> each</div></div>
@@ -827,7 +845,7 @@ function scrollToSection(id) {
   if(hash){
     var dimMap={'guidance':'g','resources':'r','implementation':'i','performance':'p'};
     if(dimMap[hash]){activate(dimMap[hash]);setTimeout(function(){scrollToSection(hash);},100);}
-    else if(hash==='intelligence-report'||hash==='copilot'||hash==='deep-dives'){setTimeout(function(){scrollToSection(hash);},100);}
+    else if(hash==='intelligence-report'||hash==='grip-os'||hash==='modules'){setTimeout(function(){scrollToSection(hash);},100);}
     else{var t=document.getElementById(hash);if(t){var d=t.closest('.mk-detail');if(d){activate(d.getAttribute('data-detail'));setTimeout(function(){scrollToSection(hash);t.style.boxShadow='0 0 0 3px rgba(0,86,179,0.2)';setTimeout(function(){t.style.boxShadow='';},2000);},300);}}}
   }
   /* Module Payment Links */
@@ -979,6 +997,45 @@ function scrollToSection(id) {
     });
   }
   updateOSPrices(getDetectedCurrency());
+})();
+</script>
+<script>
+/* P14: Sticky sub-nav visibility + scroll spy */
+(function(){
+  var subnav = document.getElementById('mkSubnav');
+  if (!subnav) return;
+  var hero = document.querySelector('.mk-hero');
+  var links = subnav.querySelectorAll('.mk-subnav-link');
+  var sections = [];
+  links.forEach(function(l){ sections.push(document.getElementById(l.dataset.section)); });
+
+  function onScroll(){
+    var heroBottom = hero.getBoundingClientRect().bottom;
+    if(heroBottom < 80) subnav.classList.add('visible');
+    else subnav.classList.remove('visible');
+
+    var current = '';
+    for(var i=sections.length-1; i>=0; i--){
+      if(sections[i]){
+        var rect = sections[i].getBoundingClientRect();
+        if(rect.top <= 160) { current = sections[i].id; break; }
+      }
+    }
+    links.forEach(function(l){
+      if(l.dataset.section === current) l.classList.add('active');
+      else l.classList.remove('active');
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  links.forEach(function(l){
+    l.addEventListener('click', function(e){
+      e.preventDefault();
+      scrollToSection(this.dataset.section);
+    });
+  });
 })();
 </script>
 </body>
