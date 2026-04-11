@@ -78,6 +78,7 @@
           a('intelligence.html','Intelligence') +
           a('contact.html','Contact') +
           a('grip-marketplace.html','GRIP Marketplace') +
+          a('partners.html','Partner Program') +
           '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">Log in to GRIP OS</a>' +
         '</div>' +
       '</header>'
@@ -141,6 +142,19 @@
     } catch (e) {
       // Older browsers or blocked fetch — keep default header
     }
+
+    /* -- 6. Inject "Partner Program" link into footer (if not already present) -- */
+    try {
+      var footerEl = document.querySelector('footer');
+      if (footerEl && !footerEl.innerHTML.includes('partners.html')) {
+        var lastP = footerEl.querySelector('p:last-of-type');
+        if (lastP && !lastP.innerHTML.includes('partners.html')) {
+          lastP.insertAdjacentHTML('beforeend',
+            ' &middot; <a href="' + base + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Partner Program</a>'
+          );
+        }
+      }
+    } catch(e) {}
   }
 
   /* -- Run when DOM is ready -- */
