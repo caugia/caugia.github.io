@@ -100,7 +100,15 @@
       });
     }
 
-    /* -- 4. Auth-aware header: check GRIP OS session -- */
+    /* -- 4. Load partner referral tracking -- */
+    try {
+      var refScript = document.createElement('script');
+      refScript.src = base + 'assets/partner-referral.js';
+      refScript.defer = true;
+      document.head.appendChild(refScript);
+    } catch (e) { /* non-critical */ }
+
+    /* -- 5. Auth-aware header: check GRIP OS session -- */
     try {
       fetch("https://os.caugia.com/api/auth/status", {
         credentials: "include",

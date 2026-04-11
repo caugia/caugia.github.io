@@ -30,6 +30,7 @@
     })(window, document, "clarity", "script", "w4z8p58zse");
   }
 </script>
+<script src="assets/partner-referral.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Partner Program | Caugia</title>
@@ -92,6 +93,47 @@
   .partner-cta-block h2 { font-size: 2rem; color: #fff; margin-bottom: 12px; }
   .partner-cta-block p { color: #94a3b8; max-width: 500px; margin: 0 auto 28px; font-size: 1rem; line-height: 1.6; }
 
+  /* Partner application form */
+  .partner-form { max-width: 640px; margin: 0 auto; text-align: left; }
+  .partner-form-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .partner-form-field { display: flex; flex-direction: column; }
+  .partner-form-field.full-width { grid-column: 1 / -1; }
+  .partner-form-field label {
+    font-size: 0.82rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;
+  }
+  .partner-form-field input,
+  .partner-form-field select,
+  .partner-form-field textarea {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+    padding: 12px 14px; font-size: 0.92rem; color: #1a2340;
+    font-family: Inter, sans-serif; outline: none; transition: border-color 0.2s;
+  }
+  .partner-form-field input:focus,
+  .partner-form-field select:focus,
+  .partner-form-field textarea:focus {
+    border-color: #E07830; box-shadow: 0 0 0 3px rgba(224,120,48,0.15);
+  }
+  .partner-form-field textarea { resize: vertical; min-height: 100px; }
+  .partner-form-field select { appearance: auto; }
+  .partner-form-submit {
+    display: inline-block; margin-top: 20px; padding: 14px 40px;
+    background: #E07830; color: #fff; border: none; border-radius: 10px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: Inter, sans-serif; transition: background 0.2s;
+  }
+  .partner-form-submit:hover { background: #c96520; }
+  .partner-form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .partner-form-error {
+    color: #f87171; font-size: 0.85rem; margin-top: 12px; display: none;
+  }
+  .partner-form-success {
+    text-align: center; padding: 40px 0;
+  }
+  .partner-form-success h3 { color: #fff; font-size: 1.3rem; margin-bottom: 8px; }
+  .partner-form-success p { color: #94a3b8; font-size: 0.95rem; }
+
   .faq-section { padding: 64px 0; }
   .faq-section h2 { text-align: center; font-size: 2rem; margin-bottom: 32px; }
   .faq-item { padding: 20px 0; border-bottom: 1px solid #f1f5f9; }
@@ -103,6 +145,8 @@
     .partner-cards { grid-template-columns: 1fr; }
     .steps-grid { grid-template-columns: 1fr; gap: 24px; }
     .commission-block .big-number { font-size: 3rem; }
+    .partner-form-grid { grid-template-columns: 1fr; }
+    .partner-cta-block { padding: 40px 20px; }
   }
 </style>
 </head>
@@ -219,12 +263,67 @@
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- CTA / Application Form -->
     <section class="container" style="padding-bottom: 72px;">
       <div class="partner-cta-block">
-        <h2>Ready to partner with Caugia?</h2>
-        <p>Apply today. We review every application within 48 hours and onboard accepted partners within one week.</p>
-        <a href="mailto:partners@caugia.com?subject=Partner%20Application" class="btn btn-primary" style="font-size:1rem; padding:16px 40px;">Apply to become a partner</a>
+        <h2>Apply to become a partner</h2>
+        <p>We review every application within 48 hours.</p>
+
+        <div id="partner-form-container">
+          <form id="partner-apply-form" class="partner-form" novalidate>
+            <div class="partner-form-grid">
+              <div class="partner-form-field">
+                <label for="pa-name">Name *</label>
+                <input type="text" id="pa-name" name="name" required placeholder="Your full name" />
+              </div>
+              <div class="partner-form-field">
+                <label for="pa-email">Email *</label>
+                <input type="email" id="pa-email" name="email" required placeholder="you@company.com" />
+              </div>
+              <div class="partner-form-field">
+                <label for="pa-company">Company</label>
+                <input type="text" id="pa-company" name="company" placeholder="Company name" />
+              </div>
+              <div class="partner-form-field">
+                <label for="pa-website">Website</label>
+                <input type="url" id="pa-website" name="website" placeholder="https://..." />
+              </div>
+              <div class="partner-form-field">
+                <label for="pa-type">Partner Type *</label>
+                <select id="pa-type" name="partner_type" required>
+                  <option value="">Select partner type</option>
+                  <option value="gtm_consultant">GTM Consultant</option>
+                  <option value="revops_agency">RevOps Agency</option>
+                  <option value="fractional_cro_cmo">Fractional CRO/CMO</option>
+                  <option value="vc_operating_partner">VC Operating Partner</option>
+                </select>
+              </div>
+              <div class="partner-form-field">
+                <label for="pa-clients">Number of B2B SaaS clients</label>
+                <select id="pa-clients" name="client_count">
+                  <option value="">Select range</option>
+                  <option value="1-5">1-5</option>
+                  <option value="6-20">6-20</option>
+                  <option value="20+">20+</option>
+                </select>
+              </div>
+              <div class="partner-form-field full-width">
+                <label for="pa-description">Tell us about your practice and how you serve clients</label>
+                <textarea id="pa-description" name="description" placeholder="What does your practice look like? How do you typically work with B2B SaaS clients?"></textarea>
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <button type="submit" class="partner-form-submit" id="pa-submit-btn">Submit Application</button>
+              <div class="partner-form-error" id="pa-error"></div>
+            </div>
+          </form>
+        </div>
+
+        <div id="partner-form-success" class="partner-form-success" style="display: none;">
+          <h3>Application submitted!</h3>
+          <p>Check your email for confirmation.</p>
+        </div>
+
         <p style="color:#64748b; font-size:0.82rem; margin-top:16px;">Questions? Email <a href="mailto:partners@caugia.com" style="color:#60a5fa;">partners@caugia.com</a></p>
       </div>
     </section>
@@ -237,5 +336,68 @@
   </footer>
 
   <script src="assets/caugia-base.js"></script>
+  <script>
+  (function() {
+    var form = document.getElementById('partner-apply-form');
+    var errEl = document.getElementById('pa-error');
+    var successEl = document.getElementById('partner-form-success');
+    var containerEl = document.getElementById('partner-form-container');
+    var submitBtn = document.getElementById('pa-submit-btn');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      errEl.style.display = 'none';
+
+      var name = form.elements['name'].value.trim();
+      var email = form.elements['email'].value.trim();
+      var partner_type = form.elements['partner_type'].value;
+
+      if (!name || !email || !partner_type) {
+        errEl.textContent = 'Please fill in all required fields.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      var payload = {
+        name: name,
+        email: email,
+        company: form.elements['company'].value.trim() || null,
+        website: form.elements['website'].value.trim() || null,
+        partner_type: partner_type,
+        client_count: form.elements['client_count'].value || null,
+        description: form.elements['description'].value.trim() || null,
+      };
+
+      fetch('https://os.caugia.com/api/partner/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then(function(res) {
+          if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Something went wrong. Please try again.'); });
+          return res.json();
+        })
+        .then(function() {
+          containerEl.style.display = 'none';
+          successEl.style.display = 'block';
+        })
+        .catch(function(err) {
+          errEl.textContent = err.message || 'Something went wrong. Please try again.';
+          errEl.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Application';
+        });
+    });
+  })();
+  </script>
 </body>
 </html>
