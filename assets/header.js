@@ -21,7 +21,8 @@
       /* Brand name toggle */
       ".brand .brand-short{display:none;}" +
       /* Login link */
-      ".caugia-login-link{color:#64748b;font-weight:600;font-size:0.85rem;text-decoration:none;transition:color 0.15s ease;}" +
+      ".caugia-login-link{color:#64748b;font-weight:600;font-size:0.85rem;text-decoration:none;transition:color 0.15s ease;opacity:0;transition:opacity 0.2s ease;}" +
+      ".caugia-login-link.visible{opacity:1;}" +
       ".caugia-login-link:hover{color:#0056b3;}" +
       /* Workspace button */
       ".btn-workspace{display:inline-flex!important;align-items:center;justify-content:center;" +
@@ -126,30 +127,34 @@
           var loginLink = document.getElementById("caugiaLoginLink");
           var ctaBtn = document.getElementById("caugiaCta");
 
-          // Hide login link when authenticated
-          if (loginLink) loginLink.style.display = "none";
-
-          // Add workspace link BEFORE CTA — Marketplace stays the primary CTA always
-          if (ctaBtn) {
-            var wsLink = document.createElement("a");
+          if (loginLink) {
             if (data.workspace) {
-              wsLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-              wsLink.textContent = "My Workspace";
+              loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
+              loginLink.textContent = "My Workspace";
+              loginLink.style.fontWeight = "700";
             } else {
-              wsLink.href = "https://os.caugia.com/dashboard";
-              wsLink.textContent = "GRIP OS";
+              loginLink.href = "https://os.caugia.com/dashboard";
+              loginLink.textContent = "GRIP OS";
+              loginLink.style.fontWeight = "700";
             }
-            wsLink.className = "caugia-login-link";
-            wsLink.style.fontWeight = "700";
-            ctaBtn.parentNode.insertBefore(wsLink, ctaBtn);
-            // Marketplace CTA stays unchanged — it's the converter
+            loginLink.classList.add("visible");
           }
+          // Marketplace CTA stays unchanged — it's the converter
         })
         .catch(function () {
-          // Silently fail — show default header for unauthenticated users
+          // Auth check failed — show login link as normal
+          var ll = document.getElementById("caugiaLoginLink");
+          if (ll) ll.classList.add("visible");
         });
+      // Fallback: if auth check takes too long, show login link after 1.5s
+      setTimeout(function() {
+        var ll = document.getElementById("caugiaLoginLink");
+        if (ll && !ll.classList.contains("visible")) ll.classList.add("visible");
+      }, 1500);
     } catch (e) {
-      // Older browsers or blocked fetch — keep default header
+      // Older browsers or blocked fetch — show login link immediately
+      var ll = document.getElementById("caugiaLoginLink");
+      if (ll) ll.classList.add("visible");
     }
 
     /* -- 6. Inject "Partner Program" link into footer (if not already present) -- */
