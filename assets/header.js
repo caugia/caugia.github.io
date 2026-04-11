@@ -30,6 +30,9 @@
       "transition:all 0.2s ease;box-shadow:0 2px 8px rgba(59,108,216,0.2);" +
       "text-decoration:none!important;white-space:nowrap;}" +
       ".btn-workspace:hover{opacity:0.9;transform:translateY(-1px);}" +
+      /* Marketplace text link (secondary style when workspace btn is shown) */
+      ".caugia-marketplace-link{color:#64748b;font-weight:600;font-size:0.85rem;text-decoration:none;transition:color 0.15s ease;white-space:nowrap;}" +
+      ".caugia-marketplace-link:hover{color:#0056b3;}" +
       /* Gradient bridge line */
       ".caugia-gradient-bridge{height:3px;background:linear-gradient(to right,#3B6CD8,#E07830);margin:0;padding:0;}" +
       /* Mobile overrides */
@@ -37,6 +40,7 @@
         ".nav-actions .btn,.nav-actions .btn-secondary{display:none!important;}" +
         ".nav-actions .btn-cta,.nav-actions .btn-workspace{display:inline-flex!important;padding:8px 16px;font-size:0.8rem;}" +
         ".nav-actions .caugia-login-link{display:none!important;}" +
+        ".nav-actions .caugia-marketplace-link{display:none!important;}" +
         ".brand .brand-full{display:none!important;}" +
         ".brand .brand-short{display:inline!important;}" +
       "}";
@@ -125,15 +129,20 @@
           // Hide login link when authenticated
           if (loginLink) loginLink.style.display = "none";
 
-          // Replace CTA with workspace link
-          if (ctaBtn && data.workspace) {
-            ctaBtn.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-            ctaBtn.className = "btn-workspace";
-            ctaBtn.textContent = "My Workspace \u2192";
-          } else if (ctaBtn && data.authenticated) {
-            ctaBtn.href = "https://os.caugia.com/dashboard";
-            ctaBtn.className = "btn-workspace";
-            ctaBtn.textContent = "GRIP OS \u2192";
+          // Add workspace button before CTA; downgrade CTA to text link
+          if (ctaBtn) {
+            var wsBtn = document.createElement("a");
+            if (data.workspace) {
+              wsBtn.href = "https://os.caugia.com/workspace/" + data.workspace.id;
+              wsBtn.textContent = "My Workspace \u2192";
+            } else {
+              wsBtn.href = "https://os.caugia.com/dashboard";
+              wsBtn.textContent = "GRIP OS \u2192";
+            }
+            wsBtn.className = "btn-workspace";
+            ctaBtn.parentNode.insertBefore(wsBtn, ctaBtn);
+            // Downgrade marketplace CTA to subtle text link
+            ctaBtn.className = "caugia-marketplace-link";
           }
         })
         .catch(function () {
