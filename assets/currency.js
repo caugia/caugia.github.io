@@ -24,18 +24,18 @@
     },
     USD: {
       symbol: "$",
-      report:       "2,795",
-      module:       "849",
-      bundle:       "1,995",
-      reportModule: "3,295",
-      reportBundle: "4,495",
+      report:       "2,995",
+      module:       "899",
+      bundle:       "2,195",
+      reportModule: "3,595",
+      reportBundle: "4,995",
       consultingComp: "25k"
     },
     GBP: {
       symbol: "£",
-      report:       "2,195",
-      module:       "649",
-      bundle:       "1,595",
+      report:       "2,295",
+      module:       "699",
+      bundle:       "1,695",
       reportModule: "2,695",
       reportBundle: "3,495",
       consultingComp: "25k"
