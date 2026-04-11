@@ -57,8 +57,20 @@
   .res-section h2 { font-size: 1.6rem; margin-bottom: 16px; color: var(--text-dark); }
   .res-section h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
   .res-section p, .res-section li { font-size: 0.95rem; color: var(--text-body); line-height: 1.7; }
-  .res-section ul { padding-left: 20px; margin: 12px 0; }
+  .res-section ul { padding-left: 20px; margin: 12px 0; list-style: none; }
   .res-section li { margin-bottom: 8px; }
+
+  /* Aligned definition lists for clean two-column bullet layouts */
+  .def-list { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 16px 0; }
+  .def-list dt { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; white-space: nowrap; }
+  .def-list dd { margin: 0; font-size: 0.95rem; color: var(--text-body); line-height: 1.6; }
+
+  /* Compact rule list with bold label + description */
+  .rule-list { margin: 16px 0; }
+  .rule-item { padding: 10px 0; border-bottom: 1px solid #f1f5f9; display: flex; gap: 8px; font-size: 0.95rem; line-height: 1.6; }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-label { font-weight: 700; color: var(--text-dark); white-space: nowrap; flex-shrink: 0; }
+  .rule-desc { color: var(--text-body); }
 
   .rate-block {
     text-align: center; padding: 40px; margin: 20px 0;
@@ -154,14 +166,14 @@
     <!-- What Qualifies -->
     <section class="container res-section">
       <h2>What Qualifies</h2>
-      <p>You earn 20% on every product your referred clients purchase. No exclusions, no tiers, no fine print.</p>
-      <ul>
-        <li><strong>GTM Intelligence Reports</strong> &mdash; one-time</li>
-        <li><strong>Module Deep Dives</strong> &mdash; one-time</li>
-        <li><strong>Dimension Bundles</strong> &mdash; one-time</li>
-        <li><strong>GRIP OS Core subscriptions</strong> &mdash; recurring</li>
-        <li><strong>GRIP OS Full subscriptions</strong> &mdash; recurring</li>
-      </ul>
+      <p>You earn 20% on every product your referred clients purchase. Same rate for every partner. No tiers. Terms are in the partner agreement.</p>
+      <dl class="def-list">
+        <dt>GTM Intelligence Reports</dt><dd>One-time</dd>
+        <dt>Module Deep Dives</dt><dd>One-time</dd>
+        <dt>Dimension Bundles</dt><dd>One-time</dd>
+        <dt>GRIP OS Core subscriptions</dt><dd>Recurring monthly</dd>
+        <dt>GRIP OS Full subscriptions</dt><dd>Recurring monthly</dd>
+      </dl>
     </section>
 
     <!-- Earnings Examples -->
@@ -186,7 +198,7 @@
           <tr>
             <td>GRIP OS Core</td>
             <td>&euro;799/mo</td>
-            <td class="earn">&euro;159.80/mo</td>
+            <td class="earn">&euro;160/mo</td>
             <td>Recurring</td>
           </tr>
           <tr>
@@ -215,13 +227,13 @@
     <section class="container res-section">
       <h2>Attribution Rules</h2>
       <p>We use first-touch attribution with a 90-day cookie window. Here is exactly how it works:</p>
-      <ul>
-        <li><strong>First-touch wins.</strong> The first partner whose referral link the client clicks gets attribution. No splitting.</li>
-        <li><strong>90-day window.</strong> When a client clicks your link, you own that email address for 90 days. Any purchase within that window is yours.</li>
-        <li><strong>Another partner clicked first?</strong> If the client already clicked a different partner's link before yours, that partner gets attribution. First-touch, no exceptions.</li>
-        <li><strong>Already a Caugia customer?</strong> If the client had an existing Caugia account and purchases before clicking your link, you do not earn commission on pre-existing purchases. You earn commission on new purchases only.</li>
-        <li><strong>Ambiguous attribution?</strong> If attribution is genuinely unclear, Caugia decides. Our default is to favor the partner.</li>
-      </ul>
+      <div class="rule-list">
+        <div class="rule-item"><span class="rule-label">First-touch wins.</span><span class="rule-desc">The first partner whose referral link the client clicks gets attribution. No splitting.</span></div>
+        <div class="rule-item"><span class="rule-label">90-day window.</span><span class="rule-desc">When a client clicks your link, you own that email address for 90 days. Any purchase within that window is yours.</span></div>
+        <div class="rule-item"><span class="rule-label">Another partner clicked first?</span><span class="rule-desc">That partner gets attribution. First-touch, no exceptions.</span></div>
+        <div class="rule-item"><span class="rule-label">Already a Caugia customer?</span><span class="rule-desc">No commission on pre-existing purchases. You earn commission on new purchases only.</span></div>
+        <div class="rule-item"><span class="rule-label">Ambiguous attribution?</span><span class="rule-desc">Caugia decides. Our intent is to resolve ambiguity in the partner's favor where possible.</span></div>
+      </div>
     </section>
 
     <!-- Edge Cases: When You DO Get Paid -->
@@ -230,24 +242,24 @@
 
       <div class="edge-green">
         <h3>When You DO Get Paid</h3>
-        <ul>
-          <li><strong>Client upgrades from Core to Full</strong> &mdash; you earn 20% of the new, higher amount</li>
-          <li><strong>Client adds module assessments</strong> &mdash; you earn 20% on every add-on purchase</li>
-          <li><strong>Client renews after pausing</strong> &mdash; you earn 20% when payments resume</li>
-          <li><strong>Client's colleague signs up under the same company</strong> &mdash; attributed to you if the same email domain, within the 90-day window</li>
-        </ul>
+        <dl class="def-list" style="gap:6px 12px;">
+          <dt style="color:#15803d;">Upgrade Core → Full</dt><dd style="color:#15803d;">You earn 20% of the new, higher amount</dd>
+          <dt style="color:#15803d;">Client adds modules</dt><dd style="color:#15803d;">You earn 20% on every add-on purchase</dd>
+          <dt style="color:#15803d;">Renews after pausing</dt><dd style="color:#15803d;">You earn 20% when payments resume</dd>
+          <dt style="color:#15803d;">Colleague same company</dt><dd style="color:#15803d;">Attributed to you if same email domain, within 90-day window</dd>
+        </dl>
       </div>
 
       <div class="edge-red">
         <h3>When You DON'T Get Paid</h3>
-        <ul>
-          <li><strong>Client was already a paying Caugia customer</strong> before your referral &mdash; no commission on pre-existing purchases</li>
-          <li><strong>Client clicked another partner's link first</strong> &mdash; first-touch wins, no exceptions</li>
-          <li><strong>Client requests a refund within 14 days</strong> &mdash; commission is reversed</li>
-          <li><strong>Client's subscription is paused</strong> &mdash; commission paused (resumes when payment resumes)</li>
-          <li><strong>Client disputes the charge (chargeback)</strong> &mdash; commission is reversed</li>
-          <li><strong>Partner violates terms (spam, misrepresentation)</strong> &mdash; account suspended, commissions forfeited</li>
-        </ul>
+        <dl class="def-list" style="gap:6px 12px;">
+          <dt style="color:#b91c1c;">Already a customer</dt><dd style="color:#b91c1c;">No commission on pre-existing purchases</dd>
+          <dt style="color:#b91c1c;">Other partner first</dt><dd style="color:#b91c1c;">First-touch wins, no exceptions</dd>
+          <dt style="color:#b91c1c;">Refund within 14 days</dt><dd style="color:#b91c1c;">Commission is reversed</dd>
+          <dt style="color:#b91c1c;">Subscription paused</dt><dd style="color:#b91c1c;">Commission paused (resumes when payment resumes)</dd>
+          <dt style="color:#b91c1c;">Chargeback</dt><dd style="color:#b91c1c;">Commission is reversed</dd>
+          <dt style="color:#b91c1c;">Terms violation</dt><dd style="color:#b91c1c;">Account suspended, commissions forfeited</dd>
+        </dl>
       </div>
     </section>
 
@@ -273,23 +285,23 @@
         </div>
       </div>
 
-      <ul>
-        <li><strong>Calculation:</strong> 1st of each month, covering the previous month's purchases and renewals.</li>
-        <li><strong>Approval:</strong> 1st through 10th. We verify no refunds, chargebacks, or disputes occurred.</li>
-        <li><strong>Payout:</strong> 15th of each month via bank transfer.</li>
-        <li><strong>Minimum payout:</strong> &euro;50. Smaller amounts roll over to the next month.</li>
-        <li><strong>Currency:</strong> Payouts are in EUR. Non-EUR transactions are converted at Stripe's exchange rate on the date of the original charge.</li>
-      </ul>
+      <div class="rule-list">
+        <div class="rule-item"><span class="rule-label">Calculation</span><span class="rule-desc">1st of each month, covering the previous month's purchases and renewals.</span></div>
+        <div class="rule-item"><span class="rule-label">Approval</span><span class="rule-desc">1st through 10th. We verify no refunds, chargebacks, or disputes occurred.</span></div>
+        <div class="rule-item"><span class="rule-label">Payout</span><span class="rule-desc">15th of each month via bank transfer.</span></div>
+        <div class="rule-item"><span class="rule-label">Minimum</span><span class="rule-desc">&euro;50. Smaller amounts roll over to the next month.</span></div>
+        <div class="rule-item"><span class="rule-label">Currency</span><span class="rule-desc">Payouts in EUR. Non-EUR transactions converted at Stripe's exchange rate.</span></div>
+      </div>
     </section>
 
     <!-- Tax & Legal -->
     <section class="container res-section">
       <h2>Tax &amp; Legal</h2>
-      <div class="info-box">
-        <p><strong>Partners are independent contractors, not employees.</strong> The commission relationship does not constitute employment, agency, or partnership with Caugia SASU.</p>
-        <p>You are responsible for your own tax obligations in your jurisdiction. Caugia does not withhold taxes on commission payouts.</p>
-        <p>Caugia provides annual commission statements in January for the previous calendar year.</p>
-        <p>If your monthly payouts exceed &euro;500, you must provide valid invoicing details (company name, address, VAT number if applicable) for compliance purposes.</p>
+      <div class="rule-list">
+        <div class="rule-item"><span class="rule-label">Relationship</span><span class="rule-desc">Partners are independent contractors. The commission relationship does not constitute employment, agency, or partnership with Caugia SASU.</span></div>
+        <div class="rule-item"><span class="rule-label">Tax responsibility</span><span class="rule-desc">You are responsible for your own tax obligations. Caugia does not withhold taxes on commission payouts.</span></div>
+        <div class="rule-item"><span class="rule-label">Annual statements</span><span class="rule-desc">Caugia provides commission statements in January for the previous calendar year.</span></div>
+        <div class="rule-item"><span class="rule-label">Invoicing threshold</span><span class="rule-desc">If monthly payouts exceed &euro;500, you must provide valid invoicing details (company name, address, VAT number if applicable).</span></div>
       </div>
     </section>
 
