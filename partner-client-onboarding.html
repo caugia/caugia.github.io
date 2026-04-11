@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.caugia.com/partner-client-onboarding.html" />
 <meta property="og:title" content="Client Onboarding Guide — Caugia Partners" />
-<meta property="og:description" content="How to onboard a client you've referred to GRIP OS. Step-by-step process and pro tips." />
+<meta property="og:description" content="How to onboard a client you've referred to GRIP OS. Step-by-step process, scripts, and what to avoid." />
 <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
@@ -59,6 +59,16 @@
   .res-section ul { padding-left: 20px; margin: 12px 0; }
   .res-section li { margin-bottom: 8px; }
 
+  .funnel-flow {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin: 24px 0; flex-wrap: wrap;
+  }
+  .funnel-step {
+    padding: 10px 20px; border-radius: 10px; font-size: 0.88rem; font-weight: 700;
+    background: #eff6ff; color: #1e40af;
+  }
+  .funnel-arrow { font-size: 1.2rem; color: #94a3b8; }
+
   .step-card {
     display: flex; gap: 20px; margin: 28px 0; padding: 28px; background: #fff;
     border: 1px solid #e2e8f0; border-radius: 16px;
@@ -71,15 +81,41 @@
   .step-body h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
   .step-body p { margin: 0; }
 
-  .pro-tips {
-    background: linear-gradient(135deg, #eff6ff 0%, #fef3e8 100%);
-    border-radius: 16px; padding: 28px 32px; margin: 32px 0;
+  .buy-flow {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;
+    padding: 24px 28px; margin: 24px 0;
   }
-  .pro-tips h2 { font-size: 1.3rem; margin-bottom: 16px; }
-  .pro-tip {
-    margin: 14px 0; padding-left: 16px; border-left: 3px solid #E07830;
+  .buy-flow h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--text-dark); }
+  .buy-flow ol { padding-left: 20px; margin: 0; }
+  .buy-flow li { margin-bottom: 8px; font-size: 0.95rem; color: var(--text-body); line-height: 1.7; }
+
+  .do-dont {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0;
   }
-  .pro-tip p { margin: 0; }
+  .do-col {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 24px 28px;
+  }
+  .do-col h3 { color: #166534; margin-bottom: 12px; font-size: 1.05rem; }
+  .do-col li { color: #15803d; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.6; }
+  .dont-col {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 24px 28px;
+  }
+  .dont-col h3 { color: #991b1b; margin-bottom: 12px; font-size: 1.05rem; }
+  .dont-col li { color: #b91c1c; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.6; }
+
+  .script-block {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+    padding: 24px 28px; margin: 20px 0;
+  }
+  .script-block h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+  .script-block .script-label { font-size: 0.78rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: #64748b; margin-bottom: 8px; }
+  .script-block blockquote {
+    margin: 0; padding: 16px 20px; background: #f8fafc; border-left: 3px solid #3B6CD8;
+    border-radius: 0 8px 8px 0; font-size: 0.93rem; color: var(--text-body); line-height: 1.7;
+    font-style: italic;
+  }
 
   .back-link { display: inline-block; margin-bottom: 24px; font-size: 0.88rem; color: #3B6CD8; text-decoration: none; font-weight: 600; }
   .back-link:hover { text-decoration: underline; }
@@ -90,12 +126,13 @@
     .res-hero { padding: 24px 0 16px; }
     .res-section { padding: 24px 0; }
     .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .pro-tips { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .do-col, .dont-col { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
   @media (max-width: 768px) {
     .res-hero h1 { font-size: 1.8rem; }
     .step-card { flex-direction: column; gap: 12px; }
+    .do-dont { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -107,68 +144,135 @@
       <a href="partners.html" class="back-link">&larr; Back to Partner Program</a>
       <span class="eyebrow">Onboarding Process</span>
       <h1>Client Onboarding Guide</h1>
-      <p>A step-by-step guide to onboarding clients you refer to GRIP OS.</p>
+      <p>The exact process from first referral link to paying subscriber. No guesswork.</p>
     </section>
 
+    <!-- The Funnel -->
     <section class="container res-section">
-      <h2>The Onboarding Process</h2>
+      <h2>The Funnel</h2>
+      <p>Every client engagement follows five stages. Know where you are.</p>
+      <div class="funnel-flow">
+        <div class="funnel-step">1. Refer</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">2. Diagnose</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">3. Review</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">4. Convert</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">5. Expand</div>
+      </div>
+    </section>
+
+    <!-- Step-by-Step -->
+    <section class="container res-section">
+      <h2>Step-by-Step</h2>
 
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-body">
           <h3>Share your referral link</h3>
-          <p>Send your unique link (<strong>caugia.com?ref=YOUR_CODE</strong>) to your client. They land on the homepage with your attribution automatically tracked via a 90-day cookie.</p>
+          <p>Send your unique link (<strong>caugia.com?ref=YOUR_CODE</strong>) to your client. They land on the homepage. A 90-day attribution cookie is set automatically. You own that email address for 90 days from the first click.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-body">
-          <h3>Guide them to the GTM Intelligence Report</h3>
-          <p>The report is the entry point. It contains 265 questions and takes approximately 35 minutes to complete. It generates a 45-page diagnostic with GRIP scores, constraint analysis, financial impact estimates, and a 90-day resolution plan.</p>
+          <h3>Client completes the GTM Intelligence Report</h3>
+          <p>This is the entry point. ~35 minutes. 265 questions. The output is a 45+ page diagnostic report covering GRIP scores across 72 scoring engines, binding constraint identification, financial leakage quantification, and a 90-day resolution plan. This is the product that sells everything else.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-body">
-          <h3>Buy for your client (optional)</h3>
-          <p>You can purchase the report on behalf of your client via the Shop. Check &ldquo;Purchase for a client&rdquo;, enter their email, and they receive the assessment link directly. You stay invisible in the transaction.</p>
+          <h3>Review results together</h3>
+          <p>This is where you earn your position as advisor. Walk through the report with your client and focus on three things: the binding constraint, the leakage number, and the first 3 recommended actions. Do not try to cover all 45+ pages. Focus on what matters most and what they can act on immediately.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-body">
-          <h3>Review results together</h3>
-          <p>Once the report is complete, review the GRIP scores with your client. Focus on three things: the binding constraint, the financial leakage, and the first 3 recommended actions.</p>
+          <h3>Recommend GRIP OS</h3>
+          <p>After the report, the natural next step is ongoing constraint governance. <strong>Core (&euro;799/mo)</strong> is for teams that want to self-manage constraint resolution with 280+ connectors and scoring engines. <strong>Full (&euro;1,495/mo)</strong> adds Sophie AI advisor, the simulator, benchmarks, and deeper analytical capability. Let the diagnostic results guide which tier makes sense. Do not push Full if Core solves the problem.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">5</div>
         <div class="step-body">
-          <h3>Recommend GRIP OS</h3>
-          <p>After the report, guide your client to a GRIP OS subscription for ongoing constraint governance. <strong>Core (&euro;799/mo)</strong> for self-service teams, <strong>Full (&euro;1,495/mo)</strong> for Sophie AI advisor and the full platform including 280+ connectors, benchmarks, and the simulator.</p>
+          <h3>Expand over time</h3>
+          <p>As constraints get resolved, new ones emerge. That is the nature of GTM systems. Clients who resolve their first binding constraint almost always find a second one worth addressing. Your role: stay close enough to recognize when a deeper module, a new assessment, or an upgrade makes sense. You earn commission on every expansion.</p>
         </div>
       </div>
     </section>
 
-    <section class="container">
-      <div class="pro-tips">
-        <h2>Pro Tips</h2>
+    <!-- Buy for Client Flow -->
+    <section class="container res-section">
+      <h2>&ldquo;Buy for Client&rdquo; Flow</h2>
+      <p>You can purchase any product on behalf of your client. The client never sees your involvement.</p>
 
-        <div class="pro-tip">
-          <p><strong>Start with the leakage number.</strong> &ldquo;You are losing &euro;X per year in system leakage&rdquo; gets attention faster than any feature list.</p>
-        </div>
+      <div class="buy-flow">
+        <h3>How it works:</h3>
+        <ol>
+          <li>Go to any GRIP OS workspace and open the <strong>Shop</strong>.</li>
+          <li>Check <strong>&ldquo;Purchase for a client&rdquo;</strong>.</li>
+          <li>Enter the client's email address.</li>
+          <li>Complete payment. The receipt goes to you, not the client.</li>
+          <li>The client receives the assessment link at their email. They see only Caugia branding.</li>
+          <li>Your commission is automatically attributed. No extra steps needed.</li>
+        </ol>
+      </div>
 
-        <div class="pro-tip">
-          <p><strong>Do not sell the product. Sell the diagnosis.</strong> The GTM Intelligence Report sells itself. Your job is to get them to take it, not to pitch features.</p>
-        </div>
+      <p style="font-size:0.9rem; color:#64748b;">This is useful when you want to gift a diagnostic as part of a consulting engagement, or when the client's procurement process would slow things down. You pay, they get the value, you earn the commission.</p>
+    </section>
 
-        <div class="pro-tip">
-          <p><strong>Frame GRIP OS as the operating system for their GTM fix.</strong> It is not another dashboard. It is the system that governs constraint resolution and tracks progress against the binding constraint.</p>
+    <!-- Do / Don't -->
+    <section class="container res-section">
+      <h2>What Partners Should Do &amp; Should NOT Do</h2>
+      <div class="do-dont">
+        <div class="do-col">
+          <h3>DO</h3>
+          <ul style="list-style:none; padding:0;">
+            <li>Lead with the leakage number after the report is complete</li>
+            <li>Let the report do the selling &mdash; it is more credible than any pitch</li>
+            <li>Position yourself as the advisor who brought clarity, not the vendor</li>
+            <li>Follow up within 48 hours of report completion</li>
+            <li>Offer to walk through results together on a call</li>
+          </ul>
         </div>
+        <div class="dont-col">
+          <h3>DON'T</h3>
+          <ul style="list-style:none; padding:0;">
+            <li>Don't oversell before the diagnosis &mdash; you have no evidence yet</li>
+            <li>Don't share your commission rate with the client</li>
+            <li>Don't promise specific revenue outcomes</li>
+            <li>Don't present GRIP OS as your own tool (unless you have co-brand approval)</li>
+            <li>Don't skip the report and push straight to an OS subscription</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onboarding Scripts -->
+    <section class="container res-section">
+      <h2>Onboarding Scripts</h2>
+      <p>Two tested scripts. Copy, personalize, send.</p>
+
+      <div class="script-block">
+        <div class="script-label">Script A &mdash; Cold Intro (email / LinkedIn)</div>
+        <blockquote>
+          Hi [Name], I've been working with a diagnostic tool that I think would be genuinely useful for [Company]. It's a 35-minute assessment that identifies exactly where your GTM system is constrained and quantifies the revenue impact. No sales pitch, no follow-up pressure &mdash; just the report. Would you be open to trying it? Here's the link: [your referral link]
+        </blockquote>
+      </div>
+
+      <div class="script-block">
+        <div class="script-label">Script B &mdash; Warm Intro (existing client / contact)</div>
+        <blockquote>
+          I want to share something with you. Before we start our next engagement, I'd like you to take a 35-minute GTM diagnostic. It scores your entire revenue system across 72 engines and identifies the binding constraint. I've found it dramatically sharpens where we focus. The report is on me &mdash; I'll send you the link.
+        </blockquote>
       </div>
     </section>
   </main>
