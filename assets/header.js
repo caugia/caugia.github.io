@@ -129,20 +129,20 @@
           // Hide login link when authenticated
           if (loginLink) loginLink.style.display = "none";
 
-          // Add workspace button before CTA; downgrade CTA to text link
+          // Add workspace link BEFORE CTA — Marketplace stays the primary CTA always
           if (ctaBtn) {
-            var wsBtn = document.createElement("a");
+            var wsLink = document.createElement("a");
             if (data.workspace) {
-              wsBtn.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-              wsBtn.textContent = "My Workspace \u2192";
+              wsLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
+              wsLink.textContent = "My Workspace";
             } else {
-              wsBtn.href = "https://os.caugia.com/dashboard";
-              wsBtn.textContent = "GRIP OS \u2192";
+              wsLink.href = "https://os.caugia.com/dashboard";
+              wsLink.textContent = "GRIP OS";
             }
-            wsBtn.className = "btn-workspace";
-            ctaBtn.parentNode.insertBefore(wsBtn, ctaBtn);
-            // Downgrade marketplace CTA to subtle text link
-            ctaBtn.className = "caugia-marketplace-link";
+            wsLink.className = "caugia-login-link";
+            wsLink.style.fontWeight = "700";
+            ctaBtn.parentNode.insertBefore(wsLink, ctaBtn);
+            // Marketplace CTA stays unchanged — it's the converter
           }
         })
         .catch(function () {
