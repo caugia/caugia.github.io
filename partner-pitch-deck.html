@@ -32,13 +32,13 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Partner Pitch Deck | Caugia</title>
-<meta name="description" content="Sales guide for Caugia partners. Position GRIP OS to your clients with confidence. Pricing, objection handling, and positioning strategies." />
+<title>Partner Talk Track | Caugia</title>
+<meta name="description" content="How to sell the GTM Intelligence Report. Partner talk track, deal scenarios, commission math, and objection handling." />
 <link rel="canonical" href="https://www.caugia.com/partner-pitch-deck.html" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.caugia.com/partner-pitch-deck.html" />
-<meta property="og:title" content="Partner Pitch Deck — GRIP OS Sales Guide" />
-<meta property="og:description" content="Everything you need to present GRIP OS to your clients. Positioning, pricing, objection handling." />
+<meta property="og:title" content="Partner Talk Track &mdash; How to Sell the Diagnosis" />
+<meta property="og:description" content="Partner operating guide: funnel, deal scenarios, commission math, objection handling." />
 <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-final.png">
@@ -60,23 +60,50 @@
   .res-section ul { padding-left: 20px; margin: 12px 0; }
   .res-section li { margin-bottom: 8px; }
 
-  .highlight-box {
-    background: linear-gradient(135deg, #eff6ff 0%, #fef3e8 100%);
-    border-radius: 16px; padding: 28px 32px; margin: 20px 0;
+  .doctrine-box {
+    background: var(--text-dark); color: #fff; border-radius: 16px;
+    padding: 40px 36px; margin: 0 0 20px; text-align: center;
   }
-  .highlight-box p { margin: 0; }
+  .doctrine-box .doctrine-text {
+    font-family: 'Merriweather', serif; font-size: 1.5rem; font-weight: 700;
+    line-height: 1.4; max-width: 680px; margin: 0 auto 16px;
+  }
+  .doctrine-box .doctrine-sub {
+    font-size: 0.92rem; color: #94a3b8; max-width: 560px; margin: 0 auto;
+  }
 
-  .positioning-card {
+  .funnel-step {
+    display: flex; gap: 20px; margin: 20px 0; align-items: flex-start;
+  }
+  .funnel-num {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+    background: #3B6CD8; color: #fff; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.95rem;
+  }
+  .funnel-content { flex: 1; }
+  .funnel-content .step-name {
+    font-weight: 800; font-size: 1rem; color: var(--text-dark); margin-bottom: 4px;
+  }
+  .funnel-content .step-desc {
+    font-size: 0.92rem; color: var(--text-body); line-height: 1.6;
+  }
+
+  .scenario-card {
     background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
-    padding: 20px 24px; margin: 12px 0;
+    padding: 24px 28px; margin: 16px 0;
   }
-  .positioning-card .label {
+  .scenario-card .scenario-label {
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-    color: #3B6CD8; margin-bottom: 6px;
+    color: #3B6CD8; margin-bottom: 8px;
   }
-  .positioning-card .pitch {
+  .scenario-card .scenario-hook {
     font-size: 1rem; font-weight: 600; color: var(--text-dark); font-style: italic;
+    margin-bottom: 12px; line-height: 1.5;
   }
+  .scenario-card .scenario-path {
+    font-size: 0.88rem; color: var(--text-body); line-height: 1.5;
+  }
+  .scenario-card .scenario-path strong { color: var(--text-dark); }
 
   .pricing-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
   .pricing-table th, .pricing-table td {
@@ -84,15 +111,24 @@
   }
   .pricing-table th { font-weight: 700; color: var(--text-dark); background: #f8fafc; }
   .pricing-table td { color: var(--text-body); }
+  .pricing-table td strong { color: var(--text-dark); }
 
-  .objection { margin: 16px 0; }
+  .objection { margin: 20px 0; }
   .objection .obj-q {
-    font-weight: 700; color: var(--text-dark); font-size: 0.95rem; margin-bottom: 4px;
+    font-weight: 700; color: var(--text-dark); font-size: 0.95rem; margin-bottom: 6px;
   }
   .objection .obj-a {
     font-size: 0.92rem; color: var(--text-body); line-height: 1.6;
     padding-left: 16px; border-left: 3px solid #E07830;
   }
+
+  .red-box {
+    background: #fef2f2; border: 2px solid #fca5a5; border-radius: 12px;
+    padding: 24px 28px; margin: 20px 0;
+  }
+  .red-box h3 { color: #dc2626; margin-bottom: 12px; font-size: 1.05rem; }
+  .red-box ul { margin: 0; padding-left: 20px; }
+  .red-box li { color: #7f1d1d; font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
 
   .commission-highlight {
     text-align: center; padding: 32px; background: var(--text-dark); border-radius: 16px;
@@ -109,14 +145,16 @@
     .site-header, footer, .back-link { display: none !important; }
     .res-hero { padding: 24px 0 16px; }
     .res-section { padding: 24px 0; }
-    .commission-highlight { background: #1A2340 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .highlight-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .doctrine-box, .commission-highlight { background: #1A2340 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .red-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
   @media (max-width: 768px) {
     .res-hero h1 { font-size: 1.8rem; }
+    .doctrine-box .doctrine-text { font-size: 1.2rem; }
     .pricing-table { font-size: 0.85rem; }
     .pricing-table th, .pricing-table td { padding: 10px 12px; }
+    .funnel-step { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
@@ -126,99 +164,169 @@
   <main>
     <section class="container res-hero">
       <a href="partners.html" class="back-link">&larr; Back to Partner Program</a>
-      <span class="eyebrow">Partner Sales Guide</span>
-      <h1>GRIP OS &mdash; Partner Pitch Deck</h1>
-      <p>Everything you need to present GRIP OS to your clients. Use this page as your reference during sales conversations.</p>
+      <span class="eyebrow">Partner Operating Guide</span>
+      <h1>Partner Talk Track</h1>
+      <p>How to sell the diagnosis. Not a sales deck &mdash; an operating playbook for every partner conversation.</p>
     </section>
 
+    <!-- 1. Partner Doctrine -->
     <section class="container res-section">
-      <h2>The Problem</h2>
-      <p>73% of B2B SaaS companies miss their revenue targets. The root cause is not pipeline &mdash; it is undiagnosed structural constraints in the GTM system.</p>
-      <p>Companies spend &euro;25K&ndash;&euro;50K on consultants who deliver subjective advice based on pattern recognition. Without an objective diagnostic, they fix the wrong things and wonder why growth stays flat.</p>
-    </section>
-
-    <section class="container res-section">
-      <h2>The Solution</h2>
-      <div class="highlight-box">
-        <p><strong>GRIP OS</strong> diagnoses the binding constraint across 4 dimensions (Guidance, Resources, Implementation, Performance), 12 pillars, and 72 scoring engines.</p>
-        <p style="margin-top:12px;">The <strong>GTM Intelligence Report</strong> is a 45-page forensic analysis that takes approximately 35 minutes to complete. It delivers a GRIP Score (0&ndash;100), constraint map, financial leakage estimate, and a 90-day resolution plan.</p>
+      <div class="doctrine-box">
+        <div class="doctrine-text">Sell the diagnosis, not the product. The report sells itself. Your job is to get the assessment started.</div>
+        <div class="doctrine-sub">Every deal starts with the GTM Intelligence Report. ~35 minutes, 265 questions, 45+ pages of scored output. Once a client reads their report, the conversion conversation is already half done.</div>
       </div>
     </section>
 
+    <!-- 2. The Partner Funnel -->
     <section class="container res-section">
-      <h2>How to Position It</h2>
+      <h2>The Partner Funnel</h2>
+      <p>Five steps. This is the canonical sequence. Do not skip steps or reorder them.</p>
 
-      <div class="positioning-card">
-        <div class="label">For Series A&ndash;B Companies</div>
-        <div class="pitch">&ldquo;Before you hire your next VP Sales, find out if your constraint is actually in Sales.&rdquo;</div>
+      <div class="funnel-step">
+        <div class="funnel-num">1</div>
+        <div class="funnel-content">
+          <div class="step-name">Refer</div>
+          <div class="step-desc">Share your partner link. The client lands on caugia.com with 90-day attribution tied to your account. You do not need to be in the room. The link does the work.</div>
+        </div>
       </div>
 
-      <div class="positioning-card">
-        <div class="label">For Companies with Flat Growth</div>
-        <div class="pitch">&ldquo;You&rsquo;re not missing pipeline. You&rsquo;re leaking revenue. Let&rsquo;s find where.&rdquo;</div>
+      <div class="funnel-step">
+        <div class="funnel-num">2</div>
+        <div class="funnel-content">
+          <div class="step-name">Diagnose</div>
+          <div class="step-desc">The client completes the GTM Intelligence Report. ~35 minutes, 265 questions. The system runs 72 scoring engines across 12 pillars and 4 dimensions (G, R, I, P). Alternatively, you buy the report for the client &mdash; this works especially well for consultants and portfolio operators.</div>
+        </div>
       </div>
 
-      <div class="positioning-card">
-        <div class="label">For PE/VC Portfolio</div>
-        <div class="pitch">&ldquo;Standardized GTM health across your portfolio in one framework.&rdquo;</div>
+      <div class="funnel-step">
+        <div class="funnel-num">3</div>
+        <div class="funnel-content">
+          <div class="step-name">Review</div>
+          <div class="step-desc">Sit with the client. Walk through the GRIP scores. Focus on two things: the binding constraint and the financial leakage number. Do not try to explain everything. The constraint is the conversation.</div>
+        </div>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-num">4</div>
+        <div class="funnel-content">
+          <div class="step-name">Convert</div>
+          <div class="step-desc">Recommend GRIP OS for ongoing constraint governance. Core (&euro;799/mo) for teams that want self-service execution. Full (&euro;1,495/mo) for teams that want Sophie as their GTM advisor plus the full platform with 280+ connectors, benchmarks, and the simulator.</div>
+        </div>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-num">5</div>
+        <div class="funnel-content">
+          <div class="step-name">Expand</div>
+          <div class="step-desc">As the client resolves the binding constraint, a new one emerges. Each constraint cycle deepens the relationship, proves ROI, and extends your commission. The system is designed for ongoing governance, not one-time fixes.</div>
+        </div>
       </div>
     </section>
 
+    <!-- 3. Three Deal Scenarios -->
     <section class="container res-section">
-      <h2>Products &amp; Pricing</h2>
+      <h2>Three Deal Scenarios</h2>
+      <p>These are the conversations that close. Use the exact framing.</p>
+
+      <div class="scenario-card">
+        <div class="scenario-label">CEO / Founder (Series A&ndash;C)</div>
+        <div class="scenario-hook">&ldquo;You&rsquo;ve hired 3 VPs in 2 years and growth is still flat. Before you hire #4, let&rsquo;s find out if the problem is actually in Sales.&rdquo;</div>
+        <div class="scenario-path"><strong>Entry:</strong> GTM Intelligence Report (&euro;2,495) &rarr; <strong>Upsell:</strong> GRIP OS Full (&euro;1,495/mo)</div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">VC / PE Operating Partner</div>
+        <div class="scenario-hook">&ldquo;You have 12 portfolio companies. Three are underperforming on GTM. Instead of sending another consultant, give them a standardized diagnostic.&rdquo;</div>
+        <div class="scenario-path"><strong>Entry:</strong> Bulk GTM Intelligence Report (5+) &rarr; <strong>Upsell:</strong> GRIP OS Core (&euro;799/mo) per portfolio company</div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-label">GTM Consultant / Fractional CRO</div>
+        <div class="scenario-hook">&ldquo;You start every engagement with 2 weeks of discovery. Replace that with a 35-minute scored diagnostic that gives you a constraint map, financial leakage estimate, and a 90-day plan on day one.&rdquo;</div>
+        <div class="scenario-path"><strong>Entry:</strong> GTM Intelligence Report (buy for client, &euro;2,495) &rarr; <strong>Upsell:</strong> Use GRIP OS as your consulting platform</div>
+      </div>
+    </section>
+
+    <!-- 4. Pricing & Commission Math -->
+    <section class="container res-section">
+      <h2>Pricing &amp; Commission Math</h2>
+
+      <div class="commission-highlight">
+        <div class="big">20% recurring, lifetime</div>
+        <div class="sub">On everything. For as long as the client stays. No caps, no clawbacks.</div>
+      </div>
+
       <table class="pricing-table">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Includes</th>
+            <th>You sell</th>
+            <th>Client pays</th>
+            <th>You earn</th>
+            <th>Annual income</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>GTM Intelligence Report</strong></td>
-            <td>&euro;2,495 one-time</td>
-            <td>265 questions, 45-page report, GRIP Score, constraint map, 90-day plan</td>
+            <td><strong>1&times; GTM Intelligence Report</strong></td>
+            <td>&euro;2,495</td>
+            <td>&euro;499</td>
+            <td>&euro;499</td>
           </tr>
           <tr>
-            <td><strong>GRIP OS Core</strong></td>
-            <td>&euro;799/mo</td>
-            <td>Constraint governance, actions, weekly briefs</td>
-          </tr>
-          <tr>
-            <td><strong>GRIP OS Full</strong></td>
+            <td><strong>1&times; GRIP OS Full</strong></td>
             <td>&euro;1,495/mo</td>
-            <td>+ Sophie AI advisor, 280+ connectors, benchmarks, simulator</td>
+            <td>&euro;299/mo</td>
+            <td>&euro;3,588/yr</td>
+          </tr>
+          <tr>
+            <td><strong>5&times; GRIP OS Full</strong></td>
+            <td>&euro;7,475/mo</td>
+            <td>&euro;1,495/mo</td>
+            <td>&euro;17,940/yr</td>
+          </tr>
+          <tr>
+            <td><strong>10&times; GRIP OS Full</strong></td>
+            <td>&euro;14,950/mo</td>
+            <td>&euro;2,990/mo</td>
+            <td>&euro;35,880/yr</td>
           </tr>
         </tbody>
       </table>
+      <p style="font-size:0.88rem; color:#64748b;">Commission is calculated on all recurring and one-time revenue. Paid monthly, net 30. No minimum commitment required from you.</p>
     </section>
 
-    <section class="container res-section">
-      <h2>Your Commission</h2>
-      <div class="commission-highlight">
-        <div class="big">20% recurring</div>
-        <div class="sub">on everything, for as long as the client stays</div>
-      </div>
-      <p>A single GRIP OS Full subscription generates <strong>&euro;299/month</strong> in partner commission &mdash; that is <strong>&euro;3,588/year</strong> from one client.</p>
-    </section>
-
+    <!-- 5. Objection Handling -->
     <section class="container res-section">
       <h2>Objection Handling</h2>
+      <p>Three objections you will hear in every conversation. Memorize the response.</p>
 
       <div class="objection">
-        <div class="obj-q">&ldquo;We already have a consultant.&rdquo;</div>
-        <div class="obj-a">GRIP OS does not replace consultants. It makes their diagnosis objective and their impact measurable. Consultants who use GRIP OS close more follow-on engagements because the data proves their work delivered results.</div>
+        <div class="obj-q">&ldquo;We already have consultants / advisors.&rdquo;</div>
+        <div class="obj-a">This does not replace your advisor. It gives them a scored baseline. No more subjective opinions &mdash; evidence-based GTM governance. Consultants who use the GTM Intelligence Report close more follow-on work because the data proves where the constraint actually is.</div>
       </div>
 
       <div class="objection">
-        <div class="obj-q">&ldquo;It&rsquo;s expensive.&rdquo;</div>
-        <div class="obj-a">They are losing &euro;1M+ per year in system leakage. &euro;2,495 to find out where is the cheapest investment they will make this quarter.</div>
+        <div class="obj-q">&ldquo;&euro;2,495 for a report?&rdquo;</div>
+        <div class="obj-a">You are losing 6&ndash;15% of ARR in system leakage. On a &euro;10M company, that is &euro;300K&ndash;&euro;1.5M. &euro;2,495 to find out where is the cheapest due diligence you will do this year. The report covers 12 pillars across 4 dimensions with 72 scoring engines. This is not a survey &mdash; it is a forensic analysis.</div>
       </div>
 
       <div class="objection">
         <div class="obj-q">&ldquo;We don&rsquo;t have time.&rdquo;</div>
-        <div class="obj-a">35 minutes. That is all it takes. The report is generated automatically. No workshops, no interviews, no waiting.</div>
+        <div class="obj-a">35 minutes. One person. No meetings, no workshops, no 6-week discovery engagement. The system does the analysis. The 45-page report is generated automatically.</div>
+      </div>
+    </section>
+
+    <!-- 6. What NOT To Do -->
+    <section class="container res-section">
+      <h2>Operating Boundaries</h2>
+      <div class="red-box">
+        <h3>What NOT to do</h3>
+        <ul>
+          <li><strong>Do not lead with GRIP OS.</strong> Lead with the diagnosis. The GTM Intelligence Report is the entry point. Always.</li>
+          <li><strong>Do not promise specific outcomes.</strong> Promise clarity. The report identifies the constraint and estimates the leakage. It does not guarantee a fix.</li>
+          <li><strong>Do not position against consultants.</strong> Position alongside them. The report makes their work better, not redundant.</li>
+          <li><strong>Do not share your commission structure with the client.</strong> Your commercial relationship with Caugia is confidential.</li>
+        </ul>
       </div>
     </section>
   </main>
