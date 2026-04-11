@@ -61,16 +61,22 @@
   .res-section li { margin-bottom: 8px; }
 
   /* Aligned definition lists for clean two-column bullet layouts */
-  .def-list { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 16px 0; }
-  .def-list dt { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; white-space: nowrap; }
+  .def-list { display: grid; grid-template-columns: 240px 1fr; gap: 8px 24px; margin: 16px 0; align-items: baseline; }
+  .def-list dt { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; }
   .def-list dd { margin: 0; font-size: 0.95rem; color: var(--text-body); line-height: 1.6; }
 
   /* Compact rule list with bold label + description */
-  .rule-list { margin: 16px 0; }
-  .rule-item { padding: 10px 0; border-bottom: 1px solid #f1f5f9; display: flex; gap: 8px; font-size: 0.95rem; line-height: 1.6; }
-  .rule-item:last-child { border-bottom: none; }
-  .rule-label { font-weight: 700; color: var(--text-dark); white-space: nowrap; flex-shrink: 0; }
-  .rule-desc { color: var(--text-body); }
+  .rule-list { display: grid; grid-template-columns: 200px 1fr; gap: 8px 24px; margin: 16px 0; align-items: baseline; }
+  .rule-label { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+  .rule-desc { color: var(--text-body); font-size: 0.95rem; line-height: 1.6; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+
+  @media (max-width: 600px) {
+    .def-list { grid-template-columns: 1fr; gap: 2px 0; }
+    .def-list dd { margin-bottom: 12px; }
+    .rule-list { grid-template-columns: 1fr; gap: 2px 0; }
+    .rule-desc { margin-bottom: 12px; border-bottom: none; }
+    .rule-label { border-bottom: none; padding-bottom: 0; }
+  }
 
   .rate-block {
     text-align: center; padding: 40px; margin: 20px 0;
@@ -228,11 +234,11 @@
       <h2>Attribution Rules</h2>
       <p>We use first-touch attribution with a 90-day cookie window. Here is exactly how it works:</p>
       <div class="rule-list">
-        <div class="rule-item"><span class="rule-label">First-touch wins.</span><span class="rule-desc">The first partner whose referral link the client clicks gets attribution. No splitting.</span></div>
-        <div class="rule-item"><span class="rule-label">90-day window.</span><span class="rule-desc">When a client clicks your link, you own that email address for 90 days. Any purchase within that window is yours.</span></div>
-        <div class="rule-item"><span class="rule-label">Another partner clicked first?</span><span class="rule-desc">That partner gets attribution. First-touch, no exceptions.</span></div>
-        <div class="rule-item"><span class="rule-label">Already a Caugia customer?</span><span class="rule-desc">No commission on pre-existing purchases. You earn commission on new purchases only.</span></div>
-        <div class="rule-item"><span class="rule-label">Ambiguous attribution?</span><span class="rule-desc">Caugia decides. Our intent is to resolve ambiguity in the partner's favor where possible.</span></div>
+        <span class="rule-label">First-touch wins</span><span class="rule-desc">The first partner whose referral link the client clicks gets attribution. No splitting.</span>
+        <span class="rule-label">90-day window</span><span class="rule-desc">When a client clicks your link, you own that email address for 90 days. Any purchase within that window is yours.</span>
+        <span class="rule-label">Other partner first?</span><span class="rule-desc">That partner gets attribution. First-touch, no exceptions.</span>
+        <span class="rule-label">Existing customer?</span><span class="rule-desc">No commission on pre-existing purchases. You earn commission on new purchases only.</span>
+        <span class="rule-label">Ambiguous?</span><span class="rule-desc">Caugia decides. Our intent is to resolve ambiguity in the partner's favor where possible.</span>
       </div>
     </section>
 
@@ -286,11 +292,11 @@
       </div>
 
       <div class="rule-list">
-        <div class="rule-item"><span class="rule-label">Calculation</span><span class="rule-desc">1st of each month, covering the previous month's purchases and renewals.</span></div>
-        <div class="rule-item"><span class="rule-label">Approval</span><span class="rule-desc">1st through 10th. We verify no refunds, chargebacks, or disputes occurred.</span></div>
-        <div class="rule-item"><span class="rule-label">Payout</span><span class="rule-desc">15th of each month via bank transfer.</span></div>
-        <div class="rule-item"><span class="rule-label">Minimum</span><span class="rule-desc">&euro;50. Smaller amounts roll over to the next month.</span></div>
-        <div class="rule-item"><span class="rule-label">Currency</span><span class="rule-desc">Payouts in EUR. Non-EUR transactions converted at Stripe's exchange rate.</span></div>
+        <span class="rule-label">Calculation</span><span class="rule-desc">1st of each month, covering the previous month's purchases and renewals.</span>
+        <span class="rule-label">Approval</span><span class="rule-desc">1st through 10th. We verify no refunds, chargebacks, or disputes occurred.</span>
+        <span class="rule-label">Payout</span><span class="rule-desc">15th of each month via bank transfer.</span>
+        <span class="rule-label">Minimum</span><span class="rule-desc">&euro;50. Smaller amounts roll over to the next month.</span>
+        <span class="rule-label">Currency</span><span class="rule-desc">Payouts in EUR. Non-EUR transactions converted at Stripe's exchange rate.</span>
       </div>
     </section>
 
@@ -298,10 +304,10 @@
     <section class="container res-section">
       <h2>Tax &amp; Legal</h2>
       <div class="rule-list">
-        <div class="rule-item"><span class="rule-label">Relationship</span><span class="rule-desc">Partners are independent contractors. The commission relationship does not constitute employment, agency, or partnership with Caugia SASU.</span></div>
-        <div class="rule-item"><span class="rule-label">Tax responsibility</span><span class="rule-desc">You are responsible for your own tax obligations. Caugia does not withhold taxes on commission payouts.</span></div>
-        <div class="rule-item"><span class="rule-label">Annual statements</span><span class="rule-desc">Caugia provides commission statements in January for the previous calendar year.</span></div>
-        <div class="rule-item"><span class="rule-label">Invoicing threshold</span><span class="rule-desc">If monthly payouts exceed &euro;500, you must provide valid invoicing details (company name, address, VAT number if applicable).</span></div>
+        <span class="rule-label">Relationship</span><span class="rule-desc">Partners are independent contractors. The commission relationship does not constitute employment, agency, or partnership with Caugia SASU.</span>
+        <span class="rule-label">Tax responsibility</span><span class="rule-desc">You are responsible for your own tax obligations. Caugia does not withhold taxes on commission payouts.</span>
+        <span class="rule-label">Annual statements</span><span class="rule-desc">Caugia provides commission statements in January for the previous calendar year.</span>
+        <span class="rule-label">Invoicing threshold</span><span class="rule-desc">If monthly payouts exceed &euro;500, you must provide valid invoicing details (company name, address, VAT number if applicable).</span>
       </div>
     </section>
 
