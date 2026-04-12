@@ -122,9 +122,13 @@
       })
         .then(function (res) { return res.ok ? res.json() : null; })
         .then(function (data) {
-          if (!data || !data.authenticated) return;
-
           var loginLink = document.getElementById("caugiaLoginLink");
+          if (!data || !data.authenticated) {
+            // Not authenticated — show login link
+            if (loginLink) loginLink.classList.add("visible");
+            return;
+          }
+
           var ctaBtn = document.getElementById("caugiaCta");
 
           if (loginLink) {
@@ -142,19 +146,10 @@
           // Marketplace CTA stays unchanged — it's the converter
         })
         .catch(function () {
-          // Auth check failed — show login link as normal
-          var ll = document.getElementById("caugiaLoginLink");
-          if (ll) ll.classList.add("visible");
+          // Auth check failed — don't show anything, Marketplace CTA is always visible
         });
-      // Fallback: if auth check takes too long, show login link after 1.5s
-      setTimeout(function() {
-        var ll = document.getElementById("caugiaLoginLink");
-        if (ll && !ll.classList.contains("visible")) ll.classList.add("visible");
-      }, 1500);
     } catch (e) {
-      // Older browsers or blocked fetch — show login link immediately
-      var ll = document.getElementById("caugiaLoginLink");
-      if (ll) ll.classList.add("visible");
+      // Older browsers or blocked fetch — Marketplace CTA is always visible
     }
 
     /* -- 6. Inject "Partner Program" link into footer (if not already present) -- */
