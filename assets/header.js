@@ -21,6 +21,8 @@
       /* Brand name toggle */
       ".brand .brand-short{display:none;}" +
       /* Login link */
+      ".caugia-lang-toggle{color:#94a3b8;font-weight:700;font-size:0.75rem;text-decoration:none;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;transition:all 0.15s;}" +
+      ".caugia-lang-toggle:hover{color:#3B6CD8;border-color:#3B6CD8;}" +
       ".caugia-login-link{color:#64748b;font-weight:600;font-size:0.85rem;text-decoration:none;transition:color 0.15s ease;opacity:0;transition:opacity 0.2s ease;}" +
       ".caugia-login-link.visible{opacity:1;}" +
       ".caugia-login-link:hover{color:#0056b3;}" +
@@ -49,7 +51,8 @@
 
     /* -- 2. Header HTML -- */
     var p = window.location.pathname.split("/").pop() || "index.html";
-    var base = window.location.pathname.indexOf('/intelligence/') !== -1 ? '../' : '';
+    var isFr = window.location.pathname.indexOf('/fr/') !== -1;
+    var base = window.location.pathname.indexOf('/intelligence/') !== -1 ? '../' : (isFr ? '' : '');
     function a(h, t) {
       return '<a href="' + base + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
     }
@@ -69,8 +72,9 @@
             '<li>' + a('contact.html','Contact') + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
+            '<a href="' + (isFr ? base + '../index.html' : base + 'fr/index.html') + '" class="caugia-lang-toggle" title="' + (isFr ? 'Switch to English' : 'Version française') + '">' + (isFr ? 'EN' : 'FR') + '</a>' +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">Log in</a>' +
-            '<a href="' + base + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
+            '<a href="' + base + (isFr ? '../grip-marketplace.html' : 'grip-marketplace.html') + '" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
             '<button class="menu-toggle" id="caugiaMenuToggle">Menu</button>' +
           '</div>' +
         '</div>' +
