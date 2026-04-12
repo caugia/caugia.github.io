@@ -114,43 +114,60 @@
       document.head.appendChild(refScript);
     } catch (e) { /* non-critical */ }
 
-    /* -- 5. Auth-aware header: check GRIP OS session -- */
+    /* -- 5. Auth-aware header: cached + background refresh -- */
+    function applyAuthState(data) {
+      var loginLink = document.getElementById("caugiaLoginLink");
+      if (!loginLink) return;
+      if (!data || !data.authenticated) {
+        loginLink.href = "https://os.caugia.com/login?redirect=https://www.caugia.com";
+        loginLink.textContent = "Log in";
+        loginLink.style.fontWeight = "600";
+      } else if (data.workspace) {
+        loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
+        loginLink.textContent = "My Workspace";
+        loginLink.style.fontWeight = "700";
+      } else {
+        loginLink.href = "https://os.caugia.com/dashboard";
+        loginLink.textContent = "GRIP OS";
+        loginLink.style.fontWeight = "700";
+      }
+      loginLink.classList.add("visible");
+    }
     try {
+      // Instant: use cached auth state (< 30 min old)
+      var cached = null;
+      try {
+        var raw = localStorage.getItem("caugia_auth_cache");
+        if (raw) {
+          cached = JSON.parse(raw);
+          if (cached && Date.now() - cached.ts < 1800000) {
+            applyAuthState(cached.data);
+          } else {
+            cached = null;
+          }
+        }
+      } catch(e) {}
+
+      // Background: always refresh auth state
       fetch("https://os.caugia.com/api/auth/status", {
         credentials: "include",
         mode: "cors",
       })
         .then(function (res) { return res.ok ? res.json() : null; })
         .then(function (data) {
-          var loginLink = document.getElementById("caugiaLoginLink");
-          if (!data || !data.authenticated) {
-            // Not authenticated — show login link
-            if (loginLink) loginLink.classList.add("visible");
-            return;
-          }
-
-          var ctaBtn = document.getElementById("caugiaCta");
-
-          if (loginLink) {
-            if (data.workspace) {
-              loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-              loginLink.textContent = "My Workspace";
-              loginLink.style.fontWeight = "700";
-            } else {
-              loginLink.href = "https://os.caugia.com/dashboard";
-              loginLink.textContent = "GRIP OS";
-              loginLink.style.fontWeight = "700";
-            }
-            loginLink.classList.add("visible");
-          }
-          // Marketplace CTA stays unchanged — it's the converter
+          // Cache the result
+          try { localStorage.setItem("caugia_auth_cache", JSON.stringify({ data: data, ts: Date.now() })); } catch(e) {}
+          // Apply (updates if cached state was wrong)
+          applyAuthState(data);
         })
         .catch(function () {
-          // Auth check failed — don't show anything, Marketplace CTA is always visible
+          // Fetch failed — if no cache, show nothing (Marketplace CTA is always visible)
+          if (!cached) {
+            var ll = document.getElementById("caugiaLoginLink");
+            if (ll) { ll.textContent = "Log in"; ll.href = "https://os.caugia.com/login"; ll.classList.add("visible"); }
+          }
         });
-    } catch (e) {
-      // Older browsers or blocked fetch — Marketplace CTA is always visible
-    }
+    } catch (e) {}
 
     /* -- 6. Inject "Partner Program" link into footer (if not already present) -- */
     try {
