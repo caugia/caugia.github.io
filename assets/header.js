@@ -52,15 +52,19 @@
     /* -- 2. Header HTML -- */
     var p = window.location.pathname.split("/").pop() || "index.html";
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
-    var base = window.location.pathname.indexOf('/intelligence/') !== -1 ? '../' : (isFr ? '../' : '');
+    var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
+    // assetBase: path to assets folder
+    var assetBase = isIntel ? '../' : (isFr ? '../' : '');
+    // navBase: path to pages (stays in /fr/ for French, goes to root for intelligence)
+    var navBase = isIntel ? '../' : '';
     function a(h, t) {
-      return '<a href="' + base + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
+      return '<a href="' + navBase + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
     }
     document.body.insertAdjacentHTML("afterbegin",
       '<header>' +
         '<div class="container nav">' +
-          '<a class="brand" href="' + base + 'index.html">' +
-            '<img src="' + base + 'assets/logo-final.png" alt="Caugia" width="32" height="32" />' +
+          '<a class="brand" href="' + navBase + 'index.html">' +
+            '<img src="' + assetBase + 'assets/logo-final.png" alt="Caugia" width="32" height="32" />' +
             '<span class="brand-full">CAUGIA</span>' +
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
@@ -72,9 +76,9 @@
             '<li>' + a('contact.html','Contact') + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
-            '<a href="' + (isFr ? base + '../index.html' : base + 'fr/index.html') + '" class="caugia-lang-toggle" title="' + (isFr ? 'Switch to English' : 'Version française') + '">' + (isFr ? 'EN' : 'FR') + '</a>' +
+            '<a href="' + (isFr ? assetBase + p : 'fr/' + p) + '" class="caugia-lang-toggle" title="' + (isFr ? 'Switch to English' : 'Version française') + '">' + (isFr ? 'EN' : 'FR') + '</a>' +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">Log in</a>' +
-            '<a href="' + base + (isFr ? '../grip-marketplace.html' : 'grip-marketplace.html') + '" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
+            '<a href="' + navBase + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
             '<button class="menu-toggle" id="caugiaMenuToggle">Menu</button>' +
           '</div>' +
         '</div>' +
