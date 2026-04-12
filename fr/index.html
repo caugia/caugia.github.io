@@ -795,7 +795,7 @@
         <h4 style="font-family:Inter,sans-serif; font-weight:800; font-size:0.95rem; color:#0f172a; margin-bottom:8px;">Est-ce un abonnement ?</h4>
         <p style="margin:0; font-size:0.92rem; color:#64748b; line-height:1.6;">
           Le GTM Intelligence Report est un achat unique. Aucun frais r&eacute;current.
-          GRIP OS est un abonnement mensuel : Core &agrave; &euro;799/mois ou Full &agrave; &euro;1 495/mois (min. 3 mois). La facturation annuelle permet d&rsquo;&eacute;conomiser 17 %.
+          GRIP OS est un abonnement mensuel : Core &agrave; 799&nbsp;&euro;/mois ou Full &agrave; 1&nbsp;495&nbsp;&euro;/mois (min. 3 mois). La facturation annuelle permet d&rsquo;&eacute;conomiser 17 %.
           Vous commencez par le rapport, puis souscrivez optionnellement &agrave; GRIP OS pour gouverner la r&eacute;solution.
         </p>
       </div>
@@ -811,8 +811,8 @@
       <div style="padding:20px 0; border-bottom:1px solid #f1f5f9;">
         <h4 style="font-family:Inter,sans-serif; font-weight:800; font-size:0.95rem; color:#0f172a; margin-bottom:8px;">Quelle est la diff&eacute;rence entre Core et Full ?</h4>
         <p style="margin:0; font-size:0.92rem; color:#64748b; line-height:1.6;">
-          Core (&euro;799/mois) vous donne une contrainte active, des actions strat&eacute;giques, des benchmarks de base, 3 connecteurs et des briefings hebdomadaires.
-          Full (&euro;1 495/mois) ajoute GRIP Brain (Sophie) avec 4 modes op&eacute;rationnels, 340+ connecteurs, d&eacute;tection de d&eacute;rive, briefings enrichis par l&rsquo;IA, cascade d&rsquo;actions compl&egrave;te, autorit&eacute; de d&eacute;cision, sources de connaissances et r&eacute;&eacute;valuation mensuelle.
+          Core (799&nbsp;&euro;/mois) vous donne une contrainte active, des actions strat&eacute;giques, des benchmarks de base, 3 connecteurs et des briefings hebdomadaires.
+          Full (1&nbsp;495&nbsp;&euro;/mois) ajoute GRIP Brain (Sophie) avec 4 modes op&eacute;rationnels, 340+ connecteurs, d&eacute;tection de d&eacute;rive, briefings enrichis par l&rsquo;IA, cascade d&rsquo;actions compl&egrave;te, autorit&eacute; de d&eacute;cision, sources de connaissances et r&eacute;&eacute;valuation mensuelle.
           <a href="../grip-marketplace.html#grip-os" style="color:#3B6CD8; font-weight:600; text-decoration:none;">Voir la comparaison compl&egrave;te &rarr;</a>
         </p>
       </div>
@@ -886,7 +886,7 @@
 /* Multi-currency pricing — timezone-based detection */
 (function(){
   var prices = {
-    EUR: { sym:'\u20AC', report:'2 495', compCost:'25k \u2013 50k+', suffix:true },
+    EUR: { sym:'\u20AC', report:'2 495', copilot_core:'799', copilot_full:'1 495', module:'749', compCost:'25k \u2013 50k+' },
     USD: { sym:'$', report:'2,995', compCost:'$30k \u2013 $60k+' },
     GBP: { sym:'\u00A3', report:'2,295', compCost:'\u00A320k \u2013 \u00A340k+' }
   };
@@ -908,14 +908,27 @@
     var key = el.getAttribute('data-price-key');
     if (p[key]) el.textContent = p[key];
   });
-  // French: EUR symbol after price (2 495 €), others before ($2,995)
   document.querySelectorAll('.curr').forEach(function(el){
     el.textContent = p.sym;
-    if (p.suffix && el.previousElementSibling) {
-      el.parentNode.appendChild(document.createTextNode('\u00A0'));
-      el.parentNode.appendChild(el);
-    }
   });
+
+  // French: EUR symbol after price (2 495 €)
+  if (curr === 'EUR') {
+    document.querySelectorAll('.curr').forEach(function(el) {
+      var priceEl = el.nextElementSibling || el.previousElementSibling;
+      if (priceEl && priceEl.hasAttribute('data-price-key')) {
+        var parent = el.parentNode;
+        if (el.nextElementSibling === priceEl) {
+          parent.insertBefore(priceEl, el);
+        }
+        if (el.previousSibling && el.previousSibling.nodeType === 3) {
+          el.previousSibling.textContent = '\u00A0';
+        } else {
+          parent.insertBefore(document.createTextNode('\u00A0'), el);
+        }
+      }
+    });
+  }
 })();
 </script>
 <script>

@@ -33,7 +33,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tarifs | Caugia &mdash; GRIP OS pour le B2B SaaS</title>
-<meta name="description" content="Tarification transparente pour les diagnostics GTM Caugia et GRIP OS. GTM Intelligence Report &agrave; partir de &euro;2 495. GRIP OS Core &agrave; partir de &euro;799/mois. GRIP OS Full &agrave; partir de &euro;1 495/mois. Pas de frais cach&eacute;s." />
+<meta name="description" content="Tarification transparente pour les diagnostics GTM Caugia et GRIP OS. GTM Intelligence Report &agrave; partir de 2&nbsp;495&nbsp;&euro;. GRIP OS Core &agrave; partir de 799&nbsp;&euro;/mois. GRIP OS Full &agrave; partir de 1&nbsp;495&nbsp;&euro;/mois. Pas de frais cach&eacute;s." />
 <link rel="canonical" href="https://www.caugia.com/fr/pricing.html" />
 <link rel="alternate" hreflang="en" href="https://www.caugia.com/pricing.html" />
 <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/pricing.html" />
@@ -367,7 +367,7 @@
   (function() {
     var euroCountries = ["AT","BE","CY","EE","FI","FR","DE","GR","IE","IT","LV","LT","LU","MT","NL","PT","SK","SI","ES","HR","BG","CZ","DK","HU","PL","RO","SE"];
     var prices = {
-      EUR: { sym:'\u20AC', report:'2,495', copilot_core:'799', copilot_full:'1,495', module:'749', bundle:'1,795', bundleSave:'452', fullBundle:'6,995', fullBundleSave:'1,993' },
+      EUR: { sym:'\u20AC', report:'2 495', copilot_core:'799', copilot_full:'1 495', module:'749', bundle:'1 795', bundleSave:'452', fullBundle:'6 995', fullBundleSave:'1 993' },
       USD: { sym:'$', report:'2,995', copilot_core:'895', copilot_full:'1,695', module:'899', bundle:'2,195', bundleSave:'502', fullBundle:'7,995', fullBundleSave:'2,793' },
       GBP: { sym:'\u00A3', report:'2,295', copilot_core:'695', copilot_full:'1,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393' }
     };
@@ -386,6 +386,24 @@
           var key = el.getAttribute('data-price-key');
           if (p[key]) el.textContent = p[key];
         });
+
+        // French: EUR symbol after price (2 495 €)
+        if (curr === 'EUR') {
+          document.querySelectorAll('.curr').forEach(function(el) {
+            var priceEl = el.nextElementSibling || el.previousElementSibling;
+            if (priceEl && priceEl.hasAttribute('data-price-key')) {
+              var parent = el.parentNode;
+              if (el.nextElementSibling === priceEl) {
+                parent.insertBefore(priceEl, el);
+              }
+              if (el.previousSibling && el.previousSibling.nodeType === 3) {
+                el.previousSibling.textContent = '\u00A0';
+              } else {
+                parent.insertBefore(document.createTextNode('\u00A0'), el);
+              }
+            }
+          });
+        }
       })
       .catch(function() {});
   })();
