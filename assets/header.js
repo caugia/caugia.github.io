@@ -70,11 +70,11 @@
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
           '<ul class="nav-links">' +
-            '<li>' + a('index.html','Home') + '</li>' +
-            '<li>' + a('about.html','About') + '</li>' +
-            '<li>' + a('gtm-assessment.html','GTM Score') + '</li>' +
-            '<li>' + a('intelligence.html','Intelligence') + '</li>' +
-            '<li>' + a('contact.html','Contact') + '</li>' +
+            '<li>' + a('index.html', isFr ? 'Accueil' : 'Home') + '</li>' +
+            '<li>' + a('about.html', isFr ? '\u00C0 propos' : 'About') + '</li>' +
+            '<li>' + a('gtm-assessment.html', 'GTM Score') + '</li>' +
+            '<li>' + a('intelligence.html', 'Intelligence') + '</li>' +
+            '<li>' + a('contact.html', 'Contact') + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
             '<a href="' + (isFr ? assetBase + p : 'fr/' + p) + '" class="caugia-lang-toggle" title="' + (isFr ? 'Switch to English' : 'Version française') + '">' + (isFr ? 'EN' : 'FR') + '</a>' +
@@ -86,14 +86,14 @@
         /* Gradient bridge — same blue-to-orange as GRIP OS */
         '<div class="caugia-gradient-bridge"></div>' +
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
-          a('index.html','Home') +
-          a('about.html','About') +
-          a('gtm-assessment.html','GTM Score') +
-          a('intelligence.html','Intelligence') +
-          a('contact.html','Contact') +
+          a('index.html', isFr ? 'Accueil' : 'Home') +
+          a('about.html', isFr ? '\u00C0 propos' : 'About') +
+          a('gtm-assessment.html', 'GTM Score') +
+          a('intelligence.html', 'Intelligence') +
+          a('contact.html', 'Contact') +
           a('grip-marketplace.html','GRIP Marketplace') +
-          a('partners.html','Partner Program') +
-          '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">Log in to GRIP OS</a>' +
+          a('partners.html', isFr ? 'Programme Partenaires' : 'Partner Program') +
+          '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + (isFr ? 'Connexion GRIP OS' : 'Log in to GRIP OS') + '</a>' +
         '</div>' +
       '</header>'
     );
@@ -129,11 +129,11 @@
       if (!loginLink) return;
       if (!data || !data.authenticated) {
         loginLink.href = "https://os.caugia.com/login?redirect=https://www.caugia.com";
-        loginLink.textContent = "Log in";
+        loginLink.textContent = isFr ? "Connexion" : "Log in";
         loginLink.style.fontWeight = "600";
       } else if (data.workspace) {
         loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-        loginLink.textContent = "My Workspace";
+        loginLink.textContent = isFr ? "Mon Espace" : "My Workspace";
         loginLink.style.fontWeight = "700";
       } else {
         loginLink.href = "https://os.caugia.com/dashboard";
@@ -173,7 +173,7 @@
           // Fetch failed — if no cache, show nothing (Marketplace CTA is always visible)
           if (!cached) {
             var ll = document.getElementById("caugiaLoginLink");
-            if (ll) { ll.textContent = "Log in"; ll.href = "https://os.caugia.com/login"; ll.classList.add("visible"); }
+            if (ll) { ll.textContent = isFr ? "Connexion" : "Log in"; ll.href = "https://os.caugia.com/login"; ll.classList.add("visible"); }
           }
         });
     } catch (e) {}
