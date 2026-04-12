@@ -368,7 +368,7 @@
     <div class="hero-actions" style="flex-direction:column;align-items:flex-start;gap:10px;">
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="https://os.caugia.com/demo" class="btn btn-primary" style="padding:16px 32px;font-size:1.05rem;">Essayer la d&eacute;mo</a>
-        <a href="../grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:#E07830;color:#E07830;">D&eacute;marrer &mdash; <span class="curr">&euro;</span><span data-price-key="report">2,495</span></a>
+        <a href="../grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:#E07830;color:#E07830;">D&eacute;marrer <span data-price-key="report">2 495</span>&nbsp;<span class="curr">&euro;</span></a>
       </div>
       <a href="https://os.caugia.com/workspace/6b80dc39-f5cf-4845-9a0a-448189202937/brain" style="font-size:0.82rem;color:#8B5CF6;font-weight:600;text-decoration:none;" target="_blank">Poser une question &agrave; Sophie &rarr;</a>
     </div>
@@ -886,7 +886,7 @@
 /* Multi-currency pricing — timezone-based detection */
 (function(){
   var prices = {
-    EUR: { sym:'\u20AC', report:'2,495', compCost:'25k \u2013 50k+' },
+    EUR: { sym:'\u20AC', report:'2 495', compCost:'25k \u2013 50k+', suffix:true },
     USD: { sym:'$', report:'2,995', compCost:'$30k \u2013 $60k+' },
     GBP: { sym:'\u00A3', report:'2,295', compCost:'\u00A320k \u2013 \u00A340k+' }
   };
@@ -904,10 +904,17 @@
   var p = prices[curr];
   if (!p) return;
 
-  document.querySelectorAll('.curr').forEach(function(el){ el.textContent = p.sym; });
   document.querySelectorAll('[data-price-key]').forEach(function(el){
     var key = el.getAttribute('data-price-key');
     if (p[key]) el.textContent = p[key];
+  });
+  // French: EUR symbol after price (2 495 €), others before ($2,995)
+  document.querySelectorAll('.curr').forEach(function(el){
+    el.textContent = p.sym;
+    if (p.suffix && el.previousElementSibling) {
+      el.parentNode.appendChild(document.createTextNode('\u00A0'));
+      el.parentNode.appendChild(el);
+    }
   });
 })();
 </script>
