@@ -53,10 +53,11 @@
     var p = window.location.pathname.split("/").pop() || "index.html";
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
     var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
-    // assetBase: path to assets folder
-    var assetBase = isIntel ? '../' : (isFr ? '../' : '');
-    // navBase: path to pages (stays in /fr/ for French, goes to root for intelligence)
-    var navBase = isIntel ? '../' : '';
+    var isFrIntel = isFr && isIntel; // /fr/intelligence/ = two levels deep
+    // assetBase: path to assets folder (root/assets/)
+    var assetBase = isFrIntel ? '../../' : (isIntel ? '../' : (isFr ? '../' : ''));
+    // navBase: path to sibling pages (stays in /fr/ for French intel, goes to /fr/ or root)
+    var navBase = isFrIntel ? '../' : (isIntel ? '../' : '');
     function a(h, t) {
       return '<a href="' + navBase + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
     }
