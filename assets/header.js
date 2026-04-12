@@ -52,7 +52,7 @@
     /* -- 2. Header HTML -- */
     var p = window.location.pathname.split("/").pop() || "index.html";
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
-    var base = window.location.pathname.indexOf('/intelligence/') !== -1 ? '../' : (isFr ? '' : '');
+    var base = window.location.pathname.indexOf('/intelligence/') !== -1 ? '../' : (isFr ? '../' : '');
     function a(h, t) {
       return '<a href="' + base + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
     }
