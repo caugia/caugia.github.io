@@ -136,4 +136,32 @@ document.addEventListener("DOMContentLoaded", function() {
       dismiss();
     });
   })();
+
+  /* 6. READING PROGRESS BAR (intelligence articles only) */
+  (function() {
+    var articleBody = document.querySelector('.article-body');
+    if (!articleBody) return;
+
+    var bar = document.createElement('div');
+    bar.id = 'readingProgress';
+    bar.style.cssText =
+      'position:fixed;top:0;left:0;width:0;height:3px;' +
+      'background:linear-gradient(to right,#3B6CD8,#E07830);' +
+      'z-index:9999;transition:width 0.1s linear;pointer-events:none;';
+    document.body.appendChild(bar);
+
+    function updateProgress() {
+      var rect = articleBody.getBoundingClientRect();
+      var articleTop = rect.top + window.pageYOffset;
+      var articleHeight = articleBody.offsetHeight;
+      var scrolled = window.pageYOffset - articleTop;
+      var viewportHeight = window.innerHeight;
+      var progress = scrolled / (articleHeight - viewportHeight);
+      progress = Math.max(0, Math.min(1, progress));
+      bar.style.width = (progress * 100) + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  })();
 });
