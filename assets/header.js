@@ -164,6 +164,7 @@
         var lastP = footerEl.querySelector('p:last-of-type');
         if (lastP && !lastP.innerHTML.includes('partners.html')) {
           lastP.insertAdjacentHTML('beforeend',
+            ' &middot; <a href="' + base + 'pricing.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Pricing</a>' +
             ' &middot; <a href="' + base + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Partner Program</a>'
           );
         }
