@@ -45,116 +45,218 @@
 <link rel="apple-touch-icon" href="assets/logo-final.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-  .res-hero { text-align: center; padding: 72px 0 48px; }
-  .res-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 12px; }
-  .res-hero p { font-size: 1.05rem; color: var(--text-body); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+  :root { --blue: #0056b3; --accent: #3B6CD8; --dark: #0f172a; --body: #374151; --muted: #64748b; --orange: #E07830; }
 
-  .res-section { padding: 48px 0; border-bottom: 1px solid #f1f5f9; }
-  .res-section:last-child { border-bottom: none; }
-  .res-section h2 { font-size: 1.6rem; margin-bottom: 16px; color: var(--text-dark); }
-  .res-section h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
-  .res-section p, .res-section li { font-size: 0.95rem; color: var(--text-body); line-height: 1.7; }
-  .res-section ul { padding-left: 20px; margin: 12px 0; }
-  .res-section li { margin-bottom: 8px; }
+  /* Hero */
+  .pitch-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    padding: 80px 0 64px; text-align: center; color: #fff; position: relative; overflow: hidden;
+  }
+  .pitch-hero::before {
+    content: ''; position: absolute; top: -60%; right: -20%; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(59,108,216,0.15) 0%, transparent 70%); border-radius: 50%;
+  }
+  .pitch-hero .back-link { color: rgba(255,255,255,0.6); }
+  .pitch-hero .back-link:hover { color: #fff; }
+  .pitch-hero .eyebrow { color: rgba(255,255,255,0.5); }
+  .pitch-hero h1 { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 900; line-height: 1.12; margin-bottom: 16px; position: relative; }
+  .pitch-hero .subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; line-height: 1.6; font-family: 'Poppins', sans-serif; }
 
+  /* Back link */
+  .back-link { display: inline-block; margin-bottom: 20px; font-size: 0.88rem; color: var(--accent); text-decoration: none; font-weight: 600; font-family: 'Poppins', sans-serif; }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Sections */
+  .pp-section { padding: 64px 0; border-bottom: 1px solid #f1f5f9; }
+  .pp-section:last-child { border-bottom: none; }
+  .pp-section h2 { font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .pp-section .section-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 32px; font-family: 'Poppins', sans-serif; line-height: 1.6; }
+  .pp-section p, .pp-section li { font-size: 0.95rem; color: var(--body); line-height: 1.7; font-family: 'Poppins', sans-serif; }
+
+  /* Doctrine */
   .doctrine-box {
-    background: var(--text-dark); color: #fff; border-radius: 16px;
-    padding: 40px 36px; margin: 0 0 20px; text-align: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; border-radius: 20px;
+    padding: 48px 40px; text-align: center; position: relative; overflow: hidden;
+  }
+  .doctrine-box::after {
+    content: ''; position: absolute; bottom: -40%; left: -10%; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(224,120,48,0.1) 0%, transparent 70%); border-radius: 50%;
   }
   .doctrine-box .doctrine-text {
-    font-family: 'Merriweather', serif; font-size: 1.5rem; font-weight: 700;
-    line-height: 1.4; max-width: 680px; margin: 0 auto 16px;
+    font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700;
+    line-height: 1.4; max-width: 680px; margin: 0 auto 16px; position: relative;
   }
   .doctrine-box .doctrine-sub {
-    font-size: 0.92rem; color: #94a3b8; max-width: 560px; margin: 0 auto;
+    font-size: 0.92rem; color: #94a3b8; max-width: 560px; margin: 0 auto; font-family: 'Poppins', sans-serif; line-height: 1.6;
   }
+  .doctrine-cta {
+    display: inline-block; margin-top: 24px; padding: 14px 32px; background: var(--orange); color: #fff;
+    border-radius: 10px; font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    font-family: 'Poppins', sans-serif; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+  }
+  .doctrine-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,120,48,0.3); }
 
-  .funnel-step {
-    display: flex; gap: 20px; margin: 20px 0; align-items: flex-start;
+  /* Funnel steps */
+  .funnel-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 24px 0; }
+  .funnel-card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px 20px;
+    text-align: center; position: relative; transition: box-shadow 0.2s;
   }
-  .funnel-num {
-    flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
-    background: #3B6CD8; color: #fff; display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 0.95rem;
+  .funnel-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .funnel-card .f-num {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; font-family: 'Poppins', sans-serif;
   }
-  .funnel-content { flex: 1; }
-  .funnel-content .step-name {
-    font-weight: 800; font-size: 1rem; color: var(--text-dark); margin-bottom: 4px;
-  }
-  .funnel-content .step-desc {
-    font-size: 0.92rem; color: var(--text-body); line-height: 1.6;
-  }
+  .funnel-card .f-title { font-weight: 700; font-size: 0.95rem; color: var(--dark); margin-bottom: 8px; font-family: 'Poppins', sans-serif; }
+  .funnel-card .f-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; font-family: 'Poppins', sans-serif; }
+  .funnel-connector { display: none; }
 
+  /* Scenario cards */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 24px 0; }
   .scenario-card {
-    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
-    padding: 24px 28px; margin: 16px 0;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px;
+    transition: box-shadow 0.2s, transform 0.2s; position: relative; overflow: hidden;
   }
-  .scenario-card .scenario-label {
-    font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-    color: #3B6CD8; margin-bottom: 8px;
+  .scenario-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .scenario-card .sc-icon {
+    width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 16px;
   }
-  .scenario-card .scenario-hook {
-    font-size: 1rem; font-weight: 600; color: var(--text-dark); font-style: italic;
-    margin-bottom: 12px; line-height: 1.5;
+  .scenario-card .sc-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 10px; font-family: 'Poppins', sans-serif;
   }
-  .scenario-card .scenario-path {
-    font-size: 0.88rem; color: var(--text-body); line-height: 1.5;
+  .scenario-card .sc-hook {
+    font-size: 0.95rem; font-weight: 600; color: var(--dark); font-style: italic;
+    margin-bottom: 16px; line-height: 1.5; font-family: 'Poppins', sans-serif;
   }
-  .scenario-card .scenario-path strong { color: var(--text-dark); }
+  .scenario-card .sc-path {
+    font-size: 0.85rem; color: var(--muted); line-height: 1.55; font-family: 'Poppins', sans-serif;
+    padding-top: 12px; border-top: 1px solid #f1f5f9;
+  }
+  .scenario-card .sc-path strong { color: var(--dark); }
 
-  .pricing-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  /* Why partners section */
+  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin: 24px 0; }
+  .benefit-card {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .benefit-card .b-num {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; font-family: 'Poppins', sans-serif;
+  }
+  .benefit-card .b-title { font-weight: 700; color: var(--dark); margin-bottom: 4px; font-size: 0.95rem; font-family: 'Poppins', sans-serif; }
+  .benefit-card .b-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.55; font-family: 'Poppins', sans-serif; }
+
+  /* Commission highlight */
+  .commission-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px;
+    padding: 40px; text-align: center; color: #fff; margin: 24px 0; position: relative; overflow: hidden;
+  }
+  .commission-banner::before {
+    content: ''; position: absolute; top: -30%; right: -10%; width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(59,108,216,0.15) 0%, transparent 70%); border-radius: 50%;
+  }
+  .commission-banner .big { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 900; position: relative; }
+  .commission-banner .sub { color: #94a3b8; font-size: 0.95rem; margin-top: 8px; font-family: 'Poppins', sans-serif; position: relative; }
+
+  /* Pricing table */
+  .pricing-table { width: 100%; border-collapse: collapse; margin: 20px 0; border-radius: 12px; overflow: hidden; }
   .pricing-table th, .pricing-table td {
     text-align: left; padding: 14px 16px; font-size: 0.92rem; border-bottom: 1px solid #f1f5f9;
+    font-family: 'Poppins', sans-serif;
   }
-  .pricing-table th { font-weight: 700; color: var(--text-dark); background: #f8fafc; }
-  .pricing-table td { color: var(--text-body); }
-  .pricing-table td strong { color: var(--text-dark); }
+  .pricing-table th { font-weight: 700; color: var(--dark); background: #f8fafc; }
+  .pricing-table td { color: var(--body); }
+  .pricing-table td strong { color: var(--dark); }
+  .pricing-table tr:last-child td { border-bottom: none; }
 
-  .objection { margin: 20px 0; }
-  .objection .obj-q {
-    font-weight: 700; color: var(--text-dark); font-size: 0.95rem; margin-bottom: 6px;
+  /* Objection cards */
+  .objection-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 24px 0; }
+  .objection-card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px 28px;
+    cursor: pointer; transition: box-shadow 0.2s;
   }
-  .objection .obj-a {
-    font-size: 0.92rem; color: var(--text-body); line-height: 1.6;
-    padding-left: 16px; border-left: 3px solid #E07830;
+  .objection-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+  .objection-card .obj-q {
+    font-weight: 700; color: var(--dark); font-size: 0.95rem; font-family: 'Poppins', sans-serif;
+    display: flex; justify-content: space-between; align-items: center;
   }
+  .objection-card .obj-q .toggle { color: var(--accent); font-size: 1.2rem; transition: transform 0.3s; font-weight: 400; }
+  .objection-card.open .obj-q .toggle { transform: rotate(45deg); }
+  .objection-card .obj-a {
+    font-size: 0.92rem; color: var(--body); line-height: 1.65; font-family: 'Poppins', sans-serif;
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9;
+    display: none;
+  }
+  .objection-card.open .obj-a { display: block; }
 
+  /* Rhythm card */
+  .rhythm-card {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 28px; margin: 24px 0;
+  }
+  .rhythm-card .rc-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 16px; font-family: 'Poppins', sans-serif;
+  }
+  .rhythm-card ul { list-style: none; padding: 0; margin: 0; }
+  .rhythm-card li {
+    font-size: 0.92rem; color: var(--body); line-height: 1.6; margin-bottom: 10px;
+    padding-left: 24px; position: relative; font-family: 'Poppins', sans-serif;
+  }
+  .rhythm-card li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .rhythm-card li strong { color: var(--dark); }
+
+  /* Red box */
   .red-box {
-    background: #fef2f2; border: 2px solid #fca5a5; border-radius: 12px;
-    padding: 24px 28px; margin: 20px 0;
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px;
+    padding: 28px; margin: 24px 0;
   }
-  .red-box h3 { color: #dc2626; margin-bottom: 12px; font-size: 1.05rem; }
-  .red-box ul { margin: 0; padding-left: 20px; }
-  .red-box li { color: #7f1d1d; font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
-
-  .commission-highlight {
-    text-align: center; padding: 32px; background: var(--text-dark); border-radius: 16px;
-    color: #fff; margin: 24px 0;
+  .red-box h3 { color: #dc2626; margin-bottom: 16px; font-size: 1.05rem; font-family: 'Poppins', sans-serif; }
+  .red-box ul { margin: 0; padding: 0; list-style: none; }
+  .red-box li {
+    color: #7f1d1d; font-size: 0.92rem; margin-bottom: 10px; line-height: 1.55;
+    padding-left: 24px; position: relative; font-family: 'Poppins', sans-serif;
   }
-  .commission-highlight .big { font-family: 'Merriweather', serif; font-size: 2.5rem; font-weight: 900; }
-  .commission-highlight .sub { color: #94a3b8; font-size: 0.95rem; margin-top: 4px; }
+  .red-box li::before { content: '\2717'; position: absolute; left: 0; color: #ef4444; font-weight: 700; }
+  .red-box li strong { color: #991b1b; }
 
-  .back-link { display: inline-block; margin-bottom: 24px; font-size: 0.88rem; color: #3B6CD8; text-decoration: none; font-weight: 600; }
-  .back-link:hover { text-decoration: underline; }
+  /* CTA bottom */
+  .bottom-cta {
+    text-align: center; padding: 48px 40px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 20px; margin: 48px 0 0; color: #fff;
+  }
+  .bottom-cta h2 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .bottom-cta p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px; font-family: 'Poppins', sans-serif; }
+  .bottom-cta a {
+    display: inline-block; padding: 14px 36px; background: var(--orange); color: #fff;
+    border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    font-family: 'Poppins', sans-serif; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .bottom-cta a:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,120,48,0.3); }
 
   @media print {
     body { font-size: 11pt; }
     .site-header, footer, .back-link { display: none !important; }
-    .res-hero { padding: 24px 0 16px; }
-    .res-section { padding: 24px 0; }
-    .doctrine-box, .commission-highlight { background: #1A2340 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .red-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .pitch-hero { padding: 24px 0 16px; }
+    .pp-section { padding: 24px 0; }
+    .doctrine-box, .commission-banner, .bottom-cta { background: #1A2340 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
   @media (max-width: 768px) {
-    .res-hero h1 { font-size: 1.8rem; }
+    .pitch-hero h1 { font-size: 2rem; }
+    .funnel-grid { grid-template-columns: 1fr; gap: 12px; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .doctrine-box { padding: 32px 24px; }
     .doctrine-box .doctrine-text { font-size: 1.2rem; }
     .pricing-table { font-size: 0.85rem; }
     .pricing-table th, .pricing-table td { padding: 10px 12px; }
-    .funnel-step { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
@@ -162,141 +264,135 @@
   <script src="assets/header.js"></script>
 
   <main>
-    <section class="container res-hero">
-      <a href="partners.html" class="back-link">&larr; Back to Partner Program</a>
-      <span class="eyebrow">Partner Operating Guide</span>
-      <h1>Partner Talk Track</h1>
-      <p>How to sell the diagnosis. Not a sales deck &mdash; an operating playbook for every partner conversation.</p>
+    <!-- Hero -->
+    <section class="pitch-hero">
+      <div class="container">
+        <a href="partners.html" class="back-link">&larr; Back to Partner Program</a>
+        <span class="eyebrow">Partner Operating Guide</span>
+        <h1>Your Partner Playbook</h1>
+        <p class="subtitle">Not a sales deck &mdash; an operating playbook for every partner conversation. Sell the diagnosis, not the product.</p>
+      </div>
     </section>
 
-    <!-- 1. Partner Doctrine -->
-    <section class="container res-section">
+    <!-- Doctrine -->
+    <section class="container pp-section">
       <div class="doctrine-box">
         <div class="doctrine-text">Sell the diagnosis, not the product. The report sells itself. Your job is to get the assessment started.</div>
         <div class="doctrine-sub">Every deal starts with the GTM Intelligence Report. ~35 minutes, 265 questions, 45-page scored diagnostic. The report gives the client clarity they didn&rsquo;t have before. That clarity drives the conversation forward.</div>
-        <a href="https://os.caugia.com/partner/preview" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#E07830;color:#fff;border-radius:8px;font-weight:700;font-size:0.9rem;text-decoration:none;">See the Partner Cockpit &rarr;</a>
+        <a href="https://os.caugia.com/partner/preview" class="doctrine-cta">See the Partner Cockpit &rarr;</a>
       </div>
     </section>
 
-    <!-- 2. The Partner Funnel -->
-    <section class="container res-section">
+    <!-- The Partner Funnel -->
+    <section class="container pp-section">
       <h2>The Partner Funnel</h2>
-      <p>Five steps. This is the canonical sequence. Do not skip steps or reorder them.</p>
+      <p class="section-sub">Five steps. This is the canonical sequence. Do not skip steps or reorder them.</p>
 
-      <div class="funnel-step">
-        <div class="funnel-num">1</div>
-        <div class="funnel-content">
-          <div class="step-name">Refer</div>
-          <div class="step-desc">Share your partner link. The client lands on caugia.com with 90-day attribution tied to your account. You do not need to be in the room. The attribution is automatic.</div>
+      <div class="funnel-grid">
+        <div class="funnel-card">
+          <div class="f-num">1</div>
+          <div class="f-title">Refer</div>
+          <div class="f-desc">Share your partner link. 90-day attribution tied to your account. Automatic.</div>
         </div>
-      </div>
-
-      <div class="funnel-step">
-        <div class="funnel-num">2</div>
-        <div class="funnel-content">
-          <div class="step-name">Diagnose</div>
-          <div class="step-desc">The client completes the GTM Intelligence Report. ~35 minutes, 265 questions. The system runs 72 scoring engines across 12 pillars and 4 dimensions (G, R, I, P). Alternatively, you buy the report for the client &mdash; this works especially well for consultants and portfolio operators.</div>
+        <div class="funnel-card">
+          <div class="f-num">2</div>
+          <div class="f-title">Diagnose</div>
+          <div class="f-desc">Client completes the GTM Intelligence Report. ~35 min, 265 questions, 72 scoring engines.</div>
         </div>
-      </div>
-
-      <div class="funnel-step">
-        <div class="funnel-num">3</div>
-        <div class="funnel-content">
-          <div class="step-name">Review</div>
-          <div class="step-desc">Sit with the client. Walk through the GRIP scores. Focus on two things: the binding constraint and the financial leakage number. Do not try to explain everything. The constraint is the conversation.</div>
+        <div class="funnel-card">
+          <div class="f-num">3</div>
+          <div class="f-title">Review</div>
+          <div class="f-desc">Walk through GRIP scores. Focus on the binding constraint and financial leakage.</div>
         </div>
-      </div>
-
-      <div class="funnel-step">
-        <div class="funnel-num">4</div>
-        <div class="funnel-content">
-          <div class="step-name">Convert</div>
-          <div class="step-desc">Recommend GRIP OS for ongoing constraint governance. Core (&euro;799/mo) for teams that want self-service execution. Full (&euro;1,495/mo) for teams that want Sophie as their GTM advisor plus the full platform with 340+ connectors, benchmarks, and the simulator.</div>
+        <div class="funnel-card">
+          <div class="f-num">4</div>
+          <div class="f-title">Convert</div>
+          <div class="f-desc">Recommend GRIP OS. Core &euro;799/mo or Full &euro;1,495/mo for ongoing governance.</div>
         </div>
-      </div>
-
-      <div class="funnel-step">
-        <div class="funnel-num">5</div>
-        <div class="funnel-content">
-          <div class="step-name">Expand</div>
-          <div class="step-desc">As the client resolves the binding constraint, a new one emerges. Each constraint cycle deepens the relationship, proves ROI, and extends your commission. The system is designed for ongoing governance, not one-time fixes.</div>
+        <div class="funnel-card">
+          <div class="f-num">5</div>
+          <div class="f-title">Expand</div>
+          <div class="f-desc">New constraints emerge. Each cycle deepens the relationship and your commission.</div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Three Deal Scenarios -->
-    <section class="container res-section">
+    <!-- Three Deal Scenarios -->
+    <section class="container pp-section">
       <h2>Three Deal Scenarios</h2>
-      <p>These are the conversations that close. Use the exact framing.</p>
+      <p class="section-sub">These are the conversations that close. Use the exact framing.</p>
 
-      <div class="scenario-card">
-        <div class="scenario-label">CEO / Founder (Series A&ndash;C)</div>
-        <div class="scenario-hook">&ldquo;You&rsquo;ve hired 3 VPs in 2 years and growth is still flat. Before you hire #4, let&rsquo;s find out if the problem is actually in Sales.&rdquo;</div>
-        <div class="scenario-path"><strong>Entry:</strong> GTM Intelligence Report (&euro;2,495) &rarr; <strong>Upsell:</strong> GRIP OS Full (&euro;1,495/mo)</div>
-      </div>
-
-      <div class="scenario-card">
-        <div class="scenario-label">VC / PE Operating Partner</div>
-        <div class="scenario-hook">&ldquo;You have 12 portfolio companies. Three are underperforming on GTM. Instead of sending another consultant, give them a standardized diagnostic.&rdquo;</div>
-        <div class="scenario-path"><strong>Entry:</strong> Bulk GTM Intelligence Report (5+) &rarr; <strong>Upsell:</strong> GRIP OS Core (&euro;799/mo) per portfolio company</div>
-      </div>
-
-      <div class="scenario-card">
-        <div class="scenario-label">GTM Consultant / Fractional CRO</div>
-        <div class="scenario-hook">&ldquo;You start every engagement with 2 weeks of discovery. Replace that with a 35-minute scored diagnostic that gives you a constraint map, financial leakage estimate, and a 90-day plan on day one.&rdquo;</div>
-        <div class="scenario-path"><strong>Entry:</strong> GTM Intelligence Report (buy for client, &euro;2,495) &rarr; <strong>Upsell:</strong> Use GRIP OS as your consulting platform</div>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="sc-icon" style="background:#eff6ff;">&#127891;</div>
+          <div class="sc-label">CEO / Founder (Series A&ndash;C)</div>
+          <div class="sc-hook">&ldquo;You&rsquo;ve hired 3 VPs in 2 years and growth is still flat. Before you hire #4, let&rsquo;s find out if the problem is actually in Sales.&rdquo;</div>
+          <div class="sc-path"><strong>Entry:</strong> GTM Intelligence Report (&euro;2,495) &rarr; <strong>Upsell:</strong> GRIP OS Full (&euro;1,495/mo)</div>
+        </div>
+        <div class="scenario-card">
+          <div class="sc-icon" style="background:#f0fdf4;">&#128188;</div>
+          <div class="sc-label">VC / PE Operating Partner</div>
+          <div class="sc-hook">&ldquo;You have 12 portfolio companies. Three are underperforming on GTM. Instead of sending another consultant, give them a standardized diagnostic.&rdquo;</div>
+          <div class="sc-path"><strong>Entry:</strong> Bulk GTM Intelligence Report (5+) &rarr; <strong>Upsell:</strong> GRIP OS Core (&euro;799/mo) per portfolio company</div>
+        </div>
+        <div class="scenario-card">
+          <div class="sc-icon" style="background:#fef3c7;">&#128640;</div>
+          <div class="sc-label">GTM Consultant / Fractional CRO</div>
+          <div class="sc-hook">&ldquo;You start every engagement with 2 weeks of discovery. Replace that with a 35-minute scored diagnostic that gives you a constraint map on day one.&rdquo;</div>
+          <div class="sc-path"><strong>Entry:</strong> GTM Intelligence Report (buy for client, &euro;2,495) &rarr; <strong>Upsell:</strong> GRIP OS as consulting platform</div>
+        </div>
       </div>
     </section>
 
     <!-- Why Partners Use GRIP OS -->
-    <section class="container res-section">
+    <section class="container pp-section">
       <h2>Why Partners Use GRIP OS</h2>
-      <p>Beyond commission, here&rsquo;s what partners with active client portfolios report:</p>
+      <p class="section-sub">Beyond commission, here&rsquo;s what partners with active client portfolios report.</p>
 
-      <div class="scenario-card" style="margin-top:20px;">
-        <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:16px;">
-          <div style="flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#3B6CD8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">1</div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="b-num">1</div>
           <div>
-            <div style="font-weight:700; color:var(--text-dark); margin-bottom:4px;">Faster discovery</div>
-            <div style="font-size:0.92rem; color:var(--text-body); line-height:1.6;">Replace 2-week discovery with a ~35-minute scored diagnostic. Day one: you have a constraint map, financial leakage, and 90-day plan.</div>
+            <div class="b-title">Faster discovery</div>
+            <div class="b-desc">Replace 2-week discovery with a ~35-minute scored diagnostic. Day one: constraint map, financial leakage, and 90-day plan.</div>
           </div>
         </div>
-        <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:16px;">
-          <div style="flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#3B6CD8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">2</div>
+        <div class="benefit-card">
+          <div class="b-num">2</div>
           <div>
-            <div style="font-weight:700; color:var(--text-dark); margin-bottom:4px;">Stronger advisory authority</div>
-            <div style="font-size:0.92rem; color:var(--text-body); line-height:1.6;">You walk in with scored evidence, not opinions. Clients take you more seriously when your diagnosis is backed by 72 scoring engines.</div>
+            <div class="b-title">Stronger advisory authority</div>
+            <div class="b-desc">Walk in with scored evidence, not opinions. 72 scoring engines backing your diagnosis.</div>
           </div>
         </div>
-        <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:16px;">
-          <div style="flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#3B6CD8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">3</div>
+        <div class="benefit-card">
+          <div class="b-num">3</div>
           <div>
-            <div style="font-weight:700; color:var(--text-dark); margin-bottom:4px;">Better client retention</div>
-            <div style="font-size:0.92rem; color:var(--text-body); line-height:1.6;">GRIP scores create a measurable before/after. Clients can see your impact. That&rsquo;s renewal insurance.</div>
+            <div class="b-title">Better client retention</div>
+            <div class="b-desc">GRIP scores create a measurable before/after. Clients see your impact. That&rsquo;s renewal insurance.</div>
           </div>
         </div>
-        <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:16px;">
-          <div style="flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#3B6CD8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">4</div>
+        <div class="benefit-card">
+          <div class="b-num">4</div>
           <div>
-            <div style="font-weight:700; color:var(--text-dark); margin-bottom:4px;">Easier expansion</div>
-            <div style="font-size:0.92rem; color:var(--text-body); line-height:1.6;">When one constraint is resolved, the next one surfaces. Each cycle deepens your engagement and your revenue.</div>
+            <div class="b-title">Easier expansion</div>
+            <div class="b-desc">When one constraint is resolved, the next surfaces. Each cycle deepens your engagement and revenue.</div>
           </div>
         </div>
-        <div style="display:flex; gap:16px; align-items:flex-start;">
-          <div style="flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#3B6CD8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">5</div>
+        <div class="benefit-card">
+          <div class="b-num">5</div>
           <div>
-            <div style="font-weight:700; color:var(--text-dark); margin-bottom:4px;">Portfolio leverage</div>
-            <div style="font-size:0.92rem; color:var(--text-body); line-height:1.6;">The same framework across 10 clients means repeatable methodology, not custom discovery every time.</div>
+            <div class="b-title">Portfolio leverage</div>
+            <div class="b-desc">Same framework across 10 clients means repeatable methodology, not custom discovery every time.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4. Pricing & Commission Math -->
-    <section class="container res-section">
+    <!-- Pricing & Commission -->
+    <section class="container pp-section">
       <h2>Pricing &amp; Commission Math</h2>
 
-      <div class="commission-highlight">
+      <div class="commission-banner">
         <div class="big">Up to 20% recurring, lifetime</div>
         <div class="sub">Tiered: 10% Starter &rarr; 15% Growth &rarr; 20% Elite. On everything. For as long as the client stays.</div>
       </div>
@@ -318,83 +414,79 @@
             <td>&euro;2,495</td>
             <td>$2,995</td>
             <td>&pound;2,295</td>
-            <td class="earn">&euro;499 / $599 / &pound;459</td>
+            <td style="color:var(--accent); font-weight:700;">&euro;499 / $599 / &pound;459</td>
           </tr>
           <tr>
             <td><strong>GRIP OS Core</strong></td>
             <td>&euro;799/mo</td>
             <td>$895/mo</td>
             <td>&pound;695/mo</td>
-            <td class="earn">&euro;160 / $179 / &pound;139 /mo</td>
+            <td style="color:var(--accent); font-weight:700;">&euro;160 / $179 / &pound;139 /mo</td>
           </tr>
           <tr>
             <td><strong>GRIP OS Full</strong></td>
             <td>&euro;1,495/mo</td>
             <td>$1,695/mo</td>
             <td>&pound;1,295/mo</td>
-            <td class="earn">&euro;299 / $339 / &pound;259 /mo</td>
+            <td style="color:var(--accent); font-weight:700;">&euro;299 / $339 / &pound;259 /mo</td>
           </tr>
         </tbody>
       </table>
       </div>
-      <p style="font-size:0.85rem; color:#64748b; margin-top:8px;"><strong>Scale examples (EUR):</strong> 5&times; Full = &euro;1,495/mo commission (&euro;17,940/yr) &middot; 10&times; Full = &euro;2,990/mo (&euro;35,880/yr)</p>
-      <p style="font-size:0.88rem; color:#64748b;">Commission is calculated on all recurring and one-time revenue. Paid monthly, net 30. No minimum commitment required from you.</p>
+      <p style="font-size:0.85rem; color:var(--muted); margin-top:8px; font-family:'Poppins',sans-serif;"><strong>Scale examples (EUR):</strong> 5&times; Full = &euro;1,495/mo commission (&euro;17,940/yr) &middot; 10&times; Full = &euro;2,990/mo (&euro;35,880/yr)</p>
+      <p style="font-size:0.88rem; color:var(--muted); font-family:'Poppins',sans-serif;">Commission is calculated on all recurring and one-time revenue. Paid monthly, net 30. No minimum commitment required from you.</p>
 
-      <div class="scenario-card" style="margin-top:28px;">
-        <div class="scenario-label">Your monthly rhythm</div>
-        <ul style="padding-left:20px; margin:0;">
-          <li style="font-size:0.92rem; color:var(--text-body); line-height:1.6; margin-bottom:8px;"><strong>Week 1:</strong> Review new GRIP scores for clients who completed assessments</li>
-          <li style="font-size:0.92rem; color:var(--text-body); line-height:1.6; margin-bottom:8px;"><strong>Week 2:</strong> Constraint review calls with 2&ndash;3 clients</li>
-          <li style="font-size:0.92rem; color:var(--text-body); line-height:1.6; margin-bottom:8px;"><strong>Week 3:</strong> Check partner dashboard &mdash; new leads, conversions, commission status</li>
-          <li style="font-size:0.92rem; color:var(--text-body); line-height:1.6; margin-bottom:0;"><strong>Week 4:</strong> Share referral link in 1&ndash;2 conversations or posts</li>
+      <div class="rhythm-card">
+        <div class="rc-label">Your monthly rhythm</div>
+        <ul>
+          <li><strong>Week 1:</strong> Review new GRIP scores for clients who completed assessments</li>
+          <li><strong>Week 2:</strong> Constraint review calls with 2&ndash;3 clients</li>
+          <li><strong>Week 3:</strong> Check partner dashboard &mdash; new leads, conversions, commission status</li>
+          <li><strong>Week 4:</strong> Share referral link in 1&ndash;2 conversations or posts</li>
         </ul>
       </div>
-      <p style="font-size:0.88rem; color:#64748b; margin-top:12px;">Time investment: ~4&ndash;6 hours/month for portfolio management. The platform does the diagnosis. You provide the advisory layer.</p>
+      <p style="font-size:0.88rem; color:var(--muted); font-family:'Poppins',sans-serif;">Time investment: ~4&ndash;6 hours/month for portfolio management. The platform does the diagnosis. You provide the advisory layer.</p>
     </section>
 
-    <!-- 5. Objection Handling -->
-    <section class="container res-section">
+    <!-- Objection Handling -->
+    <section class="container pp-section">
       <h2>Objection Handling</h2>
-      <p>Three objections you will hear in every conversation. Memorize the response.</p>
+      <p class="section-sub">The objections you will hear in every conversation. Click to reveal the response.</p>
 
-      <div class="objection">
-        <div class="obj-q">&ldquo;We already have consultants / advisors.&rdquo;</div>
-        <div class="obj-a">This does not replace your advisor. It gives them a scored baseline. No more subjective opinions &mdash; evidence-based GTM governance. Consultants who use the GTM Intelligence Report close more follow-on work because the data proves where the constraint actually is.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;&euro;2,495 for a report?&rdquo;</div>
-        <div class="obj-a">You are losing 6&ndash;15% of ARR in system leakage. On a &euro;10M company, that is &euro;300K&ndash;&euro;1.5M. &euro;2,495 to find out where is the cheapest due diligence you will do this year. The report covers 12 pillars across 4 dimensions with 72 scoring engines. This is not a survey &mdash; it is a forensic analysis.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;We don&rsquo;t have time.&rdquo;</div>
-        <div class="obj-a">35 minutes. One person. No meetings, no workshops, no 6-week discovery engagement. The system does the analysis. The report is generated automatically.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;What about data privacy?&rdquo;</div>
-        <div class="obj-a">The assessment is completed by your client directly. No third-party data access required. GRIP OS processes the self-reported inputs through 72 scoring engines. No CRM integration is required for the diagnostic.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;How do we know the benchmarks are valid?&rdquo;</div>
-        <div class="obj-a">GRIP scores are based on constraint theory and GTM structural analysis, not crowd-sourced benchmarks. The system identifies whether a dimension is the binding constraint relative to the others &mdash; that&rsquo;s structural, not statistical.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;Our procurement team won&rsquo;t approve this quickly.&rdquo;</div>
-        <div class="obj-a">The GTM Intelligence Report is a one-time &euro;2,495 purchase. Most teams can expense that without procurement. Start there. The OS subscription decision comes after they&rsquo;ve seen the results.</div>
-      </div>
-
-      <div class="objection">
-        <div class="obj-q">&ldquo;The report is interesting, but do we really need the OS after?&rdquo;</div>
-        <div class="obj-a">The report tells you what&rsquo;s wrong. The OS tells you whether you&rsquo;re fixing it. Without governance, constraints recur. Most clients who complete the report want ongoing visibility.</div>
+      <div class="objection-grid">
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;We already have consultants / advisors.&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">This does not replace your advisor. It gives them a scored baseline. No more subjective opinions &mdash; evidence-based GTM governance. Consultants who use the GTM Intelligence Report close more follow-on work because the data proves where the constraint actually is.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;&euro;2,495 for a report?&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">You are losing 6&ndash;15% of ARR in system leakage. On a &euro;10M company, that is &euro;300K&ndash;&euro;1.5M. &euro;2,495 to find out where is the cheapest due diligence you will do this year. The report covers 12 pillars across 4 dimensions with 72 scoring engines. This is not a survey &mdash; it is a forensic analysis.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;We don&rsquo;t have time.&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">35 minutes. One person. No meetings, no workshops, no 6-week discovery engagement. The system does the analysis. The report is generated automatically.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;What about data privacy?&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">The assessment is completed by your client directly. No third-party data access required. GRIP OS processes the self-reported inputs through 72 scoring engines. No CRM integration is required for the diagnostic.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;How do we know the benchmarks are valid?&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">GRIP scores are based on constraint theory and GTM structural analysis, not crowd-sourced benchmarks. The system identifies whether a dimension is the binding constraint relative to the others &mdash; that&rsquo;s structural, not statistical.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;Our procurement team won&rsquo;t approve this quickly.&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">The GTM Intelligence Report is a one-time &euro;2,495 purchase. Most teams can expense that without procurement. Start there. The OS subscription decision comes after they&rsquo;ve seen the results.</div>
+        </div>
+        <div class="objection-card" onclick="this.classList.toggle('open')">
+          <div class="obj-q">&ldquo;The report is interesting, but do we really need the OS after?&rdquo; <span class="toggle">+</span></div>
+          <div class="obj-a">The report tells you what&rsquo;s wrong. The OS tells you whether you&rsquo;re fixing it. Without governance, constraints recur. Most clients who complete the report want ongoing visibility.</div>
+        </div>
       </div>
     </section>
 
-    <!-- 6. What NOT To Do -->
-    <section class="container res-section">
+    <!-- Operating Boundaries -->
+    <section class="container pp-section">
       <h2>Operating Boundaries</h2>
       <div class="red-box">
         <h3>What NOT to do</h3>
@@ -404,6 +496,15 @@
           <li><strong>Do not position against consultants.</strong> Position alongside them. The report makes their work better, not redundant.</li>
           <li><strong>Do not share your commission structure with the client.</strong> Your commercial relationship with Caugia is confidential.</li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="container" style="padding-bottom: 72px;">
+      <div class="bottom-cta">
+        <h2>Start your first conversation today</h2>
+        <p>Share your referral link and let the diagnostic do the selling.</p>
+        <a href="https://os.caugia.com/partner/preview">Open Partner Cockpit &rarr;</a>
       </div>
     </section>
   </main>
