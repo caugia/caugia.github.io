@@ -578,6 +578,13 @@ section[id] { scroll-margin-top:120px; }
     <p style="font-size:1.12rem;color:#475569;max-width:680px;margin:0 auto;line-height:1.7;">Not a chatbot. Not a dashboard. A GTM execution system that enforces the right constraint in the right order.</p>
   </div>
 
+  <div style="display:flex;justify-content:center;margin-bottom:24px;" id="billing-toggle">
+    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
+      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Monthly</button>
+      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Annual <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
+    </div>
+  </div>
+
   <div class="mk-copilot-grid">
     <!-- OS Core -->
     <div class="mk-copilot-card mk-copilot-card-core">
@@ -598,7 +605,6 @@ section[id] { scroll-margin-top:120px; }
             <span style="font-size:0.85rem;color:#94a3b8;">/month</span>
           </div>
           <p style="font-size:0.72rem;color:#94a3b8;margin:4px 0 0;">Min. 3 months. Requires a completed GTM Intelligence Report.</p>
-          <p style="font-size:0.72rem;color:#16a34a;font-weight:700;margin:4px 0 0;">Annual billing available &mdash; save 17%. Contact us.</p>
         </div>
         <a href="https://os.caugia.com/signup" class="mk-copilot-cta" style="background:#3B6CD8;color:#fff;">Activate Core</a>
       </div>
@@ -626,7 +632,6 @@ section[id] { scroll-margin-top:120px; }
             <span style="font-size:0.85rem;color:#64748b;">/month</span>
           </div>
           <p style="font-size:0.72rem;color:#64748b;margin:4px 0 0;">Min. 3 months. Requires a completed GTM Intelligence Report.</p>
-          <p style="font-size:0.72rem;color:#16a34a;font-weight:700;margin:4px 0 0;">Annual billing available &mdash; save 17%. Contact us.</p>
         </div>
         <a href="https://os.caugia.com/signup" class="mk-copilot-cta" style="background:#E07830;color:#fff;">Activate Full</a>
       </div>
@@ -989,6 +994,10 @@ function scrollToSection(id) {
     copilot_core: { EUR:'799', GBP:'695', USD:'895' },
     copilot_full: { EUR:'1,495', GBP:'1,295', USD:'1,695' }
   };
+  var copilotAnnual = {
+    copilot_core: { EUR:'663', GBP:'577', USD:'743' },
+    copilot_full: { EUR:'1,241', GBP:'1,075', USD:'1,407' }
+  };
 
   function updateOSPrices(curr) {
     document.querySelectorAll('[data-price-key]').forEach(function(el){
@@ -999,6 +1008,30 @@ function scrollToSection(id) {
     });
   }
   updateOSPrices(getDetectedCurrency());
+
+  /* Monthly / Annual billing toggle */
+  window.setBilling = function(mode){
+    var btnM = document.getElementById('btn-monthly');
+    var btnA = document.getElementById('btn-annual');
+    if(mode==='monthly'){
+      btnM.style.background='#fff'; btnM.style.color='#0f172a'; btnM.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)';
+      btnA.style.background='transparent'; btnA.style.color='#64748b'; btnA.style.boxShadow='none';
+    } else {
+      btnA.style.background='#fff'; btnA.style.color='#0f172a'; btnA.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)';
+      btnM.style.background='transparent'; btnM.style.color='#64748b'; btnM.style.boxShadow='none';
+    }
+    var curr = getDetectedCurrency();
+    document.querySelectorAll('[data-price-key="copilot_core"],[data-price-key="copilot_full"]').forEach(function(el){
+      var key = el.getAttribute('data-price-key');
+      var mp = copilotPrices[key] && copilotPrices[key][curr] ? copilotPrices[key][curr] : '';
+      var ap = copilotAnnual[key] && copilotAnnual[key][curr] ? copilotAnnual[key][curr] : '';
+      if(mode==='annual'){
+        el.innerHTML = '<span style="text-decoration:line-through;color:#94a3b8;font-size:0.75em;">' + mp + '</span> ' + ap;
+      } else {
+        el.textContent = mp;
+      }
+    });
+  };
 })();
 </script>
 <script>

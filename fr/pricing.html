@@ -167,6 +167,12 @@
 
     <!-- Three-step journey -->
     <section class="container">
+      <div style="display:flex;justify-content:center;margin-bottom:24px;" id="billing-toggle">
+        <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
+          <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Mensuel</button>
+          <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Annuel <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
+        </div>
+      </div>
       <div class="journey">
 
         <!-- Step 1: GTM Intelligence Report -->
@@ -228,7 +234,6 @@
 
       </div>
 
-      <p style="text-align:center;font-size:0.85rem;color:#16a34a;font-weight:700;margin-top:-32px;margin-bottom:48px;">Facturation annuelle disponible sur tous les plans GRIP OS &mdash; &eacute;conomisez 17%. <a href="contact.html" style="color:#16a34a;text-decoration:underline;">Contactez-nous</a>.</p>
     </section>
 
     <!-- Deep Dive Modules -->
@@ -406,6 +411,37 @@
         }
       })
       .catch(function() {});
+  })();
+  </script>
+  <script>
+  /* Monthly / Annual billing toggle */
+  (function(){
+    var monthlyPrices = { copilot_core: 799, copilot_full: 1495 };
+    var annualPrices  = { copilot_core: 663, copilot_full: 1241 };
+    var currentBilling = 'monthly';
+
+    function fmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+    window.setBilling = function(mode){
+      currentBilling = mode;
+      var btnM = document.getElementById('btn-monthly');
+      var btnA = document.getElementById('btn-annual');
+      if(mode==='monthly'){
+        btnM.style.background='#fff'; btnM.style.color='#0f172a'; btnM.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)';
+        btnA.style.background='transparent'; btnA.style.color='#64748b'; btnA.style.boxShadow='none';
+      } else {
+        btnA.style.background='#fff'; btnA.style.color='#0f172a'; btnA.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)';
+        btnM.style.background='transparent'; btnM.style.color='#64748b'; btnM.style.boxShadow='none';
+      }
+      document.querySelectorAll('[data-price-key="copilot_core"],[data-price-key="copilot_full"]').forEach(function(el){
+        var key = el.getAttribute('data-price-key');
+        if(mode==='annual'){
+          el.innerHTML = '<span style="text-decoration:line-through;color:#94a3b8;font-size:0.75em;">' + fmt(monthlyPrices[key]) + '</span> ' + fmt(annualPrices[key]);
+        } else {
+          el.textContent = fmt(monthlyPrices[key]);
+        }
+      });
+    };
   })();
   </script>
 </body>
