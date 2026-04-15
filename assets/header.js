@@ -52,12 +52,44 @@
     /* -- 2. Header HTML -- */
     var p = window.location.pathname.split("/").pop() || "index.html";
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
+    var isDe = window.location.pathname.indexOf('/de/') !== -1;
+    var isLocalized = isFr || isDe;
     var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
-    var isFrIntel = isFr && isIntel; // /fr/intelligence/ = two levels deep
+    var isLocalizedIntel = isLocalized && isIntel; // /fr/intelligence/ or /de/intelligence/ = two levels deep
     // assetBase: path to assets folder (root/assets/)
-    var assetBase = isFrIntel ? '../../' : (isIntel ? '../' : (isFr ? '../' : ''));
-    // navBase: path to sibling pages (stays in /fr/ for French intel, goes to /fr/ or root)
-    var navBase = isFrIntel ? '../' : (isIntel ? '../' : '');
+    var assetBase = isLocalizedIntel ? '../../' : (isIntel ? '../' : (isLocalized ? '../' : ''));
+    // navBase: path to sibling pages (stays in /fr/ or /de/ for localized intel, goes to localized or root)
+    var navBase = isLocalizedIntel ? '../' : (isIntel ? '../' : '');
+
+    // Navigation labels per language
+    var navLabels = isDe
+      ? { home: 'Startseite', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden' }
+      : isFr
+      ? { home: 'Accueil', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS' }
+      : { home: 'Home', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS' };
+
+    // Language toggle links: show the two OTHER languages
+    function buildLangToggles() {
+      var enPath = isLocalized ? assetBase + p : p;
+      var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
+      var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
+      var toggles = '';
+      if (!isFr && !isDe) {
+        // English page: show FR and DE
+        toggles += '<a href="' + frPath + '" class="caugia-lang-toggle" title="Version fran\u00e7aise">FR</a>';
+        toggles += '<a href="' + dePath + '" class="caugia-lang-toggle" title="Deutsche Version" style="margin-left:4px;">DE</a>';
+      } else if (isFr) {
+        // French page: show EN and DE
+        toggles += '<a href="' + enPath + '" class="caugia-lang-toggle" title="Switch to English">EN</a>';
+        toggles += '<a href="' + dePath + '" class="caugia-lang-toggle" title="Deutsche Version" style="margin-left:4px;">DE</a>';
+      } else {
+        // German page: show EN and FR
+        toggles += '<a href="' + enPath + '" class="caugia-lang-toggle" title="Switch to English">EN</a>';
+        toggles += '<a href="' + frPath + '" class="caugia-lang-toggle" title="Version fran\u00e7aise" style="margin-left:4px;">FR</a>';
+      }
+      return toggles;
+    }
+
     function a(h, t) {
       return '<a href="' + navBase + h + '"' + (h === p ? ' class="active"' : '') + '>' + t + '</a>';
     }
@@ -70,15 +102,15 @@
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
           '<ul class="nav-links">' +
-            '<li>' + a('index.html', isFr ? 'Accueil' : 'Home') + '</li>' +
-            '<li>' + a('about.html', isFr ? '\u00C0 propos' : 'About') + '</li>' +
+            '<li>' + a('index.html', navLabels.home) + '</li>' +
+            '<li>' + a('about.html', navLabels.about) + '</li>' +
             '<li>' + a('gtm-assessment.html', 'GTM Score') + '</li>' +
             '<li>' + a('intelligence.html', 'Intelligence') + '</li>' +
-            '<li>' + a('contact.html', 'Contact') + '</li>' +
+            '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
-            '<a href="' + (isFr ? assetBase + p : 'fr/' + p) + '" class="caugia-lang-toggle" title="' + (isFr ? 'Switch to English' : 'Version française') + '">' + (isFr ? 'EN' : 'FR') + '</a>' +
-            '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">Log in</a>' +
+            buildLangToggles() +
+            '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
             '<a href="' + navBase + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
             '<button class="menu-toggle" id="caugiaMenuToggle">Menu</button>' +
           '</div>' +
@@ -86,14 +118,14 @@
         /* Gradient bridge — same blue-to-orange as GRIP OS */
         '<div class="caugia-gradient-bridge"></div>' +
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
-          a('index.html', isFr ? 'Accueil' : 'Home') +
-          a('about.html', isFr ? '\u00C0 propos' : 'About') +
+          a('index.html', navLabels.home) +
+          a('about.html', navLabels.about) +
           a('gtm-assessment.html', 'GTM Score') +
           a('intelligence.html', 'Intelligence') +
-          a('contact.html', 'Contact') +
+          a('contact.html', navLabels.contact) +
           a('grip-marketplace.html','GRIP Marketplace') +
-          a('partners.html', isFr ? 'Programme Partenaires' : 'Partner Program') +
-          '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + (isFr ? 'Connexion GRIP OS' : 'Log in to GRIP OS') + '</a>' +
+          a('partners.html', navLabels.partners) +
+          '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + navLabels.loginOs + '</a>' +
         '</div>' +
       '</header>'
     );
@@ -118,7 +150,7 @@
     /* -- 4. Load partner referral tracking -- */
     try {
       var refScript = document.createElement('script');
-      refScript.src = base + 'assets/partner-referral.js';
+      refScript.src = assetBase + 'assets/partner-referral.js';
       refScript.defer = true;
       document.head.appendChild(refScript);
     } catch (e) { /* non-critical */ }
@@ -129,11 +161,11 @@
       if (!loginLink) return;
       if (!data || !data.authenticated) {
         loginLink.href = "https://os.caugia.com/login?redirect=https://www.caugia.com";
-        loginLink.textContent = isFr ? "Connexion" : "Log in";
+        loginLink.textContent = isDe ? "Anmelden" : (isFr ? "Connexion" : "Log in");
         loginLink.style.fontWeight = "600";
       } else if (data.workspace) {
         loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-        loginLink.textContent = isFr ? "Mon Espace" : "My Workspace";
+        loginLink.textContent = isDe ? "Mein Workspace" : (isFr ? "Mon Espace" : "My Workspace");
         loginLink.style.fontWeight = "700";
       } else {
         loginLink.href = "https://os.caugia.com/dashboard";
@@ -173,7 +205,7 @@
           // Fetch failed — if no cache, show nothing (Marketplace CTA is always visible)
           if (!cached) {
             var ll = document.getElementById("caugiaLoginLink");
-            if (ll) { ll.textContent = isFr ? "Connexion" : "Log in"; ll.href = "https://os.caugia.com/login"; ll.classList.add("visible"); }
+            if (ll) { ll.textContent = isDe ? "Anmelden" : (isFr ? "Connexion" : "Log in"); ll.href = "https://os.caugia.com/login"; ll.classList.add("visible"); }
           }
         });
     } catch (e) {}
@@ -185,8 +217,8 @@
         var lastP = footerEl.querySelector('p:last-of-type');
         if (lastP && !lastP.innerHTML.includes('partners.html')) {
           lastP.insertAdjacentHTML('beforeend',
-            ' &middot; <a href="' + base + 'pricing.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Pricing</a>' +
-            ' &middot; <a href="' + base + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Partner Program</a>'
+            ' &middot; <a href="' + navBase + 'pricing.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Pricing</a>' +
+            ' &middot; <a href="' + navBase + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">' + navLabels.partners + '</a>'
           );
         }
       }
