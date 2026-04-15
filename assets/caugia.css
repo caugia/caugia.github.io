@@ -309,14 +309,20 @@ nav.nav-desktop a.cta::after {
 
 .menu-toggle {
   display: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   border: 1px solid rgba(15, 23, 42, 0.12);
   background: #fff;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.menu-toggle:hover {
+  background: #f8fafc;
 }
 
 .menu-toggle span {
@@ -325,6 +331,7 @@ nav.nav-desktop a.cta::after {
   background: #111827;
   display: block;
   position: relative;
+  transition: background 0.2s ease;
 }
 
 .menu-toggle span::before,
@@ -335,37 +342,72 @@ nav.nav-desktop a.cta::after {
   width: 18px;
   height: 2px;
   background: #111827;
+  transition: transform 0.2s ease, top 0.2s ease;
 }
 
 .menu-toggle span::before {
-  top: -5px;
+  top: -6px;
 }
 
 .menu-toggle span::after {
-  top: 5px;
+  top: 6px;
 }
 
-nav.nav-mobile {
+/* Animate to X when open */
+.menu-toggle.open span {
+  background: transparent;
+}
+
+.menu-toggle.open span::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menu-toggle.open span::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+nav.nav-mobile,
+.mobile-nav {
   display: none;
   position: fixed;
   inset: var(--header-h) 0 0 0;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-top: 1px solid rgba(15, 23, 42, 0.04);
-  padding: 16px 18px 20px;
+  padding: 24px 24px 32px;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
+  z-index: 50;
+  overflow-y: auto;
 }
 
-nav.nav-mobile a {
+nav.nav-mobile a,
+.mobile-nav a {
   text-decoration: none;
   font-size: 1rem;
+  font-weight: 500;
   color: var(--ink);
-  padding: 8px 0;
+  padding: 12px 0;
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  transition: color 0.15s ease;
 }
 
-nav.nav-mobile.open {
+nav.nav-mobile a:hover,
+.mobile-nav a:hover {
+  color: #3B6CD8;
+}
+
+nav.nav-mobile a.active,
+.mobile-nav a.active {
+  color: #3B6CD8;
+  font-weight: 700;
+}
+
+nav.nav-mobile.open,
+.mobile-nav.active {
   display: flex;
 }
 

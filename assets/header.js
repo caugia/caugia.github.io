@@ -53,7 +53,19 @@
         ".nav-actions .caugia-marketplace-link{display:none!important;}" +
         ".brand .brand-full{display:none!important;}" +
         ".brand .brand-short{display:inline!important;}" +
-      "}";
+      "}" +
+      /* Mobile header: cleaner */
+      "@media(max-width:720px){" +
+        ".nav-actions .caugia-login-link{display:none!important;}" +
+        ".nav-actions .btn-cta,.nav-actions .btn-workspace{padding:7px 14px;font-size:0.75rem;}" +
+      "}" +
+      /* Mobile lang section in hamburger menu */
+      ".caugia-mobile-lang{display:flex;align-items:center;gap:6px;padding:12px 0 4px;border-top:1px solid #e2e8f0;margin-top:4px;}" +
+      ".caugia-mobile-lang-label{color:#94a3b8;font-size:0.75rem;font-weight:600;margin-right:4px;}" +
+      ".caugia-mobile-lang a{display:inline-flex;align-items:center;justify-content:center;min-width:36px;padding:6px 12px;" +
+        "border-radius:6px;font-size:0.8rem;font-weight:700;text-decoration:none;transition:all 0.15s;border:1px solid #e2e8f0;color:#64748b;}" +
+      ".caugia-mobile-lang a:hover{border-color:#3B6CD8;color:#3B6CD8;}" +
+      ".caugia-mobile-lang a.active-lang{background:#eff6ff;color:#3B6CD8;border-color:#3B6CD8;}";
     document.head.appendChild(s);
 
     /* -- 2. Header HTML -- */
@@ -105,7 +117,7 @@
           '<ul class="nav-links">' +
             '<li>' + a('index.html', navLabels.home) + '</li>' +
             '<li>' + a('about.html', navLabels.about) + '</li>' +
-            '<li>' + a('gtm-assessment.html', 'GTM Score') + '</li>' +
+            '<li><a href="https://os.caugia.com/try">Sophie</a></li>' +
             '<li>' + a('intelligence.html', 'Intelligence') + '</li>' +
             '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
@@ -113,7 +125,7 @@
             buildLangToggles() +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
             '<a href="' + navBase + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
-            '<button class="menu-toggle" id="caugiaMenuToggle">Menu</button>' +
+            '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu"><span></span></button>' +
           '</div>' +
         '</div>' +
         /* Gradient bridge — same blue-to-orange as GRIP OS */
@@ -121,20 +133,21 @@
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
           a('index.html', navLabels.home) +
           a('about.html', navLabels.about) +
-          a('gtm-assessment.html', 'GTM Score') +
+          '<a href="https://os.caugia.com/try">Sophie</a>' +
           a('intelligence.html', 'Intelligence') +
           a('contact.html', navLabels.contact) +
           a('grip-marketplace.html','GRIP Marketplace') +
           a('partners.html', navLabels.partners) +
           '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + navLabels.loginOs + '</a>' +
-          '<div style="display:flex;gap:8px;padding-top:8px;border-top:1px solid #e2e8f0;margin-top:8px;">' +
+          '<div class="caugia-mobile-lang">' +
+            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : (isFr ? 'Langue' : 'Language')) + '</span>' +
             (function() {
               var enPath = isLocalized ? assetBase + p : p;
               var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
               var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
-              return '<a href="' + enPath + '" style="font-size:0.8rem;font-weight:700;color:' + (!isFr && !isDe ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (!isFr && !isDe ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">EN</a>' +
-                     '<a href="' + frPath + '" style="font-size:0.8rem;font-weight:700;color:' + (isFr ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (isFr ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">FR</a>' +
-                     '<a href="' + dePath + '" style="font-size:0.8rem;font-weight:700;color:' + (isDe ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (isDe ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">DE</a>';
+              return '<a href="' + enPath + '"' + (!isFr && !isDe ? ' class="active-lang"' : '') + '>EN</a>' +
+                     '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>FR</a>' +
+                     '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>';
             })() +
           '</div>' +
         '</div>' +
@@ -147,13 +160,13 @@
     if (btn && nav) {
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        nav.classList.toggle("active");
-        btn.innerText = nav.classList.contains("active") ? "Close" : "Menu";
+        var isOpen = nav.classList.toggle("active");
+        btn.classList.toggle("open", isOpen);
       });
       document.addEventListener("click", function (e) {
-        if (nav.classList.contains("active") && !nav.contains(e.target) && e.target !== btn) {
+        if (nav.classList.contains("active") && !nav.contains(e.target) && !btn.contains(e.target)) {
           nav.classList.remove("active");
-          btn.innerText = "Menu";
+          btn.classList.remove("open");
         }
       });
     }
