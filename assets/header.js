@@ -21,8 +21,15 @@
       /* Brand name toggle */
       ".brand .brand-short{display:none;}" +
       /* Login link */
-      ".caugia-lang-toggle{color:#94a3b8;font-weight:700;font-size:0.75rem;text-decoration:none;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;transition:all 0.15s;}" +
-      ".caugia-lang-toggle:hover{color:#3B6CD8;border-color:#3B6CD8;}" +
+      ".caugia-lang-wrap{position:relative;display:inline-flex;}" +
+      ".caugia-lang-btn{color:#94a3b8;font-weight:700;font-size:0.75rem;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;transition:all 0.15s;cursor:pointer;background:none;display:inline-flex;align-items:center;gap:3px;}" +
+      ".caugia-lang-btn:hover{color:#3B6CD8;border-color:#3B6CD8;}" +
+      ".caugia-lang-btn svg{width:10px;height:10px;}" +
+      ".caugia-lang-dropdown{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);min-width:120px;z-index:100;overflow:hidden;}" +
+      ".caugia-lang-wrap.open .caugia-lang-dropdown{display:block;}" +
+      ".caugia-lang-dropdown a{display:block;padding:8px 14px;color:#334155;font-size:0.8rem;font-weight:600;text-decoration:none;transition:background 0.1s;}" +
+      ".caugia-lang-dropdown a:hover{background:#f1f5f9;}" +
+      ".caugia-lang-dropdown a.active-lang{color:#3B6CD8;background:#eff6ff;}" +
       ".caugia-login-link{color:#64748b;font-weight:600;font-size:0.85rem;text-decoration:none;transition:color 0.15s ease;opacity:0;transition:opacity 0.2s ease;}" +
       ".caugia-login-link.visible{opacity:1;}" +
       ".caugia-login-link:hover{color:#0056b3;}" +
@@ -42,7 +49,7 @@
       "@media(max-width:980px){" +
         ".nav-actions .btn,.nav-actions .btn-secondary{display:none!important;}" +
         ".nav-actions .btn-cta,.nav-actions .btn-workspace{display:inline-flex!important;padding:8px 16px;font-size:0.8rem;}" +
-        ".nav-actions .caugia-login-link{display:none!important;}" +
+        ".nav-actions .caugia-login-link{font-size:0.75rem;}" +
         ".nav-actions .caugia-marketplace-link{display:none!important;}" +
         ".brand .brand-full{display:none!important;}" +
         ".brand .brand-short{display:inline!important;}" +
@@ -68,26 +75,20 @@
       ? { home: 'Accueil', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS' }
       : { home: 'Home', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS' };
 
-    // Language toggle links: show the two OTHER languages
+    // Language dropdown: current lang as button, others in dropdown
     function buildLangToggles() {
       var enPath = isLocalized ? assetBase + p : p;
       var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
       var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
-      var toggles = '';
-      if (!isFr && !isDe) {
-        // English page: show FR and DE
-        toggles += '<a href="' + frPath + '" class="caugia-lang-toggle" title="Version fran\u00e7aise">FR</a>';
-        toggles += '<a href="' + dePath + '" class="caugia-lang-toggle" title="Deutsche Version" style="margin-left:4px;">DE</a>';
-      } else if (isFr) {
-        // French page: show EN and DE
-        toggles += '<a href="' + enPath + '" class="caugia-lang-toggle" title="Switch to English">EN</a>';
-        toggles += '<a href="' + dePath + '" class="caugia-lang-toggle" title="Deutsche Version" style="margin-left:4px;">DE</a>';
-      } else {
-        // German page: show EN and FR
-        toggles += '<a href="' + enPath + '" class="caugia-lang-toggle" title="Switch to English">EN</a>';
-        toggles += '<a href="' + frPath + '" class="caugia-lang-toggle" title="Version fran\u00e7aise" style="margin-left:4px;">FR</a>';
-      }
-      return toggles;
+      var currentLang = isDe ? 'DE' : (isFr ? 'FR' : 'EN');
+      return '<div class="caugia-lang-wrap" id="caugiaLangWrap">' +
+        '<button class="caugia-lang-btn" id="caugiaLangBtn">' + currentLang + ' <svg viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+        '<div class="caugia-lang-dropdown">' +
+          '<a href="' + enPath + '"' + (!isFr && !isDe ? ' class="active-lang"' : '') + '>English</a>' +
+          '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>Fran\u00e7ais</a>' +
+          '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>Deutsch</a>' +
+        '</div>' +
+      '</div>';
     }
 
     function a(h, t) {
@@ -147,6 +148,21 @@
       });
     }
 
+    /* -- 3b. Language dropdown toggle -- */
+    var langWrap = document.getElementById("caugiaLangWrap");
+    var langBtn = document.getElementById("caugiaLangBtn");
+    if (langWrap && langBtn) {
+      langBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        langWrap.classList.toggle("open");
+      });
+      document.addEventListener("click", function (e) {
+        if (!langWrap.contains(e.target)) {
+          langWrap.classList.remove("open");
+        }
+      });
+    }
+
     /* -- 4. Load partner referral tracking -- */
     try {
       var refScript = document.createElement('script');
@@ -165,7 +181,7 @@
         loginLink.style.fontWeight = "600";
       } else if (data.workspace) {
         loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
-        loginLink.textContent = isDe ? "Mein Workspace" : (isFr ? "Mon Espace" : "My Workspace");
+        loginLink.textContent = isDe ? "Dashboard" : (isFr ? "Dashboard" : "Dashboard");
         loginLink.style.fontWeight = "700";
       } else {
         loginLink.href = "https://os.caugia.com/dashboard";
