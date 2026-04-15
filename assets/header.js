@@ -54,10 +54,14 @@
         ".brand .brand-full{display:none!important;}" +
         ".brand .brand-short{display:inline!important;}" +
       "}" +
-      /* Mobile header: cleaner */
+      /* Mobile header: ONLY logo + hamburger visible */
       "@media(max-width:720px){" +
         ".nav-actions .caugia-login-link{display:none!important;}" +
-        ".nav-actions .btn-cta,.nav-actions .btn-workspace{padding:7px 14px;font-size:0.75rem;}" +
+        ".nav-actions .btn-cta{display:none!important;}" +
+        ".nav-actions .btn-workspace{display:none!important;}" +
+        ".nav-actions .caugia-lang-wrap{display:none!important;}" +
+        ".nav-actions .caugia-marketplace-link{display:none!important;}" +
+        ".nav-actions{gap:0!important;}" +
       "}" +
       /* Mobile lang section in hamburger menu */
       ".caugia-mobile-lang{display:flex;align-items:center;gap:6px;padding:12px 0 4px;border-top:1px solid #e2e8f0;margin-top:4px;}" +
@@ -131,14 +135,19 @@
         /* Gradient bridge — same blue-to-orange as GRIP OS */
         '<div class="caugia-gradient-bridge"></div>' +
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
+          /* Navigation links */
           a('index.html', navLabels.home) +
           a('about.html', navLabels.about) +
           '<a href="https://os.caugia.com/try">Sophie</a>' +
           a('intelligence.html', 'Intelligence') +
           a('contact.html', navLabels.contact) +
-          a('grip-marketplace.html','GRIP Marketplace') +
           a('partners.html', navLabels.partners) +
-          '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + navLabels.loginOs + '</a>' +
+          /* CTA + Login section */
+          '<div style="margin-top:12px;padding-top:16px;border-top:1px solid #e2e8f0;display:flex;flex-direction:column;gap:10px;">' +
+            '<a href="' + navBase + 'grip-marketplace.html" style="display:block;text-align:center;padding:14px 0;border-radius:10px;background:#0056b3;color:#fff;font-weight:700;font-size:0.95rem;text-decoration:none;">GRIP Marketplace</a>' +
+            '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="display:block;text-align:center;padding:12px 0;border-radius:10px;border:1px solid #e2e8f0;color:#3B6CD8;font-weight:600;font-size:0.9rem;text-decoration:none;">' + navLabels.loginOs + '</a>' +
+          '</div>' +
+          /* Language switcher */
           '<div class="caugia-mobile-lang">' +
             '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : (isFr ? 'Langue' : 'Language')) + '</span>' +
             (function() {
