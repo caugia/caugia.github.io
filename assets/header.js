@@ -129,7 +129,10 @@
             buildLangToggles() +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
             '<a href="' + navBase + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
-            '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu"><span></span></button>' +
+            '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu">' +
+              '<svg class="caugia-hamburger-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+              '<svg class="caugia-close-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M5 5l10 10M15 5L5 15" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+            '</button>' +
           '</div>' +
         '</div>' +
         /* Gradient bridge — same blue-to-orange as GRIP OS */
@@ -167,15 +170,26 @@
     var btn = document.getElementById("caugiaMenuToggle");
     var nav = document.getElementById("caugiaMobileNav");
     if (btn && nav) {
+      var hamburgerIcon = btn.querySelector('.caugia-hamburger-icon');
+      var closeIcon = btn.querySelector('.caugia-close-icon');
+      function setMenuState(open) {
+        if (open) {
+          nav.classList.add("active");
+          if (hamburgerIcon) hamburgerIcon.style.display = 'none';
+          if (closeIcon) closeIcon.style.display = 'block';
+        } else {
+          nav.classList.remove("active");
+          if (hamburgerIcon) hamburgerIcon.style.display = 'block';
+          if (closeIcon) closeIcon.style.display = 'none';
+        }
+      }
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        var isOpen = nav.classList.toggle("active");
-        btn.classList.toggle("open", isOpen);
+        setMenuState(!nav.classList.contains("active"));
       });
       document.addEventListener("click", function (e) {
         if (nav.classList.contains("active") && !nav.contains(e.target) && !btn.contains(e.target)) {
-          nav.classList.remove("active");
-          btn.classList.remove("open");
+          setMenuState(false);
         }
       });
     }
