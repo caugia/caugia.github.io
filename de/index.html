@@ -192,121 +192,93 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/caugia-base.css">
 <style>
-.hero{padding:72px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-.hero h1{font-size:3.25rem;line-height:1.08;margin-bottom:20px;letter-spacing:-0.02em}
-.hero-sub{font-size:1.15rem;line-height:1.6;color:var(--text-body);margin-bottom:24px}
-.hero-sub strong{color:var(--text-dark)}
-.hero-muted{font-size:0.95rem;color:#94a3b8;font-weight:500;margin-bottom:0}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
-.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
-.grip-demo{background:#fff;border-radius:16px;border:1px solid rgba(15,23,42,0.06);box-shadow:0 4px 24px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);padding:28px;position:sticky;top:100px}
-.grip-demo-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f1f5f9}
-.grip-demo-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8}
-.grip-demo-title{font-family:Inter,sans-serif;font-weight:800;font-size:1rem;color:#0f172a;margin-top:2px}
-.grip-demo-score{font-size:2.75rem;font-weight:800;color:var(--primary);line-height:1;font-variant-numeric:tabular-nums}
-.demo-pattern{background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-bottom:20px;opacity:0;transform:translateY(6px);transition:all 0.5s ease}
+/* ============ PREMIUM VISUAL LAYER — 2026 ============ */
+
+/* Hero — dark, spacious, dramatic */
+.hero{padding:100px 0 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.hero h1{font-size:3.5rem;line-height:1.06;margin-bottom:24px;letter-spacing:-0.03em;background:linear-gradient(135deg,#fff 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .eyebrow{color:#E07830}
+.hero-sub{font-size:1.15rem;line-height:1.7;color:#94a3b8;margin-bottom:0;max-width:520px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap}
+
+/* Dark hero wrapper */
+.hero-dark{background:#0a0f1e;position:relative;overflow:hidden}
+.hero-dark::before{content:"";position:absolute;top:-40%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(59,108,216,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-dark::after{content:"";position:absolute;bottom:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(224,120,48,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-dark .container{position:relative;z-index:1}
+.hero-dark h2,.hero-dark p,.hero-dark .eyebrow{color:#94a3b8}
+
+/* GRIP demo widget — elevated card */
+.grip-demo{background:rgba(255,255,255,0.04);border-radius:20px;border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px;position:sticky;top:100px}
+.grip-demo-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.grip-demo-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#64748b}
+.grip-demo-title{font-weight:800;font-size:1rem;color:#fff;margin-top:2px}
+.grip-demo-score{font-size:2.75rem;font-weight:800;color:#3B6CD8;line-height:1;font-variant-numeric:tabular-nums}
+.demo-pattern{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);border-left:3px solid #f59e0b;border-radius:10px;padding:14px 16px;margin-bottom:20px;opacity:0;transform:translateY(6px);transition:all 0.5s ease}
 .demo-pattern.visible{opacity:1;transform:translateY(0)}
-.demo-pattern-tag{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#b45309;margin-bottom:2px}
-.demo-pattern-name{font-weight:800;font-size:0.85rem;color:#78350f;margin-bottom:2px}
-.demo-pattern-desc{font-size:0.78rem;color:#92400e;line-height:1.45}
-.demo-scores{display:flex;flex-direction:column;gap:14px}
-.demo-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
-.demo-row-label{font-family:Inter,sans-serif;font-weight:600;font-size:0.82rem;color:#64748b}
-.demo-row-val{font-family:Inter,sans-serif;font-weight:800;font-size:0.85rem;color:#0f172a;font-variant-numeric:tabular-nums}
-.demo-bar{height:5px;background:#f1f5f9;border-radius:10px;overflow:hidden;position:relative}
-.demo-bar::after{content:"";position:absolute;top:0;left:70%;width:1px;height:100%;background:#1e293b;opacity:0.15}
+.demo-pattern-tag{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#fbbf24;margin-bottom:2px}
+.demo-pattern-name{font-weight:800;font-size:0.9rem;color:#fff;margin-bottom:2px}
+.demo-pattern-desc{font-size:0.82rem;color:#94a3b8;line-height:1.5}
+.demo-scores{display:flex;flex-direction:column;gap:16px}
+.demo-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.demo-row-label{font-weight:600;font-size:0.85rem;color:#94a3b8}
+.demo-row-val{font-weight:800;font-size:0.88rem;color:#fff;font-variant-numeric:tabular-nums}
+.demo-bar{height:6px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;position:relative}
+.demo-bar::after{content:"";position:absolute;top:0;left:70%;width:1px;height:100%;background:rgba(255,255,255,0.1)}
 .demo-bar-fill{height:100%;border-radius:10px;width:0;transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1)}
-.fill-strong{background:linear-gradient(90deg,#0056b3,#3b82f6)}
+.fill-strong{background:linear-gradient(90deg,#3B6CD8,#60a5fa)}
 .fill-warn{background:linear-gradient(90deg,#d97706,#fbbf24)}
 .fill-crit{background:linear-gradient(90deg,#dc2626,#f87171)}
-.demo-row.is-constraint .demo-row-label{color:#dc2626;font-weight:700}
-.demo-row.is-constraint .demo-row-val{color:#dc2626}
-@keyframes pulse-constraint{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 3px rgba(220,38,38,0.12)}}
+.demo-row.is-constraint .demo-row-label{color:#f87171;font-weight:700}
+.demo-row.is-constraint .demo-row-val{color:#f87171}
+@keyframes pulse-constraint{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px rgba(248,113,113,0.1)}}
 .demo-row.is-constraint .demo-bar{animation:pulse-constraint 2.5s ease-in-out infinite;animation-delay:2.2s;border-radius:10px}
-.demo-foot{text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid #f1f5f9}
-.demo-foot a{color:var(--primary);font-weight:700;font-size:0.82rem;text-decoration:none}
+.demo-foot{text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
+.demo-foot a{color:#60a5fa;font-weight:700;font-size:0.85rem;text-decoration:none}
 .demo-foot a:hover{text-decoration:underline}
-.block{padding:64px 0}
-.block+.block{border-top:1px solid #f1f5f9}
-.block+.block-tight{border-top:1px solid #f1f5f9}
-.block-tight{padding:48px 0}
-.block-tight+.block{border-top:1px solid #f1f5f9}
-.pillars{margin-top:48px;padding:28px;background:#fafbfc;border:1px solid #f1f5f9;border-radius:14px;border-left:3px solid var(--primary)}
-.pillars h3{font-family:Inter,sans-serif;font-weight:800;font-size:0.95rem;margin-bottom:16px;color:#0f172a}
-.pill-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
-.pill-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:0.8rem;color:#475569;border-bottom:1px solid #f8fafc}
-.pill-item:last-child{border-bottom:none}
-.pill-num{width:20px;height:20px;border-radius:5px;background:#eff6ff;color:var(--primary);font-weight:800;font-size:0.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.m-text{display:none}
-.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
-.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;transition:border-color 0.2s,box-shadow 0.2s}
-.card:hover{border-color:#cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
-.card h4{font-family:Inter,sans-serif;font-weight:800;font-size:1rem;margin-bottom:8px;color:#0f172a}
-.card p{margin:0;font-size:0.92rem;line-height:1.5;color:#64748b}
-.comp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;max-width:960px;margin:0 auto}
-.comp-old{padding:0 20px;opacity:0.65}
+
+/* Sections — generous spacing */
+.block{padding:100px 0}
+.block+.block{border-top:none}
+.block h2{font-size:2.2rem;letter-spacing:-0.02em;line-height:1.15}
+.block p{font-size:1.05rem}
+.cta-block{padding:100px 0;text-align:center}
+
+/* Comparison */
+.comp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;max-width:960px;margin:0 auto}
+.comp-old{padding:0 24px;opacity:0.5}
 .comp-old h4{margin-bottom:20px;color:#94a3b8;font-size:1rem}
-.comp-new{background:#fff;padding:36px;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.07);border:1px solid rgba(0,86,179,0.12);position:relative;overflow:hidden}
-.comp-badge{position:absolute;top:0;right:0;background:#dcfce7;color:#166534;font-size:0.65rem;font-weight:800;padding:5px 10px;border-bottom-left-radius:10px;letter-spacing:0.04em}
-.comp-new h4{margin-bottom:20px;color:var(--primary);display:flex;align-items:center;gap:10px;font-size:0.95rem;font-family:Inter,sans-serif;font-weight:900;letter-spacing:0.02em;text-transform:uppercase}
+.comp-new{background:#fff;padding:40px;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,0.08);border:1px solid rgba(0,86,179,0.1);position:relative;overflow:hidden}
+.comp-badge{position:absolute;top:0;right:0;background:#dcfce7;color:#166534;font-size:0.65rem;font-weight:800;padding:6px 12px;border-bottom-left-radius:12px;letter-spacing:0.04em}
+.comp-new h4{margin-bottom:24px;color:var(--primary);display:flex;align-items:center;gap:10px;font-size:1rem;font-weight:900;letter-spacing:0.02em;text-transform:uppercase}
 .comp-list{list-style:none;padding:0;margin:0}
-.comp-item{padding:14px 0;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
+.comp-item{padding:16px 0;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
 .comp-item:last-child{border-bottom:none}
-.comp-label{font-weight:600;font-size:0.92rem;color:#475569}
-.comp-val{font-weight:700;font-size:0.92rem;color:#0f172a;text-align:right}
-.comp-val-green{color:#16a34a;background:#dcfce7;padding:3px 8px;border-radius:5px;font-size:0.85rem}
-.persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.report-block{background:#0f172a;padding:96px 0}
-.report-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.report-block h2{color:#fff}
-.report-block .eyebrow{color:#60a5fa}
-.report-text{color:#cbd5e1;font-size:1.05rem;margin-bottom:28px;line-height:1.6}
-.report-checks{margin-bottom:28px;padding:0;list-style:none}
-.report-checks li{color:#e2e8f0;padding:6px 0;font-size:0.95rem;display:flex;align-items:center;gap:8px}
-.report-checks li::before{content:"\2713";color:#60a5fa;font-weight:800}
-.report-visual{display:flex;align-items:center;justify-content:center}
-.rp{width:340px;background:#fff;border-radius:8px;box-shadow:0 25px 60px rgba(0,0,0,0.5);overflow:hidden;transform:perspective(900px) rotateY(-3deg) rotateX(1.5deg);transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1)}
-.rp:hover{transform:perspective(900px) rotateY(0) rotateX(0) scale(1.02)}
-.rp-head{background:linear-gradient(135deg,#0056b3,#0073e6);padding:14px 20px 12px;position:relative}
-.rp-ch{font-size:0.48rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:2px}
-.rp-t{font-family:Merriweather,serif;font-size:0.9rem;font-weight:900;color:#fff;line-height:1.2}
-.rp-st{font-size:0.48rem;color:rgba(255,255,255,0.45);margin-top:2px}
-.rp-logo{position:absolute;top:12px;right:16px;width:26px;height:26px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center}
-.rp-logo span{font-weight:900;font-size:0.6rem;color:#fff}
-.rp-foot{background:#f8fafc;border-top:1px solid #e2e8f0;padding:7px 20px;display:flex;justify-content:space-between}
-.rp-foot span{font-size:0.4rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em}
-.cta-block{padding:80px 0;text-align:center}
+.comp-label{font-weight:600;font-size:0.95rem;color:#475569}
+.comp-val{font-weight:700;font-size:0.95rem;color:#0f172a;text-align:right}
+.comp-val-green{color:#16a34a;background:#dcfce7;padding:4px 10px;border-radius:6px;font-size:0.88rem}
+
+/* Responsive */
 @media(max-width:980px){
-.hero{padding-top:28px;gap:36px;text-align:center;grid-template-columns:1fr!important}
-.hero>div:first-child{padding:0 8px}
-.hero h1{font-size:2rem!important;letter-spacing:-0.03em}
-.hero-sub{font-size:1.02rem}
-.hero-actions{justify-content:center}
-.hero-cta-row{display:flex;flex-direction:column;gap:10px;width:100%;align-items:center}
-.hero-cta-row .btn{width:100%;text-align:center;box-sizing:border-box}
-.pillars{padding:20px 18px;margin-top:32px;text-align:left}
-.pill-grid>div{display:block}
-.pill-grid{grid-template-columns:1fr 1fr}
-.pill-item{font-size:0.75rem}
-.d-text{display:none}
-.m-text{display:inline}
-.grip-demo{position:static;margin-top:0;padding:22px 18px;box-shadow:none;border:1px solid var(--line)}
-.grip-demo-score{font-size:2.5rem}
-.card-row{grid-template-columns:1fr!important;gap:16px}
-.persona-grid{grid-template-columns:1fr!important}
-.block [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important}
-.block-tight [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important}
-.block [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-.comp-wrap{grid-template-columns:1fr!important;gap:20px}
-.comp-old{background:#f8fafc;padding:20px;border-radius:14px;border:1px solid #f1f5f9;opacity:1}
-.comp-new{padding:28px 22px}
-.report-inner{grid-template-columns:1fr!important;gap:40px}
-.rp{width:100%;max-width:340px}
-[style*="grid-template-columns:repeat(5"]{grid-template-columns:repeat(2,1fr)!important;gap:24px!important}
-[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important;gap:12px!important}
-[style*="grid-template-columns:1fr 1.2fr"]{grid-template-columns:1fr!important;gap:20px!important}
-section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:32px!important}
-.block{padding:56px 0}
+  .hero{padding:60px 0 48px;gap:36px;text-align:center;grid-template-columns:1fr!important}
+  .hero>div:first-child{padding:0 8px}
+  .hero h1{font-size:2.2rem!important}
+  .hero-sub{font-size:1rem;margin:0 auto}
+  .hero-actions{justify-content:center}
+  .hero-cta-row{display:flex;flex-direction:column;gap:12px;width:100%;align-items:center}
+  .hero-cta-row .btn{width:100%;text-align:center;box-sizing:border-box}
+  .grip-demo{position:static;margin-top:0;padding:24px 20px}
+  .grip-demo-score{font-size:2.5rem}
+  .comp-wrap{grid-template-columns:1fr!important;gap:20px}
+  .comp-old{padding:20px;border-radius:14px;opacity:1;background:rgba(255,255,255,0.03)}
+  .comp-new{padding:28px 22px}
+  .block{padding:64px 0}
+  .cta-block{padding:64px 0}
+  .block h2{font-size:1.6rem}
+  [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important;gap:16px!important}
+  [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important;gap:16px!important}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:24px!important}
 }
 </style>
 </head>
@@ -315,21 +287,50 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
 
 <main>
 
-<!-- ========== HERO ========== -->
+<!-- ========== HERO (dark) ========== -->
+<div class="hero-dark">
 <section class="container hero">
   <div>
-    <span class="eyebrow">GTM-Diagnostik f&uuml;r B2B SaaS</span>
-    <h1>Ihr Umsatzsystem hat einen Engpass.<br>Wir finden ihn.</h1>
-    <p class="hero-sub" style="max-width:560px;">
+    <span class="eyebrow" style="color:#E07830;font-size:0.78rem;">GTM-Diagnostik f&uuml;r B2B SaaS</span>
+    <h1>Ihr Umsatzsystem<br>hat einen Engpass.<br>Wir finden ihn.</h1>
+    <p class="hero-sub">
       Ein diagnostisches System, das die strukturelle Bremse in Ihrem Go-to-Market identifiziert, die Kosten quantifiziert und den Fix steuert. Keine Berater. Keine Meinungen. Nur Daten.
     </p>
-    <div class="hero-actions" style="flex-direction:column;align-items:flex-start;gap:12px;">
+    <div class="hero-actions" style="flex-direction:column;align-items:flex-start;gap:14px;">
       <div class="hero-cta-row">
-        <a href="gtm-assessment.html" class="btn btn-primary" style="padding:16px 32px;font-size:1.05rem;">Kostenloser GTM Score</a>
-        <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:#E07830;color:#E07830;">Vollst&auml;ndige Diagnostik &middot; <span data-price-key="report">2 495</span>&nbsp;<span class="curr">&euro;</span></a>
+        <a href="gtm-assessment.html" class="btn btn-primary" style="padding:16px 36px;font-size:1.05rem;border-radius:12px;">Kostenloser GTM Score</a>
+        <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:rgba(224,120,48,0.4);color:#E07830;border-radius:12px;">Vollst&auml;ndige Diagnostik &middot; <span data-price-key="report">2 495</span>&nbsp;<span class="curr">&euro;</span></a>
       </div>
     </div>
-    <p style="font-size:0.82rem;color:#94a3b8;margin-top:12px;">265 Fragen. 72 Scoring-Engines. 45-seitiger Bericht in einer Stunde.</p>
+    <p style="font-size:0.82rem;color:#475569;margin-top:16px;">265 Fragen &middot; 72 Scoring-Engines &middot; 45-seitiger Bericht in einer Stunde</p>
+  </div>
+  <aside class="grip-demo" id="gripDemo">
+    <div class="grip-demo-head">
+      <div>
+        <div class="grip-demo-label">Beispiel GRIP-Diagnostik</div>
+        <div class="grip-demo-title">GRIP-Score</div>
+      </div>
+<body>
+<script src="../assets/header.js"></script>
+
+<main>
+
+<!-- ========== HERO (dark, spacious) ========== -->
+<div class="hero-dark">
+<section class="container hero">
+  <div>
+    <span class="eyebrow" style="color:#E07830;font-size:0.78rem;">GTM-Diagnostik f&uuml;r B2B SaaS</span>
+    <h1>Ihr Umsatzsystem<br>hat einen Engpass.<br>Wir finden ihn.</h1>
+    <p class="hero-sub">
+      Ein diagnostisches System, das die strukturelle Bremse in Ihrem Go-to-Market identifiziert, die Kosten quantifiziert und den Fix steuert. Keine Berater. Keine Meinungen. Nur Daten.
+    </p>
+    <div class="hero-actions" style="flex-direction:column;align-items:flex-start;gap:14px;">
+      <div class="hero-cta-row">
+        <a href="gtm-assessment.html" class="btn btn-primary" style="padding:16px 36px;font-size:1.05rem;border-radius:12px;">Kostenloser GTM Score</a>
+        <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:rgba(224,120,48,0.4);color:#E07830;border-radius:12px;">Diagnostik starten &middot; <span data-price-key="report">2 495</span>&nbsp;<span class="curr">&euro;</span></a>
+      </div>
+    </div>
+    <p style="font-size:0.82rem;color:#475569;margin-top:16px;">265 Fragen &middot; 72 Scoring-Engines &middot; 45 Seiten in einer Stunde</p>
   </div>
   <aside class="grip-demo" id="gripDemo">
     <div class="grip-demo-head">
@@ -340,38 +341,28 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
       <div class="grip-demo-score" id="demoTotal">&mdash;</div>
     </div>
     <div class="demo-pattern" id="demoPattern">
-      <div class="demo-pattern-tag">Systemisches Muster erkannt</div>
+      <div class="demo-pattern-tag">Muster erkannt</div>
       <div class="demo-pattern-name">The Ivory Tower</div>
-      <div class="demo-pattern-desc">Die Strategie ist solide, aber die Umsetzung bricht an den &Uuml;bergabepunkten zusammen.</div>
+      <div class="demo-pattern-desc">Strategie solide, Umsetzung bricht an den &Uuml;bergabepunkten zusammen.</div>
     </div>
     <div class="demo-scores">
-      <div class="demo-row" id="row-g">
-        <div class="demo-row-top"><span class="demo-row-label">Guidance</span><span class="demo-row-val" id="dv-g">&mdash;</span></div>
-        <div class="demo-bar"><div class="demo-bar-fill fill-strong" id="db-g"></div></div>
-      </div>
-      <div class="demo-row" id="row-r">
-        <div class="demo-row-top"><span class="demo-row-label">Resources</span><span class="demo-row-val" id="dv-r">&mdash;</span></div>
-        <div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-r"></div></div>
-      </div>
-      <div class="demo-row is-constraint" id="row-i">
-        <div class="demo-row-top"><span class="demo-row-label">Implementation &larr; Hauptengpass</span><span class="demo-row-val" id="dv-i">&mdash;</span></div>
-        <div class="demo-bar"><div class="demo-bar-fill fill-crit" id="db-i"></div></div>
-      </div>
-      <div class="demo-row" id="row-p">
-        <div class="demo-row-top"><span class="demo-row-label">Performance</span><span class="demo-row-val" id="dv-p">&mdash;</span></div>
-        <div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-p"></div></div>
-      </div>
+      <div class="demo-row" id="row-g"><div class="demo-row-top"><span class="demo-row-label">Guidance</span><span class="demo-row-val" id="dv-g">&mdash;</span></div><div class="demo-bar"><div class="demo-bar-fill fill-strong" id="db-g"></div></div></div>
+      <div class="demo-row" id="row-r"><div class="demo-row-top"><span class="demo-row-label">Resources</span><span class="demo-row-val" id="dv-r">&mdash;</span></div><div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-r"></div></div></div>
+      <div class="demo-row is-constraint" id="row-i"><div class="demo-row-top"><span class="demo-row-label">Implementation &larr; Engpass</span><span class="demo-row-val" id="dv-i">&mdash;</span></div><div class="demo-bar"><div class="demo-bar-fill fill-crit" id="db-i"></div></div></div>
+      <div class="demo-row" id="row-p"><div class="demo-row-top"><span class="demo-row-label">Performance</span><span class="demo-row-val" id="dv-p">&mdash;</span></div><div class="demo-bar"><div class="demo-bar-fill fill-warn" id="db-p"></div></div></div>
     </div>
     <div class="demo-foot"><a href="gtm-assessment.html">Was findet die Engine bei Ihnen? &rarr;</a></div>
   </aside>
 </section>
+</div>
 
 <!-- ========== DAS PROBLEM ========== -->
-<div class="block">
-  <div class="container" style="max-width:780px;">
-    <h2>Warum der Umsatz stagniert, obwohl alle hart arbeiten</h2>
-    <p style="color:var(--text-body);font-size:1.05rem;line-height:1.7;margin-bottom:0;">
-      Die meisten GTM-Teams werden nicht durch fehlenden Einsatz gebremst. Sie werden durch mangelnde Sichtbarkeit gebremst. Marketing, Sales und Customer Success optimieren in Silos. Der Vorstand fragt, warum das Wachstum nachl&auml;sst. Niemand hat dieselbe Antwort. Das Problem ist nicht Strategie &mdash; es ist, dass niemand den einen Engpass isoliert hat, der alles bremst.
+<div class="block" style="background:#fff;">
+  <div class="container" style="max-width:720px;text-align:center;">
+    <span class="eyebrow">Das Problem</span>
+    <h2 style="font-size:2.4rem;margin-bottom:24px;">Alle arbeiten hart.<br>Der Umsatz stagniert trotzdem.</h2>
+    <p style="color:#475569;font-size:1.1rem;line-height:1.8;">
+      Marketing, Sales und Customer Success optimieren in Silos. Der Vorstand fragt, warum das Wachstum nachl&auml;sst. Niemand hat dieselbe Antwort. Das Problem ist nicht Strategie &mdash; es ist, dass niemand den einen Engpass isoliert hat, der alles bremst.
     </p>
   </div>
 </div>
@@ -379,63 +370,59 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
 <!-- ========== DREI SCHRITTE ========== -->
 <div class="block" style="background:#f8fafc;">
   <div class="container" style="max-width:1080px;">
-    <div style="text-align:center;margin-bottom:48px;">
+    <div style="text-align:center;margin-bottom:56px;">
       <span class="eyebrow" style="color:#E07830;">Wie Caugia funktioniert</span>
-      <h2>Diagnose. Governance. Intelligence.</h2>
-      <p style="font-size:1rem;color:#475569;max-width:560px;margin:0 auto;line-height:1.6;">Drei Schichten, ein System. Jeder Schritt liefert eigenst&auml;ndigen Wert.</p>
+      <h2 style="font-size:2.2rem;">Diagnose. Governance. Intelligence.</h2>
+      <p style="font-size:1.05rem;color:#475569;max-width:520px;margin:12px auto 0;line-height:1.7;">Drei Schichten, ein System. Jeder Schritt liefert eigenst&auml;ndigen Wert.</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
-      <div style="background:#fff;border-radius:12px;padding:32px 28px;border-top:3px solid #3B6CD8;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:10px;">01 &middot; DIAGNOSTIZIEREN</div>
-        <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">Finden Sie den Engpass</h3>
-        <p style="font-size:0.92rem;color:#475569;line-height:1.6;margin-bottom:16px;">265 Fragen. 72 Scoring-Engines. Ein 45-seitiger Bericht auf Board-Niveau, der den strukturellen Hauptengpass Ihres Umsatzsystems identifiziert &mdash; in einer Stunde, nicht in Wochen.</p>
-        <a href="grip-marketplace.html#intelligence-report" style="color:#3B6CD8;font-weight:700;font-size:0.85rem;text-decoration:none;">GTM Intelligence Report &rarr;</a>
+      <div style="background:#fff;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;box-shadow:0 4px 24px rgba(0,0,0,0.03);transition:all 0.25s ease;" onmouseover="this.style.boxShadow='0 12px 40px rgba(59,108,216,0.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.03)';this.style.transform='none'">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#3B6CD8,#60a5fa);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:1.1rem;font-weight:900;color:#fff;">01</div>
+        <h3 style="font-size:1.25rem;font-weight:900;color:#0f172a;margin-bottom:12px;">Finden Sie den Engpass</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:20px;">265 Fragen. 72 Scoring-Engines. Ein 45-seitiger Bericht auf Board-Niveau &mdash; in einer Stunde, nicht in Wochen.</p>
+        <a href="grip-marketplace.html#intelligence-report" style="color:#3B6CD8;font-weight:700;font-size:0.9rem;text-decoration:none;">Intelligence Report &rarr;</a>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:32px 28px;border-top:3px solid #E07830;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:10px;">02 &middot; STEUERN</div>
-        <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">Steuern Sie den Fix</h3>
-        <p style="font-size:0.92rem;color:#475569;line-height:1.6;margin-bottom:16px;">GRIP OS verwandelt die Diagnose in Aktion. Ma&szlig;nahmen-Kaskaden, Meilensteine, Drift-Erkennung und 340+ Konnektoren. Der Engpass wird nicht nur benannt &mdash; er wird gel&ouml;st.</p>
-        <a href="grip-marketplace.html#grip-os" style="color:#E07830;font-weight:700;font-size:0.85rem;text-decoration:none;">GRIP OS entdecken &rarr;</a>
+      <div style="background:#fff;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;box-shadow:0 4px 24px rgba(0,0,0,0.03);transition:all 0.25s ease;" onmouseover="this.style.boxShadow='0 12px 40px rgba(224,120,48,0.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.03)';this.style.transform='none'">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#E07830,#fbbf24);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:1.1rem;font-weight:900;color:#fff;">02</div>
+        <h3 style="font-size:1.25rem;font-weight:900;color:#0f172a;margin-bottom:12px;">Steuern Sie den Fix</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:20px;">GRIP OS verwandelt die Diagnose in Aktion. Ma&szlig;nahmen-Kaskaden, Meilensteine und 340+ Konnektoren.</p>
+        <a href="grip-marketplace.html#grip-os" style="color:#E07830;font-weight:700;font-size:0.9rem;text-decoration:none;">GRIP OS entdecken &rarr;</a>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:32px 28px;border-top:3px solid #0f172a;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#0f172a;margin-bottom:10px;">03 &middot; INTELLIGENCE</div>
-        <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">Wissen, was der Markt tut</h3>
-        <p style="font-size:0.92rem;color:#475569;line-height:1.6;margin-bottom:16px;">Drei automatische Intelligence-Module: Wie KI Ihre Marke sieht, was Reviews sagen, und was Ihre Wettbewerber gerade tun. Jede Woche aktuell.</p>
-        <a href="intelligence.html" style="color:#0f172a;font-weight:700;font-size:0.85rem;text-decoration:none;">Intelligence-Module &rarr;</a>
+      <div style="background:#fff;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;box-shadow:0 4px 24px rgba(0,0,0,0.03);transition:all 0.25s ease;" onmouseover="this.style.boxShadow='0 12px 40px rgba(15,23,42,0.08)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.03)';this.style.transform='none'">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#0f172a,#475569);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:1.1rem;font-weight:900;color:#fff;">03</div>
+        <h3 style="font-size:1.25rem;font-weight:900;color:#0f172a;margin-bottom:12px;">Wissen, was der Markt tut</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:20px;">KI-Sichtbarkeit, Review-Intelligence und Wettbewerber-Tracking. Jede Woche automatisch aktuell.</p>
+        <a href="intelligence.html" style="color:#0f172a;font-weight:700;font-size:0.9rem;text-decoration:none;">Intelligence-Module &rarr;</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== F&Uuml;R WEN ========== -->
-<div class="block">
-  <div class="container" style="max-width:880px;">
-    <span class="eyebrow">Drei Wege zu Caugia</span>
-    <h2>Je nachdem, wo Sie heute stehen</h2>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:32px;">
-      <!-- Operator -->
-      <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #e2e8f0;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;">OPERATOR</div>
-        <h3 style="font-size:1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">CEO, CRO, VP Revenue</h3>
-        <p style="font-size:0.88rem;color:#475569;line-height:1.6;margin-bottom:16px;">Sie sp&uuml;ren die Reibung im GTM-System. Ihnen fehlen die Daten, um sie zu beweisen. Starten Sie mit dem kostenlosen GTM Score oder der vollst&auml;ndigen Diagnostik.</p>
-        <a href="gtm-assessment.html" style="color:#3B6CD8;font-weight:700;font-size:0.85rem;text-decoration:none;">Kostenloser GTM Score &rarr;</a>
+<!-- ========== DREI WEGE ========== -->
+<div class="block" style="background:#fff;">
+  <div class="container" style="max-width:1080px;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <span class="eyebrow">Drei Wege zu Caugia</span>
+      <h2 style="font-size:2.2rem;">Je nachdem, wo Sie heute stehen</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+      <div style="background:#f8fafc;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;display:flex;flex-direction:column;">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:16px;">OPERATOR</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#0f172a;margin-bottom:10px;">CEO, CRO, VP Revenue</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:24px;flex:1;">Sie sp&uuml;ren die Reibung im System. Ihnen fehlen die Daten, um sie zu beweisen.</p>
+        <a href="gtm-assessment.html" class="btn btn-primary" style="text-align:center;border-radius:10px;font-size:0.9rem;">Kostenloser GTM Score</a>
       </div>
-
-      <!-- Investor -->
-      <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #e2e8f0;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:12px;">INVESTOR</div>
-        <h3 style="font-size:1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">VC, PE, Board Member</h3>
-        <p style="font-size:0.88rem;color:#475569;line-height:1.6;margin-bottom:16px;">GTM Due Diligence in 30 Sekunden. Externe Marktdaten, KI-Sichtbarkeit, Review-Analyse und Wettbewerbs-Intelligence &mdash; ohne Kooperation des Unternehmens.</p>
-        <a href="https://os.caugia.com/dd/demo" style="color:#E07830;font-weight:700;font-size:0.85rem;text-decoration:none;">Demo-Bericht ansehen &rarr;</a>
+      <div style="background:#f8fafc;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;display:flex;flex-direction:column;">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:16px;">INVESTOR</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#0f172a;margin-bottom:10px;">VC, PE, Board Member</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:24px;flex:1;">GTM Due Diligence in 30 Sekunden. Externe Marktdaten, keine Kooperation n&ouml;tig.</p>
+        <a href="https://os.caugia.com/dd/demo" class="btn btn-outline" style="text-align:center;border-radius:10px;font-size:0.9rem;border-color:#E07830;color:#E07830;">Demo-Bericht ansehen</a>
       </div>
-
-      <!-- Advisor -->
-      <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #e2e8f0;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#0f172a;margin-bottom:12px;">ADVISOR</div>
-        <h3 style="font-size:1rem;font-weight:900;color:#0f172a;margin-bottom:8px;">GTM-Berater, RevOps, Fraktionaler CRO</h3>
-        <p style="font-size:0.88rem;color:#475569;line-height:1.6;margin-bottom:16px;">Machen Sie Ihre Beratung messbar. GRIP OS gibt Ihren Empfehlungen Daten, Nachverfolgung und Beweis. Bis zu 20% wiederkehrende Provision.</p>
-        <a href="partners.html" style="color:#0f172a;font-weight:700;font-size:0.85rem;text-decoration:none;">Partnerprogramm &rarr;</a>
+      <div style="background:#f8fafc;border-radius:16px;padding:36px 32px;border:1px solid #e2e8f0;display:flex;flex-direction:column;">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#0f172a;margin-bottom:16px;">ADVISOR</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#0f172a;margin-bottom:10px;">Berater, RevOps, Fraktionaler CRO</h3>
+        <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:24px;flex:1;">Machen Sie Ihre Beratung messbar. Bis zu 20% wiederkehrende Provision.</p>
+        <a href="partners.html" class="btn btn-outline" style="text-align:center;border-radius:10px;font-size:0.9rem;">Partnerprogramm</a>
       </div>
     </div>
   </div>
@@ -444,9 +431,9 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
 <!-- ========== VERGLEICH ========== -->
 <div class="block" style="background:#f8fafc;">
   <div class="container" style="max-width:960px;">
-    <div style="text-align:center;max-width:660px;margin:0 auto 48px;">
+    <div style="text-align:center;max-width:660px;margin:0 auto 56px;">
       <span class="eyebrow">Warum Caugia</span>
-      <h2>Beratung braucht Wochen.<br>Caugia braucht eine Stunde.</h2>
+      <h2 style="font-size:2.2rem;">Beratung braucht Wochen.<br>Caugia braucht eine Stunde.</h2>
     </div>
     <div class="comp-wrap">
       <div class="comp-old">
@@ -467,101 +454,74 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
           <li class="comp-item"><span class="comp-label">Reproduzierbarkeit</span><span class="comp-val">100% konsistent</span></li>
           <li class="comp-item"><span class="comp-label">Kosten</span><span class="comp-val comp-val-green">Ab <span data-price-key="report">2 495</span>&nbsp;<span class="curr">&euro;</span></span></li>
         </ul>
-        <div style="margin-top:24px;text-align:center;">
-          <a href="grip-marketplace.html#intelligence-report" class="btn btn-primary" style="width:100%;">Diagnostik starten</a>
-          <p style="margin-top:8px;"><a href="gtm-assessment.html" style="color:var(--primary);font-size:0.82rem;font-weight:600;text-decoration:none;">Oder kostenlos mit dem GTM Score beginnen &rarr;</a></p>
+        <div style="margin-top:28px;text-align:center;">
+          <a href="grip-marketplace.html#intelligence-report" class="btn btn-primary" style="width:100%;border-radius:10px;">Diagnostik starten</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== INTELLIGENCE-MODULE ========== -->
-<section style="padding:80px 0;background:linear-gradient(135deg, #1A2340 0%, #0f172a 100%);">
+<!-- ========== INTELLIGENCE (dark) ========== -->
+<section style="padding:100px 0;background:linear-gradient(135deg,#0a0f1e 0%,#1A2340 100%);">
   <div class="container" style="max-width:1080px;">
-    <div style="text-align:center;margin-bottom:48px;">
+    <div style="text-align:center;margin-bottom:56px;">
       <span class="eyebrow" style="color:#E07830;">Immer aktiv. Immer aktuell.</span>
-      <h2 style="font-family:Merriweather,serif;font-size:2rem;font-weight:900;color:#fff;line-height:1.2;">Drei Intelligence-Schichten.<br>Ein System.</h2>
-      <p style="font-size:1rem;color:#94a3b8;max-width:560px;margin:12px auto 0;line-height:1.7;">&Uuml;ber die Diagnostik hinaus &uuml;berwacht GRIP OS den Markt f&uuml;r Sie &mdash; jede Woche automatisch.</p>
+      <h2 style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#fff;line-height:1.15;">Drei Intelligence-Schichten.<br>Ein System.</h2>
+      <p style="font-size:1.05rem;color:#64748b;max-width:520px;margin:16px auto 0;line-height:1.7;">GRIP OS &uuml;berwacht den Markt f&uuml;r Sie &mdash; jede Woche automatisch.</p>
     </div>
-
-    <style>
-      .intel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-      .intel-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px;}
-      .intel-card h3{font-size:1.05rem;font-weight:900;color:#fff;margin-bottom:8px;}
-      .intel-card p{font-size:0.88rem;color:#94a3b8;line-height:1.6;margin:0;}
-      .intel-card ul{list-style:none;padding:0;margin:14px 0 0;}
-      .intel-card li{font-size:0.85rem;color:#cbd5e1;padding:5px 0;padding-left:18px;position:relative;line-height:1.5;}
-      .intel-card li span{position:absolute;left:0;font-weight:700;}
-      @media(max-width:980px){.intel-grid{grid-template-columns:1fr;}}
-    </style>
-    <div class="intel-grid">
-      <div class="intel-card" style="border-top:3px solid #E07830;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:10px;">KI-ANTWORTMARKT</div>
-        <h3>Wie KI Ihre Marke sieht</h3>
-        <p>Was finden K&auml;ufer, wenn sie ChatGPT, Gemini oder Claude nach Ihrer Kategorie fragen?</p>
-        <ul>
-          <li><span style="color:#E07830;">&check;</span> Share of Voice auf allen KI-Plattformen</li>
-          <li><span style="color:#E07830;">&check;</span> Zitier-Tracking und Sichtbarkeitsl&uuml;cken</li>
-          <li><span style="color:#E07830;">&check;</span> Umsetzbare Content-Ma&szlig;nahmen pro Scan</li>
-        </ul>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 28px;border-top:3px solid #E07830;">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:14px;">KI-ANTWORTMARKT</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#fff;margin-bottom:10px;">Wie KI Ihre Marke sieht</h3>
+        <p style="font-size:0.92rem;color:#64748b;line-height:1.7;">Was finden K&auml;ufer in ChatGPT, Gemini, Claude? Share of Voice, Zitier-L&uuml;cken, umsetzbare Ma&szlig;nahmen.</p>
       </div>
-      <div class="intel-card" style="border-top:3px solid #3B6CD8;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:10px;">REVIEW INTELLIGENCE</div>
-        <h3>Was der Markt denkt</h3>
-        <p>Strukturierte Analyse von G2, Capterra, TrustRadius. Nicht Sentiment &mdash; actionable GTM-Intelligence.</p>
-        <ul>
-          <li><span style="color:#3B6CD8;">&check;</span> Ihre Versprechen vs. Review-Realit&auml;t</li>
-          <li><span style="color:#3B6CD8;">&check;</span> Champion-Phrasen f&uuml;r Sales</li>
-          <li><span style="color:#3B6CD8;">&check;</span> Churn-Risikosignale in Reviews</li>
-        </ul>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 28px;border-top:3px solid #3B6CD8;">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:14px;">REVIEW INTELLIGENCE</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#fff;margin-bottom:10px;">Was der Markt denkt</h3>
+        <p style="font-size:0.92rem;color:#64748b;line-height:1.7;">G2, Capterra, TrustRadius. Versprechen vs. Realit&auml;t. Champion-Phrasen. Churn-Signale. Win/Loss-Muster.</p>
       </div>
-      <div class="intel-card" style="border-top:3px solid #fff;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:10px;">COMPETITIVE INTELLIGENCE</div>
-        <h3>Was die Konkurrenz tut</h3>
-        <p>Preis&auml;nderungen, Feature-Launches, Funding-Runden, Hiring-Trends &mdash; automatisch erkannt und bewertet.</p>
-        <ul>
-          <li><span style="color:#fff;">&check;</span> Auto-generierte Battlecards</li>
-          <li><span style="color:#fff;">&check;</span> Bedrohungs-Scores pro Wettbewerber</li>
-          <li><span style="color:#fff;">&check;</span> Reflexiver GTM-Impact</li>
-        </ul>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 28px;border-top:3px solid rgba(255,255,255,0.3);">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:14px;">COMPETITIVE INTELLIGENCE</div>
+        <h3 style="font-size:1.15rem;font-weight:900;color:#fff;margin-bottom:10px;">Was die Konkurrenz tut</h3>
+        <p style="font-size:0.92rem;color:#64748b;line-height:1.7;">Preis&auml;nderungen, Feature-Launches, Funding, Hiring. Auto-Battlecards. Reflexiver GTM-Impact.</p>
       </div>
     </div>
-    <div style="text-align:center;margin-top:36px;">
-      <a href="https://os.caugia.com/demo" class="btn btn-primary" style="background:#fff;color:#0f172a;padding:14px 32px;">Im Demo-Workspace ansehen</a>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="https://os.caugia.com/demo" class="btn btn-primary" style="background:#fff;color:#0a0f1e;padding:16px 36px;border-radius:12px;font-size:1rem;">Im Demo-Workspace ansehen</a>
     </div>
   </div>
 </section>
 
 <!-- ========== DUE DILIGENCE ========== -->
-<div class="block">
-  <div class="container" style="max-width:880px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+<div class="block" style="background:#fff;">
+  <div class="container" style="max-width:960px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
       <div>
         <span class="eyebrow" style="color:#E07830;">F&uuml;r Investoren</span>
-        <h2 style="font-size:1.8rem;">GTM Due Diligence<br>in 30 Sekunden</h2>
-        <p style="font-size:1rem;color:#475569;line-height:1.7;margin-bottom:20px;">
-          Bewerten Sie die GTM-Gesundheit eines Unternehmens aus externen Marktdaten. Keine Kooperation des Unternehmens erforderlich. KI-Sichtbarkeit, Review-Analyse, Wettbewerbsposition, Marktpotenzial &mdash; in einem Bericht.
+        <h2 style="font-size:2rem;margin-bottom:16px;">GTM Due Diligence<br>in 30 Sekunden</h2>
+        <p style="font-size:1.05rem;color:#475569;line-height:1.8;margin-bottom:24px;">
+          Bewerten Sie die GTM-Gesundheit eines Unternehmens aus externen Marktdaten. KI-Sichtbarkeit, Review-Analyse, Wettbewerbsposition, Marktpotenzial &mdash; in einem Bericht.
         </p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="https://os.caugia.com/dd/demo" class="btn btn-primary" style="background:#E07830;">Demo-Bericht ansehen</a>
-          <a href="https://os.caugia.com/dd" class="btn btn-outline" style="border-color:#E07830;color:#E07830;">Eigenen Bericht erstellen</a>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="https://os.caugia.com/dd/demo" class="btn btn-primary" style="background:#E07830;border-radius:10px;">Demo-Bericht ansehen</a>
+          <a href="https://os.caugia.com/dd" class="btn btn-outline" style="border-color:#E07830;color:#E07830;border-radius:10px;">Eigenen erstellen</a>
         </div>
       </div>
-      <div style="background:#f8fafc;border-radius:14px;padding:28px;border:1px solid #e2e8f0;">
-        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#94a3b8;margin-bottom:12px;">BEISPIEL &middot; DEEL</div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <span style="font-size:1.1rem;font-weight:900;color:#0f172a;">Deel</span>
-          <span style="font-size:1.8rem;font-weight:900;color:#3B82F6;">B</span>
+      <div style="background:#0a0f1e;border-radius:20px;padding:32px;color:#fff;box-shadow:0 12px 48px rgba(0,0,0,0.12);">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#64748b;margin-bottom:16px;">BEISPIEL &middot; DEEL</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <span style="font-size:1.2rem;font-weight:900;">Deel</span>
+          <span style="font-size:2.2rem;font-weight:900;color:#3B82F6;">B</span>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:#475569;">KI-Sichtbarkeit</span><span style="font-weight:700;color:#16A34A;">A</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:#475569;">Marktwahrnehmung</span><span style="font-weight:700;color:#3B82F6;">B</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:#475569;">Wettbewerbsposition</span><span style="font-weight:700;color:#3B82F6;">B</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:#475569;">Markt-Whitespace</span><span style="font-weight:700;color:#0f172a;">74%</span></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.92rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="color:#94a3b8;">KI-Sichtbarkeit</span><span style="font-weight:700;color:#16A34A;">A</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.92rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="color:#94a3b8;">Marktwahrnehmung</span><span style="font-weight:700;color:#3B82F6;">B</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.92rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="color:#94a3b8;">Wettbewerbsposition</span><span style="font-weight:700;color:#3B82F6;">B</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.92rem;padding:8px 0;"><span style="color:#94a3b8;">Markt-Whitespace</span><span style="font-weight:700;color:#E07830;">74%</span></div>
         </div>
-        <div style="margin-top:14px;padding-top:12px;border-top:1px solid #e2e8f0;">
-          <p style="font-size:0.78rem;color:#94a3b8;margin:0;">47 Quellen analysiert &middot; 3 Wettbewerber profiliert</p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+          <p style="font-size:0.8rem;color:#475569;margin:0;">47 Quellen &middot; 3 Wettbewerber &middot; Marktpotenzial</p>
         </div>
       </div>
     </div>
@@ -571,24 +531,22 @@ section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!impor
 <!-- ========== CTA ========== -->
 <section class="cta-block" style="background:#f8fafc;">
   <div class="container" style="max-width:640px;">
-    <h2 style="font-size:2rem;">Bereit, den Engpass zu finden?</h2>
-    <p style="font-size:1.05rem;color:#475569;margin-bottom:28px;line-height:1.6;">Beginnen Sie kostenlos mit dem GTM Score. Oder starten Sie direkt mit der vollst&auml;ndigen Diagnostik.</p>
+    <h2 style="font-size:2.2rem;margin-bottom:16px;">Bereit, den Engpass zu finden?</h2>
+    <p style="font-size:1.1rem;color:#475569;margin-bottom:32px;line-height:1.7;">Beginnen Sie kostenlos mit dem GTM Score. Oder starten Sie direkt mit der vollst&auml;ndigen Diagnostik.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <a href="gtm-assessment.html" class="btn btn-primary" style="padding:16px 36px;font-size:1.05rem;">Kostenloser GTM Score</a>
-      <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:#E07830;color:#E07830;">Vollst&auml;ndige Diagnostik</a>
+      <a href="gtm-assessment.html" class="btn btn-primary" style="padding:16px 40px;font-size:1.05rem;border-radius:12px;">Kostenloser GTM Score</a>
+      <a href="grip-marketplace.html#intelligence-report" class="btn btn-outline" style="border-color:#E07830;color:#E07830;border-radius:12px;padding:16px 40px;font-size:1.05rem;">Vollst&auml;ndige Diagnostik</a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer style="text-align:center;padding:32px 18px;border-top:1px solid #f1f5f9;">
+<footer style="text-align:center;padding:40px 18px;border-top:1px solid #e2e8f0;">
   <div class="container" style="max-width:800px;">
     <p style="margin-bottom:8px;"><a href="https://os.caugia.com/demo" style="color:#3B6CD8;text-decoration:none;font-size:0.85rem;font-weight:700;">Betrieben mit GRIP OS</a></p>
-    <p>&copy; <span id="year">2026</span> Caugia SASU. Alle Rechte vorbehalten. &middot; <a href="privacy.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Datenschutzrichtlinie</a> &middot; <a href="terms.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Nutzungsbedingungen</a> &middot; <a href="partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Partnerprogramm</a></p>
+    <p>&copy; <span id="year">2026</span> Caugia SASU &middot; <a href="privacy.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Datenschutz</a> &middot; <a href="terms.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Nutzungsbedingungen</a> &middot; <a href="partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Partnerprogramm</a></p>
   </div>
-</footer>
-
 </footer>
 
 <script src="../assets/caugia-base.js"></script>
