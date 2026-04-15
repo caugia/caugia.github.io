@@ -127,6 +127,16 @@
           a('grip-marketplace.html','GRIP Marketplace') +
           a('partners.html', navLabels.partners) +
           '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="color:#3B6CD8;font-weight:700;">' + navLabels.loginOs + '</a>' +
+          '<div style="display:flex;gap:8px;padding-top:8px;border-top:1px solid #e2e8f0;margin-top:8px;">' +
+            (function() {
+              var enPath = isLocalized ? assetBase + p : p;
+              var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
+              var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
+              return '<a href="' + enPath + '" style="font-size:0.8rem;font-weight:700;color:' + (!isFr && !isDe ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (!isFr && !isDe ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">EN</a>' +
+                     '<a href="' + frPath + '" style="font-size:0.8rem;font-weight:700;color:' + (isFr ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (isFr ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">FR</a>' +
+                     '<a href="' + dePath + '" style="font-size:0.8rem;font-weight:700;color:' + (isDe ? '#3B6CD8' : '#94a3b8') + ';text-decoration:none;padding:4px 10px;border:1px solid ' + (isDe ? '#3B6CD8' : '#e2e8f0') + ';border-radius:6px;">DE</a>';
+            })() +
+          '</div>' +
         '</div>' +
       '</header>'
     );
