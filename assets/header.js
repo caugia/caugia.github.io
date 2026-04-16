@@ -273,16 +273,24 @@
         });
     } catch (e) {}
 
-    /* -- 6. Inject "Partner Program" link into footer (if not already present) -- */
+    /* -- 6. Standardize footer across all pages -- */
     try {
       var footerEl = document.querySelector('footer');
-      if (footerEl && !footerEl.innerHTML.includes('partners.html')) {
-        var lastP = footerEl.querySelector('p:last-of-type');
-        if (lastP && !lastP.innerHTML.includes('partners.html')) {
-          lastP.insertAdjacentHTML('beforeend',
-            ' &middot; <a href="' + navBase + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">' + navLabels.partners + '</a>'
-          );
-        }
+      if (footerEl) {
+        var footerLabels = isDe
+          ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace' }
+          : isFr
+          ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace' }
+          : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace' };
+        footerEl.className = 's-footer';
+        footerEl.innerHTML =
+          '<div class="container"><p>' +
+            '&copy; <span id="year">' + new Date().getFullYear() + '</span> Caugia SASU. ' + footerLabels.rights + '.' +
+            ' &middot; <a href="' + navBase + 'privacy.html">' + footerLabels.privacy + '</a>' +
+            ' &middot; <a href="' + navBase + 'terms.html">' + footerLabels.terms + '</a>' +
+            ' &middot; <a href="' + navBase + 'partners.html">' + footerLabels.partners + '</a>' +
+            ' &middot; <a href="' + navBase + 'grip-marketplace.html">' + footerLabels.marketplace + '</a>' +
+          '</p></div>';
       }
     } catch(e) {}
   }
