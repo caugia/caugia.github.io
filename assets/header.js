@@ -126,9 +126,9 @@
             '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
-            buildLangToggles() +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
             '<a href="' + navBase + 'grip-marketplace.html#intelligence-report" class="btn-cta" id="caugiaCta">' + navLabels.cta + '</a>' +
+            buildLangToggles() +
             '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu">' +
               '<svg class="caugia-hamburger-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
               '<svg class="caugia-close-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M5 5l10 10M15 5L5 15" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
