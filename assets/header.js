@@ -86,10 +86,10 @@
 
     // Navigation labels per language
     var navLabels = isDe
-      ? { home: 'Startseite', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden' }
+      ? { product: 'Produkt', insights: 'Insights', pricing: 'Preise', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten' }
       : isFr
-      ? { home: 'Accueil', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS' }
-      : { home: 'Home', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS' };
+      ? { product: 'Produit', insights: 'Insights', pricing: 'Tarifs', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
+      : { product: 'Product', insights: 'Insights', pricing: 'Pricing', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
 
     // Language dropdown: current lang as button, others in dropdown
     function buildLangToggles() {
@@ -119,16 +119,16 @@
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
           '<ul class="nav-links">' +
-            '<li>' + a('index.html', navLabels.home) + '</li>' +
+            '<li>' + a('grip-marketplace.html', navLabels.product) + '</li>' +
+            '<li>' + a('intelligence.html', navLabels.insights) + '</li>' +
+            '<li>' + a('pricing.html', navLabels.pricing) + '</li>' +
             '<li>' + a('about.html', navLabels.about) + '</li>' +
-            '<li><a href="https://os.caugia.com/try">Sophie</a></li>' +
-            '<li>' + a('intelligence.html', 'Intelligence') + '</li>' +
             '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
           '<div class="nav-actions" id="caugiaNavActions">' +
             buildLangToggles() +
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
-            '<a href="' + navBase + 'grip-marketplace.html" class="btn-cta" id="caugiaCta">GRIP Marketplace</a>' +
+            '<a href="' + navBase + 'grip-marketplace.html#intelligence-report" class="btn-cta" id="caugiaCta">' + navLabels.cta + '</a>' +
             '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu">' +
               '<svg class="caugia-hamburger-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
               '<svg class="caugia-close-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M5 5l10 10M15 5L5 15" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
@@ -139,16 +139,17 @@
         '<div class="caugia-gradient-bridge"></div>' +
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
           /* Navigation links */
-          a('index.html', navLabels.home) +
+          a('grip-marketplace.html', navLabels.product) +
+          a('intelligence.html', navLabels.insights) +
+          a('pricing.html', navLabels.pricing) +
           a('about.html', navLabels.about) +
-          '<a href="https://os.caugia.com/try">Sophie</a>' +
-          a('intelligence.html', 'Intelligence') +
           a('contact.html', navLabels.contact) +
           a('partners.html', navLabels.partners) +
           /* CTA + Login section */
           '<div style="margin-top:12px;padding-top:16px;border-top:1px solid #e2e8f0;display:flex;flex-direction:column;gap:10px;">' +
-            '<a href="' + navBase + 'grip-marketplace.html" style="display:block;text-align:center;padding:14px 0;border-radius:10px;background:#0056b3;color:#fff;font-weight:700;font-size:0.95rem;text-decoration:none;">GRIP Marketplace</a>' +
-            '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="display:block;text-align:center;padding:12px 0;border-radius:10px;border:1px solid #e2e8f0;color:#3B6CD8;font-weight:600;font-size:0.9rem;text-decoration:none;">' + navLabels.loginOs + '</a>' +
+            '<a href="' + navBase + 'grip-marketplace.html#intelligence-report" style="display:block;text-align:center;padding:14px 0;border-radius:10px;background:#0056b3;color:#fff;font-weight:700;font-size:0.95rem;text-decoration:none;">' + navLabels.cta + '</a>' +
+            '<a href="https://os.caugia.com/try" style="display:block;text-align:center;padding:12px 0;border-radius:10px;border:1px solid #e2e8f0;color:#3B6CD8;font-weight:600;font-size:0.9rem;text-decoration:none;">Sophie</a>' +
+            '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" style="display:block;text-align:center;padding:10px 0;color:#94a3b8;font-weight:500;font-size:0.82rem;text-decoration:none;">' + navLabels.loginOs + '</a>' +
           '</div>' +
           /* Language switcher */
           '<div class="caugia-mobile-lang">' +
