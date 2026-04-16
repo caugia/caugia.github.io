@@ -308,15 +308,6 @@ section[id] { scroll-margin-top:120px; }
   .mk-copilot-h2{font-size:1.6rem !important;}
 }
 
-/* Sub-nav */
-.mk-subnav{position:sticky;top:64px;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.04);z-index:100;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity 0.3s ease,transform 0.3s ease;}
-.mk-subnav.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-.mk-subnav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;padding:0 20px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.mk-subnav-link{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#64748b;text-decoration:none;white-space:nowrap;padding:10px 0;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
-.mk-subnav-link:hover{color:#3B6CD8;}
-.mk-subnav-link.active{color:#3B6CD8;border-bottom-color:#3B6CD8;}
-@media(max-width:600px){.mk-subnav-inner{justify-content:flex-start;gap:24px;}}
-
 /* Route cards */
 .mk-route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin:0 auto 60px;padding:0 20px;}
 .mk-route-card{background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:28px 24px;text-align:center;cursor:pointer;transition:all 0.2s;}
@@ -340,14 +331,6 @@ section[id] { scroll-margin-top:120px; }
   <p class="mk-hero-sub" style="margin-bottom:32px;">Trois approches pour reprendre le contrôle de votre système GTM. selon l'étape où vous en êtes aujourd'hui.</p>
 </section>
 
-<!-- STICKY SUB-NAV -->
-<nav class="mk-subnav" id="mkSubnav">
-  <div class="mk-subnav-inner">
-    <a href="#intelligence-report" class="mk-subnav-link" data-section="intelligence-report">Intelligence Report</a>
-    <a href="#grip-os" class="mk-subnav-link" data-section="grip-os">GRIP OS</a>
-    <a href="#modules" class="mk-subnav-link" data-section="modules">Modules Deep Dive</a>
-  </div>
-</nav>
 
 <!-- ROUTE SELECTOR -->
 <div class="mk-route-grid">
@@ -813,17 +796,6 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
       }
     });
   };
-})();
-</script>
-<script>
-/* Sticky sub-nav */
-(function(){
-  var subnav=document.getElementById('mkSubnav'); if(!subnav) return;
-  var hero=document.querySelector('.mk-hero'); var links=subnav.querySelectorAll('.mk-subnav-link'); var sections=[];
-  links.forEach(function(l){sections.push(document.getElementById(l.dataset.section));});
-  function onScroll(){ var heroBottom=hero.getBoundingClientRect().bottom; if(heroBottom<80) subnav.classList.add('visible'); else subnav.classList.remove('visible'); var current=''; for(var i=sections.length-1;i>=0;i--){if(sections[i]){var rect=sections[i].getBoundingClientRect();if(rect.top<=160){current=sections[i].id;break;}}} links.forEach(function(l){if(l.dataset.section===current) l.classList.add('active'); else l.classList.remove('active');}); }
-  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
-  links.forEach(function(l){l.addEventListener('click',function(e){e.preventDefault();scrollToSection(this.dataset.section);});});
 })();
 </script>
 </body>

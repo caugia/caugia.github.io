@@ -351,23 +351,6 @@ section[id] { scroll-margin-top:120px; }
   <p class="mk-hero-sub" style="margin-bottom:32px;">Three ways to take control of your GTM system. depending on where you are today.</p>
 </section>
 
-<!-- STICKY SUB-NAV (P14) -->
-<style>
-.mk-subnav{position:sticky;top:64px;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.04);z-index:100;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity 0.3s ease,transform 0.3s ease;}
-.mk-subnav.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-.mk-subnav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;padding:0 20px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.mk-subnav-link{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#64748b;text-decoration:none;white-space:nowrap;padding:10px 0;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
-.mk-subnav-link:hover{color:#3B6CD8;}
-.mk-subnav-link.active{color:#3B6CD8;border-bottom-color:#3B6CD8;}
-@media(max-width:600px){.mk-subnav-inner{justify-content:flex-start;gap:24px;}}
-</style>
-<nav class="mk-subnav" id="mkSubnav">
-  <div class="mk-subnav-inner">
-    <a href="#intelligence-report" class="mk-subnav-link" data-section="intelligence-report">Intelligence Report</a>
-    <a href="#grip-os" class="mk-subnav-link" data-section="grip-os">GRIP OS</a>
-    <a href="#modules" class="mk-subnav-link" data-section="modules">Deep Dive Modules</a>
-  </div>
-</nav>
 
 <!-- ROUTE SELECTOR -->
 <style>
@@ -1035,45 +1018,6 @@ function scrollToSection(id) {
       }
     });
   };
-})();
-</script>
-<script>
-/* P14: Sticky sub-nav visibility + scroll spy */
-(function(){
-  var subnav = document.getElementById('mkSubnav');
-  if (!subnav) return;
-  var hero = document.querySelector('.mk-hero');
-  var links = subnav.querySelectorAll('.mk-subnav-link');
-  var sections = [];
-  links.forEach(function(l){ sections.push(document.getElementById(l.dataset.section)); });
-
-  function onScroll(){
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    if(heroBottom < 80) subnav.classList.add('visible');
-    else subnav.classList.remove('visible');
-
-    var current = '';
-    for(var i=sections.length-1; i>=0; i--){
-      if(sections[i]){
-        var rect = sections[i].getBoundingClientRect();
-        if(rect.top <= 160) { current = sections[i].id; break; }
-      }
-    }
-    links.forEach(function(l){
-      if(l.dataset.section === current) l.classList.add('active');
-      else l.classList.remove('active');
-    });
-  }
-
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-
-  links.forEach(function(l){
-    l.addEventListener('click', function(e){
-      e.preventDefault();
-      scrollToSection(this.dataset.section);
-    });
-  });
 })();
 </script>
 </body>
