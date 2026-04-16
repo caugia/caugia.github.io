@@ -241,61 +241,34 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
   color: #94a3b8;
 }
 
-/* ── GRIP score bars ──────────────────────────────────────── */
-.np-c-grip {
-  padding: 14px 24px 18px;
+/* ── Constraint line ──────────────────────────────────────── */
+.np-c-constraint {
+  padding: 12px 24px 14px;
   background: var(--light);
-}
-.np-c-grip-title {
-  font-size: 10px;
-  font-weight: 700;
-  color: #94a3b8;
-  letter-spacing: 0.06em;
-  margin-bottom: 10px;
-}
-.np-c-grip-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-.np-c-grip-bar-header {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transition: opacity 0.4s ease 1.3s;
 }
-.np-c-grip-dim {
-  font-size: 11px;
+.np-contradiction.visible .np-c-constraint { opacity: 1; }
+.np-c-constraint-label {
+  font-size: 9px;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
 }
-.np-c-grip-dim.g { color: var(--blue); }
-.np-c-grip-dim.r { color: var(--orange); }
-.np-c-grip-dim.i { color: var(--green); }
-.np-c-grip-dim.p { color: #8b5cf6; }
-.np-c-grip-score {
-  font-size: 11px;
+.np-c-constraint-value {
+  font-size: 14px;
   font-weight: 800;
   color: var(--dark);
-  opacity: 0;
-  transition: opacity 0.3s ease 1.4s;
 }
-.np-contradiction.visible .np-c-grip-score { opacity: 1; }
-
-.np-c-grip-track {
-  height: 5px;
-  background: #e2e8f0;
-  border-radius: 3px;
-  overflow: hidden;
+.np-c-constraint-dim {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
 }
-.np-c-grip-fill {
-  height: 100%;
-  border-radius: 3px;
-  width: 0%;
-  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.np-contradiction.visible .np-c-grip-fill.g { width: 50%; transition-delay: 1.3s; background: var(--blue); }
-.np-contradiction.visible .np-c-grip-fill.r { width: 54%; transition-delay: 1.4s; background: var(--orange); }
-.np-contradiction.visible .np-c-grip-fill.i { width: 43%; transition-delay: 1.5s; background: var(--green); }
-.np-contradiction.visible .np-c-grip-fill.p { width: 62%; transition-delay: 1.6s; background: #8b5cf6; }
 
 /* ── Punchline ────────────────────────────────────────────── */
 .np-punchline {
@@ -326,7 +299,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
   .np-c-financials { flex-direction: column; gap: 12px; padding: 14px 20px; }
   .np-c-fin-item { display: flex; justify-content: space-between; align-items: center; text-align: left; }
   .np-c-fin-label { margin-bottom: 0; }
-  .np-c-grip-grid { grid-template-columns: repeat(2, 1fr); }
+  .np-c-constraint { flex-direction: column; align-items: flex-start; gap: 2px; }
   .np-company-metrics { flex-wrap: wrap; gap: 10px; }
   .np-metric { min-width: 70px; }
 }
@@ -371,7 +344,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
 
   <!-- Phase 2: Sophie analyzing -->
   <div class="np-sophie-bar" id="npSophie">
-    <img src="https://os.caugia.com/brain-sophie-v2.png" alt="Sophie" class="np-sophie-avatar">
+    <img src="assets/sophie-avatar.png" alt="Sophie" class="np-sophie-avatar">
     <span class="np-sophie-text" id="npSophieText">Sophie is analyzing NovaPay&rsquo;s metrics&hellip;</span>
     <div class="np-sophie-dots" id="npDots"><span></span><span></span><span></span></div>
   </div>
@@ -382,7 +355,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
       <h3>Plenty of pipeline. Almost nothing converts.</h3>
     </div>
     <div class="np-c-explanation">
-      Pipeline coverage at 3.8x is healthy &mdash; NovaPay generates demand. But win rate at 22% with 18% average discount tells the real story: deals enter the funnel and die on value perception, not on price. The market doesn&rsquo;t understand why NovaPay is different.
+      3.8x pipeline but 22% win rate. Deals enter the funnel and die on value perception. The market doesn&rsquo;t understand why NovaPay is different.
     </div>
     <div class="np-c-financials">
       <div class="np-c-fin-item">
@@ -398,38 +371,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
         <div class="np-c-fin-value green">&euro;2.7M</div>
       </div>
     </div>
-    <div class="np-c-grip">
-      <div class="np-c-grip-title">GRIP SCORE: 50/100</div>
-      <div class="np-c-grip-grid">
-        <div>
-          <div class="np-c-grip-bar-header">
-            <span class="np-c-grip-dim g">G</span>
-            <span class="np-c-grip-score">50</span>
-          </div>
-          <div class="np-c-grip-track"><div class="np-c-grip-fill g"></div></div>
-        </div>
-        <div>
-          <div class="np-c-grip-bar-header">
-            <span class="np-c-grip-dim r">R</span>
-            <span class="np-c-grip-score">54</span>
-          </div>
-          <div class="np-c-grip-track"><div class="np-c-grip-fill r"></div></div>
-        </div>
-        <div>
-          <div class="np-c-grip-bar-header">
-            <span class="np-c-grip-dim i">I</span>
-            <span class="np-c-grip-score">43</span>
-          </div>
-          <div class="np-c-grip-track"><div class="np-c-grip-fill i"></div></div>
-        </div>
-        <div>
-          <div class="np-c-grip-bar-header">
-            <span class="np-c-grip-dim p">P</span>
-            <span class="np-c-grip-score">62</span>
-          </div>
-          <div class="np-c-grip-track"><div class="np-c-grip-fill p"></div></div>
-        </div>
-      </div>
+    <div class="np-c-constraint">
+      <span class="np-c-constraint-label">PRIMARY CONSTRAINT</span>
+      <span class="np-c-constraint-value">Product Marketing</span>
+      <span class="np-c-constraint-dim">Implementation &middot; Score 43/100</span>
     </div>
   </div>
 
