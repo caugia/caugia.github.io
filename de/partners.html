@@ -393,19 +393,19 @@
       var partner_type = form.elements['partner_type'].value;
 
       if (!name || !email || !company || !partner_type) {
-        errEl.textContent = 'Veuillez remplir tous les champs obligatoires.';
+        errEl.textContent = 'Bitte f\u00fcllen Sie alle Pflichtfelder aus.';
         errEl.style.display = 'block';
         return;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errEl.textContent = 'Veuillez saisir une adresse email valide.';
+        errEl.textContent = 'Bitte geben Sie eine g\u00fcltige E-Mail-Adresse ein.';
         errEl.style.display = 'block';
         return;
       }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Envoi en cours...';
+      submitBtn.textContent = 'Wird gesendet...';
 
       var payload = {
         name: name,
@@ -423,7 +423,7 @@
         body: JSON.stringify(payload),
       })
         .then(function(res) {
-          if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Une erreur est survenue. Veuillez réessayer.'); });
+          if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'); });
           return res.json();
         })
         .then(function() {
@@ -431,10 +431,10 @@
           successEl.style.display = 'block';
         })
         .catch(function(err) {
-          errEl.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+          errEl.textContent = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
           errEl.style.display = 'block';
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Senden ma candidature';
+          submitBtn.textContent = 'Bewerbung absenden';
         });
     });
   })();
