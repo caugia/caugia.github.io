@@ -51,165 +51,224 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/caugia-base.css">
 <style>
-:root { --dark:#1A2340; --blue:#3B6CD8; --orange:#E07830; --green:#16A34A; --muted:#64748b; --text:#0f172a; --light:#f8fafc; --line:#e2e8f0; }
-
-/* ── 2026 Typography ────────────────────────────────────── */
-h1,h2,h3 { font-family:'Merriweather',Georgia,serif; color:var(--dark); }
-h2 { font-size:2.2rem; line-height:1.15; letter-spacing:-0.02em; }
-p { font-size:1.05rem; line-height:1.75; color:#475569; }
-.eyebrow { font-family:Inter,sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:14px; display:block; }
+/* ============================================================
+   Product Page — V2026 (uses homepage class system)
+   ============================================================ */
+:root {
+  --dark: #1A2340;
+  --blue: #3B6CD8;
+  --orange: #E07830;
+  --green: #16A34A;
+  --red: #DC2626;
+  --amber: #D97706;
+  --muted: #64748b;
+  --text: #0f172a;
+  --light: #f8fafc;
+  --line: #e2e8f0;
+}
 
 /* ── Hero ────────────────────────────────────────────────── */
-.prod-hero { text-align:center; max-width:760px; margin:0 auto; padding:72px 0 48px; }
-.prod-hero h1 { font-size:3rem; font-weight:900; line-height:1.1; margin-bottom:20px; letter-spacing:-0.025em; }
-.prod-hero p { font-size:1.1rem; color:#475569; line-height:1.7; max-width:600px; margin:0 auto; }
-
-/* ── Thesis ──────────────────────────────────────────────── */
-.prod-thesis { max-width:760px; margin:0 auto 0; padding:28px 36px; background:var(--dark); border-radius:16px; text-align:center; }
-.prod-thesis p { font-family:Merriweather,serif; font-size:1.15rem; font-weight:700; color:#fff; line-height:1.55; margin:0; }
-.prod-thesis span { color:#60a5fa; }
-
-/* ── Sections — generous 2026 spacing ────────────────────── */
-.prod-section { padding:80px 0; }
-.prod-section-alt { padding:80px 0; background:var(--light); }
-.prod-section-dark { padding:80px 0; background:linear-gradient(135deg,#1A2340 0%,#0f172a 100%); color:#fff; }
-.prod-intro { text-align:center; max-width:660px; margin:0 auto 48px; }
-.prod-intro .eyebrow { color:var(--orange); }
-.prod-intro h2 { margin-bottom:14px; }
-.prod-intro p { font-size:0.98rem; color:#475569; line-height:1.7; }
-.prod-section-dark .prod-intro p { color:#94a3b8; }
-.prod-section-dark .prod-intro h2 { color:#fff; }
-
-/* ── Stats — large, confident numbers ────────────────────── */
-.prod-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; max-width:800px; margin:0 auto 48px; text-align:center; }
-.prod-stat-val { font-size:2.6rem; font-weight:900; color:var(--blue); display:block; font-family:Merriweather,serif; }
-.prod-stat-label { font-size:0.78rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-top:4px; }
-
-/* ── GRIP 4-grid ─────────────────────────────────────────── */
-.grip-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-.grip-4-card { background:#fff; padding:32px 24px; border-radius:16px; border:1px solid var(--line); text-align:center; transition:all 0.25s ease; }
-.grip-4-card:hover { box-shadow:0 12px 40px rgba(0,0,0,0.06); transform:translateY(-3px); }
-.grip-4-letter { font-size:2.2rem; font-weight:900; line-height:1; margin-bottom:16px; display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; border-radius:14px; }
-.grip-4-card h3 { font-family:Inter,sans-serif; font-weight:800; font-size:1.1rem; margin-bottom:10px; }
-.grip-4-card p { font-size:0.88rem; color:var(--muted); line-height:1.6; margin:0; }
-
-/* ── Engine steps ────────────────────────────────────────── */
-.engine-steps { display:flex; flex-direction:column; gap:0; max-width:800px; margin:0 auto; }
-.engine-step { display:flex; gap:20px; align-items:flex-start; padding:28px 0; border-bottom:1px solid var(--line); }
-.engine-step:last-child { border-bottom:none; }
-.engine-num { width:44px; height:44px; border-radius:12px; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.95rem; font-weight:900; flex-shrink:0; font-family:Inter,sans-serif; }
-.engine-step h3 { font-family:Inter,sans-serif; font-size:1.05rem; font-weight:800; color:var(--dark); margin:0 0 6px; }
-.engine-step p { font-size:0.95rem; color:#475569; line-height:1.65; margin:0; }
-
-/* ── Intel label + grid ──────────────────────────────────── */
-.intel-label { font-size:0.65rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
-.intel-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.06); border-radius:14px; overflow:hidden; }
-.intel-cell { padding:32px 28px; background:rgba(255,255,255,0.03); }
-.intel-cell h3 { font-family:Inter,sans-serif; font-size:1.05rem; font-weight:700; color:#fff; margin:0 0 8px; }
-.intel-cell p { font-size:0.88rem; color:#94a3b8; line-height:1.65; margin:0; }
-
-/* ── Governance 3-grid ───────────────────────────────────── */
-.gov-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:rgba(255,255,255,0.06); border-radius:14px; overflow:hidden; margin-top:1px; }
-.gov-cell { padding:28px; background:rgba(255,255,255,0.03); }
-.gov-cell p { font-size:0.88rem; color:#94a3b8; line-height:1.65; margin:0; }
-
-/* ── Buttons — 2026 rounded, generous ────────────────────── */
-.btn-primary { display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; padding:16px 36px; border-radius:12px; font-weight:700; font-size:1rem; text-decoration:none; font-family:Inter,sans-serif; transition:all 0.2s; box-shadow:0 4px 16px rgba(59,108,216,0.15); }
-.btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(59,108,216,0.25); }
-.btn-secondary { display:inline-flex; align-items:center; padding:16px 36px; border:1.5px solid var(--line); border-radius:12px; font-weight:600; font-size:1rem; color:var(--dark); text-decoration:none; font-family:Inter,sans-serif; transition:all 0.2s; }
-.btn-secondary:hover { border-color:var(--orange); color:var(--orange); }
-
-/* ── CTA section ─────────────────────────────────────────── */
-.prod-cta { text-align:center; padding:80px 0; background:var(--light); }
-.prod-cta h2 { margin-bottom:14px; }
-.prod-cta p { font-size:1.05rem; color:var(--muted); margin-bottom:28px; }
-.prod-cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-
-/* ── Footer ──────────────────────────────────────────────── */
-.s-footer { padding:32px 0; text-align:center; border-top:1px solid var(--line); }
-.s-footer p { font-size:0.85rem; color:#94a3b8; }
-.s-footer a { color:#94a3b8; text-decoration:none; }
-.s-footer a:hover { color:var(--blue); }
-
-/* ── Mobile ──────────────────────────────────────────────── */
-@media (max-width:980px) {
-  .prod-hero { padding:40px 20px 32px; }
-  .prod-hero h1 { font-size:2rem; }
-  .prod-thesis { margin:0 16px; padding:22px 24px; }
-  .prod-section,.prod-section-alt,.prod-section-dark { padding:56px 0; }
-  h2 { font-size:1.6rem !important; }
-  .grip-4 { grid-template-columns:1fr 1fr; gap:14px; }
-  .prod-stats { grid-template-columns:1fr 1fr; gap:20px; }
-  .intel-grid { grid-template-columns:1fr; }
-  .gov-grid { grid-template-columns:1fr; }
-  [style*="grid-template-columns:1fr 1fr"] { grid-template-columns:1fr !important; gap:28px !important; }
-  [style*="grid-template-columns:1fr 1fr 1fr"] { grid-template-columns:1fr !important; gap:16px !important; }
+.s1 { padding: 72px 0 48px; text-align: center; }
+.s1-headline {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 3rem; font-weight: 900; line-height: 1.1;
+  color: var(--dark); letter-spacing: -0.025em; margin-bottom: 20px;
 }
-@media (max-width:520px) {
-  .grip-4 { grid-template-columns:1fr; }
-  .prod-stats { grid-template-columns:1fr 1fr; }
+.s1-sub { font-size: 1.1rem; color: #475569; line-height: 1.7; max-width: 620px; margin: 0 auto; }
+.s1-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; display: block; }
+
+/* ── Thesis banner ──────────────────────────────────────── */
+.prod-thesis { max-width: 760px; margin: 0 auto; padding: 28px 36px; background: var(--dark); border-radius: 16px; text-align: center; }
+.prod-thesis p { font-family: Merriweather, serif; font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.55; margin: 0; }
+.prod-thesis span { color: #60a5fa; }
+
+/* ── Stats ───────────────────────────────────────────────── */
+.stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; max-width: 800px; margin: 0 auto; text-align: center; }
+.stat-val { font-size: 2.6rem; font-weight: 900; color: var(--blue); display: block; font-family: Merriweather, serif; }
+.stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+/* ── Section rhythm — 80px+ ──────────────────────────────── */
+.s-section { padding: 80px 0; }
+.s-section-alt { padding: 80px 0; background: var(--light); border-top: 1px solid var(--line); }
+
+/* ── Eyebrow / Section intro ────────────────────────────── */
+.s-intro { text-align: center; max-width: 660px; margin: 0 auto 48px; }
+.s-intro .s-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; display: block; }
+.s-intro h2 { font-family: 'Merriweather', Georgia, serif; font-size: 2.2rem; font-weight: 900; line-height: 1.15; color: var(--dark); margin-bottom: 14px; letter-spacing: -0.02em; }
+.s-intro p { font-size: 0.98rem; color: #475569; line-height: 1.7; }
+
+/* ── GRIP cards — aud-card pattern ──────────────────────── */
+.aud-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.aud-card {
+  background: #fff; padding: 32px 24px; border-radius: 16px;
+  border: 1px solid var(--line); text-align: center;
+  transition: all 0.25s ease;
+}
+.aud-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.06); transform: translateY(-3px); }
+.aud-card-letter {
+  font-size: 2.2rem; font-weight: 900; line-height: 1; margin-bottom: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px; border-radius: 14px;
+}
+.aud-card h3 { font-family: Inter, sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; color: var(--dark); }
+.aud-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin: 0; }
+
+/* ── How-it-works steps ─────────────────────────────────── */
+.how-grid { display: flex; flex-direction: column; max-width: 800px; margin: 0 auto; }
+.how-step { display: flex; gap: 20px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.how-step:last-child { border-bottom: none; }
+.how-num {
+  width: 44px; height: 44px; border-radius: 12px; background: var(--blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; font-weight: 900; flex-shrink: 0; font-family: Inter, sans-serif;
+}
+.how-step h3 { font-family: Inter, sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--dark); margin: 0 0 6px; }
+.how-step p { font-size: 0.95rem; color: #475569; line-height: 1.65; margin: 0; }
+
+/* ── Intelligence dark section ──────────────────────────── */
+.s-intel { padding: 80px 0; background: linear-gradient(135deg, #1A2340 0%, #0f172a 100%); }
+.s-intel .s-intro h2 { color: #fff; }
+.s-intel .s-intro p { color: #94a3b8; }
+.sys-cell { background: rgba(255,255,255,0.03); padding: 32px 28px; }
+.sys-cell-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.sys-cell h3 { font-family: Inter, sans-serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 8px; }
+.sys-cell p { font-size: 0.88rem; color: #cbd5e1; line-height: 1.65; margin: 0; }
+.sys-grid { display: grid; gap: 1px; background: rgba(255,255,255,0.06); border-radius: 14px; overflow: hidden; }
+.sys-grid-2 { grid-template-columns: 1fr 1fr; }
+.sys-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ── Intel module card (expanded dark) ──────────────────── */
+.intel-mod { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 32px 28px; margin-bottom: 16px; }
+.intel-mod h3 { font-family: Inter, sans-serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 8px; }
+.intel-mod p { font-size: 0.88rem; color: #94a3b8; line-height: 1.65; }
+.intel-checks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.intel-check { font-size: 0.82rem; color: #cbd5e1; line-height: 1.55; padding-left: 16px; position: relative; }
+.intel-check span { position: absolute; left: 0; }
+
+/* ── Data engine cards ──────────────────────────────────── */
+.engine-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.engine-card {
+  background: #fff; border-radius: 16px; padding: 28px 22px;
+  border: 1px solid var(--line); transition: all 0.25s ease;
+}
+.engine-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.06); transform: translateY(-3px); }
+.engine-card h3 { font-family: Inter, sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+.engine-card .engine-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 10px; }
+.engine-card p { font-size: 0.82rem; color: #475569; line-height: 1.55; }
+
+/* ── Buttons — homepage standard ────────────────────────── */
+.btn-p {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 16px 36px; border-radius: 12px; font-size: 1.05rem; font-weight: 700;
+  text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
+  font-family: Inter, sans-serif;
+}
+.btn-diag { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(59,108,216,0.2); }
+.btn-diag:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(59,108,216,0.3); }
+.btn-soph { background: #fff; color: var(--dark); border: 1.5px solid var(--line); }
+.btn-soph:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ── Final CTA ──────────────────────────────────────────── */
+.s-final { padding: 80px 0; background: linear-gradient(135deg, #1A2340, #0f172a); text-align: center; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+.s-footer { padding: 32px 0; text-align: center; border-top: 1px solid var(--line); }
+.s-footer p { font-size: 0.85rem; color: #94a3b8; }
+.s-footer a { color: #94a3b8; text-decoration: none; }
+.s-footer a:hover { color: var(--blue); }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .s1 { padding: 40px 20px 32px; }
+  .s1-headline { font-size: 2rem; }
+  .prod-thesis { margin: 0 16px; padding: 22px 24px; }
+  .s-section, .s-section-alt, .s-intel, .s-final { padding: 56px 0; }
+  .s-intro h2 { font-size: 1.6rem; }
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .aud-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .engine-grid { grid-template-columns: 1fr; gap: 16px; }
+  .sys-grid-2 { grid-template-columns: 1fr; }
+  .sys-grid-3 { grid-template-columns: 1fr; }
+  .intel-checks { grid-template-columns: 1fr; }
+  [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; gap: 28px !important; }
+}
+@media (max-width: 520px) {
+  .aud-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .s1-headline { font-size: 1.7rem; }
 }
 </style>
 </head>
-
 <body>
-
 <script src="assets/header.js"></script>
 
 <main>
 
-<!-- ── Hero ──────────────────────────────────────────────── -->
-<section class="container prod-hero">
-  <span class="eyebrow" style="color:var(--orange);">The Technology Behind GRIP OS</span>
-  <h1>How Caugia finds<br>the constraint</h1>
-  <p>72 deterministic scoring engines. 12 GTM pillars. 5 AI capture engines. 3 data sources. 199 codified frameworks. One structural constraint &mdash; found in an hour, governed until resolved.</p>
-</section>
-
-<!-- ── Thesis ────────────────────────────────────────────── -->
-<section class="container">
-  <div class="prod-thesis">
-    <p>"Every revenue system has exactly one binding constraint. <span>Fix that, the entire system improves. Fix anything else, nothing changes.</span>"</p>
+<!-- ============================================================ -->
+<!-- HERO                                                          -->
+<!-- ============================================================ -->
+<section class="s1">
+  <div class="container" style="max-width:760px;">
+    <span class="s1-eyebrow">The Technology Behind GRIP OS</span>
+    <h1 class="s1-headline">How Caugia finds<br>the constraint</h1>
+    <p class="s1-sub">72 deterministic scoring engines. 12 GTM pillars. 5 AI capture engines. 3 data sources. 199 codified frameworks. One structural constraint &mdash; found in an hour, governed until resolved.</p>
   </div>
 </section>
 
-<!-- ── Numbers ───────────────────────────────────────────── -->
-<section class="prod-section">
+<!-- ── Gradient bridge ──────────────────────────────────── -->
+<div style="height:3px;background:linear-gradient(to right, var(--blue), var(--orange));"></div>
+
+<!-- ── Thesis ────────────────────────────────────────────── -->
+<section style="padding:48px 0;">
   <div class="container">
-    <div class="prod-stats">
-      <div><span class="prod-stat-val">72</span><span class="prod-stat-label">Scoring engines</span></div>
-      <div><span class="prod-stat-val">12</span><span class="prod-stat-label">GRIP pillars</span></div>
-      <div><span class="prod-stat-val">199</span><span class="prod-stat-label">Codified frameworks</span></div>
-      <div><span class="prod-stat-val">5</span><span class="prod-stat-label">AI capture engines</span></div>
+    <div class="prod-thesis">
+      <p>&ldquo;Every revenue system has exactly one binding constraint. <span>Fix that, the entire system improves. Fix anything else, nothing changes.</span>&rdquo;</p>
     </div>
   </div>
 </section>
 
-<!-- ── GRIP Framework ────────────────────────────────────── -->
-<section class="prod-section-alt">
+<!-- ============================================================ -->
+<!-- STATS                                                         -->
+<!-- ============================================================ -->
+<section class="s-section">
   <div class="container">
-    <div class="prod-intro">
-      <span class="eyebrow">The Method</span>
+    <div class="stat-grid">
+      <div><span class="stat-val">72</span><span class="stat-label">Scoring engines</span></div>
+      <div><span class="stat-val">12</span><span class="stat-label">GRIP pillars</span></div>
+      <div><span class="stat-val">199</span><span class="stat-label">Codified frameworks</span></div>
+      <div><span class="stat-val">5</span><span class="stat-label">AI capture engines</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- GRIP FRAMEWORK                                                -->
+<!-- ============================================================ -->
+<section class="s-section-alt">
+  <div class="container">
+    <div class="s-intro">
+      <span class="s-eyebrow">The Method</span>
       <h2>The GRIP Framework</h2>
       <p>Four dimensions. Twelve pillars. Every revenue system maps onto this structure. The constraint always sits in one of them.</p>
     </div>
-    <div class="grip-4">
-      <div class="grip-4-card">
-        <span class="grip-4-letter">G</span>
+    <div class="aud-grid">
+      <div class="aud-card">
+        <span class="aud-card-letter" style="color:var(--blue);background:#eff6ff;">G</span>
         <h3>Guidance</h3>
         <p>Strategy, market intelligence, product marketing. The decisions that shape everything downstream.</p>
       </div>
-      <div class="grip-4-card">
-        <span class="grip-4-letter" style="color:var(--orange);background:#fff7ed;">R</span>
+      <div class="aud-card">
+        <span class="aud-card-letter" style="color:var(--orange);background:#fff7ed;">R</span>
         <h3>Resources</h3>
         <p>Pricing, product readiness, enablement. The building blocks your GTM motion depends on.</p>
       </div>
-      <div class="grip-4-card">
-        <span class="grip-4-letter" style="color:var(--green);background:#ecfdf5;">I</span>
+      <div class="aud-card">
+        <span class="aud-card-letter" style="color:var(--green);background:#ecfdf5;">I</span>
         <h3>Implementation</h3>
         <p>Demand generation, sales execution, RevOps. Where strategy meets the market and converts.</p>
       </div>
-      <div class="grip-4-card">
-        <span class="grip-4-letter" style="color:#7c3aed;background:#f5f3ff;">P</span>
+      <div class="aud-card">
+        <span class="aud-card-letter" style="color:#7c3aed;background:#f5f3ff;">P</span>
         <h3>Performance</h3>
         <p>Customer success, data quality, alignment and governance. The forces that compound growth.</p>
       </div>
@@ -217,38 +276,40 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
   </div>
 </section>
 
-<!-- ── The Constraint Engine ─────────────────────────────── -->
-<section class="prod-section">
+<!-- ============================================================ -->
+<!-- THE CONSTRAINT ENGINE                                         -->
+<!-- ============================================================ -->
+<section class="s-section">
   <div class="container">
-    <div class="prod-intro">
-      <span class="eyebrow">The Engine</span>
+    <div class="s-intro">
+      <span class="s-eyebrow">The Engine</span>
       <h2>How the diagnosis works</h2>
       <p>No opinions. No consultants. A deterministic process that identifies your binding constraint with financial impact.</p>
     </div>
-    <div class="engine-steps">
-      <div class="engine-step">
-        <div class="engine-num">1</div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
         <div>
           <h3>265 questions across 12 dimensions</h3>
           <p>A structured assessment covers every surface of your GTM system. Not a survey. An engineering-grade input layer designed to surface contradictions.</p>
         </div>
       </div>
-      <div class="engine-step">
-        <div class="engine-num">2</div>
+      <div class="how-step">
+        <div class="how-num">2</div>
         <div>
           <h3>72 scoring engines run simultaneously</h3>
           <p>Deterministic algorithms. No LLM opinions. Every answer feeds into cross-dimensional engines that score, weight, and detect contradiction patterns.</p>
         </div>
       </div>
-      <div class="engine-step">
-        <div class="engine-num">3</div>
+      <div class="how-step">
+        <div class="how-num">3</div>
         <div>
           <h3>The binding constraint is isolated</h3>
           <p>One structural bottleneck. Quantified in revenue leakage, cost of inaction per month, and recoverable value. Board-ready data, not a hunch.</p>
         </div>
       </div>
-      <div class="engine-step">
-        <div class="engine-num">4</div>
+      <div class="how-step">
+        <div class="how-num">4</div>
         <div>
           <h3>45-page Intelligence Report in 1 hour</h3>
           <p>Constraint analysis, financial impact, 90-day action plan with phased execution gates. Delivered to your GRIP OS workspace immediately.</p>
@@ -258,13 +319,15 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
   </div>
 </section>
 
-<!-- ── Sophie ─────────────────────────────────────────────── -->
-<section class="prod-section-alt">
+<!-- ============================================================ -->
+<!-- SOPHIE                                                        -->
+<!-- ============================================================ -->
+<section class="s-section-alt">
   <div class="container" style="max-width:1000px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
       <div>
-        <div class="prod-intro" style="text-align:left;margin:0 0 24px;">
-          <span class="eyebrow" style="color:var(--orange);">Sophie &mdash; GTM Intelligence Advisor</span>
+        <div class="s-intro" style="text-align:left;margin:0 0 24px;">
+          <span class="s-eyebrow" style="color:var(--orange);">Sophie &mdash; GTM Intelligence Advisor</span>
           <h2>199 frameworks.<br>Your data.<br>One advisor.</h2>
         </div>
         <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:20px;">Sophie is not a chatbot. She is a constraint-driven intelligence layer trained on 199 codified GTM frameworks &mdash; from MEDDIC to Crossing the Chasm, from Gartner Buying Groups to Bessemer Burn Multiple. Each framework is structured as rules: which pillar, at what score range, what action, what impact.</p>
@@ -278,7 +341,7 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
           <p style="padding:5px 0 5px 20px;position:relative;margin:0;"><span style="position:absolute;left:0;color:var(--blue);font-weight:700;">&check;</span> <strong>4 operating modes</strong> &mdash; Operator, Customer, Support, Success</p>
         </div>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--line);">
+      <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line);box-shadow:0 4px 20px rgba(0,0,0,0.04);">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line);">
           <div style="width:28px;height:28px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-weight:800;font-size:0.7rem;">S</span></div>
           <span style="font-weight:700;font-size:0.88rem;color:var(--dark);">Sophie</span>
@@ -292,87 +355,89 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
   </div>
 </section>
 
-<!-- ── Intelligence Layer (dark) ─────────────────────────── -->
-<section class="prod-section-dark">
+<!-- ============================================================ -->
+<!-- INTELLIGENCE LAYER (DARK)                                     -->
+<!-- ============================================================ -->
+<section class="s-intel">
   <div class="container" style="max-width:1080px;">
-    <div class="prod-intro">
-      <span class="eyebrow" style="color:var(--orange);">Continuous Intelligence</span>
+    <div class="s-intro">
+      <span class="s-eyebrow" style="color:var(--orange);">Continuous Intelligence</span>
       <h2>Three eyes on the market. Always open.</h2>
       <p>Running weekly on autopilot. Every signal feeds the constraint analysis. Every insight becomes an action.</p>
     </div>
 
     <!-- AI Answer Market -->
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:32px 28px;margin-bottom:16px;">
+    <div class="intel-mod">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
-          <div class="intel-label" style="color:var(--orange);">AI ANSWER MARKET</div>
+          <div class="sys-cell-label" style="color:var(--orange);">AI ANSWER MARKET</div>
           <h3>How AI sees your brand</h3>
         </div>
         <span style="font-size:0.68rem;font-weight:700;letter-spacing:1px;background:rgba(224,120,48,0.15);color:var(--orange);padding:4px 10px;border-radius:6px;">5 AI ENGINES</span>
       </div>
       <p style="font-size:0.88rem;color:#94a3b8;line-height:1.65;margin-bottom:14px;">ChatGPT, Gemini, Claude, Perplexity, and Grok capture how AI describes your brand to buyers. Grok uniquely pulls from live X/Twitter data &mdash; a perspective no other platform offers.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> Share of Voice per engine + overall</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> Citation tracking with authority scoring</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> 18 AI bot crawler patterns detected</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> Crawler &rarr; citation correlation (unique)</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> 10 content action templates per scan</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&check;</span> Competitor movement alerts weekly</div>
+      <div class="intel-checks">
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> Share of Voice per engine + overall</div>
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> Citation tracking with authority scoring</div>
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> 18 AI bot crawler patterns detected</div>
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> Crawler &rarr; citation correlation (unique)</div>
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> 10 content action templates per scan</div>
+        <div class="intel-check"><span style="color:var(--orange);">&check;</span> Competitor movement alerts weekly</div>
       </div>
     </div>
 
     <!-- Review Intelligence -->
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:32px 28px;margin-bottom:16px;">
+    <div class="intel-mod">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
-          <div class="intel-label" style="color:var(--blue);">REVIEW INTELLIGENCE</div>
+          <div class="sys-cell-label" style="color:var(--blue);">REVIEW INTELLIGENCE</div>
           <h3>What the market really thinks</h3>
         </div>
         <span style="font-size:0.68rem;font-weight:700;letter-spacing:1px;background:rgba(59,108,216,0.15);color:var(--blue);padding:4px 10px;border-radius:6px;">12 PLATFORMS</span>
       </div>
       <p style="font-size:0.88rem;color:#94a3b8;line-height:1.65;margin-bottom:14px;">G2, Capterra, TrustRadius, Reddit, Trustpilot, Skeepers, ITreview (Japan), Zhihu/36kr (China), X/Twitter, GetApp, Software Advice, Product Hunt. The widest coverage in the industry including Asia and social.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> GTM Coherence Score (unique)</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> 9 theme types incl. churn signals</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> Champion language for sales enablement</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> Win/loss extraction from reviews</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> Social + review combined via Grok</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">&check;</span> 4-week trend tracking</div>
+      <div class="intel-checks">
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> GTM Coherence Score (unique)</div>
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> 9 theme types incl. churn signals</div>
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> Champion language for sales enablement</div>
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> Win/loss extraction from reviews</div>
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> Social + review combined via Grok</div>
+        <div class="intel-check"><span style="color:var(--blue);">&check;</span> 4-week trend tracking</div>
       </div>
     </div>
 
     <!-- Competitor Intelligence -->
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:32px 28px;margin-bottom:16px;">
+    <div class="intel-mod">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
-          <div class="intel-label" style="color:#94a3b8;">COMPETITOR INTELLIGENCE</div>
+          <div class="sys-cell-label" style="color:#94a3b8;">COMPETITOR INTELLIGENCE</div>
           <h3>What your competitors are doing</h3>
         </div>
         <span style="font-size:0.68rem;font-weight:700;letter-spacing:1px;background:rgba(255,255,255,0.08);color:#fff;padding:4px 10px;border-radius:6px;">12-SECTION BATTLECARDS</span>
       </div>
       <p style="font-size:0.88rem;color:#94a3b8;line-height:1.65;margin-bottom:14px;">Auto-generated battlecards with discovery questions, trap-setting plays, pricing counter-arguments, and customer proof points. All in EN, FR, and DE. CEO/founder social presence tracked via Grok.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> Threat scoring with diminishing returns</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> Reflexive GTM impact (unique)</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> SWOT + win/lose scenarios</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> Social presence monitoring via Grok</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> Buyer discussion tracking on X</div>
-        <div style="font-size:0.82rem;color:#cbd5e1;line-height:1.55;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#94a3b8;">&check;</span> Thought leadership comparison</div>
+      <div class="intel-checks">
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> Threat scoring with diminishing returns</div>
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> Reflexive GTM impact (unique)</div>
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> SWOT + win/lose scenarios</div>
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> Social presence monitoring via Grok</div>
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> Buyer discussion tracking on X</div>
+        <div class="intel-check"><span style="color:#94a3b8;">&check;</span> Thought leadership comparison</div>
       </div>
     </div>
 
     <!-- Governance row -->
-    <div class="gov-grid">
-      <div class="gov-cell">
-        <div class="intel-label" style="color:var(--blue);">ACTION CASCADES</div>
+    <div class="sys-grid sys-grid-3">
+      <div class="sys-cell">
+        <div class="sys-cell-label" style="color:var(--blue);">ACTION CASCADES</div>
         <p>Three-level actions per constraint: strategic (C-level), tactical (VPs), operational (ICs). Gated, sequenced, time-bound.</p>
       </div>
-      <div class="gov-cell">
-        <div class="intel-label" style="color:var(--orange);">CONTINUOUS SCORING</div>
+      <div class="sys-cell">
+        <div class="sys-cell-label" style="color:var(--orange);">CONTINUOUS SCORING</div>
         <p>Baseline + weekly signal adjustments (&plusmn;15 pts max). Drift detection alerts when the constraint shifts. Deterministic: same signals = same scores.</p>
       </div>
-      <div class="gov-cell">
-        <div class="intel-label" style="color:#94a3b8;">MONDAY BRIEF</div>
+      <div class="sys-cell">
+        <div class="sys-cell-label" style="color:#94a3b8;">MONDAY BRIEF</div>
         <p>Board-ready executive summary every Monday. Constraint status, financial impact, intelligence alerts, action progress. One page.</p>
       </div>
     </div>
@@ -381,50 +446,54 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
   </div>
 </section>
 
-<!-- ── Three Data Engines ─────────────────────────────────── -->
-<section class="prod-section">
+<!-- ============================================================ -->
+<!-- THREE DATA ENGINES                                            -->
+<!-- ============================================================ -->
+<section class="s-section">
   <div class="container" style="max-width:1000px;">
-    <div class="prod-intro">
-      <span class="eyebrow" style="color:var(--blue);">Three Data Engines</span>
+    <div class="s-intro">
+      <span class="s-eyebrow" style="color:var(--blue);">Three Data Engines</span>
       <h2>Real data. Not AI opinions.</h2>
       <p>Every intelligence module is powered by three complementary engines. No single source of truth &mdash; triangulated intelligence.</p>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
-      <div style="background:#fff;border-radius:14px;padding:28px 22px;border:1px solid var(--line);border-top:3px solid var(--blue);">
-        <h3 style="font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:8px;">Perplexity</h3>
-        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:10px;">Real-time web search</p>
-        <p style="font-size:0.82rem;color:#475569;line-height:1.55;">Reviews across 12 platforms, competitor funding and hiring news, market sizing data, pricing intelligence, leadership profiles, community health signals.</p>
+    <div class="engine-grid">
+      <div class="engine-card" style="border-top:3px solid var(--blue);">
+        <h3>Perplexity</h3>
+        <p class="engine-sub">Real-time web search</p>
+        <p>Reviews across 12 platforms, competitor funding and hiring news, market sizing data, pricing intelligence, leadership profiles, community health signals.</p>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:28px 22px;border:1px solid var(--line);border-top:3px solid var(--orange);">
-        <h3 style="font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:8px;">Grok</h3>
-        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:10px;">Live X/Twitter intelligence</p>
-        <p style="font-size:0.82rem;color:#475569;line-height:1.55;">Brand mentions with sentiment, competitor social engagement and posting frequency, CEO thought leadership tracking, buyer discussions and recommendations.</p>
+      <div class="engine-card" style="border-top:3px solid var(--orange);">
+        <h3>Grok</h3>
+        <p class="engine-sub">Live X/Twitter intelligence</p>
+        <p>Brand mentions with sentiment, competitor social engagement and posting frequency, CEO thought leadership tracking, buyer discussions and recommendations.</p>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:28px 22px;border:1px solid var(--line);border-top:3px solid var(--green);">
-        <h3 style="font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:8px;">Claude</h3>
-        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:10px;">Structured extraction &amp; reasoning</p>
-        <p style="font-size:0.82rem;color:#475569;line-height:1.55;">Haiku 4.5 for deep analysis and theme extraction. Sonnet 4 for Sophie reasoning and advisory. 199 framework rules codified as structured logic. Confidence-banded output.</p>
+      <div class="engine-card" style="border-top:3px solid var(--green);">
+        <h3>Claude</h3>
+        <p class="engine-sub">Structured extraction &amp; reasoning</p>
+        <p>Haiku 4.5 for deep analysis and theme extraction. Sonnet 4 for Sophie reasoning and advisory. 199 framework rules codified as structured logic. Confidence-banded output.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Due Diligence ──────────────────────────────────────── -->
-<section class="prod-section-alt">
+<!-- ============================================================ -->
+<!-- DUE DILIGENCE                                                 -->
+<!-- ============================================================ -->
+<section class="s-section-alt">
   <div class="container" style="max-width:960px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
       <div>
-        <div class="prod-intro" style="text-align:left;margin:0 0 20px;">
-          <span class="eyebrow" style="color:var(--orange);">For Investors</span>
+        <div class="s-intro" style="text-align:left;margin:0 0 20px;">
+          <span class="s-eyebrow" style="color:var(--orange);">For Investors</span>
           <h2>GTM Due Diligence<br>in 30 seconds</h2>
         </div>
         <p style="font-size:0.95rem;color:#475569;line-height:1.7;margin-bottom:20px;">Assess a company&rsquo;s GTM health from external market data. AI visibility, review analysis, competitive position, market whitespace (TAM/SAM/SOM) &mdash; no company cooperation required. All three data engines running in parallel.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <a href="https://os.caugia.com/dd/demo" class="btn-primary" style="background:var(--orange);">View Sample Report</a>
-          <a href="https://os.caugia.com/dd" class="btn-secondary">Generate Your Own &rarr;</a>
+          <a href="https://os.caugia.com/dd/demo" class="btn-p btn-diag" style="background:var(--orange);box-shadow:0 4px 16px rgba(224,120,48,0.2);">View Sample Report</a>
+          <a href="https://os.caugia.com/dd" class="btn-p btn-soph">Generate Your Own &rarr;</a>
         </div>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--line);">
+      <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line);box-shadow:0 4px 20px rgba(0,0,0,0.04);">
         <span style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:var(--muted);">SAMPLE &middot; DEEL</span>
         <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0 14px;">
           <span style="font-size:1.1rem;font-weight:900;color:var(--dark);">Deel</span>
@@ -442,14 +511,16 @@ p { font-size:1.05rem; line-height:1.75; color:#475569; }
   </div>
 </section>
 
-<!-- ── CTA ────────────────────────────────────────────────── -->
-<section class="prod-cta">
+<!-- ============================================================ -->
+<!-- FINAL CTA                                                     -->
+<!-- ============================================================ -->
+<section class="s-final">
   <div class="container">
-    <h2>Ready to find the constraint?</h2>
-    <p>Start with the diagnosis. The Intelligence Report finds the structural bottleneck in 1 hour.</p>
-    <div class="prod-cta-btns">
-      <a href="grip-marketplace.html#intelligence-report" class="btn-primary">Start Diagnosis &rarr;</a>
-      <a href="https://os.caugia.com/demo" class="btn-secondary">See GRIP OS in action &rarr;</a>
+    <h2 style="font-family:'Merriweather',Georgia,serif;font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2;">Ready to find the constraint?</h2>
+    <p style="font-size:1rem;color:#94a3b8;margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;">Start with the diagnosis. The Intelligence Report finds the structural bottleneck in 1 hour. GRIP OS governs the fix.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="grip-marketplace.html#intelligence-report" class="btn-p btn-diag">Start Diagnosis &rarr;</a>
+      <a href="https://os.caugia.com/demo" class="btn-p" style="background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:#fff;">See GRIP OS in action &rarr;</a>
     </div>
   </div>
 </section>
