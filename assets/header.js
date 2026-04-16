@@ -86,10 +86,10 @@
 
     // Navigation labels per language
     var navLabels = isDe
-      ? { product: 'Produkt', insights: 'Insights', pricing: 'Preise', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten' }
+      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Insights', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten' }
       : isFr
-      ? { product: 'Produit', insights: 'Insights', pricing: 'Tarifs', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
-      : { product: 'Product', insights: 'Insights', pricing: 'Pricing', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
+      ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Insights', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
+      : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
 
     // Language dropdown: current lang as button, others in dropdown
     function buildLangToggles() {
@@ -119,9 +119,9 @@
             '<span class="brand-short">CAUGIA</span>' +
           '</a>' +
           '<ul class="nav-links">' +
-            '<li>' + a('grip-marketplace.html', navLabels.product) + '</li>' +
+            '<li>' + a('product.html', navLabels.product) + '</li>' +
+            '<li>' + a('grip-marketplace.html', navLabels.marketplace) + '</li>' +
             '<li>' + a('intelligence.html', navLabels.insights) + '</li>' +
-            '<li>' + a('pricing.html', navLabels.pricing) + '</li>' +
             '<li>' + a('about.html', navLabels.about) + '</li>' +
             '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
@@ -139,9 +139,9 @@
         '<div class="caugia-gradient-bridge"></div>' +
         '<div class="container mobile-nav" id="caugiaMobileNav">' +
           /* Navigation links */
-          a('grip-marketplace.html', navLabels.product) +
+          a('product.html', navLabels.product) +
+          a('grip-marketplace.html', navLabels.marketplace) +
           a('intelligence.html', navLabels.insights) +
-          a('pricing.html', navLabels.pricing) +
           a('about.html', navLabels.about) +
           a('contact.html', navLabels.contact) +
           a('partners.html', navLabels.partners) +
@@ -280,7 +280,6 @@
         var lastP = footerEl.querySelector('p:last-of-type');
         if (lastP && !lastP.innerHTML.includes('partners.html')) {
           lastP.insertAdjacentHTML('beforeend',
-            ' &middot; <a href="' + navBase + 'pricing.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">Pricing</a>' +
             ' &middot; <a href="' + navBase + 'partners.html" style="color:#94a3b8;text-decoration:none;font-size:0.85rem;">' + navLabels.partners + '</a>'
           );
         }
