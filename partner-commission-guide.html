@@ -50,7 +50,7 @@
 <style>
   /* ===== COMMISSION GUIDE — WORLD-CLASS REDESIGN ===== */
 
-  .pcg-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; font-size: 0.88rem; color: #3B6CD8; text-decoration: none; font-weight: 600; transition: gap 0.2s; }
+  .pcg-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; font-size: 0.88rem; color: #3B6CD8; text-decoration: none; font-weight: 700; transition: gap 0.2s; }
   .pcg-back:hover { gap: 10px; text-decoration: none; }
 
   /* --- HERO --- */
@@ -78,11 +78,15 @@
   .pcg-section { padding: 64px 0; }
   .pcg-section + .pcg-section { border-top: 1px solid #f1f5f9; }
   .pcg-section-label {
-    display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;
+    display: inline-block; text-transform: uppercase; letter-spacing: 2px;
     font-size: 0.7rem; color: var(--primary); font-weight: 800; margin-bottom: 12px;
   }
-  .pcg-section h2 { font-family: 'Merriweather', serif; font-size: 2rem; margin-bottom: 8px; color: var(--text-dark); line-height: 1.2; }
+  .pcg-section h2 { font-family: 'Merriweather', serif; font-size: 2rem; margin-bottom: 8px; color: var(--text-dark); line-height: 1.2; letter-spacing: -0.015em; }
   .pcg-section .pcg-intro { font-size: 1rem; color: #64748b; max-width: 640px; line-height: 1.7; margin-bottom: 32px; }
+
+  /* --- SVG ICONS (V2026 linework) --- */
+  .pcg-svg { width: 20px; height: 20px; stroke-width: 1.5; stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .pcg-svg-lg { width: 22px; height: 22px; }
 
   /* --- TIER CARDS --- */
   .pcg-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 32px 0 20px; position: relative; }
@@ -92,9 +96,10 @@
   }
   .pcg-tier:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px rgba(0,0,0,0.1); }
   .pcg-tier-icon {
-    width: 48px; height: 48px; border-radius: 12px; margin: 0 auto 16px;
-    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    width: 48px; height: 48px; border-radius: 14px; margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
   }
+  .pcg-tier-icon svg { width: 22px; height: 22px; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .pcg-tier-name { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
   .pcg-tier-rate { font-family: 'Merriweather', serif; font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
   .pcg-tier-deals { font-size: 0.82rem; color: #64748b; margin-bottom: 16px; }
@@ -221,19 +226,25 @@
     display: flex; align-items: stretch; gap: 0; margin: 32px 0; background: #fff;
     border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden;
   }
-  .pcg-pay-step { flex: 1; padding: 24px 20px; text-align: center; position: relative; }
+  .pcg-pay-step { flex: 1; padding: 28px 20px; text-align: center; position: relative; }
   .pcg-pay-step + .pcg-pay-step { border-left: 1px solid #e2e8f0; }
-  .pcg-pay-step-icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .pcg-pay-step-icon {
+    margin: 0 auto 12px; width: 48px; height: 48px; border-radius: 12px;
+    background: #eff6ff; color: #3B6CD8;
+    display: flex; align-items: center; justify-content: center;
+  }
   .pcg-pay-step-date { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text-dark); margin-bottom: 4px; }
-  .pcg-pay-step-label { font-size: 0.82rem; color: #64748b; }
+  .pcg-pay-step-label { font-size: 0.82rem; color: #64748b; line-height: 1.5; }
 
   /* --- RULES GRID --- */
   .pcg-rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
   .pcg-rule-card {
     background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;
     display: flex; gap: 14px; align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   }
-  .pcg-rule-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .pcg-rule-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+  .pcg-rule-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; display: flex; align-items: center; justify-content: center; }
   .pcg-rule-card h4 { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
   .pcg-rule-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0; }
 
@@ -307,7 +318,7 @@
       <span class="eyebrow">Partner Commissions</span>
       <div class="pcg-hero-rate">Earn up to 20%</div>
       <div class="pcg-hero-sub">Recurring. Lifetime. No cap. No cliff.</div>
-      <p class="pcg-hero-detail">A tiered model that rewards commitment. The more deals you close, the higher your rate. applied to every product, every renewal, for as long as the client pays.</p>
+      <p class="pcg-hero-detail">A tiered model that rewards commitment. The more deals you close, the higher your rate, applied to every product, every renewal, for as long as the client pays.</p>
     </section>
 
     <!-- TIER PROGRESSION -->
@@ -319,7 +330,9 @@
       <div class="pcg-tiers">
         <!-- Starter -->
         <div class="pcg-tier pcg-tier--starter">
-          <div class="pcg-tier-icon" style="background: #f1f5f9;">&#127793;</div>
+          <div class="pcg-tier-icon" style="background: #f1f5f9; color: #475569;">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/></svg>
+          </div>
           <div class="pcg-tier-name">Starter</div>
           <div class="pcg-tier-rate">10%</div>
           <div class="pcg-tier-deals">First 5 deals</div>
@@ -327,7 +340,9 @@
         </div>
         <!-- Growth -->
         <div class="pcg-tier pcg-tier--growth">
-          <div class="pcg-tier-icon" style="background: #eff6ff;">&#128640;</div>
+          <div class="pcg-tier-icon" style="background: #eff6ff; color: #3B6CD8;">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </div>
           <div class="pcg-tier-name">Growth</div>
           <div class="pcg-tier-rate">15%</div>
           <div class="pcg-tier-deals">5 &ndash; 10 deals</div>
@@ -335,11 +350,13 @@
         </div>
         <!-- Elite -->
         <div class="pcg-tier pcg-tier--elite">
-          <div class="pcg-tier-icon">&#9733;</div>
+          <div class="pcg-tier-icon" style="color: #fff;">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18.5 5.5 22 7 14.5 2 9.5 9 9 12 2"/></svg>
+          </div>
           <div class="pcg-tier-name">Elite</div>
           <div class="pcg-tier-rate">20%</div>
           <div class="pcg-tier-deals">10+ deals</div>
-          <div class="pcg-tier-benefit">Top-tier rate. No cap, no cliff. The maximum. permanently unlocked.</div>
+          <div class="pcg-tier-benefit">Top-tier rate. No cap, no cliff. The maximum, permanently unlocked.</div>
         </div>
       </div>
 
@@ -357,7 +374,7 @@
     <section class="container pcg-section">
       <span class="pcg-section-label">Earnings Examples</span>
       <h2>See what you could earn</h2>
-      <p class="pcg-intro">Real numbers based on current product pricing. Recurring commissions compound. every client you bring in keeps earning for you month after month.</p>
+      <p class="pcg-intro">Real numbers based on current product pricing. Recurring commissions compound: every client you bring in keeps earning for you month after month.</p>
 
       <div class="pcg-table-wrap">
         <table class="pcg-table">
@@ -431,7 +448,7 @@
           <div class="sublabel">per year at Elite rate</div>
         </div>
       </div>
-      <p style="text-align:center; font-size:0.82rem; color:#64748b; margin-top:12px;">Based on 10 GRIP OS Full clients. Recurring commissions. passive income that compounds.</p>
+      <p style="text-align:center; font-size:0.82rem; color:#64748b; margin-top:12px;">Based on 10 GRIP OS Full clients. Recurring commissions: passive income that compounds.</p>
     </section>
 
     <!-- WHAT QUALIFIES -->
@@ -442,28 +459,28 @@
 
       <div class="pcg-qualify-grid">
         <div class="pcg-qualify-card">
-          <h3><span style="color:#3B6CD8;">&#8635;</span> Recurring Products</h3>
+          <h3><svg class="pcg-svg" style="color:#3B6CD8;" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg> Recurring Products</h3>
           <div class="pcg-qualify-item">
-            <span class="pcg-qualify-icon" style="color:#16A34A;">&#10003;</span>
-            <span><strong>GRIP OS Core</strong>. monthly subscription</span>
+            <span class="pcg-qualify-icon" style="color:#16A34A;"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>GRIP OS Core</strong> &middot; monthly subscription</span>
           </div>
           <div class="pcg-qualify-item">
-            <span class="pcg-qualify-icon" style="color:#16A34A;">&#10003;</span>
-            <span><strong>GRIP OS Full</strong>. monthly subscription</span>
+            <span class="pcg-qualify-icon" style="color:#16A34A;"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>GRIP OS Full</strong> &middot; monthly subscription</span>
           </div>
         </div>
         <div class="pcg-qualify-card">
-          <h3><span style="color:#f59e0b;">&#9679;</span> One-Time Products</h3>
+          <h3><svg class="pcg-svg" style="color:#f59e0b;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg> One-Time Products</h3>
           <div class="pcg-qualify-item">
-            <span class="pcg-qualify-icon" style="color:#16A34A;">&#10003;</span>
+            <span class="pcg-qualify-icon" style="color:#16A34A;"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span><strong>GTM Intelligence Reports</strong></span>
           </div>
           <div class="pcg-qualify-item">
-            <span class="pcg-qualify-icon" style="color:#16A34A;">&#10003;</span>
+            <span class="pcg-qualify-icon" style="color:#16A34A;"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span><strong>Module Deep Dives</strong></span>
           </div>
           <div class="pcg-qualify-item">
-            <span class="pcg-qualify-icon" style="color:#16A34A;">&#10003;</span>
+            <span class="pcg-qualify-icon" style="color:#16A34A;"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span><strong>Dimension Bundles</strong></span>
           </div>
         </div>
@@ -478,35 +495,45 @@
 
       <div class="pcg-attr-grid">
         <div class="pcg-attr-card">
-          <div class="pcg-attr-icon">&#9745;</div>
+          <div class="pcg-attr-icon">
+            <svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
           <div>
             <h4>First-touch wins</h4>
             <p>The first partner whose referral link the client clicks gets attribution. No splitting.</p>
           </div>
         </div>
         <div class="pcg-attr-card">
-          <div class="pcg-attr-icon">&#9202;</div>
+          <div class="pcg-attr-icon">
+            <svg class="pcg-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+          </div>
           <div>
             <h4>90-day window</h4>
             <p>You own that email address for 90 days after the click. Any purchase within the window is yours.</p>
           </div>
         </div>
         <div class="pcg-attr-card">
-          <div class="pcg-attr-icon" style="background:#fef3c7; color:#92400e;">&#9888;</div>
+          <div class="pcg-attr-icon" style="background:#fef3c7; color:#92400e;">
+            <svg class="pcg-svg" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
           <div>
             <h4>Other partner first?</h4>
             <p>First-touch applies. That partner gets attribution, no exceptions.</p>
           </div>
         </div>
         <div class="pcg-attr-card">
-          <div class="pcg-attr-icon" style="background:#f1f5f9; color:#64748b;">&#128100;</div>
+          <div class="pcg-attr-icon" style="background:#f1f5f9; color:#64748b;">
+            <svg class="pcg-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
           <div>
             <h4>Existing customer?</h4>
             <p>No commission on pre-existing purchases. You earn on new purchases only.</p>
           </div>
         </div>
         <div class="pcg-attr-card">
-          <div class="pcg-attr-icon" style="background:#ede9fe; color:#7c3aed;">&#9878;</div>
+          <div class="pcg-attr-icon" style="background:#ede9fe; color:#7c3aed;">
+            <svg class="pcg-svg" viewBox="0 0 24 24"><path d="M16 16.5 22 12l-6-4.5v3H8v3h8v3z"/><path d="M8 7.5 2 12l6 4.5v-3h8v-3H8v-3z"/></svg>
+          </div>
           <div>
             <h4>Ambiguous?</h4>
             <p>Caugia decides. Our intent is to resolve ambiguity in the partner's favor where possible.</p>
@@ -522,21 +549,21 @@
       <p class="pcg-intro">Full transparency. No hidden clauses, no surprises.</p>
 
       <div class="pcg-edge pcg-edge--green">
-        <h3><span style="font-size:1.2rem;">&#10003;</span> When You DO Get Paid</h3>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10003;</span> <strong>Upgrade Core &rarr; Full</strong> <span>You earn your tier rate on the new, higher amount</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10003;</span> <strong>Client adds modules</strong> <span>You earn your tier rate on every add-on purchase</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10003;</span> <strong>Renews after pausing</strong> <span>You earn your tier rate when payments resume</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10003;</span> <strong>Colleague same company</strong> <span>Attributed to you if same email domain, within 90-day window</span></div>
+        <h3><svg class="pcg-svg pcg-svg-lg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> When You DO Get Paid</h3>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> <strong>Upgrade Core &rarr; Full</strong> <span>You earn your tier rate on the new, higher amount</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> <strong>Client adds modules</strong> <span>You earn your tier rate on every add-on purchase</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> <strong>Renews after pausing</strong> <span>You earn your tier rate when payments resume</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> <strong>Colleague same company</strong> <span>Attributed to you if same email domain, within 90-day window</span></div>
       </div>
 
       <div class="pcg-edge pcg-edge--red">
-        <h3><span style="font-size:1.2rem;">&#10007;</span> When You DON'T Get Paid</h3>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Already a customer</strong> <span>No commission on pre-existing purchases</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Other partner first</strong> <span>First-touch wins, no exceptions</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Refund within 14 days</strong> <span>Commission is reversed</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Subscription paused</strong> <span>Commission paused (resumes when payment resumes)</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Chargeback</strong> <span>Commission is reversed</span></div>
-        <div class="pcg-edge-item"><span class="pcg-edge-icon">&#10007;</span> <strong>Terms violation</strong> <span>Account suspended, commissions forfeited</span></div>
+        <h3><svg class="pcg-svg pcg-svg-lg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> When You DON'T Get Paid</h3>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Already a customer</strong> <span>No commission on pre-existing purchases</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Other partner first</strong> <span>First-touch wins, no exceptions</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Refund within 14 days</strong> <span>Commission is reversed</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Subscription paused</strong> <span>Commission paused (resumes when payment resumes)</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Chargeback</strong> <span>Commission is reversed</span></div>
+        <div class="pcg-edge-item"><span class="pcg-edge-icon"><svg class="pcg-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> <strong>Terms violation</strong> <span>Account suspended, commissions forfeited</span></div>
       </div>
     </section>
 
@@ -548,17 +575,23 @@
 
       <div class="pcg-pay-flow">
         <div class="pcg-pay-step">
-          <div class="pcg-pay-step-icon">&#128200;</div>
+          <div class="pcg-pay-step-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+          </div>
           <div class="pcg-pay-step-date">1st</div>
           <div class="pcg-pay-step-label">Commissions calculated for previous month</div>
         </div>
         <div class="pcg-pay-step">
-          <div class="pcg-pay-step-icon">&#128269;</div>
+          <div class="pcg-pay-step-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
           <div class="pcg-pay-step-date">1st &ndash; 10th</div>
           <div class="pcg-pay-step-label">Approval period: refunds &amp; chargebacks verified</div>
         </div>
         <div class="pcg-pay-step">
-          <div class="pcg-pay-step-icon">&#128176;</div>
+          <div class="pcg-pay-step-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="8" y2="14"/></svg>
+          </div>
           <div class="pcg-pay-step-date">15th</div>
           <div class="pcg-pay-step-label">Payout via bank transfer</div>
         </div>
@@ -566,11 +599,15 @@
 
       <div class="pcg-rules-grid" style="margin-top: 28px;">
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#128176;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
           <div><h4>Minimum</h4><p>&euro;50 per payout. Smaller amounts roll over to the next month.</p></div>
         </div>
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#127466;&#127482;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          </div>
           <div><h4>Currency</h4><p>Payouts in EUR. Non-EUR transactions converted at Stripe's exchange rate.</p></div>
         </div>
       </div>
@@ -584,19 +621,27 @@
 
       <div class="pcg-rules-grid">
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#128101;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
           <div><h4>Relationship</h4><p>Partners are independent contractors. Not employment, agency, or partnership with Caugia SASU.</p></div>
         </div>
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#128203;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          </div>
           <div><h4>Tax responsibility</h4><p>You handle your own tax obligations. Caugia does not withhold taxes on commission payouts.</p></div>
         </div>
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#128197;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
           <div><h4>Annual statements</h4><p>Commission statements provided in January for the previous calendar year.</p></div>
         </div>
         <div class="pcg-rule-card">
-          <div class="pcg-rule-icon">&#128196;</div>
+          <div class="pcg-rule-icon" style="color:#0056b3;">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </div>
           <div><h4>Invoicing threshold</h4><p>Monthly payouts exceeding &euro;500 require valid invoicing details (company name, address, VAT if applicable).</p></div>
         </div>
       </div>
