@@ -126,12 +126,12 @@
 .btn-p {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 16px 36px; border-radius: 12px; font-size: 1.05rem; font-weight: 700;
-  text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
-  font-family: Inter, sans-serif;
+  text-decoration: none; border: 1.5px solid transparent; cursor: pointer; transition: all 0.2s;
+  font-family: Inter, sans-serif; box-sizing: border-box;
 }
 .btn-diag { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(59,108,216,0.2); }
 .btn-diag:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(59,108,216,0.3); }
-.btn-soph { background: #fff; color: var(--dark); border: 1.5px solid var(--line); }
+.btn-soph { background: #fff; color: var(--dark); border-color: var(--line); }
 .btn-soph:hover { border-color: var(--orange); color: var(--orange); }
 
 .s-final { padding: 80px 0; background: linear-gradient(135deg, #1A2340, #0f172a); text-align: center; }
@@ -280,20 +280,23 @@
       <img src="../assets/screenshot-intel3.png" alt="GRIP OS Intelligence Control troisi&egrave;me vue" style="width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,0.3);" loading="lazy" />
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;align-items:center;">
-      <div class="intel-card" style="margin:0;">
-        <div class="intel-label" style="color:var(--orange);">BRIEF DU LUNDI</div>
-        <h3>Une page. Chaque lundi. Pr&ecirc;t pour le board.</h3>
-        <p>Statut de la contrainte, impact financier, alertes intelligence, progression des actions. Transf&eacute;rez-le &agrave; votre board. C&rsquo;est fait.</p>
-      </div>
-      <img src="../assets/screenshot-brief.png" alt="GRIP OS Brief du Lundi : r&eacute;sum&eacute; ex&eacute;cutif hebdomadaire avec statut de contrainte, impact financier et progression des actions" style="width:100%;max-width:380px;display:block;margin:0 auto;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,0.3);" loading="lazy" />
-
-    <div class="intel-card" style="margin-top:16px;">
-      <div class="intel-label" style="color:var(--blue);">340+ CONNECTEURS</div>
-      <h3>Tout votre stack GTM. En direct.</h3>
-      <p>HubSpot, Salesforce, Gong, G2, Amplitude, Stripe. GRIP OS tire les signaux automatiquement. Pas d&rsquo;imports CSV.</p>
+    <!-- Brief du Lundi showcase (full-width, hero-style) -->
+    <div style="margin-top:24px;background:linear-gradient(160deg, rgba(224,120,48,0.10) 0%, rgba(255,255,255,0.02) 55%);border:1px solid rgba(224,120,48,0.14);border-radius:24px;padding:56px 32px 0;text-align:center;overflow:hidden;">
+      <div class="intel-label" style="color:var(--orange);">BRIEF DU LUNDI</div>
+      <h3 style="font-family:'Merriweather',Georgia,serif;font-size:1.75rem;font-weight:900;color:#fff;margin:12px auto 14px;max-width:640px;line-height:1.25;letter-spacing:-0.015em;">Une page. Chaque lundi. Pr&ecirc;t pour le board.</h3>
+      <p style="font-size:0.98rem;color:#cbd5e1;line-height:1.7;max-width:560px;margin:0 auto 40px;">Statut de la contrainte, impact financier, alertes intelligence, progression des actions. Transf&eacute;rez-le &agrave; votre board. C&rsquo;est fait.</p>
+      <img src="../assets/screenshot-brief.png" alt="GRIP OS Brief du Lundi : r&eacute;sum&eacute; ex&eacute;cutif hebdomadaire avec statut de contrainte, impact financier et progression des actions" style="width:100%;max-width:480px;display:block;margin:0 auto;border-radius:16px 16px 0 0;box-shadow:0 -10px 40px -5px rgba(224,120,48,0.2), 0 20px 60px -10px rgba(0,0,0,0.5);" loading="lazy" />
     </div>
-    <img src="../assets/screenshot-connector.png" alt="GRIP OS Connector Signals : 7 connecteurs actifs alimentant 25 signaux dans l&rsquo;intelligence" style="width:100%;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,0.3);margin-top:16px;" loading="lazy" />
+
+    <!-- Connectors row: matched-height card + image -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;align-items:stretch;">
+      <div class="intel-card" style="margin:0;display:flex;flex-direction:column;justify-content:center;">
+        <div class="intel-label" style="color:var(--blue);">340+ CONNECTEURS</div>
+        <h3>Tout votre stack GTM. En direct.</h3>
+        <p>HubSpot, Salesforce, Gong, G2, Amplitude, Stripe. GRIP OS tire les signaux automatiquement. Pas d&rsquo;imports CSV.</p>
+      </div>
+      <img src="../assets/screenshot-connector.png" alt="GRIP OS Connector Signals : 7 connecteurs actifs alimentant 25 signaux dans l&rsquo;intelligence" style="width:100%;height:100%;object-fit:cover;object-position:left center;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,0.3);" loading="lazy" />
+    </div>
   </div>
 </section>
 
