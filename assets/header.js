@@ -76,12 +76,13 @@
     var p = window.location.pathname.split("/").pop() || "index.html";
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
     var isDe = window.location.pathname.indexOf('/de/') !== -1;
-    var isLocalized = isFr || isDe;
+    var isEs = window.location.pathname.indexOf('/es/') !== -1;
+    var isLocalized = isFr || isDe || isEs;
     var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
-    var isLocalizedIntel = isLocalized && isIntel; // /fr/intelligence/ or /de/intelligence/ = two levels deep
+    var isLocalizedIntel = isLocalized && isIntel; // /fr/intelligence/, /de/intelligence/, /es/intelligence/ = two levels deep
     // assetBase: path to assets folder (root/assets/)
     var assetBase = isLocalizedIntel ? '../../' : (isIntel ? '../' : (isLocalized ? '../' : ''));
-    // navBase: path to sibling pages (stays in /fr/ or /de/ for localized intel, goes to localized or root)
+    // navBase: path to sibling pages (stays in localized dir for localized intel, goes to localized or root)
     var navBase = isLocalizedIntel ? '../' : (isIntel ? '../' : '');
 
     // Navigation labels per language
@@ -89,6 +90,8 @@
       ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Insights', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten' }
       : isFr
       ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Insights', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
+      : isEs
+      ? { product: 'Producto', marketplace: 'Marketplace', insights: 'Insights', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de partners', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico' }
       : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
 
     // Language dropdown: current lang as button, others in dropdown
@@ -96,13 +99,15 @@
       var enPath = isLocalized ? assetBase + p : p;
       var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
       var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
-      var currentLang = isDe ? 'DE' : (isFr ? 'FR' : 'EN');
+      var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
+      var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : 'EN';
       return '<div class="caugia-lang-wrap" id="caugiaLangWrap">' +
         '<button class="caugia-lang-btn" id="caugiaLangBtn">' + currentLang + ' <svg viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
         '<div class="caugia-lang-dropdown">' +
-          '<a href="' + enPath + '"' + (!isFr && !isDe ? ' class="active-lang"' : '') + '>English</a>' +
+          '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs ? ' class="active-lang"' : '') + '>English</a>' +
           '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>Fran\u00e7ais</a>' +
           '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>Deutsch</a>' +
+          '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>Espa\u00f1ol</a>' +
         '</div>' +
       '</div>';
     }
@@ -153,14 +158,16 @@
           '</div>' +
           /* Language switcher */
           '<div class="caugia-mobile-lang">' +
-            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : (isFr ? 'Langue' : 'Language')) + '</span>' +
+            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : isFr ? 'Langue' : isEs ? 'Idioma' : 'Language') + '</span>' +
             (function() {
               var enPath = isLocalized ? assetBase + p : p;
               var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
               var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
-              return '<a href="' + enPath + '"' + (!isFr && !isDe ? ' class="active-lang"' : '') + '>EN</a>' +
+              var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
+              return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs ? ' class="active-lang"' : '') + '>EN</a>' +
                      '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>FR</a>' +
-                     '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>';
+                     '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>' +
+                     '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>ES</a>';
             })() +
           '</div>' +
         '</div>' +

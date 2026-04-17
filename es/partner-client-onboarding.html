@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guía de onboarding de cliente | Programa de socios de Caugia</title>
+<meta name="description" content="Guía paso a paso para los socios de Caugia para acompañar el onboarding de los clientes referidos. Del enlace de referido a la suscripción a GRIP OS." />
+<link rel="canonical" href="https://www.caugia.com/es/partner-client-onboarding.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/partner-client-onboarding.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/partner-client-onboarding.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/partner-client-onboarding.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/partner-client-onboarding.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/partner-client-onboarding.html" />
+
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/es/partner-client-onboarding.html" />
+<meta property="og:title" content="Guía de onboarding de cliente. Socios de Caugia" />
+<meta property="og:description" content="Cómo acompañar a un cliente referido hacia GRIP OS. Proceso paso a paso, scripts y errores que evitar." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logo-final.png">
+<link rel="apple-touch-icon" href="../assets/logo-final.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/caugia-base.css">
+<style>
+  .res-hero { text-align: center; padding: 72px 0 48px; }
+  .res-hero h1 { font-family: 'Merriweather', Georgia, serif; font-size: 2.5rem; line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .res-hero p { font-size: 1.05rem; color: var(--text-body); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+  .res-section { padding: 64px 0; border-bottom: 1px solid #f1f5f9; }
+  .res-section:last-child { border-bottom: none; }
+  .res-section h2 { font-family: 'Merriweather', Georgia, serif; font-size: 1.8rem; margin-bottom: 16px; color: var(--text-dark); letter-spacing: -0.02em; }
+  .res-section p, .res-section li { font-size: 0.95rem; color: var(--text-body); line-height: 1.7; }
+  .res-section ul { padding-left: 20px; margin: 12px 0; }
+  .res-section li { margin-bottom: 8px; }
+
+  .funnel-flow { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 28px 0; flex-wrap: wrap; }
+  .funnel-step { padding: 12px 24px; border-radius: 12px; font-size: 0.88rem; font-weight: 700; background: #eff6ff; color: #1e40af; transition: all 0.2s; }
+  .funnel-step:hover { background: #dbeafe; transform: translateY(-1px); }
+  .funnel-arrow { font-size: 1.2rem; color: #94a3b8; }
+
+  .step-card { display: flex; gap: 20px; margin: 28px 0; padding: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; transition: all 0.25s ease; }
+  .step-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .step-num { flex-shrink: 0; width: 48px; height: 48px; background: #3B6CD8; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: #fff; font-family: Inter, sans-serif; }
+  .step-body h3 { font-family: Inter, sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+  .step-body p { margin: 0; }
+
+  .buy-flow { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 32px; margin: 28px 0; }
+  .buy-flow h3 { font-family: Inter, sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--text-dark); }
+  .buy-flow ol { padding-left: 20px; margin: 0; }
+  .buy-flow li { margin-bottom: 8px; font-size: 0.95rem; color: var(--text-body); line-height: 1.7; }
+
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+  .do-col { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 16px; padding: 28px 32px; transition: all 0.25s ease; }
+  .do-col:hover { box-shadow: 0 8px 32px rgba(22,163,74,0.08); }
+  .do-col h3 { font-family: Inter, sans-serif; color: #166534; margin-bottom: 12px; font-size: 1.05rem; }
+  .do-col li { color: #15803d; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.6; }
+  .dont-col { background: #fef2f2; border: 1px solid #fecaca; border-radius: 16px; padding: 28px 32px; transition: all 0.25s ease; }
+  .dont-col:hover { box-shadow: 0 8px 32px rgba(220,38,38,0.06); }
+  .dont-col h3 { font-family: Inter, sans-serif; color: #991b1b; margin-bottom: 12px; font-size: 1.05rem; }
+  .dont-col li { color: #b91c1c; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.6; }
+
+  .script-block { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 32px; margin: 24px 0; transition: all 0.25s ease; }
+  .script-block:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
+  .script-block h3 { font-family: Inter, sans-serif; font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+  .script-block .script-label { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; color: #64748b; margin-bottom: 8px; }
+  .script-block blockquote { margin: 0; padding: 18px 24px; background: #f8fafc; border-left: 3px solid #3B6CD8; border-radius: 0 10px 10px 0; font-size: 0.93rem; color: var(--text-body); line-height: 1.7; font-style: italic; }
+
+  .back-link { display: inline-block; margin-bottom: 24px; font-size: 0.88rem; color: #3B6CD8; text-decoration: none; font-weight: 700; }
+  .back-link:hover { text-decoration: underline; }
+
+  @media print {
+    body { font-size: 11pt; }
+    .site-header, footer, .back-link { display: none !important; }
+    .res-hero { padding: 24px 0 16px; }
+    .res-section { padding: 24px 0; }
+    .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .do-col, .dont-col { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 768px) {
+    .res-hero h1 { font-size: 1.8rem; }
+    .step-card { flex-direction: column; gap: 12px; }
+    .do-dont { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <script src="../assets/header.js"></script>
+
+  <main>
+    <section class="container res-hero">
+      <a href="partners.html" class="back-link">&larr; Volver al programa de socios</a>
+      <span class="eyebrow">Proceso de onboarding</span>
+      <h1>Guía de onboarding de cliente</h1>
+      <p>El proceso exacto, del primer enlace de referido al suscriptor de pago. Sin zonas grises.</p>
+    </section>
+
+    <!-- El embudo -->
+    <section class="container res-section">
+      <h2>El embudo</h2>
+      <p>Cada proyecto con un cliente sigue cinco etapas. Sepa en cuál se encuentra.</p>
+      <div class="funnel-flow">
+        <div class="funnel-step">1. Referir</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">2. Diagnosticar</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">3. Analizar</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">4. Convertir</div>
+        <span class="funnel-arrow">&rarr;</span>
+        <div class="funnel-step">5. Ampliar</div>
+      </div>
+    </section>
+
+    <!-- Paso a paso -->
+    <section class="container res-section">
+      <h2>Paso a paso</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Comparta su enlace de referido</h3>
+          <p>Envíe su enlace único (<strong>caugia.com?ref=SU_CODIGO</strong>) a su cliente. Llegará a la página de inicio. Se establece automáticamente una cookie de atribución de 90 días. Usted retiene esa dirección de email durante 90 días a partir del primer clic.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>El cliente completa el GTM Intelligence Report</h3>
+          <p>Es el punto de entrada. ~35 minutos. 265 preguntas. El entregable es un informe diagnóstico de 45 páginas que cubre las puntuaciones GRIP sobre 72 motores de scoring, la identificación de la restricción estructural, la cuantificación de la fuga de ingresos y un plan de resolución a 90 días. El diagnóstico crea el contexto para todo lo que viene después.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Analice los resultados juntos</h3>
+          <p>Aquí es donde se gana su posición de asesor. Revise el informe con su cliente y céntrese en tres elementos: la restricción estructural, el importe de la fuga de ingresos y las 3 primeras acciones recomendadas. No intente cubrir las 45 páginas. Concéntrese en lo que más importa y en lo que el cliente puede poner en marcha de inmediato.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Recomiende GRIP OS</h3>
+          <p>Tras el informe, el siguiente paso natural es la gobernanza continua de las restricciones. <strong>Core (799&nbsp;&euro; / $895 / &pound;695 al mes)</strong> para los equipos que quieren gestionar la resolución de restricciones de forma autónoma con 340+ conectores. <strong>Full (1&nbsp;495&nbsp;&euro; / $1 695 / &pound;1 295 al mes)</strong> añade Sophie, el simulador, los benchmarks y capacidades analíticas avanzadas. Deje que los resultados del diagnóstico guíen la elección del nivel. No empuje el Full si el Core cubre la necesidad.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Amplíe con el tiempo</h3>
+          <p>A medida que se resuelven las restricciones, emergen otras nuevas. Es la naturaleza de los sistemas Go-to-Market. Los clientes que resuelven su primera restricción estructural casi siempre encuentran una segunda restricción que abordar. Su papel: manténgase lo suficientemente cerca para identificar cuándo tiene sentido un módulo en profundidad, un nuevo assessment o un upgrade. Usted gana comisión en cada expansión.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flujo "Comprar para el cliente" -->
+    <section class="container res-section">
+      <h2>Flujo &laquo;Comprar para el cliente&raquo;</h2>
+      <p>Puede comprar cualquier producto en nombre de su cliente. El cliente recibe el enlace al assessment directamente de Caugia. Su rol como socio referente no se divulga.</p>
+
+      <div class="buy-flow">
+        <h3>Cómo funciona:</h3>
+        <ol>
+          <li>Acceda a cualquier espacio de GRIP OS y abra la <strong>Tienda</strong>.</li>
+          <li>Marque <strong>&laquo;Compra para un cliente&raquo;</strong>.</li>
+          <li>Introduzca la dirección de email del cliente.</li>
+          <li>Finalice el pago. El recibo se le envía a usted, no al cliente.</li>
+          <li>El cliente recibe el enlace al assessment en su dirección de email. Solo ve el branding de Caugia.</li>
+          <li>Su comisión se atribuye automáticamente. No hacen falta pasos adicionales.</li>
+        </ol>
+      </div>
+
+      <p style="font-size:0.9rem; color:#64748b;">Resulta útil cuando desea regalar un diagnóstico dentro de una misión de consultoría, o cuando el proceso de compras del cliente ralentizaría las cosas. Usted paga, el cliente recibe el valor, usted gana la comisión.</p>
+    </section>
+
+    <!-- Qué hacer / Qué no hacer -->
+    <section class="container res-section">
+      <h2>Lo que los socios deben hacer y NO deben hacer</h2>
+      <div class="do-dont">
+        <div class="do-col">
+          <h3>QUÉ HACER</h3>
+          <ul style="list-style:none; padding:0;">
+            <li>Destaque el importe de la fuga de ingresos una vez finalizado el informe</li>
+            <li>Deje que el informe venda, es más creíble que cualquier pitch</li>
+            <li>Posiciónese como el asesor que aportó claridad, no como el vendedor</li>
+            <li>Haga seguimiento en las 48 horas posteriores a la entrega del informe</li>
+            <li>Ofrezca revisar los resultados juntos en una llamada</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <h3>QUÉ NO HACER</h3>
+          <ul style="list-style:none; padding:0;">
+            <li>No sobrevenda antes del diagnóstico, aún no tiene evidencias</li>
+            <li>No comparta su tasa de comisión con el cliente</li>
+            <li>No prometa resultados específicos en materia de ingresos</li>
+            <li>No presente GRIP OS como su propia herramienta (salvo acuerdo de co-branding)</li>
+            <li>No salte el informe para empujar directamente una suscripción al OS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ritmo mensual del socio -->
+    <section class="container res-section">
+      <h2>Su ritmo mensual como socio</h2>
+
+      <div class="do-dont" style="margin-bottom:24px;">
+        <div class="do-col">
+          <h3>Lo que gestiona Caugia</h3>
+          <ul style="list-style:none; padding:0;">
+            <li>Entrega de los productos (assessments, informes, plataforma OS)</li>
+            <li>Facturación</li>
+            <li>Soporte técnico</li>
+            <li>Cálculo y pago de comisiones</li>
+          </ul>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:24px 28px;">
+          <h3 style="color:#1e40af; margin-bottom:12px; font-size:1.05rem;">Lo que gestiona usted</h3>
+          <ul style="list-style:none; padding:0;">
+            <li style="color:#1e40af; margin-bottom:8px; font-size:0.92rem; line-height:1.6;">Conversaciones de referido</li>
+            <li style="color:#1e40af; margin-bottom:8px; font-size:0.92rem; line-height:1.6;">Asesoramiento al cliente y revisión de las restricciones</li>
+            <li style="color:#1e40af; margin-bottom:0; font-size:0.92rem; line-height:1.6;">Posicionamiento y contexto (usted conoce al cliente, nosotros no)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buy-flow">
+        <h3>Checklist mensual para los socios activos:</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="margin-bottom:10px; font-size:0.95rem; color:var(--text-body); line-height:1.7;">&#9744; Revisar el panel de socio en busca de nuevos clics, leads y conversiones</li>
+          <li style="margin-bottom:10px; font-size:0.95rem; color:var(--text-body); line-height:1.7;">&#9744; Hacer seguimiento a los leads que completaron el assessment pero aún no han suscrito el OS</li>
+          <li style="margin-bottom:10px; font-size:0.95rem; color:var(--text-body); line-height:1.7;">&#9744; Planificar llamadas de revisión de restricciones con los clientes activos en el OS</li>
+          <li style="margin-bottom:10px; font-size:0.95rem; color:var(--text-body); line-height:1.7;">&#9744; Compartir el enlace de referido en 2&ndash;3 conversaciones o publicaciones de LinkedIn</li>
+          <li style="margin-bottom:0; font-size:0.95rem; color:var(--text-body); line-height:1.7;">&#9744; Consultar los extractos de comisiones (disponibles antes del 10 de cada mes)</li>
+        </ul>
+      </div>
+
+      <p style="font-size:0.88rem; color:#64748b; margin-top:16px;">Inversión de tiempo: 2&ndash;4 horas/mes para un socio con 5 clientes. 4&ndash;6 horas/mes con 10+.</p>
+    </section>
+
+    <!-- Scripts de onboarding -->
+    <section class="container res-section">
+      <h2>Scripts de onboarding</h2>
+      <p>Dos scripts probados. Copie, personalice, envíe.</p>
+
+      <div class="script-block">
+        <div class="script-label">Script A. Introducción en frío (email / LinkedIn)</div>
+        <blockquote>
+          Hola [Nombre], estoy utilizando una herramienta de diagnóstico que creo que le resultará realmente útil para [Empresa]. Es un assessment de 35 minutos que identifica con precisión dónde está limitado su sistema Go-to-Market y cuantifica el impacto financiero. Sin pitch comercial, sin seguimiento insistente, solo el informe. ¿Estaría abierto a probarlo? Aquí tiene el enlace: [su enlace de referido]
+        </blockquote>
+      </div>
+
+      <div class="script-block">
+        <div class="script-label">Script B. Introducción en caliente (cliente existente / contacto)</div>
+        <blockquote>
+          Quiero compartir algo con usted. Antes de iniciar nuestro próximo proyecto, me gustaría que realizara un diagnóstico GTM de 35 minutos. Evalúa todo su sistema de ingresos a través de 72 motores de scoring e identifica la restricción estructural. He comprobado que permite afinar mucho más nuestras prioridades. El informe corre por mi cuenta, le envío el enlace.
+        </blockquote>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Todos los derechos reservados. &middot; <a href="privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Política de privacidad</a></p>
+    </div>
+  </footer>
+
+  <script src="../assets/caugia-base.js"></script>
+</body>
+</html>

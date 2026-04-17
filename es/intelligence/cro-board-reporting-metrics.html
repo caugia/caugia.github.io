@@ -1,0 +1,278 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Lo que su board quiere ver realmente: las métricas GTM que guían las decisiones | Caugia</title>
+  <meta name="description" content="Los board decks llenos de gráficos de pipeline y recuentos de MQL no guían decisiones. Aquí están las métricas que los miembros del board y los inversores usan para evaluar la salud GTM y la calidad del crecimiento." />
+  <link rel="canonical" href="https://www.caugia.com/es/intelligence/cro-board-reporting-metrics.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/cro-board-reporting-metrics.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/cro-board-reporting-metrics.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/cro-board-reporting-metrics.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/cro-board-reporting-metrics.html" />
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/es/intelligence/cro-board-reporting-metrics.html" />
+  <meta property="og:title" content="Lo que su board quiere ver realmente: las métricas GTM que guían las decisiones" />
+  <meta property="og:description" content="Las métricas que los miembros del board y los inversores usan para evaluar salud GTM, unit economics y calidad del crecimiento." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lo que su board quiere ver realmente: las métricas GTM que guían las decisiones" />
+  <meta name="twitter:description" content="Los gráficos de pipeline y los recuentos de MQL no guían las decisiones del board. Estas son las métricas que realmente orientan la asignación de capital." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #f0f9ff; color: #0c4a6e; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .metric-card { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 24px; margin: 20px 0; }
+    .metric-card h3 { margin-top: 0; color: var(--primary); }
+    .metric-card p { margin-bottom: 0; }
+    .article-callout { border-left: 3px solid #0284c7; background: #f0f9ff; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #0c4a6e; line-height: 1.6; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Lo que su board quiere ver realmente: las métricas GTM que guían las decisiones",
+    "description": "Los board decks llenos de gráficos de pipeline y recuentos de MQL no guían decisiones. Aquí están las métricas que los miembros del board y los inversores usan para evaluar la salud GTM y la calidad del crecimiento.",
+    "url": "https://www.caugia.com/es/intelligence/cro-board-reporting-metrics.html",
+    "inLanguage": "es",
+    "datePublished": "2026-03-11",
+    "dateModified": "2026-03-18",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Meijer"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Caugia",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.caugia.com/assets/logo-final.png"
+      }
+    },
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.caugia.com/es/intelligence/cro-board-reporting-metrics.html"
+    }
+  }
+  </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    {"@type": "Question", "name": "¿Qué métricas GTM interesan realmente a los boards?", "acceptedAnswer": {"@type": "Answer", "text": "Rule of 40, Net Revenue Retention, CAC payback, revenue per employee, creación de pipeline más conversión y burn multiple. Son señales de asignación de capital, no métricas de actividad."}},
+    {"@type": "Question", "name": "¿Qué es la Rule of 40 en SaaS?", "acceptedAnswer": {"@type": "Answer", "text": "La tasa de crecimiento de ingresos más el margen de beneficio debe superar el 40%. La mayoría de inversores la usa para evaluar la salud global del negocio."}},
+    {"@type": "Question", "name": "¿Qué es el burn multiple?", "acceptedAnswer": {"@type": "Answer", "text": "Burn neto dividido por net new ARR. Mide cuánta caja se gasta por dólar de nuevo ingreso. Por debajo de 1,5 es eficiente; por encima de 2,0 indica ineficiencia estructural GTM."}},
+    {"@type": "Question", "name": "¿Por qué la cobertura de pipeline es engañosa?", "acceptedAnswer": {"@type": "Answer", "text": "La cobertura de pipeline es una foto que puede ocultar una caída en la creación de pipeline. Ciclos de venta más largos retienen deals antiguos en el funnel y ocultan la tendencia. La tasa de creación de pipeline es el indicador adelantado."}},
+    {"@type": "Question", "name": "¿Qué debe incluir un reporte GTM listo para el board?", "acceptedAnswer": {"@type": "Answer", "text": "Cuatro secciones: métricas de salud actual (Rule of 40, ARR, NRR, burn multiple), eficiencia del motor (pipeline, conversión, CAC, rev/empleado), indicadores adelantados y una restricción identificada con plan de acción."}}
+  ]
+}
+</script>
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Volver a Intelligence</a>
+        <span class="article-tag">Operaciones</span>
+        <h1>Lo que su board quiere ver realmente: las métricas GTM que guían las decisiones</h1>
+        <p class="article-lead">La mayoría de board decks están repletos de métricas de actividad que no guían decisiones. Gráficos de pipeline, recuentos de MQL, recuentos de logos. Los miembros del board asienten, hacen algunas preguntas y se marchan sin una visión clara de la salud GTM. Aquí están las métricas que realmente orientan la asignación de capital, la contratación y los pivotes estratégicos.</p>
+        <div class="article-meta">Por Tom Meijer, fundador de Caugia &middot; 8 min de lectura &middot; Marzo 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">En este artículo</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Por qué la mayoría de board decks fallan. Las seis métricas que realmente guían las decisiones: Rule of 40, NRR, CAC payback, revenue per employee, creación de pipeline más conversión y burn multiple. Indicadores adelantados vs retardados. Y cómo estructurar un reporte GTM listo para el board.</p>
+        </div>
+
+        <h2>El problema del board deck</h2>
+
+        <p>Las reuniones de board siguen una estructura previsible. El CEO da una visión general. El CRO presenta pipeline y bookings. El CFO presenta las finanzas. Marketing presenta el rendimiento de las campañas. El board hace preguntas que el equipo en su mayoría ya anticipaba. Todos salen informados pero no iluminados.</p>
+
+        <p>El problema no es el formato. Son las métricas. La mayoría de board decks presentan métricas de actividad (cuánto hicimos), métricas de producción (qué produjimos) y métricas retardadas (qué ya pasó). Lo que los boards necesitan realmente son métricas de salud (¿el sistema funciona?), métricas de eficiencia (¿el crecimiento es sostenible?) y métricas adelantadas (¿qué va a pasar a continuación?).</p>
+
+        <p>La distinción importa porque las métricas de actividad y producción crean la ilusión del control. El pipeline está cubierto 4x. Marketing generó 500 MQLs. Los comerciales cerraron 40 deals. Todo parece ir bien hasta que se falla el trimestre y nadie puede explicar por qué.</p>
+
+        <p>La verdad subyacente es que las métricas de board no son indicadores de rendimiento. Son señales de asignación de capital. Cada métrica debería responder a una pregunta de inversión específica: ¿desplegamos más capital en este sistema o hay que reestructurarlo antes de que pueda absorber más inversión? Cuando los board decks presentan actividad en lugar de arquitectura, la conversación sobre asignación de capital no llega a producirse.</p>
+
+        <h2>Las métricas que realmente importan</h2>
+
+        <p>Boards e inversores evalúan la salud GTM con un pequeño número de métricas que revelan la verdad estructural de la empresa. Son las que guían las decisiones de asignación de capital, las aprobaciones de contratación y los pivotes estratégicos.</p>
+
+        <div class="metric-card">
+          <h3>Rule of 40</h3>
+          <p>La tasa de crecimiento de ingresos más el margen de beneficio debe superar el 40 por ciento. Es la métrica única que la mayoría de inversores usa para evaluar la salud global del negocio. Una empresa que crece al 60 por ciento con márgenes negativos del 30 por ciento obtiene 30 y subperforma. Una empresa que crece al 30 por ciento con margen del 15 por ciento obtiene 45 y está sana. La Rule of 40 fuerza una conversación sobre el trade-off entre crecimiento y eficiencia que las métricas de actividad ocultan.</p>
+        </div>
+
+        <div class="metric-card">
+          <h3>Net Revenue Retention</h3>
+          <p>Un NRR superior al 100 por ciento significa que la base de clientes existente crece sin ninguna venta nueva. Es la señal más fuerte de product-market fit y de entrega de valor al cliente. Los boards se interesan por el NRR porque determina si el crecimiento es aditivo (solo nuevos logos) o compuesto (nuevos logos más expansión). Una empresa con 115 por ciento de NRR necesita muchos menos nuevos clientes para alcanzar el mismo objetivo de crecimiento que una empresa con 90 por ciento de NRR.</p>
+        </div>
+
+        <div class="metric-card">
+          <h3>Periodo de CAC Payback</h3>
+          <p>El número de meses para recuperar el coste de adquisición de un cliente. Esta métrica revela la eficiencia GTM con más precisión que el CAC solo porque tiene en cuenta el margen bruto. Un payback de 12 meses significa que la empresa recupera el coste de adquisición en un año. Un payback de 18 meses significa que cada cliente nuevo es un agujero de caja durante año y medio antes de ser rentable. Los boards la usan para evaluar si el gasto GTM es productivo o simplemente caro.</p>
+        </div>
+
+        <div class="metric-card">
+          <h3>Revenue per employee</h3>
+          <p>El ARR total dividido por la plantilla total. Es la medida más pura de la eficiencia organizativa. Las empresas en fase temprana tienen naturalmente un revenue per employee más bajo porque invierten por adelantado del ingreso. Pero la trayectoria importa. Si el revenue per employee es estable o cae mientras la empresa crece, la arquitectura GTM añade peso más rápido de lo que añade ingresos. Los boards lo usan para evaluar si el escalado es eficiente o está sobredimensionado.</p>
+        </div>
+
+        <div class="metric-card">
+          <h3>Tasa de creación de pipeline y eficiencia de conversión</h3>
+          <p>No la cobertura de pipeline (una foto), sino la tasa de creación de pipeline (una métrica de flujo) combinada con las tasas de conversión etapa a etapa. Indica al board si el motor de demand genera a un ritmo sostenible y si el motor comercial convierte eficientemente. Una empresa con alta creación de pipeline pero conversión en declive tiene un problema distinto a una con baja creación pero fuerte conversión. La combinación revela la salud estructural del motor de ingresos.</p>
+        </div>
+
+        <div class="metric-card">
+          <h3>Burn Multiple</h3>
+          <p>El burn neto dividido por el net new ARR. Si quema 5 millones para generar 3 millones de net new ARR, su burn multiple es 1,7x. Esta métrica responde a la pregunta: ¿cuánta caja hace falta para generar un euro de nuevo ingreso recurrente? Un burn multiple por debajo de 1x es excelente. Entre 1x y 2x es aceptable para empresas en fase de crecimiento. Por encima de 2x señala que el motor GTM es ineficiente y que la empresa está comprando ingresos en lugar de ganarlos.</p>
+        </div>
+
+        <h2>Indicadores adelantados vs retardados: lo que los boards piden realmente</h2>
+
+        <p>Los miembros de board experimentados distinguen entre métricas retardadas (lo que ya pasó) y métricas adelantadas (lo que va a pasar). La mayoría de board decks están un 80 por ciento retardados y un 20 por ciento adelantados. El ratio debería invertirse.</p>
+
+        <p>Las métricas adelantadas que generan las preguntas de board más pertinentes:</p>
+
+        <p><strong>Tendencia de la tasa de creación de pipeline.</strong> ¿La creación de pipeline se acelera, es estable o decelera? Predice el ingreso del próximo trimestre mejor que la cobertura de pipeline actual, porque la cobertura es una foto y la tasa de creación una velocidad.</p>
+
+        <p><strong>Win rate por segmento y por comercial.</strong> No la win rate media (que oculta todo) sino la distribución. Si los top performers ganan al 40 por ciento y la mediana al 18 por ciento, el board sabe que el sistema depende de héroes. Si la distribución es estrecha (28 a 34 por ciento en todo el equipo), el sistema es consistente.</p>
+
+        <p><strong>Pipeline de expansión.</strong> La mayoría de empresas ni siquiera lo siguen. Los boards que entienden la dinámica del NRR preguntarán: ¿cuál es el pipeline de expansión para las cuentas existentes? ¿Cuál es la win rate de expansión? ¿Cuál es el tiempo medio entre onboarding y primera expansión? Estas métricas predicen la trayectoria del NRR meses antes de que la cifra de NRR cambie.</p>
+
+        <p><strong>Tiempo de rampa de las nuevas contrataciones.</strong> ¿Cuánto tarda un nuevo AE en alcanzar su cuota? Si la respuesta son 9 meses en una empresa que planifica trimestralmente, tres cuartos del primer año de cada nueva contratación son improductivos. Los boards lo usan para evaluar si la empresa puede hacer crecer el equipo comercial de forma rentable.</p>
+
+        <p>Un ejemplo concreto de lo que revelan los indicadores adelantados. Una empresa presentó una fuerte cobertura de pipeline durante tres trimestres consecutivos. El board aprobó la ampliación de plantilla basándose en los ratios de cobertura. Lo que nadie seguía era que la tasa de creación de pipeline había declinado durante dos trimestres, oculta por ciclos de venta más largos que retenían deals antiguos en el pipeline. Para cuando el ratio de cobertura se corrigió, la empresa ya se había comprometido con las contrataciones. Los indicadores adelantados habrían revelado la tendencia dos trimestres antes.</p>
+
+        <p>Cada una de estas métricas corresponde a una capa estructural del <a href="grip-framework-gtm-diagnostic-model.html" style="color:var(--primary); font-weight:700;">Framework GRIP</a>. El revenue per employee mide el peso arquitectónico. El CAC payback mide la eficiencia de adquisición. El NRR mide la arquitectura de expansión. El burn multiple mide la eficiencia de capital a nivel de sistema. Cuando los boards evalúan estas métricas en conjunto, evalúan la salud de la arquitectura de revenue, no solo la producción de las funciones individuales.</p>
+
+        <div class="article-callout">
+          <p><strong>El test de una buena métrica de board:</strong> ¿cambia una decisión? Si la métrica no tiene una decisión asociada, no tiene lugar en el board deck. Cada métrica debe tener un &laquo;si supera X, hacemos Y&raquo; o &laquo;si cae por debajo de X, investigamos Z&raquo; claramente definido.</p>
+        </div>
+
+        <h2>Construir el reporte GTM listo para el board</h2>
+
+        <p>Un reporte GTM listo para el board no es un volcado de datos. Es un narrativo soportado por métricas estructurales. La estructura debe seguir una lógica simple:</p>
+
+        <p><strong>¿Dónde estamos?</strong> Rule of 40, ARR, NRR, burn multiple. Cuatro cifras que establecen la salud actual en menos de 30 segundos.</p>
+
+        <p><strong>¿El motor funciona?</strong> Tasa de creación de pipeline, eficiencia de conversión, CAC payback, revenue per employee. Cuatro métricas que revelan si el motor de crecimiento es eficiente o se está degradando.</p>
+
+        <p><strong>¿Qué viene a continuación?</strong> Indicadores adelantados: tendencia de pipeline, pipeline de expansión, tiempo de rampa, distribución de win rate. Métricas que predicen el próximo trimestre antes de que llegue.</p>
+
+        <p><strong>¿Qué estamos haciendo al respecto?</strong> La restricción, la intervención, el calendario previsto, la medición. Un problema estructural por trimestre. No una lista de 15 iniciativas. Una restricción, claramente identificada, con un plan para resolverla.</p>
+
+        <p>Esta estructura se presenta en 15 minutos y produce una discusión de 30 minutos que realmente informa decisiones. Es el estándar que los boards quieren pero rara vez reciben.</p>
+
+        <h2>Preguntas frecuentes</h2>
+
+        <p><strong>¿Qué métricas GTM interesan realmente a los boards?</strong><br>Los boards evalúan la salud GTM con seis métricas: Rule of 40 (crecimiento más margen), Net Revenue Retention, periodo de CAC payback, revenue per employee, tasa de creación de pipeline más eficiencia de conversión y burn multiple. Son señales de asignación de capital, no métricas de actividad.</p>
+
+        <p><strong>¿Qué es la Rule of 40 en SaaS?</strong><br>La tasa de crecimiento de ingresos más el margen de beneficio debe superar el 40 por ciento. Es la métrica única que la mayoría de inversores usa para evaluar la salud global del negocio. Una empresa que crece al 60 por ciento con márgenes negativos del 30 por ciento obtiene 30 y subperforma.</p>
+
+        <p><strong>¿Qué es el burn multiple?</strong><br>El burn multiple es el burn neto dividido por el net new ARR. Mide cuánta caja gasta para generar cada euro de nuevo ingreso. Un burn multiple por debajo de 1,5 es eficiente. Por encima de 2,0 suele indicar ineficiencia estructural GTM.</p>
+
+        <p><strong>¿Por qué la cobertura de pipeline es engañosa?</strong><br>La cobertura de pipeline es una foto que puede ocultar una caída en la creación de pipeline. Una empresa puede mostrar fuerte cobertura durante trimestres mientras la tasa de creación de pipeline declina, porque ciclos de venta más largos retienen deals antiguos en el funnel. La tasa de creación de pipeline es el indicador adelantado que importa.</p>
+
+        <p><strong>¿Qué debe incluir un reporte GTM listo para el board?</strong><br>Cuatro secciones: dónde estamos (Rule of 40, ARR, NRR, burn multiple), ¿el motor funciona? (creación de pipeline, conversión, CAC payback, revenue per employee), qué viene a continuación (indicadores adelantados) y qué estamos haciendo al respecto (una restricción, un plan, un calendario).</p>
+
+        <div class="article-cta">
+          <h3>Obtenga las métricas GTM a nivel board en una hora</h3>
+          <p>El Caugia Constraint Engine produce las métricas estructurales, el análisis de restricciones y los scores GRIP que los boards necesitan para evaluar la salud GTM. Informe de 45 páginas, entregado automáticamente.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Score GTM gratuito</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Lanzar el diagnóstico completo</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Fundador de Caugia. Creador de GRIP OS, el sistema operativo GTM basado en restricciones para B2B SaaS. Anteriormente construyó y escaló sistemas GTM en varias empresas SaaS en Europa.</div>
+    <a href="https://www.linkedin.com/in/tommeijer/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Todos los derechos reservados. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Política de privacidad</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>
