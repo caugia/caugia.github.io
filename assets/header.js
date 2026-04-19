@@ -77,7 +77,8 @@
     var isFr = window.location.pathname.indexOf('/fr/') !== -1;
     var isDe = window.location.pathname.indexOf('/de/') !== -1;
     var isEs = window.location.pathname.indexOf('/es/') !== -1;
-    var isLocalized = isFr || isDe || isEs;
+    var isPl = window.location.pathname.indexOf('/pl/') !== -1;
+    var isLocalized = isFr || isDe || isEs || isPl;
     var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
     var isLocalizedIntel = isLocalized && isIntel; // /fr/intelligence/, /de/intelligence/, /es/intelligence/ = two levels deep
     // assetBase: path to assets folder (root/assets/)
@@ -92,6 +93,8 @@
       ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Insights', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
       : isEs
       ? { product: 'Producto', marketplace: 'Marketplace', insights: 'Insights', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de partners', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico' }
+      : isPl
+      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Insights', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119' }
       : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
 
     // Language dropdown: current lang as button, others in dropdown
@@ -100,14 +103,16 @@
       var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
       var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
       var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
-      var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : 'EN';
+      var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
+      var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : isPl ? 'PL' : 'EN';
       return '<div class="caugia-lang-wrap" id="caugiaLangWrap">' +
         '<button class="caugia-lang-btn" id="caugiaLangBtn">' + currentLang + ' <svg viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
         '<div class="caugia-lang-dropdown">' +
-          '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs ? ' class="active-lang"' : '') + '>English</a>' +
+          '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl ? ' class="active-lang"' : '') + '>English</a>' +
           '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>Fran\u00e7ais</a>' +
           '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>Deutsch</a>' +
           '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>Espa\u00f1ol</a>' +
+          '<a href="' + plPath + '"' + (isPl ? ' class="active-lang"' : '') + '>Polski</a>' +
         '</div>' +
       '</div>';
     }
@@ -158,16 +163,18 @@
           '</div>' +
           /* Language switcher */
           '<div class="caugia-mobile-lang">' +
-            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : isFr ? 'Langue' : isEs ? 'Idioma' : 'Language') + '</span>' +
+            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : isFr ? 'Langue' : isEs ? 'Idioma' : isPl ? 'J\u0119zyk' : 'Language') + '</span>' +
             (function() {
               var enPath = isLocalized ? assetBase + p : p;
               var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
               var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
               var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
-              return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs ? ' class="active-lang"' : '') + '>EN</a>' +
+              var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
+              return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl ? ' class="active-lang"' : '') + '>EN</a>' +
                      '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>FR</a>' +
                      '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>' +
-                     '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>ES</a>';
+                     '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>ES</a>' +
+                     '<a href="' + plPath + '"' + (isPl ? ' class="active-lang"' : '') + '>PL</a>';
             })() +
           '</div>' +
         '</div>' +
@@ -288,6 +295,10 @@
           ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace' }
           : isFr
           ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace' }
+          : isEs
+          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Partners', marketplace: 'Marketplace' }
+          : isPl
+          ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace' }
           : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace' };
         footerEl.className = 's-footer';
         footerEl.innerHTML =
