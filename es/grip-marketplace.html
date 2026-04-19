@@ -687,10 +687,11 @@ section[id] { scroll-margin-top:120px; }
   var prices = {
     EUR: { sym:'\u20ac', report:'2 495', module:'749', bundle:'1 795', bundleSave:'452', fullBundle:'6 995', fullBundleSave:'1 993', compCost:'25k\u00a0\u20ac \u2013 50k+\u00a0\u20ac' },
     USD: { sym:'$', report:'2,995', module:'899', bundle:'2,195', bundleSave:'502', fullBundle:'7,995', fullBundleSave:'2,793', compCost:'$30k \u2013 $60k+' },
-    GBP: { sym:'\u00a3', report:'2,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393', compCost:'\u00a320k \u2013 \u00a340k+' }
+    GBP: { sym:'\u00a3', report:'2,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393', compCost:'\u00a320k \u2013 \u00a340k+' },
+    PLN: { sym:'\u007a\u0142', report:'10,499', module:'3,149', bundle:'7,499', bundleSave:'1,948', fullBundle:'29,499', fullBundleSave:'8,297', compCost:'100k - 210k+ z\u0142' }
   };
   function detectCurrency(){
-    try { var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; }
+    try { var lang=(navigator.language||'').toLowerCase(); var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(lang.indexOf('pl')===0 || tz==='Europe/Warsaw') return 'PLN'; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; }
   }
   var curr=detectCurrency(), p=prices[curr]; if(!p) return;
   document.querySelectorAll('.curr').forEach(function(el){ el.textContent=p.sym; });
@@ -755,7 +756,7 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
     en:     { EUR:'https://buy.stripe.com/6oU5kD2fd5Iu5lC4vR9MY0z', GBP:'https://buy.stripe.com/aFadR93jh5IueWc1jF9MY0A', USD:'https://buy.stripe.com/aFa9AT0754Eq3du2nJ9MY0B' },
     ag:     { EUR:'https://buy.stripe.com/9B6aEX5rpef029q3rN9MY0C', GBP:'https://buy.stripe.com/5kQbJ1aLJ3Am4hy4vR9MY0D', USD:'https://buy.stripe.com/00w4gz3jh3AmcO47I39MY0E' }
   };
-  function getDetectedCurrency(){ try { var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; } }
+  function getDetectedCurrency(){ try { var lang=(navigator.language||'').toLowerCase(); var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(lang.indexOf('pl')===0 || tz==='Europe/Warsaw') return 'PLN'; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; } }
   document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var m=b.getAttribute('data-module'); if(m&&moduleLinks[m]){ var curr=getDetectedCurrency(); window.location.href=moduleLinks[m][curr]; } });});
   var bundleLinks = {
     g: { EUR:'https://buy.stripe.com/cNibJ16vt6MycO4aUf9MY0F', GBP:'https://buy.stripe.com/8x200jcTRef0cO4gez9MY0G', USD:'https://buy.stripe.com/00w14naLJ5Iu29q5zV9MY0H' },
@@ -767,7 +768,7 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
   document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var bu=b.getAttribute('data-bundle'); if(bu&&bundleLinks[bu]){ var curr=getDetectedCurrency(); window.location.href=bundleLinks[bu][curr]; } });});
 
   function startReportCheckout(){
-    var links = { EUR:'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00', GBP:'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03', USD:'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04' };
+    var links = { EUR:'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00', GBP:'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03', USD:'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04', PLN:'https://buy.stripe.com/dRmcN53jh6My9BS3rN9MY17' };
     var curr='USD'; try { var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) curr='GBP'; else if(/Europe\//.test(tz)) curr='EUR'; } catch(e){}
     window.location.href=links[curr];
   }
