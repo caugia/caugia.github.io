@@ -761,12 +761,15 @@ section[id] { scroll-margin-top:120px; }
   var prices = {
     EUR: { sym:'€', report:'2,495', module:'749', bundle:'1,795', bundleSave:'452', fullBundle:'6,995', fullBundleSave:'1,993', compCost:'25k – 50k+' },
     USD: { sym:'$', report:'2,995', module:'899', bundle:'2,195', bundleSave:'502', fullBundle:'7,995', fullBundleSave:'2,793', compCost:'$30k – $60k+' },
-    GBP: { sym:'£', report:'2,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393', compCost:'£20k – £40k+' }
+    GBP: { sym:'£', report:'2,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393', compCost:'£20k – £40k+' },
+    PLN: { sym:'zł', report:'10,499', module:'3,149', bundle:'7,499', bundleSave:'1,948', fullBundle:'29,499', fullBundleSave:'8,297', compCost:'100k – 210k+ zł' }
   };
 
   function detectCurrency(){
     try {
+      var lang = (navigator.language||'').toLowerCase();
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (lang.indexOf('pl')===0 || tz === 'Europe/Warsaw') return 'PLN';
       if (/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP';
       if (/Europe\//.test(tz)) return 'EUR';
       return 'USD';
@@ -867,6 +870,11 @@ function scrollToSection(id) {
 
   function getDetectedCurrency(){
     try {
+      var lang = (navigator.language||'').toLowerCase();
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (lang.indexOf('pl')===0 || tz === 'Europe/Warsaw') return 'PLN';
+    } catch(e){}
+    try {
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       if (/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP';
       if (/Europe\//.test(tz)) return 'EUR';
@@ -905,7 +913,8 @@ function scrollToSection(id) {
     var links = {
       EUR: 'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00',
       GBP: 'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03',
-      USD: 'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04'
+      USD: 'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04',
+      PLN: 'https://buy.stripe.com/cNiaEXaLJ1se01i1jF9MY16'
     };
 
     var curr = 'USD';
@@ -921,8 +930,8 @@ function scrollToSection(id) {
 
   /* OS Payment Links */
   var osLinks = {
-    core: { EUR:'https://buy.stripe.com/00w7sL5rp4EqcO4fav9MY0U', GBP:'https://buy.stripe.com/cNi9AT1b94Eq01i7I39MY0X', USD:'https://buy.stripe.com/7sY9AT7zx1se01id2n9MY0Y' },
-    full: { EUR:'https://buy.stripe.com/6oU7sL1b90oaeWc1jF9MY0T', GBP:'https://buy.stripe.com/dRm8wP8DB6My15m5zV9MY0V', USD:'https://buy.stripe.com/00waEX075c6S8xO4vR9MY0W' }
+    core: { EUR:'https://buy.stripe.com/00w7sL5rp4EqcO4fav9MY0U', GBP:'https://buy.stripe.com/cNi9AT1b94Eq01i7I39MY0X', USD:'https://buy.stripe.com/7sY9AT7zx1se01id2n9MY0Y', PLN:'https://buy.stripe.com/3cI9ATbPNc6S7tKe6r9MY14' },
+    full: { EUR:'https://buy.stripe.com/6oU7sL1b90oaeWc1jF9MY0T', GBP:'https://buy.stripe.com/dRm8wP8DB6My15m5zV9MY0V', USD:'https://buy.stripe.com/00waEX075c6S8xO4vR9MY0W', PLN:'https://buy.stripe.com/6oU6oHg63gn88xOaUf9MY15' }
   };
 
   /* OS activation with email validation */
@@ -985,12 +994,12 @@ function scrollToSection(id) {
 
   /* OS price switching */
   var osPrices = {
-    os_core: { EUR:'799', GBP:'695', USD:'895' },
-    os_full: { EUR:'1,495', GBP:'1,295', USD:'1,695' }
+    os_core: { EUR:'799', GBP:'695', USD:'895', PLN:'3,499' },
+    os_full: { EUR:'1,495', GBP:'1,295', USD:'1,695', PLN:'6,499' }
   };
   var osAnnual = {
-    os_core: { EUR:'663', GBP:'577', USD:'743' },
-    os_full: { EUR:'1,241', GBP:'1,075', USD:'1,407' }
+    os_core: { EUR:'663', GBP:'577', USD:'743', PLN:'2,899' },
+    os_full: { EUR:'1,241', GBP:'1,075', USD:'1,407', PLN:'5,399' }
   };
 
   function updateOSPrices(curr) {
