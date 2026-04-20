@@ -38,13 +38,23 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /* 4. GLOBAL CURRENCY DETECTION + PRICING + STRIPE */
-  const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "PL", "RO", "SE"];
+  // Poland is in the EU but prices in PLN — handled separately.
+  const euroCountries = ["AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES", "HR", "BG", "CZ", "DK", "HU", "RO", "SE"];
 
   const prices = {
-    '$': { val: '1499', equiv: '30k', stripe: 'price_USD_PLACEHOLDER' },
-    '€': { val: '1249', equiv: '25k', stripe: 'price_1Qim5eDZAazoTP0szK5sV78C' },
-    '£': { val: '1099', equiv: '22k', stripe: 'price_GBP_PLACEHOLDER' }
+    '$':  { val: '1499', equiv: '30k',  stripe: 'price_USD_PLACEHOLDER' },
+    '€':  { val: '1249', equiv: '25k',  stripe: 'price_1Qim5eDZAazoTP0szK5sV78C' },
+    '£':  { val: '1099', equiv: '22k',  stripe: 'price_GBP_PLACEHOLDER' },
+    'zł': { val: '5249', equiv: '100k', stripe: 'price_PLN_PLACEHOLDER' }
   };
+
+  // Skip overwriting .curr on pages where a page-level IIFE already handled
+  // currency (the /grip-marketplace.html files set window.__curSet=true once
+  // they finish their own per-page swap). This avoids the flash where a page
+  // renders zł from its own script, then gets overwritten with € by this
+  // async geo fetch resolving later.
+  const pathname = window.location.pathname;
+  const isPolishLocale = pathname.startsWith('/pl/') || pathname === '/pl';
 
   fetch('https://get.geojs.io/v1/ip/country.json')
     .then(res => res.json())
@@ -52,7 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
       const country = data.country;
       let symbol = '$';
 
-      if (country === 'GB') symbol = '£';
+      if (country === 'PL' || isPolishLocale) symbol = 'zł';
+      else if (country === 'GB') symbol = '£';
       else if (euroCountries.includes(country)) symbol = '€';
 
       // Update all currency symbols on the page
@@ -63,12 +74,12 @@ document.addEventListener("DOMContentLoaded", function() {
       const priceEquiv = document.getElementById('price-equivalent');
       const priceInlines = document.querySelectorAll('.price-inline');
 
-      if (priceVal) priceVal.textContent = prices[symbol].val;
-      if (priceEquiv) priceEquiv.textContent = prices[symbol].equiv;
-      priceInlines.forEach(el => el.textContent = prices[symbol].val);
+      if (priceVal && prices[symbol]) priceVal.textContent = prices[symbol].val;
+      if (priceEquiv && prices[symbol]) priceEquiv.textContent = prices[symbol].equiv;
+      if (prices[symbol]) priceInlines.forEach(el => el.textContent = prices[symbol].val);
 
-      // Set Stripe price ID globally for checkout
-      window.CURRENT_STRIPE_PRICE_ID = prices[symbol].stripe;
+      // Set Stripe price ID globally for checkout (fallback if not set by page IIFE)
+      if (prices[symbol]) window.CURRENT_STRIPE_PRICE_ID = prices[symbol].stripe;
     })
     .catch(err => {
       console.log('Currency check failed, keeping defaults.');
