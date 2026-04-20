@@ -762,7 +762,7 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       if (lang.indexOf('pl')===0 || tz === 'Europe/Warsaw') return 'PLN';
     } catch(e){} try { var lang=(navigator.language||'').toLowerCase(); var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(lang.indexOf('pl')===0 || tz==='Europe/Warsaw') return 'PLN'; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; } }
-  document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var m=b.getAttribute('data-module'); if(m&&moduleLinks[m]){ var curr=getDetectedCurrency(); window.location.href=moduleLinks[m][curr]; } });});
+  document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var m=b.getAttribute('data-module'); if(m&&moduleLinks[m]){ var curr=getDetectedCurrency(); window.location.href=moduleLinks[m][curr]||moduleLinks[m]['EUR']; } });});
   var bundleLinks = {
     g: { EUR:'https://buy.stripe.com/cNibJ16vt6MycO4aUf9MY0F', GBP:'https://buy.stripe.com/8x200jcTRef0cO4gez9MY0G', USD:'https://buy.stripe.com/00w14naLJ5Iu29q5zV9MY0H' },
     r: { EUR:'https://buy.stripe.com/5kQdR94nl1se15m5zV9MY0I', GBP:'https://buy.stripe.com/28EaEX2fd1se15m0fB9MY0J', USD:'https://buy.stripe.com/28EbJ16vt2wi9BS3rN9MY0K' },
@@ -770,7 +770,7 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
     p: { EUR:'https://buy.stripe.com/eVq3cv2fd2wi29q1jF9MY0O', GBP:'https://buy.stripe.com/eVqfZhaLJ2wi6pG8M79MY0P', USD:'https://buy.stripe.com/7sY5kD5rp4Eq8xObYj9MY0Q' },
     full: { EUR:'https://buy.stripe.com/9B65kDg630oa9BSfav9MY10', GBP:'https://buy.stripe.com/eVqcN5dXV1se5lC0fB9MY12', USD:'https://buy.stripe.com/6oU7sL6vt2wig0gfav9MY11' }
   };
-  document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var bu=b.getAttribute('data-bundle'); if(bu&&bundleLinks[bu]){ var curr=getDetectedCurrency(); window.location.href=bundleLinks[bu][curr]; } });});
+  document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var bu=b.getAttribute('data-bundle'); if(bu&&bundleLinks[bu]){ var curr=getDetectedCurrency(); window.location.href=bundleLinks[bu][curr]||bundleLinks[bu]['EUR']; } });});
 
   function startReportCheckout(){
     var links = { EUR:'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00', GBP:'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03', USD:'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04', PLN:'https://buy.stripe.com/dRmcN53jh6My9BS3rN9MY17' };

@@ -887,7 +887,7 @@ function scrollToSection(id) {
     var m = b.getAttribute('data-module');
     if (m && moduleLinks[m]) {
       var curr = getDetectedCurrency();
-      window.location.href = moduleLinks[m][curr];
+      window.location.href = moduleLinks[m][curr] || moduleLinks[m]['EUR'];
     }
   });});
 
@@ -904,7 +904,7 @@ function scrollToSection(id) {
     var bu = b.getAttribute('data-bundle');
     if (bu && bundleLinks[bu]) {
       var curr = getDetectedCurrency();
-      window.location.href = bundleLinks[bu][curr];
+      window.location.href = bundleLinks[bu][curr] || bundleLinks[bu]['EUR'];
     }
   });});
 
