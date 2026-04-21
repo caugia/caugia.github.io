@@ -1,0 +1,256 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>NRR und Expansion Revenue: Der unterinvestierte Wachstumsmotor | Caugia</title>
+  <meta name="description" content="Net Revenue Retention entscheidet, ob Ihr SaaS kompoundiert oder stagniert. Dieses Playbook zeigt die Mechanik der Expansion und warum CS-Teams oft strukturell scheitern." />
+  <link rel="canonical" href="https://www.caugia.com/de/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/nrr-expansion-revenue-playbook.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/nrr-expansion-revenue-playbook.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/de/intelligence/nrr-expansion-revenue-playbook.html" />
+  <meta property="og:title" content="NRR und Expansion Revenue: Der unterinvestierte Wachstumsmotor" />
+  <meta property="og:description" content="NRR entscheidet, ob Ihr Unternehmen kompoundiert oder stagniert. Hier ist das Playbook." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NRR und Expansion Revenue: Der unterinvestierte Wachstumsmotor" />
+  <meta name="twitter:description" content="NRR entscheidet, ob Ihr Unternehmen kompoundiert oder stagniert. Das Expansion-Playbook." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #f5f3ff; color: #5b21b6; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-callout { border-left: 3px solid #7c3aed; background: #f5f3ff; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #3b0764; line-height: 1.6; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org","@type": "Article","inLanguage": "de",
+    "headline": "NRR und Expansion Revenue: Der Wachstumsmotor, in den B2B-SaaS-Teams zu wenig investieren",
+    "description": "Net Revenue Retention entscheidet, ob Ihr SaaS kompoundiert oder stagniert. Dieses Playbook zeigt die Mechanik der Expansion.",
+    "url": "https://www.caugia.com/de/intelligence/nrr-expansion-revenue-playbook.html",
+    "datePublished": "2026-03-11","dateModified": "2026-03-18",
+    "author": {"@type": "Person","name": "Tom Meijer"},
+    "publisher": {"@type": "Organization","name": "Caugia","logo": {"@type": "ImageObject","url": "https://www.caugia.com/assets/logo-final.png"}},
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {"@type": "WebPage","@id": "https://www.caugia.com/de/intelligence/nrr-expansion-revenue-playbook.html"}
+  }
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org","@type": "FAQPage","inLanguage": "de",
+  "mainEntity": [
+    {"@type": "Question","name": "Was ist NRR im SaaS?","acceptedAnswer": {"@type": "Answer","text": "Net Revenue Retention misst, wie viel Revenue Sie aus Bestandskunden halten und wachsen lassen, inklusive Expansion, Kontraktion und Churn. &Uuml;ber 100 % hei&szlig;t: Bestandskunden bringen &uuml;ber Zeit mehr Revenue."}},
+    {"@type": "Question","name": "Was ist ein guter NRR f&uuml;r B2B SaaS?","acceptedAnswer": {"@type": "Answer","text": "Unter 90 % weist auf strukturelle Probleme. 90-100 % ist stabile Retention ohne Expansion. 100-115 % ist gesundes Compounding. &Uuml;ber 115 % spricht f&uuml;r starke Expansion-Mechanik."}},
+    {"@type": "Question","name": "Warum scheitern Customer-Success-Teams an Expansion?","acceptedAnswer": {"@type": "Answer","text": "CS wurde f&uuml;r Retention gebaut, nicht f&uuml;r Expansion. CSMs werden f&uuml;r Empathie eingestellt, auf Retention gemessen und mit Support-Tools ausgestattet. Expansion verlangt kommerzielle Skills und einen anderen Motion."}},
+    {"@type": "Question","name": "Was sind die drei Expansion-Engines?","acceptedAnswer": {"@type": "Answer","text": "Seat-Expansion (mehr Nutzer), Feature-Upsell (h&ouml;here Tiers oder Module) und strategische Expansion (neue Use Cases oder Business Units). Jede braucht eigene Architektur und Signale."}},
+    {"@type": "Question","name": "Wie baut man eine Expansion-Architektur?","acceptedAnswer": {"@type": "Answer","text": "Kommerzielle Skills in CS erg&auml;nzen, Expansion-Signale aufsetzen, die aus Adoption-Daten kommerzielle Gespr&auml;che machen, und eine separate Expansion-Pipeline mit der gleichen Operational Rigor wie New Business bauen."}}
+  ]
+}
+</script>
+  <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence (RSS)" href="https://www.caugia.com/de/intelligence/feed.xml" />
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Zur&uuml;ck zu Intelligence</a>
+        <span class="article-tag">Playbook</span>
+        <h1>NRR und Expansion Revenue: Der Wachstumsmotor, in den B2B-SaaS-Teams zu wenig investieren</h1>
+        <p class="article-lead">Ab einer gewissen Gr&ouml;&szlig;e entscheidet Net Revenue Retention, ob Ihr Unternehmen kompoundiert oder stagniert. Die meisten SaaS-Unternehmen behandeln Expansion als Nebensache. Die, die kompoundieren, behandeln Expansion als prim&auml;ren Wachstumsmotor mit eigener Architektur.</p>
+        <div class="article-meta">Von Tom Meijer, Gr&uuml;nder von Caugia &middot; 8 Min. Lesezeit &middot; M&auml;rz 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">In diesem Artikel</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Die Mathematik hinter NRR-Compounding. Warum CS-Teams meist an Expansion scheitern. Die Handoff-L&uuml;cke zwischen Retention und Wachstum. Drei Expansion-Engines: Seat, Upsell und strategisch. Wie Sie die Expansion-Architektur bauen. Plus: NRR-Benchmarks pro Segment.</p>
+        </div>
+
+        <h2>Die Mathematik, die alles ver&auml;ndert</h2>
+
+        <p>Es gibt eine einfache Rechnung, die die meisten Revenue-Verantwortlichen intellektuell verstehen, aber operativ nicht verinnerlichen. Ein Unternehmen mit 30 Mio. ARR und 115 % NRR w&auml;chst n&auml;chstes Jahr allein aus Bestandskunden auf &uuml;ber 34 Mio., bevor ein einziger neuer Deal closet. Dasselbe Unternehmen mit 90 % NRR schrumpft auf 27 Mio. Die Differenz: 7 Mio. ARR aus demselben Kundenstamm.</p>
+
+        <p>NRR ist die einzige Metrik, die bestimmt, ob Ihr Wachstum additiv oder exponentiell ist. Neukunden addieren Revenue linear. NRR &uuml;ber 100 % addiert Revenue exponentiell. Jeder Euro Neu-ARR ist mehr wert, wenn er kompoundiert statt leckt.</p>
+
+        <p>Trotzdem stecken die meisten B2B-SaaS-Unternehmen 70 bis 80 % ihres GTM-Budgets in Neukundenakquise und 20 bis 30 % in Retention und Expansion. Die Verteilung ist verkehrt proportional zum &ouml;konomischen Effekt.</p>
+
+        <h2>Warum CS-Teams an Expansion scheitern</h2>
+
+        <p>Customer Success wurde gebaut, um Churn zu verhindern. Dieser Gr&uuml;ndungsauftrag pr&auml;gt alles: Hiring-Profile, Skills, Incentives, Tooling und Operating Rhythm. Der typische CSM wird f&uuml;r Empathie und Beziehungsmanagement eingestellt, auf Retention und NPS gemessen und mit Tools f&uuml;r Ticket-Management und Health Scores ausgestattet.</p>
+
+        <p>Expansion verlangt eine fundamental andere F&auml;higkeit: kommerzielle Opportunities im Bestand erkennen, inkrementellen Value artikulieren, Procurement navigieren und Revenue closen. Das sind Sales-Skills. Die meisten CS-Organisationen haben sie nicht, stellen nicht daf&uuml;r ein und trainieren sie nicht.</p>
+
+        <p>Das strukturelle Problem ist nicht, dass CS schlecht in Expansion ist. Es ist, dass CS f&uuml;r eine andere Mission gebaut wurde. Ein retention-optimiertes Team zu bitten, Expansion zu treiben, ist, als bitte man einen Torwart, Tore zu schie&szlig;en. Geht gelegentlich, ist aber nicht das, wof&uuml;r das System gebaut ist.</p>
+
+        <p>Das ist der Kern: Die meisten SaaS-Unternehmen sehen Expansion als CS-Aufgabe. Die, die kompoundieren, sehen sie als GTM-Architektur. Expansion ist kein Team-Problem. Es ist ein System-Design-Problem quer &uuml;ber Produkt-Packaging, Pricing-Mechanik, Usage-Visibility und kommerziellen Motion. Fehlt eine dieser Komponenten, kann kein CS-Einsatz kompoundierende NRR produzieren.</p>
+
+        <h3>Die Handoff-L&uuml;cke</h3>
+
+        <p>In Unternehmen, die in Expansion investieren, liegt das h&auml;ufigste strukturelle Problem beim Handoff zwischen CS und der Expansion-Motion. Drei Modelle, drei Fehlermuster:</p>
+
+        <p><strong>CSMs besitzen Expansion.</strong> Am verbreitetsten und am wenigsten effektiv. CSMs sind f&uuml;r Retention und Expansion verantwortlich, das erzeugt einen Konflikt. Eine kommerzielle Konversation in eine Beziehung zu dr&uuml;cken, die auf Vertrauen und Support basiert, besch&auml;digt das Vertrauen. Die meisten CSMs weichen dem kommerziellen Gespr&auml;ch aus, Expansion unterperformt.</p>
+
+        <p><strong>Account Manager besitzen Expansion.</strong> Besser, aber mit Handoff. Der AM braucht Kontext, den der CSM hat. Ist der Handoff unstrukturiert, dupliziert der AM Discovery (Kunde frustriert) oder arbeitet unvollst&auml;ndig (Chancen verloren). Die strukturelle Anforderung: ein Shared-Account-Modell mit klarer Owner-Rolle.</p>
+
+        <p><strong>Sales besitzt Expansion.</strong> Am schlechtesten f&uuml;r das Kundenerlebnis, aber bei gro&szlig;en Expansion-Deals, die Neukundenzyklen &auml;hneln, manchmal effektiv. Risiko: Der Kunde erlebt, von einem Anbieter, den er bereits bezahlt, "bearbeitet" zu werden. Das Modell funktioniert nur, wenn es um wirklich neue Produkte oder Use Cases geht, nicht um inkrementelles Wachstum des Footprints.</p>
+
+        <div class="article-callout">
+          <p><strong>Das richtige Modell h&auml;ngt von ACV und Expansion-Komplexit&auml;t ab.</strong> Unter 30.000 ACV: CSMs mit leichtem kommerziellen Training und usage-getriggerten Playbooks. Zwischen 30.000 und 100.000: hybrides CSM-AM-Modell mit Shared Accounts. &Uuml;ber 100.000: dedizierte Expansion-AEs mit CS-Partnerschaft.</p>
+        </div>
+
+        <h2>Die drei Expansion-Engines</h2>
+
+        <p>Expansion Revenue kommt aus drei Quellen, jede mit eigener Architektur:</p>
+
+        <h3>Seat-Expansion</h3>
+
+        <p>Die einfachste Form. Mehr Nutzer im selben Account adoptieren das Produkt. Das sollte so reibungslos wie m&ouml;glich sein: Self-Serve-Provisioning, Usage-Trigger und ein Pricing, das nat&uuml;rlich mit der Adoption skaliert. Wenn das Hinzuf&uuml;gen von Seats einen Procurement-Zyklus ausl&ouml;st, erzeugt Ihre Architektur unn&ouml;tige Reibung.</p>
+
+        <h3>Feature-Upsell</h3>
+
+        <p>Der Kunde kauft zus&auml;tzliche Funktionalit&auml;t: ein h&ouml;heres Tier, ein Add-on-Modul oder eine Premium-F&auml;higkeit. Das braucht ein Packaging mit klaren Upgrade-Pfaden und eine Value-Kommunikation, die die inkrementelle Investition offensichtlich macht. Die meisten Packaging-Probleme zeigen sich hier: Ist der Unterschied zwischen Tiers unklar, werden Upsell-Gespr&auml;che zu Verhandlungen statt nat&uuml;rlicher Progression.</p>
+
+        <h3>Strategische Expansion</h3>
+
+        <p>Der Kunde expandiert in neue Abteilungen, Regionen oder Use Cases. Das ist die h&ouml;chstwertige Expansion und die schwierigste, weil oft neue Stakeholder, neue Procurement-Prozesse und neue Erfolgskriterien involviert sind. Strategische Expansion ist de facto ein Neukunden-Sale innerhalb eines bestehenden Accounts und sollte so behandelt werden.</p>
+
+        <h2>Die Expansion-Architektur bauen</h2>
+
+        <p>Eine Expansion-Architektur hat f&uuml;nf Komponenten:</p>
+
+        <p><strong>Expansion-Signale.</strong> Welche Daten zeigen, dass ein Account expansions-reif ist? Usage-Schwellen, Engagement-Muster, Lizenzauslastung und Ticket-Trends sind Leading Indicators. Die Architektur muss diese Signale systematisch erfassen, nicht auf CSM-Intuition setzen.</p>
+
+        <p><strong>Expansion-Playbooks.</strong> Was passiert, wenn ein Signal feuert? Wer f&uuml;hrt das Gespr&auml;ch? Wie lautet die Value-Story? Was ist der Ask? Playbooks machen aus Signalen strukturierte kommerzielle Gespr&auml;che. Ohne Playbooks bleiben Signale Daten, auf die niemand reagiert.</p>
+
+        <p><strong>Expansion-Pricing.</strong> Erlaubt Ihr Packaging nat&uuml;rliche Expansion? K&ouml;nnen Kunden upgraden ohne Neuverhandlung? K&ouml;nnen Seats ohne Vertrags-Amendment hinzugef&uuml;gt werden? Je weniger Reibung in der kommerziellen Mechanik, desto mehr Expansion nehmen Sie mit.</p>
+
+        <p><strong>Expansion-Messung.</strong> NRR ist der Lagging Indicator. Leading Indicators: Expansion-Pipeline (ja, auch Bestandskunden brauchen eine Pipeline), Expansion-Win-Rate, Time-to-Expand ab Onboarding, Wachstumsrate Revenue pro Account. Wer das nicht misst, fliegt blind.</p>
+
+        <p><strong>Expansion-Accountability.</strong> Wer tr&auml;gt die Zahl? Wenn Expansion "jedem seine Aufgabe" ist, ist sie niemandes Aufgabe. Das Expansion-Target braucht einen benannten Owner mit dedizierten Ressourcen und eigener Pipeline-Review-Kadenz, getrennt vom CS-Health-Check.</p>
+
+        <h2>NRR-Benchmarks und was sie bedeuten</h2>
+
+        <p>NRR-Benchmarks variieren nach Segment und ACV. Kontext z&auml;hlt:</p>
+
+        <p><strong>Unter 90 %:</strong> Der Eimer leckt schneller, als Sie nachf&uuml;llen. Wachstum verlangt beschleunigte Neukundenakquise, nur um nicht zu schrumpfen. Nicht nachhaltig, meist ein Product-Market-Fit- oder Pricing-Problem, kein CS-Problem.</p>
+
+        <p><strong>90 bis 100 %:</strong> Der Eimer h&auml;lt dicht, w&auml;chst aber nicht. Sie halten Kunden, expandieren sie aber nicht. Die h&auml;ufigste Range f&uuml;r Unternehmen mit CS, aber ohne Expansion-Architektur. Die L&ouml;sung ist strukturell, nicht motivational.</p>
+
+        <p><strong>100 bis 115 %:</strong> Gesundes Compounding. Bestandskunden liefern inkrementellen Revenue zus&auml;tzlich zum Neukundenwachstum. In dieser Range verbessert sich die GTM-Effizienz, weil Expansion-Revenue deutlich g&uuml;nstiger ist als Neukunden-Revenue.</p>
+
+        <p><strong>&Uuml;ber 115 %:</strong> Starkes Compounding. Typisch bei Unternehmen mit Usage-basiertem Pricing, starker Multi-Produkt-Strategie oder gro&szlig;en Enterprise-Accounts mit nat&uuml;rlicher Land-and-Expand-Dynamik. Dieses NRR-Niveau ver&auml;ndert fundamental, wie das Unternehmen Ressourcen zwischen Akquise und Expansion allokieren kann.</p>
+
+        <h2>Vom Retention-Team zum Wachstumsmotor</h2>
+
+        <p>Der &Uuml;bergang von CS-als-Retention zu CS-als-Wachstum verlangt drei strukturelle &Auml;nderungen. Erstens: kommerzielle Skills in der CS-Organisation aufbauen, durch Hiring, Training oder ein hybrides CSM-AM-Modell. Zweitens: Expansion-Signale und -Playbooks bauen, die Adoption-Daten in kommerzielle Gespr&auml;che &uuml;bersetzen. Drittens: eine eigene Expansion-Pipeline und Review-Kadenz aufsetzen, damit Expansion dieselbe Operational Rigor bekommt wie New Business.</p>
+
+        <p>Die Unternehmen, die kompoundieren, sind nicht die mit den besten CS-Teams. Es sind die, die Expansion als Architektur konzipiert haben, nicht als Nachgedanke.</p>
+
+        <h2>H&auml;ufig gestellte Fragen</h2>
+
+        <p><strong>Was ist NRR im SaaS?</strong><br>Net Revenue Retention (NRR) misst, wie viel Revenue Sie aus Bestandskunden &uuml;ber einen Zeitraum halten und wachsen lassen, inklusive Expansion, Kontraktion und Churn. &Uuml;ber 100 % hei&szlig;t: Bestandskunden bringen &uuml;ber Zeit mehr Revenue, ohne einen neuen Sale.</p>
+
+        <p><strong>Was ist ein guter NRR f&uuml;r B2B SaaS?</strong><br>Unter 90 % sind strukturelle Probleme. 90 bis 100 % ist stabile Retention ohne Expansion. 100 bis 115 % ist gesundes Compounding. &Uuml;ber 115 % spricht f&uuml;r starke Expansion-Mechanik, typisch bei Usage-basiertem Pricing oder starken Land-and-Expand-Motions.</p>
+
+        <p><strong>Warum scheitern CS-Teams an Expansion?</strong><br>Customer Success wurde f&uuml;r Retention gebaut, nicht f&uuml;r Expansion. CSMs werden f&uuml;r Empathie und Beziehungen eingestellt, auf Retention und NPS gemessen, mit Support-Tools ausgestattet. Expansion braucht kommerzielle Skills, Opportunity-Erkennung und einen anderen Motion.</p>
+
+        <p><strong>Was sind die drei Expansion-Engines?</strong><br>Seat-Expansion (mehr Nutzer), Feature-Upsell (h&ouml;here Tiers oder Add-ons) und strategische Expansion (neue Use Cases oder Business Units in Bestands-Accounts). Jede Engine braucht eigene Architektur und eigene Signale.</p>
+
+        <p><strong>Wie baut man eine Expansion-Architektur?</strong><br>Drei strukturelle &Auml;nderungen: kommerzielle Skills in CS &uuml;ber Hiring oder hybride Modelle, Expansion-Signale und Playbooks, die Adoption-Daten in Gespr&auml;che &uuml;bersetzen, und eine separate Expansion-Pipeline mit derselben Rigor wie New Business.</p>
+
+        <div class="article-cta">
+          <h3>Diagnostizieren Sie Ihre Expansion-Architektur</h3>
+          <p>Der Caugia Constraint Engine bewertet Ihre Customer-Success- und Expansion-S&auml;ule auf 20 Dimensionen und identifiziert die strukturellen L&uuml;cken, die Ihre NRR begrenzen.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Kostenloser GTM-Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Vollst&auml;ndige Diagnose</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Gr&uuml;nder von Caugia. Baut GRIP OS, das engpassgesteuerte GTM-Betriebssystem f&uuml;r B2B SaaS. Hat zuvor GTM-Systeme in mehreren europ&auml;ischen SaaS-Unternehmen aufgebaut und skaliert.</div>
+    <a href="https://www.linkedin.com/in/tommeijer/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Alle Rechte vorbehalten. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Datenschutz</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>

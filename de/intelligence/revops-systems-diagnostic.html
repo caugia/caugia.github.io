@@ -1,0 +1,245 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>RevOps-Diagnose: Wenn die Infrastruktur zum Engpass wird | Caugia</title>
+  <meta name="description" content="RevOps soll Reibung aus dem GTM entfernen. In den meisten B2B-SaaS-Unternehmen addiert es Komplexit&auml;t. So diagnostizieren Sie Ihre Operations-Infrastruktur." />
+  <link rel="canonical" href="https://www.caugia.com/de/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/revops-systems-diagnostic.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/revops-systems-diagnostic.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/de/intelligence/revops-systems-diagnostic.html" />
+  <meta property="og:title" content="Revenue Operations: Wenn Ihre Infrastruktur zum Engpass wird" />
+  <meta property="og:description" content="Wie Sie diagnostizieren, ob Ihre RevOps-Infrastruktur Wachstum erm&ouml;glicht oder unterdr&uuml;ckt." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RevOps-Diagnose: Wenn Infrastruktur zum Engpass wird" />
+  <meta name="twitter:description" content="RevOps soll Reibung entfernen. In den meisten F&auml;llen f&uuml;gt es Komplexit&auml;t hinzu." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #f0f9ff; color: #0c4a6e; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-callout { border-left: 3px solid #0284c7; background: #f0f9ff; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #0c4a6e; line-height: 1.6; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org","@type": "Article","inLanguage": "de",
+    "headline": "Revenue Operations f&uuml;r B2B SaaS: Wenn Ihre Infrastruktur zum Engpass wird",
+    "description": "RevOps soll Reibung aus dem GTM entfernen. In den meisten B2B-SaaS-Unternehmen addiert es Komplexit&auml;t.",
+    "url": "https://www.caugia.com/de/intelligence/revops-systems-diagnostic.html",
+    "datePublished": "2026-03-11","dateModified": "2026-03-18",
+    "author": {"@type": "Person","name": "Tom Meijer"},
+    "publisher": {"@type": "Organization","name": "Caugia","logo": {"@type": "ImageObject","url": "https://www.caugia.com/assets/logo-final.png"}},
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {"@type": "WebPage","@id": "https://www.caugia.com/de/intelligence/revops-systems-diagnostic.html"}
+  }
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"de","mainEntity":[
+{"@type":"Question","name":"Was ist RevOps im B2B SaaS?","acceptedAnswer":{"@type":"Answer","text":"Revenue Operations ist die operative Infrastruktur, die das GTM-System st&uuml;tzt: Prozesse, Tooling, Datenfundament und der Operating Rhythm, der Strategie mit Execution verbindet."}},
+{"@type":"Question","name":"Woran erkennen Sie, dass RevOps zum Engpass wird?","acceptedAnswer":{"@type":"Answer","text":"Drei Signale: Teams verbringen mehr Zeit mit Dateneingabe und Reporting als mit Verkauf, der Tech Stack erzeugt Reibung statt sie zu entfernen, und die F&uuml;hrung bekommt keine verl&auml;sslichen Antworten auf Pipeline- oder Forecast-Fragen."}},
+{"@type":"Question","name":"Unterschied zwischen RevOps und Sales Ops?","acceptedAnswer":{"@type":"Answer","text":"Sales Ops st&uuml;tzt die Sales-Funktion. RevOps st&uuml;tzt das gesamte Revenue-System &uuml;ber Marketing, Sales und Customer Success. Der Shift spiegelt den &Uuml;bergang von funktionaler zu systemischer Optimierung."}},
+{"@type":"Question","name":"Wo sitzt RevOps in GRIP?","acceptedAnswer":{"@type":"Answer","text":"Dritte S&auml;ule der Implementation-Dimension. Liefert die operative Infrastruktur, auf der Demand Generation und Sales Execution skaliert funktionieren."}},
+{"@type":"Question","name":"Was bewertet eine RevOps-Diagnose?","acceptedAnswer":{"@type":"Answer","text":"Prozessreife, Tech-Stack-Integration, Datenqualit&auml;t und -zugang, Operating Cadence, Forecast-Genauigkeit und ob Infrastruktur Reibung entfernt oder Komplexit&auml;t addiert."}}
+]}
+</script>
+  <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence (RSS)" href="https://www.caugia.com/de/intelligence/feed.xml" />
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Zur&uuml;ck zu Intelligence</a>
+        <span class="article-tag">GRIP-S&auml;ule: Implementation</span>
+        <h1>Revenue Operations: Wenn Ihre Infrastruktur zum Engpass wird</h1>
+        <p class="article-lead">RevOps existiert, um Reibung aus dem Revenue-System zu nehmen. In der Praxis addieren die meisten RevOps-Funktionen Komplexit&auml;t schneller, als sie sie entfernen. Das Ergebnis: eine operative Schicht, die Wachstum beschleunigen sollte und es jetzt bremst.</p>
+        <div class="article-meta">Von Tom Meijer, Gr&uuml;nder von Caugia &middot; 9 Min. Lesezeit &middot; M&auml;rz 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">In diesem Artikel</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Versprechen vs. Realit&auml;t von RevOps. F&uuml;nf Symptome operativer Engp&auml;sse: Daten-Misstrauen, Prozess-Inkonsistenz, Integrations-Fragilit&auml;t, Reporting-Flut und &Auml;nderungs-Widerstand. Wie gute RevOps-Architektur aussieht. Das Reifegrad-Spektrum. Und wo RevOps in GRIP sitzt.</p>
+        </div>
+
+        <h2>Versprechen und Realit&auml;t</h2>
+
+        <p>Revenue Operations entstand als Disziplin, um ein echtes Problem zu l&ouml;sen: Funktionssilos zwischen Marketing, Sales und Customer Success erzeugten Datenfragmentierung, Prozess-Inkonsistenz und Accountability-L&uuml;cken. RevOps sollte das Bindegewebe sein, das diese Funktionen unter einem gemeinsamen Operating-Modell vereint.</p>
+
+        <p>Das Versprechen war klar. Ein Datenmodell. Ein Prozess-Framework. Eine Single Source of Truth. Ein Team verantwortlich f&uuml;r die operative Infrastruktur, auf der das GTM-System l&auml;uft.</p>
+
+        <p>Die Realit&auml;t in den meisten Unternehmen ist anders. RevOps wird zum Team, das das CRM verwaltet, Reports baut, Integrationen repariert und auf Ad-hoc-Anfragen jeder Funktion reagiert. Statt operative Architektur zu designen, wartet RevOps sie. Statt Reibung zu entfernen, verwaltet RevOps Reibung. Die Funktion wird reaktiv statt strategisch.</p>
+
+        <p>Das ist kein Personen-Problem. Es ist ein Strukturproblem. RevOps sitzt zwischen jeder Funktion, und jede Funktion behandelt es als Servicedesk. Ohne explizite Architektur-Autorit&auml;t geht RevOps den Weg des geringsten Widerstands: den lautesten Request bedienen.</p>
+
+        <h2>F&uuml;nf Symptome operativer Engp&auml;sse</h2>
+
+        <p>Wird RevOps zum Engpass statt zum Enabler, zeigen sich f&uuml;nf Symptome konsistent:</p>
+
+        <h3>1. Daten-Misstrauen</h3>
+
+        <p>Das klarste Signal: Die F&uuml;hrung vertraut den CRM-Daten nicht genug, um Entscheidungen darauf zu bauen. Startet Ihr Forecast-Review mit 20 Minuten Debatte, ob die Zahlen &uuml;berhaupt stimmen, hat Ihre operative Infrastruktur ihren Kernauftrag verfehlt. Daten sollten Fundament von Entscheidungen sein, nicht Gegenstand von Diskussionen.</p>
+
+        <p>Daten-Misstrauen greift schnell um sich. Wenn Sales den Zahlen nicht traut, baut Sales Schatten-Tabellen. Traut Marketing der Attribution nicht, stoppt Optimierung. Traut CS den Health Scores nicht, entscheidet Bauchgef&uuml;hl. Jede Umgehung f&uuml;gt Gewicht hinzu, ohne Genauigkeit zu verbessern.</p>
+
+        <h3>2. Prozess-Inkonsistenz</h3>
+
+        <p>Wird dieselbe T&auml;tigkeit in Teams, Regionen oder Segmenten unterschiedlich ausgef&uuml;hrt, produziert das System keinen verl&auml;sslichen Output. Bedeuten Deal-Stages f&uuml;r verschiedene Reps verschiedenes, ist Pipeline-Reporting Fiktion. Liegen Lead-Routing-Regeln an drei Stellen, fallen Leads durch. Prozess-Inkonsistenz ist das operative &Auml;quivalent zu einem losen Kabel: Das System funktioniert meistens, versagt aber unvorhersehbar.</p>
+
+        <h3>3. Integrations-Fragilit&auml;t</h3>
+
+        <p>Ein durchschnittliches B2B-SaaS-Unternehmen zwischen 10 und 50 Mio. ARR nutzt 15 bis 30 GTM-Tools. Jede Integration ist ein potenzieller Fehlerpunkt. Bricht eine, h&ouml;rt Daten-Flow auf, Automationen laufen schief, das Team debuggt statt zu verkaufen. Verbringt Ihr RevOps-Team mehr als 30 % seiner Zeit mit Integrations-Wartung, ist der Tech Stack eine Schuld, kein Asset.</p>
+
+        <h3>4. Reporting-Flut</h3>
+
+        <p>Zu viele Dashboards sind schlimmer als zu wenige. Hat jeder Stakeholder einen Custom Report, schaut niemand auf dieselben Zahlen. Die Frage ist nicht, wie viele Reports Sie haben, sondern wie viele tats&auml;chlich eine Entscheidung treiben. Ist die Antwort unter f&uuml;nf, ist der Rest Rauschen.</p>
+
+        <h3>5. Widerstand gegen neue Tools</h3>
+
+        <p>Das letzte Symptom: Die Einf&uuml;hrung eines neuen Tools oder Prozesses dauert Monate statt Wochen. Das ist keine Konservativit&auml;t. Es ist Architekturschuld. Das System ist so komplex, dass jede &Auml;nderung riskiert, etwas anderes zu zerbrechen. &Uuml;bersteigen die Kosten der &Auml;nderung die Kosten der aktuellen Ineffizienz, ist die Infrastruktur zum Engpass geworden.</p>
+
+        <div class="article-callout">
+          <p><strong>Eine diagnostische Frage f&uuml;r Ihr RevOps-Team:</strong> Wie viel Prozent der Zeit flie&szlig;t in Architekturarbeit (Systeme designen, Reibung entfernen, Prozesse verbessern) gegen&uuml;ber Wartungsarbeit (Integrationen fixen, Ad-hoc-Reports bauen, auf Anfragen reagieren)? &Uuml;bersteigt Wartung 60 %, arbeitet Ihre RevOps-Funktion als Support, nicht als Strategie.</p>
+        </div>
+
+        <h2>Wie gute RevOps-Architektur aussieht</h2>
+
+        <p>Effektive RevOps-Architektur hat vier Eigenschaften:</p>
+
+        <p><strong>Single Customer View ohne manuelles Zusammenf&uuml;gen.</strong> Jedes Team, das einen Kunden ber&uuml;hrt, sollte dieselben Daten sehen, ohne aus mehreren Systemen zu kombinieren. Verlangt ein vollst&auml;ndiges Kundenbild den Export aus drei Tools und ein Merge in Excel, ist die Architektur defekt.</p>
+
+        <p><strong>Prozesskonsistenz durch Systeme erzwungen, nicht durch Menschen.</strong> Stage-Definitionen, Routing-Regeln, Handoff-Kriterien und Datenanforderungen geh&ouml;ren in Systeme, nicht in Trainings-Dokumente, die niemand liest. Das System sollte den falschen Weg schwerer machen als den richtigen.</p>
+
+        <p><strong>Forecast innerhalb von 10 % Genauigkeit.</strong> Verfehlt Ihr Forecast konsistent um mehr als 10 %, tr&auml;gt das operative Fundament keine verl&auml;ssliche Prognose. Das ist kein Methodenproblem. Es ist ein Datenqualit&auml;ts- und Prozesskonsistenz-Problem.</p>
+
+        <p><strong>Neue F&auml;higkeiten in Wochen statt Monaten deployen.</strong> Die Geschwindigkeit, mit der Sie ein neues Tool, einen Prozess oder Workflow einf&uuml;hren k&ouml;nnen, ist eine direkte Messgr&ouml;&szlig;e architektonischer Gesundheit. Schnelles Deployment hei&szlig;t, die Architektur ist modular und dokumentiert. Langsames Deployment hei&szlig;t, sie ist monolithisch und fragil.</p>
+
+        <h2>Das RevOps-Reifegrad-Spektrum</h2>
+
+        <p>RevOps-Funktionen liegen auf einem Spektrum von reaktiv bis strategisch. Zu wissen, wo Ihr Team steht, bestimmt, welche Intervention n&ouml;tig ist.</p>
+
+        <p><strong>Reaktiv:</strong> RevOps reagiert auf Anfragen. Das Team baut Reports auf Zuruf, fixt Integrationen wenn sie brechen, und verwaltet das CRM als Datenbank-Admin. Keine Architektur-Arbeit. Das System ist, was sich &uuml;ber Zeit angesammelt hat.</p>
+
+        <p><strong>Operativ:</strong> RevOps besitzt Prozess-Dokumentation, pflegt Datenqualit&auml;ts-Standards und f&auml;hrt regelm&auml;&szlig;ige Pipeline-Reviews. Das Team ist organisiert, aber nicht strategisch. Es h&auml;lt das System am Laufen, optimiert es aber nicht. Die Infrastruktur funktioniert, verbessert sich aber nicht.</p>
+
+        <p><strong>Strategisch:</strong> RevOps designt die operative Architektur proaktiv. Das Team erkennt Reibung, bevor sie sichtbar wird, schl&auml;gt daten-basierte Prozessverbesserungen vor und misst den Impact operativer &Auml;nderungen auf Revenue-Ergebnisse. Die Funktion ist Wachstums-Treiber, nicht Cost Center.</p>
+
+        <p>Die meisten Unternehmen stecken zwischen reaktiv und operativ. Der Sprung ins Strategische braucht zwei Dinge: explizite Architektur-Autorit&auml;t (RevOps kann zu Anfragen ohne Value Nein sagen) und Messung des operativen Impacts (beweisen, dass operative Verbesserungen in Revenue-Verbesserung &uuml;bersetzen).</p>
+
+        <h2>Wo RevOps in GRIP sitzt</h2>
+
+        <p>Im <a href="grip-framework-gtm-diagnostic-model.html" style="color:var(--primary); font-weight:700;">GRIP-Framework</a> ist Revenue Operations eine der drei S&auml;ulen der Implementation-Dimension, neben Demand Generation und Sales Execution. Diese Positionierung ist Absicht.</p>
+
+        <p>RevOps ist nicht Strategie (Guidance). Es ist nicht F&auml;higkeit (Resources). Es ist die operative Infrastruktur, die Strategie und F&auml;higkeit in konsistente Execution &uuml;bersetzt. Ist RevOps schwach, produzieren selbst starke Strategien und starke Teams inkonsistente Ergebnisse, weil das System, in dem sie arbeiten, Reibung erzeugt statt sie zu entfernen.</p>
+
+        <p>Die Diagnose bewertet RevOps auf 20 Dimensionen: CRM-Hygiene, Prozess-Dokumentation, Automatisierungs-Reife, Tech-Stack-Integration, Reporting-Qualit&auml;t, Forecast-Genauigkeit, Governance und Deployment-Geschwindigkeit. Das Ergebnis: ein Reifegrad-Score, der zeigt, ob RevOps Ihr GTM-System st&uuml;tzt oder bremst.</p>
+
+        <h2>H&auml;ufig gestellte Fragen</h2>
+
+      <p><strong>Was ist RevOps im B2B SaaS?</strong><br>Revenue Operations ist die operative Infrastruktur, die das GTM-System st&uuml;tzt: Prozesse, Tooling, Datenfundament und der Operating Rhythm, der Strategie mit Execution verbindet.</p>
+
+      <p><strong>Woran erkennen Sie RevOps als Engpass?</strong><br>Drei Signale: Teams verbringen mehr Zeit mit Dateneingabe und Reporting als mit Verkauf, der Tech Stack erzeugt Reibung, und die F&uuml;hrung bekommt keine verl&auml;sslichen Pipeline- oder Forecast-Antworten.</p>
+
+      <p><strong>Unterschied RevOps vs. Sales Ops?</strong><br>Sales Ops st&uuml;tzt die Sales-Funktion. RevOps st&uuml;tzt das gesamte Revenue-System &uuml;ber Marketing, Sales und CS. Der Shift spiegelt den &Uuml;bergang von funktionaler zu systemischer Optimierung.</p>
+
+      <p><strong>Wo sitzt RevOps in GRIP?</strong><br>Dritte S&auml;ule der Implementation-Dimension. Liefert die operative Infrastruktur, auf der Demand Generation und Sales Execution skaliert funktionieren.</p>
+
+      <p><strong>Was bewertet die Diagnose?</strong><br>Prozessreife, Tech-Stack-Integration, Datenqualit&auml;t, Operating Cadence, Forecast-Genauigkeit und ob Infrastruktur Reibung entfernt oder Komplexit&auml;t addiert.</p>
+
+      <div class="article-cta">
+          <h3>Diagnostizieren Sie Ihre RevOps-Infrastruktur</h3>
+          <p>Der Caugia Constraint Engine bewertet Ihre RevOps-S&auml;ule auf 20 Dimensionen. Finden Sie heraus, ob Ihre operative Infrastruktur Ihr GTM-System st&uuml;tzt oder bremst.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Kostenloser GTM-Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Vollst&auml;ndige Diagnose</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Gr&uuml;nder von Caugia. Baut GRIP OS, das engpassgesteuerte GTM-Betriebssystem f&uuml;r B2B SaaS. Hat zuvor GTM-Systeme in mehreren europ&auml;ischen SaaS-Unternehmen aufgebaut und skaliert.</div>
+    <a href="https://www.linkedin.com/in/tommeijer/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Alle Rechte vorbehalten. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Datenschutz</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>
