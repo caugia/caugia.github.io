@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
+  const pageLang = (document.documentElement.getAttribute("lang") || "en").toLowerCase();
+  const menuLabels = pageLang.startsWith("de")
+    ? { open: "Men\u00fc", close: "Schlie\u00dfen" }
+    : pageLang.startsWith("fr")
+    ? { open: "Menu", close: "Fermer" }
+    : pageLang.startsWith("es")
+    ? { open: "Men\u00fa", close: "Cerrar" }
+    : pageLang.startsWith("pl")
+    ? { open: "Menu", close: "Zamknij" }
+    : { open: "Menu", close: "Close" };
 
   /* 1. MOBILE NAV LOGIC (Click Outside + Toggle) */
   const toggle = document.getElementById("menuToggle");
@@ -9,13 +19,13 @@ document.addEventListener("DOMContentLoaded", function() {
       e.stopPropagation();
       mobileNav.classList.toggle("active");
       const isOpen = mobileNav.classList.contains("active");
-      toggle.innerText = isOpen ? "Close" : "Menu";
+      toggle.innerText = isOpen ? menuLabels.close : menuLabels.open;
     });
     document.addEventListener("click", (e) => {
       if (mobileNav.classList.contains("active")) {
         if (!mobileNav.contains(e.target) && e.target !== toggle) {
           mobileNav.classList.remove("active");
-          toggle.innerText = "Menu";
+          toggle.innerText = menuLabels.open;
         }
       }
     });

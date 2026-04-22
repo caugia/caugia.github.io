@@ -88,14 +88,14 @@
 
     // Navigation labels per language
     var navLabels = isDe
-      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Insights', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten' }
+      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Analysen', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten', menu: 'Men\u00fc' }
       : isFr
-      ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Insights', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme Partenaires', login: 'Connexion', loginOs: 'Connexion GRIP OS', cta: 'Lancer le diagnostic' }
+      ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Analyses', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme partenaires', login: 'Connexion', loginOs: 'Connexion \u00e0 GRIP OS', cta: 'Lancer le diagnostic', menu: 'Menu' }
       : isEs
-      ? { product: 'Producto', marketplace: 'Marketplace', insights: 'Insights', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de partners', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico' }
+      ? { product: 'Producto', marketplace: 'Marketplace', insights: 'An\u00e1lisis', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de socios', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico', menu: 'Men\u00fa' }
       : isPl
-      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Insights', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119' }
-      : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis' };
+      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Analizy', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119', menu: 'Menu' }
+      : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis', menu: 'Menu' };
 
     // Language dropdown: current lang as button, others in dropdown
     function buildLangToggles() {
@@ -139,7 +139,7 @@
             '<a href="https://os.caugia.com/login?redirect=https://www.caugia.com" class="caugia-login-link" id="caugiaLoginLink">' + navLabels.login + '</a>' +
             '<a href="' + navBase + 'grip-marketplace.html#intelligence-report" class="btn-cta" id="caugiaCta">' + navLabels.cta + '</a>' +
             buildLangToggles() +
-            '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="Menu">' +
+            '<button class="menu-toggle" id="caugiaMenuToggle" aria-label="' + navLabels.menu + '">' +
               '<svg class="caugia-hamburger-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
               '<svg class="caugia-close-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M5 5l10 10M15 5L5 15" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/></svg>' +
             '</button>' +
@@ -296,7 +296,7 @@
           : isFr
           ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace' }
           : isEs
-          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Partners', marketplace: 'Marketplace' }
+          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace' }
           : isPl
           ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace' }
           : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace' };
