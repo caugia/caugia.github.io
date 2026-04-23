@@ -370,25 +370,140 @@ section[id] { scroll-margin-top:120px; }
 .mk-route-desc{font-size:0.8rem;color:#64748b;line-height:1.5;margin-bottom:16px;flex:1;}
 .mk-route-cta{font-size:0.78rem;font-weight:700;text-decoration:none;margin-top:auto;}
 @media(max-width:768px){.mk-route-grid{grid-template-columns:1fr;gap:12px;}}
+/* 4-tier pricing ladder: responsive stack on tablets + phones */
+@media(max-width:980px){
+  section > div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:1fr 1fr !important;}
+}
+@media(max-width:600px){
+  section > div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:1fr !important;}
+}
 </style>
-<div class="mk-route-grid">
+<!-- NEW 4-TIER PRICING LADDER -->
+<section style="max-width:1100px;margin:0 auto 48px;padding:0 20px;">
+  <div style="text-align:center;margin-bottom:30px;">
+    <p style="font-size:0.75rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#E07830;margin:0 0 8px;">Pricing</p>
+    <h2 style="font-family:'Merriweather',Georgia,serif;font-size:1.9rem;font-weight:900;color:#0f172a;margin:0 0 8px;line-height:1.2;">Start free. Scale to enterprise. One engine underneath.</h2>
+    <p style="color:#475569;font-size:0.95rem;line-height:1.6;max-width:680px;margin:0 auto;">Same scoring engine, same Sophie, same peer-cohort across all tiers. You pay for capacity &mdash; turns, seats, workspaces, integrations. Every vertical (SaaS &middot; DTC &middot; Fintech &middot; Prof Services) supported on every tier.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+
+    <!-- LEAD -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px;display:flex;flex-direction:column;">
+      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Lead</div>
+      <div style="font-family:'Merriweather',Georgia,serif;font-size:2rem;font-weight:900;color:#0f172a;margin:8px 0 2px;line-height:1;">Free</div>
+      <div style="font-size:0.78rem;color:#64748b;">Self-serve assessment</div>
+      <ul style="list-style:none;padding:0;margin:18px 0 22px;font-size:0.82rem;line-height:1.7;color:#334155;flex:1;">
+        <li>&check; Full vertical assessment</li>
+        <li>&check; Binding-constraint diagnosis</li>
+        <li>&check; 3 moves with owner / cost / deadline</li>
+        <li>&check; PDF export of diagnosis</li>
+        <li>&check; 1 workspace, 1 seat</li>
+        <li style="color:#94a3b8;">&minus; No Sophie follow-up turns</li>
+        <li style="color:#94a3b8;">&minus; No peer-cohort citations</li>
+      </ul>
+      <a href="https://os.caugia.com/assess" style="background:#fff;border:1px solid #e2e8f0;color:#0f172a;text-align:center;padding:10px;border-radius:8px;font-size:0.85rem;font-weight:700;text-decoration:none;">Start free &rarr;</a>
+    </div>
+
+    <!-- CORE -->
+    <div style="background:#fff;border:2px solid #3B6CD8;border-radius:14px;padding:22px;display:flex;flex-direction:column;position:relative;">
+      <div style="position:absolute;top:-10px;right:14px;background:#3B6CD8;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:999px;">Most popular</div>
+      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#3B6CD8;">Core</div>
+      <div style="font-family:'Merriweather',Georgia,serif;font-size:2rem;font-weight:900;color:#0f172a;margin:8px 0 2px;line-height:1;">&euro;499<span style="font-size:0.7rem;color:#64748b;font-weight:500;"> /mo</span></div>
+      <div style="font-size:0.78rem;color:#64748b;">1 workspace, 3 seats</div>
+      <ul style="list-style:none;padding:0;margin:18px 0 22px;font-size:0.82rem;line-height:1.7;color:#334155;flex:1;">
+        <li>&check; Everything in Lead</li>
+        <li>&check; 500 Sophie turns / month</li>
+        <li>&check; Weekly action-rhythm cron</li>
+        <li>&check; Forward P&amp;L simulator (4Q)</li>
+        <li>&check; Peer benchmarks (k-anon &ge; 5)</li>
+        <li>&check; Proof dashboard (shareable)</li>
+        <li>&check; Public peer-outcomes API (60 rpm)</li>
+      </ul>
+      <a href="https://os.caugia.com/api/checkout/sophie/core" style="background:#3B6CD8;color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:0.85rem;font-weight:700;text-decoration:none;">Subscribe Core</a>
+    </div>
+
+    <!-- FULL -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px;display:flex;flex-direction:column;">
+      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#E07830;">Full</div>
+      <div style="font-family:'Merriweather',Georgia,serif;font-size:2rem;font-weight:900;color:#0f172a;margin:8px 0 2px;line-height:1;">&euro;1,499<span style="font-size:0.7rem;color:#64748b;font-weight:500;"> /mo</span></div>
+      <div style="font-size:0.78rem;color:#64748b;">3 workspaces, 10 seats</div>
+      <ul style="list-style:none;padding:0;margin:18px 0 22px;font-size:0.82rem;line-height:1.7;color:#334155;flex:1;">
+        <li>&check; Everything in Core</li>
+        <li>&check; 3 000 Sophie turns / month</li>
+        <li>&check; Digital-twin simulations (multi)</li>
+        <li>&check; Outbound tool (vertical-native)</li>
+        <li>&check; Slack + Teams alerts</li>
+        <li>&check; API access (600 rpm, API key)</li>
+        <li>&check; Priority support + board-brief</li>
+      </ul>
+      <a href="https://os.caugia.com/api/checkout/sophie/pro" style="background:#0f172a;color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:0.85rem;font-weight:700;text-decoration:none;">Subscribe Full</a>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div style="background:#0f172a;color:#fff;border-radius:14px;padding:22px;display:flex;flex-direction:column;">
+      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#E07830;">Enterprise</div>
+      <div style="font-family:'Merriweather',Georgia,serif;font-size:2rem;font-weight:900;color:#fff;margin:8px 0 2px;line-height:1;">Custom</div>
+      <div style="font-size:0.78rem;color:#94a3b8;">From &euro;3,000 / month</div>
+      <ul style="list-style:none;padding:0;margin:18px 0 22px;font-size:0.82rem;line-height:1.7;color:#cbd5e1;flex:1;">
+        <li>&check; Unlimited workspaces + seats</li>
+        <li>&check; SSO (Okta / Azure AD / Google)</li>
+        <li>&check; EU data residency (toggle per ws)</li>
+        <li>&check; Custom DPA + MSA</li>
+        <li>&check; SOC 2 evidence pack on request</li>
+        <li>&check; Named CSM + quarterly board brief</li>
+        <li>&check; Audit-log export, 99.5% SLA</li>
+      </ul>
+      <a href="mailto:enterprise@caugia.com" style="background:#E07830;color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:0.85rem;font-weight:700;text-decoration:none;">Talk to sales</a>
+    </div>
+
+  </div>
+
+  <!-- VERTICAL ADD-ONS -->
+  <div style="margin-top:32px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:24px;">
+    <p style="text-align:center;font-size:0.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#E07830;margin:0 0 6px;">Vertical add-on packs</p>
+    <h3 style="text-align:center;font-family:'Merriweather',Georgia,serif;font-size:1.3rem;font-weight:900;color:#0f172a;margin:0 0 4px;">+&euro;500 / month per pack. Any tier.</h3>
+    <p style="text-align:center;font-size:0.85rem;color:#475569;margin:0 0 18px;">Add the connector + signal catalogue + export format your vertical needs on top of Core or Full.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">
+        <div style="font-size:0.78rem;font-weight:800;color:#3B6CD8;">SaaS Quota Pack</div>
+        <p style="font-size:0.8rem;color:#475569;margin:6px 0 0;line-height:1.5;">Gong + Clari call intel, rep-level scorecards, board-deck export, forecast-accuracy drift alerts.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">
+        <div style="font-size:0.78rem;font-weight:800;color:#3B6CD8;">DTC Paid-Media Pack</div>
+        <p style="font-size:0.8rem;color:#475569;margin:6px 0 0;line-height:1.5;">Meta + Google + TikTok connectors, creative-fatigue alerts, MER drift signals, post-purchase survey attribution.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">
+        <div style="font-size:0.78rem;font-weight:800;color:#3B6CD8;">Fintech Compliance Pack</div>
+        <p style="font-size:0.8rem;color:#475569;margin:6px 0 0;line-height:1.5;">DORA / PSD3 regulatory radar, KYC queue SLAs, chargeback / fraud alerts, compliance-report export, EU residency by default.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">
+        <div style="font-size:0.78rem;font-weight:800;color:#3B6CD8;">Prof Services Utilisation Pack</div>
+        <p style="font-size:0.8rem;color:#475569;margin:6px 0 0;line-height:1.5;">Rocketlane / Kantata / Harvest connectors, bench-&gt;-billable alerts, partner-attribution dashboard, utilisation deck export.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGACY ROUTE GRID (kept for users arriving via old bookmarks) -->
+<div class="mk-route-grid" style="margin-top:20px;">
   <a href="javascript:void(0)" onclick="scrollToSection('intelligence-report')" class="mk-route-card" style="text-decoration:none;">
-    <div class="mk-route-step" style="color:#3B6CD8;">STEP 1: DIAGNOSE</div>
-    <div class="mk-route-title">Find the constraint</div>
-    <div class="mk-route-desc">You need clarity on what is actually suppressing growth. Start with the full system diagnosis.</div>
-    <span class="mk-route-cta" style="color:#3B6CD8;">GTM Intelligence Report &darr;</span>
+    <div class="mk-route-step" style="color:#3B6CD8;">ONE-TIME</div>
+    <div class="mk-route-title">GTM Intelligence Report</div>
+    <div class="mk-route-desc">45-page board-level deliverable. One-time engagement, can be bought separately or as an Enterprise add-on.</div>
+    <span class="mk-route-cta" style="color:#3B6CD8;">See the report &darr;</span>
   </a>
   <a href="javascript:void(0)" onclick="scrollToSection('grip-os')" class="mk-route-card" style="text-decoration:none;border-color:#E07830;">
-    <div class="mk-route-step" style="color:#E07830;">STEP 2: GOVERN</div>
-    <div class="mk-route-title">Fix it in the right order</div>
-    <div class="mk-route-desc">You have a completed diagnosis and need execution discipline. One constraint at a time.</div>
-    <span class="mk-route-cta" style="color:#E07830;">GRIP OS &darr;</span>
+    <div class="mk-route-step" style="color:#E07830;">SUBSCRIPTION</div>
+    <div class="mk-route-title">GRIP OS &middot; Core &amp; Full</div>
+    <div class="mk-route-desc">Continuous diagnosis, Sophie advisory, peer benchmarks, Forward P&amp;L &mdash; the OS layer.</div>
+    <span class="mk-route-cta" style="color:#E07830;">See tiers &darr;</span>
   </a>
   <a href="javascript:void(0)" onclick="scrollToSection('modules')" class="mk-route-card" style="text-decoration:none;">
-    <div class="mk-route-step" style="color:#0f172a;">STEP 3: DEEPEN</div>
-    <div class="mk-route-title">Go deep on one layer</div>
-    <div class="mk-route-desc">You already know which GTM dimension needs deeper analysis. Isolate it with a focused diagnostic.</div>
-    <span class="mk-route-cta" style="color:#0f172a;">Deep Dive Modules &darr;</span>
+    <div class="mk-route-step" style="color:#0f172a;">DEEP DIVE</div>
+    <div class="mk-route-title">Pillar Deep-Dive Modules</div>
+    <div class="mk-route-desc">Isolated diagnostic on one specific pillar (Pricing, CS, Demand Gen, etc). For teams who already know which dimension needs depth.</div>
+    <span class="mk-route-cta" style="color:#0f172a;">See modules &darr;</span>
   </a>
 </div>
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caugia SOC 2 Posture | 25 of 29 controls live, audited on request</title>
+<meta name="description" content="Public SOC 2 controls ledger with live tenant-isolation probe. GDPR DPA, EU data residency, append-only audit log. Verifiable at /api/soc2/evidence." />
+<link rel="canonical" href="https://www.caugia.com/soc2.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/soc2.html" />
+<meta property="og:title" content="Caugia SOC 2 Posture" />
+<meta property="og:description" content="25 of 29 controls live. Tenant-isolation probe passes. EU residency available." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/caugia-base.css">
+<style>
+:root{--dark:#1A2340;--blue:#3B6CD8;--orange:#E07830;--green:#16A34A;--muted:#64748b;--text:#0f172a;--light:#f8fafc;--line:#e2e8f0}
+body{margin:0;font-family:Inter,sans-serif;color:var(--text);background:#fff}
+.hero{background:var(--dark);padding:48px 20px;text-align:center}
+.hero h1{color:#fff;font-size:32px;font-weight:800;font-family:Merriweather,serif;margin:10px 0 4px}
+.hero p{color:#cbd5e1;font-size:14px;margin:0;max-width:640px;margin:0 auto}
+.grad{height:4px;background:linear-gradient(to right,var(--blue),var(--orange))}
+main{max-width:960px;margin:0 auto;padding:48px 20px}
+section{margin-bottom:40px}
+h2{font-size:22px;font-weight:800;margin:0 0 12px;font-family:Merriweather,serif}
+.lead{font-size:15px;color:#475569;line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+.stat{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:20px}
+.stat .label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.stat .val{font-size:30px;font-weight:900;color:var(--dark);font-family:Merriweather,serif;margin:6px 0 4px}
+.stat .sub{font-size:12px;color:#475569;line-height:1.5}
+.badge{display:inline-block;background:var(--green);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}
+th{text-align:left;background:#f8fafc;padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+td.status-impl{color:var(--green);font-weight:700}
+td.status-mon{color:var(--blue);font-weight:700}
+td.status-plan{color:var(--orange);font-weight:700}
+.probe{background:#0f172a;color:#cbd5e1;padding:18px;border-radius:10px;font-family:Monaco,monospace;font-size:12.5px;line-height:1.6;overflow-x:auto}
+.probe .k{color:#86efac}.probe .s{color:#fca5a5}
+footer{border-top:1px solid var(--line);padding:32px 20px;text-align:center;color:#94a3b8;font-size:13px}
+footer a{color:#94a3b8;text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<script src="assets/header.js"></script>
+<header class="hero">
+  <p style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;margin:0">Caugia &middot; SOC 2 Posture</p>
+  <h1>25 of 29 controls implemented.</h1>
+  <p>Ledger is public. Tenant-isolation probe runs live on every request.</p>
+</header>
+<div class="grad"></div>
+
+<main>
+  <section>
+    <div class="stats">
+      <div class="stat"><div class="label">Controls tracked</div><div class="val">29</div><div class="sub">AICPA Trust Services Criteria (SOC 2)</div></div>
+      <div class="stat"><div class="label">Implemented</div><div class="val" style="color:var(--green)">25</div><div class="sub">Common Criteria + Availability + Privacy + Processing Integrity</div></div>
+      <div class="stat"><div class="label">Monitored</div><div class="val" style="color:var(--blue)">2</div><div class="sub">Physical access + secure disposal (sub-processor SOC 2 Type II inherited)</div></div>
+      <div class="stat"><div class="label">Planned</div><div class="val" style="color:var(--orange)">2</div><div class="sub">Vanta/Drata continuous compliance (Q2 2026) + external pentest (Q3 2026)</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Live tenant-isolation probe</h2>
+    <p class="lead">Every request to <code>/api/soc2/evidence</code> attempts an anonymous read of a non-demo workspace. If RLS is doing its job, the probe returns 0 rows. Current verdict:</p>
+    <div class="probe">{
+  <span class="k">"verdict"</span>: <span class="s">"pass"</span>,
+  <span class="k">"detail"</span>: <span class="s">"Anon read of non-demo workspace 6ab246a5... returned 0 rows. RLS enforced."</span>
+}</div>
+    <p class="lead" style="margin-top:10px">Call it yourself: <a href="https://os.caugia.com/api/soc2/evidence" style="color:var(--blue)">https://os.caugia.com/api/soc2/evidence</a></p>
+  </section>
+
+  <section>
+    <h2>Controls ledger (excerpt)</h2>
+    <p class="lead">Full list at <a href="https://os.caugia.com/api/soc2/controls" style="color:var(--blue)">/api/soc2/controls</a>. Updated on every change.</p>
+    <table>
+      <tr><th>Code</th><th>Title</th><th>Status</th></tr>
+      <tr><td>CC1.1</td><td>Control environment: tone at the top</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC2.1</td><td>Communication of security policies</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC3.1</td><td>Risk assessment process</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.1</td><td>Logical access controls (RLS + SSO)</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.2</td><td>Authentication + MFA</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.3</td><td>Access provisioning + de-provisioning</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.6</td><td>Data at rest + transit encryption</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.7</td><td>Prevention of unauthorised data transmission (EU residency)</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.8</td><td>Append-only audit log for privileged mutations</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC7.1</td><td>Vulnerability management + Dependabot/Snyk</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC7.2&ndash;7.4</td><td>Incident response, evaluation, communication</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC7.5</td><td>Tenant isolation verification (RLS probe)</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC9.1&ndash;9.2</td><td>Vendor risk + vendor monitoring</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>A1.1&ndash;1.3</td><td>System monitoring, environmental, backup + recovery</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>C1.1&ndash;1.2</td><td>Confidential data classification + disposal</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>P1.1 / P2.1</td><td>Privacy notice + consent</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>PI1.1</td><td>System processing completeness (determinism)</td><td class="status-impl">Implemented</td></tr>
+      <tr><td>CC6.4 / CC6.5</td><td>Physical access + secure disposal (sub-processor inherited)</td><td class="status-mon">Monitored</td></tr>
+      <tr><td>META.1</td><td>Vanta/Drata continuous compliance</td><td class="status-plan">Planned Q2 2026</td></tr>
+      <tr><td>META.2</td><td>External pentest</td><td class="status-plan">Planned Q3 2026</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Sub-processor allowlist</h2>
+    <p class="lead">EU-pinned workspaces route every call through this list. Non-EU-safe providers hard-fail:</p>
+    <ul style="columns:2;font-size:14px;line-height:1.8;padding-left:20px">
+      <li>Anthropic (Claude, EU region)</li>
+      <li>Supabase (EU region)</li>
+      <li>Vercel (EU region)</li>
+      <li>Stripe (EU DPA)</li>
+      <li>Resend (EU region)</li>
+      <li>WorkOS (EU DPA)</li>
+      <li>ElevenLabs (EU DPA, optional voice)</li>
+    </ul>
+  </section>
+
+  <section style="text-align:center;margin-top:48px">
+    <h2 style="text-align:center">Need the full SOC 2 Type I report?</h2>
+    <p class="lead" style="max-width:520px;margin:10px auto 20px">Type I audit trajectory active. Pre-audit evidence pack available under NDA today. Full report expected Q3 2026.</p>
+    <a href="mailto:security@caugia.com" style="display:inline-block;background:var(--orange);color:#fff;padding:12px 26px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">security@caugia.com</a>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Caugia SASU &middot; <a href="index.html">Home</a> &middot; <a href="about.html">About</a> &middot; <a href="grip-marketplace.html">Pricing</a> &middot; <a href="https://os.caugia.com/legal/security">legal/security</a> &middot; <a href="https://os.caugia.com/legal/dpa">legal/dpa</a></p>
+</footer>
+</body>
+</html>

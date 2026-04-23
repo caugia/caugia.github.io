@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caugia ROI Calculator | Estimate your GTM leakage in 10 seconds</title>
+<meta name="description" content="Deterministic leakage estimator. Move 2 sliders (ARR + gross margin). See the revenue and profit you're leaking right now. Same math as the real Caugia diagnosis." />
+<link rel="canonical" href="https://www.caugia.com/roi.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/roi.html" />
+<meta property="og:title" content="Caugia ROI Calculator" />
+<meta property="og:description" content="Estimate your GTM leakage in 10 seconds. Same math as the real diagnosis." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/caugia-base.css">
+<style>
+:root{--dark:#1A2340;--blue:#3B6CD8;--orange:#E07830;--green:#16A34A;--muted:#64748b;--text:#0f172a;--line:#e2e8f0}
+body{margin:0;font-family:Inter,sans-serif;color:var(--text);background:#fff}
+.hero{background:var(--dark);padding:48px 20px;text-align:center}
+.hero h1{color:#fff;font-size:32px;font-weight:800;font-family:Merriweather,serif;margin:10px 0 4px}
+.hero p{color:#cbd5e1;font-size:14px;max-width:640px;margin:0 auto}
+.grad{height:4px;background:linear-gradient(to right,var(--blue),var(--orange))}
+main{max-width:720px;margin:0 auto;padding:48px 20px}
+.calc{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:32px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+label{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1px}
+input[type=range]{accent-color:var(--blue)}
+.val{font-size:14px;color:var(--dark);font-weight:700}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+.card .lbl2{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.card .num{font-size:30px;font-weight:900;font-family:Merriweather,serif;margin-top:8px}
+.ass{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 18px}
+.btn{display:inline-block;background:var(--orange);color:#fff;padding:12px 26px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none}
+footer{border-top:1px solid var(--line);padding:32px 20px;text-align:center;color:#94a3b8;font-size:13px;margin-top:40px}
+footer a{color:#94a3b8;text-decoration:none;margin:0 8px}
+@media(max-width:640px){.row{grid-template-columns:1fr}.out{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="assets/header.js"></script>
+<header class="hero">
+  <p style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:700;margin:0">Caugia &middot; ROI Calculator</p>
+  <h1>Estimate your leakage before you assess.</h1>
+  <p>Same math as the real diagnosis. Two sliders. Ten seconds.</p>
+</header>
+<div class="grad"></div>
+
+<main>
+  <div class="calc">
+    <div class="row">
+      <label>
+        <span class="lbl">Annual ARR</span>
+        <input id="arr" type="range" min="1" max="100" step="1" value="5" />
+        <span class="val"><span id="arrLabel">&euro;5M</span></span>
+      </label>
+      <label>
+        <span class="lbl">Gross margin</span>
+        <input id="gm" type="range" min="20" max="90" step="1" value="70" />
+        <span class="val"><span id="gmLabel">70%</span></span>
+      </label>
+    </div>
+
+    <div class="out">
+      <div class="card">
+        <div class="lbl2">Revenue leakage</div>
+        <div class="num" style="color:var(--blue)"><span id="leak">&euro;260K</span>/yr</div>
+      </div>
+      <div class="card">
+        <div class="lbl2">Profit leakage</div>
+        <div class="num" style="color:var(--orange)"><span id="profit">&euro;182K</span>/yr</div>
+      </div>
+    </div>
+
+    <p class="ass">Assumptions: pillar score ~55/100, realisation factor 55%, dimension weight 0.27. Your real figure comes from the full diagnosis after assessing &mdash; that one uses your specific pillar scores, vertical benchmarks, and constraint leverage. Method documented at <a href="https://os.caugia.com/api/openapi.json" style="color:var(--blue)">/api/openapi.json</a>.</p>
+
+    <a id="cta" href="https://os.caugia.com/assess" class="btn">Run the real diagnosis &rarr;</a>
+  </div>
+
+  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:32px">Want it for a specific vertical? <a href="saas-b2b.html" style="color:var(--blue)">SaaS</a> &middot; <a href="dtc.html" style="color:var(--blue)">DTC</a> &middot; <a href="fintech.html" style="color:var(--blue)">Fintech</a> &middot; <a href="professional-services.html" style="color:var(--blue)">Prof Services</a></p>
+</main>
+
+<footer>
+  <p>&copy; 2026 Caugia SASU &middot; <a href="index.html">Home</a> &middot; <a href="about.html">About</a> &middot; <a href="grip-marketplace.html">Pricing</a> &middot; <a href="soc2.html">SOC 2</a></p>
+</footer>
+
+<script>
+(function(){
+  const K_DRAG = 0.60, DIM = 0.27, WEAK = 0.45, REAL = 0.55;
+  const arrEl = document.getElementById('arr'), gmEl = document.getElementById('gm');
+  const arrL = document.getElementById('arrLabel'), gmL = document.getElementById('gmLabel');
+  const leakEl = document.getElementById('leak'), profitEl = document.getElementById('profit');
+  function fmt(n){if(n>=1e6)return '\u20AC'+(n/1e6).toFixed(1)+'M';if(n>=1e3)return '\u20AC'+(n/1e3).toFixed(0)+'K';return '\u20AC'+n}
+  function calc(){
+    const arr = Number(arrEl.value) * 1e6;
+    const gm = Math.max(0, Math.min(95, Number(gmEl.value))) / 100;
+    const drag = arr * K_DRAG * DIM * WEAK;
+    const leakage = Math.round(drag * REAL);
+    const profit = gm > 0 ? Math.round(leakage * gm) : 0;
+    arrL.textContent = '\u20AC' + arrEl.value + 'M';
+    gmL.textContent = gmEl.value + '%';
+    leakEl.textContent = fmt(leakage);
+    profitEl.textContent = fmt(profit);
+  }
+  arrEl.addEventListener('input', calc);
+  gmEl.addEventListener('input', calc);
+  calc();
+})();
+</script>
+</body>
+</html>
