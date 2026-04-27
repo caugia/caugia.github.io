@@ -78,7 +78,12 @@
     var isDe = window.location.pathname.indexOf('/de/') !== -1;
     var isEs = window.location.pathname.indexOf('/es/') !== -1;
     var isPl = window.location.pathname.indexOf('/pl/') !== -1;
-    var isLocalized = isFr || isDe || isEs || isPl;
+    // NL is a stealth locale: /nl/ pages exist + render native NL but the
+    // language switcher does NOT include an NL option (no SEO/UX surface).
+    // We still need isNl in `isLocalized` so assetBase / navBase resolve
+    // correctly (otherwise the logo img + relative nav links 404 on /nl/*).
+    var isNl = window.location.pathname.indexOf('/nl/') !== -1;
+    var isLocalized = isFr || isDe || isEs || isPl || isNl;
     var isIntel = window.location.pathname.indexOf('/intelligence/') !== -1;
     var isLocalizedIntel = isLocalized && isIntel; // /fr/intelligence/, /de/intelligence/, /es/intelligence/ = two levels deep
     // assetBase: path to assets folder (root/assets/)
@@ -95,6 +100,8 @@
       ? { product: 'Producto', marketplace: 'Marketplace', insights: 'An\u00e1lisis', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de socios', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico', menu: 'Men\u00fa' }
       : isPl
       ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Analizy', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119', menu: 'Menu' }
+      : isNl
+      ? { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'Over ons', contact: 'Contact', partners: 'Partnerprogramma', login: 'Inloggen', loginOs: 'Inloggen bij GRIP OS', cta: 'Start de diagnose', menu: 'Menu' }
       : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis', menu: 'Menu' };
 
     // Language dropdown: current lang as button, others in dropdown
@@ -104,11 +111,15 @@
       var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
       var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
       var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
-      var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : isPl ? 'PL' : 'EN';
+      // NL shows as "NL" on the current-locale button so a Dutch visitor sees
+      // they're on the Dutch surface. Stealth is preserved by NOT adding an NL
+      // option to the dropdown below — visitors on other locales never see
+      // that NL exists, but a Dutch visitor on /nl/ can still switch out.
+      var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : isPl ? 'PL' : isNl ? 'NL' : 'EN';
       return '<div class="caugia-lang-wrap" id="caugiaLangWrap">' +
         '<button class="caugia-lang-btn" id="caugiaLangBtn">' + currentLang + ' <svg viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
         '<div class="caugia-lang-dropdown">' +
-          '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl ? ' class="active-lang"' : '') + '>English</a>' +
+          '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl && !isNl ? ' class="active-lang"' : '') + '>English</a>' +
           '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>Fran\u00e7ais</a>' +
           '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>Deutsch</a>' +
           '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>Espa\u00f1ol</a>' +
@@ -163,14 +174,14 @@
           '</div>' +
           /* Language switcher */
           '<div class="caugia-mobile-lang">' +
-            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : isFr ? 'Langue' : isEs ? 'Idioma' : isPl ? 'J\u0119zyk' : 'Language') + '</span>' +
+            '<span class="caugia-mobile-lang-label">' + (isDe ? 'Sprache' : isFr ? 'Langue' : isEs ? 'Idioma' : isPl ? 'J\u0119zyk' : isNl ? 'Taal' : 'Language') + '</span>' +
             (function() {
               var enPath = isLocalized ? assetBase + p : p;
               var frPath = isFr ? p : (isLocalized ? assetBase + 'fr/' + p : 'fr/' + p);
               var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
               var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
               var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
-              return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl ? ' class="active-lang"' : '') + '>EN</a>' +
+              return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl && !isNl ? ' class="active-lang"' : '') + '>EN</a>' +
                      '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>FR</a>' +
                      '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>' +
                      '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>ES</a>' +
@@ -238,7 +249,7 @@
       if (!loginLink) return;
       if (!data || !data.authenticated) {
         loginLink.href = "https://os.caugia.com/login?redirect=https://www.caugia.com";
-        loginLink.textContent = isDe ? "Anmelden" : (isFr ? "Connexion" : "Log in");
+        loginLink.textContent = isDe ? "Anmelden" : (isFr ? "Connexion" : (isNl ? "Inloggen" : "Log in"));
         loginLink.style.fontWeight = "600";
       } else if (data.workspace) {
         loginLink.href = "https://os.caugia.com/workspace/" + data.workspace.id;
@@ -299,6 +310,8 @@
           ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace' }
           : isPl
           ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace' }
+          : isNl
+          ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace' }
           : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace' };
         footerEl.className = 's-footer';
         footerEl.innerHTML =
