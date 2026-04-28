@@ -1,0 +1,46 @@
+name: Locale drift check
+
+# Runs on every PR and push to main. Fails the build if any locale copy
+# (fr/, de/, es/, pl/, nl/) is more than 12% shorter than its EN canonical
+# in line count. Intent: prevent the failure mode where an EN page gains new
+# sections that never get backported to the locale copies, leaving non-EN
+# visitors stuck on an outdated version.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "*.html"
+      - "fr/**.html"
+      - "de/**.html"
+      - "es/**.html"
+      - "pl/**.html"
+      - "nl/**.html"
+      - "scripts/check-locale-drift.py"
+  push:
+    branches: [main]
+    paths:
+      - "*.html"
+      - "fr/**.html"
+      - "de/**.html"
+      - "es/**.html"
+      - "pl/**.html"
+      - "nl/**.html"
+      - "scripts/check-locale-drift.py"
+  # Manual trigger from the Actions tab
+  workflow_dispatch: {}
+  # Nightly safety net so silent drift surfaces within 24h even if a commit
+  # avoided the path filters above.
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run locale-drift check
+        run: python3 scripts/check-locale-drift.py
