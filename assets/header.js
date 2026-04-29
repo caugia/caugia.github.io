@@ -111,10 +111,8 @@
       var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
       var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
       var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
-      // NL shows as "NL" on the current-locale button so a Dutch visitor sees
-      // they're on the Dutch surface. Stealth is preserved by NOT adding an NL
-      // option to the dropdown below — visitors on other locales never see
-      // that NL exists, but a Dutch visitor on /nl/ can still switch out.
+      var nlPath = isNl ? p : (isLocalized ? assetBase + 'nl/' + p : 'nl/' + p);
+      // NL is now a public locale (promoted from stealth on 2026-04-29).
       var currentLang = isDe ? 'DE' : isFr ? 'FR' : isEs ? 'ES' : isPl ? 'PL' : isNl ? 'NL' : 'EN';
       return '<div class="caugia-lang-wrap" id="caugiaLangWrap">' +
         '<button class="caugia-lang-btn" id="caugiaLangBtn">' + currentLang + ' <svg viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
@@ -124,6 +122,7 @@
           '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>Deutsch</a>' +
           '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>Espa\u00f1ol</a>' +
           '<a href="' + plPath + '"' + (isPl ? ' class="active-lang"' : '') + '>Polski</a>' +
+          '<a href="' + nlPath + '"' + (isNl ? ' class="active-lang"' : '') + '>Nederlands</a>' +
         '</div>' +
       '</div>';
     }
