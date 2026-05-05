@@ -1,0 +1,293 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Revenue leakage in B2B SaaS: waar je ARR werkelijk verdwijnt | Caugia</title>
+  <meta name="description" content="De meeste B2B SaaS-bedrijven verliezen 15 tot 30% van hun potentiele ARR aan structurele lekken: pipeline, conversie, pricing, expansie. Hoe je ze vindt en kwantificeert." />
+  <link rel="canonical" href="https://www.caugia.com/nl/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/intelligence/revenue-leakage-saas.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/revenue-leakage-saas.html" />
+
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/nl/intelligence/revenue-leakage-saas.html" />
+  <meta property="og:title" content="Revenue leakage in B2B SaaS: waar je ARR werkelijk verdwijnt" />
+  <meta property="og:description" content="Niet churn. Structurele lekken op pipeline, conversie, pricing, expansie. Hoe je ze vindt en kwantificeert." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Revenue leakage in B2B SaaS: waar je ARR werkelijk verdwijnt" />
+  <meta name="twitter:description" content="De meeste SaaS verliezen 15 tot 30% van hun potentiele ARR aan structurele lekken. Niet churn. Hoe je ze vindt." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #fef3c7; color: #92400e; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-callout { border-left: 3px solid #f59e0b; background: #fffbeb; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #78350f; line-height: 1.6; }
+    .leakage-model { background: #0f172a; border-radius: 14px; padding: 32px; margin: 32px 0; color: #fff; }
+    .leakage-model-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #f59e0b; margin-bottom: 20px; }
+    .leakage-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.95rem; }
+    .leakage-row:last-child { border-bottom: none; padding-top: 12px; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.2); font-weight: 800; }
+    .leakage-label { color: #cbd5e1; }
+    .leakage-value { color: #f87171; font-weight: 700; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Revenue leakage in B2B SaaS: waar je ARR werkelijk verdwijnt",
+    "description": "De meeste B2B SaaS-bedrijven verliezen 15 tot 30 procent van hun potentiele ARR aan structurele lekken op pipeline, conversie, pricing en expansie. Hier is hoe je ze identificeert en kwantificeert.",
+    "url": "https://www.caugia.com/nl/intelligence/revenue-leakage-saas.html",
+    "datePublished": "2026-03-11",
+    "dateModified": "2026-03-18",
+    "author": {"@type": "Person", "name": "Tom Meijer"},
+    "publisher": {"@type": "Organization", "name": "Caugia", "logo": {"@type": "ImageObject", "url": "https://www.caugia.com/assets/logo-final.png"}},
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.caugia.com/nl/intelligence/revenue-leakage-saas.html"}
+  }
+  </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Wat is revenue leakage in SaaS?", "acceptedAnswer": {"@type": "Answer", "text": "Revenue leakage is de gap tussen wat een GTM-systeem zou kunnen produceren en wat het werkelijk produceert. Het is structureel, niet toevallig, en kan 15 tot 30 procent van het niet-gerealiseerde revenue-potentieel uitmaken."}},
+    {"@type": "Question", "name": "Wat zijn de vijf drivers van revenue leakage?", "acceptedAnswer": {"@type": "Answer", "text": "Pipeline-leakage, conversie-leakage, pricing-leakage, expansie-leakage en productiviteits-leakage. Elke driver vertegenwoordigt een ander type structureel revenue-verlies."}},
+    {"@type": "Question", "name": "Hoe verschilt revenue leakage van churn?", "acceptedAnswer": {"@type": "Answer", "text": "Churn is een zichtbare vorm van revenue-verlies. Revenue leakage is breder en omvat revenue dat nooit werd vastgelegd: deals die hadden moeten sluiten, hogere dealwaardes verloren aan discounting, en expansie die nooit plaatsvond."}},
+    {"@type": "Question", "name": "Hoe meet je revenue leakage?", "acceptedAnswer": {"@type": "Answer", "text": "Door de huidige prestatie per driver te vergelijken met haalbare benchmarks voor je segment en de waardegap over de vijf drivers tegelijk te berekenen."}},
+    {"@type": "Question", "name": "Kan revenue leakage worden teruggewonnen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Pricing- en expansie-lekken zijn het snelst terug te winnen. Pipeline- en conversie-lekken kosten meer tijd maar vertegenwoordigen de grootste kansen in de meeste groei-bedrijven."}}
+  ]
+}
+</script>
+  <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence (RSS)" href="https://www.caugia.com/nl/intelligence/feed.xml" />
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Terug naar Intelligence</a>
+        <span class="article-tag">Diagnose</span>
+        <h1>Revenue leakage in B2B SaaS: waar je ARR werkelijk verdwijnt</h1>
+        <p class="article-lead">De meeste SaaS-bedrijven volgen churn als een religie en negeren de structurele lekken die ver voor het vertrek van een klant plaatsvinden. Pipeline-inefficientie, conversie-frictie, misaligned pricing, expansie die niet komt: het kost meer dan churn. Het is alleen moeilijker te zien.</p>
+        <div class="article-meta">Door Tom Meijer, oprichter van Caugia &middot; 9 min leestijd &middot; Maart 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">In dit artikel</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Waarom churn niet je grootste lek is. De vijf drivers van revenue leakage: pipeline, conversie, pricing, expansie, productiviteit. Waarom lekken onzichtbaar zijn. Een illustratief leakage-model. En hoe je verloren ARR diagnosticeert en terugwint.</p>
+        </div>
+
+        <h2>Churn is niet je grootste lek</h2>
+
+        <p>Wanneer een board vraagt naar revenue-gezondheid, begint het gesprek doorgaans bij churn. Het is het zichtbaarste verlies: iedereen begrijpt de metric. Klanten zijn vertrokken, revenue is verdwenen.</p>
+
+        <p>Behalve dat churn de laatste stap van het lek is. Wanneer een klant opzegt, was de revenue al maanden of kwartalen daarvoor in gevaar. Het echte lek zit upstream, op plaatsen die geen toegewijde metric op je dashboard hebben.</p>
+
+        <p>Revenue leakage is de gap tussen wat je systeem zou kunnen produceren en wat het werkelijk produceert. Het is structureel, niet toevallig. In veel B2B SaaS-bedrijven tussen 5 en 120M ARR vertegenwoordigt structurele leakage 15 tot 30% van het niet-gerealiseerde revenue-potentieel.</p>
+
+        <h2>De vijf drivers van leakage</h2>
+
+        <p>Revenue lekt niet vanuit een enkele plek. Het lekt over vijf onderling verbonden drivers, elk met zijn eigen verliestype. Deze drivers zijn waar het lek zichtbaar wordt. De structurele oorzaken zitten vaak dieper in het GTM-systeem: ICP-definitie, positionering, product readiness, pricing-ontwerp, executie-architectuur. De drivers zijn de manifestatie. De oorzaken worden gediagnosticeerd op het hele systeem.</p>
+
+        <h3>Driver 1: pipeline-leakage</h3>
+
+        <p>Pipeline-leakage is wanneer je demand-gen-systeem niet genoeg gekwalificeerde opportunities produceert om je revenue-doel te halen tegen de huidige conversiepercentages. De gap is niet altijd volume. Vaak is het kwaliteit.</p>
+
+        <p>Een bedrijf met 3x pipeline coverage ziet er gezond uit, totdat je beseft dat 40% van die pipeline ongekwalificeerd, slapend of verkeerd toegewezen is. Effectieve coverage zit misschien op 1,8x. Het team is structureel onder doel voordat het kwartaal begint.</p>
+
+        <p>Pipeline-leakage omvat ook timing-mismatch: pipeline die wel bestaat, maar te laat in het kwartaal aankomt om te sluiten, en dwingt tot doorschuiven naar het volgende kwartaal of discounten om te versnellen.</p>
+
+        <h3>Driver 2: conversie-leakage</h3>
+
+        <p>Conversie-leakage is revenue die verloren gaat tussen de gekwalificeerde opportunity en de getekende deal. Het is de win rate-gap: het verschil tussen je huidige win rate en wat je product en marktpositie zouden moeten toelaten.</p>
+
+        <p>Klassieke oorzaken: inconsistente sales-executie tussen verkopers, wankele kwalificatie die deals buiten target laat binnenkomen, zwakke concurrentiepositionering, demo's die de waarde niet overdragen.</p>
+
+        <p>Eenvoudig rekenwerk. Win rate op 22%, redelijke benchmark op 30%: bij 100 gekwalificeerde opportunities verlies je 8 deals die hadden moeten sluiten. Tegen je gemiddelde ACV is dat kwantificeerbare ARR die via de conversie-driver verdwijnt.</p>
+
+        <h3>Driver 3: pricing-leakage</h3>
+
+        <p>Pricing-leakage is revenue die verloren gaat aan discounting, onderpricing en misaligned packaging. Het meest onzichtbare van de lekken: de deal sluit toch. Revenue verschijnt op het dashboard. Maar het verschijnt op 64% van wat het had moeten zijn.</p>
+
+        <p>Gemiddelde korting op 36%, 100 deals per jaar tegen je doel-ACV: de totale concessie aan discounting is een post die zelden bij het board komt. En die vaak de totale kosten van een hele GTM-functie overstijgt.</p>
+
+        <p>Pricing-leakage omvat ook packaging-falen: klanten op plannen die niet meeschalen met gebruik, gedwongen om de onderhandeling weer te openen in plaats van automatische expansie te krijgen.</p>
+
+        <h3>Driver 4: expansie-leakage</h3>
+
+        <p>Expansie-leakage is revenue die had moeten komen van bestaande klanten, maar niet kwam. De gap tussen je NRR en wat je klantenbasis zou kunnen ondersteunen.</p>
+
+        <p>NRR op 89%, gezonde benchmark op 110%: de delta is niet alleen een cijfer. Het is niet-gerealiseerde revenue bij klanten die je product gebruiken maar niet uitbreiden. Omdat de expansie-motion niet bestaat, omdat het product geen natuurlijke upsell ondersteunt, of omdat CS gebouwd is voor support in plaats van groei.</p>
+
+        <h3>Driver 5: productiviteits-leakage</h3>
+
+        <p>Productiviteits-leakage is revenue die verloren gaat door inefficientie van je revenue-team: sales die in 12 maanden in plaats van 6 op niveau komen, territorium-indelingen die marktzakken onbedekt laten, operationele frictie die verkopers dwingt administratie te doen in plaats van te verkopen.</p>
+
+        <p>Berekening: een gemiddelde AE op 200.000 fully loaded per jaar produceert 400.000 ARR, ratio 2x. Segment-benchmark op 3x. Elke AE vertegenwoordigt dan een productiviteitsgap van 200.000 in niet-gerealiseerde revenue. Vermenigvuldig met het aantal heads.</p>
+
+        <div class="leakage-model">
+          <div class="leakage-model-title">Revenue leakage-model &middot; Illustratieve breakdown voor een bedrijf op 30M$ ARR</div>
+          <div style="font-size:0.72rem;color:#94a3b8;text-align:center;margin-bottom:12px;">Illustratief voorbeeld, geen benchmark. Werkelijke leakage-patronen varieren naar stadium, sales-motion en ACV-structuur.</div>
+          <div class="leakage-row"><span class="leakage-label">Pipeline coverage-gap</span><span class="leakage-value">~$4M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Win rate-tekort</span><span class="leakage-value">~$6M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Discounting-concessie</span><span class="leakage-value">~$3M</span></div>
+          <div class="leakage-row"><span class="leakage-label">NRR-gap (gemiste expansie)</span><span class="leakage-value">~$5M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Sales-productiviteitsgap</span><span class="leakage-value">~$3M</span></div>
+          <div class="leakage-row"><span class="leakage-label">Geschat totaal lek</span><span class="leakage-value">~$21M</span></div>
+        </div>
+
+        <p>Voor een bedrijf op 30M ARR klinkt 21M lek dramatisch. Verdeeld over vijf drivers en een vol jaar, is elke gap uitlegbaar en vaak genormaliseerd als &ldquo;zo werkt SaaS nu eenmaal&rdquo;. Nee. Het is structurele frictie die je kunt vinden en verminderen.</p>
+
+        <h2>Waarom de lekken moeilijk te zien zijn</h2>
+
+        <p>Revenue leakage is om drie redenen onzichtbaar.</p>
+
+        <p><strong>Een, geen enkel rapport bevat het geheel.</strong> Pipeline-leakage zit in marketing-dashboards. Conversie-leakage in sales-rapporten. Pricing-leakage, verstopt in deal-data. Expansie-leakage, een CS-onderwerp. Productiviteits-leakage, een capaciteitsplanning-vraagstuk. Geen enkele functie heeft het overzicht.</p>
+
+        <p><strong>Twee, elk lek is lokaal uitlegbaar.</strong> Win rates zijn laag omdat de markt competitief is. Discounting is hoog omdat enterprise-deals flexibiliteit vereisen. NRR is onder doel omdat de roadmap de expansie-features nog niet heeft geleverd. Elke uitleg is lokaal rationeel. Globaal catastrofaal.</p>
+
+        <p><strong>Drie, leakage is genormaliseerd.</strong> Wanneer alle bedrijven in je peer-groep een win rate van 25% hebben en een gemiddelde korting van 30%, lijkt het op een industriestandaard, niet op een structurele falen. De benchmark wordt plafond in plaats van vloer.</p>
+
+        <p>De diepere waarheid: de meeste SaaS-bedrijven sturen revenue als een funnel. Maar revenue gedraagt zich als een systeem. Een funnel verliest volume bij elke stap. Een systeem verliest waarde bij elke verbinding. Churn is het makkelijkst te meten symptoom. Lekkage is de moeilijkst te zien ziekte.</p>
+
+        <div class="article-callout">
+          <p><strong>In veel gevallen overstijgen de kosten van het niet weten die van de diagnose met een orde van grootte.</strong> Een leakage-cijfer van 15M betekent niet dat je alles terugwint. Maar zelfs een verbetering van 10%, oftewel 1,5M teruggewonnen ARR, betaalt de diagnose honderden keren terug.</p>
+        </div>
+
+        <h2>Hoe je leakage diagnosticeert</h2>
+
+        <p>Leakage diagnosticeren vereist een systeem-view. Geen marketingaudit, geen sales-evaluatie, geen CS-review. Een complete systeemdiagnose die de vijf drivers tegelijkertijd beoordeelt en de gap per driver kwantificeert.</p>
+
+        <p>Voor elke driver moet de diagnose drie dingen doen: je huidige prestatie benchmarken tegen de haalbare standaarden voor je segment, de waardegap berekenen tussen actueel en haalbaar, en de structurele constraint identificeren die de gap veroorzaakt. Het resultaat is geen lijst van problemen. Het is een prioriteit-voor-prioriteit-leakage-model dat toont waar elke euro verloren gaat, en welke driver, indien als eerste gerepareerd, de grootste recovery oplevert.</p>
+
+        <p>Het is geen one-shot-oefening. Leakage-patronen evolueren met schaal. Een bedrijf op 5M ARR lekt niet zoals een bedrijf op 50M. De drivers die domineren veranderen met groeifase, GTM-motion en marktdynamiek.</p>
+
+        <h2>Van lek naar recovery</h2>
+
+        <p>Lekken identificeren is de eerste stap. Ze terugwinnen is de tweede. En recovery volgt de constraint-sequence: pak eerst de driver aan met de hoogste leakage en de laagste interventie-kosten.</p>
+
+        <p>In de meeste gevallen zijn pricing-leakage en expansie-leakage het snelst terug te winnen: ze vereisen geen nieuwe pipeline of nieuwe klanten. Ze vereisen betere monetisatie van klanten en deals die je al hebt.</p>
+
+        <p>Pipeline- en conversie-lekken kosten meer tijd: ze impliceren structurele veranderingen in demand-gen, kwalificatie en sales-executie. Maar ze zijn ook de grootste reservoirs in de meeste bedrijven in groeifase.</p>
+
+        <p>Het kerninzicht: leakage is geen probleem dat je een keer oplost. Het is een metric die je continu volgt. De bedrijven die revenue het efficientst opschalen, zijn niet die welke meer pipeline najagen. Het zijn die welke structurele leakage op elke driver, elk kwartaal verminderen.</p>
+
+        <h2>Veelgestelde vragen</h2>
+
+        <p><strong>Wat is revenue leakage in SaaS?</strong><br>De gap tussen wat een GTM-systeem zou kunnen produceren en wat het werkelijk produceert. Structureel, niet toevallig. In veel B2B SaaS vertegenwoordigt het 15 tot 30% van het niet-gerealiseerde revenue-potentieel op pipeline, conversie, pricing, expansie en productiviteit.</p>
+
+        <p><strong>Wat zijn de vijf drivers van leakage?</strong><br>Pipeline-leakage (onvoldoende gekwalificeerde pipeline), conversie-leakage (deals verloren aan zwakke win rates), pricing-leakage (revenue verloren aan overmatig discounten), expansie-leakage (niet-gerealiseerd NRR op bestaande klanten), productiviteits-leakage (revenue verloren aan inefficient gebruik van het sales-team).</p>
+
+        <p><strong>Wat is het verschil met churn?</strong><br>Churn is zichtbaar revenue-verlies. Leakage is breder: het omvat revenue dat nooit werd vastgelegd, deals die hadden moeten sluiten, revenue die hoger had moeten zijn per deal, expansie die niet plaatsvond. Churn is het makkelijkst te meten symptoom. Leakage is de moeilijkst te zien ziekte.</p>
+
+        <p><strong>Hoe meet je het?</strong><br>Driver per driver, door huidige prestatie te vergelijken met haalbare benchmarks voor je segment en de waardegap te berekenen. Een complete diagnose kwantificeert leakage over de vijf drivers tegelijk en wijst aan welke de grootste recovery biedt.</p>
+
+        <p><strong>Kun je het terugwinnen?</strong><br>Ja. Pricing- en expansie-lekken zijn doorgaans het snelst terug te winnen: geen nieuwe pipeline of nieuwe klanten nodig. Pipeline- en conversie-lekken kosten meer tijd, maar vertegenwoordigen de grootste reservoirs in de meeste groei-bedrijven.</p>
+
+        <div class="article-cta">
+          <h3>Kwantificeer je revenue leakage</h3>
+          <p>De Caugia Constraint Engine modelleert leakage over de vijf drivers en kwantificeert de revenue-gap achter elke constraint. 45 pagina's analyse, geleverd in minder dan een uur.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Gratis GTM-Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Volledige Diagnose</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 24px;margin-top:32px;">
+  <div style="font-weight:700;font-size:0.9rem;color:#0f172a;margin-bottom:12px;">Gerelateerde artikelen</div>
+  <ul style="list-style:none;padding:0;margin:0;">
+    <li style="margin-bottom:8px;"><a href="cfo-gtm-unit-economics.html" style="color:#3B6CD8;text-decoration:none;font-size:0.9rem;font-weight:600;">GTM unit economics voor CFOs: wanneer groei meer kost dan zou moeten &rarr;</a></li>
+    <li style="margin-bottom:0;"><a href="nrr-expansion-revenue-playbook.html" style="color:#3B6CD8;text-decoration:none;font-size:0.9rem;font-weight:600;">NRR en expansie-revenue: de groei-engine waar de meeste B2B SaaS-teams in onderinvesteren &rarr;</a></li>
+  </ul>
+</div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Oprichter van Caugia. Bouwt aan GRIP OS, het constraint-driven GTM Operating System voor B2B SaaS. Bouwde en schaalde eerder Go-to-Market-systemen bij meerdere SaaS-bedrijven in Europa.</div>
+    <a href="https://www.linkedin.com/in/meijertom/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Alle rechten voorbehouden. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacybeleid</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>

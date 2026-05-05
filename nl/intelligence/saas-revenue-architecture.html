@@ -1,0 +1,262 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Revenue-architectuur voor SaaS: waarom je GTM-systeem zwaarder is dan het zou moeten | Caugia</title>
+  <meta name="description" content="Revenue-architectuur is het structurele ontwerp van hoe een SaaS-bedrijf marktkansen omzet in recurring revenue. De meeste teams maken die nooit expliciet. Hier is hoe je erover moet denken." />
+  <link rel="canonical" href="https://www.caugia.com/nl/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/intelligence/saas-revenue-architecture.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/saas-revenue-architecture.html" />
+
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/nl/intelligence/saas-revenue-architecture.html" />
+  <meta property="og:title" content="Revenue-architectuur voor SaaS: waarom je GTM-systeem zwaarder is dan het zou moeten" />
+  <meta property="og:description" content="Revenue-architectuur gaat niet over tools of organogrammen. Het is hoe je bedrijf kansen omzet in recurring revenue." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Revenue-architectuur voor SaaS: waarom je GTM-systeem zwaarder is dan het zou moeten" />
+  <meta name="twitter:description" content="Revenue-architectuur is hoe je bedrijf kansen omzet in recurring revenue. De meeste teams maken die nooit expliciet." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #ecfdf5; color: #065f46; margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-callout { border-left: 3px solid #10b981; background: #ecfdf5; padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0; }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #064e3b; line-height: 1.6; }
+    .article-cta { text-align: center; padding: 48px; margin: 48px 0; background: #f8fafc; border: 1px solid var(--line); border-radius: 16px; }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+    @media (max-width: 768px) { .article-hero { padding-top: 30px; } .article-hero h1 { font-size: 1.8rem; } }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Revenue-architectuur voor SaaS: waarom je GTM-systeem zwaarder is dan het zou moeten",
+    "description": "Revenue-architectuur is het structurele ontwerp van hoe een SaaS-bedrijf marktkansen omzet in recurring revenue. De meeste teams maken die nooit expliciet. Hier is hoe je erover moet denken.",
+    "url": "https://www.caugia.com/nl/intelligence/saas-revenue-architecture.html",
+    "datePublished": "2026-03-11",
+    "dateModified": "2026-03-18",
+    "author": {"@type": "Person", "name": "Tom Meijer"},
+    "publisher": {"@type": "Organization", "name": "Caugia", "logo": {"@type": "ImageObject", "url": "https://www.caugia.com/assets/logo-final.png"}},
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.caugia.com/nl/intelligence/saas-revenue-architecture.html"}
+  }
+  </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Wat is revenue-architectuur in SaaS?", "acceptedAnswer": {"@type": "Answer", "text": "Revenue-architectuur is het structurele ontwerp van hoe een bedrijf marktkansen omzet in recurring revenue, omvattend de lagen strategie, resources, executie en performance."}},
+    {"@type": "Question", "name": "Wat is het verschil tussen revenue-architectuur en GTM-strategie?", "acceptedAnswer": {"@type": "Answer", "text": "Strategie definieert de richting. Architectuur definieert het systeem dat de strategie uitvoert. Een bedrijf kan een briljante strategie hebben en een gebroken architectuur."}},
+    {"@type": "Question", "name": "Hoe weet je of je revenue-architectuur gebroken is?", "acceptedAnswer": {"@type": "Answer", "text": "Vier signalen: terugkerende problemen elk kwartaal, functies die tegen elkaar optimaliseren, headcount dat geen proportionele revenue oplevert, en het onvermogen om uit te leggen waarom je wint of verliest."}},
+    {"@type": "Question", "name": "Wat maakt een GTM-systeem te zwaar?", "acceptedAnswer": {"@type": "Answer", "text": "Gewicht stapelt zich op door tools, processen en mensen toe te voegen zonder complexiteit weg te nemen. Het manifesteert zich als dalende revenue per employee, langere cycli en tragere beslissingen."}},
+    {"@type": "Question", "name": "Hoe repareer je een gebroken revenue-architectuur?", "acceptedAnswer": {"@type": "Answer", "text": "Begin met een diagnostische audit die de structurele constraint isoleert. Vervolgens: verwijder voor je toevoegt, ontwerp handovers in plaats van functies, meet het systeem in plaats van de delen."}}
+  ]
+}
+</script>
+  <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence (RSS)" href="https://www.caugia.com/nl/intelligence/feed.xml" />
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Terug naar Intelligence</a>
+        <span class="article-tag">Architectuur</span>
+        <h1>Revenue-architectuur voor SaaS: waarom je GTM-systeem zwaarder is dan het zou moeten</h1>
+        <p class="article-lead">Revenue-architectuur gaat niet over tools of organogrammen. Het is het structurele ontwerp van hoe je bedrijf marktkansen omzet in recurring revenue. De meeste teams maken die nooit expliciet. Daarom wordt het systeem elk kwartaal zwaarder.</p>
+        <div class="article-meta">Door Tom Meijer, oprichter van Caugia &middot; 10 min leestijd &middot; Maart 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">In dit artikel</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Waarom GTM-systemen elk kwartaal zwaarder worden. Wat revenue-architectuur werkelijk betekent en hoe het verschilt van proces en strategie. De tekenen dat je architectuur gebroken is. Drie architecturen die werken: velocity, enterprise en hybride. Principes voor het ontwerpen van lichtere systemen. En hoe GRIP de gezondheid van je architectuur audit.</p>
+        </div>
+
+        <h2>Het gewichtsprobleem</h2>
+
+        <p>Er is een patroon dat zich herhaalt in B2B SaaS-bedrijven tussen 5 en 100 miljoen ARR. Elk kwartaal wordt het GTM-systeem zwaarder. Meer tools. Meer processen. Meer handovers. Meer mensen. Meer meetings. Meer dashboards. En toch blijft revenue per employee stabiel of daalt.</p>
+
+        <p>Het gewicht stapelt zich stilletjes op. Elke toevoeging is individueel rationeel. Het CRM heeft een nieuw veld nodig. Marketing heeft een nieuwe ABM-tool nodig. Sales heeft een deal desk-proces nodig. CS heeft een health score nodig. RevOps heeft een data warehouse nodig. Elk verzoek wordt goedgekeurd omdat het een echt probleem oplost. Maar niemand evalueert de cumulatieve kosten van de complexiteit.</p>
+
+        <p>Het is geen disciplineprobleem. Het is een architectuurprobleem. Het systeem is nooit ontworpen. Het is geassembleerd. En geassembleerde systemen neigen altijd naar gewicht omdat niemand verantwoordelijk is voor het geheel.</p>
+
+        <p>Een concreet voorbeeld. Een SaaS-bedrijf op 20 miljoen ARR voegde in 12 maanden SDR-headcount toe, nieuwe ABM-tools, een deal desk-goedkeuringslaag en een client health-scoring-platform. Pipelinevolume nam toe. Maar revenue per employee daalde, salescycli werden langer en de handover tussen marketing en sales werd trager, niet sneller. Elke investering was individueel gerechtvaardigd. Samen verzwaarden ze de architectuur op elke verbinding zonder de doorzet te verbeteren.</p>
+
+        <h2>Wat revenue-architectuur werkelijk betekent</h2>
+
+        <p>Revenue-architectuur is het structurele ontwerp van hoe een bedrijf marktkansen omzet in recurring revenue. Het omvat vier lagen: hoe het bedrijf beslist wat na te streven (strategie), welke capaciteiten het nodig heeft om dat na te streven (resources), hoe het intentie omzet in revenue (executie), en hoe het die revenue door de tijd heen behoudt en componeert (performance). In het <a href="grip-framework-gtm-diagnostic-model.html" style="color:var(--primary); font-weight:700;">GRIP-framework</a> heten deze vier lagen Guidance, Resources, Implementation en Performance.</p>
+
+        <p>Architectuur is anders dan proces. Een proces beschrijft hoe een specifieke activiteit wordt uitgevoerd. Architectuur beschrijft hoe activiteiten zich tot elkaar verhouden. Het is het verschil tussen weten hoe je een sales meeting voert en begrijpen waarom bepaalde deals elk kwartaal in dezelfde stage stagneren.</p>
+
+        <p>Architectuur is ook anders dan strategie. Strategie definieert richting en prioriteiten. Architectuur definieert het systeem dat de strategie uitvoert. Je kunt een briljante strategie hebben en een gebroken architectuur. Het resultaat is consistente onderprestatie ondanks heldere richting.</p>
+
+        <h2>De tekenen dat je architectuur gebroken is</h2>
+
+        <p>Architectuurfalen kondigt zich niet aan. Het manifesteert zich als persistente operationele problemen die functionele correcties weerstaan. Hier zijn de signalen:</p>
+
+        <p><strong>Dezelfde problemen keren elk kwartaal terug.</strong> Pipeline is altijd onvoldoende. Win rates blijven onder doel. Churn is altijd een verrassing. Als dezelfde problemen blijven verschijnen ondanks meerdere interventies, is het probleem structureel, niet tactisch.</p>
+
+        <p><strong>Functies optimaliseren tegen elkaar.</strong> Marketing optimaliseert voor MQL's die Sales niet wil. Sales geeft korting om kwartaaldoelen te halen op een manier die NRR vernietigt. CS escaleert productproblemen die Product deprioriteert. Elke functie is lokaal rationeel maar globaal destructief.</p>
+
+        <p><strong>Headcount toevoegen verhoogt revenue niet proportioneel.</strong> Als het verdubbelen van het sales-team 1,4x revenue oplevert in plaats van 2x, is de constraint geen capaciteit. Het is architectuur. Het systeem kan geen extra doorzet absorberen omdat de bottleneck structureel is.</p>
+
+        <p><strong>Je kunt niet uitleggen waarom je wint of verliest.</strong> Wanneer deals tekenen, lijkt het op geluk of individueel talent. Wanneer deals verloren gaan, zijn de uitleg vaag. Het is geen dataprobleem. Het is een architectuurprobleem. Het systeem produceert geen observeerbare en herhaalbare patronen, omdat het daar nooit voor ontworpen is.</p>
+
+        <div class="article-callout">
+          <p><strong>Een nuttige test:</strong> kan je CRO op een whiteboard in vijf minuten het structurele model tekenen van hoe je bedrijf marktkansen omzet in recurring revenue? Niet de funnel. Niet het organogram. Het echte systeem. Als het antwoord nee is, opereer je zonder architectuur.</p>
+        </div>
+
+        <h2>De drie architecturen die echt werken</h2>
+
+        <p>Niet elk bedrijf heeft dezelfde architectuur nodig. Maar elke architectuur heeft dezelfde structurele integriteit nodig. Drie modellen domineren in B2B SaaS:</p>
+
+        <h3>De velocity-architectuur</h3>
+
+        <p>Geoptimaliseerd voor snelheid en volume. Lage ACV, veel deals, korte salescycli. Product-led of inbound-led. De architectuur is gebouwd rond conversie-efficientie: frictie wegnemen bij elke handover van eerste contact tot getekende deal. Het gewicht in deze architectuur komt van overcomplexering van wat een eenvoudige, herhaalbare motion zou moeten zijn.</p>
+
+        <h3>De enterprise-architectuur</h3>
+
+        <p>Geoptimaliseerd voor diepte en dealgrootte. Hoge ACV, weinig deals, lange salescycli. Sales-led met buying committees met meerdere stakeholders. De architectuur is gebouwd rond relationele orchestratie: de complexiteit beheren tussen stakeholders, procurement en implementatie. Gewicht hier komt van enterprise-processen toepassen op deals die ze niet vereisen.</p>
+
+        <h3>De hybride architectuur</h3>
+
+        <p>De meest voorkomende en de gevaarlijkste. Bedient meerdere segmenten met verschillende ACV's, verschillende motions en verschillende koopprocessen. De architectuur moet zowel velocity als enterprise tegelijk ondersteunen zonder de een met de ander te besmetten. Gewicht stapelt zich hier het snelst op omdat de verleiding is om een enkel proces te bouwen dat beide bedient, wat geen van beide bedient.</p>
+
+        <p>De juiste architectuur hangt af van je markt, je ACV-distributie en je stadium. Wat telt is dat ze expliciet is. Een impliciete architectuur is een onbeheerde architectuur, en onbeheerde architecturen degenereren.</p>
+
+        <h2>Ontwerpen voor lichtheid</h2>
+
+        <p>Het doel van revenue-architectuur is niet volledigheid. Het is lichtheid. Een lichte architectuur converteert marktkansen naar revenue met het minimaal benodigde structurele gewicht.</p>
+
+        <p>Lichtheid betekent geen eenvoud. Een goed ontworpen enterprise-architectuur is noodzakelijk complex. Maar ze is complex op plekken waar complexiteit waarde creeert (deal-orchestratie, stakeholdermanagement) en eenvoudig op plekken waar complexiteit waarde vernietigt (handovers, data-invoer, goedkeuringsketens).</p>
+
+        <p>Drie principes leveren een lichtere architectuur op:</p>
+
+        <p><strong>Verwijder voor je toevoegt.</strong> Voordat je een nieuwe tool, proces of rol introduceert, vraag jezelf af: welk bestaand gewicht elimineert dit? Als het antwoord geen is, voeg je gewicht toe, los je niets op.</p>
+
+        <p><strong>Ontwerp de handovers, niet de functies.</strong> De meeste architectuurfalen spelen zich af op de grenzen tussen functies: handover marketing-naar-sales, sales-naar-CS, CS-naar-expansie. Daar gaat informatie verloren, wordt accountability vaag en sterven deals. Teken eerst de handovers, de functies organiseren zich erom.</p>
+
+        <p><strong>Meet het systeem, niet de delen.</strong> Functionele metrics (MQL, SQL, win rates) zijn nodig maar onvoldoende. Architecturale metrics meten daarentegen het hele systeem: revenue per employee, CAC payback, pipeline-naar-revenue-conversie, tijd van eerste contact tot expansie. Gewicht zie je wanneer revenue per employee daalt, cycli langer worden, handover-frictie stijgt en beslissings-velocity vertraagt. Wat functionele metrics nooit naar boven brengen.</p>
+
+        <h2>De architectuur-audit</h2>
+
+        <p>Als je GTM-systeem zwaarder is dan het zou moeten, is de eerste stap niet reorganiseren. Het is auditen.</p>
+
+        <p>Een architectuur-audit beantwoordt drie vragen: wat is het huidige structurele ontwerp van je revenue-systeem, waar zit de structurele constraint, en wat is de minimale interventie die nodig is om die te verlichten.</p>
+
+        <p>De deliverable is geen strategiedeck van 50 slides. Het is een constraint-kaart: een view van welke architecturale laag het systeem beperkt, hoe de constraint zich propageert over de andere lagen, en in welke volgorde die aan te pakken.</p>
+
+        <p>Dat is wat het <a href="grip-framework-gtm-diagnostic-model.html" style="color:var(--primary); font-weight:700;">GRIP-framework</a> ontworpen is om te produceren. Het beoordeelt de vier lagen van revenue-architectuur, identificeert het structurele onevenwicht en sequenceert de interventies die de meeste verbetering opleveren met het minst toegevoegde gewicht.</p>
+
+        <p>De meeste GTM-systemen falen niet omdat de mensen zwak zijn. Ze falen omdat de architectuur te zwaar is om op te schalen.</p>
+
+        <h2>Veelgestelde vragen</h2>
+
+        <p><strong>Wat is revenue-architectuur in SaaS?</strong><br>Revenue-architectuur is het structurele ontwerp van hoe een bedrijf marktkansen omzet in recurring revenue. Het omvat vier lagen: hoe het bedrijf beslist wat na te streven (strategie), welke capaciteiten het nodig heeft (resources), hoe het intentie omzet in revenue (executie), en hoe het revenue door de tijd heen behoudt en componeert (performance).</p>
+
+        <p><strong>Wat is het verschil tussen revenue-architectuur en GTM-strategie?</strong><br>Strategie definieert richting en prioriteiten. Architectuur definieert het systeem dat de strategie uitvoert. Je kunt een briljante strategie hebben en een gebroken architectuur. Het resultaat is consistente onderprestatie ondanks heldere richting.</p>
+
+        <p><strong>Hoe weet je of je revenue-architectuur gebroken is?</strong><br>Vier signalen: dezelfde problemen keren elk kwartaal terug ondanks interventies, functies optimaliseren tegen elkaar, headcount toevoegen verhoogt revenue niet proportioneel, en je kunt niet uitleggen waarom je deals wint of verliest.</p>
+
+        <p><strong>Wat maakt een GTM-systeem te zwaar?</strong><br>Gewicht stapelt zich op wanneer elk kwartaal meer tools, processen, handovers en mensen toevoegt zonder complexiteit weg te nemen. Het manifesteert zich als dalende revenue per employee, langere cycli, stijgende handover-frictie, en tragere beslissings-velocity.</p>
+
+        <p><strong>Hoe repareer je een gebroken revenue-architectuur?</strong><br>Begin met een diagnostische audit die de structurele constraint isoleert. Daarna drie principes: verwijder voor je toevoegt, ontwerp handovers in plaats van functies, meet het systeem in plaats van de delen. De volgorde van interventies telt meer dan de interventie zelf.</p>
+
+        <div class="article-cta">
+          <h3>Audit je revenue-architectuur</h3>
+          <p>De Caugia Constraint Engine evalueert je structurele ontwerp op vier dimensies en twaalf pijlers. Geen consultants, geen workshops. Een diagnose, een uur.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Gratis GTM-Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Volledige Diagnose</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Oprichter van Caugia. Bouwt aan GRIP OS, het constraint-driven GTM Operating System voor B2B SaaS. Bouwde en schaalde eerder Go-to-Market-systemen bij meerdere SaaS-bedrijven in Europa.</div>
+    <a href="https://www.linkedin.com/in/meijertom/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Alle rechten voorbehouden. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacybeleid</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>

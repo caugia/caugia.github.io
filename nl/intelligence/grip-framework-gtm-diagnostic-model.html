@@ -1,0 +1,475 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Het GRIP Framework: een GTM-diagnostiekmodel voor B2B SaaS-revenue-systemen | Caugia</title>
+  <meta name="description" content="GRIP is het diagnostische framework van Caugia om B2B SaaS-revenue-systemen te beoordelen op 12 GTM-pijlers en 4 dimensies, om structurele constraints en revenue leakage te identificeren." />
+  <link rel="canonical" href="https://www.caugia.com/nl/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/grip-framework-gtm-diagnostic-model.html" />
+
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/nl/intelligence/grip-framework-gtm-diagnostic-model.html" />
+  <meta property="og:title" content="Het GRIP Framework: een GTM-diagnostiekmodel voor B2B SaaS-revenue-systemen" />
+  <meta property="og:description" content="Elk GTM-systeem werkt op vier dimensies. Wanneer er een breekt, voelt de hele revenue-engine het. GRIP maakt het onzichtbare zichtbaar." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Het GRIP Framework: een GTM-diagnostiekmodel voor B2B SaaS-revenue-systemen" />
+  <meta name="twitter:description" content="Elk GTM-systeem werkt op vier dimensies. Wanneer er een breekt, voelt de hele revenue-engine het. GRIP maakt het onzichtbare zichtbaar." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/logo-final.png">
+  <link rel="apple-touch-icon" href="../../assets/logo-final.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-hero .intel-back:hover { text-decoration: underline; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: rgba(96,165,250,0.15); color: var(--primary); margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+
+    .grip-dimension-card {
+      background: #f8fafc; border: 1px solid var(--line); border-radius: 14px;
+      padding: 28px; margin: 24px 0;
+    }
+    .grip-dimension-card h3 { margin-top: 0; }
+    .grip-dimension-card .grip-letter { font-size: 2rem; font-weight: 900; color: var(--primary); margin-right: 12px; }
+    .grip-pillar-list { margin: 12px 0 0; padding: 0; list-style: none; }
+    .grip-pillar-list li { padding: 6px 0 6px 16px; position: relative; font-size: 0.92rem; color: #475569; line-height: 1.5; }
+    .grip-pillar-list li::before { content: ""; position: absolute; left: 0; top: 14px; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+
+    .constraint-flow {
+      background: #0f172a; border-radius: 14px; padding: 32px;
+      margin: 32px 0; text-align: center; color: #fff;
+    }
+    .constraint-flow-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #60a5fa; margin-bottom: 16px; }
+    .constraint-flow-chain { font-size: 1rem; font-weight: 600; color: #e2e8f0; line-height: 2.2; }
+    .constraint-flow-chain .arrow { color: #f59e0b; margin: 0 8px; }
+
+    .article-callout {
+      border-left: 3px solid var(--primary); background: #eff6ff;
+      padding: 20px 24px; margin: 28px 0; border-radius: 0 10px 10px 0;
+    }
+    .article-callout p { margin: 0; font-size: 0.95rem; color: #1e3a5f; line-height: 1.6; }
+
+    .article-cta {
+      text-align: center; padding: 48px; margin: 48px 0;
+      background: #f8fafc; border: 1px solid var(--line); border-radius: 16px;
+    }
+    .article-cta h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; color: #475569; }
+
+    @media (max-width: 768px) {
+      .article-hero { padding-top: 30px; }
+      .article-hero h1 { font-size: 1.8rem; }
+      .article-body h2 { font-size: 1.3rem; }
+    }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Het GRIP Framework: een GTM-diagnostiekmodel voor B2B SaaS-revenue-systemen",
+    "description": "GRIP is het diagnostische framework van Caugia om B2B SaaS-revenue-systemen te beoordelen op 12 GTM-pijlers en 4 dimensies, om structurele constraints en revenue leakage te identificeren.",
+    "url": "https://www.caugia.com/nl/intelligence/grip-framework-gtm-diagnostic-model.html",
+    "datePublished": "2026-03-11",
+    "dateModified": "2026-03-18",
+    "author": {"@type": "Person", "name": "Tom Meijer"},
+    "publisher": {"@type": "Organization", "name": "Caugia", "logo": {"@type": "ImageObject", "url": "https://www.caugia.com/assets/logo-final.png"}},
+    "image": "https://www.caugia.com/assets/social-share.png",
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.caugia.com/nl/intelligence/grip-framework-gtm-diagnostic-model.html"}
+  }
+  </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Waar staat GRIP voor?", "acceptedAnswer": {"@type": "Answer", "text": "GRIP staat voor Guidance, Resources, Implementation en Performance. Dat zijn de vier structurele dimensies van een B2B SaaS Go-to-Market-systeem, elk met drie diagnostische pijlers."}},
+    {"@type": "Question", "name": "Hoe verschilt GRIP van andere GTM-frameworks?", "acceptedAnswer": {"@type": "Answer", "text": "De meeste GTM-frameworks zijn georganiseerd per functie. GRIP is georganiseerd per structurele laag, wat betekent dat het constraints kan identificeren die meerdere functies doorkruisen."}},
+    {"@type": "Question", "name": "Wat zijn GRIP-scores?", "acceptedAnswer": {"@type": "Answer", "text": "Elke GRIP-dimensie krijgt een score van 0 tot 100. De diagnostische waarde zit in de onbalans tussen dimensies, niet in de absolute score."}},
+    {"@type": "Question", "name": "Wat is een growth archetype in GRIP?", "acceptedAnswer": {"@type": "Answer", "text": "Growth archetypes zijn structurele patronen die specifieke GTM-onbalans beschrijven. Er zijn meer dan 30 archetypes, elk met een eigen constraint-volgorde en interventieprioriteit."}},
+    {"@type": "Question", "name": "Kun je GRIP gebruiken zonder de Caugia-diagnose?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. De vier dimensies en twaalf pijlers werken als mentaal model. De formele diagnose voegt deterministische scoring, kwantificering van revenue leakage en een 90-daagse executie-volgorde toe."}}
+  ]
+}
+</script>
+  <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence (RSS)" href="https://www.caugia.com/nl/intelligence/feed.xml" />
+</head>
+
+<body>
+  <script src="../../assets/header.js"></script>
+
+  <main>
+    <article>
+      <section class="container article-hero">
+        <a href="../intelligence.html" class="intel-back">&larr; Terug naar Intelligence</a>
+        <span class="article-tag">Caugia Framework</span>
+        <h1>Het GRIP Framework: een GTM-diagnostiekmodel voor B2B SaaS-revenue-systemen</h1>
+        <p class="article-lead">Elk Go-to-Market-systeem werkt op vier dimensies: Guidance, Resources, Implementation en Performance. Wanneer een dimensie structureel zwak is, compenseert de hele revenue-engine. GRIP maakt de onzichtbare constraint zichtbaar.</p>
+        <div class="article-meta">Door Tom Meijer, oprichter van Caugia &middot; 15 min leestijd &middot; Maart 2026</div>
+      </section>
+
+      <div class="container article-body">
+
+        <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:40px;">
+          <p style="font-size:0.82rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#94a3b8; margin-bottom:12px;">In dit artikel</p>
+          <p style="font-size:0.92rem; color:#475569; line-height:1.7; margin:0;">Waarom de meeste GTM-systemen verkeerd worden gediagnosticeerd. Wat GRIP is en hoe het GTM-evaluatie structureert over vier dimensies en twaalf pijlers. Hoe constraints zich door revenue-systemen verspreiden. Waarom deterministische scoring betere resultaten oplevert dan consulting. En hoe Caugia GRIP toepast in een gescoorde diagnose die in minder dan een uur een rapport van 45 pagina's levert.</p>
+        </div>
+
+        <h2>Het probleem met hoe we Go-to-Market beoordelen</h2>
+
+        <p>Vraag een CRO wat er mis is met zijn Go-to-Market-systeem en je krijgt een lijst symptomen. Pipeline daalt. Win rates zakken. Churn stijgt. Reps missen hun quotum. En het board wacht op antwoorden.</p>
+
+        <p>Het instinct is om het luidste symptoom te corrigeren. Pipeline daalt? Pomp meer in demand gen. Win rates zakken? Huur een trainer. Churn stijgt? Herstructureer CS. Elke interventie behandelt wat zichtbaar is. Geen enkele behandelt wat structureel is.</p>
+
+        <p>Dat is het echte probleem in hoe de meeste bedrijven hun GTM beoordelen. Ze houden symptomen voor oorzaken. Ze optimaliseren elke functie in een silo. Ze passen consultancy-frameworks toe die zijn ontworpen om aanbevelingen te produceren, niet om constraints te isoleren.</p>
+
+        <p>Het resultaat: een systeem dat elk kwartaal zwaarder wordt. Meer headcount, meer tools, meer processen. Maar de constraint blijft onzichtbaar omdat niemand naar het systeem als geheel kijkt.</p>
+
+        <h2>Wat GRIP is</h2>
+
+        <p>GRIP is een diagnostisch framework dat een B2B SaaS Go-to-Market-systeem beoordeelt op vier structurele dimensies en twaalf operationele pijlers. Het is ontworpen om een enkele vraag te beantwoorden: <strong>waar zit de primaire constraint van je revenue-systeem, en in welke volgorde moet je die adresseren?</strong></p>
+
+        <div class="article-callout">
+          <p>GRIP is het diagnostische model achter de Caugia Constraint Engine. De engine evalueert 265 gestructureerde inputs over de 12 pijlers, scoort ze via 72 scoring engines en genereert een board-niveau rapport van 45 pagina's in minder dan een uur.</p>
+        </div>
+
+        <p>De vier dimensies zijn:</p>
+
+        <div style="background:#0f172a; border-radius:14px; padding:28px 32px; margin:24px 0; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div style="padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <div style="font-weight:900; color:#60a5fa; font-size:1.1rem; margin-bottom:4px;">G <span style="color:#e2e8f0; font-size:0.85rem; font-weight:600;">Guidance</span></div>
+            <div style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">Bepaalt de richting</div>
+          </div>
+          <div style="padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <div style="font-weight:900; color:#60a5fa; font-size:1.1rem; margin-bottom:4px;">R <span style="color:#e2e8f0; font-size:0.85rem; font-weight:600;">Resources</span></div>
+            <div style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">Maakt executie mogelijk</div>
+          </div>
+          <div style="padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <div style="font-weight:900; color:#60a5fa; font-size:1.1rem; margin-bottom:4px;">I <span style="color:#e2e8f0; font-size:0.85rem; font-weight:600;">Implementation</span></div>
+            <div style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">Zet actie om in revenue</div>
+          </div>
+          <div style="padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <div style="font-weight:900; color:#60a5fa; font-size:1.1rem; margin-bottom:4px;">P <span style="color:#e2e8f0; font-size:0.85rem; font-weight:600;">Performance</span></div>
+            <div style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">Bepaalt of groei compoundt</div>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin:36px 0 12px;">
+          <div style="font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#94a3b8; margin-bottom:16px;">Hoe de vier GRIP-dimensies samenhangen</div>
+          <svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:400px; height:auto;">
+            <style>
+              .gd-border{fill:none;stroke:#0056b3;stroke-width:2}
+              .gd-lines{stroke:#0056b3;stroke-width:1;opacity:0.3}
+              .gd-icon{fill:none;stroke:#0056b3;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+              .gd-label{font-family:Inter,sans-serif;font-size:18px;font-weight:800;fill:#0f172a}
+            </style>
+            <g transform="translate(300,230)">
+              <g transform="rotate(45)">
+                <rect class="gd-border" x="-100" y="-100" width="200" height="200" rx="4" />
+                <line class="gd-lines" x1="0" y1="-100" x2="0" y2="100" />
+                <line class="gd-lines" x1="-100" y1="0" x2="100" y2="0" />
+              </g>
+            </g>
+            <g transform="translate(300, 160)">
+              <g transform="translate(-14, -14) scale(1.4)">
+                <circle cx="10" cy="10" r="9" class="gd-icon"/>
+                <polygon points="10 4 12 10 10 16 8 10" fill="#0056b3" stroke="none"/>
+                <circle cx="10" cy="10" r="1.5" fill="#fff"/>
+              </g>
+            </g>
+            <g transform="translate(370, 230)">
+              <g transform="translate(-15, -15) scale(1.5)">
+                <rect x="2" y="6" width="16" height="11" rx="1" class="gd-icon" />
+                <path d="M7 6V4C7 3 8 2 10 2C12 2 13 3 13 4V6" class="gd-icon" />
+                <rect x="9" y="9" width="2" height="2" fill="#0056b3" stroke="none"/>
+              </g>
+            </g>
+            <g transform="translate(300, 300)">
+              <g transform="translate(-12, -12) scale(1.2)">
+                <circle cx="12" cy="12" r="3" class="gd-icon"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" class="gd-icon"/>
+              </g>
+            </g>
+            <g transform="translate(230, 230)">
+              <g transform="translate(-15, -15) scale(1.5)">
+                <polyline points="18 6 11 13 7 9 2 14" class="gd-icon"/>
+                <polyline points="13 6 18 6 18 11" class="gd-icon"/>
+              </g>
+            </g>
+            <text x="300" y="55" class="gd-label" text-anchor="middle">Guidance</text>
+            <text x="455" y="235" class="gd-label" text-anchor="start">Resources</text>
+            <text x="300" y="415" class="gd-label" text-anchor="middle">Implementation</text>
+            <text x="145" y="235" class="gd-label" text-anchor="end">Performance</text>
+          </svg>
+        </div>
+
+        <div class="grip-dimension-card">
+          <h3><span class="grip-letter">G</span> Guidance</h3>
+          <p>De strategische laag. Guidance meet of de richting helder is, of het marktbegrip diepgaand is en of de positionering verdedigbaar is. Wanneer Guidance zwak is, optimaliseert elke downstream-functie voor het verkeerde doel.</p>
+          <ul class="grip-pillar-list">
+            <li><strong>GTM Strategy & Leadership.</strong> Bestaat er een gedeeld model voor jouw groei?</li>
+            <li><strong>Market Intelligence.</strong> Begrijp je je markt diep genoeg om structurele weddenschappen te maken?</li>
+            <li><strong>Product Marketing.</strong> Kun je waarde articuleren op een manier die de markt begrijpt en verkopers kunnen leveren?</li>
+          </ul>
+        </div>
+
+        <div class="grip-dimension-card">
+          <h3><span class="grip-letter">R</span> Resources</h3>
+          <p>De capaciteitslaag. Resources beoordeelt of je systeem correct is uitgerust om de strategie uit te voeren die Guidance definieert. Pricing, productgereedheid en team-enablement bevinden zich hier.</p>
+          <ul class="grip-pillar-list">
+            <li><strong>Pricing & Packaging.</strong> Ondersteunt je pricing-model de manier waarop klanten adopteren en uitbreiden?</li>
+            <li><strong>Product Readiness.</strong> Ondersteunt het product daadwerkelijk de GTM-motion die je uitvoert?</li>
+            <li><strong>Enablement.</strong> Hebben teams de vaardigheden, content en coaching om consistent te executeren?</li>
+          </ul>
+        </div>
+
+        <div class="grip-dimension-card">
+          <h3><span class="grip-letter">I</span> Implementation</h3>
+          <p>De executielaag. Implementation meet of strategie wordt omgezet in revenue via consistente, schaalbare processen. Hier voelen de meeste bedrijven de pijn als eerste, omdat executiefouten zichtbaar en onmiddellijk zijn.</p>
+          <ul class="grip-pillar-list">
+            <li><strong>Demand Generation.</strong> Komt pipeline voorspelbaar binnen en in de juiste kwaliteit?</li>
+            <li><strong>Sales Execution.</strong> Vorderen deals consistent of leunen ze op individuele heldendaden?</li>
+            <li><strong>Revenue Operations & Systems.</strong> Verwijdert je operationele infrastructuur frictie of voegt die toe?</li>
+          </ul>
+        </div>
+
+        <div class="grip-dimension-card">
+          <h3><span class="grip-letter">P</span> Performance</h3>
+          <p>De resultaatlaag. Performance meet of jouw systeem zich in de tijd compoundt. Retentie, datakwaliteit en organisatorische alignment bepalen of groei duurzaam of fragiel is.</p>
+          <ul class="grip-pillar-list">
+            <li><strong>Customer Success & Expansion.</strong> Behoud en laat je de revenue groeien die je al hebt verdiend?</li>
+            <li><strong>Data & Insights.</strong> Kan leadership vertrouwen op de cijfers waarop het beslissingen baseert?</li>
+            <li><strong>Alignment & Governance.</strong> Hebben teams de structuur en cadans om gealigneerd te blijven?</li>
+          </ul>
+        </div>
+
+        <h2>Waarom vier dimensies, niet twaalf pijlers</h2>
+
+        <p>De twaalf pijlers leveren diagnostische diepte. Maar de vier dimensies leveren diagnostische helderheid. Dat onderscheid is belangrijk omdat constraints zelden in een enkele pijler leven. Ze leven in de relatie tussen dimensies.</p>
+
+        <p>Een bedrijf met sterke Guidance en zwakke Implementation heeft een heldere strategie maar gebrekkige executie. Het symptoom lijkt op een Sales-probleem, maar de hoofdoorzaak kan een Enablement-tekort zijn in Resources, of een RevOps-tekort in Implementation, of beide.</p>
+
+        <p>Een bedrijf met sterke Implementation en zwakke Performance bezit een efficiente machine die langzaam revenue verliest. De win rates lijken gezond, pipeline coverage is adequaat, maar NRR daalt en niemand kan uitleggen waarom. De constraint zit niet in de engine. Hij zit in de resultaatlaag.</p>
+
+        <p>Door eerst dimensies te beoordelen en daarna pijlers, voorkomt GRIP de meest voorkomende diagnostische fout: <strong>een lokaal symptoom als globale oorzaak behandelen.</strong></p>
+
+        <h2>Hoe constraints zich verspreiden</h2>
+
+        <p>In elk systeem blijft een constraint in een dimensie niet ingesloten. Hij verspreidt zich. En dat doet hij voorspelbaar.</p>
+
+        <div class="constraint-flow">
+          <div class="constraint-flow-title">Voorbeeld van constraint-propagatie</div>
+          <div class="constraint-flow-chain">
+            Engineering-capaciteitstekort<br>
+            <span class="arrow">&darr;</span><br>
+            Trage productlevering<br>
+            <span class="arrow">&darr;</span><br>
+            NRR-verslechtering<br>
+            <span class="arrow">&darr;</span><br>
+            Compenserende discounting<br>
+            <span class="arrow">&darr;</span><br>
+            Win-rate-instorting
+          </div>
+        </div>
+
+        <p>In dit voorbeeld is het zichtbare symptoom een win-rate-instorting. Het instinct is om Sales te corrigeren. Maar de echte constraint is een Product-Readiness-tekort in de Resources-dimensie. Elke interventie die het oorsprongspunt niet adresseert, is verspilde inspanning.</p>
+
+        <p>Daarom evalueert GRIP het hele systeem. Niet om een uitputtend rapport te leveren, maar om te identificeren waar de keten begint. Repareer het oorsprongspunt en de cascade keert om. Repareer een downstream-symptoom en het systeem compenseert ergens anders.</p>
+
+        <h2>De 12 pijlers in detail</h2>
+
+        <p>Elke GRIP-dimensie bevat drie diagnostische pijlers. Elke pijler wordt geevalueerd op 20 gestructureerde vragen die de volwassenheid op een vijfpuntsschaal meten. De scoring is deterministisch: dezelfde inputs leveren dezelfde scores op, ongeacht wanneer of hoe vaak de diagnose wordt uitgevoerd.</p>
+
+        <h3>Guidance-pijlers</h3>
+
+        <p><strong>GTM Strategy & Leadership</strong> beoordeelt of de richting helder is, of prioriteiten zijn gedefinieerd, en of de strategie zich vertaalt in actiegerichte roadmaps. Het meet het gat tussen het hebben van een strategie en het hebben van een strategie die je hele team kan uitvoeren.</p>
+
+        <p><strong>Market Intelligence</strong> beoordeelt de diepte van je marktbegrip. Niet of je een ICP-document hebt, maar of die ICP gevalideerd is tegen werkelijke revenue-data, of je koop-triggers begrijpt en of je marktverschuivingen kunt detecteren voor je concurrenten.</p>
+
+        <p><strong>Product Marketing</strong> meet je vermogen om productfunctionaliteit te vertalen naar marktwaarde. Concreet: werkt je positionering, gebruiken verkopers je messaging zonder het aan te passen, en kan een prospect je differentiatie begrijpen na een enkel gesprek.</p>
+
+        <h3>Resources-pijlers</h3>
+
+        <p><strong>Pricing & Packaging</strong> beoordeelt of je monetisatiemodel is afgestemd op de manier waarop klanten adopteren en uitbreiden. Het kijkt naar pricing power, expansie-frictie en of je model de GTM-motion ondersteunt die je uitvoert.</p>
+
+        <p><strong>Product Readiness</strong> beoordeelt het gat tussen wat Sales belooft en wat Product levert. Dit omvat de voorspelbaarheid van time-to-value, implementatiecomplexiteit en of het product herhaalbare levering aan klanten ondersteunt.</p>
+
+        <p><strong>Enablement</strong> meet de effectiviteit van training, ramp-up-tijd, kwaliteit van coaching, en of je strategie daadwerkelijk consistent wordt uitgevoerd in de frontlinie. De vraag is niet of enablement bestaat, maar of het meetbare resultaten oplevert.</p>
+
+        <h3>Implementation-pijlers</h3>
+
+        <p><strong>Demand Generation</strong> beoordeelt de voorspelbaarheid en kwaliteit van pipeline. Niet alleen volume, maar of de pipeline die je genereert converteert tegen percentages die je unit economics ondersteunen. Het meet het gat tussen marketingactiviteit en revenue-bijdrage.</p>
+
+        <p><strong>Sales Execution</strong> beoordeelt funnel-consistentie, dealkwaliteit en proces-rigor. Het scheidt revenue dat uit een systeem komt van revenue dat uit individuele heldendaden komt. De vraag is of je win rate consistent is over verkopers of dat het afhangt van een paar top performers.</p>
+
+        <p><strong>Revenue Operations & Systems</strong> beoordeelt procesvolwassenheid, tech-stack-integratie en operationele cadans. Het meet of je infrastructuur frictie verwijdert of complexiteit toevoegt, en of je datafundament besluitvorming op schaal ondersteunt.</p>
+
+        <h3>Performance-pijlers</h3>
+
+        <p><strong>Customer Success & Expansion</strong> meet de effectiviteit van onboarding, retentiemechanieken en de expansie-motion. Het verschuift de focus van reactieve support naar proactieve waardelevering, wat het verschil is tussen stabiele retentie en compounding NRR.</p>
+
+        <p><strong>Data & Insights</strong> beoordeelt of leadership beslissingen neemt op basis van bewijs of van intuitie. Het beoordeelt metric-definities, forecast-precisie en of je dashboards actie genereren of slechts cijfers tonen.</p>
+
+        <p><strong>Alignment & Governance</strong> weerspiegelt organisatorische coherentie. Het meet of er silo's bestaan, of het operationele ritme accountability genereert, en of informatie van de frontlinie naar leiders stroomt zonder vervorming.</p>
+
+        <h2>De GRIP-scores en wat ze betekenen</h2>
+
+        <p>Elke dimensie krijgt een score van 0 tot 100 op basis van de geaggregeerde volwassenheid van zijn drie pijlers. De composite GRIP-score is het gewogen gemiddelde van de vier dimensies.</p>
+
+        <p>Maar de composite-score is niet wat ertoe doet. Wat ertoe doet, is de <strong>onbalans</strong>.</p>
+
+        <p>Een bedrijf met Guidance op 74, Resources op 66, Implementation op 41 en Performance op 62 heeft geen probleem &ldquo;61 op 100&rdquo;. Het heeft een Implementation-probleem dat het hele systeem omlaagtrekt. De GRIP-score identificeert die onbalans en kwantificeert de impact op revenue.</p>
+
+        <div class="article-callout">
+          <p><strong>De diagnostische waarde van GRIP zit niet in de absolute score. Het zit in de delta tussen dimensies.</strong> Een gebalanceerd systeem op 55 over alle vier dimensies is structureel gezonder dan een onbalans-systeem met een dimensie op 80 en een andere op 35.</p>
+        </div>
+
+        <h2>Systeempatronen en archetypes</h2>
+
+        <p>Wanneer je GRIP toepast op honderden B2B SaaS-bedrijven, ontstaan patronen. Wij noemen ze <strong>growth archetypes</strong>. Elk archetype beschrijft een specifieke structurele onbalans die voorspelbare symptomen produceert.</p>
+
+        <p><strong>De Ivoren Toren.</strong> Sterke Guidance, zwakke Implementation. De strategie is helder maar de executie breekt op de overdrachtspunten. Veel voorkomend in bedrijven waar leadership zwaar in strategie heeft geinvesteerd maar te weinig in operationele infrastructuur.</p>
+
+        <p><strong>De Toevallige Groei.</strong> Implementation-scores zijn hoog, Guidance-scores zijn laag. Revenue komt binnen, maar niemand weet echt waarom. Het systeem werkt door individuele inspanningen en gunstige marktwinden, niet door structureel voordeel. Dit is het gevaarlijkste patroon om op te schalen: wat je tot hier heeft gebracht, brengt je niet verder.</p>
+
+        <p><strong>De Lekkende Emmer.</strong> Demand generation is sterk, maar Performance is zwak. Pipeline circuleert, deals sluiten, maar klanten gaan weg. Het systeem genereert revenue en verliest het daarna. Dit patroon produceert de illusie van groei terwijl NRR het bedrijf stilletjes uitholt.</p>
+
+        <p>Er zijn meer dan 30 archetypes in het Caugia-systeem. Elk komt overeen met een specifieke constraint-volgorde en interventieprioriteit. Het archetype vertelt je niet wat je moet doen. Het vertelt je <strong>wat je als eerste moet repareren</strong>.</p>
+
+        <h2>Waarom deterministische scoring telt</h2>
+
+        <p>Traditionele GTM-evaluatie is subjectief. Een consultant interviewt je team, past zijn persoonlijke framework toe en produceert aanbevelingen op basis van zijn ervaring en oordeel. Twee consultants die hetzelfde bedrijf evalueren, leveren verschillende aanbevelingen op.</p>
+
+        <p>GRIP is deterministisch. Dezelfde inputs leveren dezelfde scores op. De scoring-logica is gecodeerd in engines, niet in meningen. Dat betekent:</p>
+
+        <p><strong>Herhaalbaarheid.</strong> Je kunt de diagnose elk kwartaal opnieuw uitvoeren en structurele verbetering in de tijd volgen. De scores blijven vergelijkbaar omdat de methodologie niet beweegt.</p>
+
+        <p><strong>Snelheid.</strong> Een klassieke consultancy-opdracht duurt 4 tot 8 weken. Een GRIP-diagnose wordt afgerond in 35 minuten en het rapport komt binnen een uur.</p>
+
+        <p><strong>Objectiviteit.</strong> De diagnose heeft geen belang om je zijn eigen diensten te verkopen. Het identificeert de constraint en kwantificeert de impact. Wat je daarmee doet, is jouw beslissing.</p>
+
+        <h2>Wat GRIP niet doet</h2>
+
+        <p>GRIP vervangt geen executie. Het schrijft je salesplaybook niet, bouwt je demand-generation-engine niet en herstructureert je CS-organisatie niet. Het is een diagnostisch instrument, geen consultancy-opdracht.</p>
+
+        <p>Het vervangt ook geen leadership-oordeel. De diagnose identificeert waar het systeem structureel beperkt is en kwantificeert de impact op revenue. Maar de beslissing hoe te prioriteren, hoe resources te alloceren en hoe interventies te sequencen, blijft bij het executive-team.</p>
+
+        <p>Wat GRIP wel doet, is ervoor zorgen dat die beslissingen worden genomen met structurele zichtbaarheid in plaats van functionele intuitie. Dat is het verschil tussen het juiste repareren en het luidste repareren.</p>
+
+        <h2>Hoe je GRIP gebruikt</h2>
+
+        <p>Er zijn twee manieren om het GRIP Framework toe te passen:</p>
+
+        <p><strong>Zelfevaluatie.</strong> Gebruik de vier dimensies en twaalf pijlers als mentaal model om je eigen GTM-systeem te onderzoeken. Stel jezelf de vraag: waar zit de onbalans? Welke dimensie is het zwakst? Behandelt het team hoofdoorzaken of symptomen? Alleen dat al produceert betere strategische gesprekken.</p>
+
+        <p><strong>Formele diagnose.</strong> De Caugia Constraint Engine voert GRIP uit als gestructureerde, gescoorde evaluatie met 265 vragen over de 12 pijlers. Het produceert een Intelligence-rapport van 45 pagina's met scores per dimensie, constraint-analyse, revenue leakage modeling, een systeemfailure-kaart en een 90-daagse executie-volgorde. Dat is de volledige toepassing van GRIP als diagnostisch instrument.</p>
+
+        <h2>Veelgestelde vragen</h2>
+
+        <p><strong>Waar staat GRIP voor?</strong><br>GRIP staat voor Guidance, Resources, Implementation en Performance. Dat zijn de vier structurele dimensies van een B2B SaaS Go-to-Market-systeem. Elke dimensie bevat drie diagnostische pijlers, in totaal twaalf.</p>
+
+        <p><strong>Hoe verschilt GRIP van andere GTM-frameworks?</strong><br>De meeste GTM-frameworks zijn georganiseerd per functie: marketing, sales, customer success. GRIP is georganiseerd per structurele laag. Daardoor kan het constraints identificeren die meerdere functies doorkruisen, zoals een positioneringsprobleem dat zich manifesteert als sales-executieprobleem.</p>
+
+        <p><strong>Wat zijn GRIP-scores?</strong><br>Elke GRIP-dimensie krijgt een score van 0 tot 100 op basis van de geaggregeerde volwassenheid van zijn drie pijlers. De diagnostische waarde zit niet in de absolute score, maar in de onbalans tussen dimensies. Een gebalanceerd systeem op 55 over alle vier dimensies is structureel gezonder dan een onbalans-systeem met een dimensie op 80 en een andere op 35.</p>
+
+        <p><strong>Wat is een growth archetype in GRIP?</strong><br>Growth archetypes zijn structurele patronen die specifieke GTM-onbalans en de gevolgen ervan beschrijven. Er zijn meer dan 30 archetypes in het Caugia-systeem. Elk komt overeen met een specifieke constraint-volgorde en interventieprioriteit.</p>
+
+        <p><strong>Kun je GRIP gebruiken zonder de Caugia-diagnose?</strong><br>Ja. De vier dimensies en twaalf pijlers kunnen worden gebruikt als mentaal model om je eigen GTM-systeem te beoordelen. De formele diagnose voegt deterministische scoring, kwantificering van revenue leakage en een 90-daagse executie-volgorde toe.</p>
+
+        <div class="article-cta">
+          <h3>Vind de structurele constraint van je GTM-systeem</h3>
+          <p>De Caugia Constraint Engine evalueert 265 inputs over 12 pijlers en levert een board-niveau diagnose van 45 pagina's in minder dan een uur.</p>
+          <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+            <a href="../gtm-assessment.html" class="btn btn-primary">Gratis GTM-Score</a>
+            <a href="../grip-marketplace.html" class="btn btn-outline">Volledige Diagnose</a>
+          </div>
+        </div>
+
+      </div>
+
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 24px;margin-top:32px;">
+  <div style="font-weight:700;font-size:0.9rem;color:#0f172a;margin-bottom:12px;">Verwante artikelen</div>
+  <ul style="list-style:none;padding:0;margin:0;">
+    <li style="margin-bottom:8px;"><a href="gtm-diagnostics-vs-consulting.html" style="color:#3B6CD8;text-decoration:none;font-size:0.9rem;font-weight:600;">GTM-diagnostics vs. traditionele consulting: waarom het model verandert &rarr;</a></li>
+    <li style="margin-bottom:0;"><a href="what-is-a-gtm-diagnostic.html" style="color:#3B6CD8;text-decoration:none;font-size:0.9rem;font-weight:600;">Wat is een GTM-diagnose? Een gestructureerde evaluatie van B2B SaaS-revenue-systemen &rarr;</a></li>
+  </ul>
+</div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-top:48px;">
+  <img src="../../assets/tom-meijer.jpg" alt="Tom Meijer" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'" />
+  <div>
+    <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Tom Meijer</div>
+    <div style="font-size:0.85rem;color:#64748b;line-height:1.6;">Oprichter van Caugia. Bouwt aan GRIP OS, het constraint-driven GTM Operating System voor B2B SaaS. Bouwde en schaalde eerder Go-to-Market-systemen bij meerdere SaaS-bedrijven in Europa.</div>
+    <a href="https://www.linkedin.com/in/meijertom/" target="_blank" rel="noopener" style="font-size:0.82rem;color:#3B6CD8;text-decoration:none;font-weight:600;">LinkedIn &rarr;</a>
+  </div>
+</div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Caugia SASU. Alle rechten voorbehouden. &middot; <a href="../privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Privacybeleid</a></p>
+    </div>
+  </footer>
+
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>
