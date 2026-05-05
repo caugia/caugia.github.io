@@ -778,12 +778,27 @@ function scrollToSection(id) {
     } catch(e){ return 'USD'; }
   }
 
+  /**
+   * Append the page's <html lang="..."> locale to a Stripe Payment Link as
+   * both `?locale=` (drives Stripe Checkout UI language) and
+   * `?metadata[lang]=` (propagates to webhook session.metadata so downstream
+   * provisioning + magic-link email + /<locale>/welcome-purchase land in the
+   * customer's chosen language). Falls back to no-op on EN root.
+   */
+  function localizeStripeUrl(url){
+    var lang = (document.documentElement.getAttribute('lang') || 'en').toLowerCase();
+    var supported = ['en','fr','de','es','pl','nl'];
+    if (supported.indexOf(lang) === -1) return url;
+    var sep = url.indexOf('?') === -1 ? '?' : '&';
+    return url + sep + 'locale=' + lang + '&prefilled_promo_code=&metadata[lang]=' + lang;
+  }
+
   document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){
     e.preventDefault();
     var m = b.getAttribute('data-module');
     if (m && moduleLinks[m]) {
       var curr = getDetectedCurrency();
-      window.location.href = moduleLinks[m][curr] || moduleLinks[m]['EUR'];
+      window.location.href = localizeStripeUrl(moduleLinks[m][curr] || moduleLinks[m]['EUR']);
     }
   });});
 
@@ -800,7 +815,7 @@ function scrollToSection(id) {
     var bu = b.getAttribute('data-bundle');
     if (bu && bundleLinks[bu]) {
       var curr = getDetectedCurrency();
-      window.location.href = bundleLinks[bu][curr] || bundleLinks[bu]['EUR'];
+      window.location.href = localizeStripeUrl(bundleLinks[bu][curr] || bundleLinks[bu]['EUR']);
     }
   });});
 
@@ -820,7 +835,7 @@ function scrollToSection(id) {
       else if (/Europe\//.test(tz)) curr = 'EUR';
     } catch(e){}
 
-    window.location.href = links[curr];
+    window.location.href = localizeStripeUrl(links[curr]);
   }
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 
