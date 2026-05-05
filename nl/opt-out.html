@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Intentionally NO analytics: this page exists to turn tracking OFF -->
+<script>
+(function(){
+  try {
+    // Set opt-out flags unconditionally on page load
+    localStorage.setItem('analytics_optout', 'true');
+    document.cookie = 'caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax';
+    // Also disable GA4 for this page load, in case anything else fires
+    window['ga-disable-G-YDP8FW3T3Z'] = true;
+  } catch(e) {}
+})();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Analytics opt-out | Caugia</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 48px 40px;
+    max-width: 520px;
+    margin: 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #16A34A;
+    box-shadow: 0 0 0 5px rgba(22,163,74,0.14);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #16A34A;
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0 0 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0 0 14px;
+  }
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #1e293b;
+  }
+  .meta {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+  .meta a {
+    color: #3B6CD8;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .opt-in {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-top: 16px;
+  }
+  .opt-in a { color: #64748b; text-decoration: underline; text-decoration-color: #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="eyebrow"><span class="dot"></span>Opt-out actief</p>
+  <h1>Analytics zijn nu uitgeschakeld voor deze browser.</h1>
+  <p>Deze pagina heeft twee vlaggen ingesteld die Google Analytics (GA4) en Microsoft Clarity uitschakelen op elke <code>*.caugia.com</code>-property vanuit deze browser:</p>
+  <p style="padding-left:18px;">
+    &middot; <code>localStorage.analytics_optout = "true"</code><br>
+    &middot; <code>caugia_optout=true</code>-cookie op <code>.caugia.com</code> (geldig 1 jaar)
+  </p>
+  <p>De cookie wordt gelezen door <strong>www.caugia.com</strong> en <strong>os.caugia.com</strong>, dus &eacute;&eacute;n keer opt-out vanuit een van beide dekt beide.</p>
+
+  <div class="meta">
+    <strong>Bookmark deze pagina.</strong> Open hem op elk apparaat en in elke browser waarmee je je eigen site bezoekt. Elke keer dat je hem laadt, worden de vlaggen opnieuw bevestigd.<br><br>
+    <a href="https://www.caugia.com/">&larr; Terug naar caugia.com</a>
+  </div>
+
+  <p class="opt-in">Analytics opnieuw inschakelen (bv. om een event te testen)? <a href="?analytics_optout=false">Wis de opt-out.</a></p>
+</div>
+
+<script>
+// If URL has ?analytics_optout=false, explicitly clear the flags
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('analytics_optout') === 'false') {
+      localStorage.removeItem('analytics_optout');
+      document.cookie = 'caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/';
+      document.querySelector('.eyebrow').innerHTML = '<span class="dot" style="background:#DC2626;box-shadow:0 0 0 5px rgba(220,38,38,0.14);"></span>Opt-out gewist';
+      document.querySelector('h1').textContent = 'Analytics opnieuw ingeschakeld voor deze browser.';
+      document.querySelectorAll('p')[1].textContent = 'Beide vlaggen zijn gewist. Je wordt nu normaal getrackt.';
+    }
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>
