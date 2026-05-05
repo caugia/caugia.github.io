@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Votre GTM Score | Caugia</title>
+  <meta name="description" content="Analyse de votre GTM Score. Découvrez où votre système de revenus se brise et que corriger en priorité." />
+  <link rel="canonical" href="https://www.caugia.com/fr/the-gtm-score.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/fr/the-gtm-score.html" />
+  <meta property="og:title" content="Mon GTM Score | Caugia" />
+  <meta property="og:description" content="Je viens d'analyser mon système GTM avec le Caugia Intelligence Engine." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../icon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/caugia-base.css">
+  <style>
+    :root { --good-bg:#f0fdf4;--good-border:#bbf7d0;--good-text:#15803d; --warn-bg:#fffbeb;--warn-border:#fde68a;--warn-text:#b45309; --bad-bg:#fef2f2;--bad-border:#fecaca;--bad-text:#b91c1c; --mid-bg:#f0f9ff;--mid-border:#bae6fd;--mid-text:#0369a1; }
+    .result-hero { padding:56px 0 32px; text-align:center; max-width:700px; margin:0 auto; }
+    .result-hero h1 { font-size:2.6rem; margin-bottom:14px; line-height:1.12; }
+    .result-hero p { font-size:1rem; color:var(--text-body); max-width:540px; margin:0 auto; }
+    .score-card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:40px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.06); max-width:560px; margin:0 auto 48px; border-top:5px solid var(--primary); }
+    .score-number { font-size:5rem; font-weight:900; color:var(--primary); line-height:1; margin-bottom:10px; font-variant-numeric:tabular-nums; }
+    .score-band { display:inline-block; padding:7px 20px; border-radius:50px; background:#e0f2fe; color:#004494; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; font-size:0.82rem; margin-bottom:14px; }
+    .score-desc { font-size:0.95rem; color:var(--text-body); line-height:1.55; }
+    .status-note { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:16px 20px; max-width:560px; margin:0 auto 48px; text-align:center; }
+    .status-note p { color:#166534; margin:0; font-size:0.85rem; }
+    .status-note strong { color:#15803d; }
+    .result-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-bottom:48px; }
+    .result-card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:32px; display:flex; flex-direction:column; }
+    .result-card h2 { font-size:1.25rem; margin-bottom:6px; font-weight:800; }
+    .result-card > p { font-size:0.85rem; color:#64748b; margin-bottom:20px; }
+    .health-row { display:flex; align-items:center; margin-bottom:16px; }
+    .health-name { width:120px; font-weight:700; color:var(--text-dark); font-size:0.88rem; }
+    .health-bar-track { flex-grow:1; height:8px; background:#e2e8f0; border-radius:8px; overflow:hidden; margin:0 16px; }
+    .health-bar-fill { display:block; height:100%; border-radius:8px; width:0; transition:width 1s ease; }
+    .fill-green{background:#16a34a;} .fill-yellow{background:#d97706;} .fill-red{background:#dc2626;}
+    .health-value { width:28px; font-weight:800; color:var(--text-dark); text-align:right; font-size:0.88rem; }
+    .insight-box { border:1px solid transparent; border-radius:10px; padding:14px 16px; margin-top:auto; }
+    .insight-box.mode-good{background:var(--good-bg);border-color:var(--good-border);}
+    .insight-box.mode-warn{background:var(--warn-bg);border-color:var(--warn-border);}
+    .insight-box.mode-bad{background:var(--bad-bg);border-color:var(--bad-border);}
+    .insight-box.mode-mid{background:var(--mid-bg);border-color:var(--mid-border);}
+    .insight-label { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:3px; }
+    .mode-good .insight-label{color:var(--good-text);} .mode-warn .insight-label{color:var(--warn-text);}
+    .mode-bad .insight-label{color:var(--bad-text);} .mode-mid .insight-label{color:var(--mid-text);}
+    .insight-title { font-weight:800; font-size:0.88rem; margin-bottom:3px; }
+    .mode-good .insight-title{color:#14532d;} .mode-warn .insight-title{color:#78350f;}
+    .mode-bad .insight-title{color:#7f1d1d;} .mode-mid .insight-title{color:#0c4a6e;}
+    .insight-text { font-size:0.8rem; color:#334155; line-height:1.5; }
+    .diamond-container { flex-grow:1; display:flex; align-items:center; justify-content:center; margin-top:12px; }
+    .diamond-wrapper { position:relative; width:100%; aspect-ratio:1/1; max-width:280px; margin:0 auto; }
+    #gripDiamondSVG { width:100%; height:100%; overflow:visible; }
+    .diamond-label { position:absolute; width:32px; height:32px; background:#fff; border:1px solid #e2e8f0; border-radius:50%; color:var(--primary); font-family:Merriweather,serif; font-weight:900; font-size:0.88rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.06); z-index:10; }
+    .diamond-label.top{top:0;left:50%;transform:translate(-50%,-50%);} .diamond-label.bottom{bottom:0;left:50%;transform:translate(-50%,50%);}
+    .diamond-label.left{top:50%;left:0;transform:translate(-50%,-50%);} .diamond-label.right{top:50%;right:0;transform:translate(50%,-50%);}
+    .focus-section { margin-bottom:48px; }
+    .focus-section h2 { font-size:1.25rem; margin-bottom:6px; font-weight:800; }
+    .focus-section > p { font-size:0.85rem; color:#64748b; margin-bottom:20px; }
+    .focus-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .focus-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:24px; display:flex; flex-direction:column; }
+    .focus-tag { display:inline-block; padding:3px 8px; border-radius:4px; font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px; width:fit-content; }
+    .tag-critical{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;} .tag-friction{background:#fffbeb;color:#d97706;border:1px solid #fcd34d;}
+    .focus-title { font-weight:800; font-size:0.95rem; color:var(--text-dark); margin-bottom:8px; }
+    .focus-desc { font-size:0.82rem; color:var(--text-body); line-height:1.5; flex-grow:1; }
+    .upsell-section { margin-bottom:0; }
+    .upsell-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .upsell-card { border-radius:14px; padding:32px; display:flex; flex-direction:column; }
+    .upsell-primary { background:linear-gradient(135deg,#0f172a,#1e293b); color:#fff; }
+    .upsell-primary h3 { color:#fff; font-size:1.15rem; font-weight:800; margin-bottom:8px; }
+    .upsell-primary p { color:#94a3b8; font-size:0.88rem; line-height:1.55; margin-bottom:20px; flex-grow:1; }
+    .upsell-primary .upsell-price { font-size:1.3rem; font-weight:900; color:#fff; margin-bottom:14px; }
+    .upsell-primary .upsell-btn { display:inline-flex; padding:12px 24px; background:#fff; color:#0f172a; border-radius:10px; font-weight:800; font-size:0.85rem; text-decoration:none; text-align:center; }
+    .upsell-secondary { background:var(--upsell-dim-bg, #eff6ff); border:2px solid var(--upsell-dim-border, #bfdbfe); }
+    .upsell-secondary h3 { font-size:1.15rem; font-weight:800; margin-bottom:8px; color:#0f172a; }
+    .upsell-secondary p { color:#475569; font-size:0.88rem; line-height:1.55; margin-bottom:20px; flex-grow:1; }
+    .upsell-secondary .upsell-price { font-size:1.3rem; font-weight:900; color:#0f172a; margin-bottom:14px; }
+    .upsell-secondary .upsell-btn { display:inline-flex; padding:12px 24px; background:#0f172a; color:#fff; border-radius:10px; font-weight:800; font-size:0.85rem; text-decoration:none; text-align:center; }
+    .upsell-or { text-align:center; font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 0; display:none; }
+    @media(max-width:900px) { .result-grid,.focus-grid,.upsell-grid { grid-template-columns:1fr; } .score-number { font-size:3.5rem; } .result-hero h1 { font-size:1.8rem; } .upsell-or { display:block; } }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/the-gtm-score.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/the-gtm-score.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/the-gtm-score.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/the-gtm-score.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/the-gtm-score.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/the-gtm-score.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/the-gtm-score.html" />
+</head>
+<body>
+<script src="../assets/header.js"></script>
+<main>
+
+  <section class="result-hero">
+    <div class="container">
+      <h1>Votre GTM Score</h1>
+      <p>Un premier aperçu de la maturité, de l'alignement et de la scalabilité de votre système go-to-market. Pas un audit complet, mais une base structurée pour une analyse plus approfondie.</p>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <div class="score-card">
+      <div id="gtm-score" class="score-number">–</div>
+      <div id="gtm-band" class="score-band">Calcul en cours...</div>
+      <p id="gtm-band-description" class="score-desc">Votre niveau de maturité apparaîtra ici.</p>
+    </div>
+
+    <div class="status-note">
+      <p><strong>Un e-mail de synthèse est en cours de génération.</strong> Vérifiez votre boîte de réception sous 2-3 minutes.</p>
+    </div>
+
+    <!-- GRIP View + Diamond -->
+    <div class="result-grid">
+      <div class="result-card">
+        <h2>Scores des dimensions GRIP</h2>
+        <p>Comment les quatre forces de votre moteur s'équilibrent.</p>
+        <div style="margin-top:8px;">
+          <div class="health-row"><div class="health-name">Guidance</div><div class="health-bar-track"><span class="health-bar-fill" id="gripGuidanceBar"></span></div><div class="health-value" id="gripGuidanceValue">-</div></div>
+          <div class="health-row"><div class="health-name">Resources</div><div class="health-bar-track"><span class="health-bar-fill" id="gripResourcesBar"></span></div><div class="health-value" id="gripResourcesValue">-</div></div>
+          <div class="health-row"><div class="health-name">Implementation</div><div class="health-bar-track"><span class="health-bar-fill" id="gripImplementationBar"></span></div><div class="health-value" id="gripImplementationValue">-</div></div>
+          <div class="health-row"><div class="health-name">Performance</div><div class="health-bar-track"><span class="health-bar-fill" id="gripPerformanceBar"></span></div><div class="health-value" id="gripPerformanceValue">-</div></div>
+        </div>
+        <div class="insight-box" id="gripArchetypeBox">
+          <span class="insight-label">Modèle système</span>
+          <div class="insight-title" id="gripArchetypeTitle">Analyse en cours...</div>
+          <div class="insight-text" id="gripArchetypeDesc">Détermination de votre modèle système.</div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>GRIP Diamond</h2>
+        <p>Visualisation de la tension entre les forces.</p>
+        <div class="diamond-container">
+          <div class="diamond-wrapper">
+            <svg id="gripDiamondSVG" viewBox="0 0 260 260"></svg>
+            <div class="diamond-label top">G</div>
+            <div class="diamond-label right">I</div>
+            <div class="diamond-label bottom">P</div>
+            <div class="diamond-label left">R</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Priority Focus Areas -->
+    <div class="focus-section">
+      <h2>Zones de focus prioritaires</h2>
+      <p>Les trois capacités qui créent actuellement le plus de friction dans votre moteur de revenus.</p>
+      <div class="focus-grid" id="focusGrid"><div class="focus-card">Chargement des priorités...</div></div>
+    </div>
+
+    <!-- Upsell -->
+    <div class="upsell-section">
+      <div class="upsell-grid">
+        <div class="upsell-card upsell-primary">
+          <h3>Obtenez la vue complète</h3>
+          <p>L'Intelligence Report diagnostique les 12 piliers avec 265 questions, 72 moteurs de scoring, cascades de contraintes, modélisation des fuites et un plan d'exécution sur 90 jours. Intelligence niveau board, 45 pages.</p>
+          <div class="upsell-price">2 495 €</div>
+          <a href="grip-marketplace.html#intelligence-report" class="upsell-btn" id="upsellReportBtn">Obtenir l'Intelligence Report &rarr;</a>
+        </div>
+        <div class="upsell-or">ou</div>
+        <div class="upsell-card upsell-secondary" id="upsellDimCard">
+          <h3 id="upsellDimTitle">Approfondissez votre dimension la plus faible</h3>
+          <p id="upsellDimDesc">Votre dimension GRIP la plus faible est l'endroit où la contrainte bloquante se cache. Le GTM Intelligence Report évalue les 12 piliers en 35 minutes et isole la contrainte exacte, avec un plan d'exécution sur 90 jours.</p>
+          <div class="upsell-price">À partir de 749 €</div>
+          <a href="grip-marketplace.html#intelligence-report" class="upsell-btn" id="upsellDimBtn">Obtenir l'Intelligence Report &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer><div class="container"><p>© <span id="year">2026</span> Caugia SASU. Tous droits réservés.</p></div></footer>
+
+<script src="../assets/caugia-base.js"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var score = parseInt(params.get("score"), 10);
+  var scoreEl = document.getElementById("gtm-score");
+  var bandEl = document.getElementById("gtm-band");
+  var descEl = document.getElementById("gtm-band-description");
+
+  if (!isNaN(score)) {
+    scoreEl.textContent = score;
+    var band, desc;
+    if (score < 30) { band = "À risque"; desc = "Votre système GTM présente plusieurs contraintes nécessitant une attention immédiate."; }
+    else if (score < 50) { band = "Émergent"; desc = "Vos fondations GTM se forment mais manquent de cohérence et d'alignement."; }
+    else if (score < 70) { band = "En développement"; desc = "Votre système progresse, plusieurs capacités performent bien."; }
+    else if (score < 85) { band = "Solide"; desc = "Votre système GTM fonctionne avec clarté et discipline sur la plupart des domaines."; }
+    else { band = "Excellence"; desc = "Vous disposez d'un moteur GTM hautement aligné et scalable."; }
+    bandEl.textContent = band;
+    descEl.textContent = desc;
+  }
+
+  var rawPillars = params.get("pillars");
+  if (!rawPillars) return;
+  var pillarScores = rawPillars.split(",").map(function(n){ return parseInt(n, 10); });
+
+  var gVal = Math.round((pillarScores[0] + pillarScores[1] + pillarScores[2]) / 3);
+  var rVal = Math.round((pillarScores[7] + pillarScores[8] + pillarScores[10]) / 3);
+  var iVal = Math.round((pillarScores[3] + pillarScores[4] + pillarScores[6]) / 3);
+  var pVal = Math.round((pillarScores[5] + pillarScores[9] + pillarScores[11]) / 3);
+
+  function colorClass(v){ return v >= 80 ? "fill-green" : v >= 50 ? "fill-yellow" : "fill-red"; }
+  function updateBar(type, val){
+    var bar = document.getElementById("grip" + type + "Bar");
+    var txt = document.getElementById("grip" + type + "Value");
+    bar.style.width = val + "%";
+    bar.className = "health-bar-fill " + colorClass(val);
+    txt.innerText = val;
+  }
+  updateBar("Guidance", gVal);
+  updateBar("Resources", rVal);
+  updateBar("Implementation", iVal);
+  updateBar("Performance", pVal);
+
+  function getArchetype(g, r, i, p) {
+    var scores = [{k:'g',v:g},{k:'r',v:r},{k:'i',v:i},{k:'p',v:p}];
+    scores.sort(function(a,b){ return a.v - b.v; });
+    var avg = (g+r+i+p)/4;
+    var lowest = scores[0], highest = scores[3], secondLowest = scores[1];
+
+    if (avg < 35) return {title:"Le moteur à l'arrêt",body:"Défaillance systémique sur toutes les dimensions. Reconstruction fondamentale requise.",mode:"mode-bad"};
+    if (avg < 45 && highest.v < 60) return {title:"Les fondations fragiles",body:"Aucune dimension n'est assez solide pour porter les autres. Risque de décélération totale du chiffre d'affaires.",mode:"mode-bad"};
+    if (avg > 85) return {title:"La machine de précision",body:"Performance d'élite. Concentrez-vous sur l'optimisation incrémentale et l'expansion.",mode:"mode-good"};
+    if (avg > 75 && lowest.v > 65) return {title:"Le moteur équilibré",body:"Cohérence forte. Pas de freins majeurs, scaling prévisible.",mode:"mode-good"};
+
+    if (lowest.k === 'g') {
+      if (highest.k === 'i' && highest.v > 65) return {title:"Le piège de l'activité",body:"Volume d'exécution élevé, mais direction floue. L'équipe court vite dans la mauvaise direction.",mode:"mode-warn"};
+      if (highest.k === 'r' && highest.v > 65) return {title:"Le navire surchargé",body:"Beaucoup de ressources, peu de stratégie. Burn rate élevé avec faible clarté stratégique.",mode:"mode-warn"};
+      if (secondLowest.k === 'p') return {title:"La stratégie au feeling",body:"Pas de direction claire ni de données pour la prouver. Décisions purement anecdotiques.",mode:"mode-bad"};
+      return {title:"Le déficit de direction",body:"La capacité d'exécution existe, mais la boussole stratégique est cassée. Équipes désalignées.",mode:"mode-warn"};
+    }
+    if (lowest.k === 'r') {
+      if (highest.k === 'g' && highest.v > 70) return {title:"Le visionnaire à vide",body:"Stratégie excellente, mais aucune ressource pour la soutenir. Une feuille de route sans carburant.",mode:"mode-warn"};
+      if (highest.k === 'i' && highest.v > 70) return {title:"Le moteur en burnout",body:"Forte exécution sur des ressources faibles. L'équipe surperforme mais reste fragile.",mode:"mode-bad"};
+      if (secondLowest.k === 'p') return {title:"La dette d'outillage",body:"Le manque de ressources provoque un blackout de données. On ne peut pas réparer ce qu'on ne peut pas mesurer.",mode:"mode-bad"};
+      return {title:"La crise de capacité",body:"L'ambition dépasse la bande passante. Le moteur est sous-dimensionné par rapport aux objectifs.",mode:"mode-warn"};
+    }
+    if (lowest.k === 'i') {
+      if (highest.k === 'g' && highest.v > 70) return {title:"La tour d'ivoire",body:"Stratégie solide, mais réalité qui se fissure. Disconnect entre leadership et front line.",mode:"mode-bad"};
+      if (highest.k === 'p' && highest.v > 60) return {title:"Le système héroïque",body:"Les résultats arrivent malgré le process, pas grâce à lui. Le revenu dépend de héros individuels.",mode:"mode-warn"};
+      if (secondLowest.k === 'r') return {title:"Le vide de processus",body:"Pas de processus et ressources limitées. Efficacité impossible, friction élevée.",mode:"mode-bad"};
+      return {title:"Le handoff cassé",body:"Friction dans la motion. Leads, données ou deals tombent entre les silos.",mode:"mode-warn"};
+    }
+    if (lowest.k === 'p') {
+      if (highest.k === 'i' && highest.v > 70) return {title:"Le seau qui fuit",body:"Beaucoup d'efforts, peu de résultats. Les taux de conversion ou la rétention drainent la valeur.",mode:"mode-bad"};
+      if (highest.k === 'g' && highest.v > 70) return {title:"L'optimiste aveugle",body:"Récit fort, mais les chiffres ne valident pas l'histoire.",mode:"mode-warn"};
+      if (highest.k === 'r' && highest.v > 70) return {title:"Le frein ROI",body:"Investissement lourd à faible rendement. Le moteur est inefficace.",mode:"mode-bad"};
+      return {title:"La boîte noire",body:"Le système tourne, mais la visibilité est nulle. Vous ne pouvez pas prédire le prochain trimestre.",mode:"mode-mid"};
+    }
+    return {title:"Le moteur en développement",body:"Le système montre du potentiel mais manque de cohérence entre dimensions.",mode:"mode-mid"};
+  }
+
+  var arch = getArchetype(gVal, rVal, iVal, pVal);
+  var boxEl = document.getElementById("gripArchetypeBox");
+  document.getElementById("gripArchetypeTitle").innerText = arch.title;
+  document.getElementById("gripArchetypeDesc").innerText = arch.body;
+  boxEl.className = "insight-box " + arch.mode;
+
+  function drawDiamond(g, r, i, p) {
+    var svg = document.getElementById("gripDiamondSVG");
+    if (!svg) return;
+    var c = 130;
+    function pt(angle, val) {
+      var rad = (Math.PI / 180) * angle;
+      return {x: c + Math.cos(rad) * val, y: c + Math.sin(rad) * val};
+    }
+    var G = pt(-90, g), I = pt(0, i), P = pt(90, p), R = pt(180, r);
+    var grid = "";
+    [30, 60, 90].forEach(function(v) {
+      var a=pt(-90,v),b=pt(0,v),cc=pt(90,v),d=pt(180,v);
+      grid += '<polygon points="'+a.x+','+a.y+' '+b.x+','+b.y+' '+cc.x+','+cc.y+' '+d.x+','+d.y+'" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>';
+    });
+    var shape = '<polygon points="'+G.x+','+G.y+' '+I.x+','+I.y+' '+P.x+','+P.y+' '+R.x+','+R.y+'" fill="rgba(0,86,179,0.15)" stroke="#0056b3" stroke-width="2.5"/>';
+    var dots = [G,I,P,R].map(function(p){ return '<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#0056b3" stroke="#fff" stroke-width="2"/>'; }).join("");
+    svg.innerHTML = grid + shape + dots;
+  }
+  drawDiamond(gVal, rVal, iVal, pVal);
+
+  var pillarNames = ["Stratégie GTM & leadership","Market Intelligence","Product Marketing","Demand Generation","Sales Execution","Customer Success & expansion","Revenue Operations & systèmes","Pricing & packaging","Maturité produit","Data & insights","Enablement","Alignement & gouvernance"];
+  var pillarInsights = {
+    "Stratégie GTM & leadership":"La direction est floue ou appliquée de manière incohérente. Les priorités dérivent et l'exécution se fragmente.",
+    "Market Intelligence":"Les décisions reposent sur l'opinion interne plutôt que sur de vrais signaux marché et terrain.",
+    "Product Marketing":"Le positionnement ne passe pas. Les acheteurs peinent à connecter valeur et urgence.",
+    "Demand Generation":"La création de pipeline n'est pas systémique. La performance dépend de pics ou de canaux étroits.",
+    "Sales Execution":"Les taux de gain et le contrôle des deals sont incohérents. La motion n'est pas reproductible sous pression.",
+    "Customer Success & expansion":"La rétention et l'expansion ne sont pas prévisibles. La croissance coûte cher car les fuites persistent.",
+    "Revenue Operations & systèmes":"Des écarts de processus et d'instrumentation créent de la friction. Les handoffs cassent et la visibilité se dégrade.",
+    "Pricing & packaging":"Vous ne capturez pas la valeur de manière constante. Le packaging ou les remises affaiblissent les résultats.",
+    "Maturité produit":"L'offre n'est pas enterprise-ready ou adoption-ready. Friction lors de l'évaluation ou du onboarding.",
+    "Data & insights":"Le système n'est pas mesurable de bout en bout. Le forecasting et la décision restent narratifs.",
+    "Enablement":"La capacité d'exécution est plafonnée par l'onboarding, les playbooks ou la bande passante de coaching managérial.",
+    "Alignement & gouvernance":"La cadence opérationnelle et l'autorité décisionnelle sont floues. L'exécution cross-fonctionnelle dérive avec le temps."
+  };
+
+  var pillars = pillarScores.map(function(s,i){ return {score:s, name:pillarNames[i]}; });
+  pillars.sort(function(a,b){ return a.score - b.score; });
+  var lowestThree = pillars.slice(0, 3);
+
+  document.getElementById("focusGrid").innerHTML = lowestThree.map(function(p){
+    var tagClass = p.score < 50 ? "tag-critical" : "tag-friction";
+    var tagName = p.score < 50 ? "Contrainte critique" : "Point de friction";
+    var insight = pillarInsights[p.name] || "Cette zone nécessite de l'attention pour libérer la croissance.";
+    return '<div class="focus-card"><span class="focus-tag '+tagClass+'">'+tagName+'</span><div class="focus-title">'+p.name+'</div><div class="focus-desc">'+insight+'</div></div>';
+  }).join("");
+
+  var dims = [
+    {key:"guidance", label:"Guidance", val:gVal, color:"#eff6ff", border:"#bfdbfe"},
+    {key:"resources", label:"Resources", val:rVal, color:"#fffbeb", border:"#fde68a"},
+    {key:"implementation", label:"Implementation", val:iVal, color:"#ecfdf5", border:"#a7f3d0"},
+    {key:"performance", label:"Performance", val:pVal, color:"#f5f3ff", border:"#ddd6fe"}
+  ];
+  dims.sort(function(a,b){ return a.v - b.v; });
+  dims.sort(function(a,b){ return a.val - b.val; });
+  var weakest = dims[0];
+
+  var dimCard = document.getElementById("upsellDimCard");
+  dimCard.style.setProperty("--upsell-dim-bg", weakest.color);
+  dimCard.style.setProperty("--upsell-dim-border", weakest.border);
+
+  document.getElementById("upsellDimTitle").textContent = "Approfondissez " + weakest.label;
+  document.getElementById("upsellDimDesc").textContent = "Votre dimension " + weakest.label + " a obtenu " + weakest.val + "/100. C'est là que se cache votre principale contrainte. Un module Deep Dive isole le pilier exact dans cette dimension et fournit un diagnostic ciblé avec des priorités actionnables.";
+  document.getElementById("upsellDimBtn").href = "grip-marketplace.html#" + weakest.key;
+  document.getElementById("upsellDimBtn").textContent = "Explorer les Deep Dives " + weakest.label + " →";
+
+})();
+</script>
+</body>
+</html>

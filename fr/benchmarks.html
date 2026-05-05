@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Analytics opt-out: visit any page with ?analytics_optout=true to disable tracking -->
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<!-- Microsoft Clarity (skipped when analytics_optout is set) -->
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GRIP Benchmarks Explorer | SaaS GTM Benchmarks by 14 Dimensions | Caugia</title>
+<meta name="description" content="Free B2B SaaS GTM benchmarks derived from published SaaS research (OpenView, Bessemer, KeyBanc). Filter by stage, sector, ICP, motion, pricing, deal size, and 8 more dimensions. Compare NRR, win rate, pipeline coverage, burn multiple, and GRIP scores. Based on published SaaS benchmarks." />
+<link rel="canonical" href="https://www.caugia.com/fr/benchmarks.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.caugia.com/fr/benchmarks.html" />
+<meta property="og:title" content="GRIP Benchmarks Explorer | SaaS GTM Benchmarks by 14 Dimensions" />
+<meta property="og:description" content="Where does your GTM system stand? Free benchmarks derived from published SaaS research and calibrated against the GRIP framework. Filter by stage, sector, ICP, motion, and 10 more dimensions." />
+<meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="32x32" href="../icon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../icon.png">
+<link rel="apple-touch-icon" href="../icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+<link rel="alternate" hreflang="en" href="https://www.caugia.com/benchmarks.html" />
+<link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/benchmarks.html" />
+<link rel="alternate" hreflang="de" href="https://www.caugia.com/de/benchmarks.html" />
+<link rel="alternate" hreflang="es" href="https://www.caugia.com/es/benchmarks.html" />
+<link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/benchmarks.html" />
+<link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/benchmarks.html" />
+<link rel="alternate" hreflang="x-default" href="https://www.caugia.com/benchmarks.html" />
+<link rel="stylesheet" href="../assets/caugia-base.css">
+<style>
+/* ─── Hero ─── */
+.bm-hero { padding: 80px 0 48px; text-align: center; }
+.bm-hero h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 20px; }
+.bm-hero .hero-sub { font-size: 1.15rem; max-width: 680px; margin: 0 auto 0; color: var(--text-body); line-height: 1.6; }
+
+/* ─── Cohort Indicator ─── */
+.cohort-bar { background: var(--white); border-bottom: 1px solid var(--line); padding: 14px 0; text-align: center; }
+.cohort-text { font-size: 0.9rem; color: var(--text-body); }
+.cohort-text strong { color: var(--text-dark); font-weight: 700; }
+.cohort-tag { display: inline-block; background: #eff6ff; color: var(--primary); font-weight: 700; font-size: 0.78rem; padding: 3px 10px; border-radius: 6px; margin-left: 4px; }
+
+/* ─── Filter Bar ─── */
+.filter-section { background: var(--white); border-bottom: 1px solid var(--line); padding: 20px 0 16px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.filter-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px 12px; }
+.filter-group { display: flex; flex-direction: column; gap: 3px; }
+.filter-group label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.filter-group select {
+  height: 36px; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500;
+  border: 1.5px solid var(--line); border-radius: 8px; padding: 0 28px 0 10px;
+  background: var(--white); color: var(--text-dark); cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23475569' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.filter-group select:hover { border-color: #94a3b8; }
+.filter-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,86,179,0.08); }
+.filter-group select.active-filter { border-color: var(--primary); background-color: #f8faff; }
+.filter-actions { display: flex; align-items: flex-end; justify-content: flex-end; gap: 12px; margin-top: 10px; }
+.filter-count { font-size: 0.78rem; font-weight: 700; color: var(--primary); background: #eff6ff; padding: 4px 12px; border-radius: 6px; white-space: nowrap; height: 36px; display: flex; align-items: center; }
+.btn-reset {
+  height: 36px; padding: 0 16px; font-size: 0.78rem; font-weight: 700; font-family: 'Inter', sans-serif;
+  border: 1.5px solid var(--line); border-radius: 8px; background: var(--white); color: var(--text-body);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.btn-reset:hover { border-color: #94a3b8; color: var(--text-dark); }
+
+/* ─── Benchmark Table ─── */
+.bm-table-wrap { overflow-x: auto; margin-bottom: 16px; }
+.bm-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  font-size: 0.88rem; background: var(--white); border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow-card); border: 1px solid var(--line);
+}
+.bm-table thead th {
+  background: #f8fafc; padding: 13px 16px; text-align: left;
+  font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-body); border-bottom: 2px solid var(--line); white-space: nowrap;
+}
+.bm-table tbody td {
+  padding: 11px 16px; border-bottom: 1px solid #f1f5f9; color: var(--text-dark);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.bm-table tbody tr:last-child td { border-bottom: none; }
+.bm-table tbody tr:hover { background: #fafbfc; }
+.bm-table .cat-row td {
+  background: #f8fafc; font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--primary); padding: 10px 16px; border-bottom: 1px solid var(--line);
+}
+.bm-table .metric-name { font-weight: 600; color: var(--text-dark); }
+.bm-table .metric-desc { font-size: 0.75rem; color: #94a3b8; font-weight: 400; margin-left: 6px; }
+.bm-table .val-col { text-align: center; min-width: 110px; }
+.bm-table thead th.val-col { text-align: center; }
+
+/* Value badges */
+.bm-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-weight: 700; font-size: 0.82rem; }
+.bm-green { background: #dcfce7; color: #166534; }
+.bm-blue { background: #eff6ff; color: #1e40af; }
+.bm-neutral { background: #f1f5f9; color: #475569; }
+
+/* ─── GRIP Score Distribution ─── */
+.grip-dist { margin-top: 0; }
+.grip-bars { display: grid; gap: 14px; }
+.grip-bar-row { display: grid; grid-template-columns: 100px 1fr 90px; gap: 12px; align-items: center; }
+.grip-bar-label { font-weight: 700; font-size: 0.88rem; color: var(--text-dark); }
+.grip-bar-track { height: 28px; background: #f1f5f9; border-radius: 8px; position: relative; overflow: hidden; }
+.grip-bar-range { position: absolute; top: 0; height: 100%; border-radius: 8px; transition: left 0.5s ease, width 0.5s ease; }
+.grip-bar-range.bar-overall { background: linear-gradient(90deg, #0056b3, #3b82f6); }
+.grip-bar-range.bar-g { background: linear-gradient(90deg, #0056b3, #60a5fa); }
+.grip-bar-range.bar-r { background: linear-gradient(90deg, #16a34a, #4ade80); }
+.grip-bar-range.bar-i { background: linear-gradient(90deg, #d97706, #fbbf24); }
+.grip-bar-range.bar-p { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+.grip-bar-value { font-weight: 700; font-size: 0.85rem; color: var(--text-body); text-align: right; font-variant-numeric: tabular-nums; }
+.grip-bar-track .bar-tick { position: absolute; top: 0; height: 100%; width: 1px; background: rgba(15,23,42,0.1); }
+
+/* ─── Constraint Prevalence ─── */
+.constraint-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 32px; }
+.constraint-card {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 24px; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.constraint-card:hover { border-color: #cbd5e1; box-shadow: var(--shadow-sm); }
+.constraint-card h4 {
+  font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.95rem; margin-bottom: 16px;
+  color: var(--text-dark); padding-bottom: 12px; border-bottom: 2px solid var(--line);
+}
+.constraint-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+.constraint-item:last-child { border-bottom: none; }
+.constraint-name { font-weight: 600; font-size: 0.88rem; color: var(--text-dark); }
+.constraint-pct {
+  font-weight: 800; font-size: 0.85rem; padding: 3px 10px; border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.pct-high { background: #fef2f2; color: #991b1b; }
+.pct-med { background: #fff7ed; color: #9a3412; }
+.pct-low { background: #fefce8; color: #854d0e; }
+
+/* ─── CTA Block ─── */
+.bm-cta { padding: 96px 0; text-align: center; }
+.bm-cta h2 { margin-bottom: 16px; }
+.bm-cta p { max-width: 520px; margin: 0 auto 32px; font-size: 1.05rem; }
+
+/* ─── Section headers ─── */
+.section-head { text-align: center; margin-bottom: 40px; }
+.section-head h2 { margin-bottom: 12px; }
+.section-head p { max-width: 640px; margin: 0 auto; font-size: 1rem; }
+
+/* Table note */
+.table-note { font-size: 0.82rem; color: #94a3b8; margin-top: 12px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1100px) {
+  .filter-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 980px) {
+  .bm-hero h1 { font-size: 2rem !important; }
+  .filter-grid { grid-template-columns: repeat(3, 1fr); }
+  .constraint-grid { grid-template-columns: 1fr !important; }
+  .grip-bar-row { grid-template-columns: 70px 1fr 70px; }
+  .bm-table { font-size: 0.82rem; }
+  .bm-table thead th, .bm-table tbody td { padding: 10px 10px; }
+}
+@media (max-width: 600px) {
+  .filter-grid { grid-template-columns: repeat(2, 1fr); }
+  .filter-group select { font-size: 12px; height: 34px; }
+  .bm-hero { padding: 60px 0 32px; }
+  .grip-bar-row { grid-template-columns: 60px 1fr 60px; }
+}
+</style>
+</head>
+<body>
+<script src="../assets/header.js"></script>
+
+<main>
+
+<!-- Hero -->
+<section class="bm-hero section-white">
+  <div class="container">
+    <span class="eyebrow">GRIP Benchmarks</span>
+    <h1>GRIP Benchmarks Explorer</h1>
+    <p class="hero-sub">Comment se compare votre système GTM ? Filtrez par stade, secteur, motion et 11 autres dimensions.</p>
+  </div>
+</section>
+
+<!-- Cohort Indicator -->
+<div class="cohort-bar" id="cohortBar">
+  <div class="container">
+    <span class="cohort-text" id="cohortText">Benchmarks pour: <strong>Toutes les entreprises</strong></span>
+  </div>
+</div>
+
+<!-- Filter Bar (sticky) -->
+<section class="filter-section">
+  <div class="container">
+    <div class="filter-grid" id="filterGrid">
+      <!-- Row 1 -->
+      <div class="filter-group">
+        <label for="f-stage">Stade</label>
+        <select id="f-stage" data-filter="stage">
+          <option value="">Tous les stades</option>
+          <option value="Pre-Seed / Seed">Pre-Seed / Seed</option>
+          <option value="Series A">Series A</option>
+          <option value="Series B">Series B</option>
+          <option value="Series C+">Series C+</option>
+          <option value="Public / PE">Public / PE</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-sector">Sector</label>
+        <select id="f-sector" data-filter="sector">
+          <option value="">Tous les secteurs</option>
+          <option value="FinTech">FinTech</option>
+          <option value="HealthTech">HealthTech</option>
+          <option value="HRTech">HRTech</option>
+          <option value="MarTech">MarTech</option>
+          <option value="Climate/ESG">Climate/ESG</option>
+          <option value="DevTools">DevTools</option>
+          <option value="Cybersecurity">Cybersecurity</option>
+          <option value="EdTech">EdTech</option>
+          <option value="LegalTech">LegalTech</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-icp">ICP / marché cible</label>
+        <select id="f-icp" data-filter="icp">
+          <option value="">Tous les marchés</option>
+          <option value="SMB">SMB</option>
+          <option value="Mid-Market">Mid-Market</option>
+          <option value="Enterprise">Enterprise</option>
+          <option value="Mixed">Mixed</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-bizmodel">Modèle économique</label>
+        <select id="f-bizmodel" data-filter="bizmodel">
+          <option value="">Tous les modèles</option>
+          <option value="Pure SaaS">Pure SaaS</option>
+          <option value="Usage-based">Usage-based</option>
+          <option value="Hybrid">Hybrid (SaaS + Services)</option>
+          <option value="Marketplace + SaaS">Marketplace + SaaS</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-pricing">Modèle de pricing</label>
+        <select id="f-pricing" data-filter="pricing">
+          <option value="">Tout pricing</option>
+          <option value="Per Seat">Per Seat</option>
+          <option value="Per Usage">Per Usage</option>
+          <option value="Tiered Plans">Tiered Plans</option>
+          <option value="Custom Enterprise">Custom Enterprise</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-motion">GTM Motion</label>
+        <select id="f-motion" data-filter="motion">
+          <option value="">Toutes les motions</option>
+          <option value="PLG">PLG</option>
+          <option value="Sales-Led">Sales-Led</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Partner-Led">Partner-Led</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-acv">Taille de deal (ACV)</label>
+        <select id="f-acv" data-filter="acv">
+          <option value="">Tous les ACVs</option>
+          <option value="< 1K">&lt; &euro;1K</option>
+          <option value="1K-10K">&euro;1K - &euro;10K</option>
+          <option value="10K-100K">&euro;10K - &euro;100K</option>
+          <option value="100K+">&euro;100K+</option>
+        </select>
+      </div>
+      <!-- Row 2 -->
+      <div class="filter-group">
+        <label for="f-revenue">Échelle de revenus</label>
+        <select id="f-revenue" data-filter="revenue">
+          <option value="">Tous revenus</option>
+          <option value="< 1M">&lt; &euro;1M ARR</option>
+          <option value="1-10M">&euro;1-10M</option>
+          <option value="10-50M">&euro;10-50M</option>
+          <option value="50M+">&euro;50M+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-growth">Taux de croissance</label>
+        <select id="f-growth" data-filter="growth">
+          <option value="">Toute croissance</option>
+          <option value="< 20%">&lt; 20%</option>
+          <option value="20-50%">20-50%</option>
+          <option value="50-100%">50-100%</option>
+          <option value="100%+">100%+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-geo">Géographie</label>
+        <select id="f-geo" data-filter="geo">
+          <option value="">Toutes géographies</option>
+          <option value="France">France</option>
+          <option value="Europe">Europe</option>
+          <option value="US">US</option>
+          <option value="Global">Global</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-org">Structure org</label>
+        <select id="f-org" data-filter="org">
+          <option value="">Toutes structures</option>
+          <option value="Founder-led">Founder-led</option>
+          <option value="Early GTM team">Early GTM team</option>
+          <option value="Structured GTM">Structured GTM</option>
+          <option value="Fully Scaled">Fully Scaled</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-tech">Tech / type de produit</label>
+        <select id="f-tech" data-filter="tech">
+          <option value="">Tous les types</option>
+          <option value="API-first">API-first</option>
+          <option value="Platform">Platform</option>
+          <option value="Single-product SaaS">Single-product SaaS</option>
+          <option value="AI-native">AI-native</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-complexity">Complexité client</label>
+        <select id="f-complexity" data-filter="complexity">
+          <option value="">Toute complexité</option>
+          <option value="Single User">Single User</option>
+          <option value="Team-based">Team-based</option>
+          <option value="Multi-department">Multi-department</option>
+          <option value="Enterprise-wide">Enterprise-wide</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="f-signals">Signaux</label>
+        <select id="f-signals" data-filter="signals">
+          <option value="">Tous les signaux</option>
+          <option value="Hiring">Hiring</option>
+          <option value="Funding Event">Funding Event</option>
+          <option value="New Product Launch">New Product Launch</option>
+          <option value="Leadership Change">Leadership Change</option>
+        </select>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <span class="filter-count" id="filterCount" style="display:none;">0 filtres actifs</span>
+      <button class="btn-reset" id="btnReset" style="display:none;">Réinitialiser les filtres</button>
+    </div>
+  </div>
+</section>
+
+<!-- Benchmark Table -->
+<section class="section-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>GTM Benchmarks</h2>
+      <p>22 métriques sur revenus, efficacité, performance commerciale et rétention. Les valeurs s'ajustent dynamiquement selon les filtres.</p>
+    </div>
+
+    <div class="bm-table-wrap">
+      <table class="bm-table" id="bmTable">
+        <thead>
+          <tr>
+            <th style="min-width:220px;">Metric</th>
+            <th class="val-col">P25</th>
+            <th class="val-col">Médiane</th>
+            <th class="val-col">P75</th>
+            <th class="val-col">Top décile</th>
+          </tr>
+        </thead>
+        <tbody id="bmBody"></tbody>
+      </table>
+    </div>
+    <p class="table-note">Les plages représentent des distributions de percentiles. Benchmarks issus de recherches SaaS publiées (OpenView, Bessemer, KeyBanc) et calibrés contre le framework GRIP. Les valeurs s'ajustent selon les filtres sélectionnés.</p>
+  </div>
+</section>
+
+<!-- GRIP Score Distribution -->
+<section class="section-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>Distribution des GRIP Scores</h2>
+      <p>Répartition des scores GRIP sur les quatre piliers système pour votre cohorte.</p>
+    </div>
+
+    <div class="grip-dist" style="max-width:720px;margin:0 auto;">
+      <div class="grip-bars" id="gripBars"></div>
+    </div>
+    <p class="table-note" style="text-align:center;margin-top:20px;">Les barres montrent la plage entre les 25e et 75e percentiles. Échelle : 0-100.</p>
+  </div>
+</section>
+
+<!-- Constraint Prevalence -->
+<section class="section-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Contraintes les plus fréquentes</h2>
+      <p>Les contraintes structurelles qui limitent le plus souvent la performance GTM dans votre cohorte.</p>
+    </div>
+    <div class="constraint-grid" id="constraintGrid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-dark bm-cta">
+  <div class="container">
+    <span class="eyebrow" style="color:#60a5fa;background:rgba(96,165,250,0.1);">Obtenez votre benchmark personnalisé</span>
+    <h2>Obtenez votre GRIP Score personnalisé</h2>
+    <p>Passez le GRIP Assessment et recevez un diagnostic complet avec des benchmarks personnalisés adaptés à votre stade, secteur et motion.</p>
+    <a href="https://os.caugia.com/assess" class="btn btn-primary" style="background:#fff;color:var(--primary-dark);">Passer le GRIP Assessment</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; <span id="year">2026</span> Caugia SASU. Tous droits réservés. &middot; <a href="privacy.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Politique de confidentialité</a></p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════
+     BASE BENCHMARK DATA (keyed by stage)
+     These are the "anchor" values; filters apply multipliers.
+     Each metric: { p25, median, p75, top, unit, fmt }
+     fmt: 'pct' = %, 'x' = multiplier, 'mo' = months, 'd' = days,
+          'eur' = currency, 'score' = raw score, 'ratio' = decimal
+     ══════════════════════════════════════════════════════ */
+  var BASE = {
+    'Pre-Seed / Seed': {
+      grip_overall:    { p25: 25, median: 32, p75: 40, top: 52, fmt: 'score' },
+      grip_g:          { p25: 30, median: 37, p75: 45, top: 55, fmt: 'score' },
+      grip_r:          { p25: 25, median: 32, p75: 40, top: 50, fmt: 'score' },
+      grip_i:          { p25: 20, median: 27, p75: 35, top: 48, fmt: 'score' },
+      grip_p:          { p25: 25, median: 32, p75: 40, top: 52, fmt: 'score' },
+      yoy_growth:      { p25: 80, median: 120, p75: 200, top: 350, fmt: 'pct' },
+      nrr:             { p25: 95, median: 100, p75: 105, top: 115, fmt: 'pct' },
+      grr:             { p25: 80, median: 85, p75: 90, top: 94, fmt: 'pct' },
+      gross_margin:    { p25: 55, median: 62, p75: 70, top: 78, fmt: 'pct' },
+      burn_multiple:   { p25: 4.0, median: 3.0, p75: 2.0, top: 1.2, fmt: 'x' },
+      cac_payback:     { p25: 30, median: 24, p75: 18, top: 12, fmt: 'mo' },
+      ltv_cac:         { p25: 1.5, median: 2.2, p75: 3.0, top: 4.5, fmt: 'x' },
+      magic_number:    { p25: 0.3, median: 0.45, p75: 0.6, top: 0.9, fmt: 'ratio' },
+      win_rate:        { p25: 15, median: 20, p75: 25, top: 35, fmt: 'pct' },
+      pipeline_cov:    { p25: 2.0, median: 2.5, p75: 3.0, top: 4.0, fmt: 'x' },
+      sales_cycle:     { p25: 60, median: 45, p75: 30, top: 18, fmt: 'd' },
+      quota_attain:    { p25: 40, median: 50, p75: 60, top: 75, fmt: 'pct' },
+      avg_acv:         { p25: 8000, median: 15000, p75: 25000, top: 45000, fmt: 'eur' },
+      logo_churn:      { p25: 25, median: 20, p75: 15, top: 8, fmt: 'pct' },
+      expansion_rev:   { p25: 5, median: 10, p75: 15, top: 25, fmt: 'pct' },
+      nps:             { p25: 20, median: 28, p75: 35, top: 50, fmt: 'score' },
+      avg_discount:    { p25: 20, median: 15, p75: 10, top: 5, fmt: 'pct' }
+    },
+    'Series A': {
+      grip_overall:    { p25: 35, median: 45, p75: 55, top: 65, fmt: 'score' },
+      grip_g:          { p25: 40, median: 47, p75: 55, top: 65, fmt: 'score' },
+      grip_r:          { p25: 35, median: 42, p75: 50, top: 62, fmt: 'score' },
+      grip_i:          { p25: 35, median: 42, p75: 50, top: 60, fmt: 'score' },
+      grip_p:          { p25: 40, median: 47, p75: 55, top: 66, fmt: 'score' },
+      yoy_growth:      { p25: 80, median: 100, p75: 150, top: 250, fmt: 'pct' },
+      nrr:             { p25: 100, median: 107, p75: 115, top: 130, fmt: 'pct' },
+      grr:             { p25: 85, median: 88, p75: 92, top: 96, fmt: 'pct' },
+      gross_margin:    { p25: 65, median: 71, p75: 78, top: 84, fmt: 'pct' },
+      burn_multiple:   { p25: 3.0, median: 2.2, p75: 1.5, top: 0.9, fmt: 'x' },
+      cac_payback:     { p25: 24, median: 18, p75: 14, top: 9, fmt: 'mo' },
+      ltv_cac:         { p25: 2.5, median: 3.5, p75: 4.5, top: 7.0, fmt: 'x' },
+      magic_number:    { p25: 0.5, median: 0.65, p75: 0.8, top: 1.2, fmt: 'ratio' },
+      win_rate:        { p25: 18, median: 24, p75: 30, top: 40, fmt: 'pct' },
+      pipeline_cov:    { p25: 2.5, median: 3.0, p75: 3.5, top: 5.0, fmt: 'x' },
+      sales_cycle:     { p25: 90, median: 65, p75: 45, top: 28, fmt: 'd' },
+      quota_attain:    { p25: 50, median: 60, p75: 70, top: 85, fmt: 'pct' },
+      avg_acv:         { p25: 15000, median: 30000, p75: 50000, top: 85000, fmt: 'eur' },
+      logo_churn:      { p25: 18, median: 14, p75: 10, top: 5, fmt: 'pct' },
+      expansion_rev:   { p25: 15, median: 20, p75: 25, top: 38, fmt: 'pct' },
+      nps:             { p25: 30, median: 37, p75: 45, top: 58, fmt: 'score' },
+      avg_discount:    { p25: 18, median: 13, p75: 8, top: 4, fmt: 'pct' }
+    },
+    'Series B': {
+      grip_overall:    { p25: 50, median: 58, p75: 68, top: 78, fmt: 'score' },
+      grip_g:          { p25: 50, median: 57, p75: 65, top: 76, fmt: 'score' },
+      grip_r:          { p25: 48, median: 56, p75: 65, top: 76, fmt: 'score' },
+      grip_i:          { p25: 45, median: 53, p75: 62, top: 74, fmt: 'score' },
+      grip_p:          { p25: 52, median: 60, p75: 68, top: 79, fmt: 'score' },
+      yoy_growth:      { p25: 50, median: 70, p75: 100, top: 160, fmt: 'pct' },
+      nrr:             { p25: 108, median: 115, p75: 125, top: 140, fmt: 'pct' },
+      grr:             { p25: 88, median: 91, p75: 95, top: 97, fmt: 'pct' },
+      gross_margin:    { p25: 70, median: 76, p75: 82, top: 88, fmt: 'pct' },
+      burn_multiple:   { p25: 2.0, median: 1.5, p75: 1.0, top: 0.6, fmt: 'x' },
+      cac_payback:     { p25: 18, median: 14, p75: 10, top: 7, fmt: 'mo' },
+      ltv_cac:         { p25: 3.5, median: 4.8, p75: 6.0, top: 9.0, fmt: 'x' },
+      magic_number:    { p25: 0.7, median: 0.9, p75: 1.1, top: 1.5, fmt: 'ratio' },
+      win_rate:        { p25: 22, median: 28, p75: 35, top: 45, fmt: 'pct' },
+      pipeline_cov:    { p25: 3.0, median: 3.5, p75: 4.5, top: 6.0, fmt: 'x' },
+      sales_cycle:     { p25: 120, median: 85, p75: 60, top: 35, fmt: 'd' },
+      quota_attain:    { p25: 55, median: 65, p75: 75, top: 88, fmt: 'pct' },
+      avg_acv:         { p25: 30000, median: 50000, p75: 80000, top: 130000, fmt: 'eur' },
+      logo_churn:      { p25: 14, median: 10, p75: 7, top: 4, fmt: 'pct' },
+      expansion_rev:   { p25: 20, median: 27, p75: 35, top: 48, fmt: 'pct' },
+      nps:             { p25: 35, median: 44, p75: 55, top: 65, fmt: 'score' },
+      avg_discount:    { p25: 15, median: 11, p75: 7, top: 3, fmt: 'pct' }
+    },
+    'Series C+': {
+      grip_overall:    { p25: 60, median: 68, p75: 78, top: 88, fmt: 'score' },
+      grip_g:          { p25: 60, median: 67, p75: 75, top: 85, fmt: 'score' },
+      grip_r:          { p25: 58, median: 66, p75: 75, top: 85, fmt: 'score' },
+      grip_i:          { p25: 55, median: 63, p75: 72, top: 82, fmt: 'score' },
+      grip_p:          { p25: 62, median: 70, p75: 78, top: 88, fmt: 'score' },
+      yoy_growth:      { p25: 30, median: 45, p75: 60, top: 100, fmt: 'pct' },
+      nrr:             { p25: 115, median: 122, p75: 130, top: 150, fmt: 'pct' },
+      grr:             { p25: 90, median: 93, p75: 96, top: 98, fmt: 'pct' },
+      gross_margin:    { p25: 75, median: 80, p75: 85, top: 90, fmt: 'pct' },
+      burn_multiple:   { p25: 1.5, median: 1.1, p75: 0.8, top: 0.5, fmt: 'x' },
+      cac_payback:     { p25: 14, median: 11, p75: 8, top: 5, fmt: 'mo' },
+      ltv_cac:         { p25: 4.5, median: 6.0, p75: 8.0, top: 12.0, fmt: 'x' },
+      magic_number:    { p25: 0.8, median: 1.0, p75: 1.3, top: 1.8, fmt: 'ratio' },
+      win_rate:        { p25: 30, median: 35, p75: 40, top: 50, fmt: 'pct' },
+      pipeline_cov:    { p25: 4.0, median: 4.5, p75: 5.0, top: 6.5, fmt: 'x' },
+      sales_cycle:     { p25: 150, median: 110, p75: 75, top: 45, fmt: 'd' },
+      quota_attain:    { p25: 60, median: 70, p75: 80, top: 92, fmt: 'pct' },
+      avg_acv:         { p25: 50000, median: 85000, p75: 150000, top: 250000, fmt: 'eur' },
+      logo_churn:      { p25: 10, median: 7, p75: 5, top: 2, fmt: 'pct' },
+      expansion_rev:   { p25: 25, median: 32, p75: 40, top: 55, fmt: 'pct' },
+      nps:             { p25: 40, median: 50, p75: 60, top: 72, fmt: 'score' },
+      avg_discount:    { p25: 12, median: 9, p75: 6, top: 2, fmt: 'pct' }
+    },
+    'Public / PE': {
+      grip_overall:    { p25: 65, median: 74, p75: 83, top: 92, fmt: 'score' },
+      grip_g:          { p25: 62, median: 70, p75: 78, top: 88, fmt: 'score' },
+      grip_r:          { p25: 65, median: 73, p75: 82, top: 90, fmt: 'score' },
+      grip_i:          { p25: 62, median: 70, p75: 78, top: 88, fmt: 'score' },
+      grip_p:          { p25: 68, median: 76, p75: 84, top: 92, fmt: 'score' },
+      yoy_growth:      { p25: 15, median: 25, p75: 40, top: 65, fmt: 'pct' },
+      nrr:             { p25: 118, median: 125, p75: 135, top: 155, fmt: 'pct' },
+      grr:             { p25: 92, median: 95, p75: 97, top: 99, fmt: 'pct' },
+      gross_margin:    { p25: 78, median: 82, p75: 87, top: 92, fmt: 'pct' },
+      burn_multiple:   { p25: 1.2, median: 0.8, p75: 0.5, top: 0.3, fmt: 'x' },
+      cac_payback:     { p25: 12, median: 9, p75: 6, top: 4, fmt: 'mo' },
+      ltv_cac:         { p25: 5.5, median: 7.5, p75: 10.0, top: 15.0, fmt: 'x' },
+      magic_number:    { p25: 0.9, median: 1.2, p75: 1.5, top: 2.0, fmt: 'ratio' },
+      win_rate:        { p25: 32, median: 38, p75: 45, top: 55, fmt: 'pct' },
+      pipeline_cov:    { p25: 4.5, median: 5.0, p75: 5.5, top: 7.0, fmt: 'x' },
+      sales_cycle:     { p25: 160, median: 120, p75: 85, top: 50, fmt: 'd' },
+      quota_attain:    { p25: 62, median: 72, p75: 82, top: 95, fmt: 'pct' },
+      avg_acv:         { p25: 70000, median: 120000, p75: 200000, top: 350000, fmt: 'eur' },
+      logo_churn:      { p25: 8, median: 5, p75: 3, top: 1.5, fmt: 'pct' },
+      expansion_rev:   { p25: 30, median: 38, p75: 48, top: 60, fmt: 'pct' },
+      nps:             { p25: 42, median: 52, p75: 62, top: 75, fmt: 'score' },
+      avg_discount:    { p25: 10, median: 7, p75: 4, top: 2, fmt: 'pct' }
+    }
+  };
+
+  /* Default stage when none selected */
+  var DEFAULT_STAGE = 'Series A';
+
+  /* Metric display order & labels */
+  var METRIC_ROWS = [
+    { cat: 'GRIP Scores' },
+    { key: 'grip_overall', name: 'Overall GRIP Score' },
+    { key: 'grip_g',       name: 'G (Growth)' },
+    { key: 'grip_r',       name: 'R (Revenue)' },
+    { key: 'grip_i',       name: 'I (Intelligence)' },
+    { key: 'grip_p',       name: 'P (Process)' },
+    { cat: 'Revenue & Growth' },
+    { key: 'yoy_growth',   name: 'YoY ARR Growth' },
+    { key: 'nrr',          name: 'Net Revenue Retention' },
+    { key: 'grr',          name: 'Gross Revenue Retention' },
+    { key: 'gross_margin', name: 'Gross Margin' },
+    { cat: 'Efficiency' },
+    { key: 'burn_multiple', name: 'Burn Multiple' },
+    { key: 'cac_payback',   name: 'CAC Payback' },
+    { key: 'ltv_cac',       name: 'LTV:CAC Ratio' },
+    { key: 'magic_number',  name: 'Magic Number' },
+    { cat: 'Sales Performance' },
+    { key: 'win_rate',      name: 'Win Rate' },
+    { key: 'pipeline_cov',  name: 'Pipeline Coverage' },
+    { key: 'sales_cycle',   name: 'Avg Sales Cycle' },
+    { key: 'quota_attain',  name: 'AE Quota Attainment' },
+    { key: 'avg_acv',       name: 'Avg Deal Size (ACV)' },
+    { key: 'avg_discount',  name: 'Avg Discount Given' },
+    { cat: 'Retention & Expansion' },
+    { key: 'logo_churn',    name: 'Logo Churn (annual)' },
+    { key: 'expansion_rev', name: 'Expansion Revenue %' },
+    { key: 'nps',            name: 'NPS Score' }
+  ];
+
+  /* ══════════════════════════════════════════════════════
+     FILTER ADJUSTMENT MULTIPLIERS
+     Each filter dimension maps option values to metric multipliers.
+     Missing metrics default to 1.0 (no change).
+     ══════════════════════════════════════════════════════ */
+  var ADJUSTMENTS = {
+    sector: {
+      'FinTech':       { nrr: 1.08, grr: 1.04, avg_acv: 1.2, sales_cycle: 1.15, win_rate: 0.92, cac_payback: 1.1 },
+      'HealthTech':    { sales_cycle: 1.4, avg_acv: 1.3, win_rate: 0.85, nrr: 1.05, cac_payback: 1.25, pipeline_cov: 1.15 },
+      'HRTech':        { nrr: 0.95, win_rate: 1.05, sales_cycle: 0.9, avg_acv: 0.85, expansion_rev: 0.9 },
+      'MarTech':       { logo_churn: 1.15, nrr: 0.92, win_rate: 1.08, sales_cycle: 0.8, avg_acv: 0.75 },
+      'Climate/ESG':   { sales_cycle: 1.3, avg_acv: 1.15, win_rate: 0.9, yoy_growth: 1.15, cac_payback: 1.2 },
+      'DevTools':      { win_rate: 1.12, sales_cycle: 0.65, avg_acv: 0.6, nrr: 1.05, logo_churn: 1.1, cac_payback: 0.7 },
+      'Cybersecurity': { avg_acv: 1.4, nrr: 1.1, sales_cycle: 1.2, win_rate: 0.88, pipeline_cov: 1.15, cac_payback: 1.15 },
+      'EdTech':        { avg_acv: 0.6, sales_cycle: 1.1, nrr: 0.9, logo_churn: 1.2, win_rate: 1.05 },
+      'LegalTech':     { avg_acv: 1.25, sales_cycle: 1.35, nrr: 1.08, win_rate: 0.88, cac_payback: 1.2 },
+      'Other':         {}
+    },
+    icp: {
+      'SMB':        { win_rate: 1.2, sales_cycle: 0.5, avg_discount: 0.7, nrr: 0.85, pipeline_cov: 0.7, avg_acv: 0.4, cac_payback: 0.6, logo_churn: 1.3, expansion_rev: 0.7 },
+      'Mid-Market': { win_rate: 1.0, sales_cycle: 1.0, avg_discount: 1.0, nrr: 1.0, pipeline_cov: 1.0, avg_acv: 1.0 },
+      'Enterprise': { win_rate: 0.8, sales_cycle: 2.0, avg_discount: 1.3, nrr: 1.15, pipeline_cov: 1.4, avg_acv: 2.5, cac_payback: 1.6, logo_churn: 0.6, expansion_rev: 1.4 },
+      'Mixed':      { win_rate: 0.95, sales_cycle: 1.2, avg_discount: 1.05, nrr: 1.0, pipeline_cov: 1.1, avg_acv: 1.1 }
+    },
+    bizmodel: {
+      'Pure SaaS':          { gross_margin: 1.08, nrr: 1.05, grr: 1.03, burn_multiple: 0.9 },
+      'Usage-based':        { nrr: 1.12, grr: 0.95, logo_churn: 0.85, expansion_rev: 1.3, gross_margin: 1.04 },
+      'Hybrid':             { gross_margin: 0.88, sales_cycle: 1.15, avg_acv: 1.2, nrr: 1.02, cac_payback: 1.15 },
+      'Marketplace + SaaS': { gross_margin: 0.82, nrr: 0.95, win_rate: 1.08, avg_acv: 0.8, logo_churn: 1.1 }
+    },
+    pricing: {
+      'Per Seat':           { nrr: 0.95, expansion_rev: 1.15, avg_acv: 0.9, logo_churn: 0.95 },
+      'Per Usage':          { nrr: 1.12, expansion_rev: 1.3, avg_acv: 0.75, logo_churn: 0.9, grr: 0.96 },
+      'Tiered Plans':       { win_rate: 1.05, avg_discount: 0.85, avg_acv: 0.95 },
+      'Custom Enterprise':  { avg_acv: 1.8, sales_cycle: 1.5, win_rate: 0.85, avg_discount: 1.25, cac_payback: 1.4, pipeline_cov: 1.2 }
+    },
+    motion: {
+      'PLG':         { win_rate: 1.15, sales_cycle: 0.55, nrr: 0.95, pipeline_cov: 0.75, cac_payback: 0.6, avg_acv: 0.5, logo_churn: 1.15, burn_multiple: 0.85, magic_number: 1.2 },
+      'Sales-Led':   { win_rate: 0.9, sales_cycle: 1.4, nrr: 1.1, pipeline_cov: 1.2, cac_payback: 1.3, avg_acv: 1.4, avg_discount: 1.2 },
+      'Hybrid':      { win_rate: 1.0, sales_cycle: 1.0, nrr: 1.0, pipeline_cov: 1.0, cac_payback: 1.0, avg_acv: 1.0 },
+      'Partner-Led': { win_rate: 1.05, sales_cycle: 1.2, nrr: 1.05, pipeline_cov: 0.9, cac_payback: 1.1, avg_acv: 1.15, avg_discount: 0.9 }
+    },
+    acv: {
+      '< 1K':     { avg_acv: 0.15, sales_cycle: 0.4, win_rate: 1.3, cac_payback: 0.5, nrr: 0.85, logo_churn: 1.4, pipeline_cov: 0.6 },
+      '1K-10K':   { avg_acv: 0.5, sales_cycle: 0.7, win_rate: 1.1, cac_payback: 0.8, nrr: 0.95 },
+      '10K-100K': { avg_acv: 1.2, sales_cycle: 1.2, win_rate: 0.95, cac_payback: 1.1 },
+      '100K+':    { avg_acv: 2.8, sales_cycle: 2.0, win_rate: 0.75, cac_payback: 1.6, pipeline_cov: 1.3, avg_discount: 1.3, nrr: 1.15 }
+    },
+    revenue: {
+      '< 1M':  { burn_multiple: 1.4, cac_payback: 1.3, ltv_cac: 0.7, magic_number: 0.7, quota_attain: 0.85 },
+      '1-10M': { burn_multiple: 1.0, cac_payback: 1.0, ltv_cac: 1.0, magic_number: 1.0 },
+      '10-50M':{ burn_multiple: 0.75, cac_payback: 0.85, ltv_cac: 1.2, magic_number: 1.15, quota_attain: 1.1 },
+      '50M+':  { burn_multiple: 0.55, cac_payback: 0.7, ltv_cac: 1.5, magic_number: 1.35, quota_attain: 1.2, gross_margin: 1.06 }
+    },
+    growth: {
+      '< 20%':  { yoy_growth: 0.3, burn_multiple: 0.6, nrr: 1.05, logo_churn: 0.8 },
+      '20-50%': { yoy_growth: 0.6, burn_multiple: 0.8, nrr: 1.0 },
+      '50-100%':{ yoy_growth: 1.0, burn_multiple: 1.0 },
+      '100%+':  { yoy_growth: 1.8, burn_multiple: 1.5, cac_payback: 1.2, logo_churn: 1.1 }
+    },
+    geo: {
+      'France': { avg_acv: 0.8, sales_cycle: 1.15, avg_discount: 1.1, nrr: 0.97 },
+      'Europe': { avg_acv: 0.9, sales_cycle: 1.1, nrr: 0.98 },
+      'US':     { avg_acv: 1.2, sales_cycle: 0.9, nrr: 1.05, pipeline_cov: 1.05 },
+      'Global': { avg_acv: 1.1, sales_cycle: 1.05, nrr: 1.02, pipeline_cov: 1.02 }
+    },
+    org: {
+      'Founder-led':     { sales_cycle: 0.8, win_rate: 1.1, cac_payback: 0.85, quota_attain: 0.8, pipeline_cov: 0.8 },
+      'Early GTM team':  { sales_cycle: 1.0, win_rate: 0.95, cac_payback: 1.1, quota_attain: 0.9 },
+      'Structured GTM':  { sales_cycle: 1.1, win_rate: 1.0, quota_attain: 1.1, pipeline_cov: 1.1 },
+      'Fully Scaled':    { sales_cycle: 1.15, win_rate: 1.05, quota_attain: 1.15, pipeline_cov: 1.15, nrr: 1.05 }
+    },
+    tech: {
+      'API-first':          { avg_acv: 0.7, sales_cycle: 0.75, nrr: 1.08, logo_churn: 0.85, expansion_rev: 1.2, gross_margin: 1.06 },
+      'Platform':           { avg_acv: 1.3, sales_cycle: 1.2, nrr: 1.1, expansion_rev: 1.25, logo_churn: 0.8 },
+      'Single-product SaaS':{ avg_acv: 0.85, sales_cycle: 0.9, nrr: 0.92, expansion_rev: 0.75, logo_churn: 1.1 },
+      'AI-native':          { avg_acv: 1.1, yoy_growth: 1.3, nrr: 1.0, sales_cycle: 0.85, burn_multiple: 1.3, gross_margin: 0.92 }
+    },
+    complexity: {
+      'Single User':      { avg_acv: 0.3, sales_cycle: 0.4, win_rate: 1.25, nrr: 0.82, logo_churn: 1.4, expansion_rev: 0.5, cac_payback: 0.5 },
+      'Team-based':        { avg_acv: 0.8, sales_cycle: 0.8, win_rate: 1.05, nrr: 0.95, expansion_rev: 1.0 },
+      'Multi-department':  { avg_acv: 1.4, sales_cycle: 1.3, win_rate: 0.9, nrr: 1.1, expansion_rev: 1.25, cac_payback: 1.2 },
+      'Enterprise-wide':   { avg_acv: 2.5, sales_cycle: 2.2, win_rate: 0.75, nrr: 1.2, expansion_rev: 1.5, cac_payback: 1.7, pipeline_cov: 1.3 }
+    },
+    signals: {
+      'Hiring':            { yoy_growth: 1.15, burn_multiple: 1.2, cac_payback: 1.1 },
+      'Funding Event':     { yoy_growth: 1.25, burn_multiple: 1.3, avg_acv: 1.05 },
+      'New Product Launch': { nrr: 1.08, expansion_rev: 1.2, logo_churn: 1.05 },
+      'Leadership Change':  { quota_attain: 0.88, win_rate: 0.92, sales_cycle: 1.1, pipeline_cov: 0.9 }
+    }
+  };
+
+  /* ══════════════════════════════════════════════════════
+     CONSTRAINT DATA (by stage + motion)
+     ══════════════════════════════════════════════════════ */
+  var CONSTRAINTS = {
+    'Pre-Seed / Seed': {
+      'G (Growth)':      [{ n: 'ICP Drift', p: 73 }, { n: 'Strategy Ambiguity', p: 68 }, { n: 'Positioning Gap', p: 55 }],
+      'R (Revenue)':     [{ n: 'Pricing Governance', p: 52 }, { n: 'Discount Discipline', p: 48 }, { n: 'Pipeline Fantasy', p: 45 }],
+      'I (Intelligence)':[{ n: 'CRM Hygiene', p: 65 }, { n: 'Data Blind Spots', p: 60 }, { n: 'Forecast Accuracy', p: 42 }],
+      'P (Process)':     [{ n: 'Sales Process Absence', p: 70 }, { n: 'Handoff Gaps', p: 58 }, { n: 'Onboarding Chaos', p: 50 }]
+    },
+    'Series A': {
+      'G (Growth)':      [{ n: 'Pipeline Quality', p: 65 }, { n: 'Channel Dependency', p: 52 }, { n: 'ICP Scatter', p: 48 }],
+      'R (Revenue)':     [{ n: 'Forecast Fantasy', p: 58 }, { n: 'Discount Governance', p: 45 }, { n: 'Expansion Blind Spot', p: 40 }],
+      'I (Intelligence)':[{ n: 'Attribution Gaps', p: 55 }, { n: 'Win/Loss Ignorance', p: 50 }, { n: 'Segment Blindness', p: 42 }],
+      'P (Process)':     [{ n: 'Stage Gate Absence', p: 55 }, { n: 'CS-Sales Handoff', p: 48 }, { n: 'RevOps Maturity', p: 38 }]
+    },
+    'Series B': {
+      'G (Growth)':      [{ n: 'Channel Saturation', p: 48 }, { n: 'Expansion Gap', p: 45 }, { n: 'Segment Confusion', p: 38 }],
+      'R (Revenue)':     [{ n: 'Churn Governance', p: 55 }, { n: 'Expansion Blind Spot', p: 48 }, { n: 'Pricing Leakage', p: 40 }],
+      'I (Intelligence)':[{ n: 'RevOps Maturity', p: 42 }, { n: 'Cohort Blindness', p: 38 }, { n: 'Pipeline Integrity', p: 35 }],
+      'P (Process)':     [{ n: 'Cross-team Alignment', p: 45 }, { n: 'Enablement Gap', p: 40 }, { n: 'Renewal Process', p: 35 }]
+    },
+    'Series C+': {
+      'G (Growth)':      [{ n: 'Cross-functional Drift', p: 50 }, { n: 'Market Saturation', p: 42 }, { n: 'New Market Entry', p: 38 }],
+      'R (Revenue)':     [{ n: 'Data Governance', p: 45 }, { n: 'Multi-product Complexity', p: 40 }, { n: 'Revenue Leakage', p: 35 }],
+      'I (Intelligence)':[{ n: 'Enablement Gap', p: 38 }, { n: 'Analytics Maturity', p: 35 }, { n: 'Predictive Gaps', p: 30 }],
+      'P (Process)':     [{ n: 'Scale Bottlenecks', p: 42 }, { n: 'Process Bloat', p: 38 }, { n: 'Tech Stack Sprawl', p: 35 }]
+    },
+    'Public / PE': {
+      'G (Growth)':      [{ n: 'Growth Plateaus', p: 45 }, { n: 'Market Saturation', p: 42 }, { n: 'Innovation Gaps', p: 35 }],
+      'R (Revenue)':     [{ n: 'Margin Optimization', p: 38 }, { n: 'Multi-product Complexity', p: 35 }, { n: 'Pricing Complexity', p: 32 }],
+      'I (Intelligence)':[{ n: 'Data Silos', p: 40 }, { n: 'Predictive Accuracy', p: 35 }, { n: 'Board Reporting', p: 28 }],
+      'P (Process)':     [{ n: 'Process Rigidity', p: 38 }, { n: 'Tech Debt', p: 35 }, { n: 'Change Resistance', p: 30 }]
+    }
+  };
+
+  /* Motion adjustments to constraint percentages */
+  var CONSTRAINT_MOTION_ADJ = {
+    'PLG':         { 'Pipeline Quality': -8, 'Pipeline Fantasy': -10, 'Pipeline Integrity': -5, 'Stage Gate Absence': -8, 'Sales Process Absence': -10, 'ICP Drift': 5, 'Pricing Governance': 8 },
+    'Sales-Led':   { 'Pipeline Quality': 5, 'Discount Governance': 8, 'Discount Discipline': 10, 'Sales Process Absence': -5, 'Stage Gate Absence': -3, 'Pricing Leakage': 5 },
+    'Hybrid':      {},
+    'Partner-Led': { 'Channel Dependency': 15, 'Pipeline Quality': -5, 'Attribution Gaps': 10, 'Handoff Gaps': 8 }
+  };
+
+
+  /* ══════════════════════════════════════════════════════
+     FORMATTING HELPERS
+     ══════════════════════════════════════════════════════ */
+  function fmtVal(val, fmt) {
+    if (val === null || val === undefined) return '-';
+    switch (fmt) {
+      case 'pct':   return Math.round(val) + '%';
+      case 'x':     return val.toFixed(1) + 'x';
+      case 'mo':    return Math.round(val) + ' mo';
+      case 'd':     return Math.round(val) + ' d';
+      case 'eur':   return '\u20AC' + formatNum(Math.round(val));
+      case 'score': return Math.round(val).toString();
+      case 'ratio': return val.toFixed(2);
+      default:      return val.toString();
+    }
+  }
+
+  function formatNum(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return Math.round(n / 1000) + 'K';
+    return n.toString();
+  }
+
+  /* ══════════════════════════════════════════════════════
+     FILTER STATE & COMPUTATION
+     ══════════════════════════════════════════════════════ */
+  var filterMap = {
+    'f-stage':      'stage',
+    'f-sector':     'sector',
+    'f-icp':        'icp',
+    'f-bizmodel':   'bizmodel',
+    'f-pricing':    'pricing',
+    'f-motion':     'motion',
+    'f-acv':        'acv',
+    'f-revenue':    'revenue',
+    'f-growth':     'growth',
+    'f-geo':        'geo',
+    'f-org':        'org',
+    'f-tech':       'tech',
+    'f-complexity': 'complexity',
+    'f-signals':    'signals'
+  };
+
+  function getActiveFilters() {
+    var filters = {};
+    var selects = document.querySelectorAll('.filter-group select');
+    for (var i = 0; i < selects.length; i++) {
+      var sel = selects[i];
+      var dim = sel.getAttribute('data-filter');
+      if (sel.value) {
+        filters[dim] = sel.value;
+        sel.classList.add('active-filter');
+      } else {
+        sel.classList.remove('active-filter');
+      }
+    }
+    return filters;
+  }
+
+  function getStageKey(filters) {
+    return filters.stage || DEFAULT_STAGE;
+  }
+
+  function computeBenchmarks(filters) {
+    var stageKey = getStageKey(filters);
+    var base = BASE[stageKey];
+    if (!base) base = BASE[DEFAULT_STAGE];
+
+    var result = {};
+    var metricKeys = Object.keys(base);
+    for (var m = 0; m < metricKeys.length; m++) {
+      var mk = metricKeys[m];
+      var b = base[mk];
+      var mult = 1.0;
+
+      /* Multiply adjustments from all active non-stage filters */
+      var dims = Object.keys(filters);
+      for (var d = 0; d < dims.length; d++) {
+        var dim = dims[d];
+        if (dim === 'stage') continue;
+        var adjGroup = ADJUSTMENTS[dim];
+        if (!adjGroup) continue;
+        var adjSet = adjGroup[filters[dim]];
+        if (!adjSet) continue;
+        if (adjSet[mk] !== undefined) {
+          mult *= adjSet[mk];
+        }
+      }
+
+      result[mk] = {
+        p25: b.p25 * mult,
+        median: b.median * mult,
+        p75: b.p75 * mult,
+        top: b.top * mult,
+        fmt: b.fmt
+      };
+    }
+    return result;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RENDER: Benchmark Table
+     ══════════════════════════════════════════════════════ */
+  function renderTable(data) {
+    var body = document.getElementById('bmBody');
+    var html = '';
+    for (var i = 0; i < METRIC_ROWS.length; i++) {
+      var row = METRIC_ROWS[i];
+      if (row.cat) {
+        html += '<tr class="cat-row"><td colspan="5">' + row.cat + '</td></tr>';
+      } else {
+        var d = data[row.key];
+        if (!d) continue;
+        html += '<tr>';
+        html += '<td class="metric-name">' + row.name + '</td>';
+        html += '<td class="val-col">' + fmtVal(d.p25, d.fmt) + '</td>';
+        html += '<td class="val-col"><span class="bm-badge bm-blue">' + fmtVal(d.median, d.fmt) + '</span></td>';
+        html += '<td class="val-col"><span class="bm-badge bm-green">' + fmtVal(d.p75, d.fmt) + '</span></td>';
+        html += '<td class="val-col" style="color:#16a34a;font-weight:700;">' + fmtVal(d.top, d.fmt) + '</td>';
+        html += '</tr>';
+      }
+    }
+    body.innerHTML = html;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RENDER: GRIP Score Bars
+     ══════════════════════════════════════════════════════ */
+  var barClasses = { 'Overall': 'bar-overall', 'G (Growth)': 'bar-g', 'R (Revenue)': 'bar-r', 'I (Intelligence)': 'bar-i', 'P (Process)': 'bar-p' };
+  var gripKeys = [
+    { label: 'Overall',          mk: 'grip_overall' },
+    { label: 'G (Growth)',       mk: 'grip_g' },
+    { label: 'R (Revenue)',      mk: 'grip_r' },
+    { label: 'I (Intelligence)', mk: 'grip_i' },
+    { label: 'P (Process)',      mk: 'grip_p' }
+  ];
+
+  function renderGripBars(data) {
+    var container = document.getElementById('gripBars');
+    var html = '';
+    for (var i = 0; i < gripKeys.length; i++) {
+      var g = gripKeys[i];
+      var d = data[g.mk];
+      if (!d) continue;
+      var lo = Math.max(0, Math.min(100, Math.round(d.p25)));
+      var hi = Math.max(0, Math.min(100, Math.round(d.p75)));
+      html += '<div class="grip-bar-row">';
+      html += '<div class="grip-bar-label">' + g.label + '</div>';
+      html += '<div class="grip-bar-track">';
+      html += '<div class="bar-tick" style="left:25%"></div>';
+      html += '<div class="bar-tick" style="left:50%"></div>';
+      html += '<div class="bar-tick" style="left:75%"></div>';
+      html += '<div class="grip-bar-range ' + barClasses[g.label] + '" style="left:' + lo + '%;width:' + (hi - lo) + '%"></div>';
+      html += '</div>';
+      html += '<div class="grip-bar-value">' + lo + ' - ' + hi + '</div>';
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RENDER: Constraint Prevalence
+     ══════════════════════════════════════════════════════ */
+  function renderConstraints(filters) {
+    var stageKey = getStageKey(filters);
+    var stageConstraints = CONSTRAINTS[stageKey];
+    if (!stageConstraints) stageConstraints = CONSTRAINTS[DEFAULT_STAGE];
+
+    var motionKey = filters.motion || '';
+    var motionAdj = CONSTRAINT_MOTION_ADJ[motionKey] || {};
+
+    var container = document.getElementById('constraintGrid');
+    var pillars = ['G (Growth)', 'R (Revenue)', 'I (Intelligence)', 'P (Process)'];
+    var html = '';
+
+    for (var p = 0; p < pillars.length; p++) {
+      var pillar = pillars[p];
+      var items = stageConstraints[pillar] || [];
+      html += '<div class="constraint-card">';
+      html += '<h4>' + pillar + '</h4>';
+      for (var j = 0; j < items.length; j++) {
+        var item = items[j];
+        var pct = item.p + (motionAdj[item.n] || 0);
+        pct = Math.max(5, Math.min(95, pct));
+        var cls = pct >= 55 ? 'pct-high' : (pct >= 40 ? 'pct-med' : 'pct-low');
+        html += '<div class="constraint-item">';
+        html += '<span class="constraint-name">' + item.n + '</span>';
+        html += '<span class="constraint-pct ' + cls + '">' + pct + '%</span>';
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RENDER: Cohort Indicator
+     ══════════════════════════════════════════════════════ */
+  function renderCohort(filters) {
+    var el = document.getElementById('cohortText');
+    var parts = [];
+    var labels = {
+      stage: 'Stage', sector: 'Sector', icp: 'ICP', bizmodel: 'Model',
+      pricing: 'Pricing', motion: 'Motion', acv: 'ACV', revenue: 'Revenue',
+      growth: 'Growth', geo: 'Geo', org: 'Org', tech: 'Tech',
+      complexity: 'Complexity', signals: 'Signals'
+    };
+
+    var keys = Object.keys(filters);
+    for (var i = 0; i < keys.length; i++) {
+      parts.push(filters[keys[i]]);
+    }
+
+    if (parts.length === 0) {
+      el.innerHTML = 'Benchmarks pour: <strong>Toutes les entreprises</strong> (defaults to Series A)';
+    } else {
+      el.innerHTML = 'Benchmarks pour : <strong>' + parts.join(' &middot; ') + '</strong>';
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     FILTER CONTROLS
+     ══════════════════════════════════════════════════════ */
+  function updateFilterUI(filters) {
+    var count = Object.keys(filters).length;
+    var countEl = document.getElementById('filterCount');
+    var resetEl = document.getElementById('btnReset');
+
+    if (count > 0) {
+      countEl.style.display = 'flex';
+      countEl.textContent = count + ' filtre' + (count !== 1 ? 's' : '') + ' actif' + (count !== 1 ? 's' : '');
+      resetEl.style.display = 'block';
+    } else {
+      countEl.style.display = 'none';
+      resetEl.style.display = 'none';
+    }
+  }
+
+  function resetFilters() {
+    var selects = document.querySelectorAll('.filter-group select');
+    for (var i = 0; i < selects.length; i++) {
+      selects[i].value = '';
+      selects[i].classList.remove('active-filter');
+    }
+    onFilterChange();
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MAIN UPDATE
+     ══════════════════════════════════════════════════════ */
+  function onFilterChange() {
+    var filters = getActiveFilters();
+    var data = computeBenchmarks(filters);
+
+    renderTable(data);
+    renderGripBars(data);
+    renderConstraints(filters);
+    renderCohort(filters);
+    updateFilterUI(filters);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     EVENT LISTENERS
+     ══════════════════════════════════════════════════════ */
+  var selects = document.querySelectorAll('.filter-group select');
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].addEventListener('change', onFilterChange);
+  }
+  document.getElementById('btnReset').addEventListener('click', resetFilters);
+
+  /* ══════════════════════════════════════════════════════
+     INITIAL RENDER
+     ══════════════════════════════════════════════════════ */
+  onFilterChange();
+
+  /* Footer year */
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+})();
+</script>
+</body>
+</html>

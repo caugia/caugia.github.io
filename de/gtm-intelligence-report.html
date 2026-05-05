@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+<script type="text/javascript">
+  if(localStorage.getItem("analytics_optout")!=="true"&&!/(?:^|;\s*)caugia_optout=true/.test(document.cookie)){
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4z8p58zse");
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Der GTM Intelligence Report — eine 45-seitige Constraint-Diagnose für B2B SaaS. 265 Fragen, 72 Scoring Engines, GRIP-Scores, Revenue-Leakage-Analyse und 90-Tage-Aktionsplan." />
+  <link rel="canonical" href="https://www.caugia.com/de/gtm-intelligence-report.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.caugia.com/de/gtm-intelligence-report.html" />
+  <meta property="og:title" content="GTM Intelligence Report | Caugia" />
+  <meta property="og:description" content="45-seitige forensische GTM-Diagnose. Finden Sie Ihre Engpass-Constraint und quantifizieren Sie die Auswirkungen auf den Umsatz." />
+  <meta property="og:image" content="https://www.caugia.com/assets/social-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Der GTM Intelligence Report | Caugia</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../icon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <link rel="stylesheet" href="../assets/caugia-v10.1.css?v=10.1"/>
+  <style>
+    html, body { height: 100%; overflow: hidden; display: flex; flex-direction: column; margin: 0; }
+    .gi-main { flex-grow: 1; overflow: hidden; padding-bottom: 0; height: calc(100% - 60px); }
+    .gi-shell { height: 100%; display: grid; grid-template-columns: 320px 1fr 280px; gap: 0; }
+    .gi-left-info { display: flex; flex-direction: column; height: 100%; overflow: hidden; padding-bottom: 4px; }
+    .gi-pillar-desc-box { margin-top: auto; height: 240px; min-height: 240px; max-height: 240px; overflow: hidden; flex-shrink: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; }
+    .gi-pillar-nav li { display: flex; justify-content: space-between; align-items: center; color: #475569; cursor: pointer; }
+    .gi-pillar-nav li:hover { color: #0056b3; background-color: #f1f5f9; }
+    .gi-pillar-nav li.active { background-color: #0056b3 !important; color: #ffffff !important; font-weight: 700; }
+    .gi-question-card { position: relative; height: 100%; display: flex; flex-direction: column; padding: 48px 40px 0 40px; overflow: hidden; }
+    .gi-question-body { flex-grow: 1; padding-bottom: 16px; overflow-y: auto; overflow-x: hidden; }
+    .gi-nav-row { flex-shrink: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 40px; margin: 0 -40px; display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
+    .gi-999-hint { font-size: 0.72rem; color: #94a3b8; white-space: nowrap; align-self: center; margin-left: 4px; }
+    .gi-nav-spacer { flex: 1; }
+    .gi-nav-utility { display: flex; gap: 6px; align-items: center; }
+    .gi-utility-btn { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 5px 10px; font-size: 0.72rem; font-weight: 600; color: #64748b; cursor: pointer; white-space: nowrap; }
+    @keyframes subtlePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,86,179,0.2); } 50% { box-shadow: 0 0 0 6px rgba(0,86,179,0); } }
+    #gi-next-btn:not(:disabled) { animation: subtlePulse 2s ease-in-out infinite; }
+    .gi-faq-button { padding: 10px 16px !important; font-size: 0.8rem !important; bottom: 16px !important; right: 16px !important; }
+    #assessment-app { display: none; height: 100%; width: 100%; }
+    #access-denied { display: none; min-height: 100vh; background: #f8fafc; padding: 48px 20px; box-sizing: border-box; overflow-y: auto; }
+    .access-denied-shell { max-width: 720px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 40px; text-align: center; }
+    .access-denied-shell img { width: 56px; height: 56px; margin-bottom: 20px; }
+    .access-denied-shell h1 { margin: 0 0 16px; font-size: 2rem; line-height: 1.2; color: #0f172a; }
+    .access-denied-shell p { margin: 0 0 12px; color: #475569; }
+    .access-denied-meta { margin-top: 28px; padding-top: 24px; border-top: 1px solid #e2e8f0; font-size: 0.92rem; color: #64748b; }
+    .access-denied-actions { margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .access-denied-btn { display: inline-flex; align-items: center; padding: 12px 18px; border-radius: 10px; text-decoration: none; font-weight: 700; }
+    .access-denied-btn.primary { background: #0056b3; color: #fff; }
+    .access-denied-btn.secondary { background: #fff; color: #334155; border: 1px solid #cbd5e1; }
+    @media (max-width: 1000px) {
+      body { overflow-y: auto; height: auto; }
+      .gi-shell { display: flex; flex-direction: column; }
+      .gi-left-info, .gi-right-pillars { display: none; }
+      .gi-question-card { height: auto; overflow: visible; padding: 24px 20px 0; }
+      .gi-nav-row { margin: 0 -20px; padding: 12px 20px; flex-wrap: wrap; }
+      .gi-nav-utility { display: none; }
+      .gi-999-hint { display: none; }
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/gtm-intelligence-report.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/gtm-intelligence-report.html" />
+</head>
+<body>
+
+<div id="access-denied">
+  <div class="access-denied-shell">
+    <img src="../assets/logo-final.png" alt="Caugia logo" />
+    <h2>Zugang erforderlich</h2>
+    <p>Dieses Assessment ist geschützt und erfordert einen gültigen Zugangslink.</p>
+    <p>Bitte verwenden Sie den Link aus Ihrer Caugia-E-Mail oder geben Sie Ihren Zugangscode erneut ein.</p>
+    <div class="access-denied-actions">
+      <a class="access-denied-btn primary" href="/de/gtm-intelligence-thank-you.html">Zur Zugangsseite</a>
+      <a class="access-denied-btn secondary" href="mailto:contact@caugia.com">Support kontaktieren</a>
+    </div>
+    <div class="access-denied-meta" id="access-denied-message">
+      Ihr Zugangstoken fehlt, ist ungültig oder abgelaufen.
+    </div>
+  </div>
+</div>
+
+<div id="assessment-app">
+  <header class="gi-header">
+    <div class="gi-header-inner">
+      <div class="gi-header-left">
+        <img src="../assets/logo-final.png" class="gi-logo" alt="Caugia logo" width="32" height="32">
+        <span class="gi-header-brand">Caugia</span>
+      </div>
+      <div class="gi-header-right"></div>
+    </div>
+  </header>
+
+  <main class="gi-main">
+    <div class="gi-shell">
+      <aside class="gi-left-info">
+        <div class="gi-info-title">Premium GTM-Assessment</div>
+        <h1 class="gi-info-h1">Der GTM Intelligence Report</h1>
+        <p class="gi-info-desc">
+          Eine strukturierte Diagnose mit 12 Säulen, die Ihr gesamtes
+          Go-to-Market-System bewertet und Stärken, Risiken und versteckte
+          Abhängigkeiten in der gesamten Revenue-Engine aufdeckt.
+        </p>
+        <div class="gi-info-meta">12 Säulen · 265 Fragen · ~35 Minuten</div>
+
+        <div class="gi-progress-box">
+          <div class="gi-progress-top">
+            <span id="gi-progress-count">0 / 265</span>
+            <span id="gi-progress-percent">0%</span>
+          </div>
+          <div class="gi-progress-track">
+            <div id="gi-progress-bar" class="gi-progress-fill"></div>
+          </div>
+        </div>
+
+        <button class="gi-btn gi-reset" id="gi-reset-btn" style="margin-bottom:16px;">Zurücksetzen</button>
+
+        <div class="gi-pillar-desc-box" id="gi-left-pillar-desc-box">
+          <h3 id="gi-pillar-name">Kontext</h3>
+          <p id="gi-pillar-desc">
+            Der Kontext bildet die Grundlage für die Interpretation des restlichen
+            Assessments. Durch das Erfassen wesentlicher Details über Ihr Unternehmen
+            passt das System die Empfehlungen an Ihre spezifische Realität an.
+          </p>
+        </div>
+      </aside>
+
+      <section class="gi-center">
+        <div class="gi-question-card" id="gi-question-card">
+          <div class="gi-question-header">
+            <div class="gi-question-kicker" id="gi-question-kicker"></div>
+            <h2 class="gi-question-title" id="gi-question-title"></h2>
+            <p class="gi-question-sub" id="gi-question-sub"></p>
+          </div>
+          <div class="gi-question-body" id="gi-question-body"></div>
+          <div class="gi-nav-row">
+            <button class="gi-btn" id="gi-prev-btn">Zurück</button>
+            <button class="gi-btn gi-primary" id="gi-next-btn">Weiter</button>
+            <button class="gi-btn gi-primary" id="gi-submit-btn" style="display:none;">Assessment einreichen</button>
+            <button class="gi-btn" id="gi-clear-btn">Löschen</button>
+            <span class="gi-999-hint">Geben Sie 999 ein, falls nicht zutreffend</span>
+            <div class="gi-nav-spacer"></div>
+            <div class="gi-nav-utility">
+              <button class="gi-utility-btn" id="gi-save-btn">Fortschritt speichern</button>
+              <button class="gi-utility-btn" id="gi-jump-first">Erste unbeantwortet</button>
+              <button class="gi-utility-btn" id="gi-jump-last">Zuletzt beantwortet</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="gi-right-pillars">
+        <div class="gi-pillars-title">Säulen</div>
+        <ul class="gi-pillar-nav" id="gi-left-pillar-list">
+          <li data-p="0" class="active">0 — Kontext</li>
+          <li data-p="1">1 — GTM-Strategie &amp; Leadership</li>
+          <li data-p="2">2 — Market Intelligence</li>
+          <li data-p="3">3 — Product Marketing</li>
+          <li data-p="4">4 — Demand Generation</li>
+          <li data-p="5">5 — Sales Execution</li>
+          <li data-p="6">6 — Customer Success &amp; Expansion</li>
+          <li data-p="7">7 — Revenue Operations &amp; Systeme</li>
+          <li data-p="8">8 — Pricing &amp; Packaging</li>
+          <li data-p="9">9 — Produktreife</li>
+          <li data-p="10">10 — Daten &amp; Insights</li>
+          <li data-p="11">11 — Enablement</li>
+          <li data-p="12">12 — Alignment &amp; Governance</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <a href="/de/faq.html" target="_blank" rel="noopener" class="gi-faq-button">FAQ</a>
+</div>
+
+<script>
+(function () {
+  var VALIDATE_WEBHOOK = 'https://script.google.com/macros/s/AKfycbyKobAAPtAmSVxi7gxlISbskien0eVt-hz_mQwz19feF86Uq8j_M0vhrKvsCK59Hdo/exec';
+  var STORAGE_RESUME_URL='caugia_resume_url',STORAGE_RESUME_SAVED_AT='caugia_resume_saved_at',STORAGE_ACTIVE_TOKEN='caugia_assessment_active_token',STORAGE_ASSESSMENT_STATE='caugia_assessment_v9_state';
+  function clearResumeState() { try { localStorage.removeItem(STORAGE_RESUME_URL); localStorage.removeItem(STORAGE_RESUME_SAVED_AT); } catch(e) {} }
+  function saveResumeState() { try { localStorage.setItem(STORAGE_RESUME_URL, window.location.href); localStorage.setItem(STORAGE_RESUME_SAVED_AT, new Date().toISOString()); } catch(e) {} }
+  function resetAssessmentStateForNewToken(t) { try { var p = localStorage.getItem(STORAGE_ACTIVE_TOKEN) || ''; if (p && t && p !== t) localStorage.removeItem(STORAGE_ASSESSMENT_STATE); if (t) localStorage.setItem(STORAGE_ACTIVE_TOKEN, t); } catch(e) {} }
+  function clearAssessmentState() { try { localStorage.removeItem(STORAGE_ACTIVE_TOKEN); localStorage.removeItem(STORAGE_ASSESSMENT_STATE); } catch(e) {} }
+  function showDenied(msg) { var d=document.getElementById('access-denied'),a=document.getElementById('assessment-app'),m=document.getElementById('access-denied-message'); if(m&&msg)m.textContent=msg; if(a)a.style.display='none'; if(d)d.style.display='block'; document.body.style.overflow='auto'; }
+  function showApp() { var d=document.getElementById('access-denied'),a=document.getElementById('assessment-app'); if(d)d.style.display='none'; if(a)a.style.display='block'; document.body.style.overflow='hidden'; window.CAUGIA_ACCESS_GRANTED=true; }
+  function getToken() { return new URLSearchParams(window.location.search).get('token'); }
+  function validateToken(t) { return fetch(VALIDATE_WEBHOOK,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'validate_token',token:t}),redirect:'follow'}).then(function(r){if(!r.ok)throw new Error('HTTP_'+r.status);return r.json();}); }
+  function markSubmitted(t) { return fetch(VALIDATE_WEBHOOK,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'mark_submitted',token:t}),redirect:'follow'}).then(function(r){if(!r.ok)throw new Error('HTTP_'+r.status);return r.json();}); }
+
+  window.CAUGIA_ACCESS_GRANTED = false;
+  window.CAUGIA_ACCESS_READY = (function() {
+    var token = getToken();
+    if (!token) { clearResumeState(); clearAssessmentState(); showDenied('Ihr Zugangstoken fehlt. Bitte verwenden Sie den Link aus Ihrer E-Mail.'); return Promise.resolve(false); }
+    resetAssessmentStateForNewToken(token);
+    return validateToken(token).then(function(d) {
+      if (!d || !d.valid) { clearResumeState(); clearAssessmentState(); showDenied((d&&d.error)||'Ihr Zugangstoken ist ungültig oder abgelaufen.'); return false; }
+      window.CAUGIA_ACCESS_CONTEXT = d; window.CAUGIA_ACCESS_TOKEN = token; saveResumeState(); showApp(); return true;
+    }).catch(function() { clearResumeState(); clearAssessmentState(); showDenied('Wir konnten Ihren Zugang derzeit nicht verifizieren. Versuchen Sie es erneut oder kontaktieren Sie contact@caugia.com.'); return false; });
+  })();
+  window.CAUGIA_MARK_SUBMITTED = markSubmitted;
+})();
+</script>
+
+<script src="../assets/QUESTIONS.js?v=1"></script>
+
+<script>
+const PILLAR_META = {
+  0:{name:"Kontext", desc:"Der Kontext bildet die Grundlage für die Interpretation des restlichen Assessments. Durch das Erfassen wesentlicher Unternehmensdetails passt das System die Empfehlungen an Ihre spezifische Realität an."},
+  1:{name:"GTM-Strategie & Leadership", desc:"Die GTM-Strategie misst, wie klar Richtung und Prioritäten definiert sind. Sie bewertet, ob Ihre langfristige Vision in umsetzbare Roadmaps übersetzt wird, die die Ressourcenallokation steuern."},
+  2:{name:"Market Intelligence", desc:"Market Intelligence spiegelt wider, wie gut Sie Ihren Markt, Ihre Kunden und Wettbewerber verstehen. Bewertet werden die Tiefe Ihrer ICP-Definition und die Fähigkeit, sich verändernde Bedürfnisse zu erkennen."},
+  3:{name:"Product Marketing", desc:"Product Marketing verbindet Kundenverständnis mit Produktwert. Bewertet wird Ihre Fähigkeit, Funktionen in Nutzen zu übersetzen und sicherzustellen, dass Sales eine konsistente Botschaft liefert."},
+  4:{name:"Demand Generation", desc:"Demand Generation misst, wie vorhersehbar Pipeline generiert wird. Sie geht über Vanity-Metriken hinaus und bewertet die Qualität der Capture und die Effizienz Ihrer Akquisitionskosten langfristig."},
+  5:{name:"Sales Execution", desc:"Sales Execution bewertet Funnel-Konsistenz und Deal-Qualität. Sie betrachtet, ob Ihr Prozess rigoros befolgt wird oder ob Umsatz von Heldentaten Einzelner abhängt — und sichert vorhersehbare Zielerreichung."},
+  6:{name:"Customer Success & Expansion", desc:"Customer Success & Expansion misst Onboarding, Retention und Expansion. Der Fokus verschiebt sich von reaktivem Support zu proaktivem Mehrwert, kritisch für kompoundierendes Wachstum via Net Revenue Retention."},
+  7:{name:"Revenue Operations & Systeme", desc:"Revenue Operations bewertet Prozess-, Tooling- und Datenfundamente. Bewertet wird, ob Ihr Tech Stack Reibung beseitigt oder Komplexität hinzufügt und die nötige Infrastruktur für Skalierung liefert."},
+  8:{name:"Pricing & Packaging", desc:"Pricing & Packaging bewertet die Klarheit von Wert und Monetarisierung. Geprüft wird, ob Ihr Modell mit der tatsächlichen Wertaufnahme der Kunden übereinstimmt und reibungslose Expansion-Umsätze ermöglicht."},
+  9:{name:"Produktreife", desc:"Produktreife bewertet, ob Ihr Produkt die GTM-Motion tatsächlich unterstützt. Bewertet werden Funktionsvollständigkeit, Integrationsqualität und die Lücke zwischen Sales-Versprechen und Produktrealität."},
+  10:{name:"Daten & Insights", desc:"Daten & Insights misst Zuverlässigkeit und Nutzbarkeit von Informationen. Es bestimmt, ob die Führung Entscheidungen auf Basis von Echtzeit-Evidenz oder Bauchgefühl trifft — Voraussetzung für genaues Forecasting."},
+  11:{name:"Enablement", desc:"Enablement bewertet die Qualität von Training, Materialien und Coaching. Fokussiert wird die Verkürzung der Ramp-Zeit neuer Mitarbeiter und die konsistente Strategieumsetzung an der Frontlinie."},
+  12:{name:"Alignment & Governance", desc:"Alignment & Governance spiegelt Zusammenarbeit und vereinheitlichte Richtung wider. Bewertet wird, ob Silos durchbrochen sind und ob die Operating Cadence Verantwortlichkeit für gemeinsame Umsatzziele schafft."}
+};
+</script>
+
+<script src="../assets/engine.js?v=8002"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  window.CAUGIA_ACCESS_READY.then(function(g) {
+    if (!g) return;
+    var jumpFirstBtn = document.getElementById("gi-jump-first");
+    var jumpLastBtn  = document.getElementById("gi-jump-last");
+    var submitBtn    = document.getElementById("gi-submit-btn");
+    if (jumpFirstBtn && window.QUESTIONS) {
+      jumpFirstBtn.addEventListener("click", function() {
+        var state = null; try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
+        if (!state || !state.answers) return;
+        for (var i = 0; i < window.QUESTIONS.length; i++) {
+          var q = window.QUESTIONS[i], answered = false;
+          if (q.type === "group" && q.fields) { answered = q.fields.every(function(f) { var k = "q" + q.id + "__" + f.name; return state.answers[k] && String(state.answers[k]).trim().length > 0; }); }
+          else { var k = "q" + q.id; answered = state.answers[k] && String(state.answers[k]).trim().length > 0; }
+          if (!answered) { state.currentStep = i; localStorage.setItem("caugia_assessment_v9_state", JSON.stringify(state)); location.reload(); return; }
+        }
+        alert("Alle Fragen sind beantwortet.");
+      });
+    }
+    if (jumpLastBtn && window.QUESTIONS) {
+      jumpLastBtn.addEventListener("click", function() {
+        var state = null; try { state = JSON.parse(localStorage.getItem("caugia_assessment_v9_state")); } catch(e) {}
+        if (!state || !state.answers) return;
+        var lastAnswered = -1;
+        for (var i = 0; i < window.QUESTIONS.length; i++) {
+          var q = window.QUESTIONS[i], answered = false;
+          if (q.type === "group" && q.fields) { answered = q.fields.some(function(f) { var k = "q" + q.id + "__" + f.name; return state.answers[k] && String(state.answers[k]).trim().length > 0; }); }
+          else { var k = "q" + q.id; answered = state.answers[k] && String(state.answers[k]).trim().length > 0; }
+          if (answered) lastAnswered = i;
+        }
+        if (lastAnswered >= 0) { state.currentStep = lastAnswered; localStorage.setItem("caugia_assessment_v9_state", JSON.stringify(state)); location.reload(); }
+        else { alert("Noch keine Antworten erfasst."); }
+      });
+    }
+    var body = document.getElementById("gi-question-body");
+    if (body) {
+      var observer = new MutationObserver(function() {
+        body.querySelectorAll(".gi-option-card").forEach(function(card) {
+          var radio = card.querySelector("input[type='radio']"); if (!radio) return;
+          if (radio.checked) { card.style.borderColor = "#0056b3"; card.style.backgroundColor = "#eff6ff"; card.style.boxShadow = "0 0 0 2px rgba(0,86,179,0.15)"; }
+        });
+      });
+      observer.observe(body, {childList: true, subtree: true});
+    }
+    var list = document.getElementById("gi-left-pillar-list"), titleBox = document.getElementById("gi-pillar-name"), descBox = document.getElementById("gi-pillar-desc");
+    if (list && titleBox && descBox) {
+      list.addEventListener("click", function(e) {
+        var li = e.target.closest("li"); if (!li) return;
+        var info = PILLAR_META[li.getAttribute("data-p")];
+        if (info) { titleBox.innerText = info.name; descBox.style.opacity = "0"; descBox.style.transition = "opacity 0.15s ease"; setTimeout(function() { descBox.innerText = info.desc; descBox.style.opacity = "1"; }, 150); }
+      });
+    }
+    if (submitBtn && window.CAUGIA_MARK_SUBMITTED && window.CAUGIA_ACCESS_TOKEN) {
+      submitBtn.addEventListener("click", function() { setTimeout(function() { window.CAUGIA_MARK_SUBMITTED(window.CAUGIA_ACCESS_TOKEN).catch(function() {}); }, 0); });
+    }
+    document.addEventListener("keydown", function(e) {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+      if (e.key === "ArrowRight" || e.key === "Enter") { var btn = document.getElementById("gi-next-btn"); if (btn && btn.style.display !== "none") btn.click(); }
+      if (e.key === "ArrowLeft") { var btn = document.getElementById("gi-prev-btn"); if (btn && btn.style.display !== "none") btn.click(); }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
