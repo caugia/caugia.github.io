@@ -9,8 +9,12 @@
   "use strict";
 
   // --- 1. CONFIGURATION ---
+  // Submission endpoint: POSTs directly to os.caugia.com /api/public/gir-submit,
+  // which writes to gir_snapshots and triggers the TS renderer pipeline.
+  // GAS Code.gs and the Make.com webhook are no longer in the path; both are
+  // retired by Fase B.3 of the GAS-replacement plan.
 const CONFIG = {
-  webhookUrl: "https://hook.eu1.make.com/8vg0fkeflod05er5zuvmtfgcgqk17hnj",
+  submitUrl: "https://os.caugia.com/api/public/gir-submit",
   storageKey: "caugia_assessment_v9_state",
   autoSaveInterval: 1000,
   schemaVersion: "11.2"
@@ -1441,7 +1445,7 @@ const CONFIG = {
       question_map: buildQuestionMapLegacy()
     };
 
-    console.log("Submitting to Make.com...");
+    console.log("Submitting to os.caugia.com...");
 
     const finishEl = UI.finishBtn || document.getElementById("gi-dynamic-finish-btn");
     if (finishEl) {
@@ -1450,7 +1454,7 @@ const CONFIG = {
     }
 
     try {
-      const res = await fetch(CONFIG.webhookUrl, {
+      const res = await fetch(CONFIG.submitUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
