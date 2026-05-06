@@ -180,11 +180,13 @@
               var dePath = isDe ? p : (isLocalized ? assetBase + 'de/' + p : 'de/' + p);
               var esPath = isEs ? p : (isLocalized ? assetBase + 'es/' + p : 'es/' + p);
               var plPath = isPl ? p : (isLocalized ? assetBase + 'pl/' + p : 'pl/' + p);
+              var nlPath = isNl ? p : (isLocalized ? assetBase + 'nl/' + p : 'nl/' + p);
               return '<a href="' + enPath + '"' + (!isFr && !isDe && !isEs && !isPl && !isNl ? ' class="active-lang"' : '') + '>EN</a>' +
                      '<a href="' + frPath + '"' + (isFr ? ' class="active-lang"' : '') + '>FR</a>' +
                      '<a href="' + dePath + '"' + (isDe ? ' class="active-lang"' : '') + '>DE</a>' +
                      '<a href="' + esPath + '"' + (isEs ? ' class="active-lang"' : '') + '>ES</a>' +
-                     '<a href="' + plPath + '"' + (isPl ? ' class="active-lang"' : '') + '>PL</a>';
+                     '<a href="' + plPath + '"' + (isPl ? ' class="active-lang"' : '') + '>PL</a>' +
+                     '<a href="' + nlPath + '"' + (isNl ? ' class="active-lang"' : '') + '>NL</a>';
             })() +
           '</div>' +
         '</div>' +
