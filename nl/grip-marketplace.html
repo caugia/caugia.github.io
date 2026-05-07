@@ -628,7 +628,24 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
       if (lang.indexOf('pl')===0 || tz === 'Europe/Warsaw') return 'PLN';
     } catch(e){} try { var lang=(navigator.language||'').toLowerCase(); var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(lang.indexOf('pl')===0 || tz==='Europe/Warsaw') return 'PLN'; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) return 'GBP'; if(/Europe\//.test(tz)) return 'EUR'; return 'USD'; } catch(e){ return 'USD'; } }
   function localizeStripeUrl(url){var lang=(document.documentElement.getAttribute('lang')||'en').toLowerCase();var supported=['en','fr','de','es','pl','nl'];if(supported.indexOf(lang)===-1)return url;var sep=url.indexOf('?')===-1?'?':'&';return url+sep+'locale='+lang+'&metadata[lang]='+lang;}
-  document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var m=b.getAttribute('data-module'); if(m&&moduleLinks[m]){ var curr=getDetectedCurrency(); window.location.href=localizeStripeUrl(moduleLinks[m][curr]||moduleLinks[m]['EUR']); } });});
+
+  // SAFETY OVERRIDE — see EN root grip-marketplace.html for full comment.
+  // Flip CHECKOUT_VIA_EMAIL to false + redeploy to restore Stripe.
+  var CHECKOUT_VIA_EMAIL = true;
+  var SAFETY_EMAIL = 'tom@caugia.com';
+  function safeCheckoutRedirect(stripeUrl, productLabel){
+    if (!CHECKOUT_VIA_EMAIL) { window.location.href = stripeUrl; return; }
+    var subject = encodeURIComponent('Caugia GIR — ' + (productLabel || 'purchase intent'));
+    var body = encodeURIComponent(
+      'Hi Tom,\n\nI\'d like to purchase: ' + (productLabel || '(unspecified)') + '.\n\n'
+      + 'Locale: ' + (document.documentElement.getAttribute('lang') || 'en') + '\n'
+      + 'Currency hint: ' + (typeof getDetectedCurrency === 'function' ? getDetectedCurrency() : '?') + '\n'
+      + 'Page: ' + window.location.href + '\n\n'
+      + 'Company name:\nName:\nUse case / context (optional):\n\nThanks!'
+    );
+    window.location.href = 'mailto:' + SAFETY_EMAIL + '?subject=' + subject + '&body=' + body;
+  }
+  document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var m=b.getAttribute('data-module'); if(m&&moduleLinks[m]){ var curr=getDetectedCurrency(); safeCheckoutRedirect(localizeStripeUrl(moduleLinks[m][curr]||moduleLinks[m]['EUR']), 'Pillar diagnostic — ' + m); } });});
   var bundleLinks = {
     g: { EUR:'https://buy.stripe.com/cNibJ16vt6MycO4aUf9MY0F', GBP:'https://buy.stripe.com/8x200jcTRef0cO4gez9MY0G', USD:'https://buy.stripe.com/00w14naLJ5Iu29q5zV9MY0H' },
     r: { EUR:'https://buy.stripe.com/5kQdR94nl1se15m5zV9MY0I', GBP:'https://buy.stripe.com/28EaEX2fd1se15m0fB9MY0J', USD:'https://buy.stripe.com/28EbJ16vt2wi9BS3rN9MY0K' },
@@ -636,12 +653,12 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
     p: { EUR:'https://buy.stripe.com/eVq3cv2fd2wi29q1jF9MY0O', GBP:'https://buy.stripe.com/eVqfZhaLJ2wi6pG8M79MY0P', USD:'https://buy.stripe.com/7sY5kD5rp4Eq8xObYj9MY0Q' },
     full: { EUR:'https://buy.stripe.com/9B65kDg630oa9BSfav9MY10', GBP:'https://buy.stripe.com/eVqcN5dXV1se5lC0fB9MY12', USD:'https://buy.stripe.com/6oU7sL6vt2wig0gfav9MY11' }
   };
-  document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var bu=b.getAttribute('data-bundle'); if(bu&&bundleLinks[bu]){ var curr=getDetectedCurrency(); window.location.href=localizeStripeUrl(bundleLinks[bu][curr]||bundleLinks[bu]['EUR']); } });});
+  document.querySelectorAll('.mk-bundle-buy').forEach(function(b){b.addEventListener('click',function(e){ e.preventDefault(); var bu=b.getAttribute('data-bundle'); if(bu&&bundleLinks[bu]){ var curr=getDetectedCurrency(); safeCheckoutRedirect(localizeStripeUrl(bundleLinks[bu][curr]||bundleLinks[bu]['EUR']), 'GRIP dimension bundle — ' + bu); } });});
 
   function startReportCheckout(){
     var links = { EUR:'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00', GBP:'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03', USD:'https://buy.stripe.com/dRm14n7zx9YK8xOaUf9MY04', PLN:'https://buy.stripe.com/dRmcN53jh6My9BS3rN9MY17' };
     var curr='USD'; try { var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; if(/Europe\/London|Europe\/Belfast|Europe\/Dublin/.test(tz)) curr='GBP'; else if(/Europe\//.test(tz)) curr='EUR'; } catch(e){}
-    window.location.href=localizeStripeUrl(links[curr]);
+    safeCheckoutRedirect(localizeStripeUrl(links[curr]), 'GTM Intelligence Report (€2,495)');
   }
   window.startReportCheckout = startReportCheckout;
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
