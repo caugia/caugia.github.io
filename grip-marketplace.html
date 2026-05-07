@@ -793,12 +793,37 @@ function scrollToSection(id) {
     return url + sep + 'locale=' + lang + '&prefilled_promo_code=&metadata[lang]=' + lang;
   }
 
+  // ─── SAFETY OVERRIDE ──────────────────────────────────────────────────
+  // Temporarily route all checkout intent to email instead of Stripe so
+  // Tom can manually QA + deliver the PDF until quality is at 8+/10 across
+  // every locale × vertical combo. To re-enable Stripe checkout: flip
+  // CHECKOUT_VIA_EMAIL to false and redeploy. No other change required.
+  // ──────────────────────────────────────────────────────────────────────
+  var CHECKOUT_VIA_EMAIL = true;
+  var SAFETY_EMAIL = 'tom@caugia.com';
+
+  function safeCheckoutRedirect(stripeUrl, productLabel){
+    if (!CHECKOUT_VIA_EMAIL) {
+      window.location.href = stripeUrl;
+      return;
+    }
+    var subject = encodeURIComponent('Caugia GIR — ' + (productLabel || 'purchase intent'));
+    var body = encodeURIComponent(
+      'Hi Tom,\n\nI\'d like to purchase: ' + (productLabel || '(unspecified)') + '.\n\n'
+      + 'Locale: ' + (document.documentElement.getAttribute('lang') || 'en') + '\n'
+      + 'Currency hint: ' + (typeof getDetectedCurrency === 'function' ? getDetectedCurrency() : '?') + '\n'
+      + 'Page: ' + window.location.href + '\n\n'
+      + 'Company name:\nName:\nUse case / context (optional):\n\nThanks!'
+    );
+    window.location.href = 'mailto:' + SAFETY_EMAIL + '?subject=' + subject + '&body=' + body;
+  }
+
   document.querySelectorAll('.mk-buy').forEach(function(b){b.addEventListener('click',function(e){
     e.preventDefault();
     var m = b.getAttribute('data-module');
     if (m && moduleLinks[m]) {
       var curr = getDetectedCurrency();
-      window.location.href = localizeStripeUrl(moduleLinks[m][curr] || moduleLinks[m]['EUR']);
+      safeCheckoutRedirect(localizeStripeUrl(moduleLinks[m][curr] || moduleLinks[m]['EUR']), 'Pillar diagnostic — ' + m);
     }
   });});
 
@@ -815,7 +840,7 @@ function scrollToSection(id) {
     var bu = b.getAttribute('data-bundle');
     if (bu && bundleLinks[bu]) {
       var curr = getDetectedCurrency();
-      window.location.href = localizeStripeUrl(bundleLinks[bu][curr] || bundleLinks[bu]['EUR']);
+      safeCheckoutRedirect(localizeStripeUrl(bundleLinks[bu][curr] || bundleLinks[bu]['EUR']), 'GRIP dimension bundle — ' + bu);
     }
   });});
 
@@ -835,7 +860,7 @@ function scrollToSection(id) {
       else if (/Europe\//.test(tz)) curr = 'EUR';
     } catch(e){}
 
-    window.location.href = localizeStripeUrl(links[curr]);
+    safeCheckoutRedirect(localizeStripeUrl(links[curr]), 'GTM Intelligence Report (€2,495)');
   }
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 
@@ -881,7 +906,7 @@ function scrollToSection(id) {
         body: JSON.stringify({ email: email, tier: tier, currency: getDetectedCurrency() })
       }).then(function(r) { return r.json(); }).then(function(data) {
         if (data.eligible) {
-          window.location.href = data.paymentUrl;
+          safeCheckoutRedirect(data.paymentUrl, 'GRIP OS ' + tier.toUpperCase() + ' — verified upgrade');
         } else {
           errEl.textContent = data.reason || 'Not eligible. Please complete a GTM Intelligence Report first.';
           errEl.style.display = 'block';
