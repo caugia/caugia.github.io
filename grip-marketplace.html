@@ -793,13 +793,20 @@ function scrollToSection(id) {
     return url + sep + 'locale=' + lang + '&prefilled_promo_code=&metadata[lang]=' + lang;
   }
 
-  // ─── SAFETY OVERRIDE ──────────────────────────────────────────────────
-  // Temporarily route all checkout intent to email instead of Stripe so
-  // Tom can manually QA + deliver the PDF until quality is at 8+/10 across
-  // every locale × vertical combo. To re-enable Stripe checkout: flip
-  // CHECKOUT_VIA_EMAIL to false and redeploy. No other change required.
+  // ─── SAFETY OVERRIDE — RESOLVED 2026-05-11 ────────────────────────────
+  // Original concern: PDF quality across 24 vertical × locale combos was
+  // uneven, risking refunds / brand damage if customers self-served Stripe
+  // before manual qualification.
+  //
+  // Resolution (grip-os-monorepo PRs #392 → #405, v14 → v27):
+  //   - y_audit_v3 confirms 0 footer-overflow on all 24 combos × 45 pages
+  //   - ~60 i18n strings cleaned of EN-leak across NL/FR/DE/ES/PL
+  //   - vertical-overlay locale-aware (non-EN profsvc/dtc shows native labels)
+  //   - FR P29 fwd_para + callout shortened to fit page (final blocker)
+  //
+  // Stripe checkout re-enabled. Roll back by flipping back to true + push.
   // ──────────────────────────────────────────────────────────────────────
-  var CHECKOUT_VIA_EMAIL = true;
+  var CHECKOUT_VIA_EMAIL = false;
   var SAFETY_EMAIL = 'tom@caugia.com';
 
   function safeCheckoutRedirect(stripeUrl, productLabel){
