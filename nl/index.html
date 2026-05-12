@@ -248,6 +248,42 @@
   .np-company-metrics { flex-wrap: wrap; gap: 10px; }
   .np-metric { min-width: 70px; }
 }
+
+/* Vertical-picker — 4-col desktop, 2-col mobile so cards don't overflow */
+.vertical-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.vertical-picker-card {
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 12px;
+  display: block;
+  transition: all 0.15s;
+  min-height: 80px;
+}
+.vertical-picker-card-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+.vertical-picker-card-sub {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+@media (max-width: 640px) {
+  .vertical-picker-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .vertical-picker-card { min-height: 76px; padding: 12px 11px; }
+  .vertical-picker-card-title { font-size: 0.88rem; }
+  .vertical-picker-card-sub { font-size: 0.68rem; }
+}
 </style>
   <link rel="alternate" hreflang="en" href="https://www.caugia.com/index.html" />
   <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/index.html" />
@@ -320,22 +356,22 @@
 <div style="background:#fff;border-bottom:1px solid var(--line);padding:22px 0;">
   <div class="container">
     <p style="text-align:center;font-size:0.72rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;">Gebouwd voor jouw vertical</p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:880px;margin:0 auto;">
-      <a href="saas-b2b.html" style="text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 12px;display:block;transition:all 0.15s;">
-        <div style="font-size:0.92rem;font-weight:800;color:var(--dark);">B2B SaaS</div>
-        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">ARR &middot; NRR &middot; Pipeline</div>
+    <div class="vertical-picker-grid">
+      <a href="saas-b2b.html" class="vertical-picker-card">
+        <div class="vertical-picker-card-title">B2B SaaS</div>
+        <div class="vertical-picker-card-sub">ARR &middot; NRR &middot; Pipeline</div>
       </a>
-      <a href="dtc.html" style="text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 12px;display:block;transition:all 0.15s;">
-        <div style="font-size:0.92rem;font-weight:800;color:var(--dark);">DTC &amp; eCommerce</div>
-        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">MER &middot; Herhaalaankoop &middot; AOV</div>
+      <a href="dtc.html" class="vertical-picker-card">
+        <div class="vertical-picker-card-title">DTC &amp; eCommerce</div>
+        <div class="vertical-picker-card-sub">MER &middot; Herhaalaankoop &middot; AOV</div>
       </a>
-      <a href="fintech.html" style="text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 12px;display:block;transition:all 0.15s;">
-        <div style="font-size:0.92rem;font-weight:800;color:var(--dark);">B2B Fintech</div>
-        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">Take-rate &middot; Activatie &middot; Compliance</div>
+      <a href="fintech.html" class="vertical-picker-card">
+        <div class="vertical-picker-card-title">B2B Fintech</div>
+        <div class="vertical-picker-card-sub">Take-rate &middot; Activatie &middot; Compliance</div>
       </a>
-      <a href="professional-services.html" style="text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 12px;display:block;transition:all 0.15s;">
-        <div style="font-size:0.92rem;font-weight:800;color:var(--dark);">Professional Services</div>
-        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">Bezetting &middot; Realisatie &middot; Win rate</div>
+      <a href="professional-services.html" class="vertical-picker-card">
+        <div class="vertical-picker-card-title">Professional Services</div>
+        <div class="vertical-picker-card-sub">Bezetting &middot; Realisatie &middot; Win rate</div>
       </a>
     </div>
   </div>
