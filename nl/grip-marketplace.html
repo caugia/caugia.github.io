@@ -602,7 +602,7 @@ section[id] { scroll-margin-top:120px; }
 /* Multi-currency pricing */
 (function(){
   var prices = {
-    EUR: { sym:'€', report:'2 495', module:'749', bundle:'1 795', bundleSave:'452', fullBundle:'6 995', fullBundleSave:'1 993', compCost:'€ 25k – € 50k+' },
+    EUR: { sym:'€', report:'2.495', module:'749', bundle:'1.795', bundleSave:'452', fullBundle:'6.995', fullBundleSave:'1.993', compCost:'€ 25k – € 50k+' },
     USD: { sym:'$', report:'2,995', module:'899', bundle:'2,195', bundleSave:'502', fullBundle:'7,995', fullBundleSave:'2,793', compCost:'$30k – $60k+' },
     GBP: { sym:'£', report:'2,295', module:'699', bundle:'1,695', bundleSave:'402', fullBundle:'5,995', fullBundleSave:'1,393', compCost:'£20k – £40k+' },
     PLN: { sym:'zł', report:'10,499', module:'3,149', bundle:'7,499', bundleSave:'1,948', fullBundle:'29,499', fullBundleSave:'8,297', compCost:'100k - 210k+ zł' }
@@ -614,7 +614,8 @@ section[id] { scroll-margin-top:120px; }
   document.querySelectorAll('.curr').forEach(function(el){ el.textContent=p.sym; });
   document.querySelectorAll('[data-price-key]').forEach(function(el){ var key=el.getAttribute('data-price-key'); if(p[key]) el.textContent=p[key]; });
 
-  if (curr === 'EUR') {
+  // NL: € VOOR het bedrag. HTML staat al in juiste order; geen DOM-reorder.
+  if (false) {
     document.querySelectorAll('.curr').forEach(function(el) {
       var priceEl = el.nextElementSibling || el.previousElementSibling;
       if (priceEl && priceEl.hasAttribute('data-price-key')) {
@@ -713,8 +714,8 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
   window.startReportCheckout = startReportCheckout;
   document.querySelectorAll('.mk-ir-buy').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();startReportCheckout();});});
 
-  var osPrices = { os_core:{EUR:'799',GBP:'695',USD:'895',PLN:'3,499'}, os_full:{EUR:'1 495',GBP:'1,295',USD:'1,695',PLN:'6,499'} };
-  var osAnnual = { os_core:{EUR:'663',GBP:'577',USD:'743',PLN:'2,899'}, os_full:{EUR:'1 241',GBP:'1,075',USD:'1,407',PLN:'5,399'} };
+  var osPrices = { os_core:{EUR:'799',GBP:'695',USD:'895',PLN:'3.499'}, os_full:{EUR:'1.495',GBP:'1,295',USD:'1,695',PLN:'6.499'} };
+  var osAnnual = { os_core:{EUR:'663',GBP:'577',USD:'743',PLN:'2.899'}, os_full:{EUR:'1.241',GBP:'1,075',USD:'1,407',PLN:'5.399'} };
   function updateOSPrices(curr){ document.querySelectorAll('[data-price-key]').forEach(function(el){ var key=el.getAttribute('data-price-key'); if(osPrices[key]&&osPrices[key][curr]) el.textContent=osPrices[key][curr]; }); }
   updateOSPrices(getDetectedCurrency());
 
