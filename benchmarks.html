@@ -583,10 +583,10 @@
   var METRIC_ROWS = [
     { cat: 'GRIP Scores' },
     { key: 'grip_overall', name: 'Overall GRIP Score' },
-    { key: 'grip_g',       name: 'G (Growth)' },
-    { key: 'grip_r',       name: 'R (Revenue)' },
-    { key: 'grip_i',       name: 'I (Intelligence)' },
-    { key: 'grip_p',       name: 'P (Process)' },
+    { key: 'grip_g',       name: 'G (Guidance)' },
+    { key: 'grip_r',       name: 'R (Resources)' },
+    { key: 'grip_i',       name: 'I (Implementation)' },
+    { key: 'grip_p',       name: 'P (Performance)' },
     { cat: 'Revenue & Growth' },
     { key: 'yoy_growth',   name: 'YoY ARR Growth' },
     { key: 'nrr',          name: 'Net Revenue Retention' },
@@ -707,34 +707,34 @@
      ══════════════════════════════════════════════════════ */
   var CONSTRAINTS = {
     'Pre-Seed / Seed': {
-      'G (Growth)':      [{ n: 'ICP Drift', p: 73 }, { n: 'Strategy Ambiguity', p: 68 }, { n: 'Positioning Gap', p: 55 }],
-      'R (Revenue)':     [{ n: 'Pricing Governance', p: 52 }, { n: 'Discount Discipline', p: 48 }, { n: 'Pipeline Fantasy', p: 45 }],
-      'I (Intelligence)':[{ n: 'CRM Hygiene', p: 65 }, { n: 'Data Blind Spots', p: 60 }, { n: 'Forecast Accuracy', p: 42 }],
-      'P (Process)':     [{ n: 'Sales Process Absence', p: 70 }, { n: 'Handoff Gaps', p: 58 }, { n: 'Onboarding Chaos', p: 50 }]
+      'G (Guidance)':      [{ n: 'ICP Drift', p: 73 }, { n: 'Strategy Ambiguity', p: 68 }, { n: 'Positioning Gap', p: 55 }],
+      'R (Resources)':     [{ n: 'Pricing Governance', p: 52 }, { n: 'Discount Discipline', p: 48 }, { n: 'Pipeline Fantasy', p: 45 }],
+      'I (Implementation)':[{ n: 'CRM Hygiene', p: 65 }, { n: 'Data Blind Spots', p: 60 }, { n: 'Forecast Accuracy', p: 42 }],
+      'P (Performance)':     [{ n: 'Sales Process Absence', p: 70 }, { n: 'Handoff Gaps', p: 58 }, { n: 'Onboarding Chaos', p: 50 }]
     },
     'Series A': {
-      'G (Growth)':      [{ n: 'Pipeline Quality', p: 65 }, { n: 'Channel Dependency', p: 52 }, { n: 'ICP Scatter', p: 48 }],
-      'R (Revenue)':     [{ n: 'Forecast Fantasy', p: 58 }, { n: 'Discount Governance', p: 45 }, { n: 'Expansion Blind Spot', p: 40 }],
-      'I (Intelligence)':[{ n: 'Attribution Gaps', p: 55 }, { n: 'Win/Loss Ignorance', p: 50 }, { n: 'Segment Blindness', p: 42 }],
-      'P (Process)':     [{ n: 'Stage Gate Absence', p: 55 }, { n: 'CS-Sales Handoff', p: 48 }, { n: 'RevOps Maturity', p: 38 }]
+      'G (Guidance)':      [{ n: 'Pipeline Quality', p: 65 }, { n: 'Channel Dependency', p: 52 }, { n: 'ICP Scatter', p: 48 }],
+      'R (Resources)':     [{ n: 'Forecast Fantasy', p: 58 }, { n: 'Discount Governance', p: 45 }, { n: 'Expansion Blind Spot', p: 40 }],
+      'I (Implementation)':[{ n: 'Attribution Gaps', p: 55 }, { n: 'Win/Loss Ignorance', p: 50 }, { n: 'Segment Blindness', p: 42 }],
+      'P (Performance)':     [{ n: 'Stage Gate Absence', p: 55 }, { n: 'CS-Sales Handoff', p: 48 }, { n: 'RevOps Maturity', p: 38 }]
     },
     'Series B': {
-      'G (Growth)':      [{ n: 'Channel Saturation', p: 48 }, { n: 'Expansion Gap', p: 45 }, { n: 'Segment Confusion', p: 38 }],
-      'R (Revenue)':     [{ n: 'Churn Governance', p: 55 }, { n: 'Expansion Blind Spot', p: 48 }, { n: 'Pricing Leakage', p: 40 }],
-      'I (Intelligence)':[{ n: 'RevOps Maturity', p: 42 }, { n: 'Cohort Blindness', p: 38 }, { n: 'Pipeline Integrity', p: 35 }],
-      'P (Process)':     [{ n: 'Cross-team Alignment', p: 45 }, { n: 'Enablement Gap', p: 40 }, { n: 'Renewal Process', p: 35 }]
+      'G (Guidance)':      [{ n: 'Channel Saturation', p: 48 }, { n: 'Expansion Gap', p: 45 }, { n: 'Segment Confusion', p: 38 }],
+      'R (Resources)':     [{ n: 'Churn Governance', p: 55 }, { n: 'Expansion Blind Spot', p: 48 }, { n: 'Pricing Leakage', p: 40 }],
+      'I (Implementation)':[{ n: 'RevOps Maturity', p: 42 }, { n: 'Cohort Blindness', p: 38 }, { n: 'Pipeline Integrity', p: 35 }],
+      'P (Performance)':     [{ n: 'Cross-team Alignment', p: 45 }, { n: 'Enablement Gap', p: 40 }, { n: 'Renewal Process', p: 35 }]
     },
     'Series C+': {
-      'G (Growth)':      [{ n: 'Cross-functional Drift', p: 50 }, { n: 'Market Saturation', p: 42 }, { n: 'New Market Entry', p: 38 }],
-      'R (Revenue)':     [{ n: 'Data Governance', p: 45 }, { n: 'Multi-product Complexity', p: 40 }, { n: 'Revenue Leakage', p: 35 }],
-      'I (Intelligence)':[{ n: 'Enablement Gap', p: 38 }, { n: 'Analytics Maturity', p: 35 }, { n: 'Predictive Gaps', p: 30 }],
-      'P (Process)':     [{ n: 'Scale Bottlenecks', p: 42 }, { n: 'Process Bloat', p: 38 }, { n: 'Tech Stack Sprawl', p: 35 }]
+      'G (Guidance)':      [{ n: 'Cross-functional Drift', p: 50 }, { n: 'Market Saturation', p: 42 }, { n: 'New Market Entry', p: 38 }],
+      'R (Resources)':     [{ n: 'Data Governance', p: 45 }, { n: 'Multi-product Complexity', p: 40 }, { n: 'Revenue Leakage', p: 35 }],
+      'I (Implementation)':[{ n: 'Enablement Gap', p: 38 }, { n: 'Analytics Maturity', p: 35 }, { n: 'Predictive Gaps', p: 30 }],
+      'P (Performance)':     [{ n: 'Scale Bottlenecks', p: 42 }, { n: 'Process Bloat', p: 38 }, { n: 'Tech Stack Sprawl', p: 35 }]
     },
     'Public / PE': {
-      'G (Growth)':      [{ n: 'Growth Plateaus', p: 45 }, { n: 'Market Saturation', p: 42 }, { n: 'Innovation Gaps', p: 35 }],
-      'R (Revenue)':     [{ n: 'Margin Optimization', p: 38 }, { n: 'Multi-product Complexity', p: 35 }, { n: 'Pricing Complexity', p: 32 }],
-      'I (Intelligence)':[{ n: 'Data Silos', p: 40 }, { n: 'Predictive Accuracy', p: 35 }, { n: 'Board Reporting', p: 28 }],
-      'P (Process)':     [{ n: 'Process Rigidity', p: 38 }, { n: 'Tech Debt', p: 35 }, { n: 'Change Resistance', p: 30 }]
+      'G (Guidance)':      [{ n: 'Growth Plateaus', p: 45 }, { n: 'Market Saturation', p: 42 }, { n: 'Innovation Gaps', p: 35 }],
+      'R (Resources)':     [{ n: 'Margin Optimization', p: 38 }, { n: 'Multi-product Complexity', p: 35 }, { n: 'Pricing Complexity', p: 32 }],
+      'I (Implementation)':[{ n: 'Data Silos', p: 40 }, { n: 'Predictive Accuracy', p: 35 }, { n: 'Board Reporting', p: 28 }],
+      'P (Performance)':     [{ n: 'Process Rigidity', p: 38 }, { n: 'Tech Debt', p: 35 }, { n: 'Change Resistance', p: 30 }]
     }
   };
 
@@ -875,13 +875,13 @@
   /* ══════════════════════════════════════════════════════
      RENDER: GRIP Score Bars
      ══════════════════════════════════════════════════════ */
-  var barClasses = { 'Overall': 'bar-overall', 'G (Growth)': 'bar-g', 'R (Revenue)': 'bar-r', 'I (Intelligence)': 'bar-i', 'P (Process)': 'bar-p' };
+  var barClasses = { 'Overall': 'bar-overall', 'G (Guidance)': 'bar-g', 'R (Resources)': 'bar-r', 'I (Implementation)': 'bar-i', 'P (Performance)': 'bar-p' };
   var gripKeys = [
     { label: 'Overall',          mk: 'grip_overall' },
-    { label: 'G (Growth)',       mk: 'grip_g' },
-    { label: 'R (Revenue)',      mk: 'grip_r' },
-    { label: 'I (Intelligence)', mk: 'grip_i' },
-    { label: 'P (Process)',      mk: 'grip_p' }
+    { label: 'G (Guidance)',       mk: 'grip_g' },
+    { label: 'R (Resources)',      mk: 'grip_r' },
+    { label: 'I (Implementation)', mk: 'grip_i' },
+    { label: 'P (Performance)',      mk: 'grip_p' }
   ];
 
   function renderGripBars(data) {
@@ -919,7 +919,7 @@
     var motionAdj = CONSTRAINT_MOTION_ADJ[motionKey] || {};
 
     var container = document.getElementById('constraintGrid');
-    var pillars = ['G (Growth)', 'R (Revenue)', 'I (Intelligence)', 'P (Process)'];
+    var pillars = ['G (Guidance)', 'R (Resources)', 'I (Implementation)', 'P (Performance)'];
     var html = '';
 
     for (var p = 0; p < pillars.length; p++) {
