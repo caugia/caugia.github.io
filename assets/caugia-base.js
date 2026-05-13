@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
     banner.id = 'cookieConsent';
     banner.innerHTML =
       '<div class="cc-inner">' +
-        '<span class="cc-text">We use cookies for analytics (Google Analytics, Microsoft Clarity) to improve your experience.</span>' +
+        '<span class="cc-text">We use cookies for analytics (Google Analytics) to improve your experience.</span>' +
         '<div class="cc-buttons">' +
           '<button class="cc-btn cc-decline">Decline</button>' +
           '<button class="cc-btn cc-accept">Accept</button>' +
