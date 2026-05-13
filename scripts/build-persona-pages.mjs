@@ -551,10 +551,16 @@ ${alternates}
       <p>${persona.cta_p}</p>
       <div class="btn-pair">
         ${(() => {
-          // Persona-specific CTA: investor → /dd, consultant → /partners.html, others → /try
+          // Persona-specific CTA — match the JTBD per role:
+          //   investor   → run DD on a company  (/dd)
+          //   consultant → partner program      (/partners.html)
+          //   cmo        → live AAM data in OS demo workspace
+          //   others     → free GTM analysis    (/try)
           const partnersHref = isRoot ? 'partners.html' : '../../partners.html';
+          const demoIntelUrl = 'https://os.caugia.com/workspace/6b80dc39-f5cf-4845-9a0a-448189202937/intel';
           if (persona.slug === 'for-investor') return `<a href="https://os.caugia.com/dd" class="btn btn-primary">Run DD on a company</a>`;
           if (persona.slug === 'for-consultant') return `<a href="${partnersHref}" class="btn btn-primary">See partner program</a>`;
+          if (persona.slug === 'for-cmo') return `<a href="${demoIntelUrl}" class="btn btn-primary">See live AAM data in the OS demo</a>`;
           return `<a href="https://os.caugia.com/try" class="btn btn-primary">Free GTM analysis</a>`;
         })()}
         <a href="${hubHref}" class="btn btn-outline">Back to Intelligence</a>
