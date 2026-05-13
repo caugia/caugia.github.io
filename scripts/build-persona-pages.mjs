@@ -551,16 +551,24 @@ ${alternates}
       <p>${persona.cta_p}</p>
       <div class="btn-pair">
         ${(() => {
-          // Persona-specific CTA — match the JTBD per role:
-          //   investor   → run DD on a company  (/dd)
-          //   consultant → partner program      (/partners.html)
-          //   cmo        → live AAM data in OS demo workspace
-          //   others     → free GTM analysis    (/try)
+          // Persona-specific CTA — match the JTBD per role.
+          // Live OS deep-links land the prospect inside the actual product
+          // surface that matters for that role, not a generic /try flow.
+          //   ceo        → workspace overview (constraint diagnosis)
+          //   cro        → action cascade (operational vs strategic routing)
+          //   cfo        → live Monday Brief (auto-generated board narrative)
+          //   cmo        → intel module (AI Answer Market data)
+          //   investor   → /dd (run DD on any company)
+          //   consultant → /partners (partner program tiers)
+          //   newcomer   → /try (no workspace yet, kick off own diagnostic)
+          const wsBase = 'https://os.caugia.com/workspace/6b80dc39-f5cf-4845-9a0a-448189202937';
           const partnersHref = isRoot ? 'partners.html' : '../../partners.html';
-          const demoIntelUrl = 'https://os.caugia.com/workspace/6b80dc39-f5cf-4845-9a0a-448189202937/intel';
+          if (persona.slug === 'for-ceo') return `<a href="${wsBase}" class="btn btn-primary">Explore the OS demo workspace</a>`;
+          if (persona.slug === 'for-cro') return `<a href="${wsBase}/actions" class="btn btn-primary">See the live action cascade</a>`;
+          if (persona.slug === 'for-cfo') return `<a href="${wsBase}/brief" class="btn btn-primary">See the live Monday Brief</a>`;
+          if (persona.slug === 'for-cmo') return `<a href="${wsBase}/intel" class="btn btn-primary">See live AAM data in the OS demo</a>`;
           if (persona.slug === 'for-investor') return `<a href="https://os.caugia.com/dd" class="btn btn-primary">Run DD on a company</a>`;
           if (persona.slug === 'for-consultant') return `<a href="${partnersHref}" class="btn btn-primary">See partner program</a>`;
-          if (persona.slug === 'for-cmo') return `<a href="${demoIntelUrl}" class="btn btn-primary">See live AAM data in the OS demo</a>`;
           return `<a href="https://os.caugia.com/try" class="btn btn-primary">Free GTM analysis</a>`;
         })()}
         <a href="${hubHref}" class="btn btn-outline">Back to Intelligence</a>
