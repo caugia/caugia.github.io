@@ -1,0 +1,192 @@
+<!--email_off-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<script>
+(function(){
+  try {
+    var p=new URLSearchParams(window.location.search);
+    if(p.get("analytics_optout")==="true"){localStorage.setItem("analytics_optout","true");document.cookie="caugia_optout=true;Domain=.caugia.com;Max-Age=31536000;Path=/;SameSite=Lax";}
+    if(p.get("analytics_optout")==="false"){localStorage.removeItem("analytics_optout");document.cookie="caugia_optout=;Domain=.caugia.com;Max-Age=0;Path=/";}
+    if(localStorage.getItem("analytics_optout")==="true"||/(?:^|;\s*)caugia_optout=true/.test(document.cookie)) window["ga-disable-G-YDP8FW3T3Z"]=true;
+  } catch(e){}
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDP8FW3T3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDP8FW3T3Z');
+</script>
+  <meta name="google-site-verification" content="MJ7qIuQm097NeOdxKSV34apfgQNz3UbOPbufxWgv7Uc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Calibración por Vertical: Por Qué un Marco GTM No Sirve para Cuatro Industrias | Caugia</title>
+  <meta name="description" content="SaaS B2B se compone a través de la retención. DTC convierte inventario en efectivo en 90 días. Fintech B2B falla en cumplimiento, no en demanda. Professional Services escala linealmente con la utilización. Un marco GTM no puede usar las mismas constantes para los cuatro. Aquí te mostramos cómo Caugia calibra por vertical." />
+  <link rel="canonical" href="https://www.caugia.com/es/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="en" href="https://www.caugia.com/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="fr" href="https://www.caugia.com/fr/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="de" href="https://www.caugia.com/de/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="es" href="https://www.caugia.com/es/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="pl" href="https://www.caugia.com/pl/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="nl" href="https://www.caugia.com/nl/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.caugia.com/intelligence/per-vertical-calibration-gtm-framework.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.caugia.com/es/intelligence/per-vertical-calibration-gtm-framework.html" />
+  <meta property="og:title" content="Calibración por Vertical: Por Qué un Marco GTM No Sirve para Cuatro Industrias" />
+  <meta property="og:description" content="Un marco GTM. Cuatro calibraciones de industria. Aquí está por qué un playbook de SaaS falla en DTC, Fintech y Professional Services — y qué hace Caugia al respecto." />
+  <meta property="og:image" content="https://www.caugia.com/assets/logo-final.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calibración por Vertical: Por Qué un Marco GTM No Sirve para Cuatro Industrias" />
+  <meta name="twitter:description" content="Un marco. Cuatro calibraciones. Por qué un playbook de SaaS falla en DTC, Fintech y Professional Services." />
+  <meta name="twitter:image" content="https://www.caugia.com/assets/logo-final.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icon.png">
+  <link rel="apple-touch-icon" href="../../icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/caugia-base.css">
+
+  <style>
+    .article-hero { max-width: 720px; margin: 0 auto; padding-top: 60px; padding-bottom: 40px; }
+    .article-hero .intel-back { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 5px; background: #eff6ff; color: var(--primary); margin-bottom: 16px; }
+    .article-hero h1 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 18px; }
+    .article-hero .article-lead { font-size: 1.15rem; color: var(--text-body); line-height: 1.6; }
+    .article-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 60px; }
+    .article-body h2 { font-family: Merriweather, serif; font-size: 1.6rem; font-weight: 900; color: #0f172a; margin: 48px 0 16px; line-height: 1.25; }
+    .article-body h3 { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 32px 0 12px; }
+    .article-body p { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 18px; }
+    .article-body strong { color: #0f172a; }
+    .article-body ul { margin: 0 0 22px 0; padding-left: 22px; }
+    .article-body li { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 8px; }
+    .vertical-card { border-left: 3px solid var(--primary); background: #f8fafc; padding: 22px 26px; border-radius: 0 12px 12px 0; margin: 24px 0; }
+    .vertical-card.saas { border-left-color: #3B6CD8; }
+    .vertical-card.dtc { border-left-color: #E07830; }
+    .vertical-card.fintech { border-left-color: #0c4a6e; }
+    .vertical-card.profsvc { border-left-color: #065f46; }
+    .vertical-card h3 { margin-top: 0; display: flex; align-items: baseline; gap: 10px; }
+    .vertical-card .vertical-pill { display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 9px; border-radius: 5px; background: rgba(59,108,216,0.12); color: var(--primary); }
+    .vertical-card.dtc .vertical-pill { background: rgba(224,120,48,0.12); color: #E07830; }
+    .vertical-card.fintech .vertical-pill { background: rgba(12,74,110,0.12); color: #0c4a6e; }
+    .vertical-card.profsvc .vertical-pill { background: rgba(6,95,70,0.12); color: #065f46; }
+    .vertical-card .k-drag-row { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-top: 14px; font-size: 0.92rem; color: #334155; }
+    .vertical-card code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.86rem; }
+    .article-cta { background: #0f172a; border-radius: 14px; padding: 40px 36px; margin: 48px 0 24px; text-align: center; }
+    .article-cta h3 { font-family: Merriweather, serif; color: #fff; font-size: 1.4rem; margin: 0 0 12px; }
+    .article-cta p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 22px; }
+    .article-cta .btn-pair { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .article-cta .btn { padding: 12px 26px; border-radius: 10px; font-size: 0.92rem; font-weight: 700; text-decoration: none; display: inline-block; }
+    .article-cta .btn-primary { background: var(--primary); color: #fff; }
+    .article-cta .btn-outline { background: transparent; color: #fff; border: 1px solid #475569; }
+    @media (max-width: 600px) {
+      .article-hero h1 { font-size: 1.8rem; }
+      .article-body h2 { font-size: 1.3rem; }
+      .article-cta { padding: 28px 22px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Calibración por Vertical: Por Qué un Marco GTM No Sirve para Cuatro Industrias",
+    "description": "Un marco GTM. Cuatro calibraciones de industria. Por qué un playbook de SaaS falla en DTC, Fintech y Professional Services.",
+    "image": "https://www.caugia.com/assets/logo-final.png",
+    "author": { "@type": "Organization", "name": "Caugia", "url": "https://www.caugia.com" },
+    "publisher": { "@type": "Organization", "name": "Caugia", "logo": { "@type": "ImageObject", "url": "https://www.caugia.com/assets/logo-final.png" } },
+    "datePublished": "2026-05-13",
+    "dateModified": "2026-05-13",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.caugia.com/es/intelligence/per-vertical-calibration-gtm-framework.html" },
+    "inLanguage": "es"
+  }
+  </script>
+</head>
+<body>
+  <script src="../../assets/header.js"></script>
+  <main>
+
+    <section class="container article-hero">
+      <a href="../intelligence.html" class="intel-back">&larr; Volver a Inteligencia</a>
+      <span class="article-tag">Guía &middot; Calibración</span>
+      <h1>Por qué un marco GTM no puede usar las mismas constantes para cuatro industrias</h1>
+      <p class="article-lead">Un operador de SaaS B2B se compone a través de la retención neta de ingresos. Un operador de DTC convierte inventario en efectivo en 90 días. Un operador de Fintech B2B puede ser frenado por un bloqueo de cumplimiento. Un operador de Professional Services escala linealmente con la utilización. Estas son cuatro realidades físicas diferentes. Cualquier marco que las ignore, usando la misma sensibilidad al arrastre y los mismos factores de recuperación en todos los ámbitos, miente sobre las matemáticas.</p>
+      <div class="article-meta">9 min de lectura &middot; Actualizado el 13&nbsp;de&nbsp;mayo&nbsp;de&nbsp;2026</div>
+    </section>
+
+    <section class="container article-body">
+
+      <h2>El error de &laquo;un marco sirve para todos&raquo;</h2>
+      <p>La mayoría de los marcos de consultoría están calibrados contra una industria &mdash; usualmente la de donde proviene el socio &mdash; y luego se venden a las otras con las constantes sin cambios. El modelo se ve igual en la diapositiva, pero por debajo, los multiplicadores, las tasas de recuperación, los pesos de dimensión son incorrectos para tres de los cuatro verticales. El cliente no puede ver esto. El resultado parece una opinión de un experto. De hecho, es una opinión de SaaS aplicada a un negocio de DTC, o una opinión de Fintech aplicada a un negocio de ProfSvc.</p>
+      <p>Caugia calibra el mismo marco GRIP contra cuatro industrias diferentes. La estructura se mantiene igual: cuatro dimensiones (Guía, Recursos, Implementación, Rendimiento), doce pilares, puntuación determinista. Las <em>constantes</em> cambian. Aquí está por qué deben hacerlo.</p>
+
+      <h2>La física difiere. Así que las matemáticas también deben hacerlo.</h2>
+
+      <div class="vertical-card saas">
+        <h3><span class="vertical-pill">SaaS B2B</span> Componiendo a través de la retención</h3>
+        <p>Una empresa SaaS con &euro;30M ARR y 110% de retención neta de ingresos se duplica en aproximadamente siete años sin adquirir un solo cliente nuevo. Las matemáticas se componen. Una diferencia de 10 puntos en la tasa de éxito o en el movimiento de expansión no es una diferencia de ingresos del 10% &mdash; es una diferencia del 25-30% en cinco años, porque el déficit se compone contra la misma curva de retención. <strong>El rendimiento domina el modelo.</strong></p>
+        <p>Los performers por debajo de la mediana del Rule-of-40 en el Bessemer Cloud Index atribuyen aproximadamente el 60% de su brecha a debilidades identificables del sistema GTM, no a la adecuación del producto al mercado. Ese es el ancla de calibración para la sensibilidad al arrastre, y se sitúa en un nivel significativamente alto.</p>
+        <div class="k-drag-row"><code>K_DRAG&nbsp;=&nbsp;0.60</code> &middot; <code>P&nbsp;weight&nbsp;=&nbsp;0.35</code> &middot; <code>P&nbsp;recovery&nbsp;=&nbsp;0.70</code></div>
+      </div>
+
+      <div class="vertical-card dtc">
+        <h3><span class="vertical-pill">DTC</span> Giros de inventario, no curvas de retención</h3>
+        <p>Una marca DTC opera en un reloj fundamentalmente más rápido. El ciclo de conversión de efectivo se mide en semanas. La vida media de una corrección es de aproximadamente 4 meses, frente a los 9 meses de SaaS &mdash; el trabajo de recuperación de cohortes de Drivepoint en 188 marcas en el rango de &euro;5-15M lo confirma. La marca puede corregir el rumbo dentro de un solo giro de inventario, pero el costo de estar equivocado también es más inmediato: un mal Q1 deja sin capital de trabajo a Q2.</p>
+        <p>El rendimiento domina aún más que en SaaS, porque la tasa de repetición, el MER y el AOV son existenciales. El State of DTC 2024 de Triple Whale lo hace explícito. Pero la sensibilidad al arrastre es <em>menor</em> que en SaaS, porque las correcciones ocurren dentro de un solo trimestre, no a lo largo de curvas de retención de varios años.</p>
+        <div class="k-drag-row"><code>K_DRAG&nbsp;=&nbsp;0.55</code> &middot; <code>P&nbsp;weight&nbsp;=&nbsp;0.45</code> &middot; <code>P&nbsp;recovery&nbsp;=&nbsp;0.75</code></div>
+      </div>
+
+      <div class="vertical-card fintech">
+        <h3><span class="vertical-pill">Fintech B2B</span> La inercia regulatoria se compone</h3>
+        <p>Un operador de Fintech B2B puede tener un gran producto, un gran precio y una gran demanda &mdash; y aún así perder 14 meses por un bloqueo de cumplimiento. El State of Fintech 2024 de Acrew Capital sitúa el tiempo medio de recuperación de un evento regulatorio en aproximadamente eso, y la consecuencia se acumula: los socios de integración se congelan, los prospectos se posponen, el embudo se reinicia desde arriba.</p>
+        <p>El modelo tiene que reflejar eso. Los recursos (personal de cumplimiento, conversión de sandbox a producción, capacidad de integración) y la Implementación (operaciones regulatorias) dominan. El rendimiento está limitado porque ninguna ganancia de rendimiento puede superar un arrastre regulatorio. Los factores de recuperación son sistemáticamente más bajos que en SaaS o DTC porque la inercia regulatoria es estructural, no conductual.</p>
+        <div class="k-drag-row"><code>K_DRAG&nbsp;=&nbsp;0.70</code> &middot; <code>R&nbsp;+&nbsp;I&nbsp;weight&nbsp;=&nbsp;0.60</code> &middot; <code>P&nbsp;recovery&nbsp;=&nbsp;0.60</code></div>
+      </div>
+
+      <div class="vertical-card profsvc">
+        <h3><span class="vertical-pill">Professional Services</span> Escalado lineal, no exponencial</h3>
+        <p>Una práctica de consultoría o una firma de servicios escala linealmente con el personal y la utilización. No hay un volante de inercia compuesto. Una brecha del 10% en la utilización crea aproximadamente una brecha del 10% en los ingresos &mdash; no un 25% en cinco años, no una cascada regulatoria, solo un déficit proporcional. El PS Maturity Benchmark 2024 de SPI codifica esto: ProfSvc es un negocio de personas con apalancamiento operativo limitado, no un negocio de sistemas con apalancamiento compuesto.</p>
+        <p>La sensibilidad al arrastre es la más baja de los cuatro verticales. Guía y Recursos dominan (estrategia, calidad del talento, liderazgo de práctica). La Pulse Survey de Kennedy confirma G + R como el centro de gravedad práctico en los resultados de consultoría.</p>
+        <div class="k-drag-row"><code>K_DRAG&nbsp;=&nbsp;0.50</code> &middot; <code>G&nbsp;+&nbsp;R&nbsp;weight&nbsp;=&nbsp;0.60</code> &middot; <code>P&nbsp;recovery&nbsp;=&nbsp;0.60</code></div>
+      </div>
+
+      <h2>La constante que más cambia: K_DRAG</h2>
+      <p>K_DRAG es el coeficiente de sensibilidad del marco &mdash; cuánto impacto en los ingresos sigue a una unidad de debilidad del sistema. A través de nuestros cuatro verticales varía de 0.50 (ProfSvc) a 0.70 (Fintech), una diferencia del 40%. La literatura de Bessemer/Acrew/Drivepoint/SPI nos da los anclajes. Aplicar el 0.60 de SaaS a ProfSvc sobreestimaría el arrastre en un 20%; aplicarlo a Fintech subestimaría el arrastre en un 17%. Cualquiera de los errores es fatal para la credibilidad del resultado.</p>
+
+      <h2>La constante que menos cambia: el propio GRIP</h2>
+      <p>Lo que <em>no</em> cambia es el modelo estructural. Cada vertical que hemos estudiado todavía tiene cuatro dimensiones de salud GTM (Guía, Recursos, Implementación, Rendimiento). Cada vertical todavía tiene doce pilares debajo de ellos. La taxonomía estructural es invariante. Son los <em>pesos</em> en la taxonomía los que cambian.</p>
+      <p>Esto es lo que hace que el marco sea portátil. No inventamos una nueva teoría GTM para cada industria. Recalibramos la misma teoría contra anclajes específicos de la industria. Mismo motor, cuatro conjuntos de constantes, total transparencia sobre qué constante proviene de qué fuente.</p>
+
+      <h2>Lo que esto significa para cómo lees los datos de referencia</h2>
+      <p>El mercado está lleno de informes de &laquo;referencia&raquo; que publican un solo número para &laquo;la mediana&raquo; del equipo GTM. Sin una descomposición por vertical, esos números son ruido. Una mediana de 110% NRR en &laquo;la industria&raquo; es una estadística ponderada por SaaS que no tiene ningún significado para un operador de DTC (donde NRR ni siquiera es el principal métrico correcto) y un daño activo para un operador de ProfSvc (cuyas dinámicas de retención son completamente diferentes del software de suscripción).</p>
+      <p>El enfoque de Caugia: cada constante que publicamos tiene un alcance vertical adjunto. <code>K_DRAG&nbsp;=&nbsp;0.60</code> es una constante de SaaS B2B, no una constante de Caugia. La prueba retrospectiva de cohorte de la Fase 2 en Q3 2026 ajustará aún más los números por vertical contra los resultados observados de los clientes, pero el principio se mantiene: <strong>números sin un alcance vertical son engañosos</strong>.</p>
+
+      <h2>Implicaciones para asesores y VCs transversales</h2>
+      <p>Si asesoras a empresas en más de uno de estos cuatro verticales, o si estás en la junta de una empresa SaaS y una empresa DTC simultáneamente, la calibración por vertical importa operativamente. La misma bandera roja (baja puntuación de rendimiento) no significa lo mismo en cada empresa del portafolio. En SaaS usualmente apunta al motor de retención. En DTC apunta al MER o a la tasa de repetición. En Fintech podría ser consecuencia de un problema de Implementación aguas arriba que aún no has detectado. En ProfSvc apunta a la utilización y al margen de compromiso.</p>
+      <p>Un marco. Cuatro lentes. Mismas matemáticas, diferentes constantes. La disciplina es la misma en los cuatro casos: identificar la ubicación de la restricción, cuantificar la fuga de ingresos, secuenciar la intervención. Los números detrás de cada paso dependen de en qué industria te encuentras.</p>
+
+      <div class="article-cta">
+        <h3>Ve la calibración en tu vertical</h3>
+        <p>El simulador y la evaluación seleccionan automáticamente las constantes por vertical según la configuración de tu espacio de trabajo. Realiza un análisis rápido en tu propia empresa para ver qué constantes se aplican y qué implican para tu número.</p>
+        <div class="btn-pair">
+          <a href="https://os.caugia.com/try" class="btn btn-primary">Análisis GTM gratuito</a>
+          <a href="caugia-gtm-intelligence-framework-v1.html" class="btn btn-outline">Leer la metodología</a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+  <footer><div class="container"><p>&copy; <span id="year">2026</span> Caugia SASU. All rights reserved. &middot; <a href="../privacy.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Privacy Policy</a> &middot; <a href="../terms.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Terms of Service</a> &middot; <a href="../contact.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Contact</a></p></div></footer>
+  <script src="../../assets/caugia-base.js"></script>
+</body>
+<!--/email_off-->
+</html>
