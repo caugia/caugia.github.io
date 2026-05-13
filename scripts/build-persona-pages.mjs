@@ -550,7 +550,13 @@ ${alternates}
       <h3>${persona.cta_h3}</h3>
       <p>${persona.cta_p}</p>
       <div class="btn-pair">
-        <a href="https://os.caugia.com/try" class="btn btn-primary">Free GTM analysis</a>
+        ${(() => {
+          // Persona-specific CTA: investor → /dd, consultant → /partners.html, others → /try
+          const partnersHref = isRoot ? 'partners.html' : '../../partners.html';
+          if (persona.slug === 'for-investor') return `<a href="https://os.caugia.com/dd" class="btn btn-primary">Run DD on a company</a>`;
+          if (persona.slug === 'for-consultant') return `<a href="${partnersHref}" class="btn btn-primary">See partner program</a>`;
+          return `<a href="https://os.caugia.com/try" class="btn btn-primary">Free GTM analysis</a>`;
+        })()}
         <a href="${hubHref}" class="btn btn-outline">Back to Intelligence</a>
       </div>
     </div>
