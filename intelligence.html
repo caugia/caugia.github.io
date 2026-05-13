@@ -117,6 +117,39 @@
     .vertical-chip.profsvc{border-color:#065f46;color:#065f46}
     .vertical-lens-note{font-size:.72rem;color:#64748b;font-style:italic;margin-left:auto}
     @media(max-width:600px){.method-strip{margin:8px 16px 24px;padding:18px 20px}.method-strip h3{font-size:.98rem}.vertical-lens{margin:0 16px 24px;flex-direction:column;align-items:flex-start;gap:8px}.vertical-lens-note{margin-left:0}}
+    /* === Wayfinder persona grid === */
+    .wayfinder{max-width:960px;margin:0 auto 56px;padding:0 16px}
+    .wayfinder-head{text-align:center;margin-bottom:22px}
+    .wayfinder-head h3{font-family:Merriweather,serif;font-size:1.45rem;font-weight:900;color:#0f172a;margin:0 0 6px;line-height:1.25}
+    .wayfinder-head p{font-size:.92rem;color:#64748b;margin:0}
+    .wayfinder-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .wayfinder-card{text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;transition:all .18s}
+    .wayfinder-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+    .wayfinder-card .wf-role{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-bottom:6px}
+    .wayfinder-card .wf-headline{font-family:Merriweather,serif;font-size:1.02rem;font-weight:800;color:#0f172a;line-height:1.3;margin:0 0 6px}
+    .wayfinder-card .wf-desc{font-size:.82rem;color:#64748b;line-height:1.5;margin:0 0 8px;flex-grow:1}
+    .wayfinder-card .wf-arrow{font-size:.78rem;font-weight:700;color:var(--primary)}
+    @media(max-width:900px){.wayfinder-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.wayfinder-grid{grid-template-columns:1fr}}
+    /* === FAQ section === */
+    .faq-section{max-width:860px;margin:64px auto 24px;padding:0 16px}
+    .faq-section .faq-eyebrow{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);text-align:center;margin-bottom:10px}
+    .faq-section h2{font-family:Merriweather,serif;font-size:1.7rem;font-weight:900;color:#0f172a;margin:0 0 8px;text-align:center}
+    .faq-section .faq-intro{font-size:.92rem;color:#64748b;text-align:center;margin:0 auto 32px;max-width:580px;line-height:1.55}
+    .faq-list{border-top:1px solid var(--line)}
+    .faq-item{border-bottom:1px solid var(--line);padding:22px 0}
+    .faq-item h3{font-size:1.06rem;font-weight:800;color:#0f172a;margin:0 0 10px;line-height:1.4}
+    .faq-item p{font-size:.94rem;color:#334155;line-height:1.65;margin:0 0 8px}
+    .faq-item a.faq-link{font-size:.84rem;font-weight:700;color:var(--primary);text-decoration:none}
+    .faq-item a.faq-link:hover{text-decoration:underline}
+    /* === About Caugia panel === */
+    .about-caugia{max-width:760px;margin:56px auto 0;padding:34px 36px;background:linear-gradient(135deg,rgba(59,108,216,.05),rgba(96,165,250,.03));border:1px solid var(--line);border-radius:16px;text-align:center}
+    .about-caugia .ab-eyebrow{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+    .about-caugia h2{font-family:Merriweather,serif;font-size:1.5rem;font-weight:900;color:#0f172a;margin:0 0 14px;line-height:1.3}
+    .about-caugia p{font-size:.96rem;color:#334155;line-height:1.7;margin:0 auto 18px;max-width:580px}
+    .about-caugia .ab-cta{display:inline-block;font-size:.86rem;font-weight:700;color:var(--primary);text-decoration:none}
+    .about-caugia .ab-cta:hover{text-decoration:underline}
+    @media(max-width:600px){.about-caugia{margin:48px 16px 0;padding:24px 22px}.about-caugia h2{font-size:1.25rem}.faq-section{margin:48px auto 16px}.faq-section h2{font-size:1.4rem}}
   </style>
   <link rel="alternate" type="application/rss+xml" title="Caugia Intelligence RSS" href="https://www.caugia.com/intelligence/feed.xml" />
 <script type="application/ld+json">
@@ -136,6 +169,97 @@
 </script>
 <meta property="og:image:width" content="1051" />
 <meta property="og:image:height" content="1058" />
+
+<!-- FAQPage schema — AEO-optimised Q&A for direct answer-engine extraction -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a GTM diagnostic?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A GTM diagnostic is a structured assessment of your Go-to-Market system that identifies which structural constraint is currently limiting revenue, quantifies the cost of inaction, and sequences the intervention. It is different from consulting because the output is a scored, repeatable diagnosis, not an opinion." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the GRIP Framework?",
+      "acceptedAnswer": { "@type": "Answer", "text": "GRIP is Caugia's diagnostic framework. Four dimensions — Guidance, Resources, Implementation, Performance — and twelve pillars underneath them. The structure is invariant across industries; the calibration constants are per vertical." }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Caugia calibrate the framework per industry?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Each vertical (SaaS B2B, DTC, Fintech B2B, Professional Services) has its own K_DRAG, dimension weights, and recovery factors, anchored to named public sources from the public benchmark literature. Every constant is auditable against a named study." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the AI Answer Market?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The AI Answer Market is the layer where AI engines (ChatGPT, Claude, Perplexity, Gemini) synthesise vendor recommendations for B2B buyers. Roughly 40% of buyers now start there, not on Google. Caugia tracks AAM share-of-voice weekly across 5 engines and 8 query categories." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Sophie?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sophie is the AI advisor inside the Caugia OS. She has read every dimension of your operation (assessment, simulator, connector signal, framework calibration). Every answer is tagged as fact, inference, or hypothesis so you can read confidence directly off the response." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Caugia different from McKinsey or BCG?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Traditional consultants produce decks. Caugia is a GTM operating system: a deterministic engine that runs continuously, recalculates the diagnosis on signal change, and produces an auto-generated board brief from live numbers. The math is published; the constants are cited." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does GTM need per-vertical calibration?",
+      "acceptedAnswer": { "@type": "Answer", "text": "SaaS B2B compounds through retention. DTC turns inventory in 90 days. Fintech B2B is gated by compliance. Professional Services scales linearly with utilisation. One set of constants cannot fit four different physical realities." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a GTM Operating System?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A GTM Operating System is the daily surface on which revenue operations run — a living diagnosis, a routed action cascade, a confidence-banded simulator, and an auto-generated board brief. Different from a diagnostic deck, which is a one-time photograph." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a Caugia diagnostic take?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The Level 1 GTM Due Diligence (external-signal only, no company cooperation) returns in 1-2 minutes. The full scored diagnostic with 265 assessment questions and a 45-page report is delivered within one hour after submission." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Caugia work for industries other than SaaS B2B?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Same GRIP framework, four sets of calibration constants. SaaS B2B, DTC, Fintech B2B, and Professional Services each have their own per-vertical numbers. Per-vertical role-articles roll out from Q3 2026 alongside the cohort backtest." }
+    }
+  ]
+}
+</script>
+
+<!-- CollectionPage schema — signals this is a content hub -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Caugia GTM Intelligence",
+  "description": "Board-level GTM intelligence calibrated for SaaS B2B, DTC, Fintech B2B, and Professional Services. Frameworks, methodology, role-specific perspectives, and per-vertical calibration anchored to the public benchmark literature.",
+  "url": "https://www.caugia.com/intelligence.html",
+  "inLanguage": "en",
+  "about": [
+    { "@type": "Thing", "name": "GTM Diagnostics" },
+    { "@type": "Thing", "name": "GRIP Framework" },
+    { "@type": "Thing", "name": "Per-Vertical Calibration" },
+    { "@type": "Thing", "name": "AI Answer Market" },
+    { "@type": "Thing", "name": "GTM Operating System" }
+  ]
+}
+</script>
+
+<!-- BreadcrumbList — site structure for Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Caugia", "item": "https://www.caugia.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Intelligence", "item": "https://www.caugia.com/intelligence.html" }
+  ]
+}
+</script>
 </head>
 <body>
   <script src="assets/header.js"></script>
@@ -179,26 +303,61 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="guided-path">
-        <h3>New here? Start in this order.</h3>
-        <div class="guided-steps">
-          <a href="intelligence/what-is-a-gtm-diagnostic.html" class="guided-step">
-            <span class="guided-step-num">01</span>
-            <span class="guided-step-title">What Is a GTM Diagnostic?</span>
-            <span class="guided-step-desc">The category definition</span>
-          </a>
-          <a href="intelligence/grip-framework-gtm-diagnostic-model.html" class="guided-step">
-            <span class="guided-step-num">02</span>
-            <span class="guided-step-title">The GRIP Framework</span>
-            <span class="guided-step-desc">The diagnostic model behind Caugia</span>
-          </a>
-          <a href="intelligence/revenue-leakage-saas.html" class="guided-step">
-            <span class="guided-step-num">03</span>
-            <span class="guided-step-title">Revenue Leakage</span>
-            <span class="guided-step-desc">Where ARR disappears before churn</span>
-          </a>
-        </div>
+    <!-- ═══ WAYFINDER ═══ -->
+    <div class="container wayfinder">
+      <div class="wayfinder-head">
+        <h3>Where should you start?</h3>
+        <p>Pick your role. Each path leads to the right first read.</p>
+      </div>
+      <div class="wayfinder-grid">
+        <a href="intelligence/what-is-a-gtm-diagnostic.html" class="wayfinder-card">
+          <span class="wf-role">New here</span>
+          <span class="wf-headline">Start with the category definition</span>
+          <span class="wf-desc">What a GTM diagnostic is, and how it differs from consulting.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/from-diagnostic-to-operating-system.html" class="wayfinder-card">
+          <span class="wf-role">CEO &middot; Founder</span>
+          <span class="wf-headline">From diagnostic to operating system</span>
+          <span class="wf-desc">Why decks change nothing, and what a GTM OS does instead.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/revenue-leakage-saas.html" class="wayfinder-card">
+          <span class="wf-role">CRO &middot; VP Sales</span>
+          <span class="wf-headline">Where revenue actually leaks</span>
+          <span class="wf-desc">The four levers that move pipeline, conversion, pricing, and expansion.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/cfo-gtm-unit-economics.html" class="wayfinder-card">
+          <span class="wf-role">CFO</span>
+          <span class="wf-headline">GTM unit economics</span>
+          <span class="wf-desc">When growth costs more than it should — and how to tell.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/cmo-marketing-revenue-architecture.html" class="wayfinder-card">
+          <span class="wf-role">CMO</span>
+          <span class="wf-headline">Marketing's role in revenue architecture</span>
+          <span class="wf-desc">Marketing spans four GRIP pillars. The CMO diagnostic is structural.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/vc-gtm-due-diligence.html" class="wayfinder-card">
+          <span class="wf-role">Investor &middot; VC/PE</span>
+          <span class="wf-headline">GTM due diligence: what most miss</span>
+          <span class="wf-desc">Product, market, team get rigorous diligence. GTM rarely does.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/why-gtm-partners-need-diagnostic-infrastructure.html" class="wayfinder-card">
+          <span class="wf-role">Consultant &middot; Partner</span>
+          <span class="wf-headline">Why advisory needs diagnostic infrastructure</span>
+          <span class="wf-desc">Referral links are not leverage. Portfolio visibility is.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
+        <a href="intelligence/grip-framework-calibration.html" class="wayfinder-card">
+          <span class="wf-role">Methodology</span>
+          <span class="wf-headline">How we calibrate the GRIP Framework</span>
+          <span class="wf-desc">Per-vertical constants, named public sources, audit-ready math.</span>
+          <span class="wf-arrow">Read &rarr;</span>
+        </a>
       </div>
     </div>
 
@@ -452,6 +611,75 @@
         </a>
       </div>
     </div>
+
+    <!-- ═══ FAQ — AEO magnet ═══ -->
+    <section class="container faq-section" id="faq">
+      <div class="faq-eyebrow">Frequently asked</div>
+      <h2>Caugia, GRIP, and how it all connects</h2>
+      <p class="faq-intro">Short answers to the questions buyers, investors, and partners ask first. Each links to the full reading.</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>What is a GTM diagnostic?</h3>
+          <p>A GTM diagnostic is a structured assessment of your Go-to-Market system that identifies which structural constraint is currently limiting revenue, quantifies the cost of inaction, and sequences the intervention. It is different from consulting because the output is a scored, repeatable diagnosis, not an opinion.</p>
+          <a href="intelligence/what-is-a-gtm-diagnostic.html" class="faq-link">Read the category definition &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>What is the GRIP Framework?</h3>
+          <p>GRIP is Caugia's diagnostic framework. Four dimensions &mdash; Guidance, Resources, Implementation, Performance &mdash; and twelve pillars underneath them. The structure is invariant across industries; the calibration constants are per vertical.</p>
+          <a href="intelligence/grip-framework-gtm-diagnostic-model.html" class="faq-link">Read the framework &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>How does Caugia calibrate the framework per industry?</h3>
+          <p>Each vertical (SaaS B2B, DTC, Fintech B2B, Professional Services) has its own K_DRAG, dimension weights, and recovery factors, anchored to named public sources from the public benchmark literature. Every constant is auditable against a named study.</p>
+          <a href="intelligence/grip-framework-calibration.html" class="faq-link">Read the calibration &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>What is the AI Answer Market?</h3>
+          <p>The AI Answer Market is the layer where AI engines (ChatGPT, Claude, Perplexity, Gemini) synthesise vendor recommendations for B2B buyers. Roughly 40% of buyers now start there, not on Google. Caugia tracks AAM share-of-voice weekly across 5 engines and 8 query categories.</p>
+          <a href="intelligence/ai-answer-market-pipeline-generation.html" class="faq-link">Read the AAM article &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>What is Sophie?</h3>
+          <p>Sophie is the AI advisor inside the Caugia OS. She has read every dimension of your operation (assessment, simulator, connector signal, framework calibration). Every answer is tagged as fact, inference, or hypothesis so you can read confidence directly off the response.</p>
+          <a href="intelligence/sophie-second-brain-revenue.html" class="faq-link">Read about Sophie &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>How is Caugia different from McKinsey or BCG?</h3>
+          <p>Traditional consultants produce decks. Caugia is a GTM operating system: a deterministic engine that runs continuously, recalculates the diagnosis on signal change, and produces an auto-generated board brief from live numbers. The math is published; the constants are cited.</p>
+          <a href="intelligence/gtm-diagnostics-vs-consulting.html" class="faq-link">Read the comparison &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>Why does GTM need per-vertical calibration?</h3>
+          <p>SaaS B2B compounds through retention. DTC turns inventory in 90 days. Fintech B2B is gated by compliance. Professional Services scales linearly with utilisation. One set of constants cannot fit four different physical realities.</p>
+          <a href="intelligence/per-vertical-calibration-gtm-framework.html" class="faq-link">Read the per-vertical breakdown &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>What is a GTM Operating System?</h3>
+          <p>A GTM Operating System is the daily surface on which revenue operations run &mdash; a living diagnosis, a routed action cascade, a confidence-banded simulator, and an auto-generated board brief. Different from a diagnostic deck, which is a one-time photograph.</p>
+          <a href="intelligence/from-diagnostic-to-operating-system.html" class="faq-link">Read the category shift &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>How long does a Caugia diagnostic take?</h3>
+          <p>The Level 1 GTM Due Diligence (external-signal only, no company cooperation) returns in 1 to 2 minutes. The full scored diagnostic with 265 assessment questions and a 45-page report is delivered within one hour after submission.</p>
+          <a href="the-gtm-score.html" class="faq-link">See the diagnostic &rarr;</a>
+        </div>
+        <div class="faq-item">
+          <h3>Does Caugia work for industries other than SaaS B2B?</h3>
+          <p>Yes. Same GRIP framework, four sets of calibration constants. SaaS B2B, DTC, Fintech B2B, and Professional Services each have their own per-vertical numbers. Per-vertical role-articles roll out from Q3 2026 alongside the cohort backtest.</p>
+          <a href="intelligence/per-vertical-calibration-gtm-framework.html" class="faq-link">Read the per-vertical breakdown &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ABOUT CAUGIA ═══ -->
+    <section class="container">
+      <div class="about-caugia">
+        <div class="ab-eyebrow">About Caugia</div>
+        <h2>We are building the GTM Operating System for B2B revenue teams.</h2>
+        <p>Caugia is a deterministic GTM diagnostic and operating system, calibrated against the public benchmark literature across SaaS B2B, DTC, Fintech B2B, and Professional Services. We publish the math behind every constant we use, version-controlled and auditable. The discipline of publishing the math is the product.</p>
+        <a href="about.html" class="ab-cta">Meet the team &rarr;</a>
+      </div>
+    </section>
 
     <!-- ═══ CTA ═══ -->
     <section class="intel-cta">
