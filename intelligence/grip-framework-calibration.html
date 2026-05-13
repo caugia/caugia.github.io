@@ -73,7 +73,7 @@
     .article-body ul { margin: 0 0 22px 0; padding-left: 22px; }
     .article-body li { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 8px; }
     .constants-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.92rem; }
-    .constants-table th, .constants-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    .constants-table th.constants-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
     .constants-table th { background: #f8fafc; font-weight: 800; color: #0f172a; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .constants-table td:first-child { font-weight: 700; color: #0f172a; }
     .constants-table code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.86rem; color: #334155; }
@@ -93,7 +93,7 @@
       .article-hero h1 { font-size: 1.8rem; }
       .article-body h2 { font-size: 1.3rem; }
       .constants-table { font-size: 0.82rem; }
-      .constants-table th, .constants-table td { padding: 8px 10px; }
+      .constants-table th.constants-table td { padding: 8px 10px; }
       .article-cta { padding: 28px 22px; }
     }
   </style>
@@ -136,9 +136,9 @@
       <h2>What the framework calibrates</h2>
       <p>The GRIP Framework calibrates three families of constants, per vertical. The Constraint Engine and the what-if simulator both depend on them.</p>
       <ul>
-        <li><strong>K_DRAG</strong> &mdash; the sensitivity of revenue drag to system weakness. Higher K_DRAG means a 10-point GRIP gap creates more euro impact.</li>
-        <li><strong>DIMENSION_WEIGHTS</strong> &mdash; the relative importance of Guidance, Resources, Implementation, and Performance per vertical. Always sums to 1.00.</li>
-        <li><strong>RECOVERY_FACTORS</strong> &mdash; the share of identified leakage that is realistically recoverable per dimension, over a 12-month horizon.</li>
+        <li><strong>K_DRAG</strong>, the sensitivity of revenue drag to system weakness. Higher K_DRAG means a 10-point GRIP gap creates more euro impact.</li>
+        <li><strong>DIMENSION_WEIGHTS</strong>, the relative importance of Guidance, Resources, Implementation, and Performance per vertical. Always sums to 1.00.</li>
+        <li><strong>RECOVERY_FACTORS</strong>, the share of identified leakage that is realistically recoverable per dimension, over a 12-month horizon.</li>
       </ul>
       <p>These constants are not invented. They are <strong>conservative central estimates from named studies</strong>. Below is the current Phase&nbsp;1 calibration, with the source anchor for each.</p>
 
@@ -154,7 +154,7 @@
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Bessemer Cloud Index 2024.</strong> Rule-of-40 dispersion shows ~60% of below-median performers attribute their gap to identifiable GTM-system weakness &rarr; drives K_DRAG&nbsp;=&nbsp;0.60.</li>
           <li><strong>OpenView SaaS Benchmarks 2024.</strong> Performance-weighted dimension importance (NRR + win-rate + churn dominate rule-of-40 valuations) drives P&nbsp;=&nbsp;0.35.</li>
-          <li><strong>OpenView cohort-turnaround studies 2022-2024.</strong> Performance fixes recover faster than Guidance &mdash; NRR improvements compound monthly, while org-design changes take quarters &mdash; drives the RECOVERY_FACTORS gradient (G&nbsp;&lt;&nbsp;R&nbsp;&lt;&nbsp;I&nbsp;&lt;&nbsp;P).</li>
+          <li><strong>OpenView cohort-turnaround studies 2022-2024.</strong> Performance fixes recover faster than Guidance, NRR improvements compound monthly, while org-design changes take quarters, drives the RECOVERY_FACTORS gradient (G&nbsp;&lt;&nbsp;R&nbsp;&lt;&nbsp;I&nbsp;&lt;&nbsp;P).</li>
         </ul>
       </div>
 
@@ -169,7 +169,7 @@
         <strong>Anchored to:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Drivepoint cohort recovery studies 2022-2024</strong> (n=188 brands, &euro;5-15M ARR). DTC drag-to-fix half-life is roughly 4 months, against SaaS&rsquo;s 9 months. The short cash-conversion cycle drives a lower K_DRAG than SaaS.</li>
-          <li><strong>Triple Whale State of DTC 2024.</strong> Performance dominates the model &mdash; repeat-rate, MER, and AOV are existential &mdash; driving P&nbsp;=&nbsp;0.45 (vs SaaS&rsquo;s 0.35).</li>
+          <li><strong>Triple Whale State of DTC 2024.</strong> Performance dominates the model, repeat-rate, MER, and AOV are existential, driving P&nbsp;=&nbsp;0.45 (vs SaaS&rsquo;s 0.35).</li>
           <li><strong>Drivepoint margin studies.</strong> Category demand elasticity in DTC drives the high RECOVERY_FACTORS across the board.</li>
         </ul>
       </div>
@@ -185,7 +185,7 @@
         <strong>Anchored to:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Acrew Capital State of Fintech 2024.</strong> Median time-to-recover from a compliance block is approximately 14 months. Regulatory drag compounds &rarr; K_DRAG&nbsp;=&nbsp;0.70 (the highest of the four verticals).</li>
-          <li><strong>FT Partners B2B Fintech Benchmarks 2024.</strong> Resources + Implementation dominate the model &mdash; compliance headcount, integration cost, sandbox-to-prod conversion &mdash; so R&nbsp;+&nbsp;I&nbsp;=&nbsp;0.60 and P is constrained to 0.15.</li>
+          <li><strong>FT Partners B2B Fintech Benchmarks 2024.</strong> Resources + Implementation dominate the model, compliance headcount, integration cost, sandbox-to-prod conversion, so R&nbsp;+&nbsp;I&nbsp;=&nbsp;0.60 and P is constrained to 0.15.</li>
           <li><strong>Plaid + Stripe Atlas onboarding cohort data 2022-2024.</strong> Regulatory inertia drives slower recovery &rarr; RECOVERY_FACTORS ceiling at P&nbsp;=&nbsp;0.60.</li>
         </ul>
       </div>
@@ -201,13 +201,13 @@
         <strong>Anchored to:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Service Performance Insights PS Maturity Benchmark 2024.</strong> ProfSvc scales linearly with headcount, not exponentially through bottlenecks. A 10% utilization gap creates a roughly 10% revenue gap, not a compounding cascade &rarr; K_DRAG&nbsp;=&nbsp;0.50 (the lowest of the four).</li>
-          <li><strong>Kennedy Pulse Survey 2024</strong> (consulting). Guidance + Resources dominate &mdash; people-business: strategy and talent drive outcomes &rarr; G&nbsp;+&nbsp;R&nbsp;=&nbsp;0.60.</li>
+          <li><strong>Kennedy Pulse Survey 2024</strong> (consulting). Guidance + Resources dominate, people-business: strategy and talent drive outcomes &rarr; G&nbsp;+&nbsp;R&nbsp;=&nbsp;0.60.</li>
           <li><strong>SPI Annual PS Operational Excellence 2024.</strong> Engagement-margin feedback loops drive medium-rate recovery uniformly across dimensions.</li>
         </ul>
       </div>
 
       <h2>Confidence bands, not single numbers</h2>
-      <p>The simulator never reports a single number. Every projection comes with a 50% confidence interval &mdash; a P25/P75 spread around the P50 point estimate.</p>
+      <p>The simulator never reports a single number. Every projection comes with a 50% confidence interval, a P25/P75 spread around the P50 point estimate.</p>
       <p>The width of the interval follows the prediction-interval methodology documented in <strong>Bessemer&rsquo;s 2024 SaaS forecasting playbook</strong>: roughly &plusmn;25% of the central estimate, as the operating-frontier band for forward-looking GTM projections.</p>
       <p>The reason is intellectual honesty. We can tell you with reasonable confidence where the number is likely to land. We cannot tell you with certainty where it <em>will</em> land, because no one can. Showing the band makes that explicit, and stops the customer from anchoring on the midpoint as a promise.</p>
 
@@ -217,7 +217,7 @@
       <div class="phase-card">
         <span class="phase-label">Phase 1 &middot; Shipped</span>
         <h3>Public-benchmark calibration</h3>
-        <p>All current constants &mdash; per-vertical K_DRAG, dimension weights, recovery factors, slider-to-GRIP weights, stage benchmarks, confidence-band swing parameters &mdash; are anchored against the named studies above. They are conservative central estimates from the public literature, not Caugia opinions. A prospect can independently verify every number against the source we cite.</p>
+        <p>All current constants, per-vertical K_DRAG, dimension weights, recovery factors, slider-to-GRIP weights, stage benchmarks, confidence-band swing parameters, are anchored against the named studies above. They are conservative central estimates from the public literature, not Caugia opinions. A prospect can independently verify every number against the source we cite.</p>
       </div>
 
       <div class="phase-card">
@@ -228,7 +228,7 @@
           <li><strong>K_DRAG per vertical</strong> against observed drag-to-fix half-life.</li>
           <li><strong>Dimension weights per vertical</strong> against observed predictive power per dimension.</li>
           <li><strong>Recovery factors per vertical</strong> against observed 12-month recovery trajectories.</li>
-          <li><strong>Confidence-band swing</strong> against observed prediction-vs-outcome dispersion &mdash; the cohort-derived bounds replace the Bessemer-derived &plusmn;25% default.</li>
+          <li><strong>Confidence-band swing</strong> against observed prediction-vs-outcome dispersion, the cohort-derived bounds replace the Bessemer-derived &plusmn;25% default.</li>
           <li><strong>Per-pillar within-dimension weights</strong> replace the equal-weighting default.</li>
         </ul>
         <p>Deliverable: a mean-absolute-error report per vertical, R&sup2; of <code>upsideIfFixed</code> predictions vs realised 6- and 12-month outcomes, and a Phase-2 constant table committed to the methodology document with a per-constant delta against Phase 1.</p>
@@ -237,16 +237,16 @@
       <h2>What this means for you</h2>
       <p><strong>If you are a prospect:</strong> every Caugia number on your screen has an audit trail. The methodology document on the Caugia repo lists each constant with its source. Disagree with Bessemer&rsquo;s 2024 dispersion analysis? Push back. We will explain how the constant was derived and what would need to be true for it to move.</p>
       <p><strong>If you are a VC running diligence:</strong> the framework is productized, not improvised. Every constant has a roadmap to empirical recalibration with explicit gates. The Phase 2 backtest is a public commitment with a date attached. If we miss it, you can hold us to it.</p>
-      <p><strong>If you are a customer:</strong> the engine you are paying for is not a black box. You can trace every number on your 45-page report back to the framework, and every framework constant back to a named public study. If the underlying study revises, our constant moves &mdash; and we publish the delta.</p>
+      <p><strong>If you are a customer:</strong> the engine you are paying for is not a black box. You can trace every number on your 45-page report back to the framework, and every framework constant back to a named public study. If the underlying study revises, our constant moves, and we publish the delta.</p>
 
       <h2>The anti-framework position</h2>
       <p>Caugia is not Gartner. We are not McKinsey. We are not building a thought-leadership franchise on top of opinion.</p>
-      <p>We are building a deterministic engine with published math, calibrated against named sources, with a public roadmap to empirical recalibration. That discipline is the product. Everything else &mdash; the assessment, the simulator, the brief, the actions &mdash; runs on top of it.</p>
+      <p>We are building a deterministic engine with published math, calibrated against named sources, with a public roadmap to empirical recalibration. That discipline is the product. Everything else, the assessment, the simulator, the brief, the actions, runs on top of it.</p>
       <p>If a competitor publishes a more rigorous methodology than ours, we lose. That is the point. We have made the methodology auditable on purpose, so the discipline of publishing the math is the durable advantage.</p>
 
       <div class="article-cta">
         <h3>Read the framework foundations</h3>
-        <p>The GRIP Framework sits on top of the GRIP model &mdash; four dimensions, twelve pillars. Start there for the structural layer, then come back here for the calibration.</p>
+        <p>The GRIP Framework sits on top of the GRIP model, four dimensions, twelve pillars. Start there for the structural layer, then come back here for the calibration.</p>
         <div class="btn-pair">
           <a href="grip-framework-gtm-diagnostic-model.html" class="btn btn-primary">Read the GRIP Framework</a>
           <a href="../grip-marketplace.html" class="btn btn-outline">Unlock the Constraint Engine</a>

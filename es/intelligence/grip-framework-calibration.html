@@ -73,7 +73,7 @@
     .article-body ul { margin: 0 0 22px 0; padding-left: 22px; }
     .article-body li { font-size: 1.02rem; color: #334155; line-height: 1.75; margin-bottom: 8px; }
     .constants-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.92rem; }
-    .constants-table th, .constants-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    .constants-table th.constants-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
     .constants-table th { background: #f8fafc; font-weight: 800; color: #0f172a; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .constants-table td:first-child { font-weight: 700; color: #0f172a; }
     .constants-table code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.86rem; color: #334155; }
@@ -93,7 +93,7 @@
       .article-hero h1 { font-size: 1.8rem; }
       .article-body h2 { font-size: 1.3rem; }
       .constants-table { font-size: 0.82rem; }
-      .constants-table th, .constants-table td { padding: 8px 10px; }
+      .constants-table th.constants-table td { padding: 8px 10px; }
       .article-cta { padding: 28px 22px; }
     }
   </style>
@@ -137,9 +137,9 @@
       <h2>Lo que calibra el framework</h2>
       <p>El GRIP Framework calibra tres familias de constantes, por vertical. El Constraint Engine y el simulador de escenarios dependen de ellas.</p>
       <ul>
-        <li><strong>K_DRAG</strong> &mdash; la sensibilidad de la pérdida de ingresos a la debilidad del sistema. Un K_DRAG más alto significa que una brecha de 10 puntos en GRIP crea más impacto en euros.</li>
-        <li><strong>DIMENSION_WEIGHTS</strong> &mdash; la importancia relativa de Guidance, Resources, Implementation y Performance por vertical. Siempre suma 1.00.</li>
-        <li><strong>RECOVERY_FACTORS</strong> &mdash; la parte de la fuga identificada que es recuperable de manera realista por dimensión, en un horizonte de 12 meses.</li>
+        <li><strong>K_DRAG</strong>, la sensibilidad de la pérdida de ingresos a la debilidad del sistema. Un K_DRAG más alto significa que una brecha de 10 puntos en GRIP crea más impacto en euros.</li>
+        <li><strong>DIMENSION_WEIGHTS</strong>, la importancia relativa de Guidance, Resources, Implementation y Performance por vertical. Siempre suma 1.00.</li>
+        <li><strong>RECOVERY_FACTORS</strong>, la parte de la fuga identificada que es recuperable de manera realista por dimensión, en un horizonte de 12 meses.</li>
       </ul>
       <p>Estas constantes no son inventadas. Son <strong>estimaciones centrales conservadoras de estudios nombrados</strong>. A continuación se muestra la calibración actual de la Fase&nbsp;1, con el anclaje de la fuente para cada una.</p>
 
@@ -155,7 +155,7 @@
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Bessemer Cloud Index 2024.</strong> La dispersión de la regla de 40 muestra que ~60% de los desempeñadores por debajo de la mediana atribuyen su brecha a debilidades identificables del sistema GTM &rarr; impulsa K_DRAG&nbsp;=&nbsp;0.60.</li>
           <li><strong>OpenView SaaS Benchmarks 2024.</strong> La importancia de la dimensión ponderada por el rendimiento (NRR + tasa de ganancia + churn dominan las valoraciones de la regla de 40) impulsa P&nbsp;=&nbsp;0.35.</li>
-          <li><strong>Estudios de cambio de cohorte de OpenView 2022-2024.</strong> Las correcciones de rendimiento se recuperan más rápido que Guidance &mdash; las mejoras de NRR se acumulan mensualmente, mientras que los cambios en el diseño organizativo llevan trimestres &mdash; impulsa el gradiente de RECOVERY_FACTORS (G&nbsp;&lt;&nbsp;R&nbsp;&lt;&nbsp;I&nbsp;&lt;&nbsp;P).</li>
+          <li><strong>Estudios de cambio de cohorte de OpenView 2022-2024.</strong> Las correcciones de rendimiento se recuperan más rápido que Guidance, las mejoras de NRR se acumulan mensualmente, mientras que los cambios en el diseño organizativo llevan trimestres, impulsa el gradiente de RECOVERY_FACTORS (G&nbsp;&lt;&nbsp;R&nbsp;&lt;&nbsp;I&nbsp;&lt;&nbsp;P).</li>
         </ul>
       </div>
 
@@ -170,7 +170,7 @@
         <strong>Anclado a:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Estudios de recuperación de cohortes de Drivepoint 2022-2024</strong> (n=188 marcas, &euro;5-15M ARR). La vida media de la corrección de DTC es de aproximadamente 4 meses, frente a los 9 meses de SaaS. El corto ciclo de conversión de efectivo impulsa un K_DRAG más bajo que SaaS.</li>
-          <li><strong>Triple Whale State of DTC 2024.</strong> El rendimiento domina el modelo &mdash; la tasa de repetición, MER y AOV son existenciales &mdash; impulsando P&nbsp;=&nbsp;0.45 (frente al 0.35 de SaaS).</li>
+          <li><strong>Triple Whale State of DTC 2024.</strong> El rendimiento domina el modelo, la tasa de repetición, MER y AOV son existenciales, impulsando P&nbsp;=&nbsp;0.45 (frente al 0.35 de SaaS).</li>
           <li><strong>Estudios de márgenes de Drivepoint.</strong> La elasticidad de la demanda por categoría en DTC impulsa los altos RECOVERY_FACTORS en general.</li>
         </ul>
       </div>
@@ -186,7 +186,7 @@
         <strong>Anclado a:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Acrew Capital State of Fintech 2024.</strong> El tiempo medio para recuperarse de un bloqueo de cumplimiento es de aproximadamente 14 meses. El arrastre regulatorio se compone &rarr; K_DRAG&nbsp;=&nbsp;0.70 (el más alto de los cuatro verticales).</li>
-          <li><strong>FT Partners B2B Fintech Benchmarks 2024.</strong> Resources + Implementation dominan el modelo &mdash; personal de cumplimiento, costo de integración, conversión de sandbox a producción &mdash; por lo que R&nbsp;+&nbsp;I&nbsp;=&nbsp;0.60 y P está limitado a 0.15.</li>
+          <li><strong>FT Partners B2B Fintech Benchmarks 2024.</strong> Resources + Implementation dominan el modelo, personal de cumplimiento, costo de integración, conversión de sandbox a producción, por lo que R&nbsp;+&nbsp;I&nbsp;=&nbsp;0.60 y P está limitado a 0.15.</li>
           <li><strong>Datos de cohortes de incorporación de Plaid + Stripe Atlas 2022-2024.</strong> La inercia regulatoria impulsa una recuperación más lenta &rarr; techo de RECOVERY_FACTORS en P&nbsp;=&nbsp;0.60.</li>
         </ul>
       </div>
@@ -202,13 +202,13 @@
         <strong>Anclado a:</strong>
         <ul style="margin: 8px 0 0 0;">
           <li><strong>Service Performance Insights PS Maturity Benchmark 2024.</strong> ProfSvc escala linealmente con el personal, no exponencialmente a través de cuellos de botella. Una brecha de utilización del 10% crea una brecha de ingresos de aproximadamente el 10%, no una cascada compuesta &rarr; K_DRAG&nbsp;=&nbsp;0.50 (el más bajo de los cuatro).</li>
-          <li><strong>Kennedy Pulse Survey 2024</strong> (consultoría). Guidance + Resources dominan &mdash; negocio de personas: la estrategia y el talento impulsan los resultados &rarr; G&nbsp;+&nbsp;R&nbsp;=&nbsp;0.60.</li>
+          <li><strong>Kennedy Pulse Survey 2024</strong> (consultoría). Guidance + Resources dominan, negocio de personas: la estrategia y el talento impulsan los resultados &rarr; G&nbsp;+&nbsp;R&nbsp;=&nbsp;0.60.</li>
           <li><strong>SPI Annual PS Operational Excellence 2024.</strong> Los bucles de retroalimentación de margen de compromiso impulsan una recuperación de tasa media uniformemente a través de las dimensiones.</li>
         </ul>
       </div>
 
       <h2>Bandas de confianza, no números únicos</h2>
-      <p>El simulador nunca informa un número único. Cada proyección viene con un intervalo de confianza del 50% &mdash; una dispersión P25/P75 alrededor del punto estimado P50.</p>
+      <p>El simulador nunca informa un número único. Cada proyección viene con un intervalo de confianza del 50%, una dispersión P25/P75 alrededor del punto estimado P50.</p>
       <p>La amplitud del intervalo sigue la metodología de intervalo de predicción documentada en <strong>el manual de pronósticos SaaS 2024 de Bessemer</strong>: aproximadamente &plusmn;25% de la estimación central, como la banda de frontera operativa para proyecciones GTM a futuro.</p>
       <p>La razón es la honestidad intelectual. Podemos decirte con confianza razonable dónde es probable que aterrice el número. No podemos decirte con certeza dónde <em>aterrizará</em>, porque nadie puede. Mostrar la banda hace eso explícito y evita que el cliente se ancle en el punto medio como una promesa.</p>
 
@@ -218,7 +218,7 @@
       <div class="phase-card">
         <span class="phase-label">Fase 1 &middot; Enviado</span>
         <h3>Calibración de benchmark público</h3>
-        <p>Todas las constantes actuales &mdash; K_DRAG por vertical, pesos de dimensión, factores de recuperación, pesos de deslizador a GRIP, benchmarks de etapa, parámetros de oscilación de banda de confianza &mdash; están ancladas contra los estudios nombrados arriba. Son estimaciones centrales conservadoras de la literatura pública, no opiniones de Caugia. Un prospecto puede verificar cada número de forma independiente contra la fuente que citamos.</p>
+        <p>Todas las constantes actuales, K_DRAG por vertical, pesos de dimensión, factores de recuperación, pesos de deslizador a GRIP, benchmarks de etapa, parámetros de oscilación de banda de confianza, están ancladas contra los estudios nombrados arriba. Son estimaciones centrales conservadoras de la literatura pública, no opiniones de Caugia. Un prospecto puede verificar cada número de forma independiente contra la fuente que citamos.</p>
       </div>
 
       <div class="phase-card">
@@ -229,7 +229,7 @@
           <li><strong>K_DRAG por vertical</strong> contra la vida media observada de corrección de arrastre.</li>
           <li><strong>Pesos de dimensión por vertical</strong> contra el poder predictivo observado por dimensión.</li>
           <li><strong>Factores de recuperación por vertical</strong> contra las trayectorias de recuperación observadas de 12 meses.</li>
-          <li><strong>Oscilación de banda de confianza</strong> contra la dispersión observada de predicción vs resultado &mdash; los límites derivados de la cohorte reemplazan el &plusmn;25% por defecto derivado de Bessemer.</li>
+          <li><strong>Oscilación de banda de confianza</strong> contra la dispersión observada de predicción vs resultado, los límites derivados de la cohorte reemplazan el &plusmn;25% por defecto derivado de Bessemer.</li>
           <li><strong>Pesos dentro de la dimensión por pilar</strong> reemplazan el peso igual por defecto.</li>
         </ul>
         <p>Entregable: un informe de error absoluto medio por vertical, R&sup2; de las predicciones de <code>upsideIfFixed</code> frente a los resultados realizados de 6 y 12 meses, y una tabla de constantes de Fase 2 comprometida con el documento de metodología con un delta por constante contra la Fase 1.</p>
@@ -238,16 +238,16 @@
       <h2>Lo que esto significa para ti</h2>
       <p><strong>Si eres un prospecto:</strong> cada número de Caugia en tu pantalla tiene un rastro de auditoría. El documento de metodología en el repositorio de Caugia enumera cada constante con su fuente. ¿No estás de acuerdo con el análisis de dispersión de Bessemer de 2024? Responde. Te explicaremos cómo se derivó la constante y qué tendría que ser cierto para que se mueva.</p>
       <p><strong>Si eres un VC realizando diligencia:</strong> el framework está productizado, no improvisado. Cada constante tiene una hoja de ruta para la recalibración empírica con puertas explícitas. El backtest de la Fase 2 es un compromiso público con una fecha adjunta. Si lo perdemos, puedes exigirnos cuentas.</p>
-      <p><strong>Si eres un cliente:</strong> el motor por el que estás pagando no es una caja negra. Puedes rastrear cada número en tu informe de 45 páginas hasta el framework, y cada constante del framework hasta un estudio público nombrado. Si el estudio subyacente se revisa, nuestra constante se mueve &mdash; y publicamos el delta.</p>
+      <p><strong>Si eres un cliente:</strong> el motor por el que estás pagando no es una caja negra. Puedes rastrear cada número en tu informe de 45 páginas hasta el framework, y cada constante del framework hasta un estudio público nombrado. Si el estudio subyacente se revisa, nuestra constante se mueve, y publicamos el delta.</p>
 
       <h2>La posición anti-framework</h2>
       <p>Caugia no es Gartner. No somos McKinsey. No estamos construyendo una franquicia de liderazgo de pensamiento sobre opiniones.</p>
-      <p>Estamos construyendo un motor determinista con matemáticas publicadas, calibrado contra fuentes nombradas, con una hoja de ruta pública para la recalibración empírica. Esa disciplina es el producto. Todo lo demás &mdash; la evaluación, el simulador, el informe, las acciones &mdash; funciona sobre eso.</p>
+      <p>Estamos construyendo un motor determinista con matemáticas publicadas, calibrado contra fuentes nombradas, con una hoja de ruta pública para la recalibración empírica. Esa disciplina es el producto. Todo lo demás, la evaluación, el simulador, el informe, las acciones, funciona sobre eso.</p>
       <p>Si un competidor publica una metodología más rigurosa que la nuestra, perdemos. Ese es el punto. Hemos hecho que la metodología sea auditable a propósito, por lo que la disciplina de publicar las matemáticas es la ventaja duradera.</p>
 
       <div class="article-cta">
         <h3>Lee los fundamentos del framework</h3>
-        <p>El GRIP Framework se asienta sobre el modelo GRIP &mdash; cuatro dimensiones, doce pilares. Comienza allí para la capa estructural, luego vuelve aquí para la calibración.</p>
+        <p>El GRIP Framework se asienta sobre el modelo GRIP, cuatro dimensiones, doce pilares. Comienza allí para la capa estructural, luego vuelve aquí para la calibración.</p>
         <div class="btn-pair">
           <a href="grip-framework-gtm-diagnostic-model.html" class="btn btn-primary">Lee el Framework GRIP</a>
           <a href="../grip-marketplace.html" class="btn btn-outline">Desbloquea el Constraint Engine</a>
