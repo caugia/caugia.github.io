@@ -314,7 +314,13 @@
           : isNl
           ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace', slack: 'Sophie aan Slack toevoegen' }
           : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace', slack: 'Add Sophie to Slack' };
-        var slackInstallUrl = 'https://slack.com/oauth/v2/authorize?client_id=11127374300182.11158338378656&scope=app_mentions:read,commands,chat:write,chat:write.public,im:write,users:read';
+        /* Goes through our own install endpoint, which signs a CSRF state and
+           sets the redirect_uri before bouncing to Slack OAuth. The endpoint
+           returns 302 → slack.com, so user experience is one click. Routing
+           through our endpoint (instead of direct slack.com URL) is what makes
+           the OAuth callback work: callback verifies HMAC state to know the
+           install came from us, not from a copy-pasted phishing link. */
+        var slackInstallUrl = 'https://os.caugia.com/api/slack/install/public';
         footerEl.className = 's-footer';
         footerEl.innerHTML =
           '<div class="container"><p>' +
