@@ -304,16 +304,16 @@
       var footerEl = document.querySelector('footer');
       if (footerEl) {
         var footerLabels = isDe
-          ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace', slack: 'Sophie zu Slack hinzuf\u00fcgen' }
+          ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace', slack: 'Sophie zu Slack hinzuf\u00fcgen', gripScore: 'Kostenloser GRIP Score' }
           : isFr
-          ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace', slack: 'Ajouter Sophie \u00e0 Slack' }
+          ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace', slack: 'Ajouter Sophie \u00e0 Slack', gripScore: 'GRIP Score gratuit' }
           : isEs
-          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace', slack: 'A\u00f1adir Sophie a Slack' }
+          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace', slack: 'A\u00f1adir Sophie a Slack', gripScore: 'GRIP Score gratis' }
           : isPl
-          ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace', slack: 'Dodaj Sophie do Slacka' }
+          ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace', slack: 'Dodaj Sophie do Slacka', gripScore: 'Darmowy GRIP Score' }
           : isNl
-          ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace', slack: 'Sophie aan Slack toevoegen' }
-          : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace', slack: 'Add Sophie to Slack' };
+          ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace', slack: 'Sophie aan Slack toevoegen', gripScore: 'Gratis GRIP Score' }
+          : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace', slack: 'Add Sophie to Slack', gripScore: 'Free GRIP Score' };
         /* Goes through our own install endpoint, which signs a CSRF state and
            sets the redirect_uri before bouncing to Slack OAuth. The endpoint
            returns 302 → slack.com, so user experience is one click. Routing
@@ -329,6 +329,7 @@
             ' &middot; <a href="' + navBase + 'terms.html">' + footerLabels.terms + '</a>' +
             ' &middot; <a href="' + navBase + 'partners.html">' + footerLabels.partners + '</a>' +
             ' &middot; <a href="' + navBase + 'grip-marketplace.html">' + footerLabels.marketplace + '</a>' +
+            ' &middot; <a href="https://os.caugia.com/grip-score" target="_blank" rel="noopener">' + footerLabels.gripScore + '</a>' +
             ' &middot; <a href="' + slackInstallUrl + '" target="_blank" rel="noopener">' + footerLabels.slack + '</a>' +
           '</p></div>';
       }
