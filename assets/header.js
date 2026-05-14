@@ -93,16 +93,16 @@
 
     // Navigation labels per language
     var navLabels = isDe
-      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Analysen', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten', menu: 'Men\u00fc' }
+      ? { product: 'Produkt', marketplace: 'Marketplace', intelligence: 'Intelligence', about: '\u00DCber uns', contact: 'Kontakt', partners: 'Partnerprogramm', login: 'Anmelden', loginOs: 'Bei GRIP OS anmelden', cta: 'Diagnose starten', menu: 'Men\u00fc' }
       : isFr
-      ? { product: 'Produit', marketplace: 'Marketplace', insights: 'Analyses', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme partenaires', login: 'Connexion', loginOs: 'Connexion \u00e0 GRIP OS', cta: 'Lancer le diagnostic', menu: 'Menu' }
+      ? { product: 'Produit', marketplace: 'Marketplace', intelligence: 'Intelligence', about: '\u00C0 propos', contact: 'Contact', partners: 'Programme partenaires', login: 'Connexion', loginOs: 'Connexion \u00e0 GRIP OS', cta: 'Lancer le diagnostic', menu: 'Menu' }
       : isEs
-      ? { product: 'Producto', marketplace: 'Marketplace', insights: 'An\u00e1lisis', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de socios', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico', menu: 'Men\u00fa' }
+      ? { product: 'Producto', marketplace: 'Marketplace', intelligence: 'Intelligence', about: 'Sobre nosotros', contact: 'Contacto', partners: 'Programa de socios', login: 'Iniciar sesi\u00f3n', loginOs: 'Iniciar sesi\u00f3n en GRIP OS', cta: 'Iniciar diagn\u00f3stico', menu: 'Men\u00fa' }
       : isPl
-      ? { product: 'Produkt', marketplace: 'Marketplace', insights: 'Analizy', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119', menu: 'Menu' }
+      ? { product: 'Produkt', marketplace: 'Marketplace', intelligence: 'Intelligence', about: 'O nas', contact: 'Kontakt', partners: 'Program partnerski', login: 'Zaloguj si\u0119', loginOs: 'Zaloguj si\u0119 do GRIP OS', cta: 'Uruchom diagnoz\u0119', menu: 'Menu' }
       : isNl
-      ? { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'Over ons', contact: 'Contact', partners: 'Partnerprogramma', login: 'Inloggen', loginOs: 'Inloggen bij GRIP OS', cta: 'Start de diagnose', menu: 'Menu' }
-      : { product: 'Product', marketplace: 'Marketplace', insights: 'Insights', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis', menu: 'Menu' };
+      ? { product: 'Product', marketplace: 'Marketplace', intelligence: 'Intelligence', about: 'Over ons', contact: 'Contact', partners: 'Partnerprogramma', login: 'Inloggen', loginOs: 'Inloggen bij GRIP OS', cta: 'Start de diagnose', menu: 'Menu' }
+      : { product: 'Product', marketplace: 'Marketplace', intelligence: 'Intelligence', about: 'About', contact: 'Contact', partners: 'Partner Program', login: 'Log in', loginOs: 'Log in to GRIP OS', cta: 'Start Diagnosis', menu: 'Menu' };
 
     // Language dropdown: current lang as button, others in dropdown
     function buildLangToggles() {
@@ -141,7 +141,7 @@
           '<ul class="nav-links">' +
             '<li>' + a('product.html', navLabels.product) + '</li>' +
             '<li>' + a('grip-marketplace.html', navLabels.marketplace) + '</li>' +
-            '<li>' + a('intelligence.html', navLabels.insights) + '</li>' +
+            '<li>' + a('intelligence.html', navLabels.intelligence) + '</li>' +
             '<li>' + a('about.html', navLabels.about) + '</li>' +
             '<li>' + a('contact.html', navLabels.contact) + '</li>' +
           '</ul>' +
@@ -161,7 +161,7 @@
           /* Navigation links */
           a('product.html', navLabels.product) +
           a('grip-marketplace.html', navLabels.marketplace) +
-          a('intelligence.html', navLabels.insights) +
+          a('intelligence.html', navLabels.intelligence) +
           a('about.html', navLabels.about) +
           a('contact.html', navLabels.contact) +
           a('partners.html', navLabels.partners) +
