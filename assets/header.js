@@ -304,16 +304,17 @@
       var footerEl = document.querySelector('footer');
       if (footerEl) {
         var footerLabels = isDe
-          ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace' }
+          ? { rights: 'Alle Rechte vorbehalten', privacy: 'Datenschutz', terms: 'AGB', partners: 'Partner', marketplace: 'Marketplace', slack: 'Sophie zu Slack hinzuf\u00fcgen' }
           : isFr
-          ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace' }
+          ? { rights: 'Tous droits r\u00e9serv\u00e9s', privacy: 'Confidentialit\u00e9', terms: 'CGU', partners: 'Partenaires', marketplace: 'Marketplace', slack: 'Ajouter Sophie \u00e0 Slack' }
           : isEs
-          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace' }
+          ? { rights: 'Todos los derechos reservados', privacy: 'Privacidad', terms: 'T\u00e9rminos', partners: 'Socios', marketplace: 'Marketplace', slack: 'A\u00f1adir Sophie a Slack' }
           : isPl
-          ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace' }
+          ? { rights: 'Wszelkie prawa zastrze\u017cone', privacy: 'Prywatno\u015b\u0107', terms: 'Regulamin', partners: 'Partnerzy', marketplace: 'Marketplace', slack: 'Dodaj Sophie do Slacka' }
           : isNl
-          ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace' }
-          : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace' };
+          ? { rights: 'Alle rechten voorbehouden', privacy: 'Privacy', terms: 'Voorwaarden', partners: 'Partners', marketplace: 'Marketplace', slack: 'Sophie aan Slack toevoegen' }
+          : { rights: 'All rights reserved', privacy: 'Privacy', terms: 'Terms', partners: 'Partners', marketplace: 'Marketplace', slack: 'Add Sophie to Slack' };
+        var slackInstallUrl = 'https://slack.com/oauth/v2/authorize?client_id=11127374300182.11158338378656&scope=app_mentions:read,commands,chat:write,chat:write.public,im:write,users:read';
         footerEl.className = 's-footer';
         footerEl.innerHTML =
           '<div class="container"><p>' +
@@ -322,6 +323,7 @@
             ' &middot; <a href="' + navBase + 'terms.html">' + footerLabels.terms + '</a>' +
             ' &middot; <a href="' + navBase + 'partners.html">' + footerLabels.partners + '</a>' +
             ' &middot; <a href="' + navBase + 'grip-marketplace.html">' + footerLabels.marketplace + '</a>' +
+            ' &middot; <a href="' + slackInstallUrl + '" target="_blank" rel="noopener">' + footerLabels.slack + '</a>' +
           '</p></div>';
       }
     } catch(e) {}
