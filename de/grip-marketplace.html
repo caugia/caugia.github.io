@@ -386,6 +386,10 @@ section[id] { scroll-margin-top:120px; }
           <div class="mk-ir-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></div>
           <div class="mk-ir-price-context">Einmalige Zahlung.<br><strong>Ersetzt ein Beratungsmandat ab 25k&nbsp;&euro;.</strong></div>
         </div>
+        <!-- Bundle callout: skip standalone purchase if going annual on OS. -->
+        <a href="#billing-toggle" style="display:block;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px;margin:0 0 16px;font-size:0.85rem;color:#0f172a;line-height:1.5;text-decoration:none;">
+          <strong style="color:#92400E;">GRIP OS im Jahresabo?</strong> Sie zahlen den GIR nicht &mdash; er ist enthalten. <span class="curr">&euro;</span>2.495 sparen.
+        </a>
         <div class="mk-ir-actions">
           <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR" style="padding:14px 32px;font-size:1rem;">Intelligence Report anfordern</button>
         </div>
@@ -536,6 +540,10 @@ section[id] { scroll-margin-top:120px; }
         <li>&check; Entscheidungsged&auml;chtnis und Audit-Trail</li>
         <li>&check; Evidenzbasierte Gate-Reviews</li>
       </ul>
+      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
+      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inkl. Baseline-GIR</strong> (<span class="curr">&euro;</span>2.495 Wert)
+      </div>
       <div class="mk-os-footer" style="border-color:#e2e8f0;">
         <div>
           <div class="mk-os-price-block">
@@ -563,6 +571,10 @@ section[id] { scroll-margin-top:120px; }
         <li style="color:#E07830;font-weight:700;">&check; GRIP Brain: Sophie identifiziert die strukturelle Kompetenzl&uuml;cke.</li>
         <li style="color:#E07830;font-weight:700;">&check; GTM Due Diligence (5/Monat). Berichte in institutioneller Qualit&auml;t f&uuml;r jedes Portfolio-Unternehmen.</li>
       </ul>
+      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
+      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inkl. Baseline-GIR</strong> (<span class="curr">&euro;</span>2.495 Wert)
+      </div>
       <div class="mk-os-footer" style="border-color:#1e293b;">
         <div>
           <div class="mk-os-price-block">
@@ -794,6 +806,10 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
       } else {
         el.textContent = mp;
       }
+    });
+    /* Bundle lines: "Inkl. Baseline-GIR" visible only when annual is selected. */
+    document.querySelectorAll('[data-bundle-line]').forEach(function(el){
+      el.style.display = (mode === 'annual') ? 'block' : 'none';
     });
   };
 })();
