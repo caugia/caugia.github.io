@@ -234,6 +234,10 @@
           <li>Entscheidungsged&auml;chtnis und Audit Trail</li>
           <li>Evidenzbasierte Gate-Reviews</li>
         </ul>
+        <!-- Monthly indicator: shown when Monthly selected; replaced by bundle banner on Annual. -->
+        <div data-monthly-line="os_core" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> &mdash; separater Kauf</a>)
+        </div>
         <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
         <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
           <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> Wert)
@@ -262,6 +266,10 @@
           <li style="color:var(--orange);font-weight:700;">Sophie identifiziert die strukturelle Skill Gap</li>
           <li style="color:var(--orange);font-weight:700;">GTM Due Diligence (5/Monat), Berichte in institutioneller Qualit&auml;t f&uuml;r jedes Portfolio-Unternehmen</li>
         </ul>
+        <!-- Monthly indicator: shown when Monthly selected; replaced by bundle banner on Annual. -->
+        <div data-monthly-line="os_full" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> &mdash; separater Kauf</a>)
+        </div>
         <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
         <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
           <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> Wert)
@@ -452,6 +460,10 @@
     /* Bundle lines visible only on annual. */
     document.querySelectorAll('[data-bundle-line="os_core"],[data-bundle-line="os_full"]').forEach(function(el){
       el.style.display = (mode === 'annual') ? 'block' : 'none';
+    });
+    /* Monthly lines visible only on monthly. */
+    document.querySelectorAll('[data-monthly-line]').forEach(function(el){
+      el.style.display = (mode === 'monthly') ? 'block' : 'none';
     });
   };
 })();
