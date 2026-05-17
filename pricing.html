@@ -314,7 +314,7 @@
             <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="os_core">799</span></span>
             <span class="pr-price-unit">/ month</span>
           </div>
-          <a href="grip-marketplace.html#grip-os" class="pr-cta pr-cta-blue">Activate Core &rarr;</a>
+          <a href="javascript:void(0)" onclick="startOsCheckout('core')" class="pr-cta pr-cta-blue">Activate Core &rarr;</a>
         </div>
       </div>
 
@@ -343,7 +343,7 @@
             <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="os_full">1,495</span></span>
             <span class="pr-price-unit">/ month</span>
           </div>
-          <a href="grip-marketplace.html#grip-os" class="pr-cta pr-cta-orange">Activate Full &rarr;</a>
+          <a href="javascript:void(0)" onclick="startOsCheckout('full')" class="pr-cta pr-cta-orange">Activate Full &rarr;</a>
         </div>
       </div>
 
@@ -508,6 +508,7 @@
 
   /* Monthly / Annual billing toggle — mirrors grip-marketplace setBilling */
   window.setBilling = function(mode){
+    window.__caugiaBilling = mode;
     var btnM = document.getElementById('btn-monthly');
     var btnA = document.getElementById('btn-annual');
     if(mode==='monthly'){
@@ -536,7 +537,21 @@
 })();
 
 /* Report checkout, re-uses grip-marketplace Stripe payment links */
-function startReportCheckout(){
+  var OS_LINKS = {
+    core_monthly: { EUR:'https://buy.stripe.com/00w7sL5rp4EqcO4fav9MY0U', GBP:'https://buy.stripe.com/6oU4gzbPN7QCcO46DZ9MY1g', USD:'https://buy.stripe.com/6oU9ATaLJ7QC29q7I39MY1h', PLN:'https://buy.stripe.com/aFadR97zx8UG5lC0fB9MY1i' },
+    core_annual: { EUR:'https://buy.stripe.com/fZu7sL1b98UG6pGd2n9MY1j', GBP:'https://buy.stripe.com/fZu4gz1b9daW5lC3rN9MY1k', USD:'https://buy.stripe.com/fZu28rf1Zgn89BS3rN9MY1l', PLN:'https://buy.stripe.com/00waEX5rp0oa7tKgez9MY1m' },
+    full_monthly: { EUR:'https://buy.stripe.com/6oU7sL1b90oaeWc1jF9MY0T', GBP:'https://buy.stripe.com/3cI4gzaLJ7QC3du3rN9MY1n', USD:'https://buy.stripe.com/4gMcN55rpfj4cO42nJ9MY1o', PLN:'https://buy.stripe.com/8x27sL4nl8UG8xOfav9MY1p' },
+    full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
+  };
+  function startOsCheckout(plan){
+    var curr = window.__caugiaCurrency || 'EUR';
+    var cycle = window.__caugiaBilling || 'monthly';
+    var sku = plan + '_' + cycle;
+    var url = OS_LINKS[sku] && OS_LINKS[sku][curr] ? OS_LINKS[sku][curr] : OS_LINKS[sku].EUR;
+    window.location.href = url;
+  }
+
+  function startReportCheckout(){
   var links = {
     EUR: 'https://buy.stripe.com/3cI00jbPNb2OdS86DZ9MY00',
     GBP: 'https://buy.stripe.com/3cI3cv1b97QC8xO9Qb9MY03',
