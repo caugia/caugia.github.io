@@ -474,9 +474,14 @@
     full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
   };
   function startOsCheckout(plan){
-    var curr = window.__caugiaCurrency || 'EUR';
     var cycle = window.__caugiaBilling || 'monthly';
-    var sku = plan + '_' + cycle;
+    if (cycle === 'monthly') {
+      var msg = "GRIP OS Monthly requiere primero el Intelligence Report. Sin él, Sophie no puede calibrar.\n\nConsejo: cambia el toggle a Annual — el IR se incluye sin coste.\n\n¿Ir al checkout del Intelligence Report ahora?";
+      if (window.confirm(msg)) startReportCheckout();
+      return;
+    }
+    var curr = window.__caugiaCurrency || 'EUR';
+    var sku = plan + '_annual';
     var url = OS_LINKS[sku] && OS_LINKS[sku][curr] ? OS_LINKS[sku][curr] : OS_LINKS[sku].EUR;
     window.location.href = url;
   }

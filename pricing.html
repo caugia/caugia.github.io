@@ -556,9 +556,21 @@
     full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
   };
   function startOsCheckout(plan){
-    var curr = window.__caugiaCurrency || 'EUR';
     var cycle = window.__caugiaBilling || 'monthly';
-    var sku = plan + '_' + cycle;
+    if (cycle === 'monthly') {
+      /* Monthly Core/Full is gated on having a completed Intelligence Report.
+         Without the baseline, Sophie has no calibration data and the OS runs
+         on industry defaults. We do NOT open the monthly Stripe link from
+         /pricing.html — that route stays available in the in-product shop for
+         customers who already did the IR. From the public pricing page the
+         only two checkouts are: Intelligence Report (one-time) and annual
+         OS (bundled IR). Annual is the upsell path; IR is the gate. */
+      var msg = "GRIP OS Monthly requires the Intelligence Report first. Sophie cannot calibrate without it.\n\nTip: switch the toggle to Annual — the IR is bundled at no extra cost.\n\nGo to Intelligence Report checkout now?";
+      if (window.confirm(msg)) startReportCheckout();
+      return;
+    }
+    var curr = window.__caugiaCurrency || 'EUR';
+    var sku = plan + '_annual';
     var url = OS_LINKS[sku] && OS_LINKS[sku][curr] ? OS_LINKS[sku][curr] : OS_LINKS[sku].EUR;
     window.location.href = url;
   }
