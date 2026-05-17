@@ -308,15 +308,33 @@ section[id] { scroll-margin-top:120px; }
   .mk-os-h2{font-size:1.6rem !important;}
 }
 
-/* Route cards */
-.mk-route-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:720px;margin:0 auto 60px;padding:0 20px;}
-.mk-route-card{background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:28px 24px;text-align:center;cursor:pointer;transition:all 0.2s;}
-.mk-route-card:hover{border-color:#3B6CD8;box-shadow:0 4px 20px rgba(59,108,216,0.1);}
-.mk-route-step{font-size:0.65rem;font-weight:800;letter-spacing:2px;margin-bottom:10px;}
-.mk-route-title{font-family:Merriweather,serif;font-size:1.1rem;font-weight:900;color:#0f172a;margin-bottom:8px;line-height:1.3;}
-.mk-route-desc{font-size:0.8rem;color:#64748b;line-height:1.5;margin-bottom:16px;}
-.mk-route-cta{font-size:0.78rem;font-weight:700;text-decoration:none;}
-@media(max-width:768px){.mk-route-grid{grid-template-columns:1fr;gap:12px;}}
+/* Top pricing grid — pricing-first redesign 2026-05-17 */
+.mk-pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1080px;margin:0 auto 56px;padding:0 20px;}
+.mk-pr-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;position:relative;}
+.mk-pr-card-featured{background:#0f172a;border-color:#E07830;}
+.mk-pr-name{font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;text-transform:uppercase;}
+.mk-pr-card-featured .mk-pr-name{color:#E07830;}
+.mk-pr-headline{font-family:Merriweather,serif;font-size:1.35rem;font-weight:900;color:#0f172a;margin-bottom:8px;line-height:1.2;min-height:32px;}
+.mk-pr-card-featured .mk-pr-headline{color:#fff;}
+.mk-pr-lede{font-size:0.92rem;color:#475569;line-height:1.55;margin:0 0 16px;min-height:80px;}
+.mk-pr-card-featured .mk-pr-lede{color:#94a3b8;}
+.mk-pr-feature{list-style:none;padding:0;margin:0 0 14px;font-size:0.86rem;line-height:2;flex-grow:1;color:#475569;}
+.mk-pr-card-featured .mk-pr-feature{color:#cbd5e1;}
+.mk-pr-feature li::before{content:'\2713';color:#16A34A;font-weight:800;margin-right:8px;}
+.mk-pr-card-featured .mk-pr-feature li::before{color:#E07830;}
+.mk-pr-footer{border-top:1px solid #e2e8f0;padding-top:18px;margin-top:6px;}
+.mk-pr-card-featured .mk-pr-footer{border-top-color:#1e293b;}
+.mk-pr-price-block{display:flex;align-items:baseline;gap:6px;margin-bottom:14px;}
+.mk-pr-price{font-size:2rem;font-weight:900;color:#0f172a;}
+.mk-pr-card-featured .mk-pr-price{color:#fff;}
+.mk-pr-unit{font-size:0.85rem;color:#94a3b8;}
+.mk-pr-cta{display:block;text-align:center;padding:13px 24px;font-size:0.92rem;border-radius:10px;text-decoration:none;font-weight:800;cursor:pointer;border:none;width:100%;box-sizing:border-box;}
+.mk-pr-cta-dark{background:#0f172a;color:#fff;}
+.mk-pr-cta-blue{background:#3B6CD8;color:#fff;}
+.mk-pr-cta-orange{background:#E07830;color:#fff;}
+.mk-pr-cta:hover{filter:brightness(0.95);}
+.mk-pr-badge{position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;}
+@media(max-width:960px){.mk-pricing-grid{grid-template-columns:1fr;max-width:480px;}.mk-pr-lede,.mk-pr-headline{min-height:0;}}
 </style>
 <script type="application/ld+json">
 {
@@ -350,42 +368,115 @@ section[id] { scroll-margin-top:120px; }
 </section>
 
 
-<!-- ROUTE SELECTOR -->
-<div class="mk-route-grid">
-  <a href="javascript:void(0)" onclick="scrollToSection('intelligence-report')" class="mk-route-card" style="text-decoration:none;">
-    <div class="mk-route-step" style="color:#3B6CD8;">ETAP 1: ZDIAGNOZUJ</div>
-    <div class="mk-route-title">Zidentyfikuj ograniczenie</div>
-    <div class="mk-route-desc">Potrzebujesz jasności, co naprawdę hamuje wzrost. Zacznij od pełnej diagnostyki.</div>
-    <span class="mk-route-cta" style="color:#3B6CD8;">GTM Intelligence Report &darr;</span>
-  </a>
-  <a href="javascript:void(0)" onclick="scrollToSection('grip-os')" class="mk-route-card" style="text-decoration:none;border-color:#E07830;">
-    <div class="mk-route-step" style="color:#E07830;">ETAP 2: ZARZĄDZAJ</div>
-    <div class="mk-route-title">Napraw we właściwej kolejności</div>
-    <div class="mk-route-desc">Masz pełną diagnostykę i potrzebujesz dyscypliny realizacji. Jedno ograniczenie na raz.</div>
-    <span class="mk-route-cta" style="color:#E07830;">GRIP OS &darr;</span>
-  </a>
-</div>
+<!-- TOP PRICING GRID — pricing-first redesign 2026-05-17.
+     Three cards (IR, Core, Full) with Monthly/Annual toggle, mirroring
+     pl/pricing.html. Replaces the previous 2-card route selector. -->
+<section class="container" style="margin-top:40px;">
+  <!-- Monthly / Annual toggle -->
+  <div style="display:flex;justify-content:center;margin:0 0 28px;" id="billing-toggle">
+    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
+      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Miesięcznie</button>
+      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Rocznie <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
+    </div>
+  </div>
 
-<!-- INTELLIGENCE REPORT SECTION -->
+  <div class="mk-pricing-grid">
+    <!-- INTELLIGENCE REPORT -->
+    <div class="mk-pr-card">
+      <div class="mk-pr-name">Intelligence Report</div>
+      <h2 class="mk-pr-headline">Znajdź ograniczenie.</h2>
+      <p class="mk-pr-lede">45-stronicowa diagnoza Państwa silnika przychodów na poziomie zarządu. 265 pytań, 72 silniki scoringowe, dostarczone w ciągu godziny.</p>
+      <ul class="mk-pr-feature">
+        <li>Identyfikacja ograniczenia + wycena wycieku</li>
+        <li>90-dniowa sekwencja realizacji</li>
+        <li>30+ archetypów wzrostu</li>
+        <li>Zastępuje doradztwo za 25k&nbsp;€+</li>
+      </ul>
+      <!-- Bundle banner: free with annual GRIP OS, always visible -->
+      <div data-bundle-line="report" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Gratis z rocznym GRIP OS</strong> (zaoszczędź <span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span>)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
+          <span class="mk-pr-unit">jednorazowo</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startReportCheckout()" class="mk-pr-cta mk-pr-cta-dark">Kup raport &rarr;</a>
+      </div>
+    </div>
+
+    <!-- GRIP OS CORE -->
+    <div class="mk-pr-card">
+      <div class="mk-pr-name">GRIP OS Core</div>
+      <h2 class="mk-pr-headline">Zarządzaj rozwiązaniem.</h2>
+      <p class="mk-pr-lede">Silnik ograniczeń, bramki, cotygodniowy brief executive, konektory dla głównego stacka. System operacyjny dla wykonania GTM.</p>
+      <ul class="mk-pr-feature">
+        <li>Jedno aktywne ograniczenie naraz</li>
+        <li>Jawnie blokowane działania i bramki</li>
+        <li>Tygodniowy Monday Brief dla zarządu</li>
+        <li>Sophie 3&nbsp;000 tur / miesiąc</li>
+        <li>Pamięć decyzji + ścieżka audytowa</li>
+      </ul>
+      <!-- Monthly indicator: shown when Monthly selected -->
+      <div data-monthly-line="os_core" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#D97706;font-weight:800;">!</span> <strong>Uwaga:</strong> najpierw wymagany Intelligence Report (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span> &mdash; osobny zakup</a>)
+      </div>
+      <!-- Bundle banner: shown when Annual selected -->
+      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Zawiera Intelligence Report</strong> (<span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span> wartości)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="os_core">799</span></span>
+          <span class="mk-pr-unit">/ miesiąc</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startOsCheckout('core')" class="mk-pr-cta mk-pr-cta-blue">Aktywuj Core &rarr;</a>
+      </div>
+    </div>
+
+    <!-- GRIP OS FULL (featured) -->
+    <div class="mk-pr-card mk-pr-card-featured">
+      <div class="mk-pr-badge">ZALECANE</div>
+      <div class="mk-pr-name">GRIP OS Full</div>
+      <h2 class="mk-pr-headline">Zarządzaj rozwiązaniem. Z Sophie.</h2>
+      <p class="mk-pr-lede">Core plus Sophie z 15k turami, pełna biblioteka konektorów, ciągły scoring, alerty dryfu i miesięczna ponowna ocena.</p>
+      <ul class="mk-pr-feature">
+        <li>Wszystko z Core</li>
+        <li>Sophie 15&nbsp;000 tur / miesiąc</li>
+        <li>Pełna biblioteka konektorów</li>
+        <li>Ciągły scoring GRIP + alerty dryfu</li>
+        <li>Miesięczna ponowna ocena GTM Pulse</li>
+        <li style="color:#E07830;font-weight:700;">GTM Due Diligence (5/miesiąc)</li>
+      </ul>
+      <!-- Monthly indicator -->
+      <div data-monthly-line="os_full" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#D97706;font-weight:800;">!</span> <strong>Uwaga:</strong> najpierw wymagany Intelligence Report (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span> &mdash; osobny zakup</a>)
+      </div>
+      <!-- Bundle banner -->
+      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Zawiera Intelligence Report</strong> (<span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span> wartości)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="os_full">1,495</span></span>
+          <span class="mk-pr-unit" style="color:#64748b;">/ miesiąc</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startOsCheckout('full')" class="mk-pr-cta mk-pr-cta-orange">Aktywuj Full &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTELLIGENCE REPORT SECTION — slim "Co Państwo otrzymują" header above stacked sample cards -->
 <section class="container" id="intelligence-report">
   <div class="mk-ir">
     <div class="mk-ir-hero">
       <div class="mk-ir-copy">
-        <span class="eyebrow" style="color:#60a5fa;">Pełna diagnostyka</span>
-        <h2 class="mk-ir-title">Zacznij od widoku całości.</h2>
-        <p class="mk-ir-lead">45-stronicowa diagnostyka silnika przychodu na poziomie zarządu. 265 pytań ocenianych przez 72 silniki punktujące. Analiza ograniczeń, modelowanie wycieku przychodu i 90-dniowy plan realizacji.</p>
-        <div class="mk-ir-price-row">
-          <div class="mk-ir-price"><span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span></div>
-          <div class="mk-ir-price-context">Płatność jednorazowa.<br><strong>Zastępuje projekt doradczy za 100k+&nbsp;zł.</strong></div>
-        </div>
-        <!-- Bundle callout: skip standalone purchase if going annual on OS. -->
-        <a href="#billing-toggle" style="display:block;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px;margin:0 0 16px;font-size:0.85rem;color:#0f172a;line-height:1.5;text-decoration:none;">
-          <strong style="color:#92400E;">GRIP OS rocznie?</strong> Intelligence Report jest wliczony &mdash; nie płacisz za niego. Zaoszczędź 10&nbsp;499&nbsp;zł.
-        </a>
-        <div class="mk-ir-actions">
-          <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR" style="padding:14px 32px;font-size:1rem;">Zamów GTM Intelligence Report</button>
-        </div>
-        <p class="mk-ir-secure">&check; Bezpieczna płatność przez Stripe. Faktura generowana automatycznie.</p>
+        <span class="eyebrow" style="color:#60a5fa;">Co Państwo otrzymują</span>
+        <h2 class="mk-ir-title">Wewnątrz Intelligence Report.</h2>
+        <p class="mk-ir-lead">45-stronicowa diagnoza silnika przychodów na poziomie zarządu. 265 pytań ocenianych przez 72 silniki. Analiza ograniczenia, wyceniony wyciek przychodu i 90-dniowa sekwencja realizacji.</p>
+        <p style="font-size:0.92rem;color:#64748b;line-height:1.6;margin-bottom:18px;">Ta sama logika co projekt doradczy najwyższej klasy, zakodowana w deterministycznych silnikach scoringowych. Przykładowe rozdziały &rarr;</p>
+        <p class="mk-ir-secure">&check; Zastępuje projekt doradczy za 25k&nbsp;€+. Dostarczone w ciągu godziny.</p>
       </div>
       <div class="mk-ir-visual">
         <div class="mk-ir-stack" id="irStack">
@@ -437,148 +528,12 @@ section[id] { scroll-margin-top:120px; }
       </div>
     </div>
 
-    <!-- COMPARISON TABLE -->
-    <div class="mk-ir-comp">
-      <div class="mk-ir-comp-headline">Doradztwo zajmuje tygodnie. AI generuje wnioski. Caugia izoluje ograniczenie.</div>
-      <table class="mk-ir-table">
-        <thead><tr><th></th><th>Narzędzia AI</th><th>Tradycyjne doradztwo</th><th>Silnik ograniczeń Caugia</th></tr></thead>
-        <tbody>
-          <tr><td>Czas uzyskania wniosków</td><td>5 minut</td><td>4&ndash;6 tygodni</td><td>Mniej niż godzina</td></tr>
-          <tr><td>Koszt</td><td>Niski koszt</td><td>100k&nbsp;zł &ndash; 210k+&nbsp;zł</td><td><span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span> ryczałt</td></tr>
-          <tr><td>Głębokość danych</td><td>Generyczne prompty</td><td>Wywiady + warsztaty</td><td>265 ustrukturyzowanych danych o firmie</td></tr>
-          <tr><td>Logika decyzyjna</td><td>Wynik probabilistyczny</td><td>Interpretacja konsultanta</td><td>Deterministyczne silniki punktujące</td></tr>
-          <tr><td>Produkt finalny</td><td>Odpowiedź konwersacyjna</td><td>Prezentacja PowerPoint</td><td>45-stronicowa diagnostyka z wyliczeniami</td></tr>
-          <tr><td>Powtarzalność</td><td>Inna odpowiedź za każdym razem</td><td>Zależy od konsultanta</td><td>Deterministyczny silnik punktujący</td></tr>
-          <tr><td>Wyciek przychodu</td><td>Niemodelowany</td><td>Przybliżone oszacowanie</td><td>Wyliczony dla każdego ograniczenia</td></tr>
-        </tbody>
-      </table>
-      <!-- Mobile: card layout -->
-      <div class="mk-comp-cards">
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Czas uzyskania wniosków</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">5 minut</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">4&ndash;6 tygodni</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Mniej niż godzina</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Koszt</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Niski koszt</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">100k&nbsp;zł &ndash; 210k+&nbsp;zł</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;"><span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span> ryczałt</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Głębokość danych</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Generyczne prompty</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Wywiady + warsztaty</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">265 ustrukturyzowanych danych</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Logika decyzyjna</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Wynik probabilistyczny</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Interpretacja konsultanta</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministyczne silniki punktujące</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Produkt finalny</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Odpowiedź konwersacyjna</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Prezentacja PowerPoint</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">45-stronicowa diagnostyka</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Powtarzalność</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Inna za każdym razem</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Zależy od konsultanta</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministyczny silnik punktujący</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Wyciek przychodu</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Niemodelowany</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Przybliżone oszacowanie</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Wyliczony dla każdego ograniczenia</span></div></div></div>
-      </div>
-      <div class="mk-ir-comp-footer">Najlepsi konsultanci stosują modele ręcznie. Caugia zakodowała je w deterministycznych silnikach. Ta sama logika. Znacznie szybciej. Znacznie taniej.</div>
-    </div>
-
-    <!-- Numbers -->
-    <div class="mk-ir-nums">
-      <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Ocenianych pytań</div></div>
-      <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Silniki diagnostyczne</div></div>
-      <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Archetypy wzrostu</div></div>
-      <div><div class="mk-ir-num">45</div><div class="mk-ir-num-label">Stron analizy</div></div>
-    </div>
-
-    <div class="mk-ir-bottom-cta">
-      <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Zamów GTM Intelligence Report &rarr; <span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span></button>
-      <p class="mk-ir-secure">&check; Bezpieczna płatność przez Stripe. Płatność jednorazowa.</p>
-    </div>
   </div>
 </section>
 
-<!-- GRIP BRAIN SECTION -->
-<section class="mk-brain" id="grip-brain">
-  <div class="mk-brain-card">
-    <img src="https://os.caugia.com/brain-sophie-v2.png" alt="Sophie. Agent AI GRIP Brain" class="mk-brain-avatar" loading="lazy" />
-    <div class="mk-brain-content">
-      <div class="mk-brain-eyebrow">GRIP Brain</div>
-      <h2 class="mk-brain-title">Poznaj Sophie. Audytowana&nbsp;tygodniowo. 0&nbsp;halucynacji. Cytuje&nbsp;po&nbsp;imieniu.</h2>
-      <p class="mk-brain-sub">To nie chatbot. Warstwa inteligencji oparta na ograniczeniach. Każde stwierdzenie cytuje slug frameworku, DOI pracy peer-reviewed, książkę z ISBN lub esej wymienionego operatora. Audytowana tygodniowo wobec publicznej rubryki: 0&nbsp;halucynacji zmierzonych w ostatnich 1000 cytatach. <a href="https://os.caugia.com/sophie/stats" style="color:inherit;text-decoration:underline;">Zobacz pokwitowania na żywo →</a></p>
-      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;"><strong style="color:#fff;">Wstępnie załadowane dla twojej branży.</strong> Pamięć robocza Sophie zawiera od początku playbooki, wzorce peerów i kotwice benchmarków pasujące do twojej branży, aby pierwsze pytanie otrzymało ugruntowaną odpowiedź, a nie generyczną.</p>
-      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;">Pami&#281;&#263; robocza w 4 wertyka&#322;ach: <strong style="color:#fff;">53 playbook&oacute;w wertykalnych</strong> &middot; <strong style="color:#fff;">62 benchmarki talentu</strong> &middot; <strong style="color:#fff;">16 insight&oacute;w Caugia evergreen</strong> &middot; <strong style="color:#fff;">100 kohort peer</strong> &middot; <strong style="color:#fff;">25 benchmark&oacute;w win/loss</strong>. Ka&#380;dy wpis citation-anchored do Bessemer, OpenView, Drivepoint, Triple Whale, FT Partners, BIS, McKinsey, Bain, BCG, SPI Research, Kennedy Pulse, Source Global, Hinge lub nazwanego operatora. 6 locales natywnych od pierwszego dnia.</p>
-      <ul class="mk-brain-features">
-        <li>Wskazuje przyczynę źródłową, nie objaw. Przedziały pewności przy każdej analizie</li>
-        <li>4-tygodniowa pamięć trendów. Proaktywne alerty, gdy wyniki się zmieniają</li>
-        <li>Wnioski z Perplexity i Grok przed pierwszym kontaktem z klientem</li>
-        <li>Automatyczne karty konkurencyjne. 12 sekcji z cytatami do rozmowy</li>
-        <li>Cztery tryby operacyjne: Operator, Klient, Support, Success</li>
-        <li>Odpowiada w każdym języku. Natywny UI i assessment w 6 (EN/FR/DE/ES/PL/NL). Dyktowanie głosem w standardzie</li>
-      </ul>
-      <a href="https://os.caugia.com/pl/sophie/preview" class="mk-brain-cta" target="_blank">Zobacz Sophie w demo &rarr;</a>
-      <p class="mk-brain-note">Demo wykorzystuje NovaPay, fikcyjny fintech z ARR 195&nbsp;mln&nbsp;zł. Porady Sophie bazują na rzeczywistych danych GRIP tego obszaru roboczego.</p>
-    </div>
-  </div>
-</section>
-
-<!-- GRIP OS SECTION -->
-<section class="container" id="grip-os" style="margin:72px auto;max-width:1080px;padding:0 20px;">
-  <div style="text-align:center;margin-bottom:48px;">
-    <div style="display:inline-block;background:#E07830;color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:16px;">ETAP 2: ZARZĄDZAJ REALIZACJĄ</div>
-    <h2 class="mk-os-h2" style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#0f172a;line-height:1.2;margin-bottom:16px;">Diagnostyka wskazała ograniczenie.<br>GRIP OS prowadzi cię przez realną naprawę.</h2>
-    <p style="font-size:1.12rem;color:#475569;max-width:680px;margin:0 auto;line-height:1.7;">To nie chatbot. To nie panel z wykresami. System realizacji GTM, który wymusza właściwe ograniczenie we właściwej kolejności.</p>
-  </div>
-
-  <div style="display:flex;justify-content:center;margin-bottom:24px;" id="billing-toggle">
-    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
-      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Miesięcznie</button>
-      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Rocznie <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
-    </div>
-  </div>
-
-  <div class="mk-os-grid">
-    <!-- OS Core -->
-    <div class="mk-os-card mk-os-card-core">
-      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;">GRIP OS CORE</div>
-      <p style="font-size:1.02rem;color:#475569;line-height:1.7;margin-bottom:24px;">Silnik ograniczeń, bramki decyzyjne, cotygodniowy brief zarządczy, integracje dla twojego głównego stacka. System operacyjny realizacji GTM.</p>
-      <ul class="mk-os-features" style="color:#475569;font-size:0.95rem;line-height:2;">
-        <li>&check; Tylko jedno aktywne ograniczenie naraz</li>
-        <li>&check; Zablokowane działania i jawne bramki decyzyjne</li>
-        <li>&check; Poniedziałkowy brief z danymi finansowymi</li>
-        <li>&check; Konfiguracja integracji dla twojego głównego stacka</li>
-        <li>&check; Pamięć decyzyjna i ścieżka audytowa</li>
-        <li>&check; Przeglądy bramek decyzyjnych na podstawie dowodów</li>
-      </ul>
-      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
-      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Zawiera Intelligence Report</strong> (10&nbsp;499&nbsp;zł wartości)
-      </div>
-      <div class="mk-os-footer" style="border-color:#e2e8f0;">
-        <div>
-          <div class="mk-os-price-block">
-            <span style="font-size:2rem;font-weight:900;color:#0f172a;"><span data-price-key="os_core">3&nbsp;499</span><span class="curr">&nbsp;zł</span></span>
-            <span style="font-size:0.85rem;color:#94a3b8;">/mies.</span>
-          </div>
-        </div>
-        <a href="pricing.html" class="mk-os-cta" style="background:#3B6CD8;color:#fff;">Aktywuj Core</a>
-      </div>
-    </div>
-
-    <!-- OS Full -->
-    <div class="mk-os-card mk-os-card-full">
-      <div style="position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;">REKOMENDOWANE</div>
-      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:12px;">GRIP OS FULL</div>
-      <p style="font-size:1.02rem;color:#94a3b8;line-height:1.7;margin-bottom:24px;">Wszystko z Core plus pełna biblioteka integracji, briefy wzbogacone AI, ciągła punktacja GRIP, wykrywanie zmian priorytetów i miesięczna reewaluacja.</p>
-      <ul class="mk-os-features" style="color:#94a3b8;font-size:0.95rem;line-height:2;">
-        <li style="color:#fff;">&check; Wszystko z Core</li>
-        <li>&check; Pełna biblioteka integracji (HubSpot, Salesforce, Gong, G2, Amplitude i więcej)</li>
-        <li>&check; Ciągła punktacja GRIP oparta na sygnałach w czasie rzeczywistym</li>
-        <li>&check; Wykrywanie zmian priorytetów i alerty</li>
-        <li>&check; Briefy zarządcze wzbogacone AI</li>
-        <li>&check; Miesięczna reewaluacja GTM Pulse</li>
-        <li>&check; Benchmarki branżowe plus własna inteligencja kohorty</li>
-        <li style="color:#E07830;font-weight:700;">&check; GRIP Brain. Sophie identyfikuje strukturalną lukę kompetencyjną.</li>
-        <li style="color:#E07830;font-weight:700;">&check; GTM Due Diligence (5/miesiąc). Raporty jakości instytucjonalnej dla dowolnej firmy z portfela.</li>
-      </ul>
-      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
-      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Zawiera Intelligence Report</strong> (10&nbsp;499&nbsp;zł wartości)
-      </div>
-      <div class="mk-os-footer" style="border-color:#1e293b;">
-        <div>
-          <div class="mk-os-price-block">
-            <span style="font-size:2rem;font-weight:900;color:#fff;"><span data-price-key="os_full">6&nbsp;499</span><span class="curr">&nbsp;zł</span></span>
-            <span style="font-size:0.85rem;color:#64748b;">/mies.</span>
-          </div>
-        </div>
-        <a href="pricing.html" class="mk-os-cta" style="background:#E07830;color:#fff;">Aktywuj Full</a>
-      </div>
-    </div>
-  </div>
-
+<!-- COMPARE Core vs Full — lifted from #grip-os so it sits directly under the
+     IR samples and above the Sophie deep-dive, matching pl/pricing.html's flow. -->
+<section class="container" style="margin:48px auto;max-width:1080px;padding:0 20px;">
   <style>
   .mk-cmp{margin:48px auto 0;max-width:920px;}
   .mk-cmp h3{font-family:Merriweather,serif;font-size:1.4rem;font-weight:900;color:#0f172a;text-align:center;letter-spacing:-0.015em;margin:0 0 10px;}
@@ -627,7 +582,79 @@ section[id] { scroll-margin-top:120px; }
     </div>
     <p class="mk-cmp-foot">Benchmark osobisty = gdzie TWOJE aktualne wyniki GRIP plasują się w Twojej kohorcie rówieśniczej. Inne niż publiczny eksplorator benchmarków (link u góry tej strony). Budżety tokenów to limity antyabuzowe na koszt Anthropic. Uczciwy power-user ich nie sięgnie. Kontrakty Enterprise są bez limitu.</p>
   </div>
+</section>
 
+<!-- GRIP BRAIN SECTION -->
+<section class="mk-brain" id="grip-brain">
+  <div class="mk-brain-card">
+    <img src="https://os.caugia.com/brain-sophie-v2.png" alt="Sophie. Agent AI GRIP Brain" class="mk-brain-avatar" loading="lazy" />
+    <div class="mk-brain-content">
+      <div class="mk-brain-eyebrow">GRIP Brain</div>
+      <h2 class="mk-brain-title">Poznaj Sophie. Audytowana&nbsp;tygodniowo. 0&nbsp;halucynacji. Cytuje&nbsp;po&nbsp;imieniu.</h2>
+      <p class="mk-brain-sub">To nie chatbot. Warstwa inteligencji oparta na ograniczeniach. Każde stwierdzenie cytuje slug frameworku, DOI pracy peer-reviewed, książkę z ISBN lub esej wymienionego operatora. Audytowana tygodniowo wobec publicznej rubryki: 0&nbsp;halucynacji zmierzonych w ostatnich 1000 cytatach. <a href="https://os.caugia.com/sophie/stats" style="color:inherit;text-decoration:underline;">Zobacz pokwitowania na żywo →</a></p>
+      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;"><strong style="color:#fff;">Wstępnie załadowane dla twojej branży.</strong> Pamięć robocza Sophie zawiera od początku playbooki, wzorce peerów i kotwice benchmarków pasujące do twojej branży, aby pierwsze pytanie otrzymało ugruntowaną odpowiedź, a nie generyczną.</p>
+      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;">Pami&#281;&#263; robocza w 4 wertyka&#322;ach: <strong style="color:#fff;">53 playbook&oacute;w wertykalnych</strong> &middot; <strong style="color:#fff;">62 benchmarki talentu</strong> &middot; <strong style="color:#fff;">16 insight&oacute;w Caugia evergreen</strong> &middot; <strong style="color:#fff;">100 kohort peer</strong> &middot; <strong style="color:#fff;">25 benchmark&oacute;w win/loss</strong>. Ka&#380;dy wpis citation-anchored do Bessemer, OpenView, Drivepoint, Triple Whale, FT Partners, BIS, McKinsey, Bain, BCG, SPI Research, Kennedy Pulse, Source Global, Hinge lub nazwanego operatora. 6 locales natywnych od pierwszego dnia.</p>
+      <ul class="mk-brain-features">
+        <li>Wskazuje przyczynę źródłową, nie objaw. Przedziały pewności przy każdej analizie</li>
+        <li>4-tygodniowa pamięć trendów. Proaktywne alerty, gdy wyniki się zmieniają</li>
+        <li>Wnioski z Perplexity i Grok przed pierwszym kontaktem z klientem</li>
+        <li>Automatyczne karty konkurencyjne. 12 sekcji z cytatami do rozmowy</li>
+        <li>Cztery tryby operacyjne: Operator, Klient, Support, Success</li>
+        <li>Odpowiada w każdym języku. Natywny UI i assessment w 6 (EN/FR/DE/ES/PL/NL). Dyktowanie głosem w standardzie</li>
+      </ul>
+      <a href="https://os.caugia.com/pl/sophie/preview" class="mk-brain-cta" target="_blank">Zobacz Sophie w demo &rarr;</a>
+      <p class="mk-brain-note">Demo wykorzystuje NovaPay, fikcyjny fintech z ARR 195&nbsp;mln&nbsp;zł. Porady Sophie bazują na rzeczywistych danych GRIP tego obszaru roboczego.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AI vs Traditional vs Caugia + Numbers + reminder CTA — lifted from the IR
+     section so it sits AFTER Sophie, matching the flow:
+     Pricing → Samples → Compare → Sophie → AI-table + Numbers → Ladder. -->
+<section class="container" style="margin:48px auto;max-width:1080px;padding:0 20px;">
+  <div class="mk-ir-comp">
+    <div class="mk-ir-comp-headline">Doradztwo zajmuje tygodnie. AI generuje wnioski. Caugia izoluje ograniczenie.</div>
+    <table class="mk-ir-table">
+      <thead><tr><th></th><th>Narzędzia AI</th><th>Tradycyjne doradztwo</th><th>Silnik ograniczeń Caugia</th></tr></thead>
+      <tbody>
+        <tr><td>Czas uzyskania wniosków</td><td>5 minut</td><td>4&ndash;6 tygodni</td><td>Mniej niż godzina</td></tr>
+        <tr><td>Koszt</td><td>Niski koszt</td><td>100k&nbsp;zł &ndash; 210k+&nbsp;zł</td><td><span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span> ryczałt</td></tr>
+        <tr><td>Głębokość danych</td><td>Generyczne prompty</td><td>Wywiady + warsztaty</td><td>265 ustrukturyzowanych danych o firmie</td></tr>
+        <tr><td>Logika decyzyjna</td><td>Wynik probabilistyczny</td><td>Interpretacja konsultanta</td><td>Deterministyczne silniki punktujące</td></tr>
+        <tr><td>Produkt finalny</td><td>Odpowiedź konwersacyjna</td><td>Prezentacja PowerPoint</td><td>45-stronicowa diagnostyka z wyliczeniami</td></tr>
+        <tr><td>Powtarzalność</td><td>Inna odpowiedź za każdym razem</td><td>Zależy od konsultanta</td><td>Deterministyczny silnik punktujący</td></tr>
+        <tr><td>Wyciek przychodu</td><td>Niemodelowany</td><td>Przybliżone oszacowanie</td><td>Wyliczony dla każdego ograniczenia</td></tr>
+      </tbody>
+    </table>
+    <!-- Mobile: card layout per row -->
+    <div class="mk-comp-cards">
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Czas uzyskania wniosków</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">5 minut</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">4&ndash;6 tygodni</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Mniej niż godzina</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Koszt</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Niski koszt</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">100k&nbsp;zł &ndash; 210k+&nbsp;zł</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;"><span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span> ryczałt</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Głębokość danych</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Generyczne prompty</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Wywiady + warsztaty</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">265 ustrukturyzowanych danych</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Logika decyzyjna</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Wynik probabilistyczny</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Interpretacja konsultanta</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministyczne silniki punktujące</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Produkt finalny</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Odpowiedź konwersacyjna</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Prezentacja PowerPoint</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">45-stronicowa diagnostyka</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Powtarzalność</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Inna za każdym razem</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Zależy od konsultanta</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministyczny silnik punktujący</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Wyciek przychodu</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">Narzędzia AI</span><span class="mk-comp-row-val">Niemodelowany</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Doradztwo</span><span class="mk-comp-row-val">Przybliżone oszacowanie</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Wyliczony dla każdego ograniczenia</span></div></div></div>
+    </div>
+    <div class="mk-ir-comp-footer">Najlepsi konsultanci stosują modele ręcznie. Caugia zakodowała je w deterministycznych silnikach. Ta sama logika. Znacznie szybciej. Znacznie taniej.</div>
+  </div>
+
+  <!-- Numbers -->
+  <div class="mk-ir-nums">
+    <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Pytań ocenionych</div></div>
+    <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Silników diagnostycznych</div></div>
+    <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Archetypów wzrostu</div></div>
+    <div><div class="mk-ir-num">45</div><div class="mk-ir-num-label">Stron analizy</div></div>
+  </div>
+
+  <div class="mk-ir-bottom-cta">
+    <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Zamów GTM Intelligence Report &rarr; <span data-price-key="report">10&nbsp;499</span><span class="curr">&nbsp;zł</span></button>
+    <p class="mk-ir-secure">&check; Bezpieczna płatność przez Stripe. Płatność jednorazowa.</p>
+  </div>
+</section>
+
+<!-- LADDER + PARTNER NOTE — last narrative anchor before the footer. -->
+<section class="container" id="grip-os" style="margin:48px auto;max-width:1080px;padding:0 20px;">
   <!-- Product ladder summary -->
   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:28px 32px;text-align:center;margin-top:32px;">
     <p style="font-size:0.82rem;color:#64748b;margin:0;line-height:1.8;">
@@ -772,6 +799,10 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
 
   /* Monthly / Annual billing toggle */
   window.setBilling = function(mode){
+    /* Expose mode globally so startOsCheckout() can read it for the
+       gate decision (monthly Core/Full triggers the IR-first confirm
+       dialog instead of opening Stripe directly). */
+    window.__caugiaBilling = mode;
     var btnM = document.getElementById('btn-monthly');
     var btnA = document.getElementById('btn-annual');
     if(mode==='monthly'){
@@ -792,11 +823,48 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
         el.textContent = mp;
       }
     });
-    /* Bundle lines: "Zawiera Intelligence Report" visible only when annual is selected. */
-    document.querySelectorAll('[data-bundle-line]').forEach(function(el){
+    /* OS bundle lines ("Zawiera Intelligence Report"): annual only.
+       The IR card's data-bundle-line="report" ("Gratis z rocznym GRIP OS")
+       stays visible in both modes — it's informational, not toggle-driven. */
+    document.querySelectorAll('[data-bundle-line="os_core"],[data-bundle-line="os_full"]').forEach(function(el){
       el.style.display = (mode === 'annual') ? 'block' : 'none';
     });
+    /* Monthly indicators ("Uwaga: najpierw wymagany Intelligence Report"): monthly only. */
+    document.querySelectorAll('[data-monthly-line]').forEach(function(el){
+      el.style.display = (mode === 'monthly') ? 'block' : 'none';
+    });
   };
+
+  /* OS_LINKS — annual-only Stripe Payment Links per currency. Monthly is
+     intentionally absent: monthly Core/Full is hard-gated on having a
+     completed Intelligence Report, and a click on those CTAs in monthly
+     mode redirects to the IR Stripe Payment Link via the confirm dialog
+     in startOsCheckout. The in-product /workspace/<id>/shop flow handles
+     monthly subscriptions for customers who already did the IR. */
+  var OS_LINKS = {
+    core_annual: { EUR:'https://buy.stripe.com/fZu7sL1b98UG6pGd2n9MY1j', GBP:'https://buy.stripe.com/fZu4gz1b9daW5lC3rN9MY1k', USD:'https://buy.stripe.com/fZu28rf1Zgn89BS3rN9MY1l', PLN:'https://buy.stripe.com/00waEX5rp0oa7tKgez9MY1m' },
+    full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
+  };
+
+  function startOsCheckout(plan){
+    var cycle = window.__caugiaBilling || 'monthly';
+    if (cycle === 'monthly') {
+      var msg = "GRIP OS Monthly wymaga najpierw Intelligence Report. Bez niego Sophie nie może się skalibrować.\n\nPodpowiedź: przełącz toggle na Annual — IR jest wtedy wliczony bez dopłaty.\n\nPrzejść teraz do kasy Intelligence Report?";
+      if (window.confirm(msg)) startReportCheckout();
+      return;
+    }
+    var curr = getDetectedCurrency();
+    var sku = plan + '_annual';
+    var url = OS_LINKS[sku] && OS_LINKS[sku][curr] ? OS_LINKS[sku][curr] : OS_LINKS[sku].EUR;
+    safeCheckoutRedirect(localizeStripeUrl(url), 'GRIP OS ' + plan.toUpperCase() + ' annual');
+  }
+
+  /* Expose IIFE-scoped functions on window so inline HTML onclick attributes
+     (top pricing grid CTAs + "Nie masz jeszcze raportu?" link in the OS
+     section) can reach them. window.setBilling is exposed above; this
+     completes the set. */
+  window.startReportCheckout = startReportCheckout;
+  window.startOsCheckout = startOsCheckout;
 })();
 </script>
 <!-- Sophie chat widget — embedded from os.caugia.com. Rolled out to locale variants 2026-05-14 (parity with EN root pages). -->

@@ -327,42 +327,150 @@ section[id] { scroll-margin-top:120px; }
 </section>
 
 
-<!-- ROUTE SELECTOR -->
-<div class="mk-route-grid">
-  <a href="javascript:void(0)" onclick="scrollToSection('intelligence-report')" class="mk-route-card" style="text-decoration:none;">
-    <div class="mk-route-step" style="color:#3B6CD8;">STAP 1: DIAGNOSTICEREN</div>
-    <div class="mk-route-title">Identificeer de bottleneck</div>
-    <div class="mk-route-desc">Je wilt weten wat je groei echt remt. Begin met de volledige diagnose.</div>
-    <span class="mk-route-cta" style="color:#3B6CD8;">GTM Intelligence Report &darr;</span>
-  </a>
-  <a href="javascript:void(0)" onclick="scrollToSection('grip-os')" class="mk-route-card" style="text-decoration:none;border-color:#E07830;">
-    <div class="mk-route-step" style="color:#E07830;">STAP 2: STUREN</div>
-    <div class="mk-route-title">Corrigeer in de juiste volgorde</div>
-    <div class="mk-route-desc">Je hebt een volledige diagnose en wilt discipline in de uitvoering. E&eacute;n bottleneck per keer.</div>
-    <span class="mk-route-cta" style="color:#E07830;">GRIP OS &darr;</span>
-  </a>
-</div>
+<!-- TOP PRICING GRID — pricing-first redesign 2026-05-17
+     Three cards (IR, Core, Full) with Monthly/Annual toggle, mirroring
+     pricing.html. Replaces the previous 2-card route selector and lifts
+     the OS pricing block from further down the page. Click-time gate
+     for monthly Core/Full is inlined here so the customer never reaches
+     a monthly Stripe link without the IR-first prompt. -->
+<style>
+.mk-pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1080px;margin:0 auto 56px;padding:0 20px;}
+.mk-pr-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;position:relative;}
+.mk-pr-card-featured{background:#0f172a;border-color:#E07830;}
+.mk-pr-name{font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;text-transform:uppercase;}
+.mk-pr-card-featured .mk-pr-name{color:#E07830;}
+.mk-pr-headline{font-family:Merriweather,serif;font-size:1.35rem;font-weight:900;color:#0f172a;margin-bottom:8px;line-height:1.2;min-height:32px;}
+.mk-pr-card-featured .mk-pr-headline{color:#fff;}
+.mk-pr-lede{font-size:0.92rem;color:#475569;line-height:1.55;margin:0 0 16px;min-height:80px;}
+.mk-pr-card-featured .mk-pr-lede{color:#94a3b8;}
+.mk-pr-feature{list-style:none;padding:0;margin:0 0 14px;font-size:0.86rem;line-height:2;flex-grow:1;color:#475569;}
+.mk-pr-card-featured .mk-pr-feature{color:#cbd5e1;}
+.mk-pr-feature li::before{content:'\2713';color:#16A34A;font-weight:800;margin-right:8px;}
+.mk-pr-card-featured .mk-pr-feature li::before{color:#E07830;}
+.mk-pr-footer{border-top:1px solid #e2e8f0;padding-top:18px;margin-top:6px;}
+.mk-pr-card-featured .mk-pr-footer{border-top-color:#1e293b;}
+.mk-pr-price-block{display:flex;align-items:baseline;gap:6px;margin-bottom:14px;}
+.mk-pr-price{font-size:2rem;font-weight:900;color:#0f172a;}
+.mk-pr-card-featured .mk-pr-price{color:#fff;}
+.mk-pr-unit{font-size:0.85rem;color:#94a3b8;}
+.mk-pr-cta{display:block;text-align:center;padding:13px 24px;font-size:0.92rem;border-radius:10px;text-decoration:none;font-weight:800;cursor:pointer;border:none;width:100%;box-sizing:border-box;}
+.mk-pr-cta-dark{background:#0f172a;color:#fff;}
+.mk-pr-cta-blue{background:#3B6CD8;color:#fff;}
+.mk-pr-cta-orange{background:#E07830;color:#fff;}
+.mk-pr-cta:hover{filter:brightness(0.95);}
+.mk-pr-badge{position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;}
+@media(max-width:960px){.mk-pricing-grid{grid-template-columns:1fr;max-width:480px;}.mk-pr-lede,.mk-pr-headline{min-height:0;}}
+</style>
+
+<section class="container" style="margin-top:40px;">
+  <!-- Maandelijks / Jaarlijks toggle -->
+  <div style="display:flex;justify-content:center;margin:0 0 28px;" id="billing-toggle">
+    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
+      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Maandelijks</button>
+      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Jaarlijks <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
+    </div>
+  </div>
+
+  <div class="mk-pricing-grid">
+    <!-- INTELLIGENCE REPORT -->
+    <div class="mk-pr-card">
+      <div class="mk-pr-name">Intelligence Report</div>
+      <h2 class="mk-pr-headline">Vind de bottleneck.</h2>
+      <p class="mk-pr-lede">Een board-level diagnose van 45 pagina&apos;s van je revenue engine. 265 vragen, 72 scoring engines, binnen een uur geleverd.</p>
+      <ul class="mk-pr-feature">
+        <li>265 gestructureerde bedrijfsinputs</li>
+        <li>72 deterministische scoring-engines</li>
+        <li>&Eacute;&eacute;n benoemde bottleneck, gekwantificeerd in revenue-termen</li>
+        <li>Strategische, tactische en operationele actie-cascade</li>
+        <li>Confidence-banded op elke bevinding</li>
+        <li>Binnen &eacute;&eacute;n uur geleverd</li>
+      </ul>
+      <!-- Bundle banner: free with annual GRIP OS, always visible -->
+      <div data-bundle-line="report" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Gratis bij jaarabonnement GRIP OS</strong> (bespaar <span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span>)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span></span>
+          <span class="mk-pr-unit">eenmalig</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startReportCheckout()" class="mk-pr-cta mk-pr-cta-dark">Haal het rapport &rarr;</a>
+      </div>
+    </div>
+
+    <!-- GRIP OS CORE -->
+    <div class="mk-pr-card">
+      <div class="mk-pr-name">GRIP OS Core</div>
+      <h2 class="mk-pr-headline">Stuur de oplossing aan.</h2>
+      <p class="mk-pr-lede">Constraint engine, gates, wekelijkse executive brief, connectors voor je core stack. Het besturingssysteem voor je GTM-executie.</p>
+      <ul class="mk-pr-feature">
+        <li>&Eacute;&eacute;n actieve bottleneck tegelijk</li>
+        <li>Expliciet geblokkeerde acties en gates</li>
+        <li>Wekelijkse Monday Brief voor de board</li>
+        <li>Connector-setup voor je kernstack</li>
+        <li>Besluitgeheugen en audit trail</li>
+        <li>Evidence-based gate reviews</li>
+      </ul>
+      <!-- Monthly indicator: shown when Monthly selected -->
+      <div data-monthly-line="os_core" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#D97706;font-weight:800;">!</span> <strong>Let op:</strong> eerst Intelligence Report nodig (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> &mdash; losse aankoop</a>)
+      </div>
+      <!-- Bundle banner: shown when Annual selected -->
+      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inclusief het Intelligence Report</strong> (<span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> waarde)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span>&nbsp;<span data-price-key="os_core">799</span></span>
+          <span class="mk-pr-unit">/ maand</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startOsCheckout('core')" class="mk-pr-cta mk-pr-cta-blue">Activeer Core &rarr;</a>
+      </div>
+    </div>
+
+    <!-- GRIP OS FULL (featured) -->
+    <div class="mk-pr-card mk-pr-card-featured">
+      <div class="mk-pr-badge">AANBEVOLEN</div>
+      <div class="mk-pr-name">GRIP OS Full</div>
+      <h2 class="mk-pr-headline">Stuur aan met Sophie.</h2>
+      <p class="mk-pr-lede">Core, plus Sophie met 15k turns, de volledige connector library, continue scoring, drift alerts en maandelijkse herbeoordeling.</p>
+      <ul class="mk-pr-feature">
+        <li>Alles uit Core</li>
+        <li>Volledige connectoren-bibliotheek</li>
+        <li>Continue GRIP-scoring uit live signalen</li>
+        <li>Priority drift detection en alerts</li>
+        <li>Maandelijkse GTM Pulse herassessment</li>
+        <li style="color:#E07830;font-weight:700;">GTM Due Diligence (5/maand)</li>
+      </ul>
+      <!-- Monthly indicator -->
+      <div data-monthly-line="os_full" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#D97706;font-weight:800;">!</span> <strong>Let op:</strong> eerst Intelligence Report nodig (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> &mdash; losse aankoop</a>)
+      </div>
+      <!-- Bundle banner -->
+      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inclusief het Intelligence Report</strong> (<span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> waarde)
+      </div>
+      <div class="mk-pr-footer">
+        <div class="mk-pr-price-block">
+          <span class="mk-pr-price"><span class="curr">&euro;</span>&nbsp;<span data-price-key="os_full">1.495</span></span>
+          <span class="mk-pr-unit" style="color:#64748b;">/ maand</span>
+        </div>
+        <a href="javascript:void(0)" onclick="startOsCheckout('full')" class="mk-pr-cta mk-pr-cta-orange">Activeer Full &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- INTELLIGENCE REPORT SECTION -->
 <section class="container" id="intelligence-report">
   <div class="mk-ir">
     <div class="mk-ir-hero">
       <div class="mk-ir-copy">
-        <span class="eyebrow" style="color:#60a5fa;">De volledige diagnose</span>
-        <h2 class="mk-ir-title">Begin bij het totaaloverzicht.</h2>
-        <p class="mk-ir-lead">Een board-ready diagnose van 45 pagina's over je revenue-engine. 265 vragen door 72 scoring engines. Bottleneck-analyse, revenue-lekkage-modellering, 90-dagen-executieplan.</p>
-        <div class="mk-ir-price-row">
-          <div class="mk-ir-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></div>
-          <div class="mk-ir-price-context">Eenmalige betaling.<br><strong>Vervangt een consultancy-opdracht van &euro;&nbsp;25k+.</strong></div>
-        </div>
-        <!-- Bundle callout: skip standalone purchase if going annual on OS. -->
-        <a href="#billing-toggle" style="display:block;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px;margin:0 0 16px;font-size:0.85rem;color:#0f172a;line-height:1.5;text-decoration:none;">
-          <strong style="color:#92400E;">Neem je GRIP OS voor een jaar?</strong> Dan betaal je niet voor het Intelligence Report &mdash; dat zit erin. Bespaar <span class="curr">&euro;</span>&nbsp;2.495.
-        </a>
-        <div class="mk-ir-actions">
-          <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR" style="padding:14px 32px;font-size:1rem;">Bestel het Intelligence Report</button>
-        </div>
-        <p class="mk-ir-secure">&check; Veilige betaling via Stripe. Factuur automatisch gegenereerd.</p>
+        <span class="eyebrow" style="color:#60a5fa;">Wat je krijgt</span>
+        <h2 class="mk-ir-title">Binnen het Intelligence Report.</h2>
+        <p class="mk-ir-lead">Een board-level diagnose van 45 pagina&apos;s van je revenue engine. 265 vragen, 72 scoring engines, binnen een uur geleverd.</p>
+        <p style="font-size:0.92rem;color:#64748b;line-height:1.6;margin-bottom:18px;">Dezelfde logica als een top-tier consultancy-opdracht, gecodeerd in deterministische scoring engines. Voorbeeldhoofdstukken &rarr;</p>
+        <p class="mk-ir-secure">&check; Vervangt een consultancy-opdracht van <span class="curr">&euro;</span>&nbsp;25k+. Binnen &eacute;&eacute;n uur geleverd.</p>
       </div>
       <div class="mk-ir-visual">
         <div class="mk-ir-stack" id="irStack">
@@ -407,164 +515,12 @@ section[id] { scroll-margin-top:120px; }
         </div>
       </div>
     </div>
-
-    <!-- COMPARISON TABLE -->
-    <div class="mk-ir-comp">
-      <div class="mk-ir-comp-headline">Consultancy duurt weken. AI strooit met inzichten. Caugia isoleert de bottleneck.</div>
-      <table class="mk-ir-table">
-        <thead><tr><th></th><th>AI-tools</th><th>Klassieke consultancy</th><th>Caugia Constraint Engine</th></tr></thead>
-        <tbody>
-          <tr><td>Tijd tot inzicht</td><td>5 minuten</td><td>4-6 weken</td><td>Minder dan een uur</td></tr>
-          <tr><td>Kosten</td><td>Lage kosten</td><td>&euro;&nbsp;25k - &euro;&nbsp;50k+</td><td><span class="curr">&euro;</span><span data-price-key="report">2,495</span> eenmalig</td></tr>
-          <tr><td>Datadiepte</td><td>Generieke prompts</td><td>Interviews + workshops</td><td>265 gestructureerde datapunten</td></tr>
-          <tr><td>Beslislogica</td><td>Probabilistische uitkomst</td><td>Interpretatie van de consultant</td><td>Deterministische scoring engines</td></tr>
-          <tr><td>Levering</td><td>Conversationeel antwoord</td><td>PowerPoint-presentatie</td><td>Becijferde diagnose van 45 pagina's</td></tr>
-          <tr><td>Reproduceerbaarheid</td><td>Elke keer anders</td><td>Hangt af van de consultant</td><td>Deterministische scoring engine</td></tr>
-          <tr><td>Revenue-lekkage</td><td>Niet gemodelleerd</td><td>Ruwe schatting</td><td>Becijferd per bottleneck</td></tr>
-        </tbody>
-      </table>
-      <div class="mk-comp-cards">
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Tijd tot inzicht</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">5 minuten</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">4-6 weken</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Minder dan een uur</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Kosten</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Lage kosten</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">&euro;&nbsp;25k - &euro;&nbsp;50k+</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;"><span class="curr">&euro;</span><span data-price-key="report">2,495</span> eenmalig</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Datadiepte</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Generieke prompts</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Interviews + workshops</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">265 gestructureerde data</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Beslislogica</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Probabilistische uitkomst</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Interpretatie consultant</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministische scoring engines</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Levering</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Conversationeel antwoord</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">PowerPoint-presentatie</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Diagnose van 45 pagina's</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Reproduceerbaarheid</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Elke keer anders</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Hangt af van consultant</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministische scoring engine</span></div></div></div>
-        <div class="mk-comp-row"><div class="mk-comp-row-label">Revenue-lekkage</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Niet gemodelleerd</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Ruwe schatting</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Becijferd per bottleneck</span></div></div></div>
-      </div>
-      <div class="mk-ir-comp-footer">De beste consultants passen frameworks handmatig toe. Caugia heeft ze in deterministische engines gecodificeerd. Dezelfde logica. Veel sneller. Veel goedkoper.</div>
-    </div>
-
-    <!-- Numbers -->
-    <div class="mk-ir-nums">
-      <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Beoordeelde vragen</div></div>
-      <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Diagnostische engines</div></div>
-      <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Groei-archetypes</div></div>
-      <div><div class="mk-ir-num">45</div><div class="mk-ir-num-label">Pagina's analyse</div></div>
-    </div>
-
-    <div class="mk-ir-bottom-cta">
-      <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Bestel het Intelligence Report &rarr; <span class="curr">&euro;</span><span data-price-key="report">2,495</span></button>
-      <p class="mk-ir-secure">&check; Veilige betaling via Stripe. Eenmalige betaling.</p>
-    </div>
   </div>
 </section>
 
-<!-- GRIP BRAIN SECTION -->
-<section class="mk-brain" id="grip-brain">
-  <div class="mk-brain-card">
-    <img src="https://os.caugia.com/brain-sophie-v2.png" alt="Sophie, GRIP Brain AI-agent" class="mk-brain-avatar" loading="lazy" />
-    <div class="mk-brain-content">
-      <div class="mk-brain-eyebrow">GRIP Brain</div>
-      <h2 class="mk-brain-title">Maak kennis met Sophie. Wekelijks&nbsp;geaudit. 0&nbsp;hallucinaties. Citeert&nbsp;bij&nbsp;naam.</h2>
-      <p class="mk-brain-sub">Geen chatbot. Een constraint-driven intelligence-laag. Elke claim citeert een framework-slug, een DOI van een peer-reviewed paper, een ISBN-getagged boek of een essay van een met-naam-genoemde operator. Wekelijks geaudit tegen een publieke rubric: 0&nbsp;hallucinaties gemeten in de laatste 1.000 citaten. <a href="https://os.caugia.com/sophie/stats" style="color:inherit;text-decoration:underline;">Bekijk de live bonnen &rarr;</a></p>
-      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;"><strong style="color:#fff;">Voorgeladen voor jouw vertical.</strong> Sophie&rsquo;s werkgeheugen komt mee met de playbooks, peer-patronen en benchmark-ankers die bij jouw industrie passen, zodat de eerste vraag een gegrond antwoord krijgt, geen generiek.</p>
-      <ul class="mk-brain-features">
-        <li>Wijst de root cause aan, niet het symptoom. Betrouwbaarheidsinterval per analyse</li>
-        <li>Trendgeheugen over 4 weken. Proactieve alerts als scores schuiven</li>
-        <li>Pre-meeting research via Perplexity + Grok voor het eerste contact</li>
-        <li>Competitive battlecards die zichzelf genereren. 12 secties, live bruikbaar</li>
-        <li>4 operationele modes: Operator, Client, Support, Success</li>
-        <li>Antwoordt in elke taal. Native UI en assessment in 6 (EN/FR/DE/ES/PL/NL). Voice input inbegrepen</li>
-      </ul>
-      <a href="https://os.caugia.com/nl/sophie/preview" class="mk-brain-cta" target="_blank">Bekijk Sophie in de demo &rarr;</a>
-      <p class="mk-brain-note">De demo draait op NovaPay, een fictieve FinTech met &euro;&nbsp;45M ARR. Sophie's adviezen leunen op hun echte GRIP-data.</p>
-    </div>
-  </div>
-</section>
-
-<!-- GRIP OS SECTION -->
-<section class="container" id="grip-os" style="margin:72px auto;max-width:1080px;padding:0 20px;">
-  <div style="text-align:center;margin-bottom:48px;">
-    <div style="display:inline-block;background:#E07830;color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:16px;">STAP 2: STUREN OP UITVOERING</div>
-    <h2 class="mk-os-h2" style="font-family:Merriweather,serif;font-size:2.2rem;font-weight:900;color:#0f172a;line-height:1.2;margin-bottom:16px;">Je diagnose vond de bottleneck.<br>GRIP OS zorgt dat je hem ook echt oplost.</h2>
-    <p style="font-size:1.12rem;color:#475569;max-width:680px;margin:0 auto;line-height:1.7;">Geen chatbot, geen dashboard. Een GTM-executiesysteem dat de juiste bottleneck in de juiste volgorde afdwingt.</p>
-  </div>
-
-  <div style="display:flex;justify-content:center;margin-bottom:24px;" id="billing-toggle">
-    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
-      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Maandelijks</button>
-      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">Jaarlijks <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
-    </div>
-  </div>
-
-  <div class="mk-os-grid">
-    <div class="mk-os-card mk-os-card-core">
-      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;">GRIP OS CORE</div>
-      <p style="font-size:1.02rem;color:#475569;line-height:1.7;margin-bottom:24px;">Constraint engine, gates, board-ready Monday Brief, connectoren voor je kernstack. Het besturingssysteem voor je GTM-uitvoering.</p>
-      <ul class="mk-os-features" style="color:#475569;font-size:0.95rem;line-height:2;">
-        <li>&check; E&eacute;n actieve bottleneck per keer</li>
-        <li>&check; Geblokkeerde acties en expliciete gates</li>
-        <li>&check; Monday Brief met financi&euml;le cijfers</li>
-        <li>&check; Connector-setup voor je kernstack</li>
-        <li>&check; Beslissingsgeheugen en audit trail</li>
-        <li>&check; Gate-reviews op basis van bewijs</li>
-      </ul>
-      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
-      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inclusief het Intelligence Report</strong> (<span class="curr">&euro;</span>&nbsp;2.495 waarde)
-      </div>
-      <div class="mk-os-footer" style="border-color:#e2e8f0;">
-        <div>
-          <div class="mk-os-price-block">
-            <span style="font-size:2rem;font-weight:900;color:#0f172a;"><span class="curr">&euro;</span><span data-price-key="os_core">799</span></span>
-            <span style="font-size:0.85rem;color:#94a3b8;">/maand</span>
-          </div>
-        </div>
-        <a href="pricing.html" class="mk-os-cta" style="background:#3B6CD8;color:#fff;">Activeer Core</a>
-      </div>
-    </div>
-
-    <div class="mk-os-card mk-os-card-full">
-      <div style="position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;">AANBEVOLEN</div>
-      <div style="font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#E07830;margin-bottom:12px;">GRIP OS FULL</div>
-      <p style="font-size:1.02rem;color:#94a3b8;line-height:1.7;margin-bottom:24px;">Alles uit Core, plus de volledige connector-bibliotheek, AI-verrijkte briefs, continue scoring, drift-detectie en maandelijkse herevaluatie.</p>
-      <ul class="mk-os-features" style="color:#94a3b8;font-size:0.95rem;line-height:2;">
-        <li style="color:#fff;">&check; Alles uit Core</li>
-        <li>&check; Volledige connectoren-bibliotheek (HubSpot, Salesforce, Gong, G2, Amplitude, etc.)</li>
-        <li>&check; Continue GRIP-scoring op live signalen</li>
-        <li>&check; Drift-detectie en alerts</li>
-        <li>&check; Board-briefs verrijkt door AI</li>
-        <li>&check; Maandelijkse GTM Pulse-herevaluatie</li>
-        <li>&check; Caugia outcome-benchmarks</li>
-        <li style="color:#E07830;font-weight:700;">&check; GRIP Brain. Sophie identificeert de structurele competentiekloof</li>
-        <li style="color:#E07830;font-weight:700;">&check; GTM Due Diligence (5/maand). Institutionele due diligence-rapporten over elk portfoliobedrijf.</li>
-      </ul>
-      <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
-      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Inclusief het Intelligence Report</strong> (<span class="curr">&euro;</span>&nbsp;2.495 waarde)
-      </div>
-      <div class="mk-os-footer" style="border-color:#1e293b;">
-        <div>
-          <div class="mk-os-price-block">
-            <span style="font-size:2rem;font-weight:900;color:#fff;"><span class="curr">&euro;</span><span data-price-key="os_full">1,495</span></span>
-            <span style="font-size:0.85rem;color:#64748b;">/maand</span>
-          </div>
-        </div>
-        <a href="pricing.html" class="mk-os-cta" style="background:#E07830;color:#fff;">Activeer Full</a>
-      </div>
-    </div>
-  </div>
-
-  <style>
-  .mk-cmp{margin:48px auto 0;max-width:920px;}
-  .mk-cmp h3{font-family:Merriweather,serif;font-size:1.4rem;font-weight:900;color:#0f172a;text-align:center;letter-spacing:-0.015em;margin:0 0 10px;}
-  .mk-cmp-intro{text-align:center;font-size:0.92rem;color:#475569;line-height:1.6;max-width:600px;margin:0 auto 24px;}
-  .mk-cmp-table{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;}
-  .mk-cmp-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;align-items:center;border-bottom:1px solid #e2e8f0;}
-  .mk-cmp-row:last-child{border-bottom:none;}
-  .mk-cmp-head{background:#f8fafc;font-size:0.65rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;}
-  .mk-cmp-head>div{padding:12px 16px;}
-  .mk-cmp-head>div:first-child{color:#64748b;}
-  .mk-cmp-head>div:nth-child(2){color:#3B6CD8;text-align:center;}
-  .mk-cmp-head>div:last-child{color:#E07830;text-align:center;}
-  .mk-cmp-row>div{padding:11px 16px;font-size:0.88rem;color:#475569;}
-  .mk-cmp-row>div:nth-child(2).mk-cmp-row>div:nth-child(3){text-align:center;font-weight:600;color:#0f172a;}
-  .mk-cmp-check{color:#16A34A;font-weight:800;font-size:1.05rem;}
-  .mk-cmp-x{color:#94a3b8;font-size:1rem;}
-  .mk-cmp-foot{text-align:center;font-size:0.75rem;color:#94a3b8;margin-top:12px;}
-  @media(max-width:720px){.mk-cmp-row{grid-template-columns:1.4fr 1fr 1fr;}.mk-cmp-row>div{padding:9px 11px;font-size:0.78rem;}.mk-cmp{padding:0 16px;}}
-  </style>
+<!-- COMPARE Core vs Full — lifted from #grip-os so it sits directly under the
+     IR samples and above the Sophie deep-dive, matching pricing.html's flow. -->
+<section class="container" style="margin:48px auto;max-width:1080px;padding:0 20px;">
   <div class="mk-cmp" id="compare-core-full">
     <h3>Vergelijk Core en Full.</h3>
     <p class="mk-cmp-intro">Beide tiers draaien op dezelfde constraint-engine. Core geeft je het operating system; Full ontgrendelt de intelligence-laag en het eigen cohort-signaal.</p>
@@ -594,7 +550,100 @@ section[id] { scroll-margin-top:120px; }
     </div>
     <p class="mk-cmp-foot">Persoonlijke benchmark = waar JOUW live GRIP-scores staan in je peer cohort. Anders dan de publieke benchmarks-explorer (link bovenaan deze pagina). Token-budgets zijn anti-abuse caps op Anthropic-spend. Eerlijke power-users halen ze niet. Enterprise-contracten zijn ongelimiteerd.</p>
   </div>
+</section>
 
+<!-- GRIP BRAIN SECTION -->
+<section class="mk-brain" id="grip-brain">
+  <div class="mk-brain-card">
+    <img src="https://os.caugia.com/brain-sophie-v2.png" alt="Sophie, GRIP Brain AI-agent" class="mk-brain-avatar" loading="lazy" />
+    <div class="mk-brain-content">
+      <div class="mk-brain-eyebrow">GRIP Brain</div>
+      <h2 class="mk-brain-title">Maak kennis met Sophie. Wekelijks&nbsp;geaudit. 0&nbsp;hallucinaties. Citeert&nbsp;bij&nbsp;naam.</h2>
+      <p class="mk-brain-sub">Geen chatbot. Een constraint-driven intelligence-laag. Elke claim citeert een framework-slug, een DOI van een peer-reviewed paper, een ISBN-getagged boek of een essay van een met-naam-genoemde operator. Wekelijks geaudit tegen een publieke rubric: 0&nbsp;hallucinaties gemeten in de laatste 1.000 citaten. <a href="https://os.caugia.com/sophie/stats" style="color:inherit;text-decoration:underline;">Bekijk de live bonnen &rarr;</a></p>
+      <p class="mk-brain-sub" style="font-size:0.9rem;color:#cbd5e1;margin-top:-14px;margin-bottom:24px;"><strong style="color:#fff;">Voorgeladen voor jouw vertical.</strong> Sophie&rsquo;s werkgeheugen komt mee met de playbooks, peer-patronen en benchmark-ankers die bij jouw industrie passen, zodat de eerste vraag een gegrond antwoord krijgt, geen generiek.</p>
+      <ul class="mk-brain-features">
+        <li>Wijst de root cause aan, niet het symptoom. Betrouwbaarheidsinterval per analyse</li>
+        <li>Trendgeheugen over 4 weken. Proactieve alerts als scores schuiven</li>
+        <li>Pre-meeting research via Perplexity + Grok voor het eerste contact</li>
+        <li>Competitive battlecards die zichzelf genereren. 12 secties, live bruikbaar</li>
+        <li>4 operationele modes: Operator, Client, Support, Success</li>
+        <li>Antwoordt in elke taal. Native UI en assessment in 6 (EN/FR/DE/ES/PL/NL). Voice input inbegrepen</li>
+      </ul>
+      <a href="https://os.caugia.com/nl/sophie/preview" class="mk-brain-cta" target="_blank">Bekijk Sophie in de demo &rarr;</a>
+      <p class="mk-brain-note">De demo draait op NovaPay, een fictieve FinTech met &euro;&nbsp;45M ARR. Sophie's adviezen leunen op hun echte GRIP-data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- mk-cmp CSS retained — used by the COMPARE Core vs Full block above. -->
+<style>
+.mk-cmp{margin:48px auto 0;max-width:920px;}
+.mk-cmp h3{font-family:Merriweather,serif;font-size:1.4rem;font-weight:900;color:#0f172a;text-align:center;letter-spacing:-0.015em;margin:0 0 10px;}
+.mk-cmp-intro{text-align:center;font-size:0.92rem;color:#475569;line-height:1.6;max-width:600px;margin:0 auto 24px;}
+.mk-cmp-table{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;}
+.mk-cmp-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;align-items:center;border-bottom:1px solid #e2e8f0;}
+.mk-cmp-row:last-child{border-bottom:none;}
+.mk-cmp-head{background:#f8fafc;font-size:0.65rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;}
+.mk-cmp-head>div{padding:12px 16px;}
+.mk-cmp-head>div:first-child{color:#64748b;}
+.mk-cmp-head>div:nth-child(2){color:#3B6CD8;text-align:center;}
+.mk-cmp-head>div:last-child{color:#E07830;text-align:center;}
+.mk-cmp-row>div{padding:11px 16px;font-size:0.88rem;color:#475569;}
+.mk-cmp-row>div:nth-child(2).mk-cmp-row>div:nth-child(3){text-align:center;font-weight:600;color:#0f172a;}
+.mk-cmp-check{color:#16A34A;font-weight:800;font-size:1.05rem;}
+.mk-cmp-x{color:#94a3b8;font-size:1rem;}
+.mk-cmp-foot{text-align:center;font-size:0.75rem;color:#94a3b8;margin-top:12px;}
+@media(max-width:720px){.mk-cmp-row{grid-template-columns:1.4fr 1fr 1fr;}.mk-cmp-row>div{padding:9px 11px;font-size:0.78rem;}.mk-cmp{padding:0 16px;}}
+</style>
+
+<!-- AI vs Traditional vs Caugia + Numbers + reminder CTA — lifted from the IR
+     section so it sits AFTER Sophie, matching Tom's flow:
+     Pricing → Samples → Compare → Sophie → AI-table + Numbers → Ladder. -->
+<section class="container" style="margin:48px auto;max-width:1080px;padding:0 20px;">
+  <div class="mk-ir-comp">
+    <div class="mk-ir-comp-headline">Consultancy duurt weken. AI strooit met inzichten. Caugia isoleert de bottleneck.</div>
+    <table class="mk-ir-table">
+      <thead><tr><th></th><th>AI-tools</th><th>Klassieke consultancy</th><th>Caugia Constraint Engine</th></tr></thead>
+      <tbody>
+        <tr><td>Tijd tot inzicht</td><td>5 minuten</td><td>4-6 weken</td><td>Minder dan een uur</td></tr>
+        <tr><td>Kosten</td><td>Lage kosten</td><td>&euro;&nbsp;25k - &euro;&nbsp;50k+</td><td><span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> eenmalig</td></tr>
+        <tr><td>Datadiepte</td><td>Generieke prompts</td><td>Interviews + workshops</td><td>265 gestructureerde datapunten</td></tr>
+        <tr><td>Beslislogica</td><td>Probabilistische uitkomst</td><td>Interpretatie van de consultant</td><td>Deterministische scoring engines</td></tr>
+        <tr><td>Levering</td><td>Conversationeel antwoord</td><td>PowerPoint-presentatie</td><td>Becijferde diagnose van 45 pagina's</td></tr>
+        <tr><td>Reproduceerbaarheid</td><td>Elke keer anders</td><td>Hangt af van de consultant</td><td>Deterministische scoring engine</td></tr>
+        <tr><td>Revenue-lekkage</td><td>Niet gemodelleerd</td><td>Ruwe schatting</td><td>Becijferd per bottleneck</td></tr>
+      </tbody>
+    </table>
+    <!-- Mobile: card layout per row -->
+    <div class="mk-comp-cards">
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Tijd tot inzicht</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">5 minuten</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">4-6 weken</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Minder dan een uur</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Kosten</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Lage kosten</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">&euro;&nbsp;25k - &euro;&nbsp;50k+</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;"><span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span> eenmalig</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Datadiepte</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Generieke prompts</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Interviews + workshops</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">265 gestructureerde data</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Beslislogica</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Probabilistische uitkomst</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Interpretatie consultant</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministische scoring engines</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Levering</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Conversationeel antwoord</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">PowerPoint-presentatie</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Diagnose van 45 pagina's</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Reproduceerbaarheid</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Elke keer anders</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Hangt af van consultant</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Deterministische scoring engine</span></div></div></div>
+      <div class="mk-comp-row"><div class="mk-comp-row-label">Revenue-lekkage</div><div class="mk-comp-row-items"><div class="mk-comp-row-item"><span class="mk-comp-row-who">AI-tools</span><span class="mk-comp-row-val">Niet gemodelleerd</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who">Consultancy</span><span class="mk-comp-row-val">Ruwe schatting</span></div><div class="mk-comp-row-item"><span class="mk-comp-row-who" style="color:#0056b3;font-weight:800;">Caugia</span><span class="mk-comp-row-val" style="color:#0056b3;font-weight:800;">Becijferd per bottleneck</span></div></div></div>
+    </div>
+    <div class="mk-ir-comp-footer">De beste consultants passen frameworks handmatig toe. Caugia heeft ze in deterministische engines gecodificeerd. Dezelfde logica. Veel sneller. Veel goedkoper.</div>
+  </div>
+
+  <!-- Numbers -->
+  <div class="mk-ir-nums">
+    <div><div class="mk-ir-num">265</div><div class="mk-ir-num-label">Vragen gescoord</div></div>
+    <div><div class="mk-ir-num">72</div><div class="mk-ir-num-label">Diagnostische engines</div></div>
+    <div><div class="mk-ir-num">30+</div><div class="mk-ir-num-label">Groei-archetypes</div></div>
+    <div><div class="mk-ir-num">45</div><div class="mk-ir-num-label">Pagina&apos;s analyse</div></div>
+  </div>
+
+  <div class="mk-ir-bottom-cta">
+    <button class="btn btn-primary mk-ir-buy" id="stripeCheckoutBtnIR2" style="padding:14px 32px;font-size:1rem;">Bestel het Intelligence Report &rarr; <span class="curr">&euro;</span>&nbsp;<span data-price-key="report">2.495</span></button>
+    <p class="mk-ir-secure">&check; Veilige betaling via Stripe. Eenmalige betaling.</p>
+  </div>
+</section>
+
+<!-- LADDER + PARTNER NOTE — last narrative anchor before the footer. -->
+<section class="container" id="grip-os" style="margin:48px auto;max-width:1080px;padding:0 20px;">
+  <!-- Product ladder summary -->
   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:28px 32px;text-align:center;margin-top:32px;">
     <p style="font-size:0.82rem;color:#64748b;margin:0;line-height:1.8;">
       <strong style="color:#0f172a;">De Caugia-productladder:</strong><br>
@@ -742,6 +791,10 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
   updateOSPrices(getDetectedCurrency());
 
   window.setBilling = function(mode){
+    /* Expose mode globally so startOsCheckout() can read it for the
+       gate decision (monthly Core/Full triggers the IR-first confirm
+       dialog instead of opening Stripe directly). */
+    window.__caugiaBilling = mode;
     var btnM = document.getElementById('btn-monthly');
     var btnA = document.getElementById('btn-annual');
     if(mode==='monthly'){
@@ -762,11 +815,48 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
         el.textContent = mp;
       }
     });
-    /* Bundle lines: "Inclusief het Intelligence Report" visible only when annual is selected. */
-    document.querySelectorAll('[data-bundle-line]').forEach(function(el){
+    /* OS bundle lines ("Inclusief het Intelligence Report"): annual only.
+       The IR card's data-bundle-line="report" ("Gratis bij jaarabonnement GRIP OS")
+       stays visible in both modes — it's informational, not toggle-driven. */
+    document.querySelectorAll('[data-bundle-line="os_core"],[data-bundle-line="os_full"]').forEach(function(el){
       el.style.display = (mode === 'annual') ? 'block' : 'none';
     });
+    /* Monthly indicators ("Let op: eerst Intelligence Report nodig"): monthly only. */
+    document.querySelectorAll('[data-monthly-line]').forEach(function(el){
+      el.style.display = (mode === 'monthly') ? 'block' : 'none';
+    });
   };
+
+  /* OS_LINKS — annual-only Stripe Payment Links per currency. Monthly is
+     intentionally absent: monthly Core/Full is hard-gated on having a
+     completed Intelligence Report, and a click on those CTAs in monthly
+     mode redirects to the IR Stripe Payment Link via the confirm dialog
+     in startOsCheckout. The in-product /workspace/<id>/shop flow handles
+     monthly subscriptions for customers who already did the IR. */
+  var OS_LINKS = {
+    core_annual: { EUR:'https://buy.stripe.com/fZu7sL1b98UG6pGd2n9MY1j', GBP:'https://buy.stripe.com/fZu4gz1b9daW5lC3rN9MY1k', USD:'https://buy.stripe.com/fZu28rf1Zgn89BS3rN9MY1l', PLN:'https://buy.stripe.com/00waEX5rp0oa7tKgez9MY1m' },
+    full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
+  };
+
+  function startOsCheckout(plan){
+    var cycle = window.__caugiaBilling || 'monthly';
+    if (cycle === 'monthly') {
+      var msg = "GRIP OS Monthly vereist eerst het Intelligence Report. Zonder kan Sophie niet kalibreren.\n\nTip: zet de toggle op Annual — het IR is dan gratis inbegrepen.\n\nNu naar Intelligence Report checkout?";
+      if (window.confirm(msg)) startReportCheckout();
+      return;
+    }
+    var curr = getDetectedCurrency();
+    var sku = plan + '_annual';
+    var url = OS_LINKS[sku] && OS_LINKS[sku][curr] ? OS_LINKS[sku][curr] : OS_LINKS[sku].EUR;
+    safeCheckoutRedirect(localizeStripeUrl(url), 'GRIP OS ' + plan.toUpperCase() + ' annual');
+  }
+
+  /* Expose IIFE-scoped functions on window so inline HTML onclick attributes
+     (top pricing grid CTAs + "Nog geen GTM Intelligence Report?" link in the OS
+     section) can reach them. window.setBilling is exposed above; this
+     completes the set. */
+  window.startReportCheckout = startReportCheckout;
+  window.startOsCheckout = startOsCheckout;
 })();
 </script>
 <!-- Sophie chat widget — embedded from os.caugia.com. Rolled out to locale variants 2026-05-14 (parity with EN root pages). -->
