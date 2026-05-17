@@ -343,10 +343,18 @@ section[id] { scroll-margin-top:120px; }
 .pr-cta-blue:hover { background:#2553b6 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(59,108,216,0.35); }
 .pr-cta-orange { background:#E07830 !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 2px 8px rgba(224,120,48,0.25); }
 .pr-cta-orange:hover { background:#c96520 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(224,120,48,0.35); }
+    /* Unify banner heights so banner tops align across IR / Core / Full.
+       The IR 1-line bundle banner (~52px) and the Core/Full 3-line monthly
+       indicator (~76px) used to misalign at the top. min-height pegs every
+       banner to a uniform 88px so banner TOPS line up — bottoms were
+       already aligned via the flex layout. */
+    .pr-card [data-bundle-line],
+    .pr-card [data-monthly-line] { min-height:88px; box-sizing:border-box; }
 @media (max-width: 980px) {
   .pr-grid { grid-template-columns:1fr; gap:18px; }
   .pr-card-lede { min-height:0; }
   .pr-card-headline { min-height:0; }
+    .pr-card [data-bundle-line], .pr-card [data-monthly-line] { min-height:0; }
 }
 </style>
 <script type="application/ld+json">
@@ -416,6 +424,7 @@ section[id] { scroll-margin-top:120px; }
         <!-- Bundle line: free-with-annual reminder, always visible on IR card. -->
         <div data-bundle-line="report" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
           <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Gratis z rocznym GRIP OS</strong> (zaoszczędź <span data-price-key="report">2&nbsp;495</span>&nbsp;<span class="curr">&euro;</span>)
+        <span style="display:block;font-size:0.74rem;color:#64748b;margin-top:2px;">vs. 25&ndash;50k <span class="curr">&euro;</span> za równoważną diagnozę konsultingową</span>
         </div>
         <div class="pr-footer">
           <div class="pr-price-block">
@@ -430,7 +439,7 @@ section[id] { scroll-margin-top:120px; }
       <div class="pr-card">
         <div class="pr-card-name" style="color:#3B6CD8;">GRIP OS Core</div>
         <div class="pr-card-headline">Zarządzaj rozwiązaniem. Samodzielnie.</div>
-        <p class="pr-card-lede">Dla zespołów, które wiedzą, gdzie patrzeć, i chcą systemu, który egzekwuje jedno ograniczenie naraz, w sekwencji.</p>
+        <p class="pr-card-lede">Przekształca diagnozę z Intelligence Report w zarządzaną 90-dniową sekwencję wykonania. Jedno ograniczenie naraz, z zablokowanymi działaniami i bramkami.</p>
         <ul class="pr-feature">
           <li>Jedno aktywne ograniczenie naraz</li>
           <li>Wyraźnie blokowane działania i bramki</li>
@@ -872,11 +881,40 @@ function scrollToSection(id) { var el=document.getElementById(id); if(!el) retur
     full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
   };
 
+  function showIrGateModal(onResult){
+    var existing = document.getElementById('caugia-ir-gate');
+    if (existing) existing.remove();
+    var overlay = document.createElement('div');
+    overlay.id = 'caugia-ir-gate';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);';
+    overlay.innerHTML = ''
+      + '<div role="dialog" aria-modal="true" aria-labelledby="caugia-ir-gate-title" style="background:#fff;border-radius:18px;max-width:480px;width:100%;padding:32px 28px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.18);">'
+      +   '<div style="font-size:0.72rem;font-weight:800;letter-spacing:2px;color:#D97706;margin-bottom:14px;text-transform:uppercase;">Intelligence Report wymagany</div>'
+      +   '<h3 id="caugia-ir-gate-title" style="font-family:Merriweather,serif;font-size:1.35rem;font-weight:900;color:#0f172a;margin:0 0 14px;line-height:1.25;letter-spacing:-0.015em;">Sophie potrzebuje najpierw Państwa baseline.</h3>'
+      +   '<p style="font-size:0.95rem;color:#475569;line-height:1.6;margin:0 0 10px;">GRIP OS kalibruje się do Państwa biznesu poprzez Intelligence Report z 265 pytań. Bez niego Sophie działa na domyślnych wartościach branżowych zamiast na rzeczywistym ograniczeniu GTM.</p>'
+      +   '<p style="font-size:0.86rem;color:#64748b;line-height:1.55;margin:0 0 22px;"><strong style="color:#0f172a;">Podpowiedź:</strong> przełącz toggle na <strong>Annual</strong> i Intelligence Report jest wliczony bez dopłaty.</p>'
+      +   '<button id="caugia-ir-gate-confirm" type="button" style="display:block;width:100%;padding:14px 24px;background:#3B6CD8;color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:800;cursor:pointer;margin-bottom:10px;letter-spacing:0.01em;box-shadow:0 2px 8px rgba(59,108,216,0.25);">Do Intelligence Report &rarr;</button>'
+      +   '<button id="caugia-ir-gate-cancel" type="button" style="display:block;width:100%;padding:10px 24px;background:transparent;color:#64748b;border:none;font-size:0.85rem;font-weight:600;cursor:pointer;">Anuluj</button>'
+      + '</div>';
+    document.body.appendChild(overlay);
+    var keyHandler = function(e){ if (e.key === 'Escape') close(false); };
+    function close(result){
+      overlay.remove();
+      document.removeEventListener('keydown', keyHandler);
+      onResult(result);
+    }
+    document.getElementById('caugia-ir-gate-confirm').addEventListener('click', function(){ close(true); });
+    document.getElementById('caugia-ir-gate-cancel').addEventListener('click', function(){ close(false); });
+    overlay.addEventListener('click', function(e){ if (e.target === overlay) close(false); });
+    document.addEventListener('keydown', keyHandler);
+  }
+
   function startOsCheckout(plan){
     var cycle = window.__caugiaBilling || 'monthly';
     if (cycle === 'monthly') {
-      var msg = "GRIP OS Monthly wymaga najpierw Intelligence Report. Bez niego Sophie nie może się skalibrować.\n\nPodpowiedź: przełącz toggle na Annual — IR jest wtedy wliczony bez dopłaty.\n\nPrzejść teraz do kasy Intelligence Report?";
-      if (window.confirm(msg)) startReportCheckout();
+      showIrGateModal(function(ok){
+        if (ok) startReportCheckout();
+      });
       return;
     }
     var curr = getDetectedCurrency();
