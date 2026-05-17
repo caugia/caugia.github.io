@@ -409,10 +409,22 @@ section[id] { scroll-margin-top:120px; }
 .pr-cta-blue:hover { background:#2553b6 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(59,108,216,0.35); }
 .pr-cta-orange { background:#E07830 !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 2px 8px rgba(224,120,48,0.25); }
 .pr-cta-orange:hover { background:#c96520 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(224,120,48,0.35); }
+/* Unify banner heights so banner tops align across IR / Core / Full.
+   In monthly mode the IR card's 1-line bundle banner ("Free with annual...")
+   is ~38px while the Core/Full 3-line monthly indicator is ~76px — that
+   38px delta is what made the dividers + prices + CTAs misalign in Tom's
+   screenshot. min-height pegs every banner to a uniform 88px so banner
+   TOPS line up at the same Y across all three cards (banner BOTTOMS were
+   already aligned via the flex layout + matching pr-footer heights). */
+.pr-card [data-bundle-line],
+.pr-card [data-monthly-line] { min-height:88px; box-sizing:border-box; }
 @media (max-width: 980px) {
   .pr-grid { grid-template-columns:1fr; gap:18px; }
   .pr-card-lede { min-height:0; }
   .pr-card-headline { min-height:0; }
+  /* On mobile the cards stack vertically — no horizontal alignment to
+     preserve — so banners go back to natural height for tighter packing. */
+  .pr-card [data-bundle-line], .pr-card [data-monthly-line] { min-height:0; }
 }
 </style>
 
@@ -447,12 +459,9 @@ section[id] { scroll-margin-top:120px; }
           <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Free with annual GRIP OS</strong> (save <span class="curr">&euro;</span><span data-price-key="report">2,495</span>)
         </div>
         <div class="pr-footer">
-          <div>
-            <div class="pr-price-block">
-              <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
-              <span class="pr-price-unit">one time</span>
-            </div>
-            <p style="font-size:0.72rem;color:#94a3b8;margin:4px 0 0;line-height:1.4;">vs. <span class="curr">&euro;</span>25&ndash;50k for the equivalent consulting diagnosis</p>
+          <div class="pr-price-block">
+            <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
+            <span class="pr-price-unit">one time</span>
           </div>
           <a href="javascript:void(0)" onclick="startReportCheckout()" class="pr-cta pr-cta-blue">Buy the Report &rarr;</a>
         </div>
