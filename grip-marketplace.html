@@ -443,9 +443,12 @@ section[id] { scroll-margin-top:120px; }
           <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Free with annual GRIP OS</strong> (save <span class="curr">&euro;</span><span data-price-key="report">2,495</span>)
         </div>
         <div class="pr-footer">
-          <div class="pr-price-block">
-            <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
-            <span class="pr-price-unit">one time</span>
+          <div>
+            <div class="pr-price-block">
+              <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="report">2,495</span></span>
+              <span class="pr-price-unit">one time</span>
+            </div>
+            <p style="font-size:0.72rem;color:#94a3b8;margin:4px 0 0;line-height:1.4;">vs. <span class="curr">&euro;</span>25&ndash;50k for the equivalent consulting diagnosis</p>
           </div>
           <a href="javascript:void(0)" onclick="startReportCheckout()" class="pr-cta pr-cta-blue">Buy the Report &rarr;</a>
         </div>
@@ -455,7 +458,7 @@ section[id] { scroll-margin-top:120px; }
       <div class="pr-card">
         <div class="pr-card-name" style="color:#3B6CD8;">GRIP OS Core</div>
         <div class="pr-card-headline">Govern the fix. Solo.</div>
-        <p class="pr-card-lede">For teams who already know where to look and want a system that enforces one constraint at a time, in sequence.</p>
+        <p class="pr-card-lede">Turns the Intelligence Report&rsquo;s diagnosis into a governed 90-day execution sequence. One constraint at a time, with blocked actions and gates.</p>
         <ul class="pr-feature">
           <li>One active constraint at a time</li>
           <li>Explicit blocked actions and gates</li>
@@ -1127,11 +1130,45 @@ function scrollToSection(id) {
     full_annual: { EUR:'https://buy.stripe.com/6oU00jbPN4Eq01ie6r9MY1q', GBP:'https://buy.stripe.com/eVqbJ12fd4Eq29q7I39MY1r', USD:'https://buy.stripe.com/9B614n5rp9YK8xO8M79MY1s', PLN:'https://buy.stripe.com/28E9AT4nl2wi8xO1jF9MY1t' }
   };
 
+  /* Custom IR-gate modal — replaces the native window.confirm() that was the
+     monthly-Core/Full gate. Same content + same behaviour (OK fires
+     startReportCheckout, Cancel stays on page, Esc + backdrop click also
+     cancel), but rendered as a polished overlay matching the site palette.
+     Conversion bump vs the browser-native dialog. */
+  function showIrGateModal(onResult){
+    var existing = document.getElementById('caugia-ir-gate');
+    if (existing) existing.remove();
+    var overlay = document.createElement('div');
+    overlay.id = 'caugia-ir-gate';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);';
+    overlay.innerHTML = ''
+      + '<div role="dialog" aria-modal="true" aria-labelledby="caugia-ir-gate-title" style="background:#fff;border-radius:18px;max-width:480px;width:100%;padding:32px 28px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.18);">'
+      +   '<div style="font-size:0.72rem;font-weight:800;letter-spacing:2px;color:#D97706;margin-bottom:14px;text-transform:uppercase;">Intelligence Report required</div>'
+      +   '<h3 id="caugia-ir-gate-title" style="font-family:Merriweather,serif;font-size:1.35rem;font-weight:900;color:#0f172a;margin:0 0 14px;line-height:1.25;letter-spacing:-0.015em;">Sophie needs your baseline first.</h3>'
+      +   '<p style="font-size:0.95rem;color:#475569;line-height:1.6;margin:0 0 10px;">GRIP OS calibrates to your business via the 265-question Intelligence Report. Without it, Sophie runs on industry defaults instead of your real GTM constraint.</p>'
+      +   '<p style="font-size:0.86rem;color:#64748b;line-height:1.55;margin:0 0 22px;"><strong style="color:#0f172a;">Tip:</strong> switch the toggle to <strong>Annual</strong> and the Intelligence Report is bundled at no extra cost.</p>'
+      +   '<button id="caugia-ir-gate-confirm" type="button" style="display:block;width:100%;padding:14px 24px;background:#3B6CD8;color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:800;cursor:pointer;margin-bottom:10px;letter-spacing:0.01em;box-shadow:0 2px 8px rgba(59,108,216,0.25);">Continue to Intelligence Report &rarr;</button>'
+      +   '<button id="caugia-ir-gate-cancel" type="button" style="display:block;width:100%;padding:10px 24px;background:transparent;color:#64748b;border:none;font-size:0.85rem;font-weight:600;cursor:pointer;">Cancel</button>'
+      + '</div>';
+    document.body.appendChild(overlay);
+    var keyHandler = function(e){ if (e.key === 'Escape') close(false); };
+    function close(result){
+      overlay.remove();
+      document.removeEventListener('keydown', keyHandler);
+      onResult(result);
+    }
+    document.getElementById('caugia-ir-gate-confirm').addEventListener('click', function(){ close(true); });
+    document.getElementById('caugia-ir-gate-cancel').addEventListener('click', function(){ close(false); });
+    overlay.addEventListener('click', function(e){ if (e.target === overlay) close(false); });
+    document.addEventListener('keydown', keyHandler);
+  }
+
   function startOsCheckout(plan){
     var cycle = window.__caugiaBilling || 'monthly';
     if (cycle === 'monthly') {
-      var msg = "GRIP OS Monthly requires the Intelligence Report first. Sophie cannot calibrate without it.\n\nTip: switch the toggle to Annual — the IR is bundled at no extra cost.\n\nGo to Intelligence Report checkout now?";
-      if (window.confirm(msg)) startReportCheckout();
+      showIrGateModal(function(ok){
+        if (ok) startReportCheckout();
+      });
       return;
     }
     var curr = getDetectedCurrency();
