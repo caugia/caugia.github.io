@@ -77,9 +77,9 @@ html { scroll-behavior:smooth; scroll-padding-top:120px; }
 section[id] { scroll-margin-top:120px; }
 
 /* HERO */
-.mk-hero { padding:56px 0 0; text-align:center; max-width:720px; margin:0 auto; }
+.mk-hero { padding:56px 0 0; text-align:center; max-width:960px; margin:0 auto; }
 .mk-hero h1 { font-family:Merriweather,serif; font-size:2.6rem; font-weight:900; line-height:1.15; color:#0f172a; margin-bottom:14px; letter-spacing:-0.02em; }
-.mk-hero-sub { font-size:1.08rem; color:#475569; line-height:1.6; max-width:560px; margin:0 auto; }
+.mk-hero-sub { font-size:1.08rem; color:#475569; line-height:1.6; max-width:none; margin:0 auto; padding:0 20px; }
 
 /* REPORT UPSELL */
 .mk-report { margin:40px auto 0; max-width:720px; background:linear-gradient(135deg,#0f172a,#1e293b); border-radius:16px; padding:28px 32px; display:flex; align-items:center; gap:20px; color:#fff; }
@@ -353,138 +353,155 @@ section[id] { scroll-margin-top:120px; }
 <section class="container mk-hero">
   <span class="eyebrow">GRIP Marketplace</span>
   <h1>Engpass finden.<br>Engpass beheben.</h1>
-  <p class="mk-hero-sub" style="margin-bottom:18px;">Zwei Wege zur&uuml;ck zur Kontrolle &uuml;ber Ihr GTM-System &ndash; je nachdem, wo Sie heute stehen.</p>
-  <p style="font-size:0.82rem;color:#94a3b8;margin:0 auto 28px;max-width:520px;">&Ouml;ffentliche Cohort-Daten &middot; ohne Anmeldung &rarr; <a href="benchmarks.html" style="color:#3B6CD8;font-weight:700;text-decoration:none;">GTM Benchmarks Explorer</a></p>
+  <p class="mk-hero-sub" style="margin:0 auto 28px;">Zwei Wege zur&uuml;ck zur Kontrolle &uuml;ber Ihr GTM-System &ndash; je nachdem, wo Sie heute stehen.</p>
 </section>
 
 
-<!-- TOP PRICING GRID — pricing-first redesign 2026-05-17
-     Three cards (IR, Core, Full) with Monthly/Annual toggle, mirroring
-     pricing.html. Replaces the previous 2-card route selector and lifts
-     the OS pricing block from further down the page. Click-time gate
-     for monthly Core/Full is inlined here so the customer never reaches
-     a monthly Stripe link without the IR-first prompt. -->
+<!-- TOP PRICING GRID — synced to /de/pricing.html on 2026-05-17.
+     CSS rules + HTML structure copied verbatim from pricing.html so the
+     marketplace's top pricing grid is visually identical to the dedicated
+     pricing page. Card content is the canonical pricing.html version:
+     6 features per card on IR + Core, 8 on Full with two orange-highlighted
+     differentiators. Click-time IR-first gate stays inlined via
+     window.confirm in startOsCheckout(). -->
 <style>
-.mk-pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1080px;margin:0 auto 56px;padding:0 20px;}
-.mk-pr-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;position:relative;}
-.mk-pr-card-featured{background:#0f172a;border-color:#E07830;}
-.mk-pr-name{font-size:0.7rem;font-weight:800;letter-spacing:2px;color:#3B6CD8;margin-bottom:12px;text-transform:uppercase;}
-.mk-pr-card-featured .mk-pr-name{color:#E07830;}
-.mk-pr-headline{font-family:Merriweather,serif;font-size:1.35rem;font-weight:900;color:#0f172a;margin-bottom:8px;line-height:1.2;min-height:32px;}
-.mk-pr-card-featured .mk-pr-headline{color:#fff;}
-.mk-pr-lede{font-size:0.92rem;color:#475569;line-height:1.55;margin:0 0 16px;min-height:80px;}
-.mk-pr-card-featured .mk-pr-lede{color:#94a3b8;}
-.mk-pr-feature{list-style:none;padding:0;margin:0 0 14px;font-size:0.86rem;line-height:2;flex-grow:1;color:#475569;}
-.mk-pr-card-featured .mk-pr-feature{color:#cbd5e1;}
-.mk-pr-feature li::before{content:'\2713';color:#16A34A;font-weight:800;margin-right:8px;}
-.mk-pr-card-featured .mk-pr-feature li::before{color:#E07830;}
-.mk-pr-footer{border-top:1px solid #e2e8f0;padding-top:18px;margin-top:6px;}
-.mk-pr-card-featured .mk-pr-footer{border-top-color:#1e293b;}
-.mk-pr-price-block{display:flex;align-items:baseline;gap:6px;margin-bottom:14px;}
-.mk-pr-price{font-size:2rem;font-weight:900;color:#0f172a;}
-.mk-pr-card-featured .mk-pr-price{color:#fff;}
-.mk-pr-unit{font-size:0.85rem;color:#94a3b8;}
-.mk-pr-cta{display:block;text-align:center;padding:13px 24px;font-size:0.92rem;border-radius:10px;text-decoration:none;font-weight:800;cursor:pointer;border:none;width:100%;box-sizing:border-box;}
-.mk-pr-cta-dark{background:#0f172a;color:#fff;}
-.mk-pr-cta-blue{background:#3B6CD8;color:#fff;}
-.mk-pr-cta-orange{background:#E07830;color:#fff;}
-.mk-pr-cta:hover{filter:brightness(0.95);}
-.mk-pr-badge{position:absolute;top:-12px;right:24px;background:#E07830;color:#fff;font-size:0.65rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:10px;}
-@media(max-width:960px){.mk-pricing-grid{grid-template-columns:1fr;max-width:480px;}.mk-pr-lede,.mk-pr-headline{min-height:0;}}
+.pr-section { padding:48px 0; }
+.pr-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:1100px; margin:0 auto; padding:0 20px; }
+.pr-card { background:#fff; border:1px solid #e2e8f0; border-radius:18px; padding:36px 30px; display:flex; flex-direction:column; }
+.pr-card-featured { background:#0f172a; border-color:#E07830; color:#fff; position:relative; }
+.pr-card-featured .pr-card-name { color:#E07830; }
+.pr-card-featured .pr-card-headline { color:#fff; }
+.pr-card-featured .pr-card-lede { color:#64748b; }
+.pr-card-featured .pr-feature li { color:#64748b; }
+.pr-card-featured .pr-feature li::before { color:#E07830; }
+.pr-card-featured .pr-price { color:#fff; }
+.pr-card-featured .pr-price-unit { color:#64748b; }
+.pr-card-featured .pr-footer { border-top-color:#1e293b; }
+.pr-badge { position:absolute; top:-12px; right:24px; background:#E07830; color:#fff; font-size:0.65rem; font-weight:800; letter-spacing:1.5px; padding:5px 14px; border-radius:12px; text-transform:uppercase; }
+.pr-card-name { font-size:0.7rem; font-weight:800; letter-spacing:2px; color:#3B6CD8; text-transform:uppercase; margin-bottom:12px; }
+.pr-card-headline { font-family:Inter,sans-serif; font-size:1.35rem; font-weight:800; line-height:1.25; color:#0f172a; margin-bottom:10px; letter-spacing:-0.01em; min-height:54px; }
+.pr-card-lede { font-size:0.92rem; color:#64748b; line-height:1.65; margin-bottom:24px; min-height:80px; }
+.pr-feature { list-style:none; padding:0; margin:0 0 24px; font-size:0.9rem; line-height:1.9; flex-grow:1; }
+.pr-feature li { padding-left:26px; position:relative; color:#475569; }
+.pr-feature li::before { content:"\2713"; position:absolute; left:0; color:#3B6CD8; font-weight:800; }
+.pr-footer { margin-top:auto; padding-top:20px; border-top:1px solid #e2e8f0; display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+.pr-price-block { display:flex; align-items:baseline; gap:6px; }
+.pr-price { font-size:2rem; font-weight:900; color:#0f172a; letter-spacing:-0.02em; }
+.pr-price-unit { font-size:0.85rem; color:#64748b; font-weight:600; }
+.pr-cta { display:inline-block; padding:13px 22px; border-radius:10px; font-weight:800; font-size:0.9rem; text-decoration:none !important; white-space:nowrap; transition:all 0.2s; letter-spacing:0.01em; cursor:pointer; border:none; }
+.pr-cta-blue { background:#3B6CD8 !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 2px 8px rgba(59,108,216,0.25); }
+.pr-cta-blue:hover { background:#2553b6 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(59,108,216,0.35); }
+.pr-cta-orange { background:#E07830 !important; color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; box-shadow:0 2px 8px rgba(224,120,48,0.25); }
+.pr-cta-orange:hover { background:#c96520 !important; transform:translateY(-1px); box-shadow:0 4px 14px rgba(224,120,48,0.35); }
+@media (max-width: 980px) {
+  .pr-grid { grid-template-columns:1fr; gap:18px; }
+  .pr-card-lede { min-height:0; }
+  .pr-card-headline { min-height:0; }
+}
 </style>
 
-<section class="container" style="margin-top:40px;">
-  <!-- Monatlich / J&auml;hrlich toggle -->
-  <div style="display:flex;justify-content:center;margin:0 0 28px;" id="billing-toggle">
-    <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
-      <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Monatlich</button>
-      <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">J&auml;hrlich <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
-    </div>
-  </div>
+<section class="pr-section">
+  <div class="container">
 
-  <div class="mk-pricing-grid">
-    <!-- INTELLIGENCE REPORT -->
-    <div class="mk-pr-card">
-      <div class="mk-pr-name">Intelligence Report</div>
-      <h2 class="mk-pr-headline">Finden Sie den Constraint.</h2>
-      <p class="mk-pr-lede">Eine 45-seitige Board-Level-Diagnose Ihres Revenue-Engines. 265 Fragen, 72 Scoring-Engines, in einer Stunde geliefert.</p>
-      <ul class="mk-pr-feature">
-        <li>Engpass-Identifikation + bezifferter Umsatzverlust</li>
-        <li>90-Tage-Umsetzungssequenz</li>
-        <li>30+ Wachstums-Archetypen bewertet</li>
-        <li>Ersetzt Beratung ab 25k&nbsp;&euro;+</li>
-      </ul>
-      <!-- Bundle banner: free with annual GRIP OS, always visible -->
-      <div data-bundle-line="report" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Im GRIP OS Jahresabo enthalten</strong> (<span class="curr">&euro;</span><span data-price-key="report">2.495</span> sparen)
-      </div>
-      <div class="mk-pr-footer">
-        <div class="mk-pr-price-block">
-          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="report">2.495</span></span>
-          <span class="mk-pr-unit">einmalig</span>
-        </div>
-        <a href="javascript:void(0)" onclick="startReportCheckout()" class="mk-pr-cta mk-pr-cta-dark">Bericht holen &rarr;</a>
+    <!-- Monthly/Annual toggle (only affects Core + Full; IR is one-time) -->
+    <div style="display:flex;justify-content:center;margin:0 0 28px;" id="billing-toggle">
+      <div style="display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;">
+        <button onclick="setBilling('monthly')" id="btn-monthly" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,0.1);transition:all 0.2s;">Monatlich</button>
+        <button onclick="setBilling('annual')" id="btn-annual" style="padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#64748b;transition:all 0.2s;">J&auml;hrlich <span style="margin-left:6px;font-size:11px;font-weight:700;color:#16A34A;background:#f0fdf4;padding:2px 6px;border-radius:4px;">-17%</span></button>
       </div>
     </div>
 
-    <!-- GRIP OS CORE -->
-    <div class="mk-pr-card">
-      <div class="mk-pr-name">GRIP OS Core</div>
-      <h2 class="mk-pr-headline">Steuern Sie die L&ouml;sung.</h2>
-      <p class="mk-pr-lede">Constraint-Engine, Gates, w&ouml;chentlicher Executive Brief, Connectors f&uuml;r Ihren Core-Stack. Das Betriebssystem f&uuml;r Ihre GTM-Execution.</p>
-      <ul class="mk-pr-feature">
-        <li>Immer nur ein aktiver Engpass</li>
-        <li>Explizit blockierte Aktionen und Gates</li>
-        <li>W&ouml;chentliches Monday Brief f&uuml;r den Board</li>
-        <li>Sophie 3.000 Turns / Monat</li>
-        <li>Entscheidungsged&auml;chtnis + Audit Trail</li>
-      </ul>
-      <!-- Monthly indicator: shown when Monthly selected -->
-      <div data-monthly-line="os_core" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span class="curr">&euro;</span><span data-price-key="report">2.495</span>&nbsp; &mdash; separater Kauf</a>)
-      </div>
-      <!-- Bundle banner: shown when Annual selected -->
-      <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span class="curr">&euro;</span><span data-price-key="report">2.495</span> Wert)
-      </div>
-      <div class="mk-pr-footer">
-        <div class="mk-pr-price-block">
-          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="os_core">799</span></span>
-          <span class="mk-pr-unit">/ Monat</span>
-        </div>
-        <a href="javascript:void(0)" onclick="startOsCheckout('core')" class="mk-pr-cta mk-pr-cta-blue">Core aktivieren &rarr;</a>
-      </div>
-    </div>
+    <div class="pr-grid">
 
-    <!-- GRIP OS FULL (featured) -->
-    <div class="mk-pr-card mk-pr-card-featured">
-      <div class="mk-pr-badge">EMPFOHLEN</div>
-      <div class="mk-pr-name">GRIP OS Full</div>
-      <h2 class="mk-pr-headline">Steuern mit Sophie.</h2>
-      <p class="mk-pr-lede">Core, plus Sophie mit 15k Turns, die volle Connector-Bibliothek, kontinuierliches Scoring, Drift-Alerts und monatliche Neubewertung.</p>
-      <ul class="mk-pr-feature">
-        <li>Alles aus Core</li>
-        <li>Sophie 15.000 Turns / Monat</li>
-        <li>Volle Connector-Bibliothek</li>
-        <li>Kontinuierliches GRIP-Scoring + Drift-Alerts</li>
-        <li>Monatliche GTM-Pulse-Neubewertung</li>
-        <li style="color:#E07830;font-weight:700;">GTM Due Diligence (5/Monat)</li>
-      </ul>
-      <!-- Monthly indicator -->
-      <div data-monthly-line="os_full" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span class="curr">&euro;</span><span data-price-key="report">2.495</span>&nbsp; &mdash; separater Kauf</a>)
-      </div>
-      <!-- Bundle banner -->
-      <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
-        <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span class="curr">&euro;</span><span data-price-key="report">2.495</span> Wert)
-      </div>
-      <div class="mk-pr-footer">
-        <div class="mk-pr-price-block">
-          <span class="mk-pr-price"><span class="curr">&euro;</span><span data-price-key="os_full">1.495</span></span>
-          <span class="mk-pr-unit" style="color:#64748b;">/ Monat</span>
+      <!-- INTELLIGENCE REPORT -->
+      <div class="pr-card">
+        <div class="pr-card-name">GTM Intelligence Report</div>
+        <div class="pr-card-headline">Engpass finden. Einmalig.</div>
+        <p class="pr-card-lede">Die 45-seitige Diagnose, die Ihnen in Zahlen sagt, welches eine strukturelle Element den Umsatz drosselt.</p>
+        <ul class="pr-feature">
+          <li>265 strukturierte Unternehmenseingaben</li>
+          <li>72 deterministische Scoring-Engines</li>
+          <li>Ein benannter Engpass, in Umsatzgr&ouml;&szlig;en quantifiziert</li>
+          <li>Strategische, taktische und operative Aktionskaskade</li>
+          <li>Konfidenz-gebandelt auf jedem Befund</li>
+          <li>Lieferung innerhalb einer Stunde</li>
+        </ul>
+        <!-- Bundle line: free-with-annual reminder, always visible on IR card. -->
+        <div data-bundle-line="report" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Im GRIP OS Jahresabo enthalten</strong> (<span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> sparen)
         </div>
-        <a href="javascript:void(0)" onclick="startOsCheckout('full')" class="mk-pr-cta mk-pr-cta-orange">Full aktivieren &rarr;</a>
+        <div class="pr-footer">
+          <div class="pr-price-block">
+            <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="report">2.495</span></span>
+            <span class="pr-price-unit">einmalig</span>
+          </div>
+          <a href="javascript:void(0)" onclick="startReportCheckout()" class="pr-cta pr-cta-blue">Bericht kaufen &rarr;</a>
+        </div>
       </div>
+
+      <!-- GRIP OS CORE -->
+      <div class="pr-card">
+        <div class="pr-card-name" style="color:#3B6CD8;">GRIP OS Core</div>
+        <div class="pr-card-headline">L&ouml;sung steuern. Eigenst&auml;ndig.</div>
+        <p class="pr-card-lede">F&uuml;r Teams, die wissen, wo sie hinschauen m&uuml;ssen, und ein System wollen, das einen Engpass nach dem anderen erzwingt.</p>
+        <ul class="pr-feature">
+          <li>Ein aktiver Engpass zur Zeit</li>
+          <li>Explizit blockierte Aktionen und Gates</li>
+          <li>W&ouml;chentliches Monday Brief f&uuml;r den Board</li>
+          <li>Konnektor-Setup f&uuml;r Ihren Kern-Stack</li>
+          <li>Entscheidungsged&auml;chtnis und Audit Trail</li>
+          <li>Evidenzbasierte Gate-Reviews</li>
+        </ul>
+        <!-- Monthly indicator: shown when Monthly selected; replaced by bundle banner on Annual. -->
+        <div data-monthly-line="os_core" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> &mdash; separater Kauf</a>)
+        </div>
+        <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
+        <div data-bundle-line="os_core" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> Wert)
+        </div>
+        <div class="pr-footer">
+          <div class="pr-price-block">
+            <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="os_core">799</span></span>
+            <span class="pr-price-unit">/ Monat</span>
+          </div>
+          <a href="javascript:void(0)" onclick="startOsCheckout('core')" class="pr-cta pr-cta-blue">Core aktivieren &rarr;</a>
+        </div>
+      </div>
+
+      <!-- GRIP OS FULL -->
+      <div class="pr-card pr-card-featured">
+        <div class="pr-badge">Am meisten gew&auml;hlt</div>
+        <div class="pr-card-name">GRIP OS Full</div>
+        <div class="pr-card-headline">L&ouml;sung steuern. Mit Sophie.</div>
+        <p class="pr-card-lede">Core, plus Sophie, Ihre AI-GTM-Beraterin, die volle Konnektor-Bibliothek, kontinuierliches Scoring und Cohort Intelligence.</p>
+        <ul class="pr-feature">
+          <li>Alles aus Core</li>
+          <li>Volle Konnektor-Bibliothek</li>
+          <li>Kontinuierliches GRIP-Scoring aus Live-Signalen</li>
+          <li>Priorit&auml;ts-Drift-Erkennung und Alerts</li>
+          <li>Monatliche GTM Pulse-Neubewertung</li>
+          <li>Branchen-Benchmarks plus propriet&auml;re Cohort Intelligence</li>
+          <li style="color:#E07830;font-weight:700;">Sophie identifiziert die strukturelle Skill Gap</li>
+          <li style="color:#E07830;font-weight:700;">GTM Due Diligence (5/Monat), Berichte in institutioneller Qualit&auml;t f&uuml;r jedes Portfolio-Unternehmen</li>
+        </ul>
+        <!-- Monthly indicator: shown when Monthly selected; replaced by bundle banner on Annual. -->
+        <div data-monthly-line="os_full" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#D97706;font-weight:800;">!</span> <strong>Hinweis:</strong> Intelligence Report zuerst erforderlich (<a href="javascript:void(0)" onclick="startReportCheckout()" style="color:#3B6CD8;font-weight:700;text-decoration:underline;cursor:pointer;"><span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> &mdash; separater Kauf</a>)
+        </div>
+        <!-- Bundle line: shown only when Annual is selected. Toggled by setBilling. -->
+        <div data-bundle-line="os_full" style="display:none;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin:0 0 12px;font-size:0.82rem;color:#0f172a;line-height:1.4;">
+          <span style="color:#16A34A;font-weight:800;">&check;</span> <strong>Intelligence Report inklusive</strong> (<span data-price-key="report">2.495</span>&nbsp;<span class="curr">&euro;</span> Wert)
+        </div>
+        <div class="pr-footer">
+          <div class="pr-price-block">
+            <span class="pr-price"><span class="curr">&euro;</span><span data-price-key="os_full">1.495</span></span>
+            <span class="pr-price-unit">/ Monat</span>
+          </div>
+          <a href="javascript:void(0)" onclick="startOsCheckout('full')" class="pr-cta pr-cta-orange">Full aktivieren &rarr;</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
