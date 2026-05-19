@@ -335,6 +335,63 @@
   .sophie-callout__avatar { flex: 0 0 32px; width: 32px; height: 32px; }
 }
 /* === /Sophie callout === */
+
+/* === Sophie demo video teaser + click-to-expand modal (Tom 2026-05-19) === */
+.sophie-video-teaser {
+  appearance: none; background: transparent;
+  border: 1px solid rgba(15, 23, 41, 0.10); border-radius: 16px;
+  padding: 0; cursor: pointer;
+  display: flex; flex-direction: column;
+  width: 100%; max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 6px 22px rgba(15, 23, 41, 0.10);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  text-align: left;
+}
+.sophie-video-teaser:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(15, 23, 41, 0.14); }
+.sophie-video-teaser:focus-visible { outline: 2px solid #3B6CD8; outline-offset: 3px; }
+.sophie-video-teaser__poster {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  background: #0F1729 center/cover no-repeat; overflow: hidden;
+}
+.sophie-video-teaser__poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sophie-video-teaser__play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.sophie-video-teaser__play svg { width: 56px; height: 56px; fill: rgba(255,255,255,0.96); filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4)); transition: transform 0.18s ease; }
+.sophie-video-teaser:hover .sophie-video-teaser__play svg { transform: scale(1.06); }
+.sophie-video-teaser__meta { padding: 12px 16px 14px; background: #fff; border-top: 1px solid rgba(15, 23, 41, 0.06); }
+.sophie-video-teaser__eyebrow { margin: 0 0 2px; color: #3B6CD8; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.sophie-video-teaser__title { margin: 0; color: #0F1729; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.sophie-video-disclaimer { margin: 10px auto 0; max-width: 420px; text-align: center; color: #6b7280; font-size: 12px; font-style: italic; }
+.sophie-video-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(7, 12, 24, 0.78);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  animation: sophieFadeIn 0.18s ease;
+}
+.sophie-video-modal[hidden] { display: none; }
+@keyframes sophieFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.sophie-video-modal__inner {
+  position: relative; width: 100%; max-width: 1100px; aspect-ratio: 16 / 9;
+  background: #000; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: sophieZoomIn 0.22s ease;
+}
+@keyframes sophieZoomIn { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.sophie-video-modal__player { display: block; width: 100%; height: 100%; background: #000; outline: none; }
+.sophie-video-modal__close {
+  position: absolute; top: -44px; right: 0;
+  width: 36px; height: 36px; border: none; background: transparent;
+  color: #fff; font-size: 28px; line-height: 1; cursor: pointer; padding: 0;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s ease;
+}
+.sophie-video-modal__close:hover { background: rgba(255,255,255,0.12); }
+.sophie-video-modal__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (max-width: 720px) {
+  .sophie-video-modal { padding: 16px; }
+  .sophie-video-modal__close { top: -40px; right: 4px; }
+}
 </style>
 </head>
 <body>
@@ -351,38 +408,22 @@
     <h1 class="s1-headline">Ihr Umsatz hat einen Engpass.<br>Wir sp&uuml;ren ihn auf. Sie l&ouml;sen ihn.</h1>
     <p class="s1-sub">Ihr GTM-Team gibt Vollgas. Die Pipeline sieht solide aus. Der Umsatz kommt trotzdem nicht nach, Deals kleben fest, und niemand kann den Finger draufhalten. GRIP OS beendet das Raten. In einer Stunde.</p>
     <!-- Listen to Sophie, 2:30 audio (Nova-energetic, English audio with native-localized labels) -->
-    <div style="margin-top:28px;display:flex;justify-content:center;">
-      <div class="sophie-audio" id="sophieAudio" style="width:100%;max-width:560px;">
-        <button class="sophie-audio-trigger" id="sophieAudioTrigger" type="button" aria-label="Sophie Audio-Demo abspielen">
-          <div class="sophie-audio-thumb">
-            <img src="../assets/sophie-avatar.png" alt="Sophie, AI-GTM-Advisor" width="56" height="56" />
-          </div>
-          <div class="sophie-audio-meta">
-            <p class="sophie-audio-eyebrow">2 Min 30 &middot; hören</p>
-            <p class="sophie-audio-cta">Hören Sie Sophie</p>
-            <p class="sophie-audio-headline">Hören Sie, wie Sophie ein Framework zitiert, in einem Peer-Ergebnis verankert und den nächsten Schritt vorschlägt.</p>
-          </div>
-          <div class="sophie-audio-badge" id="sophieAudioBadge">
-            <svg class="sophie-audio-icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-              <path d="M3 1.5 L11.5 7 L3 12.5 Z" fill="currentColor" />
-            </svg>
-            <svg class="sophie-audio-icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="display:none;">
-              <rect x="3" y="2" width="3" height="10" fill="currentColor" rx="1" />
-              <rect x="8" y="2" width="3" height="10" fill="currentColor" rx="1" />
-            </svg>
-          </div>
-        </button>
-        <div class="sophie-audio-player">
-          <div class="sophie-audio-progress" id="sophieAudioProgress" role="slider" tabindex="0" aria-label="Audio-Fortschritt">
-            <div class="sophie-audio-progress-fill" id="sophieAudioProgressFill"></div>
-          </div>
-          <div class="sophie-audio-time">
-            <span><span id="sophieAudioCurrent">0:00</span> / <span id="sophieAudioDuration">2:22</span></span>
-            <span class="sophie-audio-fallback">Audio auf Englisch. Native DE-Stimme folgt.</span>
-          </div>
-        </div>
-        <audio id="sophieAudioElement" src="../assets/audio/sophie-demo-en.mp3" preload="metadata"></audio>
-      </div>
+        <!-- Sophie demo video teaser → modal (EN, locale disclaimer per Tom 2026-05-19) -->
+    <div style="margin-top:28px;display:flex;flex-direction:column;align-items:center;">
+      <button class="sophie-video-teaser" id="sophieVideoTeaser" type="button"
+              aria-label="Sophie-Produktdemo ansehen (1 Minute 40)">
+        <span class="sophie-video-teaser__poster">
+          <img src="../assets/video/sophie-demo-en-poster.jpg" alt="Sophie" />
+          <span class="sophie-video-teaser__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z"/></svg>
+          </span>
+        </span>
+        <span class="sophie-video-teaser__meta">
+          <span class="sophie-video-teaser__eyebrow">1 min 40 · ansehen</span>
+          <span class="sophie-video-teaser__title">Sophie führt Sie durch GRIP OS</span>
+        </span>
+      </button>
+      <p class="sophie-video-disclaimer">Video auf Englisch. Deutsche Version folgt.</p>
     </div>
 
     <div style="margin-top:32px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
@@ -716,5 +757,43 @@
 
 <!-- Sophie chat widget — embedded from os.caugia.com. Rolled out to locale variants 2026-05-14 (parity with EN root pages). -->
 <script src="https://os.caugia.com/widget.js" async></script>
+
+<!-- Sophie demo video modal (EN, de) -->
+<div class="sophie-video-modal" id="sophieVideoModal" hidden role="dialog" aria-modal="true" aria-labelledby="sophieVideoTeaser">
+  <div class="sophie-video-modal__inner">
+    <button class="sophie-video-modal__close" id="sophieVideoModalClose" type="button" aria-label="Video schließen">&times;</button>
+    <video class="sophie-video-modal__player" id="sophieVideoModalPlayer" controls preload="metadata"
+           poster="../assets/video/sophie-demo-en-poster.jpg"
+           playsinline crossorigin="anonymous">
+      <source src="../assets/video/sophie-demo-en.mp4" type="video/mp4" />
+      <track kind="captions" srclang="en" label="English" src="../assets/video/sophie-demo-en.en.vtt" default />
+    </video>
+  </div>
+</div>
+
+<script>
+(function () {
+  var teaser = document.getElementById('sophieVideoTeaser');
+  var modal = document.getElementById('sophieVideoModal');
+  var closeBtn = document.getElementById('sophieVideoModalClose');
+  var player = document.getElementById('sophieVideoModalPlayer');
+  if (!teaser || !modal || !closeBtn || !player) return;
+  function open() {
+    modal.hidden = false; document.body.style.overflow = 'hidden';
+    setTimeout(function () { var p = player.play(); if (p && p.catch) p.catch(function(){}); }, 60);
+    closeBtn.focus();
+  }
+  function close() {
+    modal.hidden = true; document.body.style.overflow = '';
+    try { player.pause(); player.currentTime = 0; } catch (e) {}
+    teaser.focus();
+  }
+  teaser.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) { if (!modal.hidden && e.key === 'Escape') close(); });
+})();
+</script>
+
 </body>
 </html>
