@@ -292,27 +292,68 @@
   margin-top: 1px;
 }
 .sophie-callout__body { flex: 1; min-width: 0; }
-.sophie-callout__row { margin: 0; }
+/* Tom 2026-05-19: label + content on a 2-col grid so the second column lines
+ * up across rows regardless of label length ("What you see" vs "Why it matters"). */
+.sophie-callout__row {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+}
 .sophie-callout__row + .sophie-callout__row { margin-top: 10px; }
 .sophie-callout__label {
-  display: inline-block;
   color: #3B6CD8;
   font-weight: 700;
   font-size: 11.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-right: 8px;
-  vertical-align: 1px;
+  margin-right: 0;
 }
 .sophie-callout--dark {
-  background: rgba(255, 255, 255, 0.05);
-  border-left-color: #7aa3ff;
-  color: #cbd5e1;
+  /* Tom 2026-05-19: text was hard to read on navy section. Lift the body
+   * color + add a touch more background overlay for contrast (still subtle). */
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: #93b4f5;
+  color: #e6ecf5;
 }
-.sophie-callout--dark .sophie-callout__label { color: #7aa3ff; }
+.sophie-callout--dark .sophie-callout__label { color: #a5beff; }
 @media (max-width: 600px) {
   .sophie-callout { font-size: 13.5px; padding: 14px 16px; gap: 12px; }
   .sophie-callout__avatar { flex: 0 0 32px; width: 32px; height: 32px; }
+  .sophie-callout__row { grid-template-columns: 1fr; column-gap: 0; }
+  .sophie-callout__row .sophie-callout__label { margin-bottom: 4px; }
+}
+
+/* === Sophie demo video block (replaces sophie-audio, Tom 2026-05-19) === */
+.sophie-video {
+  background: rgba(59, 108, 216, 0.05);
+  border: 1px solid rgba(59, 108, 216, 0.18);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 6px 22px rgba(15, 23, 41, 0.06);
+}
+.sophie-video-eyebrow {
+  margin: 0 0 10px;
+  color: #3B6CD8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sophie-video-player {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #000;
+  outline: none;
+}
+.sophie-video-caption {
+  margin: 12px 2px 0;
+  color: #4a5469;
+  font-size: 13px;
+  line-height: 1.5;
 }
 /* === /Sophie callout === */
 </style>
@@ -331,37 +372,19 @@
     <h1 class="s1-headline">Your revenue has a bottleneck.<br>We find it. You fix it.</h1>
     <p class="s1-sub">Your GTM team is working hard. Pipeline looks fine. But revenue plateaus, deals stall, and nobody agrees on why. GRIP OS ends that conversation in one hour.</p>
 
-    <!-- Listen to Sophie, 2:30 audio (Nova-energetic, matches os.caugia.com/demo) -->
+    <!-- Sophie demo video — 1:40 walkthrough, replaces 2:30 audio (Tom 2026-05-19). -->
     <div style="margin-top:28px;display:flex;justify-content:center;">
-      <div class="sophie-audio" id="sophieAudio" style="width:100%;max-width:560px;">
-        <button class="sophie-audio-trigger" id="sophieAudioTrigger" type="button" aria-label="Play Sophie audio demo">
-          <div class="sophie-audio-thumb">
-            <img src="assets/sophie-avatar.png" alt="Sophie, AI GTM advisor" width="56" height="56" />
-          </div>
-          <div class="sophie-audio-meta">
-            <p class="sophie-audio-eyebrow">2 min 30 &middot; listen</p>
-            <p class="sophie-audio-cta">Listen to Sophie</p>
-            <p class="sophie-audio-headline">Hear Sophie cite a framework, ground it in a peer outcome, and propose the next move.</p>
-          </div>
-          <div class="sophie-audio-badge" id="sophieAudioBadge">
-            <svg class="sophie-audio-icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-              <path d="M3 1.5 L11.5 7 L3 12.5 Z" fill="currentColor" />
-            </svg>
-            <svg class="sophie-audio-icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="display:none;">
-              <rect x="3" y="2" width="3" height="10" fill="currentColor" rx="1" />
-              <rect x="8" y="2" width="3" height="10" fill="currentColor" rx="1" />
-            </svg>
-          </div>
-        </button>
-        <div class="sophie-audio-player">
-          <div class="sophie-audio-progress" id="sophieAudioProgress" role="slider" tabindex="0" aria-label="Audio progress">
-            <div class="sophie-audio-progress-fill" id="sophieAudioProgressFill"></div>
-          </div>
-          <div class="sophie-audio-time">
-            <span id="sophieAudioCurrent">0:00</span> / <span id="sophieAudioDuration">2:22</span>
-          </div>
-        </div>
-        <audio id="sophieAudioElement" src="assets/audio/sophie-demo-en.mp3" preload="metadata"></audio>
+      <div class="sophie-video" style="width:100%;max-width:720px;">
+        <p class="sophie-video-eyebrow">1 min 40 &middot; watch</p>
+        <video class="sophie-video-player" controls preload="metadata"
+               poster="assets/sophie-avatar.png?v=20260519"
+               playsinline crossorigin="anonymous">
+          <source src="assets/video/sophie-demo-en.mp4" type="video/mp4" />
+          <track kind="captions" srclang="en" label="English"
+                 src="assets/video/sophie-demo-en.en.vtt" default />
+          Your browser does not support the video tag.
+        </video>
+        <p class="sophie-video-caption">Sophie walks you through the diagnostic, the live OS, the intelligence feeds, and the Monday brief — in one minute forty.</p>
       </div>
     </div>
 
