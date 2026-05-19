@@ -13,7 +13,7 @@
 // Excludes (matches robots.txt Disallow + obvious internal pages):
 //   - 404.html, opt-out.html
 //   - gtm-intelligence-report.html, gtm-intelligence-thank-you.html
-//   - gtm-module-thank-you.html, faq.html
+//   - faq.html
 //
 // Run: node scripts/generate-sitemap.mjs
 //   → writes sitemap.xml at repo root (overwrites)
@@ -34,7 +34,6 @@ const DENY = new Set([
   'opt-out.html',
   'gtm-intelligence-report.html',
   'gtm-intelligence-thank-you.html',
-  'gtm-module-thank-you.html',
   'faq.html',
 ]);
 
