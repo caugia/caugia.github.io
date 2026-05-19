@@ -312,13 +312,17 @@
   margin-right: 0;
 }
 .sophie-callout--dark {
-  /* Tom 2026-05-19 v2: body still read as grey on navy. Lift bg overlay
-   * (0.05 → 0.12) and switch body to pure white for max legibility. */
-  background: rgba(255, 255, 255, 0.12);
+  /* Tom 2026-05-19 v3: alpha overlay mengde anders per parent section bg
+   * (op donker-navy stuk verdween de tint → body leek grijs). Solid bg
+   * #14213d garandeert consistente card ongeacht parent. Body font-weight
+   * 500 voor zichtbare presence tov bold label. */
+  background: #14213d;
   border-left-color: #bcd0ff;
   color: #ffffff;
 }
-.sophie-callout--dark .sophie-callout__label { color: #c4d6ff; }
+.sophie-callout--dark .sophie-callout__body,
+.sophie-callout--dark .sophie-callout__row { font-weight: 500; }
+.sophie-callout--dark .sophie-callout__label { color: #c4d6ff; font-weight: 700; }
 @media (max-width: 600px) {
   .sophie-callout { font-size: 13.5px; padding: 14px 16px; gap: 12px; }
   .sophie-callout__avatar { flex: 0 0 32px; width: 32px; height: 32px; }
