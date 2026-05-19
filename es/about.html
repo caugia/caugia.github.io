@@ -217,19 +217,11 @@
   .sophie-listen__title { font-size: 0.98rem; }
 }
 
-/* Tom 2026-05-19 v3: caugia-base.css gives every section 80px top+bottom
- * padding → 160px gap between thesis + listen on mobile. Nuke it. */
-@media (max-width: 640px) {
-  section.container:has(.about-thesis),
-  section.container:has(.sophie-listen-wrap) { padding: 0 !important; }
-}
 
-/* Tom 2026-05-19 v4: halve gap between hero <p> and thesis quote on mobile.
- * Thesis section padding already killed; this targets the .about-thesis
- * margin-top + hero <p> margin-bottom that still produced ~44px gap. */
+/* Tom 2026-05-19 v5: :has() unreliable on older iOS Safari. Use direct
+ * selector — kill 80px padding on all non-hero container sections. */
 @media (max-width: 640px) {
-  .about-thesis { margin-top: 14px !important; }
-  .about-hero p { margin-bottom: 0 !important; }
+  section.container:not(.about-hero) { padding: 0 !important; }
 }
 </style>
 <meta property="og:image:width" content="1051" />
